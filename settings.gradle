@@ -1,6 +1,6 @@
 rootProject.name = 'views'
 
-include 'views-bom'
+include 'views'
 include 'views-core'
 include 'views-freemarker'
 include 'views-handlebars'

@@ -32,12 +32,43 @@ ext {
     homeBinDir = file("bin")
     homeLibDir = file("lib")
     homeSrcDir = file("src")
+
+    dependencyVersions = [
+        freemarker: [
+            version: freemarkerVersion,
+            group  : 'org.freemarker',
+            name   : 'freemarker'
+        ],
+        handlebars: [
+            version: handlebarsVersion,
+            group  : 'com.github.jknack',
+            name   : 'handlebars'
+        ],
+        thymeleaf: [
+            version: thymeleafVersion,
+            group  : 'org.thymeleaf',
+            name   : 'thymeleaf'
+        ],
+        velocity: [
+            version: velocityVersion,
+            group  : 'org.apache.velocity',
+            name   : 'velocity-engine-core'
+        ],
+    ]
+
+    dependencyVersion = { String name ->
+        def dep = dependencyVersions[name]
+        if (dep == null) {
+            throw new IllegalArgumentException("No core dependency defined for name: $name")
+        }
+        return "$dep.group:$dep.name:$dep.version".toString()
+    }
 }
 
 subprojects { Project subproject ->
 
     version project.projectVersion
-    group "io.micronaut.views"
+    group "io.micronaut"
     ext {
         isConfiguration = subproject.projectDir.parentFile.name == 'configurations'
         isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
@@ -54,9 +85,11 @@ subprojects { Project subproject ->
     apply plugin:"java"
     apply plugin: "io.spring.dependency-management"
 
-    dependencyManagement {
-        imports {
-            mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
+    if (subproject.name != "views") {
+        dependencyManagement {
+            imports {
+                mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
+            }
         }
     }
 

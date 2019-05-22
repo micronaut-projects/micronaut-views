@@ -2,7 +2,7 @@ dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
 
     compile project(":views-core")
-    compileOnly "org.apache.velocity:velocity-engine-core:$velocityVersion"
+    compile dependencyVersion("velocity")
     compileOnly "io.micronaut:micronaut-security"
 
     compile "io.micronaut:micronaut-runtime"

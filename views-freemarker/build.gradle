@@ -2,7 +2,7 @@ dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
 
     compile project(":views-core")
-    compileOnly "org.freemarker:freemarker:$freemarkerVersion"
+    compile dependencyVersion("freemarker")
     compileOnly "io.micronaut:micronaut-security"
 
     compile "io.micronaut:micronaut-runtime"
