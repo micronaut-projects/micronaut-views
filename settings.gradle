@@ -1,8 +1,0 @@
-rootProject.name = 'views'
-
-include 'views'
-include 'views-core'
-include 'views-freemarker'
-include 'views-handlebars'
-include 'views-thymeleaf'
-include 'views-velocity'
