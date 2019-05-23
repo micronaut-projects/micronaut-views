@@ -1,5 +1,6 @@
 dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
+    annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
 
     compile project(":views-core")
     compile dependencyVersion("thymeleaf")
