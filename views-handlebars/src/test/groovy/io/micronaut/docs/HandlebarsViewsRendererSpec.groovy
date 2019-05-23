@@ -16,17 +16,14 @@
 package io.micronaut.docs
 
 import io.micronaut.context.ApplicationContext
-import io.micronaut.context.exceptions.NoSuchBeanException
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.client.RxHttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
-import io.micronaut.views.handlebars.HandlebarsViewsRenderer
 import io.micronaut.views.ViewsFilter
-import io.micronaut.views.thymeleaf.ThymeleafViewsRenderer
-import io.micronaut.views.velocity.VelocityViewsRenderer
+import io.micronaut.views.handlebars.HandlebarsViewsRenderer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -50,7 +47,6 @@ class HandlebarsViewsRendererSpec extends Specification {
     RxHttpClient client = embeddedServer.getApplicationContext().createBean(RxHttpClient, embeddedServer.getURL())
 
     def "bean is loaded"() {
-
         when:
         embeddedServer.applicationContext.getBean(ViewsFilter)
 
@@ -62,18 +58,6 @@ class HandlebarsViewsRendererSpec extends Specification {
 
         then:
         noExceptionThrown()
-
-        when:
-        embeddedServer.applicationContext.getBean(VelocityViewsRenderer)
-
-        then:
-        thrown(NoSuchBeanException)
-
-        when:
-        embeddedServer.applicationContext.getBean(ThymeleafViewsRenderer)
-
-        then:
-        thrown(NoSuchBeanException)
     }
 
     def "invoking /handlebars/home does not specify @View, thus, regular JSON rendering is used"() {
