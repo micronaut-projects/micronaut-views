@@ -17,5 +17,5 @@ dependencies {
 
     testCompile "org.yaml:snakeyaml:$snakeYamlVersion"
 
-    testRuntime "com.github.jknack:handlebars:$handlebarsVersion"
+    testRuntime dependencyVersion("handlebars")
 }

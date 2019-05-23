@@ -17,5 +17,5 @@ dependencies {
 
     testCompile "org.yaml:snakeyaml:$snakeYamlVersion"
 
-    testRuntime "org.thymeleaf:thymeleaf:$thymeleafVersion"
+    testRuntime dependencyVersion("thymeleaf")
 }
