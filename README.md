@@ -1,6 +1,6 @@
 # Micronaut Views #
 
-[![Build Status](https://travis-ci.org/micronaut-projects/micronaut-views.svg?branch=master)](https://travis-ci.org/micronaut-projects/micronaut-security)
+[![Build Status](https://travis-ci.org/micronaut-projects/micronaut-views.svg?branch=master)](https://travis-ci.org/micronaut-projects/micronaut-views)
 
 Integrates Micronaut and Server Side View Rendering
 
