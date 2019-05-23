@@ -16,7 +16,6 @@
 package io.micronaut.docs
 
 import io.micronaut.context.ApplicationContext
-import io.micronaut.context.exceptions.NoSuchBeanException
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
@@ -24,10 +23,8 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.client.RxHttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
-import io.micronaut.views.handlebars.HandlebarsViewsRenderer
 import io.micronaut.views.ViewsFilter
 import io.micronaut.views.thymeleaf.ThymeleafViewsRenderer
-import io.micronaut.views.velocity.VelocityViewsRenderer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -61,18 +58,6 @@ class ThymeleafViewRendererSpec extends Specification {
 
         then:
         noExceptionThrown()
-
-        when:
-        embeddedServer.applicationContext.getBean(HandlebarsViewsRenderer)
-
-        then:
-        thrown(NoSuchBeanException)
-
-        when:
-        embeddedServer.applicationContext.getBean(VelocityViewsRenderer)
-
-        then:
-        thrown(NoSuchBeanException)
     }
 
     def "invoking /views/home does not specify @View, thus, regular JSON rendering is used"() {
