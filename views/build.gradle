@@ -1,3 +1,4 @@
+bintray.pkg.name = "micronaut-views"
 publishing {
     publications {
         maven(MavenPublication) {
