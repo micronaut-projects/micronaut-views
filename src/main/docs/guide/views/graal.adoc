@@ -1,0 +1,12 @@
+Micronaut supports GraalVM and starting in `1.2.0` special configuration files have been added to make easier the native image creation.
+
+The only change needed to create it is to add the dependency of the view technology used instead of the generic `micronaut-views`.
+For example, when using Thymeleaf, instead of defining this dependency:
+
+dependency:micronaut-views[]
+
+Use this:
+
+dependency:micronaut-views-thymeleaf[]
+
+NOTE: Learn more about https://docs.micronaut.io/latest/guide/index.html#graal[Micronaut's GraalVM support].
