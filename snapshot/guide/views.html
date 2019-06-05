@@ -89,6 +89,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#views-security"><strong>2.6</strong><span>Security Integration</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:0px"><a href="#graal"><strong>2.7</strong><span>GraalVM Support</span></a>
+                    </div>
+                    
                 </div>
                 
 
@@ -733,6 +736,71 @@ public class BooksController {
 </div>
 <div class="paragraph">
 <p>You can access information about the current user with the <code>security</code> map.</p>
+</div>
+
+
+<h2 id="graal">2.7 GraalVM Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/graal.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut supports GraalVM and starting in <code>1.2.0</code> special configuration files have been added to make easier the native image creation.</p>
+</div>
+<div class="paragraph">
+<p>The only change needed to create it is to add the dependency of the view technology used instead of the generic <code>micronaut-views</code>.
+For example, when using Thymeleaf, instead of defining this dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-views'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Use this:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'io.micronaut:micronaut-views-thymeleaf'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-thymeleaf&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graal">Micronaut&#8217;s GraalVM support</a>.
+</td>
+</tr>
+</table>
 </div>
 
 
