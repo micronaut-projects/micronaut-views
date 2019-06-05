@@ -7,3 +7,4 @@ views:
   freemarker: Apache Freemarker
   csp: CSP Header Support
   views-security: Security Integration
+  graal: GraalVM Support
