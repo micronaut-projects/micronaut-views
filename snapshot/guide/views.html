@@ -752,7 +752,7 @@ public class BooksController {
 <p>Micronaut supports GraalVM and starting in <code>1.2.0</code> special configuration files have been added to make easier the native image creation.</p>
 </div>
 <div class="paragraph">
-<p>The only change needed to create it is to add the dependency of the view technology used instead of the generic <code>micronaut-views</code>.
+<p>The first change needed is to add the dependency of the view technology used instead of the generic <code>micronaut-views</code>.
 For example, when using Thymeleaf, instead of defining this dependency:</p>
 </div>
 <div class="paragraph">
@@ -789,6 +789,40 @@ For example, when using Thymeleaf, instead of defining this dependency:</p>
 </div>
 </div>
 </p>
+</div>
+<div class="paragraph">
+<p>Then it is necessary to tell Graal to include all the static resources in the native image. To do that edit the file
+<code>native-image.properties</code> included in the project when created with the <code>graal-native-image</code> feature and add the necessary
+directories:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/META-INF/native-image/example.micronaut/mn-graal-application/native-image.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">Args = -H:IncludeResources=logback.xml|application.yml|views/.* \ <i class="conum" data-value="1"></i><b>(1)</b>
+       -H:Name=mn-graal-application \
+       -H:Class=example.micronaut.Application</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Include all static resources in <code>views</code> directory in the native-image.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you want to <a href="https://docs.micronaut.io/latest/guide/index.html#staticResources">serve static resources</a> like html, css
+and javascript files with Micronaut it is also necessary to include the <code>public</code> directory in the resources.
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock note">
 <table>
