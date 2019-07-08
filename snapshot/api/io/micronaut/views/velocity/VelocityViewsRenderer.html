@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -190,6 +190,13 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/velocity/VelocityViewsRenderer.html#render-java.lang.String-java.lang.Object-">render</a></span>(java.lang.String&nbsp;view,
       java.lang.Object&nbsp;data)</code>&nbsp;</td>
 </tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/velocity/VelocityViewsRenderer.html#render-java.lang.String-org.apache.velocity.VelocityContext-java.lang.String-java.io.Writer-">render</a></span>(java.lang.String&nbsp;view,
+      org.apache.velocity.VelocityContext&nbsp;context,
+      java.lang.String&nbsp;encoding,
+      java.io.Writer&nbsp;writer)</code>&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -282,6 +289,26 @@ public&nbsp;io.micronaut.core.io.Writable&nbsp;render(@Nonnull
 <dd><code>data</code> - response body to render it with a view</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A writable where the view will be written to.</dd>
+</dl>
+</li>
+</ul>
+<a name="render-java.lang.String-org.apache.velocity.VelocityContext-java.lang.String-java.io.Writer-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>render</h4>
+<pre>public&nbsp;void&nbsp;render(@Nonnull
+                   java.lang.String&nbsp;view,
+                   org.apache.velocity.VelocityContext&nbsp;context,
+                   java.lang.String&nbsp;encoding,
+                   java.io.Writer&nbsp;writer)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>view</code> - The view</dd>
+<dd><code>context</code> - The context</dd>
+<dd><code>encoding</code> - The encoding</dd>
+<dd><code>writer</code> - The writer</dd>
 </dl>
 </li>
 </ul>

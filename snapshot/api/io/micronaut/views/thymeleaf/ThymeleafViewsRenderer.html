@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -208,11 +208,19 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html#exists-java.lang.String-">exists</a></span>(java.lang.String&nbsp;viewName)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html#render-java.lang.String-org.thymeleaf.context.IContext-java.io.Writer-">render</a></span>(java.lang.String&nbsp;viewName,
+      org.thymeleaf.context.IContext&nbsp;context,
+      java.io.Writer&nbsp;writer)</code>
+<div class="block">Passes the arguments as is to <code>TemplateEngine.process(String, IContext, Writer)</code>.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>io.micronaut.core.io.Writable</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html#render-java.lang.String-java.lang.Object-">render</a></span>(java.lang.String&nbsp;viewName,
       java.lang.Object&nbsp;data)</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>io.micronaut.core.io.Writable</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html#render-java.lang.String-java.lang.Object-io.micronaut.http.HttpRequest-">render</a></span>(java.lang.String&nbsp;viewName,
       java.lang.Object&nbsp;data,
@@ -371,6 +379,24 @@ public&nbsp;io.micronaut.core.io.Writable&nbsp;render(@Nonnull
 <dd><code>request</code> - HTTP request</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A writable where the view will be written to.</dd>
+</dl>
+</li>
+</ul>
+<a name="render-java.lang.String-org.thymeleaf.context.IContext-java.io.Writer-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>render</h4>
+<pre>public&nbsp;void&nbsp;render(java.lang.String&nbsp;viewName,
+                   org.thymeleaf.context.IContext&nbsp;context,
+                   java.io.Writer&nbsp;writer)</pre>
+<div class="block">Passes the arguments as is to <code>TemplateEngine.process(String, IContext, Writer)</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>viewName</code> - The view name</dd>
+<dd><code>context</code> - The context</dd>
+<dd><code>writer</code> - The writer</dd>
 </dl>
 </li>
 </ul>
