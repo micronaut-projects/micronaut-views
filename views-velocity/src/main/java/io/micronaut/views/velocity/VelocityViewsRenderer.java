@@ -95,6 +95,12 @@ public class VelocityViewsRenderer implements ViewsRenderer {
         };
     }
 
+    /**
+     * @param view The view
+     * @param context The context
+     * @param encoding The encoding
+     * @param writer The writer
+     */
     public void render(@Nonnull String view, VelocityContext context, String encoding, Writer writer) {
         String viewName = viewName(view);
         try {
