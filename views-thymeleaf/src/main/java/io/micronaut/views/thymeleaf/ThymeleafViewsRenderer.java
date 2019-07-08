@@ -94,7 +94,7 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             IContext context = new Context(Locale.US, variables(data));
-            processView(viewName, writer, context);
+            render(viewName, context, writer);
         };
     }
 
@@ -106,8 +106,16 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
         ArgumentUtils.requireNonNull("request", request);
         return (writer) -> {
             IContext context = new WebContext(request, Locale.US, variables(data));
-            processView(viewName, writer, context);
+            render(viewName, context, writer);
         };
+    }
+
+    public void render(String viewName, IContext context, Writer writer) {
+        try {
+            engine.process(viewName, context, writer);
+        } catch (TemplateEngineException e) {
+            throw new ViewRenderingException("Error rendering Thymeleaf view [" + viewName + "]: " + e.getMessage(), e);
+        }
     }
 
     @Override
@@ -155,11 +163,4 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
                 templateResolver.getSuffix();
     }
 
-    private void processView(String viewName, Writer writer, IContext context) {
-        try {
-            engine.process(viewName, context, writer);
-        } catch (TemplateEngineException e) {
-            throw new ViewRenderingException("Error rendering Thymeleaf view [" + viewName + "]: " + e.getMessage(), e);
-        }
-    }
 }

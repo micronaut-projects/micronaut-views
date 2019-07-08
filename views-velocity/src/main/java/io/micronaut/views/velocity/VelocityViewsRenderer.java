@@ -34,6 +34,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Properties;
@@ -90,13 +91,17 @@ public class VelocityViewsRenderer implements ViewsRenderer {
         return (writer) -> {
             Map<String, Object> context = modelOf(data);
             final VelocityContext velocityContext = new VelocityContext(context);
-            String viewName = viewName(view);
-            try {
-                velocityEngine.mergeTemplate(viewName, StandardCharsets.UTF_8.name(), velocityContext, writer);
-            } catch (ResourceNotFoundException | ParseErrorException | MethodInvocationException e) {
-                throw new ViewRenderingException("Error rendering Velocity view [" + viewName + "]: " + e.getMessage(), e);
-            }
+            render(view, velocityContext, StandardCharsets.UTF_8.name(), writer);
         };
+    }
+
+    public void render(@Nonnull String view, VelocityContext context, String encoding, Writer writer) {
+        String viewName = viewName(view);
+        try {
+            velocityEngine.mergeTemplate(viewName, encoding, context, writer);
+        } catch (ResourceNotFoundException | ParseErrorException | MethodInvocationException e) {
+            throw new ViewRenderingException("Error rendering Velocity view [" + viewName + "]: " + e.getMessage(), e);
+        }
     }
 
     @Override
