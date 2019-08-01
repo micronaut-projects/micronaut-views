@@ -39,7 +39,8 @@ class FreemarkerViewRendererSpec extends Specification {
                     'micronaut.views.thymeleaf.enabled': false,
                     'micronaut.views.velocity.enabled': false,
                     'micronaut.views.handlebars.enabled': false,
-                    'micronaut.views.freemarker.lazy-imports': true
+                    'micronaut.views.freemarker.lazy-imports': true,
+                    'micronaut.views.freemarker.settings.urlEscapingCharset': 'UTF-8'
             ],
             "test")
 
@@ -59,8 +60,9 @@ class FreemarkerViewRendererSpec extends Specification {
         FreemarkerViewsRendererConfigurationProperties props = embeddedServer.applicationContext.getBean(FreemarkerViewsRendererConfigurationProperties)
 
         then:
-        !props.configuration.isCacheStorageExplicitlySet()
-        props.configuration.lazyImports
+        !props.isCacheStorageExplicitlySet()
+        props.lazyImports
+        props.URLEscapingCharset == 'UTF-8'
     }
 
     def "invoking /freemarker/home does not specify @View, thus, regular JSON rendering is used"() {

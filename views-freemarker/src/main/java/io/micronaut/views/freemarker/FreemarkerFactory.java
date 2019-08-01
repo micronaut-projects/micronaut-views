@@ -17,11 +17,8 @@
 package io.micronaut.views.freemarker;
 
 import freemarker.template.Configuration;
-import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.env.Environment;
 import io.micronaut.views.ViewsConfiguration;
-
-import javax.inject.Singleton;
 
 /**
  * Factory for freemarker beans.
@@ -29,7 +26,7 @@ import javax.inject.Singleton;
  * @author James Kleeh
  * @since 1.1.0
  */
-@Factory
+@Deprecated
 public class FreemarkerFactory {
 
     /**
@@ -40,7 +37,6 @@ public class FreemarkerFactory {
      * @param environment The environment
      * @return The freemarker configuration
      */
-    @Singleton
     Configuration getConfiguration(FreemarkerViewsRendererConfiguration freemarkerConfiguration,
                                    ViewsConfiguration viewsConfiguration,
                                    Environment environment) {

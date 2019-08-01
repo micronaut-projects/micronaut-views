@@ -16,15 +16,19 @@
 package io.micronaut.views.freemarker;
 
 import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
 import freemarker.template.Version;
 import io.micronaut.context.annotation.*;
+import io.micronaut.core.convert.format.MapFormat;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
+import io.micronaut.core.naming.conventions.StringConvention;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsConfigurationProperties;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Properties;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link FreemarkerViewsRendererConfiguration}.
@@ -44,7 +48,7 @@ import javax.annotation.Nullable;
  */
 @Requires(classes = freemarker.template.Configuration.class)
 @ConfigurationProperties(FreemarkerViewsRendererConfigurationProperties.PREFIX)
-public class FreemarkerViewsRendererConfigurationProperties implements FreemarkerViewsRendererConfiguration {
+public class FreemarkerViewsRendererConfigurationProperties extends Configuration implements FreemarkerViewsRendererConfiguration {
 
     public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".freemarker";
 
@@ -60,12 +64,8 @@ public class FreemarkerViewsRendererConfigurationProperties implements Freemarke
     @SuppressWarnings("WeakerAccess")
     public static final boolean DEFAULT_ENABLED = true;
 
-    @ConfigurationBuilder
-    final Configuration configuration;
-
     private boolean enabled = DEFAULT_ENABLED;
     private String defaultExtension = DEFAULT_EXTENSION;
-    private Version incompatibleImprovements = Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS;
 
     /**
      * Default contructor.
@@ -78,9 +78,9 @@ public class FreemarkerViewsRendererConfigurationProperties implements Freemarke
             ViewsConfiguration viewsConfiguration,
             @Property(name = PREFIX + ".incompatible-improvements") @Nullable String version,
             @Nullable ClassPathResourceLoader resourceLoader) {
-        this.configuration = new Configuration(version != null ? new Version(version) : Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+        super(version != null ? new Version(version) : Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
         if (resourceLoader != null) {
-            this.configuration.setClassLoaderForTemplateLoading(
+            setClassLoaderForTemplateLoading(
                     resourceLoader.getClassLoader(), "/" + viewsConfiguration.getFolder()
             );
         }
@@ -122,7 +122,7 @@ public class FreemarkerViewsRendererConfigurationProperties implements Freemarke
      * @return An optional version number
      */
     public Version getIncompatibleImprovements() {
-        return incompatibleImprovements;
+        return super.getIncompatibleImprovements();
     }
 
     /**
@@ -133,6 +133,11 @@ public class FreemarkerViewsRendererConfigurationProperties implements Freemarke
      * @param incompatibleImprovements The version number
      */
     public void setIncompatibleImprovements(Version incompatibleImprovements) {
-        this.incompatibleImprovements = incompatibleImprovements;
+        super.setIncompatibleImprovements(incompatibleImprovements);
+    }
+
+    @Override
+    public void setSettings(@MapFormat(keyFormat = StringConvention.UNDER_SCORE_SEPARATED_LOWER_CASE) Properties props) throws TemplateException {
+        super.setSettings(props);
     }
 }

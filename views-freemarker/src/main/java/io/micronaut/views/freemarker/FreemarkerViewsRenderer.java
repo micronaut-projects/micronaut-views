@@ -50,38 +50,18 @@ public class FreemarkerViewsRenderer implements ViewsRenderer {
 
     protected final ViewsConfiguration viewsConfiguration;
     protected final FreemarkerViewsRendererConfigurationProperties freemarkerMicronautConfiguration;
-    protected final Configuration freemarkerConfiguration;
     protected final String extension;
 
     /**
-     * @param viewsConfiguration      Views Configuration
-     * @param freemarkerConfiguration Freemarker Configuration
-     * @deprecated Use {@link #FreemarkerViewsRenderer(ViewsConfiguration, FreemarkerViewsRendererConfigurationProperties, Configuration)} instead
+     * @param viewsConfiguration      Views Configuration Properties
+     * @param freemarkerConfiguration Freemarker Configuration Properties
      */
-    @Deprecated
+    @Inject
     FreemarkerViewsRenderer(ViewsConfiguration viewsConfiguration,
                             FreemarkerViewsRendererConfigurationProperties freemarkerConfiguration) {
         this.viewsConfiguration = viewsConfiguration;
         this.freemarkerMicronautConfiguration = freemarkerConfiguration;
         this.extension = freemarkerConfiguration.getDefaultExtension();
-        Configuration configuration = new Configuration(freemarkerConfiguration.getIncompatibleImprovements());
-        configuration.setClassLoaderForTemplateLoading(getClass().getClassLoader(), "/" + viewsConfiguration.getFolder());
-        this.freemarkerConfiguration = configuration;
-    }
-
-    /**
-     * @param viewsConfiguration      Views Configuration Properties
-     * @param freemarkerConfiguration Freemarker Configuration Properties
-     * @param configuration           The Freemarker Configuration
-     */
-    @Inject
-    FreemarkerViewsRenderer(ViewsConfiguration viewsConfiguration,
-                            FreemarkerViewsRendererConfigurationProperties freemarkerConfiguration,
-                            Configuration configuration) {
-        this.viewsConfiguration = viewsConfiguration;
-        this.freemarkerMicronautConfiguration = freemarkerConfiguration;
-        this.extension = freemarkerConfiguration.getDefaultExtension();
-        this.freemarkerConfiguration = configuration;
     }
 
     @Override
@@ -90,7 +70,7 @@ public class FreemarkerViewsRenderer implements ViewsRenderer {
         return (writer) -> {
             Map<String, Object> context = modelOf(data);
             String location = viewLocation(viewName);
-            Template template = freemarkerConfiguration.getTemplate(location);
+            Template template = freemarkerMicronautConfiguration.getTemplate(location);
             try {
                 template.process(context, writer);
             } catch (TemplateException e) {
@@ -103,7 +83,7 @@ public class FreemarkerViewsRenderer implements ViewsRenderer {
     @Override
     public boolean exists(@Nonnull String view) {
         try {
-            freemarkerConfiguration.getTemplate(viewLocation(view));
+            freemarkerMicronautConfiguration.getTemplate(viewLocation(view));
         } catch (ParseException | MalformedTemplateNameException e) {
             return true;
         } catch (IOException e) {
