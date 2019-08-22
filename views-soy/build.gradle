@@ -1,0 +1,41 @@
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url "https://repo.grails.org/grails/core" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+dependencies {
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
+
+    compile project(":views-core")
+    compileOnly "io.micronaut:micronaut-security"
+
+    compile "io.micronaut:micronaut-runtime:$micronautVersion"
+    compile "io.micronaut:micronaut-http:$micronautVersion"
+    compile "io.micronaut:micronaut-http-server:$micronautVersion"
+    compile name: "soy-$soyVersion"
+//    compile dependencyVersion("soy")  @TODO: uncomment when google/closure-templates#185 is merged
+
+    testCompile "io.micronaut:micronaut-http-client"
+    testCompile "io.micronaut:micronaut-inject-groovy"
+    testCompile "io.micronaut:micronaut-inject-java"
+    testCompile "io.micronaut:micronaut-http-server-netty"
+    testCompile "io.micronaut:micronaut-security"
+
+    testCompile "org.yaml:snakeyaml:$snakeYamlVersion"
+
+    testRuntime "com.google.inject:guice:$guiceVersion"
+    testRuntime "com.google.guava:guava:$guavaVersion"
+    testRuntime "com.google.protobuf:protobuf-java:$protoVersion"
+    testRuntime "com.google.common.html.types:types:$htmlTypesVersion"
+    testRuntime "com.ibm.icu:icu4j:$icuVersion"
+    testRuntime name: "soy-$soyVersion"
+//    testRuntime dependencyVersion("soy")  @TODO: uncomment when google/closure-templates#185 is merged
+}

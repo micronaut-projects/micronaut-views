@@ -2,6 +2,8 @@
 set -e
 EXIT_STATUS=0
 
+./patch-soy.sh
+
 if [ "${TRAVIS_JDK_VERSION}" == "openjdk11" ] ; then
     echo "Check for branch $TRAVIS_BRANCH JDK: $TRAVIS_JDK_VERSION"
     ./gradlew testClasses --no-daemon || EXIT_STATUS=$?
