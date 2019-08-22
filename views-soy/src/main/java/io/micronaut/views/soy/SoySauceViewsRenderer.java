@@ -7,10 +7,13 @@ import com.google.template.soy.jbcsrc.api.SoySauce;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.csp.CspConfiguration;
+import io.micronaut.views.csp.CspFilter;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +23,9 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 
@@ -34,24 +39,29 @@ import java.util.concurrent.ExecutionException;
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".engine", notEquals = "tofu")
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Singleton
-@SuppressWarnings({"WeakerAccess", "deprecation"})
+@SuppressWarnings({"WeakerAccess", "UnstableApiUsage"})
 public class SoySauceViewsRenderer implements ViewsRenderer {
 
   private static final Logger LOG = LoggerFactory.getLogger(SoySauceViewsRenderer.class);
+  private static final String INJECTED_NONCE_PROPERTY = "csp_nonce";
 
   protected final ViewsConfiguration viewsConfiguration;
   protected final SoyViewsRendererConfigurationProperties soyMicronautConfiguration;
   protected final SoySauce soySauce;
+  private final boolean injectNonce;
 
   /**
    * @param viewsConfiguration Views configuration properties.
+   * @param cspConfiguration Content-Security-Policy configuration.
    * @param soyConfiguration   Soy configuration properties.
    */
   @Inject
   SoySauceViewsRenderer(ViewsConfiguration viewsConfiguration,
+                        CspConfiguration cspConfiguration,
                         SoyViewsRendererConfigurationProperties soyConfiguration) {
     this.viewsConfiguration = viewsConfiguration;
     this.soyMicronautConfiguration = soyConfiguration;
+    this.injectNonce = cspConfiguration.isNonceEnabled();
     final SoySauce precompiled = soyConfiguration.getCompiledTemplates();
     if (precompiled != null) {
       this.soySauce = precompiled;
@@ -66,11 +76,22 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
    * @param data     response body to render it with a view
    * @return A writable where the view will be written to.
    */
+  public @Nonnull Writable render(@Nonnull String viewName, @Nullable Object data) {
+    return render(viewName, data, null);
+  }
+
+  /**
+   * @param viewName view name to be render
+   * @param data     response body to render it with a view
+   * @param request  HTTP request
+   * @return A writable where the view will be written to.
+   */
   @Nonnull
   @Override
-  public Writable render(@Nonnull String viewName, @Nullable Object data) {
+  public Writable render(@Nonnull String viewName, @Nullable Object data, @Nullable HttpRequest<?> request) {
     ArgumentUtils.requireNonNull("viewName", viewName);
 
+    Map<String, Object> ijOverlay = new HashMap<>();
     Map<String, Object> context = modelOf(data);
     final SoySauce.Renderer renderer = soySauce.newRenderer(new TemplateParameters() {
       @Override
@@ -84,6 +105,14 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
       }
     });
     renderer.setData(context);
+    if (injectNonce && request != null) {
+      Optional<Object> nonceObj = request.getAttribute(CspFilter.NONCE_PROPERTY);
+      if (nonceObj.isPresent()) {
+        String nonceValue = ((String)nonceObj.get());
+        ijOverlay.put(INJECTED_NONCE_PROPERTY, nonceValue);
+      }
+    }
+    renderer.setIj(ijOverlay);
 
     try {
       final AppendableToWritable target = new AppendableToWritable();
