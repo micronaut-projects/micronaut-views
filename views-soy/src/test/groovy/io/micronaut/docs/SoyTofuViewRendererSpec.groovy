@@ -91,7 +91,7 @@ class SoyTofuViewRendererSpec extends Specification {
 
     def "invoking /soy/missing should produce a 404 exception describing a missing view template"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/soy/missing', String)
+        client.toBlocking().exchange('/soy/missing', String)
 
         then:
         def e = thrown(HttpClientResponseException)
@@ -102,7 +102,7 @@ class SoyTofuViewRendererSpec extends Specification {
 
     def "invoking /soy/invalidContext should produce an exception describing invalid context"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/soy/invalidContext', String)
+        client.toBlocking().exchange('/soy/invalidContext', String)
 
         then:
         def e = thrown(HttpClientResponseException)
