@@ -4,7 +4,7 @@ EXIT_STATUS=0
 SOY_VERSION=2019-08-22
 
 echo "Downloading patched version of Soy..."
-curl --progress-bar https://storage.googleapis.com/bloom-software/frontend/soy/soy-lib-b17.jar > soy.jar
+curl --progress-bar https://storage.googleapis.com/bloom-software/frontend/soy/soy-lib-b19.jar > soy.jar
 mkdir -p views-soy/libs && cp -f soy.jar views-soy/libs/soy-$SOY_VERSION.jar
 
 mvn install:install-file \

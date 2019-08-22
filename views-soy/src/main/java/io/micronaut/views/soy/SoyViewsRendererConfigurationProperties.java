@@ -2,11 +2,13 @@ package io.micronaut.views.soy;
 
 
 import com.google.template.soy.SoyFileSet;
+import com.google.template.soy.jbcsrc.api.SoySauce;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsConfigurationProperties;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 
 /**
@@ -19,8 +21,8 @@ import javax.annotation.Nonnull;
  * @since 1.3.0
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
-@ConfigurationProperties(SoyTofuViewsRendererConfigurationProperties.PREFIX)
-public class SoyTofuViewsRendererConfigurationProperties implements SoyTofuViewsRendererConfiguration {
+@ConfigurationProperties(SoyViewsRendererConfigurationProperties.PREFIX)
+public class SoyViewsRendererConfigurationProperties implements SoyViewsRendererConfiguration {
 
   public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".soy";
 
@@ -30,7 +32,14 @@ public class SoyTofuViewsRendererConfigurationProperties implements SoyTofuViews
   @SuppressWarnings("WeakerAccess")
   public static final boolean DEFAULT_ENABLED = true;
 
+  /**
+   * The default Soy rendering engine.
+   */
+  @SuppressWarnings("WeakerAccess")
+  public static final String DEFAULT_ENGINE = "tofu";
+
   private boolean enabled = DEFAULT_ENABLED;
+  private String engine = DEFAULT_ENGINE;
   private SoyFileSetProvider fileSetProvider;
 
   /**
@@ -39,7 +48,7 @@ public class SoyTofuViewsRendererConfigurationProperties implements SoyTofuViews
    * @param viewsConfiguration The views configuration
    * @param fileSetProvider Soy file set provider (template sources)
    */
-  public SoyTofuViewsRendererConfigurationProperties(
+  public SoyViewsRendererConfigurationProperties(
     ViewsConfiguration viewsConfiguration,
     SoyFileSetProvider fileSetProvider) {
     this.fileSetProvider = fileSetProvider;
@@ -64,6 +73,14 @@ public class SoyTofuViewsRendererConfigurationProperties implements SoyTofuViews
    */
   public @Nonnull SoyFileSet getFileSet() {
     return fileSetProvider.provideSoyFileSet();
+  }
+
+  /**
+   * @return Return a set of pre-compiled Soy templates, if supported
+   */
+  @Nullable @Override
+  public SoySauce getCompiledTemplates() {
+    return fileSetProvider.provideCompiledTemplates();
   }
 
 }

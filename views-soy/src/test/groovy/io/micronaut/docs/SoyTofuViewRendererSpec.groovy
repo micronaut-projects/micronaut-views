@@ -9,8 +9,9 @@ import io.micronaut.http.client.RxHttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
+import io.micronaut.views.soy.AppendableToWritable
 import io.micronaut.views.soy.SoyTofuViewsRenderer
-import io.micronaut.views.soy.SoyTofuViewsRendererConfigurationProperties
+import io.micronaut.views.soy.SoyViewsRendererConfigurationProperties
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -18,13 +19,14 @@ import spock.lang.Specification
 import java.nio.charset.StandardCharsets
 
 
-class SoyViewRendererSpec extends Specification {
+class SoyTofuViewRendererSpec extends Specification {
     @Shared
     @AutoCleanup
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
     [
             "spec.name": "soy",
             "micronaut.views.soy.enabled": true,
+            "micronaut.views.soy.engine": "tofu",
             'micronaut.views.thymeleaf.enabled': false,
             'micronaut.views.velocity.enabled': false,
             'micronaut.views.handlebars.enabled': false,
@@ -45,8 +47,8 @@ class SoyViewRendererSpec extends Specification {
         noExceptionThrown()
 
         when:
-        SoyTofuViewsRendererConfigurationProperties props = embeddedServer.applicationContext.getBean(
-                SoyTofuViewsRendererConfigurationProperties)
+        SoyViewsRendererConfigurationProperties props = embeddedServer.applicationContext.getBean(
+                SoyViewsRendererConfigurationProperties)
 
         then:
         props.isEnabled()
@@ -111,7 +113,7 @@ class SoyViewRendererSpec extends Specification {
 
     def "AppendableToWritable should work as an Appendable and a Writable"() {
         when:
-        SoyTofuViewsRenderer.AppendableToWritable obj = new SoyTofuViewsRenderer.AppendableToWritable()
+        AppendableToWritable obj = new AppendableToWritable()
         Appendable objAsAppendable = obj
         Writable objAsWritable = obj
         obj.append("hello 123")

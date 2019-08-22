@@ -36,6 +36,10 @@ dependencies {
     testRuntime "com.google.protobuf:protobuf-java:$protoVersion"
     testRuntime "com.google.common.html.types:types:$htmlTypesVersion"
     testRuntime "com.ibm.icu:icu4j:$icuVersion"
+    testRuntime "org.ow2.asm:asm:$asmVersion"
+    testRuntime "org.ow2.asm:asm-commons:$asmVersion"
+    testRuntime "org.ow2.asm:asm-util:$asmVersion"
+    testRuntime "org.ow2.asm:asm-analysis:$asmVersion"
     testRuntime name: "soy-$soyVersion"
 //    testRuntime dependencyVersion("soy")  @TODO: uncomment when google/closure-templates#185 is merged
 }
