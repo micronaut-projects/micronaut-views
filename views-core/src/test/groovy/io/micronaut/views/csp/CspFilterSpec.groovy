@@ -228,4 +228,72 @@ class CspFilterSpec extends Specification {
         embeddedServer.close()
     }
 
+    void "test CSP response header nonce injection"() {
+        given:
+        EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
+                'spec.name': getClass().simpleName,
+                'micronaut.views.csp.enabled': true,
+                'micronaut.views.csp.generateNonce': true,
+                'micronaut.views.csp.filterPath': "/csp",
+                'micronaut.views.csp.reportOnly': false,
+                'micronaut.views.csp.policyDirectives': "default-src self:; script-src 'nonce-{#nonceValue}';"
+        ])
+        URL server = embeddedServer.getURL()
+        RxHttpClient rxClient = embeddedServer.applicationContext.createBean(RxHttpClient, server)
+
+        when:
+        def response = rxClient.exchange(
+                HttpRequest.GET('/csp')
+        ).blockingFirst()
+        def headerNames = response.headers.names()
+
+        then:
+        response.code() == HttpStatus.OK.code
+        response.header(CspFilter.CSP_HEADER).contains("default-src self:;")
+        response.header(CspFilter.CSP_HEADER).contains("'nonce-")
+        !headerNames.contains(CspFilter.CSP_REPORT_ONLY_HEADER)
+
+        cleanup:
+        embeddedServer.close()
+    }
+
+    void "test CSP response header nonce changes every request/response cycle"() {
+        given:
+        EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
+                'spec.name': getClass().simpleName,
+                'micronaut.views.csp.enabled': true,
+                'micronaut.views.csp.generateNonce': true,
+                'micronaut.views.csp.filterPath': "/csp",
+                'micronaut.views.csp.reportOnly': false,
+                'micronaut.views.csp.policyDirectives': "default-src self:; script-src 'nonce-{#nonceValue}';"
+        ])
+        URL server = embeddedServer.getURL()
+        RxHttpClient rxClient = embeddedServer.applicationContext.createBean(RxHttpClient, server)
+
+        when:
+        def response1 = rxClient.exchange(
+                HttpRequest.GET('/csp')
+        ).blockingFirst()
+        def headerNames1 = response1.headers.names()
+        def response2 = rxClient.exchange(
+                HttpRequest.GET('/csp')
+        ).blockingFirst()
+        def headerNames2 = response2.headers.names()
+
+        then:
+        response1.code() == HttpStatus.OK.code
+        response1.header(CspFilter.CSP_HEADER).contains("default-src self:;")
+        response1.header(CspFilter.CSP_HEADER).contains("'nonce-")
+        response2.code() == HttpStatus.OK.code
+        response2.header(CspFilter.CSP_HEADER).contains("default-src self:;")
+        response2.header(CspFilter.CSP_HEADER).contains("'nonce-")
+        !headerNames1.contains(CspFilter.CSP_REPORT_ONLY_HEADER)
+        !headerNames2.contains(CspFilter.CSP_REPORT_ONLY_HEADER)
+        !response2.header(CspFilter.CSP_HEADER).equals(
+                response1.header(CspFilter.CSP_HEADER))
+
+        cleanup:
+        embeddedServer.close()
+    }
+
 }

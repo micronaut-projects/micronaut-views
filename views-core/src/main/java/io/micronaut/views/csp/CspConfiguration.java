@@ -20,7 +20,11 @@ import io.micronaut.core.util.Toggleable;
 import io.micronaut.views.ViewsConfigurationProperties;
 
 import javax.annotation.Nullable;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Optional;
+import java.util.Random;
 
 /**
  * Defines CSP configuration properties.
@@ -30,6 +34,29 @@ import java.util.Optional;
  */
 @ConfigurationProperties(CspConfiguration.PREFIX)
 public class CspConfiguration implements Toggleable {
+    /**
+     * Length of generated CSP nonce values.
+     */
+    public static final int NONCE_LENGTH = 16;
+
+    /**
+     * Secure random to use for CSP nonce values.
+     */
+    public static final Random DEFAULT_RANDOM;
+
+    /**
+     * Default Base64 encoder.
+     */
+    public static final Base64.Encoder BASE64_ENCODER =
+      Base64.getEncoder().withoutPadding();
+
+    static {
+        try {
+            DEFAULT_RANDOM = SecureRandom.getInstanceStrong();
+        } catch (NoSuchAlgorithmException rxe) {
+            throw new RuntimeException(rxe);
+        }
+    }
 
     /**
      * The prefix for csp configuration.
@@ -42,12 +69,15 @@ public class CspConfiguration implements Toggleable {
     public static final String FILTER_PATH = PREFIX + ".filter-path";
     public static final boolean DEFAULT_ENABLED = false;
     public static final boolean DEFAULT_REPORT_ONLY = false;
+    public static final boolean DEFAULT_ENABLE_NONCE = false;
     public static final String DEFAULT_FILTER_PATH = "/**";
 
     private boolean enabled = DEFAULT_ENABLED;
     private String policyDirectives;
     private boolean reportOnly = DEFAULT_REPORT_ONLY;
+    private boolean generateNonce = DEFAULT_ENABLE_NONCE;
     private String filterPath = DEFAULT_FILTER_PATH;
+    private Random randomEngine = DEFAULT_RANDOM;
 
     /**
      * @return Whether csp headers will be sent
@@ -65,10 +95,24 @@ public class CspConfiguration implements Toggleable {
     }
 
     /**
+     * @return The random number generator to use for CSP nonce values
+     */
+    public Random getRandomEngine() {
+        return randomEngine;
+    }
+
+    /**
      * @return Whether the report only header should be set
      */
     public boolean isReportOnly() {
         return reportOnly;
+    }
+
+    /**
+     * @return Whether nonce generation is enabled for each request/response cycle
+     */
+    public boolean isNonceEnabled() {
+        return generateNonce;
     }
 
     /**
@@ -89,6 +133,14 @@ public class CspConfiguration implements Toggleable {
     }
 
     /**
+     * Sets the random number generator to use for nonce values.
+     * @param randomEngine random number generator.
+     */
+    public void setRandomEngine(Random randomEngine) {
+        this.randomEngine = randomEngine;
+    }
+
+    /**
      * If true, the Content-Security-Policy-Report-Only header will be sent instead
      * of Content-Security-Policy. Default {@value #DEFAULT_REPORT_ONLY}.
      *
@@ -96,6 +148,17 @@ public class CspConfiguration implements Toggleable {
      */
     public void setReportOnly(boolean reportOnly) {
         this.reportOnly = reportOnly;
+    }
+
+    /**
+     * If true, the CSP header will contain a generated nonce that is made available
+     * to view renderers. The nonce should change for each request/response cycle and
+     * can be used by views to authorize inlined script blocks.
+     *
+     * @param generateNonce set to true to enable generation of nonces
+     */
+    public void setGenerateNonce(boolean generateNonce) {
+        this.generateNonce = generateNonce;
     }
 
     /**
@@ -112,5 +175,20 @@ public class CspConfiguration implements Toggleable {
      */
     public void setFilterPath(String filterPath) {
         this.filterPath = filterPath;
+    }
+
+    /**
+     * Generate a nonce value for use in a Content-Security-Policy header, which
+     * is usable for one request/response cycle.
+     *
+     * A good guide for generating nonce values:
+     * https://csp.withgoogle.com/docs/faq.html#generating-nonces
+     *
+     * @return Base64-encoded random nonce value.
+     */
+    public String generateNonce() {
+        byte[] randomBytes = new byte[NONCE_LENGTH];
+        randomEngine.nextBytes(randomBytes);
+        return BASE64_ENCODER.encodeToString(randomBytes);
     }
 }
