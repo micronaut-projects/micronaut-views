@@ -16,8 +16,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.Map;
 
 
@@ -28,13 +26,14 @@ import java.util.Map;
  * @since 1.3.0
  */
 @Produces(MediaType.TEXT_HTML)
-@Requires(property = SoyTofuViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
+@Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".engine", notEquals = "sauce")
+@Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Singleton
 @SuppressWarnings({"WeakerAccess", "deprecation"})
 public class SoyTofuViewsRenderer implements ViewsRenderer {
 
   protected final ViewsConfiguration viewsConfiguration;
-  protected final SoyTofuViewsRendererConfigurationProperties soyMicronautConfiguration;
+  protected final SoyViewsRendererConfigurationProperties soyMicronautConfiguration;
   protected final SoyTofu soyTofu;
 
   /**
@@ -43,7 +42,7 @@ public class SoyTofuViewsRenderer implements ViewsRenderer {
    */
   @Inject
   SoyTofuViewsRenderer(ViewsConfiguration viewsConfiguration,
-                       SoyTofuViewsRendererConfigurationProperties soyConfiguration) {
+                       SoyViewsRendererConfigurationProperties soyConfiguration) {
     this.viewsConfiguration = viewsConfiguration;
     this.soyMicronautConfiguration = soyConfiguration;
     this.soyTofu = soyConfiguration.getFileSet().compileToTofu();
@@ -81,33 +80,6 @@ public class SoyTofuViewsRenderer implements ViewsRenderer {
   @Override
   public boolean exists(@Nonnull String view) {
     return soyTofu.hasTemplate(view);
-  }
-
-  /**
-   * Adapts {@link Appendable} to {@link Writable} for use when rendering Soy templates.
-   */
-  public class AppendableToWritable implements Writable, Appendable {
-    private final StringBuilder builder = new StringBuilder();
-
-    @Override
-    public Appendable append(CharSequence csq) {
-      return builder.append(csq);
-    }
-
-    @Override
-    public Appendable append(CharSequence csq, int start, int end) {
-      return builder.append(csq, start, end);
-    }
-
-    @Override
-    public Appendable append(char c) {
-      return builder.append(c);
-    }
-
-    @Override
-    public void writeTo(Writer out) throws IOException {
-      out.write(builder.toString());
-    }
   }
 
 }
