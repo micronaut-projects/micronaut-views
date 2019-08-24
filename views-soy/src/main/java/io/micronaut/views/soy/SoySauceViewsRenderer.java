@@ -1,9 +1,12 @@
 package io.micronaut.views.soy;
 
+import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.data.SoyValueProvider;
 import com.google.template.soy.data.TemplateParameters;
 import com.google.template.soy.jbcsrc.api.RenderResult;
 import com.google.template.soy.jbcsrc.api.SoySauce;
+import com.google.template.soy.shared.SoyCssRenamingMap;
+import com.google.template.soy.shared.SoyIdRenamingMap;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
@@ -47,6 +50,7 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
 
   protected final ViewsConfiguration viewsConfiguration;
   protected final SoyViewsRendererConfigurationProperties soyMicronautConfiguration;
+  protected final SoyNamingMapProvider namingMapProvider;
   protected final SoySauce soySauce;
   private final boolean injectNonce;
 
@@ -57,16 +61,23 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
    */
   @Inject
   SoySauceViewsRenderer(ViewsConfiguration viewsConfiguration,
-                        CspConfiguration cspConfiguration,
+                        @Nullable CspConfiguration cspConfiguration,
+                        @Nullable SoyNamingMapProvider namingMapProvider,
                         SoyViewsRendererConfigurationProperties soyConfiguration) {
     this.viewsConfiguration = viewsConfiguration;
     this.soyMicronautConfiguration = soyConfiguration;
-    this.injectNonce = cspConfiguration.isNonceEnabled();
+    this.namingMapProvider = namingMapProvider;
+    this.injectNonce = cspConfiguration != null && cspConfiguration.isNonceEnabled();
     final SoySauce precompiled = soyConfiguration.getCompiledTemplates();
     if (precompiled != null) {
       this.soySauce = precompiled;
     } else {
       LOG.warn("Compiling Soy templates (this may take a moment)...");
+      SoyFileSet fileSet = soyConfiguration.getFileSet();
+      if (fileSet == null) {
+        throw new IllegalStateException(
+          "Unable to load Soy templates: no file set, no compiled templates provided.");
+      }
       this.soySauce = soyConfiguration.getFileSet().compileTemplates();
     }
   }
@@ -91,7 +102,7 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
   public Writable render(@Nonnull String viewName, @Nullable Object data, @Nullable HttpRequest<?> request) {
     ArgumentUtils.requireNonNull("viewName", viewName);
 
-    Map<String, Object> ijOverlay = new HashMap<>();
+    Map<String, Object> ijOverlay = new HashMap<>(1);
     Map<String, Object> context = modelOf(data);
     final SoySauce.Renderer renderer = soySauce.newRenderer(new TemplateParameters() {
       @Override
@@ -108,11 +119,22 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
     if (injectNonce && request != null) {
       Optional<Object> nonceObj = request.getAttribute(CspFilter.NONCE_PROPERTY);
       if (nonceObj.isPresent()) {
-        String nonceValue = ((String)nonceObj.get());
+        String nonceValue = ((String) nonceObj.get());
         ijOverlay.put(INJECTED_NONCE_PROPERTY, nonceValue);
       }
     }
     renderer.setIj(ijOverlay);
+
+    if (this.soyMicronautConfiguration.isRenamingEnabled() && this.namingMapProvider != null) {
+      SoyCssRenamingMap cssMap = this.namingMapProvider.cssRenamingMap();
+      SoyIdRenamingMap idMap = this.namingMapProvider.idRenamingMap();
+      if (cssMap != null) {
+        renderer.setCssRenamingMap(cssMap);
+      }
+      if (idMap != null) {
+        renderer.setXidRenamingMap(idMap);
+      }
+    }
 
     try {
       final AppendableToWritable target = new AppendableToWritable();

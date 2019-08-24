@@ -7,7 +7,6 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsConfigurationProperties;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 
@@ -38,7 +37,14 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
   @SuppressWarnings("WeakerAccess")
   public static final String DEFAULT_ENGINE = "tofu";
 
+  /**
+   * Whether to mount renaming maps.
+   */
+  @SuppressWarnings("WeakerAccess")
+  public static final boolean DEFAULT_RENAMING = true;
+
   private boolean enabled = DEFAULT_ENABLED;
+  private boolean renaming = DEFAULT_RENAMING;
   private String engine = DEFAULT_ENGINE;
   private SoyFileSetProvider fileSetProvider;
 
@@ -69,9 +75,29 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
   }
 
   /**
+   * Specifies whether renaming is enabled. Defaults to `true`.
+   *
+   * @return True if it is enabled.
+   */
+  @Override
+  public boolean isRenamingEnabled() {
+    return renaming;
+  }
+
+  /**
+   * Turns renaming on or off.
+   *
+   * @param renaming Renaming status.
+   */
+  @Override
+  public void setRenamingEnabled(boolean renaming) {
+    this.renaming = renaming;
+  }
+
+  /**
    * @return The Soy file set to render from
    */
-  public @Nonnull SoyFileSet getFileSet() {
+  public @Nullable SoyFileSet getFileSet() {
     return fileSetProvider.provideSoyFileSet();
   }
 
