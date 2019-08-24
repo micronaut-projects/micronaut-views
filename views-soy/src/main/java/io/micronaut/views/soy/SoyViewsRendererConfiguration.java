@@ -36,6 +36,18 @@ public interface SoyViewsRendererConfiguration extends Toggleable {
   SoyFileSet getFileSet();
 
   /**
+   * @return Whether renaming is enabled
+   */
+  boolean isRenamingEnabled();
+
+  /**
+   * Turns renaming on or off.
+   *
+   * @param renaming Renaming status.
+   */
+  void setRenamingEnabled(boolean renaming);
+
+  /**
    * @return Return a set of pre-compiled Soy templates, if supported
    */
   @Nullable default SoySauce getCompiledTemplates() {

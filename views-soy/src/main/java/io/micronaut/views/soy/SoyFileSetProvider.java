@@ -19,7 +19,6 @@ package io.micronaut.views.soy;
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.jbcsrc.api.SoySauce;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 
@@ -33,7 +32,7 @@ public interface SoyFileSetProvider {
   /**
    * @return Soy file set to render templates with
    */
-  @Nonnull SoyFileSet provideSoyFileSet();
+  @Nullable SoyFileSet provideSoyFileSet();
 
   /**
    * @return Compiled set of Soy templates, if supported
