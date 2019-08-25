@@ -18,6 +18,7 @@ package io.micronaut.views.csp;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.util.Toggleable;
 import io.micronaut.views.ViewsConfigurationProperties;
+import it.unimi.dsi.Util;
 
 import javax.annotation.Nullable;
 import java.security.NoSuchAlgorithmException;
@@ -32,6 +33,7 @@ import java.util.Random;
  * @author Arul Dhesiaseelan
  * @since 1.1
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 @ConfigurationProperties(CspConfiguration.PREFIX)
 public class CspConfiguration implements Toggleable {
     /**
@@ -77,7 +79,6 @@ public class CspConfiguration implements Toggleable {
     private boolean reportOnly = DEFAULT_REPORT_ONLY;
     private boolean generateNonce = DEFAULT_ENABLE_NONCE;
     private String filterPath = DEFAULT_FILTER_PATH;
-    private Random randomEngine = DEFAULT_RANDOM;
 
     /**
      * @return Whether csp headers will be sent
@@ -92,13 +93,6 @@ public class CspConfiguration implements Toggleable {
      */
     public Optional<String> getPolicyDirectives() {
         return Optional.of(policyDirectives);
-    }
-
-    /**
-     * @return The random number generator to use for CSP nonce values
-     */
-    public Random getRandomEngine() {
-        return randomEngine;
     }
 
     /**
@@ -130,14 +124,6 @@ public class CspConfiguration implements Toggleable {
      */
     public void setPolicyDirectives(@Nullable String policyDirectives) {
         this.policyDirectives = policyDirectives;
-    }
-
-    /**
-     * Sets the random number generator to use for nonce values.
-     * @param randomEngine random number generator.
-     */
-    public void setRandomEngine(Random randomEngine) {
-        this.randomEngine = randomEngine;
     }
 
     /**
@@ -188,7 +174,13 @@ public class CspConfiguration implements Toggleable {
      */
     public String generateNonce() {
         byte[] randomBytes = new byte[NONCE_LENGTH];
-        randomEngine.nextBytes(randomBytes);
+        int iter = 0;
+        byte[] segment;
+        while (iter < (NONCE_LENGTH / 8)) {
+            iter++;
+            segment = Util.randomSeedBytes();
+            System.arraycopy(segment, 0, randomBytes, iter * 8, 8);
+        }
         return BASE64_ENCODER.encodeToString(randomBytes);
     }
 }
