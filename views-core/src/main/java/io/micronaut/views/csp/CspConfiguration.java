@@ -21,11 +21,9 @@ import io.micronaut.views.ViewsConfigurationProperties;
 import it.unimi.dsi.Util;
 
 import javax.annotation.Nullable;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Optional;
-import java.util.Random;
+
 
 /**
  * Defines CSP configuration properties.
@@ -37,14 +35,9 @@ import java.util.Random;
 @ConfigurationProperties(CspConfiguration.PREFIX)
 public class CspConfiguration implements Toggleable {
     /**
-     * Length of generated CSP nonce values.
+     * Length of generated CSP nonce values. Must be a multiple of 8.
      */
-    public static final int NONCE_LENGTH = 16;
-
-    /**
-     * Secure random to use for CSP nonce values.
-     */
-    public static final Random DEFAULT_RANDOM;
+    public static final int NONCE_LENGTH = 8 * 2;
 
     /**
      * Default Base64 encoder.
@@ -53,11 +46,8 @@ public class CspConfiguration implements Toggleable {
       Base64.getEncoder().withoutPadding();
 
     static {
-        try {
-            DEFAULT_RANDOM = SecureRandom.getInstanceStrong();
-        } catch (NoSuchAlgorithmException rxe) {
-            throw new RuntimeException(rxe);
-        }
+        // warm up PRNG
+        Util.randomSeedBytes();
     }
 
     /**
@@ -175,11 +165,9 @@ public class CspConfiguration implements Toggleable {
     public String generateNonce() {
         byte[] randomBytes = new byte[NONCE_LENGTH];
         int iter = 0;
-        byte[] segment;
         while (iter < (NONCE_LENGTH / 8)) {
+            System.arraycopy(Util.randomSeedBytes(), 0, randomBytes, iter * 8, 8);
             iter++;
-            segment = Util.randomSeedBytes();
-            System.arraycopy(segment, 0, randomBytes, iter * 8, 8);
         }
         return BASE64_ENCODER.encodeToString(randomBytes);
     }
