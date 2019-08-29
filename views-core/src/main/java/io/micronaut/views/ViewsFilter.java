@@ -45,7 +45,7 @@ import java.util.Optional;
  * @author Sergio del Amo
  * @since 1.0
  */
-@Requires(beans = ViewsRenderer.class)
+@Requires(beans = BaseViewsRenderer.class)
 @Filter("/**")
 public class ViewsFilter implements HttpServerFilter {
 
@@ -113,26 +113,38 @@ public class ViewsFilter implements HttpServerFilter {
                     Optional<String> optionalView = resolveView(route, body);
 
                     if (optionalView.isPresent()) {
-
                         MediaType type = route.getValue(Produces.class, MediaType.class)
-                                .orElse((route.getValue(View.class).isPresent() || body instanceof ModelAndView) ? MediaType.TEXT_HTML_TYPE : MediaType.APPLICATION_JSON_TYPE);
-                        Optional<ViewsRenderer> optionalViewsRenderer = beanLocator.findBean(ViewsRenderer.class,
-                                new ProducesMediaTypeQualifier<>(type));
+                          .orElse((route.getValue(View.class).isPresent() ||
+                            body instanceof ModelAndView) ?
+                            MediaType.TEXT_HTML_TYPE :
+                            MediaType.APPLICATION_JSON_TYPE);
+                        Optional<BaseViewsRenderer> optionalViewsRenderer = beanLocator.findBean(
+                          BaseViewsRenderer.class,
+                          new ProducesMediaTypeQualifier<>(type));
 
                         if (optionalViewsRenderer.isPresent()) {
-                            ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
+                            BaseViewsRenderer viewsRenderer = optionalViewsRenderer.get();
                             Map<String, Object> model = populateModel(request, viewsRenderer, body);
                             ModelAndView<Map<String, Object>> modelAndView = processModelAndView(request,
-                                    optionalView.get(),
-                                    model);
+                              optionalView.get(),
+                              model);
                             model = modelAndView.getModel().orElse(model);
                             String view = modelAndView.getView().orElse(optionalView.get());
                             if (viewsRenderer.exists(view)) {
-
-                                Writable writable = viewsRenderer.render(view, model, request);
                                 response.contentType(type);
-                                ((MutableHttpResponse<Object>) response).body(writable);
-                                return Flowable.just(response);
+
+                                if (viewsRenderer instanceof AsyncViewsRenderer) {
+                                    // it's an async renderer
+                                    AsyncViewsRenderer asyncRenderer = (AsyncViewsRenderer) optionalViewsRenderer.get();
+                                    return asyncRenderer.render(view, model, request, response);
+
+                                } else if (viewsRenderer instanceof ViewsRenderer) {
+                                    ViewsRenderer syncRenderer = (ViewsRenderer) optionalViewsRenderer.get();
+                                    Writable writable = syncRenderer.render(view, model, request);
+                                    ((MutableHttpResponse<Object>) response).body(writable);
+                                    return Flowable.just(response);
+
+                                }
                             } else {
                                 if (LOG.isDebugEnabled()) {
                                     LOG.debug("view {} not found ", view);
@@ -174,7 +186,7 @@ public class ViewsFilter implements HttpServerFilter {
      * @param responseBody Response Body
      * @return A model with the controllers response and enhanced with the decorators.
      */
-    protected Map<String, Object> populateModel(HttpRequest request, ViewsRenderer viewsRenderer, Object responseBody) {
+    protected Map<String, Object> populateModel(HttpRequest request, BaseViewsRenderer viewsRenderer, Object responseBody) {
         return new HashMap<>(viewsRenderer.modelOf(resolveModel(responseBody)));
     }
 
@@ -204,6 +216,7 @@ public class ViewsFilter implements HttpServerFilter {
     @SuppressWarnings("WeakerAccess")
     protected Optional<String> resolveView(AnnotationMetadata route, Object responseBody) {
         Optional optionalViewName = route.getValue(View.class);
+
         if (optionalViewName.isPresent()) {
             return Optional.of((String) optionalViewName.get());
         } else if (responseBody instanceof ModelAndView) {
