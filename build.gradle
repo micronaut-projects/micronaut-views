@@ -11,6 +11,7 @@ buildscript {
         classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
         classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
         classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
+        classpath "com.palantir:jacoco-coverage:0.4.0"
     }
 }
 
@@ -83,6 +84,7 @@ subprojects { Project subproject ->
     
     apply plugin:"groovy"
     apply plugin:"java"
+    apply plugin:"jacoco"
     apply plugin: "io.spring.dependency-management"
 
     if (subproject.name != "views") {
@@ -121,6 +123,21 @@ subprojects { Project subproject ->
         reports.html.enabled = !System.getenv("TRAVIS")
         reports.junitXml.enabled = !System.getenv("TRAVIS")
 
+    }
+
+    jacoco {
+        toolVersion = '0.8.4'
+    }
+
+    jacocoTestReport {
+        additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
+        sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+        classDirectories = files(sourceSets.main.output)
+        reports {
+            html.enabled = false
+            xml.enabled = true
+            csv.enabled = false
+        }
     }
 
     configurations {
@@ -185,3 +202,5 @@ allprojects {
     }
     apply from: rootProject.file('gradle/license.gradle')
 }
+
+apply plugin: 'com.palantir.jacoco-full-report'
