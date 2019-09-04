@@ -27,7 +27,7 @@ import java.io.Writer;
  * Adapts {@link Appendable} to {@link Writable} for use when rendering Soy templates.
  *
  * @author Sam Gammon (sam@bloombox.io)
- * @since 1.3.0
+ * @since 1.2.1
  */
 public class AppendableToWritable implements Writable, Appendable, AdvisingAppendable {
   private final StringBuilder builder = new StringBuilder();

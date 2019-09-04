@@ -33,7 +33,7 @@ import javax.annotation.Nullable;
  * are provided via DI, using a {@link SoyFileSetProvider}.
  *
  * @author Sam Gammon (sam@bloombox.io)
- * @since 1.3.0
+ * @since 1.2.1
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 @ConfigurationProperties(SoyViewsRendererConfigurationProperties.PREFIX)
