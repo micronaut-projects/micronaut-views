@@ -17,7 +17,7 @@
 /**
  * Contains classes specific to Views rendered with Soy.
  *
- * @author Sam Gammon
+ * @author Sam Gammon (sam@bloombox.io)
  * @since 1.3.0
  */
 @Configuration
