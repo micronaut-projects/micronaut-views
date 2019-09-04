@@ -37,7 +37,7 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
         ./gradlew testClasses --no-daemon || EXIT_STATUS=$?
 
         ./gradlew --stop
-        ./gradlew check --no-daemon || EXIT_STATUS=$?
+        ./gradlew check jacocoFullReport --no-daemon || EXIT_STATUS=$?
     fi
 fi
 
