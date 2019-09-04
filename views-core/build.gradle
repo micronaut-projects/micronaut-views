@@ -7,7 +7,6 @@ dependencies {
     compile "io.micronaut:micronaut-runtime:$micronautVersion"
     compile "io.micronaut:micronaut-http:$micronautVersion"
     compile "io.micronaut:micronaut-http-server:$micronautVersion"
-    compile "it.unimi.dsi:dsiutils:$dsiUtilVersion"
 
     testCompile "io.micronaut:micronaut-http-client"
     testCompile "io.micronaut:micronaut-inject-groovy"

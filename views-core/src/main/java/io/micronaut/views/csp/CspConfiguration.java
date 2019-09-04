@@ -18,11 +18,11 @@ package io.micronaut.views.csp;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.util.Toggleable;
 import io.micronaut.views.ViewsConfigurationProperties;
-import it.unimi.dsi.Util;
 
 import javax.annotation.Nullable;
 import java.util.Base64;
 import java.util.Optional;
+import java.util.Random;
 
 
 /**
@@ -45,10 +45,11 @@ public class CspConfiguration implements Toggleable {
     public static final Base64.Encoder BASE64_ENCODER =
       Base64.getEncoder().withoutPadding();
 
-    static {
-        // warm up PRNG
-        Util.randomSeedBytes();
-    }
+    /**
+     * Default random data generator to use.
+     */
+    public static final Random DEFAULT_RANDOM =
+      new Random();
 
     /**
      * The prefix for csp configuration.
@@ -164,11 +165,7 @@ public class CspConfiguration implements Toggleable {
      */
     public String generateNonce() {
         byte[] randomBytes = new byte[NONCE_LENGTH];
-        int iter = 0;
-        while (iter < (NONCE_LENGTH / 8)) {
-            System.arraycopy(Util.randomSeedBytes(), 0, randomBytes, iter * 8, 8);
-            iter++;
-        }
+        DEFAULT_RANDOM.nextBytes(randomBytes);
         return BASE64_ENCODER.encodeToString(randomBytes);
     }
 }
