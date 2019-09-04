@@ -52,7 +52,7 @@ import java.util.concurrent.ExecutionException;
  * Renders views with a Soy Tofu-based engine.
  *
  * @author Sam Gammon (sam@bloombox.io)
- * @since 1.3.0
+ * @since 1.2.1
  */
 @Produces(MediaType.TEXT_HTML)
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".engine", notEquals = "tofu")

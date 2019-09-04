@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
  * Configuration for {@link SoyTofuViewsRenderer}.
  *
  * @author Sam Gammon (sam@bloombox.io)
- * @since 1.3.0
+ * @since 1.2.1
  */
 public interface SoyViewsRendererConfiguration extends Toggleable {
   /**
