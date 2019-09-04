@@ -29,15 +29,5 @@ dependencies {
     testCompile "io.micronaut:micronaut-security"
 
     testCompile "org.yaml:snakeyaml:$snakeYamlVersion"
-
-    testRuntime "com.google.inject:guice:$guiceVersion"
-    testRuntime "com.google.guava:guava:$guavaVersion"
-    testRuntime "com.google.protobuf:protobuf-java:$protoVersion"
-    testRuntime "com.google.common.html.types:types:$htmlTypesVersion"
-    testRuntime "com.ibm.icu:icu4j:$icuVersion"
-    testRuntime "org.ow2.asm:asm:$asmVersion"
-    testRuntime "org.ow2.asm:asm-commons:$asmVersion"
-    testRuntime "org.ow2.asm:asm-util:$asmVersion"
-    testRuntime "org.ow2.asm:asm-analysis:$asmVersion"
     testRuntime dependencyVersion("soy")
 }
