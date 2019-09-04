@@ -8,3 +8,4 @@ views:
   csp: CSP Header Support
   views-security: Security Integration
   graal: GraalVM Support
+  soy: Soy/Closure Support
