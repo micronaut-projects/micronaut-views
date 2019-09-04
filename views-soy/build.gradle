@@ -20,8 +20,7 @@ dependencies {
     compile "io.micronaut:micronaut-runtime:$micronautVersion"
     compile "io.micronaut:micronaut-http:$micronautVersion"
     compile "io.micronaut:micronaut-http-server:$micronautVersion"
-    compile name: "soy-$soyVersion"
-//    compile dependencyVersion("soy")  @TODO: uncomment when google/closure-templates#185 is merged
+    compile dependencyVersion("soy")
 
     testCompile "io.micronaut:micronaut-http-client"
     testCompile "io.micronaut:micronaut-inject-groovy"
@@ -40,6 +39,5 @@ dependencies {
     testRuntime "org.ow2.asm:asm-commons:$asmVersion"
     testRuntime "org.ow2.asm:asm-util:$asmVersion"
     testRuntime "org.ow2.asm:asm-analysis:$asmVersion"
-    testRuntime name: "soy-$soyVersion"
-//    testRuntime dependencyVersion("soy")  @TODO: uncomment when google/closure-templates#185 is merged
+    testRuntime dependencyVersion("soy")
 }
