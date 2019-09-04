@@ -136,8 +136,9 @@ public class ViewsFilter implements HttpServerFilter {
 
                                 if (viewsRenderer instanceof AsyncViewsRenderer) {
                                     // it's an async renderer
+                                    //noinspection unchecked
                                     return ((AsyncViewsRenderer) viewsRenderer).render(
-                                      view, model, request, response);
+                                      view, model, request, (MutableHttpResponse<Writable>) response);
 
                                 } else if (viewsRenderer instanceof ViewsRenderer) {
                                     ViewsRenderer syncRenderer = (ViewsRenderer) optionalViewsRenderer.get();
