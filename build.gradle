@@ -55,6 +55,11 @@ ext {
             group  : 'org.apache.velocity',
             name   : 'velocity-engine-core'
         ],
+        soy: [
+            version: soyVersion,
+            group  : 'com.google.template',
+            name   : 'soy'
+        ]
     ]
 
     dependencyVersion = { String name ->
