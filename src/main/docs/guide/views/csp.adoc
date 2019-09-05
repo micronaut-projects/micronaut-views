@@ -1,15 +1,52 @@
-Micronaut supports CSP (link:https://www.w3.org/TR/CSP2/[Content Security Policy Level 2]) out of the box. By default, CSP is disabled. To enable CSP, modify your configuration. For example:
+Micronaut supports CSP (_link:https://www.w3.org/TR/CSP3/[Content Security Policy, Level 3]_) out of the box.
+By default, CSP is disabled. To enable CSP, modify your configuration. For example:
 
 .application.yml
 [source,yaml]
 ----
 micronaut:
-    views:
-        csp:
-            enabled: true
+  views:
+    csp:
+      enabled: true
 ----
 
 See the following table for all configuration options:
 
 include::{includedir}configurationProperties/io.micronaut.views.csp.CspConfiguration.adoc[]
 
+
+=== Nonce Support
+
+At the developer's option, Micronaut can generate a nonce with each render cycle. This nonce value can be used in
+`script-src` and `style-src` directives in a CSP response header (note that `nonce` values generally do not have any
+effect when _Content Security Policy_ is set via a `<meta http-equiv>` tag).
+
+To opt-in to this behavior, configure Micronaut with `generateNonce` set to `true`. Additionally, provide a spot for the
+nonce value in your CSP directives, with the token `{#nonceValue}`. It must be preceded by `nonce-` and wrapped in
+single quotes, https://www.w3.org/TR/CSP3/#framework-directive-source-list[as per the CSP3 spec]:
+
+.application.yml
+[source,yaml]
+----
+micronaut:
+  views:
+    csp:
+      enabled: true
+      generateNonce: true
+      policyDirectives: "default-src https: self:; script-src 'nonce-{#nonceValue}';"
+----
+
+That's it! After applying the above configuration, HTTP responses might include a header that look like this:
+
+```txt
+Content-Security-Policy: default-src https: self:; script-src 'nonce-4ze2IRazk4Yu/j5K6SEzjA';
+```
+
+Inline scripts which aren't otherwise whitelisted will be declined for execution, unless CSP is operating in report-only
+mode. Inline scripts can be whitelisted with the syntax:
+
+```html
+<script type="text/javascript" nonce="4ze2IRazk4Yu/j5K6SEzjA">
+  // some javascript code here
+</script>
+```
