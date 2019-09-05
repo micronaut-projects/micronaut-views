@@ -44,7 +44,8 @@ import java.util.Map;
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".engine", notEquals = "sauce")
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Singleton
-@SuppressWarnings({"WeakerAccess", "deprecation"})
+@Deprecated
+@SuppressWarnings({"WeakerAccess"})
 public class SoyTofuViewsRenderer implements ViewsRenderer {
 
   protected final ViewsConfiguration viewsConfiguration;
