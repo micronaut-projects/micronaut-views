@@ -25,6 +25,8 @@ import io.micronaut.http.filter.ServerFilterChain;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
 
+import javax.annotation.Nullable;
+
 import static io.micronaut.views.csp.CspConfiguration.DEFAULT_FILTER_PATH;
 import static io.micronaut.views.csp.CspConfiguration.FILTER_PATH;
 
@@ -63,6 +65,8 @@ public class CspFilter implements HttpServerFilter {
 
     public static final String CSP_HEADER = "Content-Security-Policy";
     public static final String CSP_REPORT_ONLY_HEADER = "Content-Security-Policy-Report-Only";
+    public static final String NONCE_PROPERTY = "cspNonce";
+    public static final String NONCE_TOKEN = "{#nonceValue}";
 
     protected final CspConfiguration cspConfiguration;
 
@@ -73,16 +77,31 @@ public class CspFilter implements HttpServerFilter {
         this.cspConfiguration = cspConfiguration;
     }
 
+    private @Nullable String nonceValue() {
+        return cspConfiguration.isNonceEnabled() ? cspConfiguration.generateNonce() : null;
+    }
+
     @Override
     public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
-
-        return Flowable.fromPublisher(chain.proceed(request))
+        final String nonce = nonceValue();
+        return Flowable.fromPublisher(chain.proceed(request.setAttribute(NONCE_PROPERTY, nonce)))
                 .doOnNext(response -> {
                     cspConfiguration.getPolicyDirectives()
                             .map(StringUtils::trimToNull)
                             .ifPresent(directives -> {
                         String header = cspConfiguration.isReportOnly() ? CSP_REPORT_ONLY_HEADER : CSP_HEADER;
-                        response.getHeaders().add(header, directives);
+                        final String headerValue;
+                        if (directives.contains(NONCE_TOKEN)) {
+                            if (nonce == null) {
+                                // there is no nonce, but one was requested.
+                                throw new IllegalArgumentException(
+                                  "Must enable CSP nonce generation to use '" + NONCE_TOKEN + "' placeholder.");
+                            }
+                            headerValue = directives.replace(NONCE_TOKEN, nonce);
+                        } else {
+                            headerValue = directives;
+                        }
+                        response.getHeaders().add(header, headerValue);
                     });
                 });
     }
