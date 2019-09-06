@@ -143,18 +143,32 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><a name="io.micronaut.views.csp.CspConfiguration.DEFAULT_ENABLE_NONCE">
+<!--   -->
+</a><code>public&nbsp;static&nbsp;final&nbsp;boolean</code></td>
+<td><code><a href="io/micronaut/views/csp/CspConfiguration.html#DEFAULT_ENABLE_NONCE">DEFAULT_ENABLE_NONCE</a></code></td>
+<td class="colLast"><code>false</code></td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a name="io.micronaut.views.csp.CspConfiguration.DEFAULT_ENABLED">
 <!--   -->
 </a><code>public&nbsp;static&nbsp;final&nbsp;boolean</code></td>
 <td><code><a href="io/micronaut/views/csp/CspConfiguration.html#DEFAULT_ENABLED">DEFAULT_ENABLED</a></code></td>
 <td class="colLast"><code>false</code></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a name="io.micronaut.views.csp.CspConfiguration.DEFAULT_FILTER_PATH">
 <!--   -->
 </a><code>public&nbsp;static&nbsp;final&nbsp;java.lang.String</code></td>
 <td><code><a href="io/micronaut/views/csp/CspConfiguration.html#DEFAULT_FILTER_PATH">DEFAULT_FILTER_PATH</a></code></td>
 <td class="colLast"><code>"/**"</code></td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a name="io.micronaut.views.csp.CspConfiguration.DEFAULT_FORCE_SECURE_RANDOM">
+<!--   -->
+</a><code>public&nbsp;static&nbsp;final&nbsp;boolean</code></td>
+<td><code><a href="io/micronaut/views/csp/CspConfiguration.html#DEFAULT_FORCE_SECURE_RANDOM">DEFAULT_FORCE_SECURE_RANDOM</a></code></td>
+<td class="colLast"><code>false</code></td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><a name="io.micronaut.views.csp.CspConfiguration.DEFAULT_REPORT_ONLY">
@@ -171,6 +185,13 @@
 <td class="colLast"><code>"micronaut.views.csp.filter-path"</code></td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a name="io.micronaut.views.csp.CspConfiguration.NONCE_LENGTH">
+<!--   -->
+</a><code>public&nbsp;static&nbsp;final&nbsp;int</code></td>
+<td><code><a href="io/micronaut/views/csp/CspConfiguration.html#NONCE_LENGTH">NONCE_LENGTH</a></code></td>
+<td class="colLast"><code>16</code></td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a name="io.micronaut.views.csp.CspConfiguration.PREFIX">
 <!--   -->
 </a><code>public&nbsp;static&nbsp;final&nbsp;java.lang.String</code></td>
@@ -202,6 +223,20 @@
 </a><code>public&nbsp;static&nbsp;final&nbsp;java.lang.String</code></td>
 <td><code><a href="io/micronaut/views/csp/CspFilter.html#CSP_REPORT_ONLY_HEADER">CSP_REPORT_ONLY_HEADER</a></code></td>
 <td class="colLast"><code>"Content-Security-Policy-Report-Only"</code></td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a name="io.micronaut.views.csp.CspFilter.NONCE_PROPERTY">
+<!--   -->
+</a><code>public&nbsp;static&nbsp;final&nbsp;java.lang.String</code></td>
+<td><code><a href="io/micronaut/views/csp/CspFilter.html#NONCE_PROPERTY">NONCE_PROPERTY</a></code></td>
+<td class="colLast"><code>"cspNonce"</code></td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a name="io.micronaut.views.csp.CspFilter.NONCE_TOKEN">
+<!--   -->
+</a><code>public&nbsp;static&nbsp;final&nbsp;java.lang.String</code></td>
+<td><code><a href="io/micronaut/views/csp/CspFilter.html#NONCE_TOKEN">NONCE_TOKEN</a></code></td>
+<td class="colLast"><code>"{#nonceValue}"</code></td>
 </tr>
 </tbody>
 </table>
@@ -321,6 +356,48 @@
 </a><code>public&nbsp;static&nbsp;final&nbsp;java.lang.String</code></td>
 <td><code><a href="io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html#PREFIX">PREFIX</a></code></td>
 <td class="colLast"><code>"micronaut.security.views-model-decorator"</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<ul class="blockList">
+<li class="blockList">
+<table class="constantsSummary" border="0" cellpadding="3" cellspacing="0" summary="Constant Field Values table, listing constant fields, and values">
+<caption><span>io.micronaut.views.soy.<a href="io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.soy">SoyViewsRendererConfigurationProperties</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th scope="col">Constant Field</th>
+<th class="colLast" scope="col">Value</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a name="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties.DEFAULT_ENABLED">
+<!--   -->
+</a><code>public&nbsp;static&nbsp;final&nbsp;boolean</code></td>
+<td><code><a href="io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html#DEFAULT_ENABLED">DEFAULT_ENABLED</a></code></td>
+<td class="colLast"><code>true</code></td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a name="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties.DEFAULT_ENGINE">
+<!--   -->
+</a><code>public&nbsp;static&nbsp;final&nbsp;java.lang.String</code></td>
+<td><code><a href="io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html#DEFAULT_ENGINE">DEFAULT_ENGINE</a></code></td>
+<td class="colLast"><code>"tofu"</code></td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a name="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties.DEFAULT_RENAMING">
+<!--   -->
+</a><code>public&nbsp;static&nbsp;final&nbsp;boolean</code></td>
+<td><code><a href="io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html#DEFAULT_RENAMING">DEFAULT_RENAMING</a></code></td>
+<td class="colLast"><code>true</code></td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a name="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties.PREFIX">
+<!--   -->
+</a><code>public&nbsp;static&nbsp;final&nbsp;java.lang.String</code></td>
+<td><code><a href="io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html#PREFIX">PREFIX</a></code></td>
+<td class="colLast"><code>"micronaut.views.soy"</code></td>
 </tr>
 </tbody>
 </table>

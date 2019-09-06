@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -141,6 +141,16 @@ implements io.micronaut.core.util.Toggleable</pre>
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static java.util.Base64.Encoder</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#BASE64_ENCODER">BASE64_ENCODER</a></span></code>
+<div class="block">Default Base64 encoder.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#DEFAULT_ENABLE_NONCE">DEFAULT_ENABLE_NONCE</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#DEFAULT_ENABLED">DEFAULT_ENABLED</a></span></code>&nbsp;</td>
 </tr>
@@ -150,12 +160,22 @@ implements io.micronaut.core.util.Toggleable</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#DEFAULT_REPORT_ONLY">DEFAULT_REPORT_ONLY</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#DEFAULT_FORCE_SECURE_RANDOM">DEFAULT_FORCE_SECURE_RANDOM</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#DEFAULT_REPORT_ONLY">DEFAULT_REPORT_ONLY</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#FILTER_PATH">FILTER_PATH</a></span></code>
 <div class="block">The path for endpoints settings.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#NONCE_LENGTH">NONCE_LENGTH</a></span></code>
+<div class="block">Length of generated CSP nonce values.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -198,39 +218,77 @@ implements io.micronaut.core.util.Toggleable</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#getFilterPath--">getFilterPath</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#generateNonce--">generateNonce</a></span>()</code>
+<div class="block">Generate a nonce value for use in a Content-Security-Policy header, which
+ is usable for one request/response cycle.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#getFilterPath--">getFilterPath</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.util.Optional&lt;java.lang.String&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#getPolicyDirectives--">getPolicyDirectives</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.util.Random</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#getRandomEngine--">getRandomEngine</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#isEnabled--">isEnabled</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#isForceSecureRandomEnabled--">isForceSecureRandomEnabled</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#isNonceEnabled--">isNonceEnabled</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#isReportOnly--">isReportOnly</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#setEnabled-boolean-">setEnabled</a></span>(boolean&nbsp;enabled)</code>
 <div class="block">Sets whether CSP is enabled.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#setFilterPath-java.lang.String-">setFilterPath</a></span>(java.lang.String&nbsp;filterPath)</code>
 <div class="block">Sets the path the CSP filter should apply to.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#setForceSecureRandom-boolean-">setForceSecureRandom</a></span>(boolean&nbsp;forceSecureRandom)</code>
+<div class="block">Sets whether `SecureRandom` is forced for use in generated nonce values.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#setGenerateNonce-boolean-">setGenerateNonce</a></span>(boolean&nbsp;generateNonce)</code>
+<div class="block">If true, the CSP header will contain a generated nonce that is made available
+ to view renderers.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#setPolicyDirectives-java.lang.String-">setPolicyDirectives</a></span>(java.lang.String&nbsp;policyDirectives)</code>
 <div class="block">Sets the policy directives.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#setRandomEngine-java.util.Random-">setRandomEngine</a></span>(java.util.Random&nbsp;randomEngine)</code>
+<div class="block">Sets the `Random` data engine used to generate nonce values.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/csp/CspConfiguration.html#setReportOnly-boolean-">setReportOnly</a></span>(boolean&nbsp;reportOnly)</code>
 <div class="block">If true, the Content-Security-Policy-Report-Only header will be sent instead
@@ -259,6 +317,30 @@ implements io.micronaut.core.util.Toggleable</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
+<a name="NONCE_LENGTH">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>NONCE_LENGTH</h4>
+<pre>public static final&nbsp;int NONCE_LENGTH</pre>
+<div class="block">Length of generated CSP nonce values. Must be a multiple of 8.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../constant-values.html#io.micronaut.views.csp.CspConfiguration.NONCE_LENGTH">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="BASE64_ENCODER">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>BASE64_ENCODER</h4>
+<pre>public static final&nbsp;java.util.Base64.Encoder BASE64_ENCODER</pre>
+<div class="block">Default Base64 encoder.</div>
+</li>
+</ul>
 <a name="PREFIX">
 <!--   -->
 </a>
@@ -310,6 +392,32 @@ implements io.micronaut.core.util.Toggleable</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../constant-values.html#io.micronaut.views.csp.CspConfiguration.DEFAULT_REPORT_ONLY">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="DEFAULT_ENABLE_NONCE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFAULT_ENABLE_NONCE</h4>
+<pre>public static final&nbsp;boolean DEFAULT_ENABLE_NONCE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../constant-values.html#io.micronaut.views.csp.CspConfiguration.DEFAULT_ENABLE_NONCE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="DEFAULT_FORCE_SECURE_RANDOM">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFAULT_FORCE_SECURE_RANDOM</h4>
+<pre>public static final&nbsp;boolean DEFAULT_FORCE_SECURE_RANDOM</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../constant-values.html#io.micronaut.views.csp.CspConfiguration.DEFAULT_FORCE_SECURE_RANDOM">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -392,6 +500,45 @@ implements io.micronaut.core.util.Toggleable</pre>
 </dl>
 </li>
 </ul>
+<a name="isNonceEnabled--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isNonceEnabled</h4>
+<pre>public&nbsp;boolean&nbsp;isNonceEnabled()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Whether nonce generation is enabled for each request/response cycle</dd>
+</dl>
+</li>
+</ul>
+<a name="isForceSecureRandomEnabled--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isForceSecureRandomEnabled</h4>
+<pre>public&nbsp;boolean&nbsp;isForceSecureRandomEnabled()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Whether use of <code>SecureRandom</code> is forced for nonce generation.</dd>
+</dl>
+</li>
+</ul>
+<a name="getRandomEngine--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRandomEngine</h4>
+<pre>public&nbsp;java.util.Random&nbsp;getRandomEngine()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Random data engine currently in use to generate nonce values.</dd>
+</dl>
+</li>
+</ul>
 <a name="setEnabled-boolean-">
 <!--   -->
 </a>
@@ -436,6 +583,54 @@ implements io.micronaut.core.util.Toggleable</pre>
 </dl>
 </li>
 </ul>
+<a name="setGenerateNonce-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setGenerateNonce</h4>
+<pre>public&nbsp;void&nbsp;setGenerateNonce(boolean&nbsp;generateNonce)</pre>
+<div class="block">If true, the CSP header will contain a generated nonce that is made available
+ to view renderers. The nonce should change for each request/response cycle and
+ can be used by views to authorize inlined script blocks.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>generateNonce</code> - set to true to enable generation of nonces</dd>
+</dl>
+</li>
+</ul>
+<a name="setForceSecureRandom-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setForceSecureRandom</h4>
+<pre>public&nbsp;void&nbsp;setForceSecureRandom(boolean&nbsp;forceSecureRandom)</pre>
+<div class="block">Sets whether `SecureRandom` is forced for use in generated nonce values.
+ Defaults to `<a href="../../../../io/micronaut/views/csp/CspConfiguration.html#DEFAULT_FORCE_SECURE_RANDOM">false</a>`. Enabling this requires
+ careful consideration, because `SecureRandom` will block infinitely without
+ enough entropy.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>forceSecureRandom</code> - set to true to force <code>SecureRandom</code> use for nonce values.</dd>
+</dl>
+</li>
+</ul>
+<a name="setRandomEngine-java.util.Random-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setRandomEngine</h4>
+<pre>public&nbsp;void&nbsp;setRandomEngine(java.util.Random&nbsp;randomEngine)</pre>
+<div class="block">Sets the `Random` data engine used to generate nonce values. Ignored if
+ `forceSecureRandom` is set to `true`.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>randomEngine</code> - Random data engine to use.</dd>
+</dl>
+</li>
+</ul>
 <a name="getFilterPath--">
 <!--   -->
 </a>
@@ -452,7 +647,7 @@ implements io.micronaut.core.util.Toggleable</pre>
 <a name="setFilterPath-java.lang.String-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setFilterPath</h4>
 <pre>public&nbsp;void&nbsp;setFilterPath(java.lang.String&nbsp;filterPath)</pre>
@@ -460,6 +655,24 @@ implements io.micronaut.core.util.Toggleable</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>filterPath</code> - The filter path</dd>
+</dl>
+</li>
+</ul>
+<a name="generateNonce--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>generateNonce</h4>
+<pre>public&nbsp;java.lang.String&nbsp;generateNonce()</pre>
+<div class="block">Generate a nonce value for use in a Content-Security-Policy header, which
+ is usable for one request/response cycle.
+
+ A good guide for generating nonce values:
+ https://csp.withgoogle.com/docs/faq.html#generating-nonces</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Base64-encoded random nonce value.</dd>
 </dl>
 </li>
 </ul>

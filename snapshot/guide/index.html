@@ -88,11 +88,13 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-freemarker"><a href="#freemarker"><strong>2.4</strong><span>Apache Freemarker</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-csp"><a href="#csp"><strong>2.5</strong><span>CSP Header Support</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-soy"><a href="#soy"><strong>2.5</strong><span>Soy/Closure Support</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-views-security"><a href="#views-security"><strong>2.6</strong><span>Security Integration</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-csp"><a href="#csp"><strong>2.6</strong><span>Content Security Policy</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>2.7</strong><span>GraalVM Support</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-views-security"><a href="#views-security"><strong>2.7</strong><span>Security Integration</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>2.8</strong><span>GraalVM Support</span></a></div>
         
         </div>
     </div>
@@ -155,10 +157,8 @@
 </p>
 </div>
 <div class="paragraph">
-<p>Views and templates can then be placed in the <code>src/main/resources/views</code> directory of your project.</p>
-</div>
-<div class="paragraph">
-<p>If you wish to use a different folder instead of <code>views</code>, set the property <code>micronaut.views.folder</code>.</p>
+<p>For file-based view schemes, views and templates can be placed in the <code>src/main/resources/views</code> directory of your
+project. If you use this feature and wish to use a different folder, set the property <code>micronaut.views.folder</code>.</p>
 </div>
 <div class="paragraph">
 <p>Your controller&#8217;s method can render the response with a template with the the <a href="../api/io/micronaut/views/View.html">View</a> annotation.</p>
@@ -594,7 +594,484 @@ the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based tem
 </div>
 
 
-<h2 id="csp">2.5 CSP Header Support</h2>
+<h2 id="soy">2.5 Soy/Closure Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/soy.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut includes <a href="../api/io/micronaut/views/soy/SoySauceViewsRenderer.html">SoySauceViewsRenderer</a> which uses
+<a href="https://github.com/google/closure-templates">Soy, also known as Closure Templates</a>, a template
+compiler from Google. Soy is usable standalone, or together with the rest of the
+<a href="https://developers.google.com/closure">Closure Tools ecosystem</a>, and targets both server-side and
+client-side, with the ability to compile templates into Java, Python, or JavaScript.</p>
+</div>
+<div class="paragraph">
+<p>In addition to the <a href="#views">Views</a> dependency, add the following dependency.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="gradle">compile <span class="hljs-string">'com.google.template:soy:2019-09-03'</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;com.google.template&lt;/groupId&gt;
+    &lt;artifactId&gt;soy&lt;/artifactId&gt;
+    &lt;version&gt;2019-09-03&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Soy template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/home.soy</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-soy hljs" data-lang="soy">// Copyright 2017-2019 original authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+{namespace sample}
+
+
+// Sample template.
+{template .home}
+  {@param loggedIn: bool}  // Whether the user is logged in.
+  {@param? username: string}  // The user's username, if they are logged in.
+
+  &lt;!DOCTYPE html&gt;
+  &lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+    &lt;script type="text/javascript"&gt;alert("Hello, CSP!");&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  {if $loggedIn}
+      &lt;h1&gt;username: &lt;span&gt;{$username}&lt;/span&gt;&lt;/h1&gt;
+  {else}
+      &lt;h1&gt;You are not logged in&lt;/h1&gt;
+  {/if}
+  &lt;/body&gt;
+  &lt;/html&gt;
+{/template}</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_usage">Usage</h3>
+<div class="paragraph">
+<p>Soy integration is invoked by providing a bean that complies with <code>SoyFileSetProvider</code>. The object that complies with
+this interface is responsible for loading the Soy templates, either in compiled or source form.</p>
+</div>
+<div class="paragraph">
+<p>Both server-side Soy rendering layers are supported in Micronaut:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SoySauceViewsRenderer</code>: This renderer uses templates pre-compiled to Java bytecode, generally AOT, with
+<code>SoyToJbcSrcCompiler</code>. If compiled templates can&#8217;t be located by the <code>SoyFileSetProvider</code>, templates are pre-compiled
+into bytecode at server startup. This can be impactful on startup-time, so, if that&#8217;s an important metric for your
+app, pre-compile your templates using the AOT bytecode compiler.</p>
+</li>
+<li>
+<p><code>SoyTofuViewsRenderer</code> (<em>Deprecated</em>): This renderer is supported for compatibility and toy uses, but it&#8217;s
+deprecated in Soy Java, so it&#8217;s deprecated here. <code>SoyTofu</code> renders templates from sources.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Which renderer is active depends on the Micronaut configuration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  views:
+    soy:
+      enabled: true
+      engine: sauce  # one of `sauce` or `tofu`</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After wiring up your <code>SoyFileSetProvider</code>, and configuring Micronaut, you can render templates like so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Validated
+@Controller("/")
+public class HelloWorld {
+  @Get(value = "/soy", produces = MediaType.TEXT_HTML)
+  @View("some.soy.template.path")
+  public HttpResponse soyDemo() {
+    // return template context
+    return HttpResponse.ok(ImmutableMap.of("username", "jdoe", "loggedIn", true));
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The return value is converted to Soy template context parameters, and passed to the <code>@View</code>-annotation-bound template.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration">Configuration</h3>
+<div class="paragraph">
+<p>The entire set of supported Soy configuration properties are documented below:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration property</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.engine</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code> (one of <code>sauce</code> or <code>tofu</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sauce</code> (<code>tofu</code> is deprecated)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.renaming</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_features_template_security">Features: Template Security</h3>
+<div class="paragraph">
+<p>Soy/Closure Templates has seen significant work from Google where security is concerned, both in the browser and on the
+backend. Soy is extremely strict and strongly typed, with validation being performed by Soy and then subsequently either
+by <code>javac</code> or Closure Compiler, and additionally in some cases at render-time. What follows is a brief guide of these
+security features. These are outlined in more detail over in the
+<a href="https://github.com/google/closure-templates/blob/master/documentation/reference/security.md">Closure Templates docs</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_front_end_security">Front-end Security</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Trusted URIs:</em> Soy is smart enough to know that <code>scriptUrl</code> might be influenced by user input, and, therefore,
+introduces an <a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)">XSS vulnerability</a> when used as a script
+<code>src</code>. To inject resources, use <code>uri</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-soy hljs" data-lang="soy">/* I won't compile because I introduce a vulnerability */
+{template .foo}
+  {@param scriptUrl: string}
+  &lt;script src={$scriptUrl}&gt;&lt;/script&gt;
+{/template}</code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>/* I will compile because I accept a URI type, which is trusted in this context */
+{template .foo}
+  {@param scriptUrl: uri}
+  &lt;script src={$scriptUrl}&gt;&lt;/script&gt;
+{/template}</pre>
+</div>
+</div>
+</li>
+<li>
+<p><em>Markup:</em> Passing in HTML for <code>content</code> won&#8217;t work if it&#8217;s a <code>string</code>. Soy will comply and inject your content, but it
+will be escaped. To inject markup, use the strict markup types (<code>js</code>, <code>css</code>, <code>html</code>).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-soy hljs" data-lang="soy">/* I will compile, but I may escape the injected content if it contains markup. */
+{template .foo}
+  {@param content: string}
+  &lt;b&gt;{$content}&lt;/b&gt;
+{/template}</code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>/* I allow markup because the appropriate types are used */
+{template .foo}
+  {@param content: html}
+  &lt;b&gt;{$content}&lt;/b&gt;
+{/template}</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_back_end_security">Back-end Security</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><em>CSP Nonce Support</em>: Soy has support for <em>Content Security Policy</em> (<a href="https://www.w3.org/TR/CSP3/">Level 3</a>),
+specifically, embedding server-generated <code>nonce</code> attributes in <code>&lt;script&gt;</code> tags. This is accomplished by providing an
+<a href="https://github.com/google/closure-templates/blob/b0b39f9af2fed78333ddb7963266e9d2db3df094/documentation/dev/security.md#content-security-policy-csp-content_security_policy">"injected value"</a>
+with the key <code>"csp_nonce"</code>. The nonce, which
+<a href="https://csp.withgoogle.com/docs/faq.html#generating-nonces">should change on each page load</a>, is available in the
+template like so:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-soy hljs" data-lang="soy">/* Soy will inject the nonce for you, but if you need it anyway, this is how you access it. */
+{template .foo}
+  {@param injectedScript: uri}
+  {@inject csp_nonce: string}
+  &lt;script src={$injectedScript} nonce={$csp_nonce} type="text/javascript"&gt;&lt;/script&gt;
+{/template}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_features_renaming">Features: Renaming</h3>
+<div class="paragraph">
+<p>Soy has powerful built-in renaming features, that both obfuscate and optimize your code as it is rendered. Renaming is
+opt-in and requires a few things:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A compatible CSS compiler (<a href="https://github.com/google/closure-stylesheets">GSS / Closure Stylesheets</a> is a good one)</p>
+</li>
+<li>
+<p>Special calls in your templates that map CSS classes and IDs</p>
+</li>
+<li>
+<p>JSON renaming map provided at compile time for JS templates, and runtime for Java rendering</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Renaming is similar to other frameworks' correponding uglify features, but it&#8217;s significantly more powerful, allowing
+you to rewrite CSS classes and IDs as you would JavaScript symbols. Here&#8217;s how you can use renaming server-side with
+Micronaut:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Configure Micronaut to enable renaming:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  views:
+    soy:
+      enabled: true
+      renaming: true</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>When building your styles with GSS, or a similar tool, generate a rewrite map:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; java -jar closure-stylesheets.jar \
+    --output-renaming-map-format JSON \
+    --output-renaming-map src/main/resources/renaming-map.json \
+    --rename CLOSURE \
+    [...inputs...] &gt; src/main/resources/styles/app-styles.min.css</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In your template sources, annotate CSS classes with <code>{css('name')}</code> calls. Note that the value passed into each call
+must be a string literal (variables cannot be used):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-soy hljs" data-lang="soy">{template .foo}
+  &lt;div class="{css('my-cool-class')} {css('my-cool-class-active')}"&gt;
+    ... content, and stuff...
+  &lt;/div&gt;
+{/template}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In your CSS, use the names you mentioned in your template:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-css hljs" data-lang="css">.my-cool-class {
+  color: blue;
+}
+.my-cool-class-active {
+  background: yellow;
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Compile your templates (see: <em>Building Soy</em>).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; java -jar SoyToJbcSrcCompiler.jar \
+    --output templates.jar \
+    --srcs [...templates...];</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The last step is to provide the renaming map to Micronaut:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
+public class RewriteMapProvider implements SoyNamingMapProvider {
+  /** Filename for the JSON class renaming map. */
+  private static final String RENAMING_MAP_NAME = "renaming-map.json";
+
+  /** Naming map to use for classes. */
+  private static SoyCssRenamingMap CSS_RENAMING_MAP = null;
+
+  /**
+   * Load JSON embedded in a JAR resource into a naming map for Soy rendering.
+   *
+   * @param mapPath URL to the JAR resource we should load.
+   */
+  @Nullable
+  private static Map&lt;String, String&gt; loadMapFromJSON(URL mapPath) {
+    try {
+      return new ObjectMapper().readValue(mapPath, new TypeReference&lt;Map&lt;String, String&gt;&gt;() { });
+    } catch (Throwable thr) {
+      //handle `JsonMappingException` and `IOException`, if, for instance, you're using Jackson
+      throw new RuntimeException(thr);
+    }
+  }
+
+  static {
+    final URL mapPath =
+        SoyRenderConfigProvider.class.getClassLoader().getResource(RENAMING_MAP_NAME);
+    if (mapPath != null) {
+      // load the renaming map
+      final Map&lt;String, String&gt; cssRenamingMap = loadMapFromJSON(mapPath);
+      if (renamingMapRaw != null) {
+        CSS_RENAMING_MAP = new SoyCssRenamingMap() {
+          @Nullable @Override
+          public String get(@NotNull String className) {
+            // (or whatever logic you need to rewrite the class)
+            return cssRenamingMap.get(className);
+          }
+        };
+      }
+    }
+  }
+
+  /**
+   * Provide a CSS renaming map to Soy/Micronaut.
+   *
+   * @return Inflated Soy CSS renaming map.
+   */
+  @Nullable @Override public SoyCssRenamingMap cssRenamingMap() {
+    return CSS_RENAMING_MAP;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, your output will be renamed. Referencing the Soy template sample above, output would look something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;div class="a-b-c a-b-c-d"&gt;... content, and stuff...&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With your CSS rewritten and minified to match:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-css hljs" data-lang="css">.a-b-c{color:blue;}.a-b-c-d{background:yellow;}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_soy">Building Soy</h3>
+<div class="paragraph">
+<p>Soy has tooling support from <a href="https://github.com/Medium/soynode">Node</a> (<a href="https://www.npmjs.com/package/gulp-soynode">Gulp</a>,
+<a href="https://www.npmjs.com/package/grunt-closure-soy">Grunt</a>),
+<a href="http://mvnrepository.com/artifact/com.google.template/soy">Maven</a>,
+<a href="https://plugins.gradle.org/plugin/com.liferay.soy">Gradle</a>, and
+<a href="https://github.com/bazelbuild/rules_closure/#closure_js_template_library">Bazel</a>. You can also invoke each
+Soy compiler directly via the runner classes for each one:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyHeaderCompiler.java">SoyHeaderCompiler</a>:
+Compile templates into light "headers," that can be used downstream as dependencies for other templates.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyMsgExtractor.java">SoyMsgExtractor</a>:
+Enables easy i18n by extracting <code>{msg desc=""}{/msg}</code> declarations for processing or translation.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyParseInfoGenerator.java">SoyParseInfoGenerator</a>:
+Generates template parser metadata information as Java sources.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyPluginValidator.java">SoyPluginValidator</a>:
+Validates <code>SoySourceFunction</code> definitions found in a set of JARs.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToIncrementalDomSrcCompiler.java">SoyToIncrementalDomSrcCompiler</a>:
+Generate client-side templates that render with <a href="http://google.github.io/incremental-dom">IncrementalDOM</a> (AKA <code>idom</code>).
+This compiler uses direct calls into the DOM to incrementally render content, as opposed to the traditional client-side
+approach, which renders strings into <code>element.innerHTML</code>. This support is currently experimental and involves a number
+of external dependencies.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToJbcSrcCompiler.java">SoyToJbcSrcCompiler</a>:
+Compiles Soy templates directly to Java bytecode, packaged up in a JAR. These templates can be used together with
+  <a href="https://search.maven.org/search?q=g:com.google.template%20AND%20a:soy&amp;core=gav">Soy Java</a> for highly performant
+server-side rendering.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToJsSrcCompiler.java">SoyToJsSrcCompiler</a>:
+Traditional JS client-side compiler, which assembles strings of rendered template content. Like <code>idom</code>, these compiled
+templates work well with Closure Compiler, and Closure Library via
+  <a href="https://github.com/google/closure-library/tree/master/closure/goog/soy"><code>goog.soy</code></a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToPySrcCompiler.java">SoyToPySrcCompiler</a>:
+Compiles templates into Python sources for use server-side.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+<h2 id="csp">2.6 Content Security Policy</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/csp.adoc"'>
@@ -604,15 +1081,16 @@ the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based tem
 
 
 <div class="paragraph">
-<p>Micronaut supports CSP (<a href="https://www.w3.org/TR/CSP2/">Content Security Policy Level 2</a>) out of the box. By default, CSP is disabled. To enable CSP, modify your configuration. For example:</p>
+<p>Micronaut supports CSP (<em><a href="https://www.w3.org/TR/CSP3/">Content Security Policy, Level 3</a></em>) out of the box.
+By default, CSP is disabled. To enable CSP, modify your configuration. For example:</p>
 </div>
 <div class="listingblock">
 <div class="title">application.yml</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    views:
-        csp:
-            enabled: true</code></pre>
+  views:
+    csp:
+      enabled: true</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -651,15 +1129,79 @@ the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based tem
  of Content-Security-Policy. Default false.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.generate-nonce</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, the CSP header will contain a generated nonce that is made available
+ to view renderers. The nonce should change for each request/response cycle and
+ can be used by views to authorize inlined script blocks.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.filter-path</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets the path the CSP filter should apply to. Default value "/**".</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.force-secure-random</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether <code>SecureRandom</code> is forced for use in generated nonce values.
+ Defaults to <code>false</code>. Enabling this requires
+ careful consideration, because <code>SecureRandom</code> will block infinitely without
+ enough entropy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.random-engine</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Random</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the <code>Random</code> data engine used to generate nonce values. Ignored if
+ <code>forceSecureRandom</code> is set to <code>true</code>.</p></td>
+</tr>
 </tbody>
 </table>
+<div class="sect2">
+<h3 id="_nonce_support">Nonce Support</h3>
+<div class="paragraph">
+<p>At the developer&#8217;s option, Micronaut can generate a nonce with each render cycle. This nonce value can be used in
+<code>script-src</code> and <code>style-src</code> directives in a CSP response header (note that <code>nonce</code> values generally do not have any
+effect when <em>Content Security Policy</em> is set via a <code>&lt;meta http-equiv&gt;</code> tag).</p>
+</div>
+<div class="paragraph">
+<p>To opt-in to this behavior, configure Micronaut with <code>generateNonce</code> set to <code>true</code>. Additionally, provide a spot for the
+nonce value in your CSP directives, with the token <code>{#nonceValue}</code>. It must be preceded by <code>nonce-</code> and wrapped in
+single quotes, <a href="https://www.w3.org/TR/CSP3/#framework-directive-source-list">as per the CSP3 spec</a>:</p>
+</div>
+<div class="listingblock">
+<div class="title">application.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  views:
+    csp:
+      enabled: true
+      generateNonce: true
+      policyDirectives: "default-src https: self:; script-src 'nonce-{#nonceValue}';"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That&#8217;s it! After applying the above configuration, HTTP responses might include a header that look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt hljs" data-lang="txt">Content-Security-Policy: default-src https: self:; script-src 'nonce-4ze2IRazk4Yu/j5K6SEzjA';</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Inline scripts which aren&#8217;t otherwise whitelisted will be declined for execution, unless CSP is operating in report-only
+mode. Inline scripts can be whitelisted with the syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;script type="text/javascript" nonce="4ze2IRazk4Yu/j5K6SEzjA"&gt;
+  // some javascript code here
+&lt;/script&gt;</code></pre>
+</div>
+</div>
+</div>
 
 
-<h2 id="views-security">2.6 Security Integration</h2>
+<h2 id="views-security">2.7 Security Integration</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/views-security.adoc"'>
@@ -762,7 +1304,7 @@ public class BooksController {
 </div>
 
 
-<h2 id="graal">2.7 GraalVM Support</h2>
+<h2 id="graal">2.8 GraalVM Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/graal.adoc"'>
