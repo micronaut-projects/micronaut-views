@@ -20,7 +20,11 @@ import io.micronaut.core.util.Toggleable;
 import io.micronaut.views.ViewsConfigurationProperties;
 
 import javax.annotation.Nullable;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Optional;
+import java.util.Random;
+
 
 /**
  * Defines CSP configuration properties.
@@ -28,8 +32,19 @@ import java.util.Optional;
  * @author Arul Dhesiaseelan
  * @since 1.1
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 @ConfigurationProperties(CspConfiguration.PREFIX)
 public class CspConfiguration implements Toggleable {
+    /**
+     * Length of generated CSP nonce values. Must be a multiple of 8.
+     */
+    public static final int NONCE_LENGTH = 8 * 2;
+
+    /**
+     * Default Base64 encoder.
+     */
+    public static final Base64.Encoder BASE64_ENCODER =
+      Base64.getEncoder().withoutPadding();
 
     /**
      * The prefix for csp configuration.
@@ -42,12 +57,38 @@ public class CspConfiguration implements Toggleable {
     public static final String FILTER_PATH = PREFIX + ".filter-path";
     public static final boolean DEFAULT_ENABLED = false;
     public static final boolean DEFAULT_REPORT_ONLY = false;
+    public static final boolean DEFAULT_ENABLE_NONCE = false;
+    public static final boolean DEFAULT_FORCE_SECURE_RANDOM = false;
     public static final String DEFAULT_FILTER_PATH = "/**";
+
+    /**
+     * Default random data generator to use.
+     */
+    private static final Random DEFAULT_RANDOM =
+      new Random();
+
+    /**
+     * {@link SecureRandom} instance, lazy-loaded when requested.
+     */
+    private static volatile SecureRandom secureRandom = null;
 
     private boolean enabled = DEFAULT_ENABLED;
     private String policyDirectives;
     private boolean reportOnly = DEFAULT_REPORT_ONLY;
+    private boolean generateNonce = DEFAULT_ENABLE_NONCE;
     private String filterPath = DEFAULT_FILTER_PATH;
+    private boolean forceSecureRandom = false;
+    private Random randomEngine = DEFAULT_FORCE_SECURE_RANDOM ? null : DEFAULT_RANDOM;
+
+    private Random acquireRandom() {
+        if (forceSecureRandom) {
+            if (CspConfiguration.secureRandom == null) {
+                CspConfiguration.secureRandom = new SecureRandom();
+            }
+            return CspConfiguration.secureRandom;
+        }
+        return randomEngine;
+    }
 
     /**
      * @return Whether csp headers will be sent
@@ -69,6 +110,27 @@ public class CspConfiguration implements Toggleable {
      */
     public boolean isReportOnly() {
         return reportOnly;
+    }
+
+    /**
+     * @return Whether nonce generation is enabled for each request/response cycle
+     */
+    public boolean isNonceEnabled() {
+        return generateNonce;
+    }
+
+    /**
+     * @return Whether use of {@link SecureRandom} is forced for nonce generation.
+     */
+    public boolean isForceSecureRandomEnabled() {
+        return forceSecureRandom;
+    }
+
+    /**
+     * @return Random data engine currently in use to generate nonce values.
+     */
+    public Random getRandomEngine() {
+        return randomEngine;
     }
 
     /**
@@ -99,6 +161,39 @@ public class CspConfiguration implements Toggleable {
     }
 
     /**
+     * If true, the CSP header will contain a generated nonce that is made available
+     * to view renderers. The nonce should change for each request/response cycle and
+     * can be used by views to authorize inlined script blocks.
+     *
+     * @param generateNonce set to true to enable generation of nonces
+     */
+    public void setGenerateNonce(boolean generateNonce) {
+        this.generateNonce = generateNonce;
+    }
+
+    /**
+     * Sets whether `SecureRandom` is forced for use in generated nonce values.
+     * Defaults to `{@value #DEFAULT_FORCE_SECURE_RANDOM}`. Enabling this requires
+     * careful consideration, because `SecureRandom` will block infinitely without
+     * enough entropy.
+     *
+     * @param forceSecureRandom set to true to force {@link SecureRandom} use for nonce values.
+     */
+    public void setForceSecureRandom(boolean forceSecureRandom) {
+        this.forceSecureRandom = forceSecureRandom;
+    }
+
+    /**
+     * Sets the `Random` data engine used to generate nonce values. Ignored if
+     * `forceSecureRandom` is set to `true`.
+     *
+     * @param randomEngine Random data engine to use.
+     */
+    public void setRandomEngine(Random randomEngine) {
+        this.randomEngine = randomEngine;
+    }
+
+    /**
      * @return The path the CSP filter should apply to
      */
     public String getFilterPath() {
@@ -112,5 +207,20 @@ public class CspConfiguration implements Toggleable {
      */
     public void setFilterPath(String filterPath) {
         this.filterPath = filterPath;
+    }
+
+    /**
+     * Generate a nonce value for use in a Content-Security-Policy header, which
+     * is usable for one request/response cycle.
+     *
+     * A good guide for generating nonce values:
+     * https://csp.withgoogle.com/docs/faq.html#generating-nonces
+     *
+     * @return Base64-encoded random nonce value.
+     */
+    public String generateNonce() {
+        byte[] randomBytes = new byte[NONCE_LENGTH];
+        acquireRandom().nextBytes(randomBytes);
+        return BASE64_ENCODER.encodeToString(randomBytes);
     }
 }

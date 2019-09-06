@@ -5,6 +5,7 @@ views:
   handlebars: Handlebars.java
   velocity: Apache Velocity
   freemarker: Apache Freemarker
-  csp: CSP Header Support
+  soy: Soy/Closure Support
+  csp: Content Security Policy
   views-security: Security Integration
   graal: GraalVM Support
