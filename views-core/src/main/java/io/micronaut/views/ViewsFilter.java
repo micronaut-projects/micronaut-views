@@ -99,9 +99,7 @@ public class ViewsFilter implements HttpServerFilter {
     }
 
     @Override
-    public final Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request,
-                                                            ServerFilterChain chain) {
-
+    public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
         return Flowable.fromPublisher(chain.proceed(request))
             .switchMap(response -> {
                 Optional<AnnotationMetadata> routeMatch = response.getAttribute(HttpAttributes.ROUTE_MATCH,
@@ -138,7 +136,7 @@ public class ViewsFilter implements HttpServerFilter {
                                     // it's an async renderer
                                     //noinspection unchecked
                                     return ((AsyncViewsRenderer) viewsRenderer).render(
-                                      view, model, request, (MutableHttpResponse<Writable>) response);
+                                      view, model, request, response);
 
                                 } else if (viewsRenderer instanceof ViewsRenderer) {
                                     ViewsRenderer syncRenderer = (ViewsRenderer) optionalViewsRenderer.get();

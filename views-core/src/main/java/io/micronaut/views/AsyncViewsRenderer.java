@@ -15,10 +15,10 @@
  */
 package io.micronaut.views;
 
-import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MutableHttpResponse;
-import org.reactivestreams.Publisher;
+import io.netty.buffer.ByteBuf;
+import io.reactivex.Flowable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -37,13 +37,13 @@ public interface AsyncViewsRenderer extends BaseViewsRenderer {
    * @param viewName view name to be render
    * @param data     response body to render it with a view
    * @param request  HTTP request
-   * @param response HTTP response object.
+   * @param response HTTP response object assembled so far.
    * @return A writable where the view will be written to.
    */
   @Nonnull
-  Publisher<MutableHttpResponse<Writable>> render(
+  Flowable<MutableHttpResponse<ByteBuf>> render(
     @Nonnull String viewName,
     @Nullable Object data,
     @Nonnull HttpRequest<?> request,
-    @Nonnull MutableHttpResponse<Writable> response);
+    @Nonnull MutableHttpResponse<?> response);
 }
