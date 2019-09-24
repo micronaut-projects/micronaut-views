@@ -39,6 +39,8 @@ include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[t
 
 <1> Use `@View` annotation to indicate the view name which should be used to render the POJO responded by the controller.
 
+Use the ann:core.annotation.Introspected[] annotation on your POJO object to avoid reflection at runtime (It will also fix a problem with OpenJ9 jvm.)
+
 You can also return a api:views.ModelAndView[] and skip specifying the api:views.View[] annotation.
 
 [source,java]
