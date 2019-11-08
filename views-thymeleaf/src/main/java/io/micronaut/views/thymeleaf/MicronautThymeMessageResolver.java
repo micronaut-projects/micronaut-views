@@ -30,15 +30,7 @@ public class MicronautThymeMessageResolver extends AbstractMessageResolver {
             return value.get();
         }
 
-        if (origin != null) {
-            // We will be disabling template-based resolution when delegating in order to use only origin-based
-            final String message =
-                this.standardMessageResolver.resolveMessage(context, origin, key, messageParameters, false, true, true);
-            return message;
-        }
-
         return null;
-
     }
 
     public String createAbsentMessageRepresentation(
