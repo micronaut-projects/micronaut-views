@@ -25,7 +25,19 @@ class MicronautThymeMessageResolverSpec extends Specification {
         content.contains("SampleLastName")
     }
 
-    void "test template engine uses standard resolver on error"() {
+    void "test template engine uses thyme standard resolver"() {
+        given:
+        ApplicationContext ctx = ApplicationContext.run()
+        TemplateEngine templateEngine = ctx.getBean(TemplateEngine)
+
+        when:
+        String content = templateEngine.process("thymeleaf/sampleStandard", new Context())
+
+        then:
+        content.contains("Standard Title")
+    }
+
+    void "test template engine uses standard resolver"() {
         given:
         ApplicationContext ctx = ApplicationContext.run()
         TemplateEngine templateEngine = ctx.getBean(TemplateEngine)
