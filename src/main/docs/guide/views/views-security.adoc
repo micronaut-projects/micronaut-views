@@ -7,7 +7,7 @@ In a controller, you can return a model without specifying in the model the auth
 [source,java]
 .src/main/java/myapp/BooksController.java
 ----
-include::{testsviewsVelocity}/groovy/io/micronaut/views/model/security/BooksController.java[tags=class]
+include::{testsviewsVelocity}/java/io/micronaut/views/model/security/BooksController.java[tags=class]
 ----
 
 and still access the authenticated user in the view (for example a velocity template):
