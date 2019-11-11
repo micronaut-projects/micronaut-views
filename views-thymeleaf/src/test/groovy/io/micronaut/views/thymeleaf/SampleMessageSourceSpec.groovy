@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 class SampleMessageSourceSpec extends Specification {
 
-    void "test sample messages are bundled"() {
+    void "test sample messages bundled"() {
         given:
         ApplicationContext ctx = ApplicationContext.run()
 
@@ -15,6 +15,17 @@ class SampleMessageSourceSpec extends Specification {
 
         then:
         "Sample Title" == sampleMessageSource.getMessage("sample.title", MessageSource.MessageContext.DEFAULT).orElse("null")
+    }
+
+    void "test sample messages spanish locale"() {
+        given:
+        ApplicationContext ctx = ApplicationContext.run()
+
+        when:
+        SampleMessageSource sampleMessageSource = ctx.getBean(SampleMessageSource)
+
+        then:
+        "Título de muestra" == sampleMessageSource.getMessage("sample.title", MessageSource.MessageContext.of(new Locale("es", "ES"))).orElse("null")
     }
 
     void "test interpolate"() {

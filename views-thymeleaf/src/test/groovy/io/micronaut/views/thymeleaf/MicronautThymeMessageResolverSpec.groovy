@@ -25,6 +25,24 @@ class MicronautThymeMessageResolverSpec extends Specification {
         content.contains("SampleLastName")
     }
 
+    void "test template engine resolves micronaut message bundle different locale"() {
+        given:
+        ApplicationContext ctx = ApplicationContext.run()
+        TemplateEngine templateEngine = ctx.getBean(TemplateEngine)
+
+        when:
+        // the model for the template
+        Context context = new Context(new Locale("es", "ES"));
+        context.setVariable("firstName", "SampleFirstName");
+        context.setVariable("lastName", "SampleLastName");
+        String content = templateEngine.process("thymeleaf/sample", context)
+
+        then:
+        content.contains("Título de muestra")
+        content.contains("Texto de ejemplo")
+        content.contains("Este es un mensaje con la primera sustitución SampleFirstName Y luego segunda sustitución SampleLastName.")
+    }
+
     void "test template engine uses thyme standard resolver"() {
         given:
         ApplicationContext ctx = ApplicationContext.run()

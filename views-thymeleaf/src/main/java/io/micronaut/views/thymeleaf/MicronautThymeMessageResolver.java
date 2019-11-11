@@ -39,17 +39,22 @@ public class MicronautThymeMessageResolver extends AbstractMessageResolver {
     public final String resolveMessage(
             final ITemplateContext context, final Class<?> origin, final String key, final Object[] messageParameters) {
 
+        Validate.notNull(context.getLocale(), "Locale in context cannot be null");
         Validate.notNull(key, "Message key cannot be null");
+
+        MessageSource.MessageContext messageContext;
 
         if (messageParameters.length > 0) {
             Map<String, Object> variables = translateMessagesToMap(messageParameters);
-            Optional<String> template = this.messageSource.getMessage(key, MessageSource.MessageContext.DEFAULT);
+            messageContext = MessageSource.MessageContext.of(context.getLocale(), variables);
+            Optional<String> template = this.messageSource.getMessage(key, messageContext);
             if (template.isPresent()) {
-                return this.messageSource.interpolate(template.get(), MessageSource.MessageContext.of(variables));
+                return this.messageSource.interpolate(template.get(),  messageContext);
             }
         }
 
-        Optional<String> value = this.messageSource.getMessage(key, MessageSource.MessageContext.DEFAULT);
+        messageContext = MessageSource.MessageContext.of(context.getLocale());
+        Optional<String> value = this.messageSource.getMessage(key, messageContext);
         return value.orElse(null);
     }
 
