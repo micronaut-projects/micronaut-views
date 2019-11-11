@@ -12,11 +12,17 @@ class MicronautThymeMessageResolverSpec extends Specification {
         TemplateEngine templateEngine = ctx.getBean(TemplateEngine)
 
         when:
-        String content = templateEngine.process("thymeleaf/sample", new Context())
+        // the model for the template
+        Context context = new Context();
+        context.setVariable("firstName", "SampleFirstName");
+        context.setVariable("lastName", "SampleLastName");
+        String content = templateEngine.process("thymeleaf/sample", context)
 
         then:
         content.contains("Sample Title")
-        content.contains("sample body")
+        content.contains("Sample body")
+        content.contains("SampleFirstName")
+        content.contains("SampleLastName")
     }
 
     void "test template engine uses standard resolver on error"() {

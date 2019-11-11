@@ -7,5 +7,9 @@
     <body>
         <h1><span th:text="#{sample.title}"></span></h1>
         <p><span th:text="#{sample.body}"></span> </p>
+
+        <!--/*@thymesVar id="firstName" type="java.lang.String"*/-->
+        <!--/*@thymesVar id="lastName" type="java.lang.String"*/-->
+        <span th:text="#{sample.template(${firstName}, ${lastName})}"></span> </p>
     </body>
 </html>
