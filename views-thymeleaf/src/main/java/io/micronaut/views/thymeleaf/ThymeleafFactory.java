@@ -37,9 +37,6 @@ import javax.inject.Singleton;
 @Factory
 public class ThymeleafFactory {
 
-    @Inject
-    private MicronautThymeMessageResolver micronautThymeMessageResolver;
-
     /**
      * Constructs the template resolver bean.
      *
@@ -75,12 +72,14 @@ public class ThymeleafFactory {
      */
     @Singleton
     public TemplateEngine templateEngine(ITemplateResolver templateResolver,
-            IEngineContextFactory engineContextFactory, ILinkBuilder linkBuilder) {
+                                         IEngineContextFactory engineContextFactory,
+                                         ILinkBuilder linkBuilder,
+                                         MicronautThymeMessageResolver micronautThymeMessageResolver) {
         TemplateEngine engine = new TemplateEngine();
         engine.setEngineContextFactory(engineContextFactory);
         engine.setLinkBuilder(linkBuilder);
         engine.setTemplateResolver(templateResolver);
-        engine.addMessageResolver(this.micronautThymeMessageResolver);
+        engine.addMessageResolver(micronautThymeMessageResolver);
         return engine;
     }
 }
