@@ -16,6 +16,7 @@ import java.util.Map;
  * micronaut message properties.
  *
  * @author Nirav Assar
+ * @since 1.3.0
  */
 @Singleton
 public class MessageSourceMessageResolver extends AbstractMessageResolver {
