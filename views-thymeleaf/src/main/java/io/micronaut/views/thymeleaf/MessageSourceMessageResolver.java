@@ -18,7 +18,7 @@ import java.util.Map;
  * @author Nirav Assar
  */
 @Singleton
-public class MicronautThymeMessageResolver extends AbstractMessageResolver {
+public class MessageSourceMessageResolver extends AbstractMessageResolver {
 
     private final StandardMessageResolver standardMessageResolver;
     private final MessageSource messageSource;
@@ -29,7 +29,7 @@ public class MicronautThymeMessageResolver extends AbstractMessageResolver {
      *
      * @param messageSource Micronaut message source
      */
-    public MicronautThymeMessageResolver(MessageSource messageSource) {
+    public MessageSourceMessageResolver(MessageSource messageSource) {
         this.standardMessageResolver = new StandardMessageResolver();
         this.messageSource = messageSource;
     }

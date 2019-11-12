@@ -25,7 +25,6 @@ import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
@@ -68,18 +67,19 @@ public class ThymeleafFactory {
      * @param templateResolver The template resolver
      * @param engineContextFactory The engine context factory
      * @param linkBuilder The link builder
+     * @param messageSourceMessageResolver The message resolver
      * @return The template engine
      */
     @Singleton
     public TemplateEngine templateEngine(ITemplateResolver templateResolver,
                                          IEngineContextFactory engineContextFactory,
                                          ILinkBuilder linkBuilder,
-                                         MicronautThymeMessageResolver micronautThymeMessageResolver) {
+                                         MessageSourceMessageResolver messageSourceMessageResolver) {
         TemplateEngine engine = new TemplateEngine();
         engine.setEngineContextFactory(engineContextFactory);
         engine.setLinkBuilder(linkBuilder);
         engine.setTemplateResolver(templateResolver);
-        engine.addMessageResolver(micronautThymeMessageResolver);
+        engine.addMessageResolver(messageSourceMessageResolver);
         return engine;
     }
 }
