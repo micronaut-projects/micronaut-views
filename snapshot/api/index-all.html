@@ -106,6 +106,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/freemarker/VersionTypeConverter.html#convert-java.lang.CharSequence-java.lang.Class-io.micronaut.core.convert.ConversionContext-">convert(CharSequence, Class&lt;Version&gt;, ConversionContext)</a></span> - Method in class io.micronaut.views.freemarker.<a href="io/micronaut/views/freemarker/VersionTypeConverter.html" title="class in io.micronaut.views.freemarker">VersionTypeConverter</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html#createAbsentMessageRepresentation-org.thymeleaf.context.ITemplateContext-java.lang.Class-java.lang.String-java.lang.Object:A-">createAbsentMessageRepresentation(ITemplateContext, Class&lt;?&gt;, String, Object[])</a></span> - Method in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html" title="class in io.micronaut.views.thymeleaf">MessageSourceMessageResolver</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/thymeleaf/EngineContextFactory.html#createEngineContext-org.thymeleaf.IEngineConfiguration-org.thymeleaf.engine.TemplateData-java.util.Map-org.thymeleaf.context.IContext-">createEngineContext(IEngineConfiguration, TemplateData, Map&lt;String, Object&gt;, IContext)</a></span> - Method in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/EngineContextFactory.html" title="class in io.micronaut.views.thymeleaf">EngineContextFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/csp/CspFilter.html#CSP_HEADER">CSP_HEADER</a></span> - Static variable in class io.micronaut.views.csp.<a href="io/micronaut/views/csp/CspFilter.html" title="class in io.micronaut.views.csp">CspFilter</a></dt>
@@ -559,6 +561,15 @@
 </a>
 <h2 class="title">M</h2>
 <dl>
+<dt><a href="io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html" title="class in io.micronaut.views.thymeleaf"><span class="typeNameLink">MessageSourceMessageResolver</span></a> - Class in <a href="io/micronaut/views/thymeleaf/package-summary.html">io.micronaut.views.thymeleaf</a></dt>
+<dd>
+<div class="block">Resolves messages with the Micronaut MessageSource.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html#MessageSourceMessageResolver-io.micronaut.context.MessageSource-">MessageSourceMessageResolver(MessageSource)</a></span> - Constructor for class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html" title="class in io.micronaut.views.thymeleaf">MessageSourceMessageResolver</a></dt>
+<dd>
+<div class="block">Constructor which will initialize teh thymeleaf standard message resolver, and also the message source for
+ Micronaut.</div>
+</dd>
 <dt><a href="io/micronaut/views/ModelAndView.html" title="class in io.micronaut.views"><span class="typeNameLink">ModelAndView</span></a>&lt;<a href="io/micronaut/views/ModelAndView.html" title="type parameter in ModelAndView">T</a>&gt; - Class in <a href="io/micronaut/views/package-summary.html">io.micronaut.views</a></dt>
 <dd>
 <div class="block">Holder for both Model and View.</div>
@@ -702,6 +713,8 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/views/ViewsRenderer.html#render-java.lang.String-java.lang.Object-">render(String, Object)</a></span> - Method in interface io.micronaut.views.<a href="io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/ViewsRenderer.html#render-java.lang.String-java.lang.Object-io.micronaut.http.HttpRequest-">render(String, Object, HttpRequest&lt;?&gt;)</a></span> - Method in interface io.micronaut.views.<a href="io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html#resolveMessage-org.thymeleaf.context.ITemplateContext-java.lang.Class-java.lang.String-java.lang.Object:A-">resolveMessage(ITemplateContext, Class&lt;?&gt;, String, Object[])</a></span> - Method in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html" title="class in io.micronaut.views.thymeleaf">MessageSourceMessageResolver</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/ViewsFilter.html#resolveModel-java.lang.Object-">resolveModel(Object)</a></span> - Method in class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
 <dd>
@@ -942,7 +955,7 @@
 </a>
 <h2 class="title">T</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="io/micronaut/views/thymeleaf/ThymeleafFactory.html#templateEngine-org.thymeleaf.templateresolver.ITemplateResolver-org.thymeleaf.context.IEngineContextFactory-org.thymeleaf.linkbuilder.ILinkBuilder-">templateEngine(ITemplateResolver, IEngineContextFactory, ILinkBuilder)</a></span> - Method in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/ThymeleafFactory.html" title="class in io.micronaut.views.thymeleaf">ThymeleafFactory</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/thymeleaf/ThymeleafFactory.html#templateEngine-org.thymeleaf.templateresolver.ITemplateResolver-org.thymeleaf.context.IEngineContextFactory-org.thymeleaf.linkbuilder.ILinkBuilder-io.micronaut.views.thymeleaf.MessageSourceMessageResolver-">templateEngine(ITemplateResolver, IEngineContextFactory, ILinkBuilder, MessageSourceMessageResolver)</a></span> - Method in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/ThymeleafFactory.html" title="class in io.micronaut.views.thymeleaf">ThymeleafFactory</a></dt>
 <dd>
 <div class="block">Constructs the template engine.</div>
 </dd>

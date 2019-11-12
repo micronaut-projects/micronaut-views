@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../io/micronaut/views/thymeleaf/LinkBuilder.html" title="class in io.micronaut.views.thymeleaf"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html" title="class in io.micronaut.views.thymeleaf"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html" title="class in io.micronaut.views.thymeleaf"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -154,9 +154,10 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>org.thymeleaf.TemplateEngine</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafFactory.html#templateEngine-org.thymeleaf.templateresolver.ITemplateResolver-org.thymeleaf.context.IEngineContextFactory-org.thymeleaf.linkbuilder.ILinkBuilder-">templateEngine</a></span>(org.thymeleaf.templateresolver.ITemplateResolver&nbsp;templateResolver,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafFactory.html#templateEngine-org.thymeleaf.templateresolver.ITemplateResolver-org.thymeleaf.context.IEngineContextFactory-org.thymeleaf.linkbuilder.ILinkBuilder-io.micronaut.views.thymeleaf.MessageSourceMessageResolver-">templateEngine</a></span>(org.thymeleaf.templateresolver.ITemplateResolver&nbsp;templateResolver,
               org.thymeleaf.context.IEngineContextFactory&nbsp;engineContextFactory,
-              org.thymeleaf.linkbuilder.ILinkBuilder&nbsp;linkBuilder)</code>
+              org.thymeleaf.linkbuilder.ILinkBuilder&nbsp;linkBuilder,
+              <a href="../../../../io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html" title="class in io.micronaut.views.thymeleaf">MessageSourceMessageResolver</a>&nbsp;messageSourceMessageResolver)</code>
 <div class="block">Constructs the template engine.</div>
 </td>
 </tr>
@@ -225,7 +226,7 @@ public&nbsp;org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver&
 </dl>
 </li>
 </ul>
-<a name="templateEngine-org.thymeleaf.templateresolver.ITemplateResolver-org.thymeleaf.context.IEngineContextFactory-org.thymeleaf.linkbuilder.ILinkBuilder-">
+<a name="templateEngine-org.thymeleaf.templateresolver.ITemplateResolver-org.thymeleaf.context.IEngineContextFactory-org.thymeleaf.linkbuilder.ILinkBuilder-io.micronaut.views.thymeleaf.MessageSourceMessageResolver-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -234,13 +235,15 @@ public&nbsp;org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver&
 <pre>@Singleton
 public&nbsp;org.thymeleaf.TemplateEngine&nbsp;templateEngine(org.thymeleaf.templateresolver.ITemplateResolver&nbsp;templateResolver,
                                                               org.thymeleaf.context.IEngineContextFactory&nbsp;engineContextFactory,
-                                                              org.thymeleaf.linkbuilder.ILinkBuilder&nbsp;linkBuilder)</pre>
+                                                              org.thymeleaf.linkbuilder.ILinkBuilder&nbsp;linkBuilder,
+                                                              <a href="../../../../io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html" title="class in io.micronaut.views.thymeleaf">MessageSourceMessageResolver</a>&nbsp;messageSourceMessageResolver)</pre>
 <div class="block">Constructs the template engine.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>templateResolver</code> - The template resolver</dd>
 <dd><code>engineContextFactory</code> - The engine context factory</dd>
 <dd><code>linkBuilder</code> - The link builder</dd>
+<dd><code>messageSourceMessageResolver</code> - The message resolver</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The template engine</dd>
 </dl>
@@ -273,7 +276,7 @@ public&nbsp;org.thymeleaf.TemplateEngine&nbsp;templateEngine(org.thymeleaf.templ
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../io/micronaut/views/thymeleaf/LinkBuilder.html" title="class in io.micronaut.views.thymeleaf"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html" title="class in io.micronaut.views.thymeleaf"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html" title="class in io.micronaut.views.thymeleaf"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
