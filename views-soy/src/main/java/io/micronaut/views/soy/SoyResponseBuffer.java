@@ -45,10 +45,10 @@ import java.nio.charset.StandardCharsets;
 @SuppressWarnings("unused")
 public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppendable {
   private static final Logger LOG = LoggerFactory.getLogger(SoyResponseBuffer.class);
-  private static final int DEFAULT_BUFFER_SIZE = 2048;
-  private static final int MAX_BUFFER_CHUNKS = 4096;
+  private static final int DEFAULT_BUFFER_SIZE = 4096;
+  private static final int MAX_BUFFER_CHUNKS = 2048;
   private static final int DEFAULT_INITIAL_BUFFER = 1024;
-  static final int MAX_CHUNK_SIZE = DEFAULT_INITIAL_BUFFER;
+  static final int MAX_CHUNK_SIZE = DEFAULT_INITIAL_BUFFER * 2;
   private static final float DEFAULT_SOFT_LIMIT = 0.8f;
   private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
   private static final ByteBufAllocator ALLOCATOR = PooledByteBufAllocator.DEFAULT;
@@ -158,12 +158,22 @@ public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppe
     return buffer.readSlice(Math.min(maxBytes, availableBytes)).asReadOnly().retain();
   }
 
+  private void ensureChunkSize(int size) {
+    if (chunk.capacity() > (chunk.writerIndex() + size)) {
+      // we need to allocate a new chunk real fast
+      buffer.addComponent(true, chunk);
+      chunk = allocateChunk();
+    } else {
+      chunk.ensureWritable(size);
+    }
+  }
+
   // -- Incoming Data -- //
 
   @Override
   public AdvisingAppendable append(CharSequence charSequence) {
     int size = charSequence.length();
-    chunk.ensureWritable(size);
+    ensureChunkSize(size);
     chunk.writeCharSequence(charSequence, charset);
     if (LOG.isTraceEnabled()) {
       LOG.trace("Appended char seq of size = " + charSequence.length() +
@@ -179,7 +189,7 @@ public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppe
 
   @Override
   public AdvisingAppendable append(char c) {
-    chunk.ensureWritable(1);
+    ensureChunkSize(1);
     char[] item = {c};
     chunk.writeCharSequence(CharBuffer.wrap(item), charset);
     if (LOG.isTraceEnabled()) {
