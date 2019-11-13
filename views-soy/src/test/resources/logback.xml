@@ -11,6 +11,9 @@
     <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
+    <logger name="io.micronaut.views.soy.SoySauceViewsRenderer" level="TRACE"/>
+    <logger name="io.micronaut.views.soy.SoyResponseBuffer" level="TRACE"/>
+    <logger name="io.micronaut.views.soy.SoyRender" level="TRACE"/>
     <logger name="io.micronaut.context.condition" level="DEBUG"/>
     <logger name="io.micronaut.docs" level="DEBUG"/>
 </configuration>

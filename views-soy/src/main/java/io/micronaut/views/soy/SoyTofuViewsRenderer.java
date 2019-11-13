@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.micronaut.views.soy;
+
 
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofuException;
@@ -61,7 +61,11 @@ public class SoyTofuViewsRenderer implements ViewsRenderer {
                        SoyViewsRendererConfigurationProperties soyConfiguration) {
     this.viewsConfiguration = viewsConfiguration;
     this.soyMicronautConfiguration = soyConfiguration;
-    this.soyTofu = soyConfiguration.getFileSet().compileToTofu();
+    if (soyConfiguration.getFileSet() != null) {
+      this.soyTofu = soyConfiguration.getFileSet().compileToTofu();
+    } else {
+      throw new IllegalStateException("Failed to load Soy templates for Tofu render.");
+    }
   }
 
   /**
@@ -79,7 +83,7 @@ public class SoyTofuViewsRenderer implements ViewsRenderer {
     renderer.setData(context);
 
     try {
-      final AppendableToWritable target = new AppendableToWritable();
+      final SoyRender target = SoyRender.create();
       renderer.renderHtml(target);
       return target;
 

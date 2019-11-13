@@ -1,7 +1,6 @@
 package io.micronaut.docs
 
 import io.micronaut.context.ApplicationContext
-import io.micronaut.core.io.Writable
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
@@ -10,14 +9,12 @@ import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
 import io.micronaut.views.csp.CspFilter
-import io.micronaut.views.soy.AppendableToWritable
 import io.micronaut.views.soy.SoySauceViewsRenderer
 import io.micronaut.views.soy.SoyViewsRendererConfigurationProperties
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
-import java.nio.charset.StandardCharsets
 import java.util.regex.Pattern
 
 
@@ -106,27 +103,6 @@ class SoySauceViewRendererSpec extends Specification {
         e.status == HttpStatus.NOT_FOUND
     }
 
-    def "AppendableToWritable should work as an Appendable and a Writable"() {
-        when:
-        AppendableToWritable obj = new AppendableToWritable()
-        Appendable objAsAppendable = obj
-        Writable objAsWritable = obj
-        obj.append("hello 123")
-        objAsAppendable.append("456789", 3, 5)
-        objAsAppendable.append("0".toCharArray()[0])
-
-        then:
-        noExceptionThrown()
-
-        when:
-        OutputStream outputStream = new ByteArrayOutputStream()
-        objAsWritable.writeTo(outputStream, StandardCharsets.UTF_8)
-        String encoded = new String(outputStream.toByteArray(), StandardCharsets.UTF_8)
-
-        then:
-        encoded == "hello 123780"
-    }
-
     def "invoking /soy renders soy template with built-in CSP nonce support"() {
         when:
         HttpResponse<String> rsp = client.toBlocking().exchange('/soy', String)
@@ -195,5 +171,16 @@ class SoySauceViewRendererSpec extends Specification {
         rsp2.body().contains("nonce=\"${nonceValue2}\"")
         !rsp.body().contains(nonceValue2)
         !rsp2.body().contains(nonceValue)
+    }
+
+    def "invoking /soy/invalidContext should produce an exception describing invalid context"() {
+        when:
+        client.toBlocking().exchange('/soy/invalidContext', String)
+
+        then:
+        def e = thrown(HttpClientResponseException)
+
+        and:
+        e.status == HttpStatus.INTERNAL_SERVER_ERROR
     }
 }

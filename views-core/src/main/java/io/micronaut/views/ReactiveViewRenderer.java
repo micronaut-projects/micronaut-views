@@ -17,7 +17,6 @@ package io.micronaut.views;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MutableHttpResponse;
-import io.netty.buffer.ByteBuf;
 import io.reactivex.Flowable;
 
 import javax.annotation.Nonnull;
@@ -25,14 +24,14 @@ import javax.annotation.Nullable;
 
 
 /**
- * Asynchronous rendering interface for views in Micronaut. This interface works with reactive types to allow the event
- * loop to take over when the renderer is paused, in cases where renderers support such signals.
+ * Reactive rendering interface for views in Micronaut. This interface works with reactive types to allow the event loop
+ * to take over when the renderer is paused, in cases where view rendering supports such signals.
  *
  * @see ViewsRenderer for the synchronous version
  * @author Sam Gammon
  * @since 1.3.0
  */
-public interface AsyncViewsRenderer extends BaseViewsRenderer {
+public interface ReactiveViewRenderer extends BaseViewsRenderer {
   /**
    * @param viewName view name to be render
    * @param data     response body to render it with a view
@@ -41,7 +40,7 @@ public interface AsyncViewsRenderer extends BaseViewsRenderer {
    * @return A writable where the view will be written to.
    */
   @Nonnull
-  Flowable<MutableHttpResponse<ByteBuf>> render(
+  Flowable render(
     @Nonnull String viewName,
     @Nullable Object data,
     @Nonnull HttpRequest<?> request,

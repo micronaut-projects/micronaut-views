@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.micronaut.views.soy;
+
 
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.jbcsrc.api.SoySauce;
@@ -47,6 +47,11 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
   public static final boolean DEFAULT_ENABLED = true;
 
   /**
+   * Default buffer/chunk size.
+   */
+  public static final int DEFAULT_CHUNK_SIZE = SoyResponseBuffer.MAX_CHUNK_SIZE;
+
+  /**
    * The default Soy rendering engine.
    */
   @SuppressWarnings("WeakerAccess")
@@ -60,6 +65,7 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
 
   private boolean enabled = DEFAULT_ENABLED;
   private boolean renaming = DEFAULT_RENAMING;
+  private int chunkSize = DEFAULT_CHUNK_SIZE;
   private String engine = DEFAULT_ENGINE;
   private SoyFileSetProvider fileSetProvider;
 
@@ -124,4 +130,19 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
     return fileSetProvider.provideCompiledTemplates();
   }
 
+  /**
+   * @return The current chunk size, used when sizing buffers for render
+   */
+  public int getChunkSize() {
+    return chunkSize;
+  }
+
+  /**
+   * Set the chunk size for render buffers.
+   *
+   * @param chunkSize Buffer chunk size
+   */
+  public void setChunkSize(int chunkSize) {
+    this.chunkSize = chunkSize;
+  }
 }

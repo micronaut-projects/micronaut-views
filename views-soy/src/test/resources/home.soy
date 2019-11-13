@@ -19,6 +19,7 @@
 {template .home}
   {@param loggedIn: bool}  // Whether the user is logged in.
   {@param? username: string}  // The user's username, if they are logged in.
+  {@param? message: string}  // Message to display at the tail end of the page.
 
   <!DOCTYPE html>
   <html lang="en">
@@ -27,10 +28,15 @@
     <script type="text/javascript">alert("Hello, CSP!");</script>
   </head>
   <body>
-  {if $loggedIn}
+  {if $loggedIn and isNonnull($username)}
       <h1>username: <span>{$username}</span></h1>
   {else}
       <h1>You are not logged in</h1>
+  {/if}
+  {if isNonnull($message)}
+    <b class="{css('message')}">{$message}</b>
+  {else}
+    <b class="{css('message')}">Blocking</b>
   {/if}
   </body>
   </html>

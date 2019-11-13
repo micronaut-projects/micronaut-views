@@ -9,7 +9,7 @@ import io.micronaut.http.client.RxHttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
-import io.micronaut.views.soy.AppendableToWritable
+import io.micronaut.views.soy.SoyRender
 import io.micronaut.views.soy.SoyTofuViewsRenderer
 import io.micronaut.views.soy.SoyViewsRendererConfigurationProperties
 import spock.lang.AutoCleanup
@@ -109,26 +109,5 @@ class SoyTofuViewRendererSpec extends Specification {
 
         and:
         e.status == HttpStatus.INTERNAL_SERVER_ERROR
-    }
-
-    def "AppendableToWritable should work as an Appendable and a Writable"() {
-        when:
-        AppendableToWritable obj = new AppendableToWritable()
-        Appendable objAsAppendable = obj
-        Writable objAsWritable = obj
-        obj.append("hello 123")
-        objAsAppendable.append("456789", 3, 5)
-        objAsAppendable.append("0".toCharArray()[0])
-
-        then:
-        noExceptionThrown()
-
-        when:
-        OutputStream outputStream = new ByteArrayOutputStream()
-        objAsWritable.writeTo(outputStream, StandardCharsets.UTF_8)
-        String encoded = new String(outputStream.toByteArray(), StandardCharsets.UTF_8)
-
-        then:
-        encoded == "hello 123780"
     }
 }

@@ -15,28 +15,15 @@
  */
 package io.micronaut.views.soy;
 
-import com.google.template.soy.SoyFileSet;
-import com.google.template.soy.jbcsrc.api.SoySauce;
 
-import javax.annotation.Nullable;
+import com.google.template.soy.jbcsrc.api.AdvisingAppendable;
+import io.micronaut.core.io.Writable;
 
 
 /**
- * Interface via DI to acquire a {@link SoyFileSet}.
- *
- * @author Sam Gammon (sam@bloombox.io)
- * @since 1.2.1
+ * Combines the interfaces necessary to adhere to both the {@link AdvisingAppendable} surface (used in new-style Soy
+ * rendering, which is async/reactive), and {@link Writable}, which is used in the old-style Soy rendering.
  */
-public interface SoyFileSetProvider {
-  /**
-   * @return Soy file set to render templates with
-   */
-  @Nullable SoyFileSet provideSoyFileSet();
-
-  /**
-   * @return Compiled set of Soy templates, if supported
-   */
-  default @Nullable SoySauce provideCompiledTemplates() {
-    return null;
-  }
+public interface AdvisingAppendableToWritable extends AdvisingAppendable, Writable {
+  /* no-op */
 }

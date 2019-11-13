@@ -9,6 +9,7 @@ dependencies {
     compile "io.micronaut:micronaut-http:$micronautVersion"
     compile "io.micronaut:micronaut-http-server:$micronautVersion"
     compile dependencyVersion("soy")
+    compile dependencyVersion("commonsIo")
 
     testCompile "io.micronaut:micronaut-http-client"
     testCompile "io.micronaut:micronaut-inject-groovy"
@@ -18,4 +19,5 @@ dependencies {
 
     testCompile "org.yaml:snakeyaml:$snakeYamlVersion"
     testRuntime dependencyVersion("soy")
+    testRuntime dependencyVersion("commonsIo")
 }
