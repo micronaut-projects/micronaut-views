@@ -161,8 +161,9 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
                                           @Nonnull MutableHttpResponse<?> response) {
     ArgumentUtils.requireNonNull("viewName", viewName);
     LOG.debug("Preparing render for template path '" + viewName + "'");
+    int statusCode = response.getStatus().getCode();
 
-    if ((!(data instanceof Map) && !(data instanceof SoyData)) || data instanceof HttpResponse) {
+    if ((!(data instanceof Map) && !(data instanceof SoyData)) || statusCode != 200) {
       // we were passed something other than context data for a render operation. so, duck out gracefully.
       LOG.debug("Data was not a `Map` or `SoyData`. Returning untouched by Soy for view '" + viewName + "'.");
       return Flowable.just(response);
