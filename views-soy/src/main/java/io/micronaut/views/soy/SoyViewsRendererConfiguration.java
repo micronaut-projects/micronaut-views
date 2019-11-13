@@ -15,7 +15,6 @@
  */
 package io.micronaut.views.soy;
 
-
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.jbcsrc.api.SoySauce;
 import io.micronaut.core.util.Toggleable;

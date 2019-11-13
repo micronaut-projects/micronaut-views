@@ -16,4 +16,6 @@
     <logger name="io.micronaut.views.soy.SoyRender" level="TRACE"/>
     <logger name="io.micronaut.context.condition" level="DEBUG"/>
     <logger name="io.micronaut.docs" level="DEBUG"/>
+    <logger name="io.micronaut.context.condition" level="DEBUG"/>
+    <logger name="io.micronaut.docs" level="DEBUG"/>
 </configuration>
