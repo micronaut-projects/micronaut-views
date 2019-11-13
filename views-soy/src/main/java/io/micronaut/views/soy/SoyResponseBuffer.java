@@ -45,7 +45,6 @@ import java.nio.charset.StandardCharsets;
 @SuppressWarnings("unused")
 public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppendable {
   private static final Logger LOG = LoggerFactory.getLogger(SoyResponseBuffer.class);
-  private static final int DEFAULT_BUFFER_SIZE = 4096;
   private static final int MAX_BUFFER_CHUNKS = 2048;
   private static final int DEFAULT_INITIAL_BUFFER = 1024;
   static final int MAX_CHUNK_SIZE = DEFAULT_INITIAL_BUFFER * 2;
@@ -58,7 +57,6 @@ public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppe
   private final Charset charset;
   private final float softLimit;
   private final int initialBufferSize;
-  private final int maxBufferSize;
 
   // -- Constructors -- //
 
@@ -66,7 +64,7 @@ public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppe
    * Construct an `SoyResponseBuffer` backed by a buffer of default size, with the default charset.
    */
   SoyResponseBuffer() {
-    this(DEFAULT_CHARSET, DEFAULT_INITIAL_BUFFER, DEFAULT_BUFFER_SIZE, DEFAULT_SOFT_LIMIT);
+    this(DEFAULT_CHARSET, DEFAULT_INITIAL_BUFFER, DEFAULT_SOFT_LIMIT);
   }
 
   /**
@@ -75,7 +73,7 @@ public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppe
    * @param charset Character set to use.
    */
   public SoyResponseBuffer(Charset charset) {
-    this(charset, DEFAULT_INITIAL_BUFFER, DEFAULT_BUFFER_SIZE);
+    this(charset, DEFAULT_INITIAL_BUFFER);
   }
 
   /**
@@ -84,8 +82,8 @@ public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppe
    * @param charset Charset to use.
    * @param initialBufferSize Initial buffer size to use.
    */
-  private SoyResponseBuffer(Charset charset, int initialBufferSize, int maxBufferSize) {
-    this(charset, initialBufferSize, maxBufferSize, DEFAULT_SOFT_LIMIT);
+  private SoyResponseBuffer(Charset charset, int initialBufferSize) {
+    this(charset, initialBufferSize, DEFAULT_SOFT_LIMIT);
   }
 
   /**
@@ -93,19 +91,15 @@ public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppe
    *
    * @param charset Charset to use.
    * @param initialBufferSize Buffer size to use.
-   * @param maxBufferSize Maximum buffer size to use.
    * @param softLimitRatio Ratio of buffer fill at which to begin reporting `true` for {@link #softLimitReached()}.
    */
-  private SoyResponseBuffer(Charset charset, int initialBufferSize, int maxBufferSize, float softLimitRatio) {
-    if (maxBufferSize < 1) {
-      throw new IllegalArgumentException("Cannot create `SoyResponseBuffer` with max buffer size less than 1.");
-    } else if (softLimitRatio > 1.0 || softLimitRatio < 0.0) {
+  private SoyResponseBuffer(Charset charset, int initialBufferSize, float softLimitRatio) {
+    if (softLimitRatio > 1.0 || softLimitRatio < 0.0) {
       throw new IllegalArgumentException(
         "Cannot create `SoyResponseBuffer` with soft limit ratio of: '" + softLimitRatio + "'.");
     }
     this.charset = charset;
     this.softLimit = softLimitRatio;
-    this.maxBufferSize = maxBufferSize;
     this.initialBufferSize = initialBufferSize;
     this.buffer = ALLOCATOR.compositeDirectBuffer(MAX_BUFFER_CHUNKS);
     this.chunk = allocateChunk();
@@ -118,9 +112,9 @@ public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppe
    */
   private ByteBuf allocateChunk() {
     if (LOG.isTraceEnabled()) {
-      LOG.trace("Allocating chunk of sizing = i: " + initialBufferSize + ", m: " + maxBufferSize);
+      LOG.trace("Allocating chunk of sizing = " + initialBufferSize);
     }
-    return ALLOCATOR.directBuffer(initialBufferSize, maxBufferSize);
+    return ALLOCATOR.directBuffer(initialBufferSize);
   }
 
   // -- Internals -- //
@@ -158,26 +152,25 @@ public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppe
     return buffer.readSlice(Math.min(maxBytes, availableBytes)).asReadOnly().retain();
   }
 
-  private void ensureChunkSize(int size) {
-    if (chunk.capacity() > (chunk.writerIndex() + size)) {
-      // we need to allocate a new chunk real fast
-      buffer.addComponent(true, chunk);
-      chunk = allocateChunk();
-    } else {
-      chunk.ensureWritable(size);
-    }
-  }
-
   // -- Incoming Data -- //
 
   @Override
   public AdvisingAppendable append(CharSequence charSequence) {
     int size = charSequence.length();
-    ensureChunkSize(size);
+    int available = (chunk.capacity() - chunk.writerIndex() - 1);
+    int balance = available - size;
+    if (balance < 0) {
+      buffer.addComponent(true, chunk);
+      chunk = allocateChunk();
+    }
+
+    // we can write it, there is either enough space or we made enough space
+    chunk.ensureWritable(size);
     chunk.writeCharSequence(charSequence, charset);
+
     if (LOG.isTraceEnabled()) {
       LOG.trace("Appended char seq of size = " + charSequence.length() +
-                " (c: " + chunk.writerIndex() + ", b: " + buffer.writerIndex() + ")");
+        " (c: " + chunk.writerIndex() + ", b: " + buffer.writerIndex() + ")");
     }
     return this;
   }
@@ -189,13 +182,8 @@ public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppe
 
   @Override
   public AdvisingAppendable append(char c) {
-    ensureChunkSize(1);
     char[] item = {c};
-    chunk.writeCharSequence(CharBuffer.wrap(item), charset);
-    if (LOG.isTraceEnabled()) {
-      LOG.trace("Appended char seq of size = 1 (c: " +
-                chunk.writerIndex() + ", b: " + buffer.writerIndex() + ")");
-    }
+    append(CharBuffer.wrap(item));
     return this;
   }
 
@@ -204,7 +192,7 @@ public class SoyResponseBuffer implements Closeable, AutoCloseable, AdvisingAppe
   @Override
   public boolean softLimitReached() {
     // have we met, or exceeded, soft-limit ratio of the buffer capacity?
-    return (buffer.writerIndex() >= Math.round(Math.min(maxBufferSize, MAX_CHUNK_SIZE) * softLimit));
+    return (buffer.writerIndex() >= Math.round(MAX_CHUNK_SIZE) * softLimit);
   }
 
   // -- Interface: Closeable -- //
