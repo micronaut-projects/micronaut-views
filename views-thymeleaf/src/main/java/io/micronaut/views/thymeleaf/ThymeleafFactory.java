@@ -67,15 +67,19 @@ public class ThymeleafFactory {
      * @param templateResolver The template resolver
      * @param engineContextFactory The engine context factory
      * @param linkBuilder The link builder
+     * @param messageSourceMessageResolver The message resolver
      * @return The template engine
      */
     @Singleton
     public TemplateEngine templateEngine(ITemplateResolver templateResolver,
-            IEngineContextFactory engineContextFactory, ILinkBuilder linkBuilder) {
+                                         IEngineContextFactory engineContextFactory,
+                                         ILinkBuilder linkBuilder,
+                                         MessageSourceMessageResolver messageSourceMessageResolver) {
         TemplateEngine engine = new TemplateEngine();
         engine.setEngineContextFactory(engineContextFactory);
         engine.setLinkBuilder(linkBuilder);
         engine.setTemplateResolver(templateResolver);
+        engine.addMessageResolver(messageSourceMessageResolver);
         return engine;
     }
 }
