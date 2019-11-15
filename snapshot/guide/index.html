@@ -244,6 +244,18 @@ extra properties.</p>
 <div class="paragraph">
 <p>To create your own implementation create a class which implements <a href="../api/io/micronaut/views/ViewsRenderer.html">ViewsRenderer</a> and annotate it with <a href="../api/io/micronaut/http/annotation/Produces.html">@Produces</a> to the media types the view rendering supports producing.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you want to render a template directly on your code (for example, to generate the body of an email) you can inject the ViewsRenderer bean and use its method "render".
+</td>
+</tr>
+</table>
+</div>
 
 
 <h2 id="thymeleaf">2.1 Thymeleaf</h2>
