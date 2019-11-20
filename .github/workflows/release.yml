@@ -27,6 +27,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         BASE_BRANCH: master 
         BRANCH: gh-pages 
+        BETA: true
         FOLDER: build/docs
         VERSION: ${{ steps.release_version.outputs.release_version }}
     - name: Synchronize Maven Central
@@ -34,4 +35,4 @@ jobs:
       env:
          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-      run: ./gradlew sWMC
+      run: ./gradlew sWMC -x views-soy:sWMC
