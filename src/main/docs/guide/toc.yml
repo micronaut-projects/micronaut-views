@@ -9,3 +9,4 @@ views:
   csp: Content Security Policy
   views-security: Security Integration
   graal: GraalVM Support
+repository: Repository
