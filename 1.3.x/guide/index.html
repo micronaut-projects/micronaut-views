@@ -28,6 +28,7 @@
 <body class="body" id="docs" onload="addJsClass();" onhashchange="highlightMenu()">
 
 <div id="table-of-content-nav-link" class="desktop">
+    <a id="theme-switcher" title="Switch to dark theme" href="javascript:switchTheme(true)"><i class="fa fa-moon-o"></i></a>
     <a title="Collapse/Open Table of contents" title="Hide Table of Contents" href="javascript:hideTableOfContents();" class="button">[ + ]</a>
 </div>
 
@@ -38,14 +39,15 @@
         </div>
         <div class="navLinks">
             <ul>
-                    <li>
-                        <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)" class="desktop">
+                    <li class='desktop'><select style='margin-top: 10px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-views/snapshot/guide/index.html'>1.3.0</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-views/1.3.0/guide/index.html'>1.3.0</option><option value='https://micronaut-projects.github.io/micronaut-views/1.3.0.RC1/guide/index.html'>1.3.0.RC1</option><option value='https://micronaut-projects.github.io/micronaut-views/1.2.0/guide/index.html'>1.2.0</option><option value='https://micronaut-projects.github.io/micronaut-views/1.2.0.RC1/guide/index.html'>1.2.0.RC1</option></select></li><li><div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)" class="desktop">
                             <a href="../guide/index.html" class="button">Table of contents</a>
                             <div id="nav-summary-childs" style="display:none;">
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#views"><strong>2</strong><span>Server Side View Rendering</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>3</strong><span>Repository</span></a></div>
                                 
                             </div>
                         </div>
@@ -96,6 +98,8 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>2.8</strong><span>GraalVM Support</span></a></div>
         
+        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>3</strong><span>Repository</span></a></div>
+        
         </div>
     </div>
     
@@ -104,11 +108,10 @@
         <h1>Micronaut Views</h1>
         <p></p>
         <p>Provides integration between Micronaut and server-side views technologies</p>
-        <p><strong>Version:</strong> 1.3.0.RC1</p>
+        <p><strong>Version:</strong> <select style='margin-top: 10px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-views/snapshot/guide/index.html'>1.3.0</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-views/1.3.0/guide/index.html'>1.3.0</option><option value='https://micronaut-projects.github.io/micronaut-views/1.3.0.RC1/guide/index.html'>1.3.0.RC1</option><option value='https://micronaut-projects.github.io/micronaut-views/1.2.0/guide/index.html'>1.2.0</option><option value='https://micronaut-projects.github.io/micronaut-views/1.2.0.RC1/guide/index.html'>1.2.0.RC1</option></select></p>
     </div>
     
-
-<h1 id="introduction">1 Introduction</h1>
+<h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/introduction.adoc"'>
@@ -121,8 +124,7 @@
 <p>This project integrates Micronaut and Server Side View Rendering.</p>
 </div>
 
-
-<h1 id="views">2 Server Side View Rendering</h1>
+<h1 id="views"><a class="anchor" href="#views"></a>2 Server Side View Rendering</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views.adoc"'>
@@ -257,8 +259,7 @@ If you want to render a template directly on your code (for example, to generate
 </table>
 </div>
 
-
-<h2 id="thymeleaf">2.1 Thymeleaf</h2>
+<h2 id="thymeleaf"><a class="anchor" href="#thymeleaf"></a>2.1 Thymeleaf</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/thymeleaf.adoc"'>
@@ -414,8 +415,7 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 MessageSource automatically. For more information on the MessageSource, see the core documentation.</p>
 </div>
 
-
-<h2 id="handlebars">2.2 Handlebars.java</h2>
+<h2 id="handlebars"><a class="anchor" href="#handlebars"></a>2.2 Handlebars.java</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/handlebars.adoc"'>
@@ -471,8 +471,7 @@ the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> proje
 </div>
 </div>
 
-
-<h2 id="velocity">2.3 Apache Velocity</h2>
+<h2 id="velocity"><a class="anchor" href="#velocity"></a>2.3 Apache Velocity</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/velocity.adoc"'>
@@ -528,8 +527,7 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
 </div>
 </div>
 
-
-<h2 id="freemarker">2.4 Apache Freemarker</h2>
+<h2 id="freemarker"><a class="anchor" href="#freemarker"></a>2.4 Apache Freemarker</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/freemarker.adoc"'>
@@ -612,8 +610,7 @@ the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based tem
 <p>If a value is not declared and is null, the default configuration from Freemarker is used. The expected format of each value is the same from Freemarker, and no conversion or validation is done by Micronaut. You can find in <a href="https://freemarker.apache.org/docs/pgui_config.html">Freemarker documentation</a> how to configure each one.</p>
 </div>
 
-
-<h2 id="soy">2.5 Soy/Closure Support</h2>
+<h2 id="soy"><a class="anchor" href="#soy"></a>2.5 Soy/Closure Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/soy.adoc"'>
@@ -1089,8 +1086,7 @@ Compiles templates into Python sources for use server-side.</p>
 </div>
 </div>
 
-
-<h2 id="csp">2.6 Content Security Policy</h2>
+<h2 id="csp"><a class="anchor" href="#csp"></a>2.6 Content Security Policy</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/csp.adoc"'>
@@ -1219,8 +1215,7 @@ mode. Inline scripts can be whitelisted with the syntax:</p>
 </div>
 </div>
 
-
-<h2 id="views-security">2.7 Security Integration</h2>
+<h2 id="views-security"><a class="anchor" href="#views-security"></a>2.7 Security Integration</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/views-security.adoc"'>
@@ -1322,8 +1317,7 @@ public class BooksController {
 <p>You can access information about the current user with the <code>security</code> map.</p>
 </div>
 
-
-<h2 id="graal">2.8 GraalVM Support</h2>
+<h2 id="graal"><a class="anchor" href="#graal"></a>2.8 GraalVM Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/graal.adoc"'>
@@ -1419,6 +1413,22 @@ Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graa
 </td>
 </tr>
 </table>
+</div>
+
+<h1 id="repository"><a class="anchor" href="#repository"></a>3 Repository</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/repository.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can find the source code of this project in this repository:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/micronaut-projects/micronaut-views">https://github.com/micronaut-projects/micronaut-views</a></p>
 </div>
 
     </div>
