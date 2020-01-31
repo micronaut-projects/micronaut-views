@@ -112,7 +112,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>@Produces(value="text/html")
- @Requires(property="micronaut.views.soy.engine",notEquals="tofu") @Requires(property="micronaut.views.soy.enabled",notEquals="false")
+ @Requires(property="micronaut.views.soy.engine",notEquals="tofu") @Requires(classes=com.google.template.soy.jbcsrc.api.SoySauce.class)
  @Singleton
 public class <span class="typeNameLabel">SoySauceViewsRenderer</span>
 extends java.lang.Object

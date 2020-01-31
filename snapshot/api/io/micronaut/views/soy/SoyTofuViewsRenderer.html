@@ -113,7 +113,7 @@ var activeTableTab = "activeTableTab";
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <br>
 <pre>@Produces(value="text/html")
- @Requires(property="micronaut.views.soy.engine",notEquals="sauce") @Requires(property="micronaut.views.soy.enabled",notEquals="false")
+ @Requires(property="micronaut.views.soy.engine",notEquals="sauce") @Requires(classes=com.google.template.soy.tofu.SoyTofu.class)
  @Singleton
  @Deprecated
 public class <span class="typeNameLabel">SoyTofuViewsRenderer</span>
