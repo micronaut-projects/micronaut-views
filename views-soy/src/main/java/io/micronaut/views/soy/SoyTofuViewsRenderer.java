@@ -16,6 +16,7 @@
 
 package io.micronaut.views.soy;
 
+import com.google.template.soy.jbcsrc.api.SoySauce;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofuException;
 import io.micronaut.context.annotation.Requires;
@@ -43,6 +44,7 @@ import java.util.Map;
 @Produces(MediaType.TEXT_HTML)
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".engine", notEquals = "sauce")
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
+@Requires(classes = SoyTofu.class)
 @Singleton
 @Deprecated
 @SuppressWarnings({"WeakerAccess"})

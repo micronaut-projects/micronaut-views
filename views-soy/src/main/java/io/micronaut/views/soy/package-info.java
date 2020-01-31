@@ -21,6 +21,9 @@
  * @since 1.2.1
  */
 @Configuration
+@Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 package io.micronaut.views.soy;
 
 import io.micronaut.context.annotation.Configuration;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.StringUtils;

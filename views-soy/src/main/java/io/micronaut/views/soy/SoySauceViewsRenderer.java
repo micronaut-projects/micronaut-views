@@ -57,6 +57,7 @@ import java.util.concurrent.ExecutionException;
 @Produces(MediaType.TEXT_HTML)
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".engine", notEquals = "tofu")
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
+@Requires(classes = SoySauce.class)
 @Singleton
 @SuppressWarnings({"WeakerAccess", "UnstableApiUsage"})
 public class SoySauceViewsRenderer implements ViewsRenderer {
