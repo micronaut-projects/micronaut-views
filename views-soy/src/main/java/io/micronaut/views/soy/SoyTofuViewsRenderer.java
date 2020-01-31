@@ -16,7 +16,6 @@
 
 package io.micronaut.views.soy;
 
-import com.google.template.soy.jbcsrc.api.SoySauce;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofuException;
 import io.micronaut.context.annotation.Requires;

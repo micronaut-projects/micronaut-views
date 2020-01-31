@@ -73,6 +73,7 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
   /**
    * @param viewsConfiguration Views configuration properties.
    * @param cspConfiguration Content-Security-Policy configuration.
+   * @param namingMapProvider Soy naming map provider
    * @param soyConfiguration   Soy configuration properties.
    */
   @Inject
