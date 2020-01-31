@@ -43,7 +43,6 @@ import java.util.Map;
  */
 @Produces(MediaType.TEXT_HTML)
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".engine", notEquals = "sauce")
-@Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Requires(classes = SoyTofu.class)
 @Singleton
 @Deprecated
