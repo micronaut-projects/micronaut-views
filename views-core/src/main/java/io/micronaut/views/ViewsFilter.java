@@ -134,8 +134,8 @@ public class ViewsFilter implements HttpServerFilter {
                                 ((MutableHttpResponse<Object>) response).body(writable);
                                 return Flowable.just(response);
                             } else {
-                                if (LOG.isDebugEnabled()) {
-                                    LOG.debug("view {} not found ", view);
+                                if (LOG.isWarnEnabled()) {
+                                    LOG.warn("View {} not found ", view);
                                 }
                                 return Flowable.just(HttpResponse.notFound());
                             }
