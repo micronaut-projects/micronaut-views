@@ -58,7 +58,12 @@ ext {
             version: soyVersion,
             group  : 'com.google.template',
             name   : 'soy'
-        ]
+        ],
+        rocker: [
+            version: rockerVersion,
+            group  : 'com.fizzed',
+            name   : 'rocker-runtime'
+        ],
     ]
 
     dependencyVersion = { String name ->
