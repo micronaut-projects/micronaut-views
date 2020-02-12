@@ -97,7 +97,7 @@ class SoyTofuViewRendererSpec extends Specification {
         def e = thrown(HttpClientResponseException)
 
         and:
-        e.status == HttpStatus.NOT_FOUND
+        e.status == HttpStatus.INTERNAL_SERVER_ERROR
     }
 
     def "invoking /soy/invalidContext should produce an exception describing invalid context"() {

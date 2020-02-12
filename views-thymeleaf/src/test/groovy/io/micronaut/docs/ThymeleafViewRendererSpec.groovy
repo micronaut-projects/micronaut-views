@@ -122,7 +122,7 @@ class ThymeleafViewRendererSpec extends Specification {
         def e = thrown(HttpClientResponseException)
 
         and:
-        e.status == HttpStatus.NOT_FOUND
+        e.status == HttpStatus.INTERNAL_SERVER_ERROR
     }
 
     def "invoking /views/nullbody renders view even if the response body is null"() {
