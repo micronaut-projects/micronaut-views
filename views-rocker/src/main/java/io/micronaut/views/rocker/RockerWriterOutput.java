@@ -26,7 +26,7 @@ import java.nio.charset.Charset;
  * {@link Writer} implementation of {@link com.fizzed.rocker.RockerOutput}.
  *
  * @author Sam Adams
- * @since 1.3.1
+ * @since 1.3.2
  */
 public class RockerWriterOutput extends AbstractRockerOutput<RockerWriterOutput>  {
     

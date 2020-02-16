@@ -19,7 +19,7 @@
  * @see <a href="https://github.com/fizzed/rocker">Rocker</a>
  *
  * @author Sam Adams
- * @since 1.0
+ * @since 1.3.2
  */
 @Configuration
 @Requires(property = RockerViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)

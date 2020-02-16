@@ -34,7 +34,7 @@ import java.util.Map;
  * Renders templates with Rocker.
  *
  * @author Sam Adams
- * @since 1.3.1
+ * @since 1.3.2
  */
 @Produces(MediaType.TEXT_HTML)
 @Singleton
