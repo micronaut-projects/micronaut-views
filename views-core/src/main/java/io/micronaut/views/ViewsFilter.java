@@ -25,6 +25,7 @@ import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
+import io.micronaut.views.exceptions.ViewNotFoundException;
 import io.micronaut.views.model.ViewModelProcessor;
 import io.micronaut.web.router.qualifier.ProducesMediaTypeQualifier;
 import io.reactivex.Flowable;
@@ -134,10 +135,7 @@ public class ViewsFilter implements HttpServerFilter {
                                 ((MutableHttpResponse<Object>) response).body(writable);
                                 return Flowable.just(response);
                             } else {
-                                if (LOG.isWarnEnabled()) {
-                                    LOG.warn("View {} not found ", view);
-                                }
-                                return Flowable.just(HttpResponse.notFound());
+                                return Flowable.error(new ViewNotFoundException("View [" + view + "] does not exist"));
                             }
                         }
                     }
