@@ -18,6 +18,7 @@ package io.micronaut.views.rocker;
 
 import com.fizzed.rocker.runtime.RockerRuntime;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.views.ViewsConfiguration;
 
 import javax.inject.Singleton;
 
@@ -31,13 +32,15 @@ import javax.inject.Singleton;
 public class RockerFactory {
 
     /**
+     * @param viewsConfiguration The views configuration
      * @param rockerConfiguration The Rocker configuration
      * @return The Rocker engine
      */
     @Singleton
-    public RockerEngine rockerEngine(RockerViewsRendererConfiguration rockerConfiguration) {
+    public RockerEngine rockerEngine(ViewsConfiguration viewsConfiguration,
+                                     RockerViewsRendererConfiguration rockerConfiguration) {
         RockerRuntime.getInstance().setReloading(rockerConfiguration.isHotReloading());
-        return new RockerEngine(rockerConfiguration.getDefaultPath(), rockerConfiguration.getDefaultExtension());
+        return new RockerEngine(viewsConfiguration.getFolder(), rockerConfiguration.getDefaultExtension());
     }
 
 }

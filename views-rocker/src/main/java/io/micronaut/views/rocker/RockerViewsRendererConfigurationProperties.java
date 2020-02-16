@@ -28,13 +28,7 @@ import io.micronaut.views.ViewsConfigurationProperties;
 public class RockerViewsRendererConfigurationProperties implements RockerViewsRendererConfiguration {
 
     public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".rocker";
-    
-    /**
-     * The default path.
-     */
-    @SuppressWarnings("WeakerAccess")
-    public static final String DEFAULT_PATH = "views/";
-    
+
     /**
      * The default extension.
      */
@@ -60,7 +54,6 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
     public static final boolean DEFAULT_ENABLED = true;
 
     private boolean enabled = DEFAULT_ENABLED;
-    private String defaultPath = DEFAULT_PATH;
     private String defaultExtension = DEFAULT_EXTENSION;
     private boolean hotReloading = DEFAULT_HOT_RELOADING;
     private boolean relaxed = DEFAULT_RELAXED;
@@ -74,15 +67,7 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
     public boolean isEnabled() {
         return this.enabled;
     }
-    
-    /**
-     * @return Default path for templates. By default {@value #DEFAULT_PATH}.
-     */
-    @Override
-    public String getDefaultPath() {
-        return defaultPath;
-    }
-    
+
     /**
      * @return Default extension for templates. By default {@value #DEFAULT_EXTENSION}.
      */
@@ -119,16 +104,7 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-    
-    /**
-     * Sets the default path to use for Rocker templates. Default value ({@value #DEFAULT_PATH}).
-     *
-     * @param defaultPath The default path
-     */
-    public void setDefaultPath(String defaultPath) {
-        this.defaultPath = defaultPath;
-    }
-    
+
     /**
      * Sets the default extension to use for Rocker templates. Default value ({@value #DEFAULT_EXTENSION}).
      *

@@ -39,9 +39,5 @@ public interface RockerViewsRendererConfiguration extends Toggleable {
      * @return If relaxed binding is enabled for dynamic templates
      */
     boolean isRelaxed();
-    
-    /**
-     * @return Default path for templates
-     */
-    String getDefaultPath();
+
 }
