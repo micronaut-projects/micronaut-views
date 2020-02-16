@@ -63,13 +63,12 @@ public class RockerViewsRenderer implements ViewsRenderer {
     @Override
     @Nonnull public Writable render(@Nonnull String view, @Nullable Object data) {
         ArgumentUtils.requireNonNull("view", view);
-        return (writer) -> {
-            Map<String, Object> context = modelOf(data);
-            BindableRockerModel model = rockerConfiguration.isRelaxed()
-                    ? rockerEngine.template(view).relaxedBind(context)
-                    : rockerEngine.template(view).bind(context);
-            model.render((contentType, charsetName) -> new RockerWriterOutput(writer, contentType, charsetName));
-        };
+
+        Map<String, Object> context = modelOf(data);
+        BindableRockerModel model = rockerConfiguration.isRelaxed()
+                ? rockerEngine.template(view).relaxedBind(context)
+                : rockerEngine.template(view).bind(context);
+        return new RockerWritable(model);
     }
 
     @Override
