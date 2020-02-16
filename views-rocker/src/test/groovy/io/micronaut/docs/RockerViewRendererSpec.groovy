@@ -169,7 +169,7 @@ class RockerViewRendererSpec extends Specification {
         rsp.body() == 'io.micronaut.docs.Person(sdelamo, true)'
     }
 
-    def "invoking /rocker/bogus returns 404 if you attempt to render a template which does not exist"() {
+    def "invoking /rocker/bogus returns 500 if you attempt to render a template which does not exist"() {
         when:
         client.toBlocking().exchange('/rocker/bogus', String)
 
@@ -177,7 +177,7 @@ class RockerViewRendererSpec extends Specification {
         def e = thrown(HttpClientResponseException)
 
         and:
-        e.status == HttpStatus.NOT_FOUND
+        e.status == HttpStatus.INTERNAL_SERVER_ERROR
     }
 
     def "invoking /rocker/nullbody renders view even if the response body is null"() {

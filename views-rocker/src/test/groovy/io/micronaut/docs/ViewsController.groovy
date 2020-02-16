@@ -54,7 +54,6 @@ class ViewsController {
     //end::pogo[]
 
     //tag::static[]
-    @View
     @Get("/static")
     public HttpResponse<RockerWritable> staticTemplate() {
         return ok(new RockerWritable(home.template(true, "sdelamo")));

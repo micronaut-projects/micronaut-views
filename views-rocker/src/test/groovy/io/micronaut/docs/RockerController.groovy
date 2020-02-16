@@ -52,7 +52,6 @@ class RockerController {
         HttpResponse.ok(new Person(loggedIn: true, username: 'sdelamo'))
     }
 
-    @View
     @Get("/static")
     public HttpResponse<RockerWritable> staticTemplate() {
         return ok(new RockerWritable(home.template(true, "sdelamo")));
