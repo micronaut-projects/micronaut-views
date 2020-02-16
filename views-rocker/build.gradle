@@ -3,7 +3,7 @@ plugins {
 }
 
 sourceSets {
-    main {
+    test {
         rocker {
             srcDir('src/test/resources')
         }

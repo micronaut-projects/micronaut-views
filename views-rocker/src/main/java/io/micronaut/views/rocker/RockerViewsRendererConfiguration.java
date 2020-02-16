@@ -21,6 +21,7 @@ import io.micronaut.core.util.Toggleable;
  * Configuration for {@link RockerViewsRenderer}.
  *
  * @author Sam Adams
+ * @since 1.3.1
  */
 public interface RockerViewsRendererConfiguration extends Toggleable {
 

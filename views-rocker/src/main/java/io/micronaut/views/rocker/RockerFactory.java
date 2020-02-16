@@ -25,6 +25,7 @@ import javax.inject.Singleton;
  * Factory for the Rocker engine.
  *
  * @author Sam Adams
+ * @since 1.3.1
  */
 @Factory
 public class RockerFactory {

@@ -105,6 +105,22 @@ class RockerViewRendererSpec extends Specification {
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
+    def "invoking /rocker/static renders rocker template from a controller returning a static template"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/rocker/static', String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+
+        then:
+        body
+        rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
+    }
+
     def "invoking /rocker/reactive renders rocker template from a controller returning a reactive type"() {
         when:
         HttpResponse<String> rsp = client.toBlocking().exchange('/rocker/reactive', String)
@@ -179,4 +195,5 @@ class RockerViewRendererSpec extends Specification {
         body
         rsp.body().contains("<h1>You are not logged in</h1>")
     }
+
 }

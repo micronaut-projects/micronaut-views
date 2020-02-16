@@ -34,6 +34,7 @@ import java.util.Map;
  * Renders templates with Rocker.
  *
  * @author Sam Adams
+ * @since 1.3.1
  */
 @Produces(MediaType.TEXT_HTML)
 @Singleton
@@ -43,20 +44,7 @@ public class RockerViewsRenderer implements ViewsRenderer {
     protected final ViewsConfiguration viewsConfiguration;
     protected final RockerViewsRendererConfiguration rockerConfiguration;
     protected final String folder;
-    
-    /**
-     * @param viewsConfiguration  Views Configuration
-     * @param rockerConfiguration Rocker Configuration
-     */
-    @Deprecated
-    RockerViewsRenderer(ViewsConfiguration viewsConfiguration,
-                        RockerViewsRendererConfiguration rockerConfiguration) {
-        this.viewsConfiguration = viewsConfiguration;
-        this.rockerConfiguration = rockerConfiguration;
-        this.rockerEngine = new RockerFactory().rockerEngine(rockerConfiguration);
-        this.folder = viewsConfiguration.getFolder();
-    }
-    
+
     /**
      * @param viewsConfiguration  Views Configuration
      * @param rockerConfiguration Rocker Configuration

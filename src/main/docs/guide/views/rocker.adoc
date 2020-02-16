@@ -1,7 +1,7 @@
 Micronaut includes api:views.rocker.RockerEngine[] which uses
 the https://github.com/fizzed/rocker[Rocker] Java-based template engine.
 
-In addition to the <<views, Views>> dependency, add the following dependency on your classpath.
+Add the following dependency on your classpath.
 
 dependency:rocker-runtime[groupId="com.fizzed",scope="runtime",version="1.2.3"]
 
@@ -60,7 +60,6 @@ sourceSets {
 ----
 
 === Compile Time Type Checking
-
 
 Rocker templates are compiled at build time giving the ability to statically type check template arguments.
 Using the standard `@View` annotation will invoke the template dynamically without these checks.

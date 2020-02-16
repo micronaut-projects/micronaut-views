@@ -24,7 +24,12 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Produces
 import io.micronaut.views.ModelAndView
 import io.micronaut.views.View
+import io.micronaut.views.rocker.RockerWritable
 import io.reactivex.Single
+
+import views.home
+
+import static io.micronaut.http.HttpResponse.ok
 
 @Requires(property = "spec.name", value = "rocker")
 @Controller("/rocker")
@@ -45,6 +50,12 @@ class RockerController {
     @Get("/home")
     HttpResponse<Person> home() {
         HttpResponse.ok(new Person(loggedIn: true, username: 'sdelamo'))
+    }
+
+    @View
+    @Get("/static")
+    public HttpResponse<RockerWritable> staticTemplate() {
+        return ok(new RockerWritable(home.template(true, "sdelamo")));
     }
 
     @Produces(MediaType.TEXT_PLAIN)

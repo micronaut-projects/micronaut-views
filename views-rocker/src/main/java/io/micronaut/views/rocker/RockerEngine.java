@@ -24,6 +24,9 @@ import static io.micronaut.views.ViewUtils.normalizeFile;
 
 /**
  * Engine for Rocker templates.
+ *
+ * @author Sam Adams
+ * @since 1.3.1
  */
 public class RockerEngine {
     

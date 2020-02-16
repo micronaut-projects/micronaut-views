@@ -24,6 +24,7 @@ import java.io.Writer;
  * A {@link Writable} for Rocker templates.
  *
  * @author Sam Adams
+ * @since 1.3.1
  */
 public class RockerWritable implements Writable {
 

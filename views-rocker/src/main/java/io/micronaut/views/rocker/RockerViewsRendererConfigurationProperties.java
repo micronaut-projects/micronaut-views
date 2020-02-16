@@ -22,6 +22,7 @@ import io.micronaut.views.ViewsConfigurationProperties;
  * {@link ConfigurationProperties} implementation of {@link RockerViewsRendererConfiguration}.
  *
  * @author Sam Adams
+ * @since 1.3.1
  */
 @ConfigurationProperties(RockerViewsRendererConfigurationProperties.PREFIX)
 public class RockerViewsRendererConfigurationProperties implements RockerViewsRendererConfiguration {

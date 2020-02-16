@@ -25,6 +25,11 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.views.ModelAndView
 import io.micronaut.views.View
+import io.micronaut.views.rocker.RockerWritable
+
+import views.home
+
+import static io.micronaut.http.HttpResponse.ok
 
 @Requires(property = "spec.name", value = "rocker")
 //tag::clazz[]
@@ -47,6 +52,14 @@ class ViewsController {
         return HttpResponse.ok(new Person("sdelamo", true))
     }
     //end::pogo[]
+
+    //tag::static[]
+    @View
+    @Get("/static")
+    public HttpResponse<RockerWritable> staticTemplate() {
+        return ok(new RockerWritable(home.template(true, "sdelamo")));
+    }
+    //end::static[]
 
     //tag::modelAndView[]
     @Get("/modelAndView")
