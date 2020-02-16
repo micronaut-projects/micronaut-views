@@ -1,9 +1,7 @@
 Micronaut includes api:views.rocker.RockerEngine[] which uses
 the https://github.com/fizzed/rocker[Rocker] Java-based template engine.
 
-Add the following dependency on your classpath.
-
-dependency:rocker-runtime[groupId="com.fizzed",scope="runtime",version="1.2.3"]
+Add the <<views-rocker, Views Rocker>> dependency to your classpath.
 
 The example shown in the <<views, Views>> section, could be rendered with the following Rocker template:
 
