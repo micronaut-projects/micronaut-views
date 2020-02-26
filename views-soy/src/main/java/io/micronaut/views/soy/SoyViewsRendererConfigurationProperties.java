@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
  * Configured properties support a {@link SoyFileSet}, which is rendered via a from-source renderer. Template sources
  * are provided via DI, using a {@link SoyFileSetProvider}.
  *
- * @author Sam Gammon (sam@bloombox.io)
+ * @author Sam Gammon (sam@momentum.io)
  * @since 1.2.1
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
@@ -47,6 +47,13 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
   public static final boolean DEFAULT_ENABLED = true;
 
   /**
+   * Default buffer/chunk size.
+   *
+   * @since 1.3.2
+   */
+  public static final int DEFAULT_CHUNK_SIZE = SoyResponseBuffer.MAX_CHUNK_SIZE;
+
+  /**
    * The default Soy rendering engine.
    */
   @SuppressWarnings("WeakerAccess")
@@ -60,6 +67,7 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
 
   private boolean enabled = DEFAULT_ENABLED;
   private boolean renaming = DEFAULT_RENAMING;
+  private int chunkSize = DEFAULT_CHUNK_SIZE;
   private String engine = DEFAULT_ENGINE;
   private SoyFileSetProvider fileSetProvider;
 
@@ -122,6 +130,24 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
   @Nullable @Override
   public SoySauce getCompiledTemplates() {
     return fileSetProvider.provideCompiledTemplates();
+  }
+
+  /**
+   * @since 1.3.2
+   * @return The current chunk size, used when sizing buffers for render
+   */
+  public int getChunkSize() {
+    return chunkSize;
+  }
+
+  /**
+   * Set the chunk size for render buffers.
+   *
+   * @since 1.3.2
+   * @param chunkSize Buffer chunk size
+   */
+  public void setChunkSize(int chunkSize) {
+    this.chunkSize = chunkSize;
   }
 
 }
