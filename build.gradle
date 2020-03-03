@@ -80,8 +80,6 @@ subprojects { Project subproject ->
     }
 
     repositories {
-        mavenCentral()
-        jcenter()
         maven { url "https://repo.grails.org/grails/core" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
