@@ -90,13 +90,15 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-freemarker"><a href="#freemarker"><strong>2.4</strong><span>Apache Freemarker</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-soy"><a href="#soy"><strong>2.5</strong><span>Soy/Closure Support</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-rocker"><a href="#rocker"><strong>2.5</strong><span>Rocker</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-csp"><a href="#csp"><strong>2.6</strong><span>Content Security Policy</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-soy"><a href="#soy"><strong>2.6</strong><span>Soy/Closure Support</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-views-security"><a href="#views-security"><strong>2.7</strong><span>Security Integration</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-csp"><a href="#csp"><strong>2.7</strong><span>Content Security Policy</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>2.8</strong><span>GraalVM Support</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-views-security"><a href="#views-security"><strong>2.8</strong><span>Security Integration</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>2.9</strong><span>GraalVM Support</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>3</strong><span>Repository</span></a></div>
         
@@ -615,7 +617,159 @@ the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based tem
 <p>If a value is not declared and is null, the default configuration from Freemarker is used. The expected format of each value is the same from Freemarker, and no conversion or validation is done by Micronaut. You can find in <a href="https://freemarker.apache.org/docs/pgui_config.html">Freemarker documentation</a> how to configure each one.</p>
 </div>
 
-<h2 id="soy"><a class="anchor" href="#soy"></a>2.5 Soy/Closure Support</h2>
+<h2 id="rocker"><a class="anchor" href="#rocker"></a>2.5 Rocker</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/rocker.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut includes <a href="../api/io/micronaut/views/rocker/RockerEngine.html">RockerEngine</a> which uses
+the <a href="https://github.com/fizzed/rocker">Rocker</a> Java-based template engine.</p>
+</div>
+<div class="paragraph">
+<p>Add the <a href="#views-rocker">Views Rocker</a> dependency to your classpath.</p>
+</div>
+<div class="paragraph">
+<p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Rocker template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.rocker.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    @if (loggedIn != null &amp;&amp; loggedIn) {
+    &lt;h1&gt;username: &lt;span&gt;@username&lt;/span&gt;&lt;/h1&gt;
+    } else {
+    &lt;h1&gt;You are not logged in&lt;/h1&gt;
+    }
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compiling_templates">Compiling Templates</h3>
+<div class="paragraph">
+<p>Rocker templates must be precompiled at build time. This can be done either by a Gradle or Maven plugin.</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">plugins {
+    id "com.fizzed.rocker" version "1.2.3"
+}
+
+sourceSets {
+    main {
+        rocker {
+            srcDir('src/main/resources')
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;com.fizzed&lt;/groupId&gt;
+            &lt;artifactId&gt;rocker-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;1.2.3&lt;/version&gt;
+            &lt;executions&gt;
+                &lt;execution&gt;
+                    &lt;id&gt;generate-rocker-templates&lt;/id&gt;
+                    &lt;phase&gt;generate-sources&lt;/phase&gt;
+                    &lt;goals&gt;
+                        &lt;goal&gt;generate&lt;/goal&gt;
+                    &lt;/goals&gt;
+                    &lt;configuration&gt;
+                        &lt;templateDirectory&gt;src/main/resources&lt;/templateDirectory&gt;
+                    &lt;/configuration&gt;
+                &lt;/execution&gt;
+            &lt;/executions&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compile_time_type_checking">Compile Time Type Checking</h3>
+<div class="paragraph">
+<p>Rocker templates are compiled at build time giving the ability to statically type check template arguments.
+Using the standard <code>@View</code> annotation will invoke the template dynamically without these checks.
+Instead the compiled template should be invoked within the controller and a <code>RockerWritable</code> returned.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.views.rocker.RockerWritable;
+import views.index;
+...
+
+    @Get("/")
+    @Produces(TEXT_HTML)
+    public HttpResponse&lt;?&gt; staticTemplate() {
+        return ok(new RockerWritable(index.template("World", true)));
+    }
+
+...</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration">Configuration</h3>
+<div class="paragraph">
+<p>The properties used can be customized by overriding the values of:</p>
+</div>
+<a id="io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties" href="#io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html">RockerViewsRendererConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Rocker views are enabled. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.default-extension</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the default extension to use for Rocker templates. Default value ("rocker.html").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.hot-reloading</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether hot reloading is enabled. Default value (false).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.relaxed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether relaxed binding is enabled for dynamic templates. Default value (false).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="soy"><a class="anchor" href="#soy"></a>2.6 Soy/Closure Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/soy.adoc"'>
@@ -1092,7 +1246,7 @@ Compiles templates into Python sources for use server-side.</p>
 </div>
 </div>
 
-<h2 id="csp"><a class="anchor" href="#csp"></a>2.6 Content Security Policy</h2>
+<h2 id="csp"><a class="anchor" href="#csp"></a>2.7 Content Security Policy</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/csp.adoc"'>
@@ -1221,7 +1375,7 @@ mode. Inline scripts can be whitelisted with the syntax:</p>
 </div>
 </div>
 
-<h2 id="views-security"><a class="anchor" href="#views-security"></a>2.7 Security Integration</h2>
+<h2 id="views-security"><a class="anchor" href="#views-security"></a>2.8 Security Integration</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/views-security.adoc"'>
@@ -1323,7 +1477,7 @@ public class BooksController {
 <p>You can access information about the current user with the <code>security</code> map.</p>
 </div>
 
-<h2 id="graal"><a class="anchor" href="#graal"></a>2.8 GraalVM Support</h2>
+<h2 id="graal"><a class="anchor" href="#graal"></a>2.9 GraalVM Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/graal.adoc"'>
