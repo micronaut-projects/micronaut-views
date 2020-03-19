@@ -183,7 +183,7 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
   }
 
   /**
-   * @param viewName view name to be render
+   * @param viewName view name to be rendered
    * @param data     response body to render it with a view
    * @param request  HTTP request
    * @param response HTTP response object assembled so far.
@@ -293,7 +293,7 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
             "' rendering Soy Sauce view [" + viewName + "]: " + rxe.getMessage(), rxe));
 
       }
-    }, SoyRender::close).map(response::body);
+    }, SoyRender::close).map((buffer) -> context.finalizeResponse(response, buffer));
   }
 
   /**

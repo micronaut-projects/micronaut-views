@@ -16,6 +16,8 @@
 package io.micronaut.views.soy;
 
 
+import io.micronaut.http.MutableHttpResponse;
+
 import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Optional;
@@ -54,5 +56,19 @@ public interface SoyContextMediator {
    */
   default @Nonnull Optional<SoyNamingMapProvider> overrideNamingMap() {
     return Optional.empty();
+  }
+
+  /**
+   * Finalize an HTTP response rendered by the Micronaut Soy layer. This may include adding any final headers, or
+   * adjusting headers, before the response is sent.
+   *
+   * @param response HTTP response to finalize.
+   * @param body Rendered HTTP response body.
+   * @param <T> Body object type.
+   * @return Response, but finalized.
+   */
+  default @Nonnull <T> MutableHttpResponse<T> finalizeResponse(@Nonnull MutableHttpResponse<T> response,
+                                                               @Nonnull T body) {
+    return response.body(body);
   }
 }
