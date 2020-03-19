@@ -48,6 +48,8 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,6 +71,7 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
   private static final Logger LOG = LoggerFactory.getLogger(SoySauceViewsRenderer.class);
   private static final String INJECTED_NONCE_PROPERTY = "csp_nonce";
   private static final String SOY_CONTEXT_SENTINEL = "__soy_context__";
+  private static final String ETAG_HASH_ALGORITHM = "MD5";
   private static final Boolean EMIT_ONE_CHUNK = true;
 
   protected final ViewsConfiguration viewsConfiguration;
@@ -77,6 +80,7 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
   protected final SoySauce soySauce;
   private final ByteBufferFactory<ByteBufAllocator, ByteBuf> bufferFactory;
   private final boolean injectNonce;
+  private volatile boolean digesterActive = false;
 
   /**
    * @param viewsConfiguration Views configuration properties.
@@ -118,13 +122,14 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
 
   private void continueRender(@Nonnull SoySauce.WriteContinuation continuation,
                               @Nonnull SoyRender target,
-                              @Nonnull Emitter<ByteBuffer> emitter) throws SoyViewException {
+                              @Nonnull Emitter<ByteBuffer> emitter,
+                              @Nullable MessageDigest digester) throws SoyViewException {
     try {
       target.advance(continuation);
       if (target.getRenderState() == SoyRender.State.READY) {
         LOG.debug("Render is READY to proceed. Continuing.");
         SoySauce.WriteContinuation next = continuation.continueRender();
-        handleRender(next, target, emitter);
+        handleRender(next, target, emitter, digester);
       } else {
         LOG.debug("Render is NOT READY.");
       }
@@ -137,24 +142,31 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
   }
 
   private void emitChunk(@Nonnull SoyRender target,
-                         @Nonnull Emitter<ByteBuffer> emitter) {
+                         @Nonnull Emitter<ByteBuffer> emitter,
+                         @Nullable MessageDigest digester) {
     LOG.debug("Render emitting chunk");
     emitter.onNext(
-      target.exportChunk(bufferFactory, soyMicronautConfiguration.getChunkSize()));
+      target.exportChunk(
+        bufferFactory,
+        this.digesterActive ? digester : null,
+        soyMicronautConfiguration.getChunkSize()));
   }
 
   private void handleRender(@Nonnull SoySauce.WriteContinuation continuation,
                             @Nonnull SoyRender target,
-                            @Nonnull Emitter<ByteBuffer> emitter) throws SoyViewException {
+                            @Nonnull Emitter<ByteBuffer> emitter,
+                            @Nullable MessageDigest digester) throws SoyViewException {
     // Emit the next chunk and keep processing.
     if (!EMIT_ONE_CHUNK) {
-      emitChunk(target, emitter);
+      emitChunk(target, emitter, digester);
+      this.digesterActive = false;
     }
     target.advance(continuation);
     if (continuation.result().type() == RenderResult.Type.DONE) {
       LOG.debug("Finished Soy render routine. Calling `onComplete`.");
       if (EMIT_ONE_CHUNK) {
-        emitChunk(target, emitter);
+        emitChunk(target, emitter, digester);
+        this.digesterActive = false;
       }
       emitter.onComplete();
     }
@@ -267,6 +279,19 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
       }
     }
 
+    // handle a streaming message digester for etags, if directed
+    final MessageDigest digester;
+    if (context.enableETags() && context.strongETags()) {
+      try {
+        digester = MessageDigest.getInstance(ETAG_HASH_ALGORITHM);
+        this.digesterActive = true;
+      } catch (NoSuchAlgorithmException nsa) {
+        throw new IllegalStateException(nsa);
+      }
+    } else {
+      digester = null;
+    }
+
     // prime the initial render
     return Flowable.<ByteBuffer, SoyRender>generate(SoyRender::create, (buffer, emitter) -> {
       // trigger initial render cycle, which may finish the response
@@ -275,11 +300,11 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
         if (op == null) {
           // no continuation means we are doing the first render run, which may complete it
           LOG.trace("Initial render for view '" + viewName + "'");
-          handleRender(renderer.renderHtml(buffer), buffer, emitter);
+          handleRender(renderer.renderHtml(buffer), buffer, emitter, digester);
         } else {
           // otherwise, pick up where we left off
           LOG.trace("Continue render for view '" + viewName + "'");
-          continueRender(op, buffer, emitter);
+          continueRender(op, buffer, emitter, digester);
         }
 
       } catch (SoyViewException sre) {
@@ -293,7 +318,7 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
             "' rendering Soy Sauce view [" + viewName + "]: " + rxe.getMessage(), rxe));
 
       }
-    }, SoyRender::close).map((buffer) -> context.finalizeResponse(response, buffer));
+    }, SoyRender::close).map((buffer) -> context.finalizeResponse(response, buffer, digester));
   }
 
   /**

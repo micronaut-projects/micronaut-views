@@ -30,6 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import java.io.*;
+import java.security.MessageDigest;
 import java.util.concurrent.*;
 
 
@@ -207,12 +208,20 @@ public final class SoyRender implements Closeable, AutoCloseable, AdvisingAppend
    * buffer held internally.
    *
    * @param factory Factory with which to create byte buffers.
+   * @param digester Digester to factor the chunk into, if applicable.
    * @return Exported chunk from the underlying buffer.
    */
-  ByteBuffer exportChunk(ByteBufferFactory<ByteBufAllocator, ByteBuf> factory) {
+  @Nonnull ByteBuffer exportChunk(@Nonnull ByteBufferFactory<ByteBufAllocator, ByteBuf> factory,
+                                  @Nullable MessageDigest digester) {
     ByteBuf buf = soyBuffer.exportChunk();
     if (LOG.isDebugEnabled()) {
       LOG.debug("Exporting full chunk: " + buf.toString());
+    }
+    if (digester != null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("Mixing chunk into non-null MessageDigest.");
+        digester.update(buf.array());
+      }
     }
     return factory.wrap(buf);
   }
@@ -222,13 +231,22 @@ public final class SoyRender implements Closeable, AutoCloseable, AdvisingAppend
    * buffer held internally. This method additionally allows a chunk size.
    *
    * @param factory Factory with which to create byte buffers.
+   * @param digester Digester to factor the chunk into, if applicable.
    * @param maxSize Maximum chunk size to specify.
    * @return Exported chunk from the underlying buffer.
    */
-  ByteBuffer exportChunk(ByteBufferFactory<ByteBufAllocator, ByteBuf> factory, int maxSize) {
+  @Nonnull ByteBuffer exportChunk(@Nonnull ByteBufferFactory<ByteBufAllocator, ByteBuf> factory,
+                                  @Nullable MessageDigest digester,
+                                  int maxSize) {
     ByteBuf buf = soyBuffer.exportChunk(maxSize);
     if (LOG.isDebugEnabled()) {
       LOG.debug("Exporting capped chunk (max-size: " + maxSize + "): " + buf.toString());
+    }
+    if (digester != null) {
+      if (LOG.isDebugEnabled()) {
+        LOG.debug("Mixing chunk into non-null MessageDigest.");
+        digester.update(buf.array());
+      }
     }
     return factory.wrap(buf);
   }

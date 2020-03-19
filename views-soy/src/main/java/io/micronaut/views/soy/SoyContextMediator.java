@@ -19,6 +19,8 @@ package io.micronaut.views.soy;
 import io.micronaut.http.MutableHttpResponse;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.security.MessageDigest;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,6 +35,16 @@ import java.util.Optional;
  * @since 1.3.2
  */
 public interface SoyContextMediator {
+  /** @return Whether to enable {@code ETag} support within the Soy rendering layer. */
+  default boolean enableETags() {
+    return false;
+  }
+
+  /** @return Whether to calculate strong {@code ETag} values while rendering. */
+  default boolean strongETags() {
+    return false;
+  }
+
   /**
    * Retrieve properties which should be made available via regular, declared `@param` statements.
    *
@@ -64,11 +76,13 @@ public interface SoyContextMediator {
    *
    * @param response HTTP response to finalize.
    * @param body Rendered HTTP response body.
+   * @param digester Pre-filled message digest for the first chunk. Only provided if enabled by {@link #enableETags()}.
    * @param <T> Body object type.
    * @return Response, but finalized.
    */
   default @Nonnull <T> MutableHttpResponse<T> finalizeResponse(@Nonnull MutableHttpResponse<T> response,
-                                                               @Nonnull T body) {
+                                                               @Nonnull T body,
+                                                               @Nullable MessageDigest digester) {
     return response.body(body);
   }
 }
