@@ -16,6 +16,7 @@
 package io.micronaut.views.soy;
 
 
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MutableHttpResponse;
 
 import javax.annotation.Nonnull;
@@ -74,13 +75,15 @@ public interface SoyContextMediator {
    * Finalize an HTTP response rendered by the Micronaut Soy layer. This may include adding any final headers, or
    * adjusting headers, before the response is sent.
    *
+   * @param request Request that produced this response.
    * @param response HTTP response to finalize.
    * @param body Rendered HTTP response body.
    * @param digester Pre-filled message digest for the first chunk. Only provided if enabled by {@link #enableETags()}.
    * @param <T> Body object type.
    * @return Response, but finalized.
    */
-  default @Nonnull <T> MutableHttpResponse<T> finalizeResponse(@Nonnull MutableHttpResponse<T> response,
+  default @Nonnull <T> MutableHttpResponse<T> finalizeResponse(@Nonnull HttpRequest<?> request,
+                                                               @Nonnull MutableHttpResponse<T> response,
                                                                @Nonnull T body,
                                                                @Nullable MessageDigest digester) {
     return response.body(body);

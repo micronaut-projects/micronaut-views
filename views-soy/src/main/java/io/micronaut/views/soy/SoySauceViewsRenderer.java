@@ -318,7 +318,7 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
             "' rendering Soy Sauce view [" + viewName + "]: " + rxe.getMessage(), rxe));
 
       }
-    }, SoyRender::close).map((buffer) -> context.finalizeResponse(response, buffer, digester));
+    }, SoyRender::close).map((buffer) -> context.finalizeResponse(request, response, buffer, digester));
   }
 
   /**
