@@ -29,7 +29,6 @@ import io.micronaut.core.io.buffer.ByteBuffer;
 import io.micronaut.core.io.buffer.ByteBufferFactory;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Produces;
@@ -195,7 +194,7 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
   public Flowable<MutableHttpResponse<?>> render(@Nonnull String viewName,
                                                  @Nullable Object data,
                                                  @Nonnull HttpRequest<?> request,
-                                                 @Nonnull MutableHttpResponse<?> response) {
+                                                 @Nonnull MutableHttpResponse<Object> response) {
     ArgumentUtils.requireNonNull("viewName", viewName);
     LOG.debug("Preparing render for template path '" + viewName + "'");
 
@@ -294,7 +293,7 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
             "' rendering Soy Sauce view [" + viewName + "]: " + rxe.getMessage(), rxe));
 
       }
-    }, SoyRender::close).map(HttpResponse::ok);
+    }, SoyRender::close).map(response::body);
   }
 
   /**

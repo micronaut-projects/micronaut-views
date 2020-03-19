@@ -44,5 +44,5 @@ public interface ReactiveViewRenderer extends BaseViewsRenderer {
     @Nonnull String viewName,
     @Nullable Object data,
     @Nonnull HttpRequest<?> request,
-    @Nonnull MutableHttpResponse<?> response);
+    @Nonnull MutableHttpResponse<Object> response);
 }
