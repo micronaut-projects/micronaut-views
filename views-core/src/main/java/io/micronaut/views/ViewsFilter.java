@@ -46,7 +46,7 @@ import java.util.Optional;
  * @author Sergio del Amo
  * @since 1.0
  */
-@Requires(beans = ViewsRenderer.class)
+@Requires(beans = BaseViewsRenderer.class)
 @Filter("/**")
 public class ViewsFilter implements HttpServerFilter {
 
@@ -100,49 +100,67 @@ public class ViewsFilter implements HttpServerFilter {
     }
 
     @Override
-    public final Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request,
-                                                            ServerFilterChain chain) {
-
+    public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
         return Flowable.fromPublisher(chain.proceed(request))
-            .switchMap(response -> {
-                Optional<AnnotationMetadata> routeMatch = response.getAttribute(HttpAttributes.ROUTE_MATCH,
-                        AnnotationMetadata.class);
-                if (routeMatch.isPresent()) {
-                    AnnotationMetadata route = routeMatch.get();
+          .switchMap(response -> {
+              Optional<AnnotationMetadata> routeMatch = response.getAttribute(HttpAttributes.ROUTE_MATCH,
+                AnnotationMetadata.class);
+              if (routeMatch.isPresent()) {
+                  AnnotationMetadata route = routeMatch.get();
 
-                    Object body = response.body();
-                    Optional<String> optionalView = resolveView(route, body);
+                  Object body = response.body();
+                  Optional<String> optionalView = resolveView(route, body);
 
-                    if (optionalView.isPresent()) {
+                  if (optionalView.isPresent()) {
+                      MediaType type = route.getValue(Produces.class, MediaType.class)
+                        .orElse((route.getValue(View.class).isPresent() ||
+                          body instanceof ModelAndView) ?
+                          MediaType.TEXT_HTML_TYPE :
+                          MediaType.APPLICATION_JSON_TYPE);
+                      Optional<BaseViewsRenderer> optionalViewsRenderer = beanLocator.findBean(
+                        BaseViewsRenderer.class,
+                        new ProducesMediaTypeQualifier<>(type));
 
-                        MediaType type = route.getValue(Produces.class, MediaType.class)
-                                .orElse((route.getValue(View.class).isPresent() || body instanceof ModelAndView) ? MediaType.TEXT_HTML_TYPE : MediaType.APPLICATION_JSON_TYPE);
-                        Optional<ViewsRenderer> optionalViewsRenderer = beanLocator.findBean(ViewsRenderer.class,
-                                new ProducesMediaTypeQualifier<>(type));
+                      if (optionalViewsRenderer.isPresent()) {
+                          BaseViewsRenderer viewsRenderer = optionalViewsRenderer.get();
+                          Map<String, Object> model = populateModel(request, viewsRenderer, body);
+                          ModelAndView<Map<String, Object>> modelAndView = processModelAndView(request,
+                            optionalView.get(),
+                            model);
+                          model = modelAndView.getModel().orElse(model);
+                          String view = modelAndView.getView().orElse(optionalView.get());
 
-                        if (optionalViewsRenderer.isPresent()) {
-                            ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
-                            Map<String, Object> model = populateModel(request, viewsRenderer, body);
-                            ModelAndView<Map<String, Object>> modelAndView = processModelAndView(request,
-                                    optionalView.get(),
-                                    model);
-                            model = modelAndView.getModel().orElse(model);
-                            String view = modelAndView.getView().orElse(optionalView.get());
-                            if (viewsRenderer.exists(view)) {
+                          if (viewsRenderer.exists(view)) {
+                              response.contentType(type);
+                              try {
+                                  if (viewsRenderer instanceof ReactiveViewRenderer) {
+                                      // it's an async renderer
+                                      return ((ReactiveViewRenderer) viewsRenderer).render(
+                                        view, model, request, ((MutableHttpResponse<Object>) response));
 
-                                Writable writable = viewsRenderer.render(view, model, request);
-                                response.contentType(type);
-                                ((MutableHttpResponse<Object>) response).body(writable);
-                                return Flowable.just(response);
-                            } else {
-                                return Flowable.error(new ViewNotFoundException("View [" + view + "] does not exist"));
-                            }
-                        }
-                    }
-                }
+                                  } else if (viewsRenderer instanceof ViewsRenderer) {
+                                      ViewsRenderer syncRenderer = (ViewsRenderer) optionalViewsRenderer.get();
+                                      Writable writable = syncRenderer.render(view, model, request);
+                                      ((MutableHttpResponse<Object>) response).body(writable);
+                                      return Flowable.just(response);
 
-                return Flowable.just(response);
-            });
+                                  }
+                              } catch (ViewNotFoundException vne) {
+                                  LOG.error(String.format("failed to resolve view: %s", view));
+                                  return Flowable.just(HttpResponse.serverError());
+                              }
+                          } else {
+                              if (LOG.isDebugEnabled()) {
+                                  LOG.debug("view {} not found ", view);
+                              }
+                              return Flowable.just(HttpResponse.serverError());
+                          }
+                      }
+                  }
+              }
+
+              return Flowable.just(response);
+          });
     }
 
     /**
@@ -172,7 +190,9 @@ public class ViewsFilter implements HttpServerFilter {
      * @param responseBody Response Body
      * @return A model with the controllers response and enhanced with the decorators.
      */
-    protected Map<String, Object> populateModel(HttpRequest request, ViewsRenderer viewsRenderer, Object responseBody) {
+    protected Map<String, Object> populateModel(HttpRequest request,
+                                                BaseViewsRenderer viewsRenderer,
+                                                Object responseBody) {
         return new HashMap<>(viewsRenderer.modelOf(resolveModel(responseBody)));
     }
 
