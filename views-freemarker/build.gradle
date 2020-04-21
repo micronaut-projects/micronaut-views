@@ -4,7 +4,7 @@ dependencies {
 
     compile project(":views-core")
     compile dependencyVersion("freemarker")
-    compileOnly "io.micronaut:micronaut-security"
+    compileOnly "io.micronaut:micronaut-security:$micronautSecurity"
 
     compile "io.micronaut:micronaut-runtime:$micronautVersion"
     compile "io.micronaut:micronaut-http:$micronautVersion"
@@ -14,7 +14,7 @@ dependencies {
     testCompile "io.micronaut:micronaut-inject-groovy"
     testCompile "io.micronaut:micronaut-inject-java"
     testCompile "io.micronaut:micronaut-http-server-netty"
-    testCompile "io.micronaut:micronaut-security"
+    testCompile "io.micronaut:micronaut-security:$micronautSecurity"
 
     testCompile "org.yaml:snakeyaml:$snakeYamlVersion"
 
