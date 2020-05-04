@@ -2,7 +2,7 @@ dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
 
-    compileOnly "io.micronaut:micronaut-security"
+    compileOnly "io.micronaut:micronaut-security:2.0.0.M1"
 
     compile "io.micronaut:micronaut-runtime:$micronautVersion"
     compile "io.micronaut:micronaut-http:$micronautVersion"
@@ -12,7 +12,7 @@ dependencies {
     testCompile "io.micronaut:micronaut-inject-groovy"
     testCompile "io.micronaut:micronaut-inject-java"
     testCompile "io.micronaut:micronaut-http-server-netty"
-    testCompile "io.micronaut:micronaut-security"
+    testCompile "io.micronaut:micronaut-security:2.0.0.M1"
 
     testCompile "org.yaml:snakeyaml:$snakeYamlVersion"
 }
