@@ -54,19 +54,6 @@ public class HandlebarsViewsRenderer implements ViewsRenderer {
     protected Handlebars handlebars;
     protected String folder;
 
-
-    /**
-     * @param viewsConfiguration                   Views Configuration
-     * @param resourceLoader                       Resource Loader
-     * @param handlebarsViewsRendererConfiguration Handlebars ViewRenderer Configuration.
-     */
-    @Deprecated
-    public HandlebarsViewsRenderer(ViewsConfiguration viewsConfiguration,
-                                   ClassPathResourceLoader resourceLoader,
-                                   HandlebarsViewsRendererConfiguration handlebarsViewsRendererConfiguration) {
-        this(viewsConfiguration, resourceLoader, handlebarsViewsRendererConfiguration, new Handlebars());
-    }
-
     /**
      * @param viewsConfiguration                   Views Configuration
      * @param resourceLoader                       Resource Loader
