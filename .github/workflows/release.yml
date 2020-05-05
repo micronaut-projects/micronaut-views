@@ -26,8 +26,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         BASE_BRANCH: master 
-        BRANCH: gh-pages 
-        BETA: true
+        BRANCH: gh-pages
         FOLDER: build/docs
         VERSION: ${{ steps.release_version.outputs.release_version }}
     - name: Synchronize Maven Central
