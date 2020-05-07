@@ -42,7 +42,7 @@ jobs:
         env:
           BETA: ${{ contains(steps.release_version.outputs.release_version, 'M') || contains(steps.release_version.outputs.release_version, 'RC') }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          BASE_BRANCH: 1.3.x
+          BASE_BRANCH: master
           BRANCH: gh-pages
           FOLDER: build/docs
           VERSION: ${{ steps.release_version.outputs.release_version }}
@@ -57,13 +57,13 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           repository: micronaut-projects/micronaut-core
-          ref: 1.3.x
+          ref: master
           path: micronaut-core # Must be micronaut-core
 
       - name: Update BOM
         uses: micronaut-projects/github-actions/update-bom@master
         with:
           token: ${{ secrets.GH_TOKEN }}
-          branch: 1.3.x
+          branch: master
           property: micronautViewsVersion # Refers to the key in the BOM (gradle.properties)
           version: ${{ steps.release_version.outputs.release_version }}
