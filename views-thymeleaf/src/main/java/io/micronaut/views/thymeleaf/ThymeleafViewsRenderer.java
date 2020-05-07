@@ -61,20 +61,6 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
     protected ResourceLoader resourceLoader;
 
     /**
-     * @param viewsConfiguration Views Configuration
-     * @param thConfiguration    Thymeleaf template renderer configuration
-     * @param resourceLoader     The resource loader
-     */
-    @Deprecated
-    public ThymeleafViewsRenderer(ViewsConfiguration viewsConfiguration,
-                                  ThymeleafViewsRendererConfiguration thConfiguration,
-                                  ClassPathResourceLoader resourceLoader) {
-        this.templateResolver = initializeTemplateResolver(viewsConfiguration, thConfiguration);
-        this.resourceLoader = resourceLoader;
-        this.engine = initializeTemplateEngine();
-    }
-
-    /**
      * @param templateResolver   The template resolver
      * @param templateEngine     The template engine
      * @param resourceLoader     The resource loader

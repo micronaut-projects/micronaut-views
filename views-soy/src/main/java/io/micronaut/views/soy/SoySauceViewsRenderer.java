@@ -77,10 +77,10 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
    * @param soyConfiguration   Soy configuration properties.
    */
   @Inject
-  SoySauceViewsRenderer(ViewsConfiguration viewsConfiguration,
-                        @Nullable CspConfiguration cspConfiguration,
-                        @Nullable SoyNamingMapProvider namingMapProvider,
-                        SoyViewsRendererConfigurationProperties soyConfiguration) {
+  public SoySauceViewsRenderer(ViewsConfiguration viewsConfiguration,
+                               @Nullable CspConfiguration cspConfiguration,
+                               @Nullable SoyNamingMapProvider namingMapProvider,
+                               SoyViewsRendererConfigurationProperties soyConfiguration) {
     this.viewsConfiguration = viewsConfiguration;
     this.soyMicronautConfiguration = soyConfiguration;
     this.namingMapProvider = namingMapProvider;
