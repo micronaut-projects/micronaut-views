@@ -79,7 +79,6 @@ class CspFilterSpec extends Specification {
     void "test no CSP configuration"() {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
-                'micronaut.security.enabled': false,
                 'spec.name': getClass().simpleName
         ])
         URL server = embeddedServer.getURL()
@@ -103,7 +102,6 @@ class CspFilterSpec extends Specification {
     void "test CSP no response header"() {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
-                'micronaut.security.enabled': false,
                 'spec.name': getClass().simpleName
         ])
         URL server = embeddedServer.getURL()
@@ -128,7 +126,6 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
-                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.reportOnly': false,
                 'micronaut.views.csp.policyDirectives': ""
@@ -154,7 +151,6 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
-                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.filterPath': "/csp",
                 'micronaut.views.csp.reportOnly': false,
@@ -182,7 +178,6 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
-                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.filterPath': "/csp",
                 'micronaut.views.csp.reportOnly': true,
@@ -210,7 +205,6 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
-                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.filterPath': "/csp",
                 'micronaut.views.csp.reportOnly': false,
@@ -238,7 +232,6 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
-                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.generateNonce': true,
                 'micronaut.views.csp.filterPath': "/csp",
@@ -268,7 +261,6 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
-                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.generateNonce': true,
                 'micronaut.views.csp.filterPath': "/csp",

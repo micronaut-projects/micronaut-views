@@ -16,7 +16,7 @@ dependencies {
 
     compile project(":views-core")
     compile dependencyVersion("rocker")
-    compileOnly "io.micronaut:micronaut-security:2.0.0.M1"
+    compileOnly "io.micronaut:micronaut-security"
 
     compile "io.micronaut:micronaut-runtime:$micronautVersion"
     compile "io.micronaut:micronaut-http:$micronautVersion"
@@ -26,7 +26,7 @@ dependencies {
     testCompile "io.micronaut:micronaut-inject-groovy"
     testCompile "io.micronaut:micronaut-inject-java"
     testCompile "io.micronaut:micronaut-http-server-netty"
-    testCompile "io.micronaut:micronaut-security:2.0.0.M1"
+    testCompile "io.micronaut:micronaut-security"
 
     testCompile "org.yaml:snakeyaml:$snakeYamlVersion"
 

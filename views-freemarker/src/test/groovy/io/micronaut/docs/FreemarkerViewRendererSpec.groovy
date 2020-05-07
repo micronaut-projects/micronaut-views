@@ -36,7 +36,6 @@ class FreemarkerViewRendererSpec extends Specification {
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
             [
                     'spec.name': 'freemarker',
-                    'micronaut.security.enabled': false,
                     'micronaut.views.thymeleaf.enabled': false,
                     'micronaut.views.velocity.enabled': false,
                     'micronaut.views.handlebars.enabled': false,

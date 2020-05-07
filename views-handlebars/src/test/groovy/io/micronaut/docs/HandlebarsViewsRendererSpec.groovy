@@ -35,7 +35,6 @@ class HandlebarsViewsRendererSpec extends Specification {
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
             [
                     'spec.name': 'handlebars',
-                    'micronaut.security.enabled': false,
                     'micronaut.views.handlebars.enabled': true,
                     'micronaut.views.thymeleaf.enabled': false,
                     'micronaut.views.velocity.enabled': false,
