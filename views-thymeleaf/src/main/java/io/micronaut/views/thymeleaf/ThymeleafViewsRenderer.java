@@ -127,7 +127,7 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
                                                                    ThymeleafViewsRendererConfiguration thConfiguration) {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
 
-        templateResolver.setPrefix(ViewUtils.normalizeFolder(viewsConfiguration.getFolder()));
+        templateResolver.setPrefix(normalizeFolder(viewsConfiguration.getFolder()));
         templateResolver.setCharacterEncoding(thConfiguration.getCharacterEncoding());
         templateResolver.setTemplateMode(thConfiguration.getTemplateMode());
         templateResolver.setSuffix(thConfiguration.getSuffix());

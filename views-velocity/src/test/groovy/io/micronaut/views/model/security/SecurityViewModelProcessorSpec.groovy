@@ -58,6 +58,10 @@ class SecurityViewModelProcessorSpec extends Specification {
                 'spec.name': 'SecurityViewModelProcessorSpec',
                 'micronaut.security.enabled': true,
                 'micronaut.security.views-model-decorator.security-key': 'securitycustom',
+                'micronaut.views.handlebars.enabled': false,
+                'micronaut.views.thymeleaf.enabled': false,
+                'micronaut.views.velocity.enabled': true,
+                'micronaut.views.freemarker.enabled': false,
         ])
         HttpClient httpClient = HttpClient.create(embeddedServer.URL)
 
@@ -104,6 +108,10 @@ class SecurityViewModelProcessorSpec extends Specification {
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': 'SecurityViewModelProcessorSpec',
                 'micronaut.security.enabled': true,
+                'micronaut.views.handlebars.enabled': false,
+                'micronaut.views.thymeleaf.enabled': false,
+                'micronaut.views.velocity.enabled': true,
+                'micronaut.views.freemarker.enabled': false,
         ])
         HttpClient httpClient = HttpClient.create(embeddedServer.URL)
 

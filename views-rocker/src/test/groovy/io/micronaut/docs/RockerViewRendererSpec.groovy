@@ -35,7 +35,10 @@ class RockerViewRendererSpec extends Specification {
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
             [
                     'spec.name': 'rocker',
-                    'micronaut.security.enabled': false
+                    'micronaut.views.thymeleaf.enabled': false,
+                    'micronaut.views.handlebars.enabled': false,
+                    'micronaut.views.freemarker.enabled': false,
+                    'micronaut.views.velocity.enabled': false
             ],
             "test")
 

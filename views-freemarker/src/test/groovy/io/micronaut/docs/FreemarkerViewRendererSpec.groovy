@@ -37,6 +37,9 @@ class FreemarkerViewRendererSpec extends Specification {
             [
                     'spec.name': 'freemarker',
                     'micronaut.security.enabled': false,
+                    'micronaut.views.thymeleaf.enabled': false,
+                    'micronaut.views.velocity.enabled': false,
+                    'micronaut.views.handlebars.enabled': false,
                     'micronaut.views.freemarker.lazy-imports': true,
                     'micronaut.views.freemarker.settings.urlEscapingCharset': 'UTF-8'
             ],

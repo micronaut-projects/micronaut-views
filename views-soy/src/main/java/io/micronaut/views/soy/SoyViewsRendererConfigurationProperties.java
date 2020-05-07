@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 
 
 /**
- * {@link ConfigurationProperties} implementation for soy views renderer.
+ * {@link ConfigurationProperties} implementation for {@link SoyTofuViewsRenderer}.
  *
  * Configured properties support a {@link SoyFileSet}, which is rendered via a from-source renderer. Template sources
  * are provided via DI, using a {@link SoyFileSetProvider}.
@@ -47,6 +47,12 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
   public static final boolean DEFAULT_ENABLED = true;
 
   /**
+   * The default Soy rendering engine.
+   */
+  @SuppressWarnings("WeakerAccess")
+  public static final String DEFAULT_ENGINE = "tofu";
+
+  /**
    * Whether to mount renaming maps.
    */
   @SuppressWarnings("WeakerAccess")
@@ -54,6 +60,7 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
 
   private boolean enabled = DEFAULT_ENABLED;
   private boolean renaming = DEFAULT_RENAMING;
+  private String engine = DEFAULT_ENGINE;
   private SoyFileSetProvider fileSetProvider;
 
   /**
