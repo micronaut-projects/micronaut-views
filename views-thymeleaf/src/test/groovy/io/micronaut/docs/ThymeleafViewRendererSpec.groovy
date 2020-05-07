@@ -36,9 +36,7 @@ class ThymeleafViewRendererSpec extends Specification {
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
             [
                     'spec.name': 'thymeleaf',
-                    'micronaut.views.velocity.enabled': false,
-                    'micronaut.views.handlebars.enabled': false,
-                    'micronaut.views.freemarker.enabled': false,
+                    'micronaut.security.enabled': false
             ],
             "test")
 

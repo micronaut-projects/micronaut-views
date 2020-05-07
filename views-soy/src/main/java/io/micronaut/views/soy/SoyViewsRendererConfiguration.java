@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 
 
 /**
- * Configuration for {@link SoyTofuViewsRenderer}.
+ * Configuration for the soy view renderer.
  *
  * @author Sam Gammon (sam@bloombox.io)
  * @since 1.2.1

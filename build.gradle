@@ -21,6 +21,7 @@ plugins {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     jcenter()
 }
@@ -95,6 +96,7 @@ subprojects { Project subproject ->
     apply plugin: 'idea'
     apply plugin: 'checkstyle'
     apply from: rootProject.file('gradle/license.gradle')
+
 
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
