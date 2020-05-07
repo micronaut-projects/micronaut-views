@@ -24,7 +24,7 @@ import io.micronaut.security.utils.SecurityService;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.model.ViewModelProcessor;
 
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +56,7 @@ public class SecurityViewModelProcessor implements ViewModelProcessor {
     }
 
     @Override
-    public void process(@Nonnull HttpRequest<?> request, @Nonnull ModelAndView<Map<String, Object>> modelAndView) {
+    public void process(@NonNull HttpRequest<?> request, @NonNull ModelAndView<Map<String, Object>> modelAndView) {
         Optional<Authentication> authentication = securityService.getAuthentication();
         if (authentication.isPresent()) {
             Map<String, Object> securityModel = new HashMap<>();

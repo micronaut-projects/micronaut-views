@@ -18,7 +18,7 @@ package io.micronaut.views.model;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ModelAndView;
 
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import java.util.Map;
 
 /**
@@ -37,6 +37,6 @@ public interface ViewModelProcessor {
      * @param modelAndView The model and view
      */
     void process(
-            @Nonnull HttpRequest<?> request,
-            @Nonnull ModelAndView<Map<String, Object>> modelAndView);
+            @NonNull HttpRequest<?> request,
+            @NonNull ModelAndView<Map<String, Object>> modelAndView);
 }

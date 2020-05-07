@@ -16,7 +16,7 @@
 package io.micronaut.views.model.security;
 
 import io.micronaut.core.util.Toggleable;
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 /**
  * Configuration for {@link SecurityViewModelProcessor}.
@@ -30,20 +30,20 @@ public interface SecurityViewModelProcessorConfiguration extends Toggleable {
      *
      * @return the key name which will be used in the model map.
      */
-    @Nonnull
+    @NonNull
     String getSecurityKey();
 
     /**
      *
      * @return the key for the principal name property which is used in the nested security map.
      */
-    @Nonnull
+    @NonNull
     String getPrincipalNameKey();
 
     /**
      *
      * @return the key for the attributes property which is used in the nested security map.
      */
-    @Nonnull
+    @NonNull
     String getAttributesKey();
 }

@@ -34,8 +34,8 @@ import org.thymeleaf.exceptions.TemplateEngineException;
 import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.Writer;
@@ -74,9 +74,9 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
         this.engine = templateEngine;
     }
 
+    @NonNull
     @Override
-    @Nonnull
-    public Writable render(@Nonnull String viewName, @Nullable Object data) {
+    public Writable render(@NonNull String viewName, @Nullable Object data) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             IContext context = new Context(Locale.US, variables(data));
@@ -85,9 +85,9 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
     }
 
     @Override
-    @Nonnull
-    public Writable render(@Nonnull String viewName, @Nullable Object data,
-            @Nonnull HttpRequest<?> request) {
+    @NonNull
+    public Writable render(@NonNull String viewName, @Nullable Object data,
+            @NonNull HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         ArgumentUtils.requireNonNull("request", request);
         return (writer) -> {
@@ -112,7 +112,7 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
     }
 
     @Override
-    public boolean exists(@Nonnull String viewName) {
+    public boolean exists(@NonNull String viewName) {
         String location = viewLocation(viewName);
         return resourceLoader.getResourceAsStream(location).isPresent();
     }

@@ -23,8 +23,8 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Map;
@@ -59,8 +59,9 @@ public class RockerViewsRenderer implements ViewsRenderer {
         this.folder = viewsConfiguration.getFolder();
     }
 
+    @NonNull
     @Override
-    @Nonnull public Writable render(@Nonnull String view, @Nullable Object data) {
+    public Writable render(@NonNull String view, @Nullable Object data) {
         ArgumentUtils.requireNonNull("view", view);
 
         Map<String, Object> context = modelOf(data);
@@ -71,7 +72,7 @@ public class RockerViewsRenderer implements ViewsRenderer {
     }
 
     @Override
-    public boolean exists(@Nonnull String viewName) {
+    public boolean exists(@NonNull String viewName) {
         return rockerEngine.exists(viewName);
     }
     

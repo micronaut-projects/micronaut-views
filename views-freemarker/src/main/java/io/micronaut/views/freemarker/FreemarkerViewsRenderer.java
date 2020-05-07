@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.freemarker;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import freemarker.template.*;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.cli.exceptions.ParseException;
@@ -27,8 +28,8 @@ import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
@@ -63,8 +64,9 @@ public class FreemarkerViewsRenderer implements ViewsRenderer {
         this.extension = freemarkerConfiguration.getDefaultExtension();
     }
 
+    @NonNull
     @Override
-    public @Nonnull Writable render(@Nonnull String viewName, @Nullable Object data) {
+    public Writable render(@NonNull String viewName, @Nullable Object data) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             Map<String, Object> context = modelOf(data);
@@ -80,7 +82,7 @@ public class FreemarkerViewsRenderer implements ViewsRenderer {
     }
 
     @Override
-    public boolean exists(@Nonnull String view) {
+    public boolean exists(@NonNull String view) {
         try {
             freemarkerMicronautConfiguration.getTemplate(viewLocation(view));
         } catch (ParseException | MalformedTemplateNameException e) {

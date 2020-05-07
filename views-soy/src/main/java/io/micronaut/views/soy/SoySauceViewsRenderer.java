@@ -36,8 +36,8 @@ import io.micronaut.views.exceptions.ViewRenderingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
@@ -102,7 +102,8 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
    * @param data     response body to render it with a view
    * @return A writable where the view will be written to.
    */
-  public @Nonnull Writable render(@Nonnull String viewName, @Nullable Object data) {
+  @NonNull
+  public Writable render(@NonNull String viewName, @Nullable Object data) {
     return render(viewName, data, null);
   }
 
@@ -112,9 +113,9 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
    * @param request  HTTP request
    * @return A writable where the view will be written to.
    */
-  @Nonnull
+  @NonNull
   @Override
-  public Writable render(@Nonnull String viewName, @Nullable Object data, @Nullable HttpRequest<?> request) {
+  public Writable render(@NonNull String viewName, @Nullable Object data, @NonNull HttpRequest<?> request) {
     ArgumentUtils.requireNonNull("viewName", viewName);
 
     Map<String, Object> ijOverlay = new HashMap<>(1);
@@ -193,7 +194,7 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
    * @return true if a template can be found for the supplied view name.
    */
   @Override
-  public boolean exists(@Nonnull String view) {
+  public boolean exists(@NonNull String view) {
     return soySauce.hasTemplate(view);
   }
 

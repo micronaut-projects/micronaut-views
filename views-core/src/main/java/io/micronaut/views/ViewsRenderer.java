@@ -15,13 +15,12 @@
  */
 package io.micronaut.views;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.beans.BeanMap;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +42,7 @@ public interface ViewsRenderer {
      * @param data     response body to render it with a view
      * @return A writable where the view will be written to.
      */
-    @Nonnull Writable render(@Nonnull String viewName, @Nullable Object data);
+    @NonNull Writable render(@NonNull String viewName, @Nullable Object data);
 
     /**
      * @param viewName view name to be render
@@ -51,8 +50,8 @@ public interface ViewsRenderer {
      * @param request  HTTP request
      * @return A writable where the view will be written to.
      */
-    default @Nonnull Writable render(@Nonnull String viewName, @Nullable Object data,
-            @Nonnull HttpRequest<?> request) {
+    default @NonNull Writable render(@NonNull String viewName, @Nullable Object data,
+            @NonNull HttpRequest<?> request) {
         return render(viewName, data);
     }
 
@@ -60,14 +59,14 @@ public interface ViewsRenderer {
      * @param viewName view name to be render
      * @return true if a template can be found for the supplied view name.
      */
-    boolean exists(@Nonnull String viewName);
+    boolean exists(@NonNull String viewName);
 
     /**
      * Creates a view model for the given data.
      * @param data The data
      * @return The model
      */
-    default @Nonnull Map<String, Object> modelOf(@Nullable Object data) {
+    default @NonNull Map<String, Object> modelOf(@Nullable Object data) {
         if (data == null) {
             return new HashMap<>(0);
         }

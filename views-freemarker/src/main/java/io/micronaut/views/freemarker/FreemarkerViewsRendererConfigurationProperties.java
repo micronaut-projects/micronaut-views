@@ -26,8 +26,8 @@ import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsConfigurationProperties;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import java.util.Properties;
 
 /**
@@ -104,7 +104,7 @@ public class FreemarkerViewsRendererConfigurationProperties extends Configuratio
     /**
      * @return The default extension to use
      */
-    public @Nonnull String getDefaultExtension() {
+    public @NonNull String getDefaultExtension() {
         return defaultExtension;
     }
 

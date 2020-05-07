@@ -17,6 +17,7 @@ package io.micronaut.views.handlebars;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
@@ -30,8 +31,8 @@ import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -72,8 +73,9 @@ public class HandlebarsViewsRenderer implements ViewsRenderer {
         this.handlebars = handlebars;
     }
 
+    @NonNull
     @Override
-    @Nonnull public Writable render(@Nonnull String viewName, @Nullable Object data) {
+    public Writable render(@NonNull String viewName, @Nullable Object data) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             String location = viewLocation(viewName);
@@ -87,7 +89,7 @@ public class HandlebarsViewsRenderer implements ViewsRenderer {
     }
 
     @Override
-    public boolean exists(@Nonnull String viewName) {
+    public boolean exists(@NonNull String viewName) {
         //noinspection ConstantConditions
         if (viewName == null) {
             return false;

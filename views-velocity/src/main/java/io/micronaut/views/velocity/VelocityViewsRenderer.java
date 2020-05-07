@@ -29,8 +29,8 @@ import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.Writer;
@@ -71,8 +71,9 @@ public class VelocityViewsRenderer implements ViewsRenderer {
         this.folder = viewsConfiguration.getFolder();
     }
 
+    @NonNull
     @Override
-    @Nonnull public Writable render(@Nonnull String view, @Nullable Object data) {
+    public Writable render(@NonNull String view, @Nullable Object data) {
         ArgumentUtils.requireNonNull("view", view);
         return (writer) -> {
             Map<String, Object> context = modelOf(data);
@@ -87,7 +88,7 @@ public class VelocityViewsRenderer implements ViewsRenderer {
      * @param encoding The encoding
      * @param writer The writer
      */
-    public void render(@Nonnull String view, VelocityContext context, String encoding, Writer writer) {
+    public void render(@NonNull String view, VelocityContext context, String encoding, Writer writer) {
         String viewName = viewName(view);
         try {
             velocityEngine.mergeTemplate(viewName, encoding, context, writer);
@@ -97,7 +98,7 @@ public class VelocityViewsRenderer implements ViewsRenderer {
     }
 
     @Override
-    public boolean exists(@Nonnull String viewName) {
+    public boolean exists(@NonNull String viewName) {
         try {
             velocityEngine.getTemplate(viewName(viewName));
         } catch (ResourceNotFoundException | ParseErrorException e) {

@@ -24,7 +24,7 @@ import io.micronaut.http.filter.ServerFilterChain;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
 
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import static io.micronaut.views.csp.CspConfiguration.DEFAULT_FILTER_PATH;
 import static io.micronaut.views.csp.CspConfiguration.FILTER_PATH;

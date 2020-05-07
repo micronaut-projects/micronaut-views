@@ -15,8 +15,8 @@
  */
 package io.micronaut.views;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 /**
  * Utility methods for views.
@@ -33,7 +33,7 @@ public class ViewUtils {
      * @param path The path to normalizeFile
      * @return The normalized path
      */
-    @Nonnull
+    @NonNull
     public static String normalizeFolder(@Nullable String path) {
         if (path == null) {
             path = "";
@@ -57,8 +57,8 @@ public class ViewUtils {
      * @param extension The file extension
      * @return The normalized path
      */
-    @Nonnull
-    public static String normalizeFile(@Nonnull String path, String extension) {
+    @NonNull
+    public static String normalizeFile(@NonNull String path, String extension) {
         path = path.replace("\\", "/");
         if (path.startsWith("/")) {
             path = path.substring(1);
