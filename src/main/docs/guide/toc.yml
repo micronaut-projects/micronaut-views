@@ -11,4 +11,3 @@ views:
   views-security: Security Integration
   graal: GraalVM Support
 repository: Repository
-breaks: Breaking Changes
