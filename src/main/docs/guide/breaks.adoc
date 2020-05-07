@@ -1,0 +1,5 @@
+This section outlines the breaking changes done in major versions of Micronaut Views.
+
+== 2.0.0
+
+* The `micronaut-views` dependency is no longer published. Replace the dependency with the one specific to the view implementation being used.
