@@ -22,17 +22,15 @@ import java.util.regex.Pattern
 
 
 class SoySauceViewRendererSpec extends Specification {
+
     @Shared
     @AutoCleanup
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
     [
             "spec.name": "soy",
+            "micronaut.security.enabled": false,
             "micronaut.views.soy.enabled": true,
             "micronaut.views.soy.engine": "sauce",
-            'micronaut.views.thymeleaf.enabled': false,
-            'micronaut.views.velocity.enabled': false,
-            'micronaut.views.handlebars.enabled': false,
-            'micronaut.views.freemarker.enabled': false,
             'micronaut.views.csp.enabled': true,
             'micronaut.views.csp.generateNonce': true,
             'micronaut.views.csp.reportOnly': false,

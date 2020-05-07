@@ -19,6 +19,7 @@ plugins {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     jcenter()
     maven { url "https://repo.grails.org/grails/core" }
@@ -85,6 +86,7 @@ subprojects { Project subproject ->
     }
 
     repositories {
+        mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
@@ -93,13 +95,12 @@ subprojects { Project subproject ->
     apply plugin:"java"
     apply plugin: "io.spring.dependency-management"
 
-    if (subproject.name != "views") {
-        dependencyManagement {
-            imports {
-                mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
-            }
+    dependencyManagement {
+        imports {
+            mavenBom "io.micronaut:micronaut-bom:$micronautVersion"
         }
     }
+
 
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'

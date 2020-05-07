@@ -28,8 +28,6 @@ Both server-side Soy rendering layers are supported in Micronaut:
   `SoyToJbcSrcCompiler`. If compiled templates can't be located by the `SoyFileSetProvider`, templates are pre-compiled
   into bytecode at server startup. This can be impactful on startup-time, so, if that's an important metric for your
   app, pre-compile your templates using the AOT bytecode compiler.
-* `SoyTofuViewsRenderer` (_Deprecated_): This renderer is supported for compatibility and toy uses, but it's
-  deprecated in Soy Java, so it's deprecated here. `SoyTofu` renders templates from sources.
 
 Which renderer is active depends on the Micronaut configuration:
 
@@ -38,7 +36,6 @@ micronaut:
   views:
     soy:
       enabled: true
-      engine: sauce  # one of `sauce` or `tofu`
 
 After wiring up your `SoyFileSetProvider`, and configuring Micronaut, you can render templates like so:
 
@@ -64,7 +61,6 @@ The entire set of supported Soy configuration properties are documented below:
 |=======
 |Configuration property |Type |Default value
 |`micronaut.views.soy.enabled` |`Boolean` |`false`
-|`micronaut.views.soy.engine` |`string` (one of `sauce` or `tofu`) |`sauce` (`tofu` is deprecated)
 |`micronaut.views.soy.renaming` |`Boolean` |`false`
 |=======
 
