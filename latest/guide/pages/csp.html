@@ -2,7 +2,16 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>2.5 CSP Header Support 1.2.0</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
+    <title>2.7 Content Security Policy 1.3.2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -35,6 +44,9 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/views.html"><strong>2</strong><span>Server Side View Rendering</span></a>
                         </div>
                         
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/repository.html"><strong>3</strong><span>Repository</span></a>
+                        </div>
+                        
                     </div>
                 </div>
             </li>
@@ -59,37 +71,39 @@ function addJsClass() {
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
+                    <div class="toc-item next-right"><a href="../../guide/repository.html"><strong>3</strong><span>Repository</span> >></a></div>
+                
 
 
                 <div class="project">
-                    <h1>2.5 CSP Header Support</h1>
+                    <h1>2.7 Content Security Policy</h1>
 
-                    <p><strong>Version:</strong> 1.2.0</p>
+                    <p><strong>Version:</strong> 1.3.2</p>
                 </div>
 
                 
 
                 
-
-<h2 id="csp">2.5 CSP Header Support</h2>
+<h2 id="csp"><a class="anchor" href="#csp"></a>2.7 Content Security Policy</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/csp.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/1.3.x/src/main/docs/guide/views/csp.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>Micronaut supports CSP (<a href="https://www.w3.org/TR/CSP2/">Content Security Policy Level 2</a>) out of the box. By default, CSP is disabled. To enable CSP, modify your configuration. For example:</p>
+<p>Micronaut supports CSP (<em><a href="https://www.w3.org/TR/CSP3/">Content Security Policy, Level 3</a></em>) out of the box.
+By default, CSP is disabled. To enable CSP, modify your configuration. For example:</p>
 </div>
 <div class="listingblock">
 <div class="title">application.yml</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-    views:
-        csp:
-            enabled: true</code></pre>
+  views:
+    csp:
+      enabled: true</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -128,17 +142,83 @@ function addJsClass() {
  of Content-Security-Policy. Default false.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.generate-nonce</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, the CSP header will contain a generated nonce that is made available
+ to view renderers. The nonce should change for each request/response cycle and
+ can be used by views to authorize inlined script blocks.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.filter-path</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets the path the CSP filter should apply to. Default value "/**".</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.force-secure-random</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether <code>SecureRandom</code> is forced for use in generated nonce values.
+ Defaults to <code>false</code>. Enabling this requires
+ careful consideration, because <code>SecureRandom</code> will block infinitely without
+ enough entropy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.random-engine</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Random</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the <code>Random</code> data engine used to generate nonce values. Ignored if
+ <code>forceSecureRandom</code> is set to <code>true</code>.</p></td>
+</tr>
 </tbody>
 </table>
+<div class="sect2">
+<h3 id="_nonce_support">Nonce Support</h3>
+<div class="paragraph">
+<p>At the developer&#8217;s option, Micronaut can generate a nonce with each render cycle. This nonce value can be used in
+<code>script-src</code> and <code>style-src</code> directives in a CSP response header (note that <code>nonce</code> values generally do not have any
+effect when <em>Content Security Policy</em> is set via a <code>&lt;meta http-equiv&gt;</code> tag).</p>
+</div>
+<div class="paragraph">
+<p>To opt-in to this behavior, configure Micronaut with <code>generateNonce</code> set to <code>true</code>. Additionally, provide a spot for the
+nonce value in your CSP directives, with the token <code>{#nonceValue}</code>. It must be preceded by <code>nonce-</code> and wrapped in
+single quotes, <a href="https://www.w3.org/TR/CSP3/#framework-directive-source-list">as per the CSP3 spec</a>:</p>
+</div>
+<div class="listingblock">
+<div class="title">application.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  views:
+    csp:
+      enabled: true
+      generateNonce: true
+      policyDirectives: "default-src https: self:; script-src 'nonce-{#nonceValue}';"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That&#8217;s it! After applying the above configuration, HTTP responses might include a header that look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt hljs" data-lang="txt">Content-Security-Policy: default-src https: self:; script-src 'nonce-4ze2IRazk4Yu/j5K6SEzjA';</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Inline scripts which aren&#8217;t otherwise whitelisted will be declined for execution, unless CSP is operating in report-only
+mode. Inline scripts can be whitelisted with the syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;script type="text/javascript" nonce="4ze2IRazk4Yu/j5K6SEzjA"&gt;
+  // some javascript code here
+&lt;/script&gt;</code></pre>
+</div>
+</div>
+</div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
                     <div class="toc-item prev-left"><a href="../../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/repository.html"><strong>3</strong><span>Repository</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>
