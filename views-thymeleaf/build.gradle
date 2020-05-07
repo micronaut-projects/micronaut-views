@@ -2,22 +2,22 @@ dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
 
-    compile project(":views-core")
-    compile dependencyVersion("thymeleaf")
+    api project(":views-core")
+    implementation dependencyVersion("thymeleaf")
     compileOnly "io.micronaut:micronaut-security:2.0.0.M1"
 
-    compile "io.micronaut:micronaut-runtime:$micronautVersion"
-    compile "io.micronaut:micronaut-http:$micronautVersion"
-    compile "io.micronaut:micronaut-http-server:$micronautVersion"
-    compile "io.micronaut:micronaut-inject:$micronautVersion"
+    api "io.micronaut:micronaut-runtime:$micronautVersion"
+    api "io.micronaut:micronaut-http:$micronautVersion"
+    api "io.micronaut:micronaut-http-server:$micronautVersion"
+    api "io.micronaut:micronaut-inject:$micronautVersion"
 
-    testCompile "io.micronaut:micronaut-http-client"
-    testCompile "io.micronaut:micronaut-inject-groovy"
-    testCompile "io.micronaut:micronaut-inject-java"
-    testCompile "io.micronaut:micronaut-http-server-netty"
-    testCompile "io.micronaut:micronaut-security:2.0.0.M1"
+    testImplementation "io.micronaut:micronaut-http-client"
+    testImplementation "io.micronaut:micronaut-inject-groovy"
+    testImplementation "io.micronaut:micronaut-inject-java"
+    testImplementation "io.micronaut:micronaut-http-server-netty"
+    testImplementation "io.micronaut:micronaut-security:2.0.0.M1"
 
-    testCompile "org.yaml:snakeyaml:$snakeYamlVersion"
+    testImplementation "org.yaml:snakeyaml:$snakeYamlVersion"
 
     testRuntime dependencyVersion("thymeleaf")
 }
