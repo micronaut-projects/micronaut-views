@@ -75,6 +75,25 @@ public class ViewsFilter implements HttpServerFilter {
         this.viewModelProcessors = viewModelProcessors;
     }
 
+    /**
+     * Constructor.
+     * @deprecated Use {@link ViewsFilter#ViewsFilter(BeanLocator, ViewsFilterOrderProvider, Collection)} instead.
+     *
+     * @param beanLocator The bean locator
+     * @param viewsFilterOrderProvider The order provider
+     */
+    @Deprecated
+    public ViewsFilter(BeanLocator beanLocator,
+                       @Nullable ViewsFilterOrderProvider viewsFilterOrderProvider) {
+        this.beanLocator = beanLocator;
+        if (viewsFilterOrderProvider != null) {
+            this.order = viewsFilterOrderProvider.getOrder();
+        } else {
+            this.order = 0;
+        }
+        this.viewModelProcessors = new ArrayList<>();
+    }
+
     @Override
     public int getOrder() {
         return order;

@@ -57,8 +57,8 @@ public class FreemarkerViewsRenderer implements ViewsRenderer {
      * @param freemarkerConfiguration Freemarker Configuration Properties
      */
     @Inject
-    public FreemarkerViewsRenderer(ViewsConfiguration viewsConfiguration,
-                                   FreemarkerViewsRendererConfigurationProperties freemarkerConfiguration) {
+    FreemarkerViewsRenderer(ViewsConfiguration viewsConfiguration,
+                            FreemarkerViewsRendererConfigurationProperties freemarkerConfiguration) {
         this.viewsConfiguration = viewsConfiguration;
         this.freemarkerMicronautConfiguration = freemarkerConfiguration;
         this.extension = freemarkerConfiguration.getDefaultExtension();

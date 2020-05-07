@@ -51,9 +51,9 @@ public class RockerViewsRenderer implements ViewsRenderer {
      * @param rockerEngine        Rocker Engine
      */
     @Inject
-    public RockerViewsRenderer(ViewsConfiguration viewsConfiguration,
-                               RockerViewsRendererConfiguration rockerConfiguration,
-                               RockerEngine rockerEngine) {
+    RockerViewsRenderer(ViewsConfiguration viewsConfiguration,
+                        RockerViewsRendererConfiguration rockerConfiguration,
+                        RockerEngine rockerEngine) {
         this.viewsConfiguration = viewsConfiguration;
         this.rockerConfiguration = rockerConfiguration;
         this.rockerEngine = rockerEngine;

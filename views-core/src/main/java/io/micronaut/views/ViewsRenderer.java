@@ -35,6 +35,14 @@ import java.util.Map;
 public interface ViewsRenderer {
 
     /**
+     * The file separator to use.
+     *
+     * @deprecated Use {@link File#separator} directly
+     */
+    @Deprecated
+    String FILE_SEPARATOR = File.separator;
+
+    /**
      * The extension separator.
      */
     String EXTENSION_SEPARATOR = ".";
@@ -78,4 +86,35 @@ public interface ViewsRenderer {
         return BeanMap.of(data);
     }
 
+    /**
+     * Returns a path with unix style folder
+     * separators that starts and ends with a "\".
+     *
+     * @param path The path to normalizeFile
+     * @deprecated Use {@link ViewUtils#normalizeFolder(String)} instead
+     * @return The normalized path
+     */
+    @Nonnull
+    @Deprecated
+    default String normalizeFolder(@Nullable String path) {
+        return ViewUtils.normalizeFolder(path);
+    }
+
+    /**
+     * Returns a path that is converted to unix style file separators
+     * and never starts with a "\". If an extension is provided and the
+     * path ends with the extension, the extension will be stripped.
+     * The extension parameter supports extensions that do and do not
+     * begin with a ".".
+     *
+     * @param path The path to normalizeFile
+     * @param extension The file extension
+     * @deprecated Use {@link ViewUtils#normalizeFile(String, String)} instead
+     * @return The normalized path
+     */
+    @Nonnull
+    @Deprecated
+    default String normalizeFile(@Nonnull String path, String extension) {
+        return ViewUtils.normalizeFile(path, extension);
+    }
 }

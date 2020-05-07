@@ -60,10 +60,23 @@ public class VelocityViewsRenderer implements ViewsRenderer {
     /**
      * @param viewsConfiguration    Views Configuration
      * @param velocityConfiguration Velocity Configuration
+     */
+    @Deprecated
+    VelocityViewsRenderer(ViewsConfiguration viewsConfiguration,
+                          VelocityViewsRendererConfiguration velocityConfiguration) {
+        this.viewsConfiguration = viewsConfiguration;
+        this.velocityConfiguration = velocityConfiguration;
+        this.velocityEngine = initializeVelocityEngine();
+        this.folder = viewsConfiguration.getFolder();
+    }
+
+    /**
+     * @param viewsConfiguration    Views Configuration
+     * @param velocityConfiguration Velocity Configuration
      * @param velocityEngine        Velocity Engine
      */
     @Inject
-    public VelocityViewsRenderer(ViewsConfiguration viewsConfiguration,
+    VelocityViewsRenderer(ViewsConfiguration viewsConfiguration,
                           VelocityViewsRendererConfiguration velocityConfiguration,
                           VelocityEngine velocityEngine) {
         this.viewsConfiguration = viewsConfiguration;
