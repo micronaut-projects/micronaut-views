@@ -8,7 +8,7 @@ on:
     types: [closed,reopened]
   push:
     branches:
-      - master
+      - 1.3.x
     paths:
       - ".github/workflows/release-notes.yml"
 jobs:
