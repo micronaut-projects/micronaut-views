@@ -16,7 +16,7 @@ dependencies {
 
     compile project(":views-core")
     compile dependencyVersion("rocker")
-    compileOnly "io.micronaut:micronaut-security:2.0.0.M1"
+    compileOnly "io.micronaut:micronaut-security:2.0.0.M2"
 
     compile "io.micronaut:micronaut-runtime:$micronautVersion"
     compile "io.micronaut:micronaut-http:$micronautVersion"

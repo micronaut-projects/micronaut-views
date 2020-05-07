@@ -14,7 +14,7 @@ dependencies {
     testCompile "io.micronaut:micronaut-inject-groovy"
     testCompile "io.micronaut:micronaut-inject-java"
     testCompile "io.micronaut:micronaut-http-server-netty"
-    testCompile "io.micronaut:micronaut-security:2.0.0.M1"
+    testCompile "io.micronaut:micronaut-security:2.0.0.M2"
 
     testCompile "org.yaml:snakeyaml:$snakeYamlVersion"
 
