@@ -25,15 +25,13 @@ import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
+import io.micronaut.http.filter.ServerFilterPhase;
 import io.micronaut.views.exceptions.ViewNotFoundException;
 import io.micronaut.views.model.ViewModelProcessor;
 import io.micronaut.web.router.qualifier.ProducesMediaTypeQualifier;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,9 +47,6 @@ import java.util.Optional;
 @Filter("/**")
 public class ViewsFilter implements HttpServerFilter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
-
-    protected final Integer order;
     protected final BeanLocator beanLocator;
     private final Collection<ViewModelProcessor> viewModelProcessors;
 
@@ -59,24 +54,17 @@ public class ViewsFilter implements HttpServerFilter {
      * Constructor.
      *
      * @param beanLocator The bean locator
-     * @param viewsFilterOrderProvider The order provider
      * @param viewModelProcessors Collection of views model decorator beans
      */
     public ViewsFilter(BeanLocator beanLocator,
-                       @Nullable ViewsFilterOrderProvider viewsFilterOrderProvider,
                        Collection<ViewModelProcessor> viewModelProcessors) {
         this.beanLocator = beanLocator;
-        if (viewsFilterOrderProvider != null) {
-            this.order = viewsFilterOrderProvider.getOrder();
-        } else {
-            this.order = 0;
-        }
         this.viewModelProcessors = viewModelProcessors;
     }
 
     @Override
     public int getOrder() {
-        return order;
+        return ServerFilterPhase.RENDERING.order();
     }
 
     @Override
@@ -109,10 +97,9 @@ public class ViewsFilter implements HttpServerFilter {
                             model = modelAndView.getModel().orElse(model);
                             String view = modelAndView.getView().orElse(optionalView.get());
                             if (viewsRenderer.exists(view)) {
-
                                 Writable writable = viewsRenderer.render(view, model, request);
                                 response.contentType(type);
-                                ((MutableHttpResponse<Object>) response).body(writable);
+                                response.body(writable);
                                 return Flowable.just(response);
                             } else {
                                 return Flowable.error(new ViewNotFoundException("View [" + view + "] does not exist"));

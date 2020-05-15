@@ -5,3 +5,5 @@ This section outlines the breaking changes done in major versions of Micronaut V
 * The `micronaut-views` dependency is no longer published. Replace the dependency with the one specific to the view implementation being used.
 
 * Deprecated classes, constructors, etc have been removed.
+
+* ViewsFilterOrderProvider has been removed. The view filter now always runs on `ServerFilterPhase.RENDERING`.
