@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../io/micronaut/views/ViewsConfigurationProperties.html" title="class in io.micronaut.views"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../io/micronaut/views/ViewsFilterOrderProvider.html" title="interface in io.micronaut.views"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?io/micronaut/views/ViewsFilter.html" target="_top">Frames</a></li>
@@ -145,10 +145,6 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <td class="colFirst"><code>protected io.micronaut.context.BeanLocator</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#beanLocator">beanLocator</a></span></code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected java.lang.Integer</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#order">order</a></span></code>&nbsp;</td>
-</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="fields.inherited.from.class.io.micronaut.core.order.Ordered">
@@ -171,8 +167,7 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.context.BeanLocator-io.micronaut.views.ViewsFilterOrderProvider-java.util.Collection-">ViewsFilter</a></span>(io.micronaut.context.BeanLocator&nbsp;beanLocator,
-           <a href="../../../io/micronaut/views/ViewsFilterOrderProvider.html" title="interface in io.micronaut.views">ViewsFilterOrderProvider</a>&nbsp;viewsFilterOrderProvider,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.context.BeanLocator-java.util.Collection-">ViewsFilter</a></span>(io.micronaut.context.BeanLocator&nbsp;beanLocator,
            java.util.Collection&lt;<a href="../../../io/micronaut/views/model/ViewModelProcessor.html" title="interface in io.micronaut.views.model">ViewModelProcessor</a>&gt;&nbsp;viewModelProcessors)</code>
 <div class="block">Constructor.</div>
 </td>
@@ -257,15 +252,6 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="order">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>order</h4>
-<pre>protected final&nbsp;java.lang.Integer order</pre>
-</li>
-</ul>
 <a name="beanLocator">
 <!--   -->
 </a>
@@ -283,21 +269,18 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ViewsFilter-io.micronaut.context.BeanLocator-io.micronaut.views.ViewsFilterOrderProvider-java.util.Collection-">
+<a name="ViewsFilter-io.micronaut.context.BeanLocator-java.util.Collection-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ViewsFilter</h4>
 <pre>public&nbsp;ViewsFilter(io.micronaut.context.BeanLocator&nbsp;beanLocator,
-                   @Nullable
-                   <a href="../../../io/micronaut/views/ViewsFilterOrderProvider.html" title="interface in io.micronaut.views">ViewsFilterOrderProvider</a>&nbsp;viewsFilterOrderProvider,
                    java.util.Collection&lt;<a href="../../../io/micronaut/views/model/ViewModelProcessor.html" title="interface in io.micronaut.views.model">ViewModelProcessor</a>&gt;&nbsp;viewModelProcessors)</pre>
 <div class="block">Constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>beanLocator</code> - The bean locator</dd>
-<dd><code>viewsFilterOrderProvider</code> - The order provider</dd>
 <dd><code>viewModelProcessors</code> - Collection of views model decorator beans</dd>
 </dl>
 </li>
@@ -438,7 +421,7 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../io/micronaut/views/ViewsConfigurationProperties.html" title="class in io.micronaut.views"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../io/micronaut/views/ViewsFilterOrderProvider.html" title="interface in io.micronaut.views"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?io/micronaut/views/ViewsFilter.html" target="_top">Frames</a></li>
