@@ -1,7 +1,9 @@
 Micronaut includes api:views.velocity.VelocityViewsRenderer[] which uses
 the http://velocity.apache.org[Apache Velocity] Java-based template engine.
 
-In addition to the <<views, Views>> dependency, add the following dependency on your classpath.
+In addition to the <<views, Views>> dependency, add the following dependencies on your classpath.
+
+dependency:micronaut-views-velocity[groupId="io.micronaut",scope="implementation",version="1.3.2"]
 
 dependency:velocity-engine-core[groupId="org.apache.velocity",scope="runtime",version="2.0"]
 
