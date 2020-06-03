@@ -39,7 +39,7 @@ import io.micronaut.core.annotation.TypeHint;
                 org.apache.velocity.runtime.directive.Macro.class,
                 org.apache.velocity.runtime.directive.Parse.class,
                 org.apache.velocity.runtime.directive.Stop.class,
-                org.apache.velocity.util.introspection.ConversionHandlerImpl.class,
+                org.apache.velocity.util.introspection.TypeConversionHandlerImpl.class,
                 org.apache.velocity.util.introspection.UberspectImpl.class},
         accessType = TypeHint.AccessType.ALL_PUBLIC
 )
