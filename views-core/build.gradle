@@ -2,7 +2,7 @@ dependencies {
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
 
-    compileOnly "io.micronaut:micronaut-security:2.0.0.M1"
+    compileOnly "io.micronaut:micronaut-security:2.0.0.BUILD-SNAPSHOT"
 
     api "io.micronaut:micronaut-runtime:$micronautVersion"
     api "io.micronaut:micronaut-http:$micronautVersion"

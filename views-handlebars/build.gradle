@@ -4,7 +4,7 @@ dependencies {
 
     api project(":views-core")
     implementation "com.github.jknack:handlebars:$handlebarsVersion"
-    compileOnly "io.micronaut:micronaut-security:2.0.0.M1"
+    compileOnly "io.micronaut:micronaut-security:2.0.0.BUILD-SNAPSHOT"
 
     api "io.micronaut:micronaut-runtime:$micronautVersion"
     api "io.micronaut:micronaut-http:$micronautVersion"

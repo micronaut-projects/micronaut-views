@@ -4,7 +4,7 @@ dependencies {
 
     api project(":views-core")
     implementation "org.freemarker:freemarker:$freemarkerVersion"
-    compileOnly "io.micronaut:micronaut-security:2.0.0.M2"
+    compileOnly "io.micronaut:micronaut-security:2.0.0.BUILD-SNAPSHOT"
 
     api "io.micronaut:micronaut-runtime:$micronautVersion"
     api "io.micronaut:micronaut-http:$micronautVersion"
@@ -14,7 +14,7 @@ dependencies {
     testImplementation "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut:micronaut-inject-java"
     testImplementation "io.micronaut:micronaut-http-server-netty"
-    testImplementation "io.micronaut:micronaut-security:2.0.0.M1"
+    testImplementation "io.micronaut:micronaut-security:2.0.0.BUILD-SNAPSHOT"
 
     testImplementation "org.yaml:snakeyaml:$snakeYamlVersion"
 
