@@ -1,6 +1,5 @@
 rootProject.name = 'views'
 
-include 'views'
 include 'views-core'
 include 'views-soy'
 include 'views-freemarker'
