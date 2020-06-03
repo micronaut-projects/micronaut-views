@@ -100,7 +100,6 @@ public class FreemarkerViewsRendererConfigurationProperties extends Configuratio
         this.enabled = enabled;
     }
 
-
     /**
      * @return The default extension to use
      */

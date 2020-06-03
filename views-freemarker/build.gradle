@@ -3,7 +3,7 @@ dependencies {
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
 
     api project(":views-core")
-    implementation dependencyVersion("freemarker")
+    implementation "org.freemarker:freemarker:$freemarkerVersion"
     compileOnly "io.micronaut:micronaut-security:2.0.0.M2"
 
     api "io.micronaut:micronaut-runtime:$micronautVersion"
@@ -18,5 +18,4 @@ dependencies {
 
     testImplementation "org.yaml:snakeyaml:$snakeYamlVersion"
 
-    testRuntime dependencyVersion("freemarker")
 }

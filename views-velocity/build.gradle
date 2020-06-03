@@ -5,7 +5,7 @@ dependencies {
     annotationProcessor "io.micronaut:micronaut-graal:$micronautVersion"
 
     api project(":views-core")
-    implementation dependencyVersion("velocity")
+    implementation "org.apache.velocity:velocity-engine-core:$velocityVersion"
     compileOnly "io.micronaut:micronaut-security:2.0.0.M1"
 
     api "io.micronaut:micronaut-runtime:$micronautVersion"
@@ -20,5 +20,4 @@ dependencies {
 
     testImplementation "org.yaml:snakeyaml:$snakeYamlVersion"
 
-    testRuntime dependencyVersion("velocity")
 }

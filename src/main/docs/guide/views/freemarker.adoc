@@ -1,9 +1,9 @@
 Micronaut includes api:views.freemarker.FreemarkerViewsRenderer[] which uses
 the https://freemarker.apache.org[Apache Freemarker] Java-based template engine.
 
-In addition to the <<views, Views>> dependency, add the following dependency on your classpath.
+Add the following dependency on your classpath.
 
-dependency:freemarker[groupId="org.freemarker",scope="runtime",version="2.3.28"]
+dependency:io.micronaut.views:micronaut-views-freemarker[]
 
 The example shown in the <<views, Views>> section, could be rendered with the following Freemarker template:
 

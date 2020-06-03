@@ -16,8 +16,8 @@
 package io.micronaut.views.soy;
 
 import com.google.template.soy.SoyFileSet;
+import com.google.template.soy.data.SoyTemplate;
 import com.google.template.soy.data.SoyValueProvider;
-import com.google.template.soy.data.TemplateParameters;
 import com.google.template.soy.jbcsrc.api.RenderResult;
 import com.google.template.soy.jbcsrc.api.SoySauce;
 import com.google.template.soy.shared.SoyCssRenamingMap;
@@ -120,7 +120,7 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
 
     Map<String, Object> ijOverlay = new HashMap<>(1);
     Map<String, Object> context = modelOf(data);
-    final SoySauce.Renderer renderer = soySauce.newRenderer(new TemplateParameters() {
+    final SoySauce.Renderer renderer = soySauce.newRenderer(new SoyTemplate() {
       @Override
       public String getTemplateName() {
         return viewName;

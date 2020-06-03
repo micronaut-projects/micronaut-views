@@ -1,78 +1,11 @@
 buildscript {
     repositories {
         jcenter()
+        maven { url "https://dl.bintray.com/micronaut/core-releases-local" }
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
-        classpath "org.grails:grails-docs:$grailsVersion"
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
-        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.2"
-        classpath "de.marcphilipp.gradle:nexus-publish-plugin:0.4.0"
-        classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
-        classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
-        classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
-        classpath "io.spring.nohttp:nohttp-gradle:0.0.4.RELEASE"
-    }
-}
-
-plugins {
-    id 'com.github.hierynomus.license' version '0.15.0' apply false
-}
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    jcenter()
-}
-
-version project.projectVersion
-
-ext {
-    distInstallDir = file("$buildDir/dist-tmp")
-    homeBinDir = file("bin")
-    homeLibDir = file("lib")
-    homeSrcDir = file("src")
-
-    dependencyVersions = [
-        freemarker: [
-            version: freemarkerVersion,
-            group  : 'org.freemarker',
-            name   : 'freemarker'
-        ],
-        handlebars: [
-            version: handlebarsVersion,
-            group  : 'com.github.jknack',
-            name   : 'handlebars'
-        ],
-        thymeleaf: [
-            version: thymeleafVersion,
-            group  : 'org.thymeleaf',
-            name   : 'thymeleaf'
-        ],
-        velocity: [
-            version: velocityVersion,
-            group  : 'org.apache.velocity',
-            name   : 'velocity-engine-core'
-        ],
-        soy: [
-            version: soyVersion,
-            group  : 'com.google.template',
-            name   : 'soy'
-        ],
-        rocker: [
-            version: rockerVersion,
-            group  : 'com.fizzed',
-            name   : 'rocker-runtime'
-        ],
-    ]
-
-    dependencyVersion = { String name ->
-        def dep = dependencyVersions[name]
-        if (dep == null) {
-            throw new IllegalArgumentException("No core dependency defined for name: $name")
-        }
-        return "$dep.group:$dep.name:$dep.version".toString()
+        classpath "io.micronaut.build:micronaut-gradle-plugins:2.0.0.RC10"
     }
 }
 
@@ -80,117 +13,41 @@ subprojects { Project subproject ->
 
     repositories {
         maven { url "https://oss.jfrog.org/oss-snapshot-local" }
-        maven { url "https://repo.grails.org/grails/core" }
     }
+    group "io.micronaut.views"
 
-    version project.projectVersion
+    if (subproject.name != 'views') {
+        apply plugin: "io.micronaut.build.common"
 
-    group "io.micronaut"
-    ext {
-        isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
-    }
-
-    apply plugin:"groovy"
-    if (subproject.name != "views") {
-        apply plugin:"java-library"
-    }
-    apply plugin: 'idea'
-    apply plugin: 'checkstyle'
-    apply from: rootProject.file('gradle/license.gradle')
-
-
-    sourceCompatibility = '1.8'
-    targetCompatibility = '1.8'
-    apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
-
-    jar {
-        manifest {
-            attributes('Automatic-Module-Name': "${subproject.group}.${subproject.name}".replaceAll('[^\\w\\.\\$_]', "_"))
-            attributes('Implementation-Version': projectVersion)
-            attributes('Implementation-Title': title)
+        micronautBuild {
+            enforcedPlatform = true
         }
+    } else {
+        apply plugin: "java-platform"
+        version projectVersion
     }
 
-    bintray.publish = true
-
-    tasks.withType(Test) {
-        jvmArgs '-Duser.country=US'
-        jvmArgs '-Duser.language=en'
-        testLogging {
-            exceptionFormat = 'full'
-        }
-        afterSuite {
-            System.out.print(".")
-            System.out.flush()
-        }
-
-        reports.html.enabled = !System.getenv("TRAVIS")
-        reports.junitXml.enabled = !System.getenv("TRAVIS")
+    if (subproject.parent.name == "docs-examples" || subproject.name == "docs-examples") {
+        return
     }
 
-    configurations {
-        documentation
-        all {
-            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-                String group = details.requested.group
-                if(group == 'org.codehaus.groovy') {
-                    details.useVersion(groovyVersion)
-                }
+    apply plugin: "io.micronaut.build.publishing"
+
+    if (subproject.name != 'views') {
+        
+        apply plugin: "io.micronaut.build.dependency-updates"
+        dependencies {
+            testImplementation("org.spockframework:spock-core:${spockVersion}") {
+                exclude module:'groovy-all'
             }
-        }
-    }
-    dependencies {
-        annotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-        testAnnotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-        implementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-
-        documentation "org.codehaus.groovy:groovy-templates:$groovyVersion"
-        documentation "org.codehaus.groovy:groovy-dateutil:$groovyVersion"
-
-        testImplementation("org.spockframework:spock-core:${spockVersion}") {
-            exclude module:'groovy-all'
-        }
-        testImplementation "io.micronaut:micronaut-inject-groovy:$micronautVersion"
-        testImplementation "cglib:cglib-nodep:3.3.0"
-        testImplementation "org.objenesis:objenesis:3.1"
-
-        testRuntimeOnly "ch.qos.logback:logback-classic:1.2.3"
-        testImplementation "org.codehaus.groovy:groovy-test:$groovyVersion"
+            testImplementation "io.micronaut.test:micronaut-test-spock:$micronautTestVersion"        
+        }            
     }
 
-    groovydoc {
-        classpath += project.configurations.documentation
-    }
-
-    task allDeps(type: DependencyReportTask) {}
-
-    checkstyle {
-        toolVersion = 8.16
-        configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
-
-        // Per submodule
-        maxErrors = 1
-        maxWarnings = 10
-
-        showViolations = true
-    }
-    checkstyleTest.enabled = false
-
-    idea {
-        module {
-            outputDir file('build/classes/java/main')
-            testOutputDir file('build/classes/groovy/test')
-        }
-    }
-
-    tasks.withType(GroovyCompile) {
-        groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
-    }
-
-    tasks.withType(JavaCompile){
-        options.encoding = "UTF-8"
-        options.compilerArgs.add('-parameters')
-    }
+    project.tasks.withType(Test) {
+        useJUnitPlatform()
+    }    
 }
 
-apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-docs/v${micronautDocsVersion}/gradle/docs.gradle"
+apply plugin: "io.micronaut.build.docs"
+apply plugin: "io.micronaut.build.dependency-updates"

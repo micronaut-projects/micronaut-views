@@ -31,7 +31,6 @@ import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -40,7 +39,7 @@ import javax.inject.Singleton;
  * Renders Views with with Handlebars.java.
  *
  * @author Sergio del Amo
- * @see <a href="http://jknack.github.io/handlebars.java/">http://jknack.github.io/handlebars.java/</a>
+ * @see <a href="https://jknack.github.io/handlebars.java/">https://jknack.github.io/handlebars.java/</a>
  * @since 1.0
  */
 @Produces(MediaType.TEXT_HTML)
