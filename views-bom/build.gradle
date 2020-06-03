@@ -5,13 +5,13 @@ javaPlatform {
 }
 dependencies {
     for (Project p : rootProject.subprojects) {
-        if (p.name == "views") continue
+        if (p.name == "views-bom") continue
         api "$p.group:micronaut-$p.name:$p.version"
     }
 
     constraints {
         for (Project p : rootProject.subprojects) {
-            if (p.name == "views") continue
+            if (p.name == "views-bom") continue
             api "$p.group:micronaut-$p.name:$p.version"
         }
 
