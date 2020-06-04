@@ -3,7 +3,7 @@ dependencies {
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
 
     api project(":views-core")
-    implementation "com.google.template:soy:$soyVersion"
+    api "com.google.template:soy:$soyVersion"
     compileOnly "io.micronaut:micronaut-security:2.0.0.M1"
 
     api "io.micronaut:micronaut-runtime:$micronautVersion"
