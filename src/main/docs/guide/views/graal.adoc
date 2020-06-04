@@ -1,28 +1,8 @@
 Micronaut supports GraalVM and starting in `1.2.0` special configuration files have been added to make easier the native image creation.
 
-The first change needed is to add the dependency of the view technology used instead of the generic `micronaut-views`.
-For example, when using Thymeleaf, instead of defining this dependency:
-
-dependency:micronaut-views[]
-
-Use this:
-
-dependency:micronaut-views-thymeleaf[]
-
-Then it is necessary to tell Graal to include all the static resources in the native image. To do that edit the file
-`native-image.properties` included in the project when created with the `graal-native-image` feature and add the necessary
-directories:
-
-[source,properties]
-.src/main/resources/META-INF/native-image/example.micronaut/mn-graal-application/native-image.properties
-----
-Args = -H:IncludeResources=logback.xml|application.yml|views/.* \ # <1>
-       -H:Name=mn-graal-application \
-       -H:Class=example.micronaut.Application
-----
-<1> Include all static resources in `views` directory in the native-image.
-
-TIP: If you want to https://docs.micronaut.io/latest/guide/index.html#staticResources[serve static resources] like html, css
-and javascript files with Micronaut it is also necessary to include the `public` directory in the resources.
+For Micronaut 2.0 the support for GraalVM has been improved and now it's not necessary to declare any view.
+This also applies if you https://docs.micronaut.io/latest/guide/index.html#staticResources[serve static resources] like
+html, css and javascript files. Everything in the `public` directory will also be added to the GraalVM resource configuration
+automatically.
 
 NOTE: Learn more about https://docs.micronaut.io/latest/guide/index.html#graal[Micronaut's GraalVM support].
