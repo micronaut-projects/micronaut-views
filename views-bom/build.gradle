@@ -1,5 +1,3 @@
-bintray.pkg.name = "micronaut-views"
-
 javaPlatform {
     allowDependencies()
 }
