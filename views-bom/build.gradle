@@ -1,15 +1,7 @@
-javaPlatform {
-    allowDependencies()
-}
 dependencies {
-    for (Project p : rootProject.subprojects) {
-        if (p.name == "views-bom") continue
-        api "$p.group:micronaut-$p.name:$p.version"
-    }
-
     constraints {
         for (Project p : rootProject.subprojects) {
-            if (p.name == "views-bom") continue
+            if (p.name == "views-bom" || p.name == 'views') continue
             api "$p.group:micronaut-$p.name:$p.version"
         }
 
