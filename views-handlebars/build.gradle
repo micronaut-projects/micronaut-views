@@ -4,7 +4,7 @@ dependencies {
 
     api project(":views-core")
     api "com.github.jknack:handlebars:$handlebarsVersion"
-    compileOnly 'io.micronaut.security:micronaut-security:2.0.0.M3'
+
     compileOnly "io.micronaut:micronaut-management:$micronautVersion"
     compileOnly "io.micronaut:micronaut-validation:$micronautVersion"
 
@@ -17,7 +17,6 @@ dependencies {
 
     testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
     testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
-    testImplementation 'io.micronaut.security:micronaut-security:2.0.0.M3'
     testImplementation "io.micronaut:micronaut-management:$micronautVersion"
     testImplementation "io.micronaut:micronaut-validation:$micronautVersion"
     
