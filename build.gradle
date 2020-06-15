@@ -36,9 +36,9 @@ subprojects { Project subproject ->
         return
     }
 
-    // configurations.all {
-    //     resolutionStrategy.force "org.spockframework:spock-core:${spockVersion}"
-    // }
+    configurations.all {
+        resolutionStrategy.force "org.spockframework:spock-core:${spockVersion}"
+    }
     
     apply plugin: "io.micronaut.build.publishing"
 
