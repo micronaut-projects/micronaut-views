@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.model.security
+package views.model.security
 
+import io.micronaut.views.model.security.BooksController
+import io.micronaut.views.model.security.MockAuthenticationProvider
+import io.micronaut.views.model.security.SecurityViewModelProcessor
 import io.micronaut.context.ApplicationContext
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse

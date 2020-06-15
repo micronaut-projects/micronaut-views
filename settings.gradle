@@ -8,3 +8,5 @@ include 'views-handlebars'
 include 'views-thymeleaf'
 include 'views-velocity'
 include 'views-rocker'
+
+include "test-suite"
