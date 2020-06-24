@@ -15,7 +15,7 @@
  */
 /**
  * Contains classes specific to Views rendered with Velocity.
- * @see <a href="http://velocity.apache.org">Velocity</a>
+ * @see <a href="https://velocity.apache.org">Velocity</a>
  *
  * @author Sergio del Amo
  * @since 1.0

@@ -44,7 +44,7 @@ import java.util.Properties;
  * @author Sergio del Amo
  * @author graemerocher
  *
- * @see <a href="http://velocity.apache.org">http://velocity.apache.org</a>
+ * @see <a href="https://velocity.apache.org">https://velocity.apache.org</a>
  * @since 1.0
  */
 @Produces(MediaType.TEXT_HTML)
