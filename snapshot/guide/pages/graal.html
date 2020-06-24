@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>2.9 GraalVM Support 2.0.0.BUILD-SNAPSHOT</title>
+    <title>2.9 GraalVM Support 1.3.3.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -47,9 +47,6 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/repository.html"><strong>3</strong><span>Repository</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/breaks.html"><strong>4</strong><span>Breaking Changes</span></a>
-                        </div>
-                        
                     </div>
                 </div>
             </li>
@@ -81,7 +78,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>2.9 GraalVM Support</h1>
 
-                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -90,7 +87,7 @@ function addJsClass() {
 <h2 id="graal"><a class="anchor" href="#graal"></a>2.9 GraalVM Support</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/graal.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/1.3.x/src/main/docs/guide/views/graal.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -100,10 +97,79 @@ function addJsClass() {
 <p>Micronaut supports GraalVM and starting in <code>1.2.0</code> special configuration files have been added to make easier the native image creation.</p>
 </div>
 <div class="paragraph">
-<p>For Micronaut 2.0 the support for GraalVM has been improved and now it&#8217;s not necessary to declare any view.
-This also applies if you <a href="https://docs.micronaut.io/latest/guide/index.html#staticResources">serve static resources</a> like
-html, css and javascript files. Everything in the <code>public</code> directory will also be added to the GraalVM resource configuration
-automatically.</p>
+<p>The first change needed is to add the dependency of the view technology used instead of the generic <code>micronaut-views</code>.
+For example, when using Thymeleaf, instead of defining this dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-views")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Use this:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut:micronaut-views-thymeleaf")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-thymeleaf&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Then it is necessary to tell Graal to include all the static resources in the native image. To do that edit the file
+<code>native-image.properties</code> included in the project when created with the <code>graal-native-image</code> feature and add the necessary
+directories:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/META-INF/native-image/example.micronaut/mn-graal-application/native-image.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">Args = -H:IncludeResources=logback.xml|application.yml|views/.* \ <i class="conum" data-value="1"></i><b>(1)</b>
+       -H:Name=mn-graal-application \
+       -H:Class=example.micronaut.Application</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Include all static resources in <code>views</code> directory in the native-image.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you want to <a href="https://docs.micronaut.io/latest/guide/index.html#staticResources">serve static resources</a> like html, css
+and javascript files with Micronaut it is also necessary to include the <code>public</code> directory in the resources.
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock note">
 <table>
