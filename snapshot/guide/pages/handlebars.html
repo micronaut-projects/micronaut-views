@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>2.2 Handlebars.java 1.3.3.BUILD-SNAPSHOT</title>
+    <title>2.2 Handlebars.java 2.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -47,6 +47,9 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/repository.html"><strong>3</strong><span>Repository</span></a>
                         </div>
                         
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/breaks.html"><strong>4</strong><span>Breaking Changes</span></a>
+                        </div>
+                        
                     </div>
                 </div>
             </li>
@@ -78,7 +81,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>2.2 Handlebars.java</h1>
 
-                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -87,7 +90,7 @@ function addJsClass() {
 <h2 id="handlebars"><a class="anchor" href="#handlebars"></a>2.2 Handlebars.java</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/1.3.x/src/main/docs/guide/views/handlebars.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/handlebars.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -98,22 +101,20 @@ function addJsClass() {
 the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> project.</p>
 </div>
 <div class="paragraph">
-<p>In addition to the <a href="#views">Views</a> dependency, add the following dependency on your classpath. For example, in <code>build.gradle</code></p>
+<p>Add the following dependency on your classpath. For example, in <code>build.gradle</code></p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">runtime(<span class="hljs-string">"com.github.jknack:handlebars:4.1.0")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-handlebars")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;com.github.jknack&lt;/groupId&gt;
-    &lt;artifactId&gt;handlebars&lt;/artifactId&gt;
-    &lt;version&gt;4.1.0&lt;/version&gt;
-    &lt;scope&gt;runtime&lt;/scope&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-handlebars&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
