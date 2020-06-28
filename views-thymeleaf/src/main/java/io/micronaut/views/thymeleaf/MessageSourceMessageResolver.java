@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * Resolves messages with the Micronaut MessageSource. Allows Thymeleaf templates to use
- * micronaut message properties.
+ * Micronaut message properties.
  *
  * @author Nirav Assar
  * @since 1.3.0
@@ -40,7 +40,7 @@ public class MessageSourceMessageResolver extends AbstractMessageResolver {
     private final MessageSource messageSource;
 
     /**
-     * Constructor which will initialize teh thymeleaf standard message resolver, and also the message source for
+     * Constructor which will initialize the Thymeleaf standard message resolver, and also the message source for
      * Micronaut.
      *
      * @param messageSource Micronaut message source
