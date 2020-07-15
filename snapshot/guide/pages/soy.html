@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>2.6 Soy/Closure Support 2.0.1.BUILD-SNAPSHOT</title>
+    <title>2.6 Soy/Closure Support 1.3.3.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -47,9 +47,6 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/repository.html"><strong>3</strong><span>Repository</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/breaks.html"><strong>4</strong><span>Breaking Changes</span></a>
-                        </div>
-                        
                     </div>
                 </div>
             </li>
@@ -81,7 +78,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>2.6 Soy/Closure Support</h1>
 
-                    <p><strong>Version:</strong> 2.0.1.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -90,7 +87,7 @@ function addJsClass() {
 <h2 id="soy"><a class="anchor" href="#soy"></a>2.6 Soy/Closure Support</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/soy.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/1.3.x/src/main/docs/guide/views/soy.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -104,20 +101,21 @@ compiler from Google. Soy is usable standalone, or together with the rest of the
 client-side, with the ability to compile templates into Java, Python, or JavaScript.</p>
 </div>
 <div class="paragraph">
-<p>Add the <code>micronaut-views-soy</code> dependency to your classpath.</p>
+<p>In addition to the <a href="#views">Views</a> dependency, add the following dependency.</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-soy")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"com.google.template:soy:2019-09-03")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
-    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
-    &lt;artifactId&gt;micronaut-views-soy&lt;/artifactId&gt;
+    &lt;groupId&gt;com.google.template&lt;/groupId&gt;
+    &lt;artifactId&gt;soy&lt;/artifactId&gt;
+    &lt;version&gt;2019-09-03&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -185,6 +183,10 @@ this interface is responsible for loading the Soy templates, either in compiled 
 into bytecode at server startup. This can be impactful on startup-time, so, if that&#8217;s an important metric for your
 app, pre-compile your templates using the AOT bytecode compiler.</p>
 </li>
+<li>
+<p><code>SoyTofuViewsRenderer</code> (<em>Deprecated</em>): This renderer is supported for compatibility and toy uses, but it&#8217;s
+deprecated in Soy Java, so it&#8217;s deprecated here. <code>SoyTofu</code> renders templates from sources.</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -195,7 +197,8 @@ app, pre-compile your templates using the AOT bytecode compiler.</p>
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
   views:
     soy:
-      enabled: true</code></pre>
+      enabled: true
+      engine: sauce  # one of `sauce` or `tofu`</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -240,6 +243,11 @@ public class HelloWorld {
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.engine</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code> (one of <code>sauce</code> or <code>tofu</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sauce</code> (<code>tofu</code> is deprecated)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.renaming</code></p></td>
