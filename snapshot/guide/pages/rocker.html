@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>2.5 Rocker 1.3.3.BUILD-SNAPSHOT</title>
+    <title>2.5 Rocker 2.0.1.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -47,6 +47,9 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/repository.html"><strong>3</strong><span>Repository</span></a>
                         </div>
                         
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/breaks.html"><strong>4</strong><span>Breaking Changes</span></a>
+                        </div>
+                        
                     </div>
                 </div>
             </li>
@@ -78,7 +81,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>2.5 Rocker</h1>
 
-                    <p><strong>Version:</strong> 1.3.3.BUILD-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 2.0.1.BUILD-SNAPSHOT</p>
                 </div>
 
                 
@@ -87,7 +90,7 @@ function addJsClass() {
 <h2 id="rocker"><a class="anchor" href="#rocker"></a>2.5 Rocker</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/1.3.x/src/main/docs/guide/views/rocker.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/rocker.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -98,7 +101,24 @@ function addJsClass() {
 the <a href="https://github.com/fizzed/rocker">Rocker</a> Java-based template engine.</p>
 </div>
 <div class="paragraph">
-<p>Add the <a href="#views-rocker">Views Rocker</a> dependency to your classpath.</p>
+<p>Add the <code>micronaut-views-rocker</code> dependency to your classpath.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-rocker")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-rocker&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Rocker template:</p>
