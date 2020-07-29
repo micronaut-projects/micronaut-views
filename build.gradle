@@ -5,7 +5,7 @@ buildscript {
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
-        classpath "io.micronaut.build:micronaut-gradle-plugins:2.0.5"
+        classpath "io.micronaut.build:micronaut-gradle-plugins:2.0.6"
     }
 }
 
@@ -54,11 +54,7 @@ subprojects { Project subproject ->
             testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'     
         }       
 
-    }
-
-    project.tasks.withType(Test) {
-        useJUnitPlatform()
-    }    
+    }   
 }
 
 apply plugin: "io.micronaut.build.docs"
