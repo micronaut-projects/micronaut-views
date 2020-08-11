@@ -16,9 +16,9 @@
 package io.micronaut.views.freemarker;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import freemarker.core.ParseException;
 import freemarker.template.*;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.cli.exceptions.ParseException;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.MediaType;

@@ -188,4 +188,15 @@ class FreemarkerViewRendererSpec extends Specification {
         body
         rsp.body().contains("<h1>You are not logged in</h1>")
     }
+
+    def "invoking /freemarker/invalid returns error"() {
+        when:
+        client.toBlocking().exchange('/freemarker/invalid', String)
+
+        then:
+        def e = thrown(HttpClientResponseException)
+
+        and:
+        e.status == HttpStatus.INTERNAL_SERVER_ERROR
+    }
 }
