@@ -78,4 +78,9 @@ class FreemarkerController {
     HttpResponse nullBody() {
         HttpResponse.ok()
     }
+
+    @Get("/invalid")
+    ModelAndView invalid() {
+        return new ModelAndView("/invalid", Collections.emptyMap())
+    }
 }
