@@ -45,11 +45,13 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#views"><strong>2</strong><span>Server Side View Rendering</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>2</strong><span>Release History</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>3</strong><span>Repository</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#views"><strong>3</strong><span>Server Side View Rendering</span></a></div>
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#breaks"><strong>4</strong><span>Breaking Changes</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
                                 
                             </div>
                         </div>
@@ -82,29 +84,31 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-introduction"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-views"><a href="#views"><strong>2</strong><span>Server Side View Rendering</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>2</strong><span>Release History</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-thymeleaf"><a href="#thymeleaf"><strong>2.1</strong><span>Thymeleaf</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-views"><a href="#views"><strong>3</strong><span>Server Side View Rendering</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-handlebars"><a href="#handlebars"><strong>2.2</strong><span>Handlebars.java</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-thymeleaf"><a href="#thymeleaf"><strong>3.1</strong><span>Thymeleaf</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-velocity"><a href="#velocity"><strong>2.3</strong><span>Apache Velocity</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-handlebars"><a href="#handlebars"><strong>3.2</strong><span>Handlebars.java</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-freemarker"><a href="#freemarker"><strong>2.4</strong><span>Apache Freemarker</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-velocity"><a href="#velocity"><strong>3.3</strong><span>Apache Velocity</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-rocker"><a href="#rocker"><strong>2.5</strong><span>Rocker</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-freemarker"><a href="#freemarker"><strong>3.4</strong><span>Apache Freemarker</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-soy"><a href="#soy"><strong>2.6</strong><span>Soy/Closure Support</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-rocker"><a href="#rocker"><strong>3.5</strong><span>Rocker</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-csp"><a href="#csp"><strong>2.7</strong><span>Content Security Policy</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-soy"><a href="#soy"><strong>3.6</strong><span>Soy/Closure Support</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-views-security"><a href="#views-security"><strong>2.8</strong><span>Security Integration</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-csp"><a href="#csp"><strong>3.7</strong><span>Content Security Policy</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>2.9</strong><span>GraalVM Support</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-views-security"><a href="#views-security"><strong>3.8</strong><span>Security Integration</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>3</strong><span>Repository</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>3.9</strong><span>GraalVM Support</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-breaks"><a href="#breaks"><strong>4</strong><span>Breaking Changes</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
         
         </div>
     </div>
@@ -114,7 +118,7 @@
         <h1>Micronaut Views</h1>
         <p></p>
         <p>Provides integration between Micronaut and server-side views technologies</p>
-        <p><strong>Version:</strong> <select style='max-width: 200px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-views/snapshot/guide/index.html'>SNAPSHOT</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-views/2.0.0/guide/index.html'>2.0.0</option><option value='https://micronaut-projects.github.io/micronaut-views/2.0.0.RC1/guide/index.html'>2.0.0.RC1</option><option value='https://micronaut-projects.github.io/micronaut-views/1.3.2/guide/index.html'>1.3.2</option><option value='https://micronaut-projects.github.io/micronaut-views/1.3.1/guide/index.html'>1.3.1</option><option value='https://micronaut-projects.github.io/micronaut-views/1.3.0/guide/index.html'>1.3.0</option><option value='https://micronaut-projects.github.io/micronaut-views/1.3.0.RC1/guide/index.html'>1.3.0.RC1</option><option value='https://micronaut-projects.github.io/micronaut-views/1.2.0/guide/index.html'>1.2.0</option><option value='https://micronaut-projects.github.io/micronaut-views/1.2.0.RC1/guide/index.html'>1.2.0.RC1</option></select></p>
+        <p><strong>Version:</strong> <select style='max-width: 200px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-views/snapshot/guide/index.html'>SNAPSHOT</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-views/2.0.1/guide/index.html'>2.0.1</option><option value='https://micronaut-projects.github.io/micronaut-views/2.0.0/guide/index.html'>2.0.0</option><option value='https://micronaut-projects.github.io/micronaut-views/2.0.0.RC1/guide/index.html'>2.0.0.RC1</option><option value='https://micronaut-projects.github.io/micronaut-views/1.3.2/guide/index.html'>1.3.2</option><option value='https://micronaut-projects.github.io/micronaut-views/1.3.1/guide/index.html'>1.3.1</option><option value='https://micronaut-projects.github.io/micronaut-views/1.3.0/guide/index.html'>1.3.0</option><option value='https://micronaut-projects.github.io/micronaut-views/1.3.0.RC1/guide/index.html'>1.3.0.RC1</option><option value='https://micronaut-projects.github.io/micronaut-views/1.2.0/guide/index.html'>1.2.0</option><option value='https://micronaut-projects.github.io/micronaut-views/1.2.0.RC1/guide/index.html'>1.2.0.RC1</option></select></p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
@@ -130,7 +134,23 @@
 <p>This project integrates Micronaut and Server Side View Rendering.</p>
 </div>
 
-<h1 id="views"><a class="anchor" href="#views"></a>2 Server Side View Rendering</h1>
+<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>2 Release History</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/releaseHistory.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>For this project, you can find a list of releases (with release notes) here:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/micronaut-projects/micronaut-views/releases">https://github.com/micronaut-projects/micronaut-views/releases</a></p>
+</div>
+
+<h1 id="views"><a class="anchor" href="#views"></a>3 Server Side View Rendering</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views.adoc"'>
@@ -249,7 +269,7 @@ If you want to render a template directly on your code (for example, to generate
 </table>
 </div>
 
-<h2 id="thymeleaf"><a class="anchor" href="#thymeleaf"></a>2.1 Thymeleaf</h2>
+<h2 id="thymeleaf"><a class="anchor" href="#thymeleaf"></a>3.1 Thymeleaf</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/thymeleaf.adoc"'>
@@ -404,7 +424,7 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 MessageSource automatically. For more information on the MessageSource, see the core documentation.</p>
 </div>
 
-<h2 id="handlebars"><a class="anchor" href="#handlebars"></a>2.2 Handlebars.java</h2>
+<h2 id="handlebars"><a class="anchor" href="#handlebars"></a>3.2 Handlebars.java</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/handlebars.adoc"'>
@@ -459,7 +479,7 @@ the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> proje
 </div>
 </div>
 
-<h2 id="velocity"><a class="anchor" href="#velocity"></a>2.3 Apache Velocity</h2>
+<h2 id="velocity"><a class="anchor" href="#velocity"></a>3.3 Apache Velocity</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/velocity.adoc"'>
@@ -514,7 +534,7 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
 </div>
 </div>
 
-<h2 id="freemarker"><a class="anchor" href="#freemarker"></a>2.4 Apache Freemarker</h2>
+<h2 id="freemarker"><a class="anchor" href="#freemarker"></a>3.4 Apache Freemarker</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/freemarker.adoc"'>
@@ -596,7 +616,7 @@ the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based tem
 <p>If a value is not declared and is null, the default configuration from Freemarker is used. The expected format of each value is the same from Freemarker, and no conversion or validation is done by Micronaut. You can find in <a href="https://freemarker.apache.org/docs/pgui_config.html">Freemarker documentation</a> how to configure each one.</p>
 </div>
 
-<h2 id="rocker"><a class="anchor" href="#rocker"></a>2.5 Rocker</h2>
+<h2 id="rocker"><a class="anchor" href="#rocker"></a>3.5 Rocker</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/rocker.adoc"'>
@@ -765,7 +785,7 @@ import views.index;
 </table>
 </div>
 
-<h2 id="soy"><a class="anchor" href="#soy"></a>2.6 Soy/Closure Support</h2>
+<h2 id="soy"><a class="anchor" href="#soy"></a>3.6 Soy/Closure Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/soy.adoc"'>
@@ -1231,7 +1251,7 @@ Compiles templates into Python sources for use server-side.</p>
 </div>
 </div>
 
-<h2 id="csp"><a class="anchor" href="#csp"></a>2.7 Content Security Policy</h2>
+<h2 id="csp"><a class="anchor" href="#csp"></a>3.7 Content Security Policy</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/csp.adoc"'>
@@ -1360,7 +1380,7 @@ mode. Inline scripts can be whitelisted with the syntax:</p>
 </div>
 </div>
 
-<h2 id="views-security"><a class="anchor" href="#views-security"></a>2.8 Security Integration</h2>
+<h2 id="views-security"><a class="anchor" href="#views-security"></a>3.8 Security Integration</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/views-security.adoc"'>
@@ -1462,7 +1482,7 @@ public class BooksController {
 <p>You can access information about the current user with the <code>security</code> map.</p>
 </div>
 
-<h2 id="graal"><a class="anchor" href="#graal"></a>2.9 GraalVM Support</h2>
+<h2 id="graal"><a class="anchor" href="#graal"></a>3.9 GraalVM Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/graal.adoc"'>
@@ -1491,22 +1511,6 @@ Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graa
 </td>
 </tr>
 </table>
-</div>
-
-<h1 id="repository"><a class="anchor" href="#repository"></a>3 Repository</h1>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/repository.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>You can find the source code of this project in this repository:</p>
-</div>
-<div class="paragraph">
-<p><a href="https://github.com/micronaut-projects/micronaut-views">https://github.com/micronaut-projects/micronaut-views</a></p>
 </div>
 
 <h1 id="breaks"><a class="anchor" href="#breaks"></a>4 Breaking Changes</h1>
@@ -1541,6 +1545,22 @@ Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graa
 </ul>
 </div>
 </div>
+</div>
+
+<h1 id="repository"><a class="anchor" href="#repository"></a>5 Repository</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/repository.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can find the source code of this project in this repository:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/micronaut-projects/micronaut-views">https://github.com/micronaut-projects/micronaut-views</a></p>
 </div>
 
     </div>
