@@ -1,4 +1,5 @@
 introduction: Introduction
+releaseHistory: Release History
 views:
   title: Server Side View Rendering
   thymeleaf: Thymeleaf
@@ -10,5 +11,5 @@ views:
   csp: Content Security Policy
   views-security: Security Integration
   graal: GraalVM Support
-repository: Repository
 breaks: Breaking Changes
+repository: Repository
