@@ -7,6 +7,6 @@
 <suppressions>
     <!-- <suppress checks="FileLength" -->
               <!-- files="DefaultBeanContext.java|BeanDefinitionWriter.java|DefaultHttpClient.java"/> -->
-
+    <suppress files=".*/generated-src/.*" checks=".*"/>
     <suppress checks="MissingJavadocType" files=".*doc-examples.*" />
 </suppressions>
