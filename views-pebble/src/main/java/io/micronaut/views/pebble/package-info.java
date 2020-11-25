@@ -18,7 +18,7 @@
  * @see <a href="https://pebbletemplates.io/">Pebble</a>
  *
  * @author Ecmel Ercan
- * @since 2.1.1
+ * @since 2.2.0
  */
 @Configuration
 @Requires(property = PebbleConfigurationProperties.ENABLED, notEquals = StringUtils.FALSE)

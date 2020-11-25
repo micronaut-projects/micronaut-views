@@ -29,7 +29,7 @@ import io.micronaut.context.annotation.Factory;
  * Factory for PebbleEngine beans.
  *
  * @author Ecmel Ercan
- * @since 2.1.1
+ * @since 2.2.0
  */
 @Factory
 public class PebbleEngineFactory {

@@ -32,7 +32,7 @@ import io.micronaut.views.ViewsRenderer;
  *
  * @author Ecmel Ercan
  * @see <a href="https://pebbletemplates.io/">https://pebbletemplates.io/</a>
- * @since 2.1.1
+ * @since 2.2.0
  */
 @Singleton
 @Produces(MediaType.TEXT_HTML)

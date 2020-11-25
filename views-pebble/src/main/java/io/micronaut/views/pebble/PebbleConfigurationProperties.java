@@ -24,7 +24,7 @@ import io.micronaut.views.ViewsConfigurationProperties;
  * {@link ConfigurationProperties} implementation of {@link PebbleConfiguration}.
  *
  * @author Ecmel Ercan
- * @since 2.1.1
+ * @since 2.2.0
  */
 @ConfigurationProperties(PebbleConfigurationProperties.PREFIX)
 public class PebbleConfigurationProperties implements PebbleConfiguration {
