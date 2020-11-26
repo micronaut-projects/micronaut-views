@@ -184,7 +184,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
 
     /**
      * Enable/disable treat literal decimal as Integer. Default is disabled, treated as Long.
-     * Default value ({@value #DEFAULT_ESCAPING_STRATEGY})
+     * Default value ({@value #DEFAULT_LITERAL_DECIMALS_AS_INTEGERS})
      *
      * @param literalDecimalsAsIntegers toggle to enable/disable literal decimal treated as
      * integer
@@ -231,7 +231,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
 
     /**
      * Sets whether or not core operators overrides should be allowed.
-     * Default value ({@value #DEFAULT_LITERAL_DECIMALS_AS_INTEGERS})
+     * Default value ({@value #DEFAULT_ALLOW_OVERRIDE_CORE_OPERATORS})
      *
      * @param allowOverrideCoreOperators Whether or not core operators overrides should be allowed.
      */

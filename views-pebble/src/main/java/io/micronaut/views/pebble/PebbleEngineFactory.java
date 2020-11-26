@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.pebble;
 
+import java.util.List;
 import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -37,13 +38,13 @@ public class PebbleEngineFactory {
     private final PebbleConfiguration configuration;
     private final Optional<Loader<?>> loader;
     private final Optional<Syntax> syntax;
-    private final Extension[] extensions;
+    private final List<Extension> extensions;
 
     @Inject
     public PebbleEngineFactory(PebbleConfiguration configuration, 
                                Optional<Loader<?>> loader,
                                Optional<Syntax> syntax,
-                               Extension[] extensions) {
+                               List<Extension> extensions) {
 
         this.configuration = configuration;
         this.loader = loader;
@@ -67,17 +68,13 @@ public class PebbleEngineFactory {
             .literalDecimalTreatedAsInteger(configuration.isLiteralDecimalsAsIntegers())
             .literalNumbersAsBigDecimals(configuration.isLiteralNumbersAsBigDecimals());
 
-        if (loader.isPresent()) {
-            builder.loader(loader.get());
-        }
+        loader.ifPresent(bean -> builder.loader(bean));
+        syntax.ifPresent(bean -> builder.syntax(bean));
+        extensions.forEach(bean -> builder.extension(bean));
 
-        if (syntax.isPresent()) {
-            builder.syntax(syntax.get());
-        }
-
-        if (extensions.length > 0) {
-            builder.extension(extensions);
-        }
+        // Not implemented yet:
+        // defaultLocale, executorService, templateCache, tagCache, 
+        // addEscapingStrategy, methodAccessValidator
 
         return builder.build();
     }

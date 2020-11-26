@@ -28,7 +28,7 @@ import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 
 /**
- * Renders Views with with Pebble.
+ * Renders Views with Pebble.
  *
  * @author Ecmel Ercan
  * @see <a href="https://pebbletemplates.io/">https://pebbletemplates.io/</a>
