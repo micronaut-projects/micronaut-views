@@ -31,6 +31,21 @@ public interface PebbleConfiguration extends Toggleable {
     String getDefaultExtension();
 
     /**
+     * @return Gets <code>cacheActive</code> property
+     */    
+    boolean isCacheActive();
+
+    /**
+     * @return Gets <code>newLineTrimming</code> property
+     */    
+    boolean isNewLineTrimming();
+
+   /**
+     * @return Gets <code>autoEscaping</code> property
+     */
+    boolean isAutoEscaping();
+
+    /**
      * @return Gets <code>defaultEscapingStrategy</code> property
      */
     String getDefaultEscapingStrategy();
@@ -39,21 +54,6 @@ public interface PebbleConfiguration extends Toggleable {
      * @return Gets <code>strictVariables</code> property
      */    
     boolean isStrictVariables();
-
-    /**
-     * @return Gets <code>newLineTrimming</code> property
-     */    
-    boolean isNewLineTrimming();
-
-    /**
-     * @return Gets <code>cacheActive</code> property
-     */    
-    boolean isCacheActive();
-
-   /**
-     * @return Gets <code>autoEscaping</code> property
-     */
-    boolean isAutoEscaping();
 
     /**
      * @return Gets <code>greedyMatchMethod</code> property

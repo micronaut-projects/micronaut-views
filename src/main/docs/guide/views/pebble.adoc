@@ -12,3 +12,8 @@ The example shown in the <<views, Views>> section, could be rendered with the fo
 ----
 include::{testsviewsPebble}/resources/views/home.html[]
 ----
+
+The properties used can be customized by overriding the values of:
+
+include::{includedir}configurationProperties/io.micronaut.views.pebble.PebbleConfigurationProperties.adoc[]
+

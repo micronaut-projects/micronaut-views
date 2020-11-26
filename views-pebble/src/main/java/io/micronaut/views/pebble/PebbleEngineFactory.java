@@ -58,11 +58,11 @@ public class PebbleEngineFactory {
     @Singleton
     public PebbleEngine create() {
         Builder builder = new PebbleEngine.Builder()
+            .cacheActive(configuration.isCacheActive())
+            .newLineTrimming(configuration.isNewLineTrimming())
             .autoEscaping(configuration.isAutoEscaping())
             .defaultEscapingStrategy(configuration.getDefaultEscapingStrategy())
             .strictVariables(configuration.isStrictVariables())
-            .newLineTrimming(configuration.isNewLineTrimming())
-            .cacheActive(configuration.isCacheActive())
             .greedyMatchMethod(configuration.isGreedyMatchMethod())
             .allowOverrideCoreOperators(configuration.isAllowOverrideCoreOperators())
             .literalDecimalTreatedAsInteger(configuration.isLiteralDecimalsAsIntegers())

@@ -32,25 +32,25 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".pebble";
     public static final String ENABLED = PREFIX + ".enabled";
 
-    public static final String DEFAULT_EXTENSION = "html";
-    public static final String DEFAULT_ESCAPING_STRATEGY = EscapeFilter.HTML_ESCAPE_STRATEGY;
     public static final boolean DEFAULT_ENABLED = true;
-    public static final boolean DEFAULT_STRICT_VARIABLES = false;
-    public static final boolean DEFAULT_NEW_LINE_TRIMMING = true;
+    public static final String DEFAULT_EXTENSION = "html";
     public static final boolean DEFAULT_CACHE_ACTIVE = true;    
+    public static final boolean DEFAULT_NEW_LINE_TRIMMING = true;
     public static final boolean DEFAULT_AUTO_ESCAPING = true;        
+    public static final String DEFAULT_ESCAPING_STRATEGY = EscapeFilter.HTML_ESCAPE_STRATEGY;
+    public static final boolean DEFAULT_STRICT_VARIABLES = false;
     public static final boolean DEFAULT_GREEDY_MATCH_METHOD = false;
     public static final boolean DEFAULT_ALLOW_OVERRIDE_CORE_OPERATORS = false;
     public static final boolean DEFAULT_LITERAL_DECIMALS_AS_INTEGERS = false;
     public static final boolean DEFAULT_LITERAL_NUMBERS_AS_BIG_DECIMALS = false;
 
-    private String defaultExtension = DEFAULT_EXTENSION;
-    private String defaultEscapingStrategy = DEFAULT_ESCAPING_STRATEGY;
     private boolean enabled = DEFAULT_ENABLED;
-    private boolean strictVariables = DEFAULT_STRICT_VARIABLES;
-    private boolean newLineTrimming = DEFAULT_NEW_LINE_TRIMMING;
+    private String defaultExtension = DEFAULT_EXTENSION;
     private boolean cacheActive = DEFAULT_CACHE_ACTIVE;
+    private boolean newLineTrimming = DEFAULT_NEW_LINE_TRIMMING;
     private boolean autoEscaping = DEFAULT_AUTO_ESCAPING;
+    private String defaultEscapingStrategy = DEFAULT_ESCAPING_STRATEGY;
+    private boolean strictVariables = DEFAULT_STRICT_VARIABLES;
     private boolean greedyMatchMethod = DEFAULT_GREEDY_MATCH_METHOD;
     private boolean allowOverrideCoreOperators = DEFAULT_ALLOW_OVERRIDE_CORE_OPERATORS;
     private boolean literalDecimalsAsIntegers = DEFAULT_LITERAL_DECIMALS_AS_INTEGERS;
@@ -87,13 +87,60 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     }
 
     @Override
+    public boolean isCacheActive() {
+        return cacheActive;
+    }
+
+    /**
+     * Enable/disable all caches, i.e. cache used by the engine to store compiled PebbleTemplate
+     * instances and tags cache. Default value ({@value #DEFAULT_CACHE_ACTIVE}).
+     * 
+     * @param cacheActive toggle to enable/disable all caches
+     */
+    public void setCacheActive(boolean cacheActive) {
+        this.cacheActive = cacheActive;
+    }
+
+    @Override
+    public boolean isNewLineTrimming() {
+        return newLineTrimming;
+    }
+
+    /**
+     * Changes the newLineTrimming setting of the PebbleEngine. By default, Pebble 
+     * will trim a new line that immediately follows a Pebble tag. If set to false, then the 
+     * first newline following a Pebble tag won't be trimmed.  All newlines will be preserved.
+     * Default value ({@value #DEFAULT_NEW_LINE_TRIMMING}).
+     *
+     * @param newLineTrimming Whether or not the newline should be trimmed.
+     */
+    public void setNewLineTrimming(boolean newLineTrimming) {
+        this.newLineTrimming = newLineTrimming;
+    }
+
+    @Override
+    public boolean isAutoEscaping() {
+        return autoEscaping;
+    }
+
+    /**
+     * Sets whether or not escaping should be performed automatically.
+     * Default value ({@value #DEFAULT_AUTO_ESCAPING}).
+     *
+     * @param autoEscaping The auto escaping setting
+     */
+    public void setAutoEscaping(boolean autoEscaping) {
+        this.autoEscaping = autoEscaping;
+    }
+
+    @Override
     public String getDefaultEscapingStrategy() {
         return defaultEscapingStrategy;
     }
 
      /**
      * Sets the default escaping strategy of the built-in escaper extension.
-     * Default value ({@value #DEFAULT_ESCAPING_STRATEGY})
+     * Default value ({@value #DEFAULT_ESCAPING_STRATEGY}).
      *
      * @param defaultEscapingStrategy The name of the default escaping strategy
      */
@@ -107,90 +154,13 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     }
 
     /**
-     * Changes the <code>strictVariables</code> setting of the PebbleEngine. 
-     * Default value ({@value #DEFAULT_STRICT_VARIABLES})
-     * <p>
-     * The following examples will all print empty strings if strictVariables is false but will
-     * throw exceptions if it is true:
-     * </p>
-     * {{ nonExistingVariable }} {{ nonExistingVariable.attribute }} {{ nullVariable.attribute }} {{
-     * existingVariable.nullAttribute.attribute }} {{ existingVariable.nonExistingAttribute }} {{
-     * array[-1] }}
+     * Changes the strictVariables setting of the PebbleEngine. 
+     * Default value ({@value #DEFAULT_STRICT_VARIABLES}).
      *
      * @param strictVariables Whether or not strict variables is used
      */
     public void setStrictVariables(boolean strictVariables) {
         this.strictVariables = strictVariables;
-    }
-
-    @Override
-    public boolean isNewLineTrimming() {
-        return newLineTrimming;
-    }
-
-    /**
-     * Changes the <code>newLineTrimming</code> setting of the PebbleEngine. 
-     * Default value ({@value #DEFAULT_NEW_LINE_TRIMMING})
-     * <p>
-     * By default, Pebble will trim a newline that immediately follows a Pebble tag. For example,
-     * <code>{{key1}}\n{{key2}}</code> will have the newline removed.
-     * </p>
-     * <p>
-     * If <code>newLineTrimming</code> is set to false, then the first newline following a Pebble
-     * tag won't be trimmed.  All newlines will be preserved
-     * </p>
-     *
-     * @param newLineTrimming Whether or not the newline should be trimmed.
-     */
-    public void setNewLineTrimming(boolean newLineTrimming) {
-        this.newLineTrimming = newLineTrimming;
-    }
-
-    @Override
-    public boolean isCacheActive() {
-        return cacheActive;
-    }
-
-    /**
-     * Enable/disable all caches, i.e. cache used by the engine to store compiled PebbleTemplate
-     * instances and tags cache
-     * Default value ({@value #DEFAULT_CACHE_ACTIVE})
-     * 
-     * @param cacheActive toggle to enable/disable all caches
-     */
-    public void setCacheActive(boolean cacheActive) {
-        this.cacheActive = cacheActive;
-    }
-
-    @Override
-    public boolean isAutoEscaping() {
-        return autoEscaping;
-    }
-
-    /**
-     * Sets whether or not escaping should be performed automatically.
-     * Default value ({@value #DEFAULT_AUTO_ESCAPING})
-     *
-     * @param autoEscaping The auto escaping setting
-     */
-    public void setAutoEscaping(boolean autoEscaping) {
-        this.autoEscaping = autoEscaping;
-    }
-
-    @Override
-    public boolean isLiteralDecimalsAsIntegers() {
-        return literalDecimalsAsIntegers;
-    }
-
-    /**
-     * Enable/disable treat literal decimal as Integer. Default is disabled, treated as Long.
-     * Default value ({@value #DEFAULT_LITERAL_DECIMALS_AS_INTEGERS})
-     *
-     * @param literalDecimalsAsIntegers toggle to enable/disable literal decimal treated as
-     * integer
-     */
-    public void setLiteralDecimalsAsIntegers(boolean literalDecimalsAsIntegers) {
-        this.literalDecimalsAsIntegers = literalDecimalsAsIntegers;
     }
 
     @Override
@@ -203,19 +173,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
      * when can not find perfect method (method name, parameter length and parameter type are all
      * satisfied), reduce the limit of the parameter type, try to find other method which has
      * compatible parameter types.
-     *
-     * For example,
-     * <pre> {{ obj.number(2) }} </pre>
-     * the expression can match all of below methods.
-     * <pre>
-     *   public Long getNumber(Long v) {...}
-     *   public Integer getNumber(Integer v) {...}
-     *   public Short getNumber(Short v) {...}
-     *   public Byte getNumber(Byte v) {...}
-     *   ...
-     * </pre>
-     * 
-     * Default value ({@value #DEFAULT_GREEDY_MATCH_METHOD})
+     * Default value ({@value #DEFAULT_GREEDY_MATCH_METHOD}).
      * 
      * @param greedyMatchMethod toggle to enable/disable greedy match method
      * @see com.mitchellbosecke.pebble.utils.TypeUtils#compatibleCast(Object, Class)
@@ -231,7 +189,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
 
     /**
      * Sets whether or not core operators overrides should be allowed.
-     * Default value ({@value #DEFAULT_ALLOW_OVERRIDE_CORE_OPERATORS})
+     * Default value ({@value #DEFAULT_ALLOW_OVERRIDE_CORE_OPERATORS}).
      *
      * @param allowOverrideCoreOperators Whether or not core operators overrides should be allowed.
      */
@@ -240,13 +198,29 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     }
 
     @Override
+    public boolean isLiteralDecimalsAsIntegers() {
+        return literalDecimalsAsIntegers;
+    }
+
+    /**
+     * Enable/disable treat literal decimal as Integer. 
+     * Default value ({@value #DEFAULT_LITERAL_DECIMALS_AS_INTEGERS}), treated as Long.
+     *
+     * @param literalDecimalsAsIntegers toggle to enable/disable literal decimal treated as
+     * integer
+     */
+    public void setLiteralDecimalsAsIntegers(boolean literalDecimalsAsIntegers) {
+        this.literalDecimalsAsIntegers = literalDecimalsAsIntegers;
+    }
+
+    @Override
     public boolean isLiteralNumbersAsBigDecimals() {
         return literalNumbersAsBigDecimals;
     }
 
     /**
-     * Enable/disable treat literal numbers as BigDecimals. Default is disabled, treated as Long/Double.
-     * Default value ({@value #DEFAULT_LITERAL_NUMBERS_AS_BIG_DECIMALS})
+     * Enable/disable treat literal numbers as BigDecimals. 
+     * Default value ({@value #DEFAULT_LITERAL_NUMBERS_AS_BIG_DECIMALS}), treated as Long/Double.
      * 
      * @param literalNumbersAsBigDecimals toggle to enable/disable literal numbers treated as
      * BigDecimals
