@@ -24,7 +24,6 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewUtils;
-import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 
 /**
@@ -40,31 +39,22 @@ import io.micronaut.views.ViewsRenderer;
 @Requires(classes = PebbleEngine.class)
 public class PebbleViewsRenderer implements ViewsRenderer {
     
-    private final PebbleEngine engine;
     private final String extension;
-    private final String folder;
+    private final PebbleEngine engine;
 
     @Inject
-    public PebbleViewsRenderer(ViewsConfiguration viewsConfiguration,
-                               PebbleConfiguration configuration,
-                               PebbleEngine engine) {
-        
-        this.folder = viewsConfiguration.getFolder();
+    public PebbleViewsRenderer(PebbleConfiguration configuration, PebbleEngine engine) {    
         this.extension = configuration.getDefaultExtension();
         this.engine = engine;
     }
 
     @Override
     public Writable render(String name, Object data) {
-        return (writer) -> engine.getTemplate(location(name)).evaluate(writer, modelOf(data));
+        return (writer) -> engine.getTemplate(ViewUtils.normalizeFile(name, extension)).evaluate(writer, modelOf(data));
     }
 
     @Override
     public boolean exists(String name) {
-        return engine.getLoader().resourceExists(location(name));
-    }
-
-    private String location(String name) {
-        return folder + ViewUtils.normalizeFile(name, extension) + EXTENSION_SEPARATOR + extension;
+        return engine.getLoader().resourceExists(ViewUtils.normalizeFile(name, extension));
     }
 }

@@ -25,6 +25,8 @@ import com.mitchellbosecke.pebble.extension.Extension;
 import com.mitchellbosecke.pebble.lexer.Syntax;
 import com.mitchellbosecke.pebble.loader.Loader;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.views.ViewsConfiguration;
+import io.micronaut.views.ViewsRenderer;
 
 /**
  * Factory for PebbleEngine beans.
@@ -35,17 +37,20 @@ import io.micronaut.context.annotation.Factory;
 @Factory
 public class PebbleEngineFactory {
 
+    private final ViewsConfiguration viewsConfiguration;
     private final PebbleConfiguration configuration;
     private final Optional<Loader<?>> loader;
     private final Optional<Syntax> syntax;
     private final List<Extension> extensions;
 
     @Inject
-    public PebbleEngineFactory(PebbleConfiguration configuration, 
+    public PebbleEngineFactory(ViewsConfiguration viewsConfiguration,
+                               PebbleConfiguration configuration, 
                                Optional<Loader<?>> loader,
                                Optional<Syntax> syntax,
                                List<Extension> extensions) {
 
+        this.viewsConfiguration = viewsConfiguration;
         this.configuration = configuration;
         this.loader = loader;
         this.syntax = syntax;
@@ -75,7 +80,12 @@ public class PebbleEngineFactory {
         // Not implemented yet:
         // defaultLocale, executorService, templateCache, tagCache, 
         // addEscapingStrategy, methodAccessValidator
+        
+        PebbleEngine engine = builder.build();
 
-        return builder.build();
+        engine.getLoader().setPrefix(viewsConfiguration.getFolder());
+        engine.getLoader().setSuffix(ViewsRenderer.EXTENSION_SEPARATOR + configuration.getDefaultExtension());
+
+        return engine;
     }
 }
