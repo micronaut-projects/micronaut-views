@@ -5,7 +5,6 @@ io.micronaut.views.freemarker
 io.micronaut.views.handlebars
 io.micronaut.views.model
 io.micronaut.views.model.security
-io.micronaut.views.pebble
 io.micronaut.views.rocker
 io.micronaut.views.soy
 io.micronaut.views.thymeleaf
