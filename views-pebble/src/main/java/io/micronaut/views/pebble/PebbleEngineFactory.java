@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.PebbleEngine.Builder;
+import com.mitchellbosecke.pebble.attributes.methodaccess.MethodAccessValidator;
 import com.mitchellbosecke.pebble.extension.Extension;
 import com.mitchellbosecke.pebble.lexer.Syntax;
 import com.mitchellbosecke.pebble.loader.ClasspathLoader;
@@ -42,6 +43,7 @@ public class PebbleEngineFactory {
     private final PebbleConfiguration configuration;
     private final Optional<Loader<?>> loader;
     private final Optional<Syntax> syntax;
+    private final Optional<MethodAccessValidator> methodAccessValidator;
     private final List<Extension> extensions;
 
     @Inject
@@ -49,12 +51,14 @@ public class PebbleEngineFactory {
                                PebbleConfiguration configuration, 
                                Optional<Loader<?>> loader,
                                Optional<Syntax> syntax,
+                               Optional<MethodAccessValidator> methodAccessValidator,
                                List<Extension> extensions) {
 
         this.viewsConfiguration = viewsConfiguration;
         this.configuration = configuration;
         this.loader = loader;
         this.syntax = syntax;
+        this.methodAccessValidator = methodAccessValidator;
         this.extensions = extensions;
     }
 
@@ -84,11 +88,11 @@ public class PebbleEngineFactory {
         }
 
         syntax.ifPresent(bean -> builder.syntax(bean));
+        methodAccessValidator.ifPresent(bean -> builder.methodAccessValidator(bean));
         extensions.forEach(bean -> builder.extension(bean));
 
-        // Not implemented yet:
-        // defaultLocale, executorService, templateCache, tagCache, 
-        // addEscapingStrategy, methodAccessValidator
+        // Not implemented:
+        // executorService, defaultLocale, templateCache, tagCache, addEscapingStrategy 
         
         return builder.build();
     }
