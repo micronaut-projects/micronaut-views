@@ -23,6 +23,7 @@ import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.PebbleEngine.Builder;
 import com.mitchellbosecke.pebble.extension.Extension;
 import com.mitchellbosecke.pebble.lexer.Syntax;
+import com.mitchellbosecke.pebble.loader.ClasspathLoader;
 import com.mitchellbosecke.pebble.loader.Loader;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.views.ViewsConfiguration;
@@ -73,7 +74,15 @@ public class PebbleEngineFactory {
             .literalDecimalTreatedAsInteger(configuration.isLiteralDecimalsAsIntegers())
             .literalNumbersAsBigDecimals(configuration.isLiteralNumbersAsBigDecimals());
 
-        loader.ifPresent(bean -> builder.loader(bean));
+        if (loader.isPresent()) {
+            builder.loader(loader.get());
+        } else {
+            Loader<?> loader = new ClasspathLoader();
+            loader.setPrefix(viewsConfiguration.getFolder());
+            loader.setSuffix(ViewsRenderer.EXTENSION_SEPARATOR + configuration.getDefaultExtension());
+            builder.loader(loader);
+        }
+
         syntax.ifPresent(bean -> builder.syntax(bean));
         extensions.forEach(bean -> builder.extension(bean));
 
@@ -81,11 +90,6 @@ public class PebbleEngineFactory {
         // defaultLocale, executorService, templateCache, tagCache, 
         // addEscapingStrategy, methodAccessValidator
         
-        PebbleEngine engine = builder.build();
-
-        engine.getLoader().setPrefix(viewsConfiguration.getFolder());
-        engine.getLoader().setSuffix(ViewsRenderer.EXTENSION_SEPARATOR + configuration.getDefaultExtension());
-
-        return engine;
+        return builder.build();
     }
 }
