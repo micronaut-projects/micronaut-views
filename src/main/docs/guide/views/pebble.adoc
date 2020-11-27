@@ -1,0 +1,19 @@
+Micronaut includes api:views.pebble.PebbleViewsRenderer[] which uses
+the https://pebbletemplates.io/[Pebble] project.
+
+Add the following dependency on your classpath. For example, in `build.gradle`
+
+dependency:io.micronaut.views:micronaut-views-pebble[group="io.micronaut.views"]
+
+The example shown in the <<views, Views>> section, could be rendered with the following Pebble template:
+
+[source,html]
+.src/main/resources/views/home.html
+----
+include::{testsviewsPebble}/resources/views/home.html[]
+----
+
+The properties used can be customized by overriding the values of:
+
+include::{includedir}configurationProperties/io.micronaut.views.pebble.PebbleConfigurationProperties.adoc[]
+

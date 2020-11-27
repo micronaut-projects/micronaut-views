@@ -8,6 +8,7 @@ views:
   freemarker: Apache Freemarker
   rocker: Rocker
   soy: Soy/Closure Support
+  pebble: Pebble
   csp: Content Security Policy
   views-security: Security Integration
   graal: GraalVM Support
