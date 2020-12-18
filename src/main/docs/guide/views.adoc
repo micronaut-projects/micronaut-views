@@ -8,7 +8,7 @@ To use the view rendering features described in this section, add a dependency b
 For file-based view schemes, views and templates can be placed in the `src/main/resources/views` directory of your
 project. If you use this feature and wish to use a different folder, set the property `micronaut.views.folder`.
 
-Your controller's method can render the response with a template with the the api:views.View[] annotation.
+Your controller's method can render the response with a template by using the api:views.View[] annotation.
 
 The following is an example of a controller which renders a template by passing a model as a `java.util.Map` via the returned response object.
 
