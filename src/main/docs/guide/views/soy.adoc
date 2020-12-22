@@ -36,7 +36,29 @@ micronaut:
     soy:
       enabled: true
 
-After wiring up your `SoyFileSetProvider`, and configuring Micronaut, you can render templates like so:
+After configuring Micronaut and wiring up your `SoyFileSetProvider`:
+
+[source,java]
+@Singleton
+public class CustomSoyFileSetProvider implements SoyFileSetProvider {
+  private static final String[] VIEWS = {
+    "home.soy"
+  };
+  @Override
+  public SoyFileSet provideSoyFileSet() {
+    final SoyFileSet.Builder builder = SoyFileSet.builder();
+    final ClassLoader classLoader = CustomSoyFileSetProvider.class.getClassLoader();
+    for (final String template : VIEWS) {
+      final URL resource = classLoader.getResource(template);
+      if (resource != null) {
+        builder.add(new File(resource.getFile()));
+      }
+    }
+    return builder.build();
+  }
+}
+
+you can render templates like so:
 
 [source,java]
 @Validated
