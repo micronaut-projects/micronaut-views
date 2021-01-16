@@ -4,6 +4,7 @@ dependencies {
 
     api project(":views-core")
     api "org.thymeleaf:thymeleaf:$thymeleafVersion"
+    api "org.thymeleaf.extras:thymeleaf-extras-java8time:$thymeleafExtraJava8timeVersion"
     compileOnly "io.micronaut:micronaut-management:$micronautVersion"
     compileOnly "io.micronaut:micronaut-validation:$micronautVersion"
 

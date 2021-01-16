@@ -19,6 +19,7 @@ import io.micronaut.context.annotation.Factory;
 import io.micronaut.views.ViewsConfiguration;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.IEngineContextFactory;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.linkbuilder.ILinkBuilder;
 import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
@@ -78,6 +79,7 @@ public class ThymeleafFactory {
         engine.setEngineContextFactory(engineContextFactory);
         engine.setLinkBuilder(linkBuilder);
         engine.setTemplateResolver(templateResolver);
+        engine.addDialect(new Java8TimeDialect());
         engine.addMessageResolver(messageSourceMessageResolver);
         return engine;
     }
