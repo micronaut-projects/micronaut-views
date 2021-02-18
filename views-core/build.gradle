@@ -18,5 +18,3 @@ dependencies {
     testImplementation "io.micronaut:micronaut-validation:$micronautVersion"
     testImplementation "org.yaml:snakeyaml:$snakeYamlVersion"
 }
-
-bintray.pkg.name = "micronaut-views"
