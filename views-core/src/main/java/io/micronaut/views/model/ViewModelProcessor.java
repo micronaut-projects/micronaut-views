@@ -17,8 +17,7 @@ package io.micronaut.views.model;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ModelAndView;
-
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import java.util.Map;
 
 /**

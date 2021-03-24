@@ -20,9 +20,7 @@ import com.google.template.soy.jbcsrc.api.SoySauce;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsConfigurationProperties;
-
-import edu.umd.cs.findbugs.annotations.Nullable;
-
+import io.micronaut.core.annotation.Nullable;
 
 /**
  * {@link ConfigurationProperties} implementation for soy views renderer.

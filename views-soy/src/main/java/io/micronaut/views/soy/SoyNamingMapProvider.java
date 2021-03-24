@@ -15,12 +15,9 @@
  */
 package io.micronaut.views.soy;
 
-
 import com.google.template.soy.shared.SoyCssRenamingMap;
 import com.google.template.soy.shared.SoyIdRenamingMap;
-
-import edu.umd.cs.findbugs.annotations.Nullable;
-
+import io.micronaut.core.annotation.Nullable;
 
 /**
  * Specifies an interface that provides renaming maps for CSS and XID calls in Soy templates.

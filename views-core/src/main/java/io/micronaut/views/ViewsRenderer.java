@@ -15,12 +15,11 @@
  */
 package io.micronaut.views;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.beans.BeanMap;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
-import edu.umd.cs.findbugs.annotations.Nullable;
-
+import io.micronaut.core.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 

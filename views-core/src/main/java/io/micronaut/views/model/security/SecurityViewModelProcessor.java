@@ -23,8 +23,7 @@ import io.micronaut.security.filters.SecurityFilter;
 import io.micronaut.security.utils.SecurityService;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.model.ViewModelProcessor;
-
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
