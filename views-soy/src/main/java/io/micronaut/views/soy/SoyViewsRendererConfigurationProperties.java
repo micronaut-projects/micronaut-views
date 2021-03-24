@@ -51,7 +51,7 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
 
   private boolean enabled = DEFAULT_ENABLED;
   private boolean renaming = DEFAULT_RENAMING;
-  private SoyFileSetProvider fileSetProvider;
+  private final SoyFileSetProvider fileSetProvider;
 
   /**
    * Default constructor for Soy views renderer config properties.
