@@ -18,8 +18,7 @@ package io.micronaut.views.thymeleaf;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.exceptions.TemplateProcessingException;
 import org.thymeleaf.linkbuilder.StandardLinkBuilder;
-
-import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.Nullable;
 import javax.inject.Singleton;
 import java.util.Map;
 

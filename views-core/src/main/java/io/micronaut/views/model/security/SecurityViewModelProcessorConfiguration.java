@@ -16,7 +16,7 @@
 package io.micronaut.views.model.security;
 
 import io.micronaut.core.util.Toggleable;
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 
 /**
  * Configuration for {@link SecurityViewModelProcessor}.

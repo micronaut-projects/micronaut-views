@@ -15,7 +15,7 @@
  */
 package io.micronaut.views.freemarker;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import freemarker.core.ParseException;
 import freemarker.template.*;
 import io.micronaut.context.annotation.Requires;
@@ -28,7 +28,7 @@ import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;

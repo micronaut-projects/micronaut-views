@@ -22,9 +22,8 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
-
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Map;
