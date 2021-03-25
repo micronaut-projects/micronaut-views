@@ -57,12 +57,7 @@ The return value is converted to Soy template context parameters, and passed to 
 
 The entire set of supported Soy configuration properties are documented below:
 
-|=======
-|Configuration property |Type |Default value
-|`micronaut.views.soy.enabled` |`Boolean` |`false`
-|`micronaut.views.soy.renaming` |`Boolean` |`false`
-|=======
-
+include::{includedir}configurationProperties/io.micronaut.views.soy.SoyViewsRendererConfigurationProperties.adoc[]
 
 === Features: Template Security
 
