@@ -832,11 +832,16 @@ client-side, with the ability to compile templates into Java, Python, or JavaScr
 </div>
 </p>
 </div>
+<div class="sect2">
+<h3 id="_usage">Usage</h3>
 <div class="paragraph">
-<p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Soy template:</p>
+<p>To use Soy integration you have to provide a bean of type <a href="../api/io/micronaut/views/soy/SoyFileSetProvider.html">SoyFileSetProvider</a>. Such a bean is responsible for loading the Soy templates, either in compiled or source form.</p>
+</div>
+<div class="paragraph">
+<p>Given the following Soy template:</p>
 </div>
 <div class="listingblock">
-<div class="title">src/main/resources/home.soy</div>
+<div class="title">src/main/resources/views/home.soy</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-soy hljs" data-lang="soy">{namespace sample}
 
@@ -863,11 +868,170 @@ client-side, with the ability to compile templates into Java, Python, or JavaScr
 {/template}</code></pre>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_usage">Usage</h3>
 <div class="paragraph">
-<p>Soy integration is invoked by providing a bean that complies with <code>SoyFileSetProvider</code>. The object that complies with
-this interface is responsible for loading the Soy templates, either in compiled or source form.</p>
+<p>A naive implementation of <a href="../api/io/micronaut/views/soy/SoyFileSetProvider.html">SoyFileSetProvider</a> could look like:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
+public class CustomSoyFileSetProvider implements SoyFileSetProvider {
+    private static final Logger LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider.class);
+    private static final String[] VIEWS = {
+            "home.soy"
+    };
+    private final String folder;
+    private final ResourceLoader resourceLoader;
+
+    public CustomSoyFileSetProvider(ViewsConfiguration viewsConfiguration, ResourceLoader resourceLoader) {
+        this.folder = viewsConfiguration.getFolder();
+        this.resourceLoader = resourceLoader;
+    }
+    @Override
+    public SoyFileSet provideSoyFileSet() {
+        final SoyFileSet.Builder builder = SoyFileSet.builder();
+        for (final String template : VIEWS) {
+            resourceLoader.getResource(folder + "/" + template).ifPresent(url -&gt; {
+                try {
+                    builder.add(new File(url.toURI()));
+                } catch (URISyntaxException e) {
+                    if (LOG.isWarnEnabled()) {
+                        LOG.warn("URISyntaxException raised while generating the SoyFileSet for folder {}",
+                                folder, e);
+                    }
+                }
+            });
+        }
+        return builder.build();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+class CustomSoyFileSetProvider implements SoyFileSetProvider {
+    private static final Logger LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider.class)
+
+    private static final List&lt;String&gt; VIEWS = [
+            "home.soy"
+    ]
+
+    private final String folder
+    private final ResourceLoader resourceLoader
+
+    CustomSoyFileSetProvider(ViewsConfiguration viewsConfiguration, ResourceLoader resourceLoader) {
+        this.folder = viewsConfiguration.getFolder()
+        this.resourceLoader = resourceLoader
+    }
+
+    @Override
+    SoyFileSet provideSoyFileSet() {
+        final SoyFileSet.Builder builder = SoyFileSet.builder()
+        for (String template : VIEWS) {
+            String path = "${folder}${template}"
+            resourceLoader.getResource(path).ifPresent(url -&gt; {
+                try {
+                    builder.add(new File(url.toURI()))
+                } catch (URISyntaxException e) {
+                    if (LOG.isWarnEnabled()) {
+                        LOG.warn("URISyntaxException raised while generating SoyFileSet for folder {}", folder, e)
+                    }
+                }
+            })
+        }
+        builder.build()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+class CustomSoyFileSetProvider(val resourceLoader: ResourceLoader, viewsConfiguration: ViewsConfiguration) :
+    SoyFileSetProvider {
+    private val folder: String
+    override fun provideSoyFileSet(): SoyFileSet {
+        val builder = SoyFileSet.builder()
+        for (template in VIEWS) {
+            resourceLoader.getResource("$folder/$template").ifPresent { url: URL -&gt;
+                try {
+                    builder.add(File(url.toURI()))
+                } catch (e: URISyntaxException) {
+                    if (LOG.isWarnEnabled) {
+                        LOG.warn(
+                            "URISyntaxException raised while generating the SoyFileSet for folder {}",
+                            folder, e
+                        )
+                    }
+                }
+            }
+        }
+        return builder.build()
+    }
+
+    companion object {
+        private val LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider::class.java)
+        private val VIEWS = arrayOf(
+            "home.soy"
+        )
+    }
+
+    init {
+        folder = viewsConfiguration.folder
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The return value of the following Controller is converted to Soy template context parameters, and passed to the <code>@View</code>-annotation-bound template.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/soy")
+public class SoyController {
+    @View("sample.home")
+    @Get
+    public HttpResponse&lt;?&gt; home() {
+        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sgammon"));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/soy")
+class SoyController {
+    @View("sample.home")
+    @Get
+    HttpResponse&lt;?&gt; home() {
+        HttpResponse.ok([loggedIn: true, username: "sgammon"])
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/soy")
+class SoyController {
+    @View("sample.home")
+    @Get
+    fun home(): HttpResponse&lt;*&gt; {
+        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sgammon"))
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <a href="../api/io/micronaut/views/View.html">View</a> annotation value is set to namespace and template name.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Both server-side Soy rendering layers are supported in Micronaut:</p>
@@ -881,37 +1045,6 @@ into bytecode at server startup. This can be impactful on startup-time, so, if t
 app, pre-compile your templates using the AOT bytecode compiler.</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>Which renderer is active depends on the Micronaut configuration:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-  views:
-    soy:
-      enabled: true</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>After wiring up your <code>SoyFileSetProvider</code>, and configuring Micronaut, you can render templates like so:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Validated
-@Controller("/")
-public class HelloWorld {
-  @Get(value = "/soy", produces = MediaType.TEXT_HTML)
-  @View("some.soy.template.path")
-  public HttpResponse soyDemo() {
-    // return template context
-    return HttpResponse.ok(ImmutableMap.of("username", "jdoe", "loggedIn", true));
-  }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The return value is converted to Soy template context parameters, and passed to the <code>@View</code>-annotation-bound template.</p>
 </div>
 </div>
 <div class="sect2">
