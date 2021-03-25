@@ -17,6 +17,9 @@ subprojects { Project subproject ->
             enableBom = false
         }
         dependencies {
+            if (!subproject.name.startsWith("test-suite")) {
+                annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
+            }
             testImplementation("org.spockframework:spock-core:${spockVersion}") {
                 exclude module: 'groovy-all'
             }
@@ -27,7 +30,7 @@ subprojects { Project subproject ->
         version projectVersion
     }
     apply plugin: "io.micronaut.build.internal.dependency-updates"
-    if (subproject.name != "test-suite") {
+    if (!subproject.name.startsWith("test-suite")) {
         apply plugin: "io.micronaut.build.internal.publishing"
     }
 }
