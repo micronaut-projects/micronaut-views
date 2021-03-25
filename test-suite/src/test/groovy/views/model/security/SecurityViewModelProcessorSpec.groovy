@@ -32,6 +32,7 @@ class SecurityViewModelProcessorSpec extends Specification {
         given:
         ApplicationContext applicationContext = ApplicationContext.run([
                 'micronaut.security.enabled': true,
+                'micronaut.views.soy.enabled': false,
                 'micronaut.security.views-model-decorator.enabled': false,
         ])
 
@@ -46,6 +47,7 @@ class SecurityViewModelProcessorSpec extends Specification {
         given:
         ApplicationContext applicationContext = ApplicationContext.run([
                 'micronaut.security.enabled': true,
+                'micronaut.views.soy.enabled': false,
         ])
 
         expect:
@@ -60,6 +62,7 @@ class SecurityViewModelProcessorSpec extends Specification {
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': 'SecurityViewModelProcessorSpec',
                 'micronaut.security.enabled': true,
+                'micronaut.views.soy.enabled': false,
                 'micronaut.security.views-model-decorator.security-key': 'securitycustom',
         ])
         HttpClient httpClient = HttpClient.create(embeddedServer.URL)
@@ -107,6 +110,7 @@ class SecurityViewModelProcessorSpec extends Specification {
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': 'SecurityViewModelProcessorSpec',
                 'micronaut.security.enabled': true,
+                'micronaut.views.soy.enabled': false,
         ])
         HttpClient httpClient = HttpClient.create(embeddedServer.URL)
 

@@ -1,0 +1,6 @@
+dependencies {
+    testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
+    testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
+    testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
+    testImplementation project(":views-soy")
+}
