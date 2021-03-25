@@ -31,6 +31,7 @@ class SecurityViewModelProcessorSpec extends Specification {
     def "if micronaut.security.views-model-decorator.enabled=true SecurityViewsModelDecorator bean exists"() {
         given:
         ApplicationContext applicationContext = ApplicationContext.run([
+                'micronaut.views.soy.enabled': false,
                 'micronaut.security.views-model-decorator.enabled': false,
         ])
 
@@ -43,7 +44,9 @@ class SecurityViewModelProcessorSpec extends Specification {
 
     def "by default SecurityViewsModelDecorator bean exists"() {
         given:
-        ApplicationContext applicationContext = ApplicationContext.run([:])
+        ApplicationContext applicationContext = ApplicationContext.run([
+                'micronaut.views.soy.enabled': false,
+        ])
 
         expect:
         applicationContext.containsBean(SecurityViewModelProcessor)
@@ -56,6 +59,7 @@ class SecurityViewModelProcessorSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': 'SecurityViewModelProcessorSpec',
+                'micronaut.views.soy.enabled': false,
                 'micronaut.security.views-model-decorator.security-key': 'securitycustom',
         ])
         HttpClient httpClient = HttpClient.create(embeddedServer.URL)
@@ -102,6 +106,7 @@ class SecurityViewModelProcessorSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': 'SecurityViewModelProcessorSpec',
+                'micronaut.views.soy.enabled': false,
         ])
         HttpClient httpClient = HttpClient.create(embeddedServer.URL)
 

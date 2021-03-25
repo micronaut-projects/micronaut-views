@@ -1,6 +1,7 @@
 package io.micronaut.docs
 
 import com.google.template.soy.SoyFileSet
+import io.micronaut.views.ViewsConfiguration
 import io.micronaut.views.soy.SoyFileSetProvider
 
 import javax.inject.Singleton
@@ -11,6 +12,11 @@ import javax.inject.Singleton
  */
 @Singleton
 class ExampleSoyFileSetProvider implements SoyFileSetProvider {
+
+    private final ViewsConfiguration viewsConfiguration
+    ExampleSoyFileSetProvider(ViewsConfiguration viewsConfiguration) {
+        this.viewsConfiguration = viewsConfiguration
+    }
     /**
      * @return Soy file set to render templates with
      */
@@ -18,7 +24,7 @@ class ExampleSoyFileSetProvider implements SoyFileSetProvider {
     SoyFileSet provideSoyFileSet() {
         return SoyFileSet.builder()
             .add(new File(
-                ExampleSoyFileSetProvider.class.getClassLoader().getResource("home.soy").getFile()))
+                ExampleSoyFileSetProvider.class.getClassLoader().getResource(viewsConfiguration.getFolder() + "/home.soy").getFile()))
         .build()
     }
 }
