@@ -13,6 +13,7 @@ import java.io.File;
 import java.net.URISyntaxException;
 
 @Requires(property = "spec.name", value = "soy")
+//tag::clazz[]
 @Singleton
 public class CustomSoyFileSetProvider implements SoyFileSetProvider {
     private static final Logger LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider.class);
@@ -44,3 +45,4 @@ public class CustomSoyFileSetProvider implements SoyFileSetProvider {
         return builder.build();
     }
 }
+//end::clazz[]

@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 @Property(name = "micronaut.security.enabled", value = StringUtils.FALSE)
 @Property(name = "spec.name", value = "soy")
-@Property(name = "micronaut.views.soy.enabled", value = StringUtils.TRUE)
 @Property(name = "micronaut.views.velocity.enabled", value = StringUtils.FALSE)
 @MicronautTest
 class SoySpec extends Specification {

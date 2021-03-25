@@ -12,7 +12,6 @@ import spock.lang.Specification
 import javax.inject.Inject
 
 @Property(name = "spec.name", value = "soy")
-@Property(name = "micronaut.views.soy.enabled", value = StringUtils.TRUE)
 @MicronautTest
 class SoySpec extends Specification {
     @Inject

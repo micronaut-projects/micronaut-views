@@ -11,8 +11,6 @@ sourceSets {
 }
 
 dependencies {
-    annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
-
     api project(":views-core")
     api "com.fizzed:rocker-runtime:$rockerVersion"
     compileOnly "io.micronaut:micronaut-management:$micronautVersion"

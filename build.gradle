@@ -18,6 +18,9 @@ subprojects { Project subproject ->
         }
         dependencies {
             annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
+            if (!subproject.name.startsWith("test-suite")) {
+                annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
+            }
             testImplementation("org.spockframework:spock-core:${spockVersion}") {
                 exclude module: 'groovy-all'
             }

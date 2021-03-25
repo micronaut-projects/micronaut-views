@@ -1,4 +1,4 @@
-package io.micronaut.doc.soy
+package io.micronaut.docs.soy
 
 import io.micronaut.context.annotation.Requires
 import io.micronaut.http.HttpResponse
@@ -7,6 +7,7 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.views.View
 
 @Requires(property = "spec.name", value = "soy")
+//tag::clazz[]
 @Controller("/soy")
 class SoyController {
     @View("sample.home")
@@ -15,3 +16,4 @@ class SoyController {
         HttpResponse.ok([loggedIn: true, username: "sgammon"])
     }
 }
+//end::clazz[]

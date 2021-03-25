@@ -1,6 +1,4 @@
 dependencies {
-    annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
-
     api project(":views-core")
     api "com.github.jknack:handlebars:$handlebarsVersion"
 

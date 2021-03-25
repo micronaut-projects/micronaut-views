@@ -8,6 +8,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.views.View;
 
 @Requires(property = "spec.name", value = "soy")
+//tag::clazz[]
 @Controller("/soy")
 public class SoyController {
     @View("sample.home")
@@ -16,3 +17,4 @@ public class SoyController {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sgammon"));
     }
 }
+//end::clazz[]

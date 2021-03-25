@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory
 import javax.inject.Singleton
 
 @Requires(property = "spec.name", value = "soy")
+//tag::clazz[]
 @Singleton
 class CustomSoyFileSetProvider implements SoyFileSetProvider {
     private static final Logger LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider.class)
@@ -44,3 +45,4 @@ class CustomSoyFileSetProvider implements SoyFileSetProvider {
         builder.build()
     }
 }
+//end::clazz[]

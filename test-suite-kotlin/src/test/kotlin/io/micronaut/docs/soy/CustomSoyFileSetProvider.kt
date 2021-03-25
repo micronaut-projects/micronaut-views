@@ -12,6 +12,7 @@ import java.net.URL
 import javax.inject.Singleton
 
 @Requires(property = "spec.name", value = "soy")
+//tag::clazz[]
 @Singleton
 class CustomSoyFileSetProvider(val resourceLoader: ResourceLoader, viewsConfiguration: ViewsConfiguration) :
     SoyFileSetProvider {
@@ -46,3 +47,4 @@ class CustomSoyFileSetProvider(val resourceLoader: ResourceLoader, viewsConfigur
         folder = viewsConfiguration.folder
     }
 }
+//end::clazz[]

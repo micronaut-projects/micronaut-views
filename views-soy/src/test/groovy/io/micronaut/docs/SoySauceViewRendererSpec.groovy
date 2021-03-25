@@ -29,7 +29,6 @@ class SoySauceViewRendererSpec extends Specification {
     [
             "spec.name": "soy",
             "micronaut.security.enabled": false,
-            "micronaut.views.soy.enabled": true,
             "micronaut.views.soy.engine": "sauce",
             'micronaut.views.csp.enabled': true,
             'micronaut.views.csp.generateNonce': true,
