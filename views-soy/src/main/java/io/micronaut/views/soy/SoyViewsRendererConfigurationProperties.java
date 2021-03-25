@@ -71,7 +71,7 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
   }
 
   /**
-   * Whether Soy-backed views are enabled.
+   * Whether Soy-backed views are enabled. Default value `{@value #DEFAULT_ENABLED}`
    *
    * @param enabled True if they are.
    */
@@ -80,7 +80,7 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
   }
 
   /**
-   * Specifies whether renaming is enabled. Defaults to `true`.
+   * Specifies whether renaming is enabled. Defaults to `{@value #DEFAULT_RENAMING}`.
    *
    * @return True if it is enabled.
    */
@@ -90,7 +90,7 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
   }
 
   /**
-   * Turns renaming on or off.
+   * Turns renaming on or off. Default value `{@value #DEFAULT_RENAMING}`
    *
    * @param renaming Renaming status.
    */
