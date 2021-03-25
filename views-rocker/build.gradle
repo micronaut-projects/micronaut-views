@@ -11,8 +11,6 @@ sourceSets {
 }
 
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
-
     api project(":views-core")
     api "com.fizzed:rocker-runtime:$rockerVersion"
     compileOnly "io.micronaut:micronaut-management:$micronautVersion"

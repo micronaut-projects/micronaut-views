@@ -1,6 +1,4 @@
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
-
     api project(":views-core")
     implementation "org.freemarker:freemarker:$freemarkerVersion"
     compileOnly "io.micronaut:micronaut-management:$micronautVersion"
