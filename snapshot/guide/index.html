@@ -100,6 +100,16 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-soy"><a href="#soy"><strong>3.6</strong><span>Soy/Closure Support</span></a></div>
         
+        <div class="toc-item" style="margin-left:20px" id="toc-item-soyconfiguration"><a href="#soyconfiguration"><strong>3.6.1</strong><span>Soy Configuration</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-soyusage"><a href="#soyusage"><strong>3.6.2</strong><span>Soy Usage</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-soyfeaturestemplatesecurity"><a href="#soyfeaturestemplatesecurity"><strong>3.6.3</strong><span>Soy Features - Template Security</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-soyfeaturesremaining"><a href="#soyfeaturesremaining"><strong>3.6.4</strong><span>Soy Features - Remaining</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-buildingsoy"><a href="#buildingsoy"><strong>3.6.5</strong><span>Building Soy</span></a></div>
+        
         <div class="toc-item" style="margin-left:10px" id="toc-item-pebble"><a href="#pebble"><strong>3.7</strong><span>Pebble</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-csp"><a href="#csp"><strong>3.8</strong><span>Content Security Policy</span></a></div>
@@ -832,8 +842,59 @@ client-side, with the ability to compile templates into Java, Python, or JavaScr
 </div>
 </p>
 </div>
-<div class="sect2">
-<h3 id="_usage">Usage</h3>
+
+<h2 id="soyconfiguration"><a class="anchor" href="#soyconfiguration"></a>3.6.1 Soy Configuration</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master
+/src/main/docs/guide/views/soy/soyconfiguration.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The entire set of supported Soy configuration properties are documented below:</p>
+</div>
+<a id="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties" href="#io.micronaut.views.soy.SoyViewsRendererConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html">SoyViewsRendererConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Soy-backed views are enabled. Default value <code>true</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.renaming-enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Turns renaming on or off. Default value <code>true</code></p></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="soyusage"><a class="anchor" href="#soyusage"></a>3.6.2 Soy Usage</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master
+/src/main/docs/guide/views/soy/soyusage.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
 <div class="paragraph">
 <p>To use Soy integration you have to provide a bean of type <a href="../api/io/micronaut/views/soy/SoyFileSetProvider.html">SoyFileSetProvider</a>. Such a bean is responsible for loading the Soy templates, either in compiled or source form.</p>
 </div>
@@ -1046,43 +1107,17 @@ app, pre-compile your templates using the AOT bytecode compiler.</p>
 </li>
 </ul>
 </div>
+
+<h2 id="soyfeaturestemplatesecurity"><a class="anchor" href="#soyfeaturestemplatesecurity"></a>3.6.3 Soy Features - Template Security</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master
+/src/main/docs/guide/views/soy/soyfeaturestemplatesecurity.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
 </div>
-<div class="sect2">
-<h3 id="_configuration">Configuration</h3>
-<div class="paragraph">
-<p>The entire set of supported Soy configuration properties are documented below:</p>
-</div>
-<a id="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties" href="#io.micronaut.views.soy.SoyViewsRendererConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html">SoyViewsRendererConfigurationProperties</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Soy-backed views are enabled. Default value <code>true</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.renaming-enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Turns renaming on or off. Default value <code>true</code></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_features_template_security">Features: Template Security</h3>
+
+
 <div class="paragraph">
 <p>Soy/Closure Templates has seen significant work from Google where security is concerned, both in the browser and on the
 backend. Soy is extremely strict and strongly typed, with validation being performed by Soy and then subsequently either
@@ -1167,9 +1202,17 @@ template like so:</p>
 </ul>
 </div>
 </div>
+
+<h2 id="soyfeaturesremaining"><a class="anchor" href="#soyfeaturesremaining"></a>3.6.4 Soy Features - Remaining</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master
+/src/main/docs/guide/views/soy/soyfeaturesremaining.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
 </div>
-<div class="sect2">
-<h3 id="_features_renaming">Features: Renaming</h3>
+
+
 <div class="paragraph">
 <p>Soy has powerful built-in renaming features, that both obfuscate and optimize your code as it is rendered. Renaming is
 opt-in and requires a few things:</p>
@@ -1329,9 +1372,17 @@ public class RewriteMapProvider implements SoyNamingMapProvider {
 <pre class="highlightjs highlight"><code class="language-css hljs" data-lang="css">.a-b-c{color:blue;}.a-b-c-d{background:yellow;}</code></pre>
 </div>
 </div>
+
+<h2 id="buildingsoy"><a class="anchor" href="#buildingsoy"></a>3.6.5 Building Soy</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master
+/src/main/docs/guide/views/soy/buildingsoy.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
 </div>
-<div class="sect2">
-<h3 id="_building_soy">Building Soy</h3>
+
+
 <div class="paragraph">
 <p>Soy has tooling support from <a href="https://github.com/Medium/soynode">Node</a> (<a href="https://www.npmjs.com/package/gulp-soynode">Gulp</a>,
 <a href="https://www.npmjs.com/package/grunt-closure-soy">Grunt</a>),
@@ -1368,21 +1419,20 @@ of external dependencies.</p>
 <li>
 <p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToJbcSrcCompiler.java">SoyToJbcSrcCompiler</a>:
 Compiles Soy templates directly to Java bytecode, packaged up in a JAR. These templates can be used together with
-  <a href="https://search.maven.org/search?q=g:com.google.template%20AND%20a:soy&amp;core=gav">Soy Java</a> for highly performant
+<a href="https://search.maven.org/search?q=g:com.google.template%20AND%20a:soy&amp;core=gav">Soy Java</a> for highly performant
 server-side rendering.</p>
 </li>
 <li>
 <p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToJsSrcCompiler.java">SoyToJsSrcCompiler</a>:
 Traditional JS client-side compiler, which assembles strings of rendered template content. Like <code>idom</code>, these compiled
 templates work well with Closure Compiler, and Closure Library via
-  <a href="https://github.com/google/closure-library/tree/master/closure/goog/soy"><code>goog.soy</code></a>.</p>
+<a href="https://github.com/google/closure-library/tree/master/closure/goog/soy"><code>goog.soy</code></a>.</p>
 </li>
 <li>
 <p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToPySrcCompiler.java">SoyToPySrcCompiler</a>:
 Compiles templates into Python sources for use server-side.</p>
 </li>
 </ul>
-</div>
 </div>
 
 <h2 id="pebble"><a class="anchor" href="#pebble"></a>3.7 Pebble</h2>
