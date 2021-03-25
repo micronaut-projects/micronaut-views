@@ -17,6 +17,7 @@ subprojects { Project subproject ->
             enableBom = false
         }
         dependencies {
+            annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
             testImplementation("org.spockframework:spock-core:${spockVersion}") {
                 exclude module: 'groovy-all'
             }
