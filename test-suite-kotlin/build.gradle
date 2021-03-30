@@ -7,7 +7,7 @@ dependencies {
     testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
     testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
     testImplementation project(":views-soy")
-    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.31"
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32"
 }
 
 
