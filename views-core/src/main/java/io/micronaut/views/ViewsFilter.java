@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,8 @@ import io.micronaut.views.model.ViewModelProcessor;
 import io.micronaut.web.router.qualifier.ProducesMediaTypeQualifier;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -46,6 +48,7 @@ import java.util.Optional;
 @Requires(beans = ViewsRenderer.class)
 @Filter("/**")
 public class ViewsFilter implements HttpServerFilter {
+    private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
 
     protected final BeanLocator beanLocator;
     private final Collection<ViewModelProcessor> viewModelProcessors;
@@ -81,6 +84,11 @@ public class ViewsFilter implements HttpServerFilter {
                     Object body = response.body();
                     Optional<String> optionalView = resolveView(route, body);
 
+                    if (response.getStatus().getCode() <= 199 || response.status().getCode() >= 300) {
+                        LOG.debug("response has a non-200 return code ({}), bypassing view rendering", response.status().getCode());
+                        return Flowable.just(response);
+                    }
+
                     if (optionalView.isPresent()) {
 
                         MediaType type = route.getValue(Produces.class, MediaType.class)
@@ -88,16 +96,29 @@ public class ViewsFilter implements HttpServerFilter {
                         Optional<ViewsRenderer> optionalViewsRenderer = beanLocator.findBean(ViewsRenderer.class,
                                 new ProducesMediaTypeQualifier<>(type));
 
-                        if (optionalViewsRenderer.isPresent()) {
-                            ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
-                            Map<String, Object> model = populateModel(request, viewsRenderer, body);
-                            ModelAndView<Map<String, Object>> modelAndView = processModelAndView(request,
-                                    optionalView.get(),
-                                    model);
-                            model = modelAndView.getModel().orElse(model);
-                            String view = modelAndView.getView().orElse(optionalView.get());
+                        if (!optionalViewsRenderer.isPresent()) {
+                            LOG.debug("no view renderer found for media type: {}, ignoring", type);
+                            return Flowable.just(response);
+                        }
+
+                        ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
+
+                        ModelAndView<?> modelAndView;
+
+                        // We treat Map<String, Object> the same as a model view as long as
+                        // the method includes a view annotation:
+                        if (body instanceof ModelAndView || body instanceof Map) {
+                            Map<String, Object> context = populateModel(request, viewsRenderer, body);
+                            modelAndView  = processModelAndView(request, optionalView.get(), context);
+                        } else {
+                            // these arbitrary models do not get processed by the view model processors:
+                            modelAndView = new ModelAndView<>(optionalView.get(), body);
+                        }
+
+                        if (modelAndView.getView().isPresent() && modelAndView.getModel().isPresent()) {
+                            String view = modelAndView.getView().get();
                             if (viewsRenderer.exists(view)) {
-                                Writable writable = viewsRenderer.render(view, model, request);
+                                Writable writable = viewsRenderer.render(view, modelAndView.getModel().get(), request);
                                 response.contentType(type);
                                 response.body(writable);
                                 return Flowable.just(response);
@@ -119,7 +140,7 @@ public class ViewsFilter implements HttpServerFilter {
      * @param model The Model returned
      * @return A {@link ModelAndView} after being processed by the available {@link ViewModelProcessor}s.
      */
-    protected ModelAndView<Map<String, Object>> processModelAndView(HttpRequest request, String view, Map<String, Object> model) {
+    protected ModelAndView<Map<String, Object>> processModelAndView(HttpRequest<?> request, String view, Map<String, Object> model) {
         ModelAndView<Map<String, Object>> modelAndView = new ModelAndView<>(
                 view,
                 model
@@ -139,7 +160,8 @@ public class ViewsFilter implements HttpServerFilter {
      * @param responseBody Response Body
      * @return A model with the controllers response and enhanced with the decorators.
      */
-    protected Map<String, Object> populateModel(HttpRequest request, ViewsRenderer viewsRenderer, Object responseBody) {
+    @SuppressWarnings("unused")
+    protected Map<String, Object> populateModel(HttpRequest<?> request, ViewsRenderer viewsRenderer, Object responseBody) {
         return new HashMap<>(viewsRenderer.modelOf(resolveModel(responseBody)));
     }
 
@@ -149,7 +171,7 @@ public class ViewsFilter implements HttpServerFilter {
      * @param responseBody Response body
      * @return the model to be rendered
      */
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "unchecked", "rawtypes"})
     protected Object resolveModel(Object responseBody) {
         if (responseBody instanceof ModelAndView) {
             return ((ModelAndView) responseBody).getModel().orElse(null);
@@ -166,9 +188,9 @@ public class ViewsFilter implements HttpServerFilter {
      * @param responseBody Response body
      * @return view name to be rendered
      */
-    @SuppressWarnings("WeakerAccess")
+    @SuppressWarnings({"WeakerAccess", "unchecked", "rawtypes"})
     protected Optional<String> resolveView(AnnotationMetadata route, Object responseBody) {
-        Optional optionalViewName = route.getValue(View.class);
+        Optional<?> optionalViewName = route.getValue(View.class);
         if (optionalViewName.isPresent()) {
             return Optional.of((String) optionalViewName.get());
         } else if (responseBody instanceof ModelAndView) {
