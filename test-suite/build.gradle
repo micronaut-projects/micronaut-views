@@ -5,7 +5,7 @@ dependencies {
     testImplementation "io.micronaut:micronaut-validation:$micronautVersion"
     testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
     testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    testImplementation 'io.micronaut.security:micronaut-security:2.4.1'
+    testImplementation 'io.micronaut.security:micronaut-security:2.4.2'
     testImplementation project(":views-velocity")
     testImplementation project(":views-core")
     testImplementation project(":views-soy")
