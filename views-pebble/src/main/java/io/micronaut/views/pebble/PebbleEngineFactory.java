@@ -27,8 +27,11 @@ import com.mitchellbosecke.pebble.lexer.Syntax;
 import com.mitchellbosecke.pebble.loader.ClasspathLoader;
 import com.mitchellbosecke.pebble.loader.Loader;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
+import java.util.concurrent.ExecutorService;
+import javax.inject.Named;
 
 /**
  * Factory for PebbleEngine beans.
@@ -45,6 +48,7 @@ public class PebbleEngineFactory {
     private final Optional<Syntax> syntax;
     private final Optional<MethodAccessValidator> methodAccessValidator;
     private final List<Extension> extensions;
+    private final ExecutorService executorService;
 
     @Inject
     public PebbleEngineFactory(ViewsConfiguration viewsConfiguration,
@@ -52,7 +56,8 @@ public class PebbleEngineFactory {
                                Optional<Loader<?>> loader,
                                Optional<Syntax> syntax,
                                Optional<MethodAccessValidator> methodAccessValidator,
-                               List<Extension> extensions) {
+                               List<Extension> extensions,
+                               @Named(TaskExecutors.IO) ExecutorService executorService) {
 
         this.viewsConfiguration = viewsConfiguration;
         this.configuration = configuration;
@@ -60,6 +65,7 @@ public class PebbleEngineFactory {
         this.syntax = syntax;
         this.methodAccessValidator = methodAccessValidator;
         this.extensions = extensions;
+        this.executorService = executorService;
     }
 
     /**
@@ -76,7 +82,8 @@ public class PebbleEngineFactory {
             .greedyMatchMethod(configuration.isGreedyMatchMethod())
             .allowOverrideCoreOperators(configuration.isAllowOverrideCoreOperators())
             .literalDecimalTreatedAsInteger(configuration.isLiteralDecimalsAsIntegers())
-            .literalNumbersAsBigDecimals(configuration.isLiteralNumbersAsBigDecimals());
+            .literalNumbersAsBigDecimals(configuration.isLiteralNumbersAsBigDecimals())
+            .executorService(executorService);
 
         if (loader.isPresent()) {
             builder.loader(loader.get());
@@ -92,7 +99,7 @@ public class PebbleEngineFactory {
         extensions.forEach(bean -> builder.extension(bean));
 
         // Not implemented:
-        // executorService, defaultLocale, templateCache, tagCache, addEscapingStrategy 
+        // defaultLocale, templateCache, tagCache, addEscapingStrategy 
         
         return builder.build();
     }
