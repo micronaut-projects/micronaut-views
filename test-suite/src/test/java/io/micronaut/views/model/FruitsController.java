@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @Secured(SecurityRule.IS_ANONYMOUS)
-@Requires(property = "spec.name", value = "ViewModelProcessorSpec")
+@Requires(property = "spec.name", value = "ModelAndViewSpec")
 @Controller()
 public class FruitsController {
 

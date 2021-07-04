@@ -30,7 +30,7 @@ class ModelAndViewSpec extends Specification {
     def "a view model can be any object"() {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
-                'spec.name'                                       : 'ViewModelProcessorSpec',
+                'spec.name'                                       : 'ModelAndViewSpec',
                 'micronaut.views.soy.enabled'                     : false,
                 'micronaut.security.views-model-decorator.enabled': false,
         ]) as EmbeddedServer
@@ -71,7 +71,7 @@ class ModelAndViewSpec extends Specification {
     def "returning a null model causes a 404"() {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
-                'spec.name'                                       : 'ViewModelProcessorSpec',
+                'spec.name'                                       : 'ModelAndViewSpec',
                 'micronaut.views.soy.enabled'                     : false,
                 'micronaut.security.views-model-decorator.enabled': false,
         ]) as EmbeddedServer
@@ -97,7 +97,7 @@ class ModelAndViewSpec extends Specification {
     def "a view model can be a map"() {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
-                'spec.name'                                       : 'ViewModelProcessorSpec',
+                'spec.name'                                       : 'ModelAndViewSpec',
                 'micronaut.views.soy.enabled'                     : false,
                 'micronaut.security.views-model-decorator.enabled': false,
         ]) as EmbeddedServer
