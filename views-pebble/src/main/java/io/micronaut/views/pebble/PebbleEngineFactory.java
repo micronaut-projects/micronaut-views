@@ -27,6 +27,7 @@ import com.mitchellbosecke.pebble.lexer.Syntax;
 import com.mitchellbosecke.pebble.loader.ClasspathLoader;
 import com.mitchellbosecke.pebble.loader.Loader;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -48,7 +49,24 @@ public class PebbleEngineFactory {
     private final Optional<Syntax> syntax;
     private final Optional<MethodAccessValidator> methodAccessValidator;
     private final List<Extension> extensions;
+
+    @Nullable
     private final ExecutorService executorService;
+
+    public PebbleEngineFactory(ViewsConfiguration viewsConfiguration,
+                               PebbleConfiguration configuration,
+                               Optional<Loader<?>> loader,
+                               Optional<Syntax> syntax,
+                               Optional<MethodAccessValidator> methodAccessValidator,
+                               List<Extension> extensions) {
+        this.viewsConfiguration = viewsConfiguration;
+        this.configuration = configuration;
+        this.loader = loader;
+        this.syntax = syntax;
+        this.methodAccessValidator = methodAccessValidator;
+        this.extensions = extensions;
+        this.executorService = null;
+    }
 
     @Inject
     public PebbleEngineFactory(ViewsConfiguration viewsConfiguration,
@@ -58,7 +76,6 @@ public class PebbleEngineFactory {
                                Optional<MethodAccessValidator> methodAccessValidator,
                                List<Extension> extensions,
                                @Named(TaskExecutors.IO) ExecutorService executorService) {
-
         this.viewsConfiguration = viewsConfiguration;
         this.configuration = configuration;
         this.loader = loader;
@@ -82,8 +99,11 @@ public class PebbleEngineFactory {
             .greedyMatchMethod(configuration.isGreedyMatchMethod())
             .allowOverrideCoreOperators(configuration.isAllowOverrideCoreOperators())
             .literalDecimalTreatedAsInteger(configuration.isLiteralDecimalsAsIntegers())
-            .literalNumbersAsBigDecimals(configuration.isLiteralNumbersAsBigDecimals())
-            .executorService(executorService);
+            .literalNumbersAsBigDecimals(configuration.isLiteralNumbersAsBigDecimals());
+
+        if (executorService != null) {
+            builder.executorService(executorService);
+        }
 
         if (loader.isPresent()) {
             builder.loader(loader.get());
