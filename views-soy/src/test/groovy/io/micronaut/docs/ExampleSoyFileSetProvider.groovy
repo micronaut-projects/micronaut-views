@@ -4,7 +4,7 @@ import com.google.template.soy.SoyFileSet
 import io.micronaut.views.ViewsConfiguration
 import io.micronaut.views.soy.SoyFileSetProvider
 
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 
 /**

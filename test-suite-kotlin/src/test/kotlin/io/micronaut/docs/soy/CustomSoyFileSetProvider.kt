@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 import java.io.File
 import java.net.URISyntaxException
 import java.net.URL
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 @Requires(property = "spec.name", value = "soy")
 //tag::clazz[]

@@ -18,7 +18,7 @@ package io.micronaut.views.velocity;
 import io.micronaut.context.annotation.Factory;
 import org.apache.velocity.app.VelocityEngine;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.Properties;
 
 /**
