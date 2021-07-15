@@ -5,7 +5,13 @@ dependencies {
     testImplementation "io.micronaut:micronaut-validation:$micronautVersion"
     testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
     testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    testImplementation 'io.micronaut.security:micronaut-security:2.5.0'
+    
+    //TODO remove this once security has been upgraded to reactor
+    testImplementation "io.reactivex.rxjava2:rxjava:2.2.21"
+
+    testImplementation 'io.micronaut.security:micronaut-security:3.0.0-M2'
+    testImplementation "io.projectreactor:reactor-core:$reactorVersion"
+
     testImplementation project(":views-velocity")
     testImplementation project(":views-core")
     testImplementation project(":views-soy")

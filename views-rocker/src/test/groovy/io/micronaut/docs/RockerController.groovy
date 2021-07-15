@@ -16,6 +16,7 @@
 package io.micronaut.docs
 
 import io.micronaut.context.annotation.Requires
+import io.micronaut.core.async.annotation.SingleResult
 import io.micronaut.core.util.CollectionUtils
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
@@ -25,8 +26,8 @@ import io.micronaut.http.annotation.Produces
 import io.micronaut.views.ModelAndView
 import io.micronaut.views.View
 import io.micronaut.views.rocker.RockerWritable
-import io.reactivex.Single
-
+import org.reactivestreams.Publisher
+import reactor.core.publisher.Mono
 import views.home
 
 import static io.micronaut.http.HttpResponse.ok
@@ -66,15 +67,17 @@ class RockerController {
 
     @View("home")
     @Get("/reactive")
-    Single<Person> reactive() {
-        return Single.just(new Person(loggedIn: true, username: 'sdelamo'))
+    @SingleResult
+    Publisher<Person> reactive() {
+        return Mono.just(new Person(loggedIn: true, username: 'sdelamo'))
     }
 
     @Get("/modelAndView")
-    Single<ModelAndView> modelAndView() {
+    @SingleResult
+    Publisher<ModelAndView> modelAndView() {
         ModelAndView modelAndView = new ModelAndView("home",
                 new Person(loggedIn: true, username: 'sdelamo'))
-        return Single.just(modelAndView)
+        return Mono.just(modelAndView)
     }
 
     @View("bogus")
