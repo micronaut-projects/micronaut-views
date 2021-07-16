@@ -1,15 +1,15 @@
 plugins {
-    id "com.fizzed.rocker" version "$rockerVersion"
+    id 'nu.studer.rocker' version '3.0.2'
 }
-
-sourceSets {
-    test {
-        rocker {
-            srcDir('src/test/resources')
+rocker {
+    configurations {
+        test {
+            templateDir = file('src/test/resources')
+            outputDir = file('build/generated/rocker')
+            optimize = true
         }
     }
 }
-
 dependencies {
     api project(":views-core")
     api "com.fizzed:rocker-runtime:$rockerVersion"
