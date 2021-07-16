@@ -23,19 +23,25 @@ import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.model.FruitsController
+import spock.lang.AutoCleanup
+import spock.lang.Shared
 import spock.lang.Specification
 
 class ModelAndViewSpec extends Specification {
 
-    def "a view model can be any object"() {
-        given:
-        EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
-                'spec.name'                                       : 'ModelAndViewSpec',
-                'micronaut.views.soy.enabled'                     : false,
-                'micronaut.security.views-model-decorator.enabled': false,
-        ]) as EmbeddedServer
-        HttpClient httpClient = HttpClient.create(embeddedServer.URL)
+    @Shared
+    @AutoCleanup
+    EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
+            'spec.name'                                       : 'ModelAndViewSpec',
+            'micronaut.views.soy.enabled'                     : false,
+            'micronaut.security.views-model-decorator.enabled': false,
+    ]) as EmbeddedServer
 
+    @AutoCleanup
+    @Shared
+    HttpClient httpClient = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.URL)
+
+    def "a view model can be any object"() {
         expect:
         embeddedServer.applicationContext.containsBean(FruitsController)
 
@@ -57,23 +63,9 @@ class ModelAndViewSpec extends Specification {
 
         and:
         html.contains('<h1>color: red</h1>')
-
-        cleanup:
-        httpClient.close()
-
-        and:
-        embeddedServer.close()
     }
 
     def "returning a null model causes a 404"() {
-        given:
-        EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
-                'spec.name'                                       : 'ModelAndViewSpec',
-                'micronaut.views.soy.enabled'                     : false,
-                'micronaut.security.views-model-decorator.enabled': false,
-        ]) as EmbeddedServer
-        HttpClient httpClient = HttpClient.create(embeddedServer.URL, )
-
         expect:
         embeddedServer.applicationContext.containsBean(FruitsController)
 
@@ -83,23 +75,9 @@ class ModelAndViewSpec extends Specification {
 
         then:
         thrown(HttpClientResponseException)
-
-        cleanup:
-        httpClient.close()
-
-        and:
-        embeddedServer.close()
     }
 
     def "a view model can be a map"() {
-        given:
-        EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
-                'spec.name'                                       : 'ModelAndViewSpec',
-                'micronaut.views.soy.enabled'                     : false,
-                'micronaut.security.views-model-decorator.enabled': false,
-        ]) as EmbeddedServer
-        HttpClient httpClient = HttpClient.create(embeddedServer.URL)
-
         expect:
         embeddedServer.applicationContext.containsBean(FruitsController)
 
@@ -112,9 +90,6 @@ class ModelAndViewSpec extends Specification {
 
         when:
         String html = response.body()
-        println "=" * 100
-        println "html -> " + html
-        println "=" * 100
 
         then:
         html
@@ -124,11 +99,5 @@ class ModelAndViewSpec extends Specification {
 
         and:
         html.contains('<h1>color: orange</h1>')
-
-        cleanup:
-        httpClient.close()
-
-        and:
-        embeddedServer.close()
     }
 }
