@@ -171,7 +171,7 @@ class RockerViewRendererSpec extends Specification {
         client.toBlocking().exchange('/rocker/bogus', String)
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown()
 
         and:
         e.status == HttpStatus.INTERNAL_SERVER_ERROR

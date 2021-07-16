@@ -194,7 +194,7 @@ class FreemarkerViewRendererSpec extends Specification {
         client.toBlocking().exchange('/freemarker/invalid', String)
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown()
 
         and:
         e.status == HttpStatus.INTERNAL_SERVER_ERROR

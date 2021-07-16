@@ -117,7 +117,7 @@ class ThymeleafViewRendererSpec extends Specification {
         client.toBlocking().exchange('/views/bogus', String)
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown()
 
         and:
         e.status == HttpStatus.INTERNAL_SERVER_ERROR
@@ -144,7 +144,7 @@ class ThymeleafViewRendererSpec extends Specification {
         client.toBlocking().exchange(HttpRequest.POST('/views/error', [status: true, exception: false, global: false]), String)
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown()
 
         and:
         e.status == HttpStatus.NOT_FOUND

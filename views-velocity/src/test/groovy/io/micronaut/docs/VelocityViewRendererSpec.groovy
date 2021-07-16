@@ -155,7 +155,7 @@ class VelocityViewRendererSpec extends Specification {
         client.toBlocking().exchange('/velocity/bogus', String)
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown()
 
         and:
         e.status == HttpStatus.INTERNAL_SERVER_ERROR
