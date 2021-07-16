@@ -25,7 +25,7 @@ import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * A factory for Thymeleaf beans.

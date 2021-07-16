@@ -7,7 +7,7 @@ import io.micronaut.views.ViewsConfiguration
 import io.micronaut.views.soy.SoyFileSetProvider
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 @Requires(property = "spec.name", value = "soy")
 @Singleton

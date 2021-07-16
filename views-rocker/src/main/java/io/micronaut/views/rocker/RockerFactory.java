@@ -19,7 +19,7 @@ import com.fizzed.rocker.runtime.RockerRuntime;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.views.ViewsConfiguration;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Factory for the Rocker engine.

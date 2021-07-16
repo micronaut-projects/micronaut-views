@@ -22,7 +22,7 @@ import org.thymeleaf.context.IEngineContext;
 import org.thymeleaf.context.IEngineContextFactory;
 import org.thymeleaf.engine.TemplateData;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;

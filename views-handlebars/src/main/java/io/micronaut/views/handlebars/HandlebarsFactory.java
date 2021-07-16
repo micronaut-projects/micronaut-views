@@ -18,7 +18,7 @@ package io.micronaut.views.handlebars;
 import com.github.jknack.handlebars.Handlebars;
 import io.micronaut.context.annotation.Factory;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Factory for handlebars beans.

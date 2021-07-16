@@ -2,7 +2,7 @@ package io.micronaut.views.thymeleaf
 
 import io.micronaut.context.i18n.ResourceBundleMessageSource
 
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 @Singleton
 class SampleMessageSource extends ResourceBundleMessageSource {
