@@ -17,6 +17,7 @@
 package io.micronaut.views.model;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.Introspected;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.security.annotation.Secured;
@@ -52,6 +53,7 @@ public class FruitsController {
         return context;
     }
 
+    @Introspected
     public static class Fruit {
         private final String name;
         private final String color;

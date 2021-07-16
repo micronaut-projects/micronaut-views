@@ -50,7 +50,7 @@ include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[t
 include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=modelAndView]
 ----
 
-Moreover, you can pass a POJO to the view in the Controller's method:
+Moreover, the Controller's method can return a POJO annotated with `@Introspected` to the view:
 
 snippet::io.micronaut.views.model.FruitsController[tags="pojo"]
 
