@@ -32,7 +32,7 @@ import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import java.util.concurrent.ExecutorService;
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 /**
  * Factory for PebbleEngine beans.
