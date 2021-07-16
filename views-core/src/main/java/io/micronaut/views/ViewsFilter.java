@@ -29,7 +29,7 @@ import io.micronaut.http.filter.ServerFilterPhase;
 import io.micronaut.views.exceptions.ViewNotFoundException;
 import io.micronaut.views.model.ViewModelProcessor;
 import io.micronaut.web.router.qualifier.ProducesMediaTypeQualifier;
-import io.reactivex.Flowable;
+import reactor.core.publisher.Flux;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,7 +74,7 @@ public class ViewsFilter implements HttpServerFilter {
     public final Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request,
                                                             ServerFilterChain chain) {
 
-        return Flowable.fromPublisher(chain.proceed(request))
+        return Flux.from(chain.proceed(request))
             .switchMap(response -> {
                 Optional<AnnotationMetadata> routeMatch = response.getAttribute(HttpAttributes.ROUTE_MATCH,
                         AnnotationMetadata.class);
@@ -116,15 +116,15 @@ public class ViewsFilter implements HttpServerFilter {
                                 Writable writable = viewsRenderer.render(view, modelAndView.getModel().orElse(null), request);
                                 response.contentType(type);
                                 response.body(writable);
-                                return Flowable.just(response);
+                                return Flux.just(response);
                             } else {
-                                return Flowable.error(new ViewNotFoundException("View [" + view + "] does not exist"));
+                                return Flux.error(new ViewNotFoundException("View [" + view + "] does not exist"));
                             }
                         }
                     }
                 }
 
-                return Flowable.just(response);
+                return Flux.just(response);
             });
     }
 
