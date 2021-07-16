@@ -9,7 +9,7 @@ dependencies {
     //TODO remove this once security has been upgraded to reactor
     testImplementation "io.reactivex.rxjava2:rxjava:2.2.21"
 
-    testImplementation 'io.micronaut.security:micronaut-security:3.0.0-M2'
+    testImplementation 'io.micronaut.security:micronaut-security:3.0.0-M1'
     testImplementation "io.projectreactor:reactor-core:$reactorVersion"
 
     testImplementation project(":views-velocity")
