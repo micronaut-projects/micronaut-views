@@ -30,11 +30,13 @@ import java.util.TreeMap;
 @Controller()
 public class FruitsController {
 
+    //tag::pojo[]
     @View("fruits")
     @Get
     public Fruit index() {
         return new Fruit("apple", "red");
     }
+    //end::pojo[]
 
     @View("fruits")
     @Get("/null")
