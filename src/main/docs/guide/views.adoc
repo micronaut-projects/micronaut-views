@@ -50,6 +50,12 @@ include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[t
 include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=modelAndView]
 ----
 
+Moreover, you can pass a POJO to the view in the Controller's method:
+
+snippet::io.micronaut.views.model.FruitsController[tags="pojo"]
+
+WARNING: POJOs passed to views are not processed by api:io.micronaut.views.model.ViewModelProcessor[]s
+
 You can also provide implementations of api:views.model.ViewsModelDecorator[] to decorate the model with
 extra properties.
 

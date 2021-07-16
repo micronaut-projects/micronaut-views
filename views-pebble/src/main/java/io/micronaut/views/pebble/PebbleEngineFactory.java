@@ -27,8 +27,12 @@ import com.mitchellbosecke.pebble.lexer.Syntax;
 import com.mitchellbosecke.pebble.loader.ClasspathLoader;
 import com.mitchellbosecke.pebble.loader.Loader;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
+import java.util.concurrent.ExecutorService;
+import javax.inject.Named;
 
 /**
  * Factory for PebbleEngine beans.
@@ -46,20 +50,39 @@ public class PebbleEngineFactory {
     private final Optional<MethodAccessValidator> methodAccessValidator;
     private final List<Extension> extensions;
 
-    @Inject
+    @Nullable
+    private final ExecutorService executorService;
+
     public PebbleEngineFactory(ViewsConfiguration viewsConfiguration,
-                               PebbleConfiguration configuration, 
+                               PebbleConfiguration configuration,
                                Optional<Loader<?>> loader,
                                Optional<Syntax> syntax,
                                Optional<MethodAccessValidator> methodAccessValidator,
                                List<Extension> extensions) {
-
         this.viewsConfiguration = viewsConfiguration;
         this.configuration = configuration;
         this.loader = loader;
         this.syntax = syntax;
         this.methodAccessValidator = methodAccessValidator;
         this.extensions = extensions;
+        this.executorService = null;
+    }
+
+    @Inject
+    public PebbleEngineFactory(ViewsConfiguration viewsConfiguration,
+                               PebbleConfiguration configuration, 
+                               Optional<Loader<?>> loader,
+                               Optional<Syntax> syntax,
+                               Optional<MethodAccessValidator> methodAccessValidator,
+                               List<Extension> extensions,
+                               @Named(TaskExecutors.IO) ExecutorService executorService) {
+        this.viewsConfiguration = viewsConfiguration;
+        this.configuration = configuration;
+        this.loader = loader;
+        this.syntax = syntax;
+        this.methodAccessValidator = methodAccessValidator;
+        this.extensions = extensions;
+        this.executorService = executorService;
     }
 
     /**
@@ -78,6 +101,10 @@ public class PebbleEngineFactory {
             .literalDecimalTreatedAsInteger(configuration.isLiteralDecimalsAsIntegers())
             .literalNumbersAsBigDecimals(configuration.isLiteralNumbersAsBigDecimals());
 
+        if (executorService != null) {
+            builder.executorService(executorService);
+        }
+
         if (loader.isPresent()) {
             builder.loader(loader.get());
         } else {
@@ -92,7 +119,7 @@ public class PebbleEngineFactory {
         extensions.forEach(bean -> builder.extension(bean));
 
         // Not implemented:
-        // executorService, defaultLocale, templateCache, tagCache, addEscapingStrategy 
+        // defaultLocale, templateCache, tagCache, addEscapingStrategy 
         
         return builder.build();
     }
