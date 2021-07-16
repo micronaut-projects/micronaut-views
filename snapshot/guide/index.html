@@ -259,6 +259,30 @@ class ViewsController {
 </div>
 </div>
 <div class="paragraph">
+<p>Moreover, you can pass a POJO to the view in the Controller&#8217;s method:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">    @View("fruits")
+    @Get
+    public Fruit index() {
+        return new Fruit("apple", "red");
+    }</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+POJOs passed to views are not processed by <a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a>s
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
 <p>You can also provide implementations of <a href="../api/io/micronaut/views/model/ViewsModelDecorator.html">ViewsModelDecorator</a> to decorate the model with
 extra properties.</p>
 </div>

@@ -198,7 +198,7 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#populateModel-io.micronaut.http.HttpRequest-io.micronaut.views.ViewsRenderer-java.lang.Object-">populateModel</a></span>(io.micronaut.http.HttpRequest&nbsp;request,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#populateModel-io.micronaut.http.HttpRequest-io.micronaut.views.ViewsRenderer-java.lang.Object-">populateModel</a></span>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
              <a href="../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&nbsp;viewsRenderer,
              java.lang.Object&nbsp;responseBody)</code>
 <div class="block">Resolves the model for the given response body and enhances the model with instances of <a href="../../../io/micronaut/views/model/ViewModelProcessor.html" title="interface in io.micronaut.views.model"><code>ViewModelProcessor</code></a>.</div>
@@ -206,7 +206,7 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../io/micronaut/views/ModelAndView.html" title="class in io.micronaut.views">ModelAndView</a>&lt;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#processModelAndView-io.micronaut.http.HttpRequest-java.lang.String-java.util.Map-">processModelAndView</a></span>(io.micronaut.http.HttpRequest&nbsp;request,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#processModelAndView-io.micronaut.http.HttpRequest-java.lang.String-java.util.Map-">processModelAndView</a></span>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
                    java.lang.String&nbsp;view,
                    java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;model)</code>&nbsp;</td>
 </tr>
@@ -326,7 +326,7 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>processModelAndView</h4>
-<pre>protected&nbsp;<a href="../../../io/micronaut/views/ModelAndView.html" title="class in io.micronaut.views">ModelAndView</a>&lt;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&gt;&nbsp;processModelAndView(io.micronaut.http.HttpRequest&nbsp;request,
+<pre>protected&nbsp;<a href="../../../io/micronaut/views/ModelAndView.html" title="class in io.micronaut.views">ModelAndView</a>&lt;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&gt;&nbsp;processModelAndView(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
                                                                                              java.lang.String&nbsp;view,
                                                                                              java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;model)</pre>
 <dl>
@@ -345,7 +345,7 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>populateModel</h4>
-<pre>protected&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;populateModel(io.micronaut.http.HttpRequest&nbsp;request,
+<pre>protected&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;populateModel(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
                                                                          <a href="../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&nbsp;viewsRenderer,
                                                                          java.lang.Object&nbsp;responseBody)</pre>
 <div class="block">Resolves the model for the given response body and enhances the model with instances of <a href="../../../io/micronaut/views/model/ViewModelProcessor.html" title="interface in io.micronaut.views.model"><code>ViewModelProcessor</code></a>.</div>
