@@ -93,7 +93,7 @@ public class ViewsFilter implements HttpServerFilter {
 
                         if (!optionalViewsRenderer.isPresent()) {
                             LOG.debug("no view renderer found for media type: {}, ignoring", type);
-                            return Flowable.just(response);
+                            return Flux.just(response);
                         }
 
                         ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
