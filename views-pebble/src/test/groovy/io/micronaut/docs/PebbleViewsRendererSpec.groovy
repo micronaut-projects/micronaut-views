@@ -19,7 +19,7 @@ import io.micronaut.context.ApplicationContext
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
-import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
@@ -41,7 +41,7 @@ class PebbleViewsRendererSpec extends Specification {
 
     @Shared
     @AutoCleanup
-    RxHttpClient client = embeddedServer.getApplicationContext().createBean(RxHttpClient, embeddedServer.getURL())
+    HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient, embeddedServer.getURL())
 
     def "bean is loaded"() {
         when:
