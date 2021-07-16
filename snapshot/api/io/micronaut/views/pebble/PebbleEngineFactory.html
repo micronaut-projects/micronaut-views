@@ -142,6 +142,15 @@ extends java.lang.Object</pre>
                    java.util.Optional&lt;com.mitchellbosecke.pebble.attributes.methodaccess.MethodAccessValidator&gt;&nbsp;methodAccessValidator,
                    java.util.List&lt;com.mitchellbosecke.pebble.extension.Extension&gt;&nbsp;extensions)</code>&nbsp;</td>
 </tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/pebble/PebbleEngineFactory.html#PebbleEngineFactory-io.micronaut.views.ViewsConfiguration-io.micronaut.views.pebble.PebbleConfiguration-java.util.Optional-java.util.Optional-java.util.Optional-java.util.List-java.util.concurrent.ExecutorService-">PebbleEngineFactory</a></span>(<a href="../../../../io/micronaut/views/ViewsConfiguration.html" title="interface in io.micronaut.views">ViewsConfiguration</a>&nbsp;viewsConfiguration,
+                   <a href="../../../../io/micronaut/views/pebble/PebbleConfiguration.html" title="interface in io.micronaut.views.pebble">PebbleConfiguration</a>&nbsp;configuration,
+                   java.util.Optional&lt;com.mitchellbosecke.pebble.loader.Loader&lt;?&gt;&gt;&nbsp;loader,
+                   java.util.Optional&lt;com.mitchellbosecke.pebble.lexer.Syntax&gt;&nbsp;syntax,
+                   java.util.Optional&lt;com.mitchellbosecke.pebble.attributes.methodaccess.MethodAccessValidator&gt;&nbsp;methodAccessValidator,
+                   java.util.List&lt;com.mitchellbosecke.pebble.extension.Extension&gt;&nbsp;extensions,
+                   java.util.concurrent.ExecutorService&nbsp;executorService)</code>&nbsp;</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -186,6 +195,20 @@ extends java.lang.Object</pre>
 <a name="PebbleEngineFactory-io.micronaut.views.ViewsConfiguration-io.micronaut.views.pebble.PebbleConfiguration-java.util.Optional-java.util.Optional-java.util.Optional-java.util.List-">
 <!--   -->
 </a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PebbleEngineFactory</h4>
+<pre>public&nbsp;PebbleEngineFactory(<a href="../../../../io/micronaut/views/ViewsConfiguration.html" title="interface in io.micronaut.views">ViewsConfiguration</a>&nbsp;viewsConfiguration,
+                           <a href="../../../../io/micronaut/views/pebble/PebbleConfiguration.html" title="interface in io.micronaut.views.pebble">PebbleConfiguration</a>&nbsp;configuration,
+                           java.util.Optional&lt;com.mitchellbosecke.pebble.loader.Loader&lt;?&gt;&gt;&nbsp;loader,
+                           java.util.Optional&lt;com.mitchellbosecke.pebble.lexer.Syntax&gt;&nbsp;syntax,
+                           java.util.Optional&lt;com.mitchellbosecke.pebble.attributes.methodaccess.MethodAccessValidator&gt;&nbsp;methodAccessValidator,
+                           java.util.List&lt;com.mitchellbosecke.pebble.extension.Extension&gt;&nbsp;extensions)</pre>
+</li>
+</ul>
+<a name="PebbleEngineFactory-io.micronaut.views.ViewsConfiguration-io.micronaut.views.pebble.PebbleConfiguration-java.util.Optional-java.util.Optional-java.util.Optional-java.util.List-java.util.concurrent.ExecutorService-">
+<!--   -->
+</a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PebbleEngineFactory</h4>
@@ -195,7 +218,9 @@ public&nbsp;PebbleEngineFactory(<a href="../../../../io/micronaut/views/ViewsCon
                                    java.util.Optional&lt;com.mitchellbosecke.pebble.loader.Loader&lt;?&gt;&gt;&nbsp;loader,
                                    java.util.Optional&lt;com.mitchellbosecke.pebble.lexer.Syntax&gt;&nbsp;syntax,
                                    java.util.Optional&lt;com.mitchellbosecke.pebble.attributes.methodaccess.MethodAccessValidator&gt;&nbsp;methodAccessValidator,
-                                   java.util.List&lt;com.mitchellbosecke.pebble.extension.Extension&gt;&nbsp;extensions)</pre>
+                                   java.util.List&lt;com.mitchellbosecke.pebble.extension.Extension&gt;&nbsp;extensions,
+                                   @Named(value="io")
+                                   java.util.concurrent.ExecutorService&nbsp;executorService)</pre>
 </li>
 </ul>
 </li>
