@@ -48,9 +48,6 @@ class ModelAndViewSpec extends Specification {
 
         when:
         String html = response.body()
-        println "=" * 100
-        println "html -> " + html
-        println "=" * 100
 
         then:
         html
