@@ -22,8 +22,6 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.views.View;
-
-import java.time.Instant;
 import java.util.Map;
 import java.util.TreeMap;
 
