@@ -26,8 +26,6 @@ import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
 import io.micronaut.views.thymeleaf.ThymeleafViewsRenderer
 import spock.lang.AutoCleanup
-import spock.lang.Ignore
-import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -141,13 +139,12 @@ class ThymeleafViewRendererSpec extends Specification {
         rsp.body().contains("<h1>You are not logged in</h1>")
     }
 
-    @PendingFeature
     void "invoking /notFound renders the view defined on the error handler"() {
         when:
         client.toBlocking().exchange(HttpRequest.POST('/views/error', [status: true, exception: false, global: false]), String)
 
         then:
-        def e = thrown()
+        def e = thrown(HttpClientResponseException)
 
         and:
         e.status == HttpStatus.NOT_FOUND
