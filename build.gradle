@@ -11,11 +11,6 @@ subprojects { Project subproject ->
 
     group "io.micronaut.views"
 
-    // TODO: Remove this when using a non-snapshot version of core
-    repositories {
-        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-    }
-
     if (subproject.name != 'views-bom') {
         apply plugin: "io.micronaut.build.internal.common"
         micronautBuild {
