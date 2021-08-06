@@ -240,7 +240,7 @@ class ViewsController {
 </table>
 </div>
 <div class="paragraph">
-<p>Use the <a href="../api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation on your POJO object to avoid reflection at runtime (It will also fix a problem with OpenJ9 jvm.)</p>
+<p>Use the <a href="https://micronaut-projects.github.io/micronaut-core/latest/api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation on your POJO object to avoid reflection at runtime (It will also fix a problem with OpenJ9 jvm.)</p>
 </div>
 <div class="paragraph">
 <p>You can also return a <a href="../api/io/micronaut/views/ModelAndView.html">ModelAndView</a> and skip specifying the <a href="../api/io/micronaut/views/View.html">View</a> annotation.</p>
@@ -283,14 +283,14 @@ POJOs passed to views are not processed by <a href="../api/io/micronaut/views/mo
 </table>
 </div>
 <div class="paragraph">
-<p>You can also provide implementations of <a href="../api/io/micronaut/views/model/ViewsModelDecorator.html">ViewsModelDecorator</a> to decorate the model with
+<p>You can also provide implementations of <a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a> to decorate the model with
 extra properties.</p>
 </div>
 <div class="paragraph">
 <p>The following sections show different template engines integrations.</p>
 </div>
 <div class="paragraph">
-<p>To create your own implementation create a class which implements <a href="../api/io/micronaut/views/ViewsRenderer.html">ViewsRenderer</a> and annotate it with <a href="../api/io/micronaut/http/annotation/Produces.html">@Produces</a> to the media types the view rendering supports producing.</p>
+<p>To create your own implementation create a class which implements <a href="../api/io/micronaut/views/ViewsRenderer.html">ViewsRenderer</a> and annotate it with <a href="https://micronaut-projects.github.io/micronaut-core/latest/api/io/micronaut/http/annotation/Produces.html">@Produces</a> to the media types the view rendering supports producing.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
