@@ -38,7 +38,7 @@ include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[t
 
 <1> Use `@View` annotation to indicate the view name which should be used to render the POJO responded by the controller.
 
-Use the ann:core.annotation.Introspected[] annotation on your POJO object to avoid reflection at runtime (It will also fix a problem with OpenJ9 jvm.)
+Use the https://micronaut-projects.github.io/micronaut-core/latest/api/io/micronaut/core/annotation/Introspected.html[@Introspected] annotation on your POJO object to avoid reflection at runtime (It will also fix a problem with OpenJ9 jvm.)
 
 You can also return a api:views.ModelAndView[] and skip specifying the api:views.View[] annotation.
 
@@ -56,11 +56,11 @@ snippet::io.micronaut.views.model.FruitsController[tags="pojo"]
 
 WARNING: POJOs passed to views are not processed by api:io.micronaut.views.model.ViewModelProcessor[]s
 
-You can also provide implementations of api:views.model.ViewsModelDecorator[] to decorate the model with
+You can also provide implementations of api:views.model.ViewModelProcessor[] to decorate the model with
 extra properties.
 
 The following sections show different template engines integrations.
 
-To create your own implementation create a class which implements api:views.ViewsRenderer[] and annotate it with api:http.annotation.Produces[@Produces] to the media types the view rendering supports producing.
+To create your own implementation create a class which implements api:views.ViewsRenderer[] and annotate it with https://micronaut-projects.github.io/micronaut-core/latest/api/io/micronaut/http/annotation/Produces.html[@Produces] to the media types the view rendering supports producing.
 
 TIP: If you want to render a template directly on your code (for example, to generate the body of an email) you can inject the ViewsRenderer bean and use its method "render".
