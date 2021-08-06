@@ -8,7 +8,6 @@ import io.micronaut.security.authentication.AuthenticationResponse;
 import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Flux;
 import org.reactivestreams.Publisher;
-
 import jakarta.inject.Singleton;
 import java.util.Collections;
 
@@ -17,8 +16,7 @@ public class MockAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Publisher<AuthenticationResponse> authenticate(@Nullable HttpRequest<?> httpRequest, AuthenticationRequest<?, ?> authenticationRequest) {
         return Flux.create(emitter -> {
-            UserDetailsEmail userDetailsEmail = new UserDetailsEmail(authenticationRequest.getIdentity().toString(), Collections.emptyList(), "john@email.com");
-            emitter.next(userDetailsEmail);
+            emitter.next(AuthenticationResponse.success(authenticationRequest.getIdentity().toString(), Collections.singletonMap("email", "john@email.com")));
             emitter.complete();
         }, FluxSink.OverflowStrategy.ERROR);
     }
