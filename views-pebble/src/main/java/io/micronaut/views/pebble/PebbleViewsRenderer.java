@@ -15,16 +15,18 @@
  */
 package io.micronaut.views.pebble;
 
-import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsRenderer;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 /**
  * Renders Views with Pebble.
@@ -38,23 +40,24 @@ import io.micronaut.views.ViewsRenderer;
 @Requires(property = PebbleConfigurationProperties.ENABLED, notEquals = StringUtils.FALSE)
 @Requires(classes = PebbleEngine.class)
 public class PebbleViewsRenderer implements ViewsRenderer {
-    
+
     private final String extension;
     private final PebbleEngine engine;
 
     @Inject
-    public PebbleViewsRenderer(PebbleConfiguration configuration, PebbleEngine engine) {    
+    public PebbleViewsRenderer(PebbleConfiguration configuration, PebbleEngine engine) {
         this.extension = configuration.getDefaultExtension();
         this.engine = engine;
     }
 
     @Override
-    public Writable render(String name, Object data) {
+    public @NonNull
+    Writable render(@NonNull String name, @Nullable Object data) {
         return (writer) -> engine.getTemplate(ViewUtils.normalizeFile(name, extension)).evaluate(writer, modelOf(data));
     }
 
     @Override
-    public boolean exists(String name) {
+    public boolean exists(@NonNull String name) {
         return engine.getLoader().resourceExists(ViewUtils.normalizeFile(name, extension));
     }
 }

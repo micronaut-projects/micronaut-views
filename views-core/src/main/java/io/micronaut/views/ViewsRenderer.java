@@ -16,10 +16,11 @@
 package io.micronaut.views;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.beans.BeanMap;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.core.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,39 +38,44 @@ public interface ViewsRenderer {
     String EXTENSION_SEPARATOR = ".";
 
     /**
-     * @param viewName view name to be render
+     * @param viewName view name to be rendered
      * @param data     response body to render it with a view
      * @return A writable where the view will be written to.
      */
-    @NonNull Writable render(@NonNull String viewName, @Nullable Object data);
+    @NonNull
+    Writable render(@NonNull String viewName, @Nullable Object data);
 
     /**
-     * @param viewName view name to be render
+     * @param viewName view name to be rendered
      * @param data     response body to render it with a view
      * @param request  HTTP request
      * @return A writable where the view will be written to.
      */
-    default @NonNull Writable render(@NonNull String viewName, @Nullable Object data,
-            @NonNull HttpRequest<?> request) {
+    default @NonNull
+    Writable render(@NonNull String viewName, @Nullable Object data,
+                    @NonNull HttpRequest<?> request) {
         return render(viewName, data);
     }
 
     /**
-     * @param viewName view name to be render
+     * @param viewName view name to be rendered
      * @return true if a template can be found for the supplied view name.
      */
     boolean exists(@NonNull String viewName);
 
     /**
-     * Creates a view model for the given data.
+     * Converts the object being passed in into a {@code Map<String, Object>} if not already one.
+     *
      * @param data The data
      * @return The model
      */
-    default @NonNull Map<String, Object> modelOf(@Nullable Object data) {
+    default @NonNull
+    Map<String, Object> modelOf(@Nullable Object data) {
         if (data == null) {
             return new HashMap<>(0);
         }
         if (data instanceof Map) {
+            //noinspection unchecked
             return (Map<String, Object>) data;
         }
         return BeanMap.of(data);

@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Returns information about the current user so that it can be append it to the model being rendered.
+ * Returns information about the current user so that it can be appended it to the model being rendered.
  *
  * @author Sergio del Amo
  * @since 1.1.0
@@ -38,7 +38,7 @@ import java.util.Optional;
 @Requires(property = SecurityViewModelProcessorConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 @Requires(beans = {SecurityFilter.class, SecurityService.class, SecurityViewModelProcessorConfiguration.class})
 @Singleton
-public class SecurityViewModelProcessor implements ViewModelProcessor {
+public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String, Object>> {
 
     private final SecurityService securityService;
     private final SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration;

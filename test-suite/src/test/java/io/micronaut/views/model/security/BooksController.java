@@ -22,12 +22,13 @@ import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.views.View;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 @Requires(property = "spec.name", value = "SecurityViewModelProcessorSpec")
 //tag::class[]
-@Controller("/")
+@Controller()
 public class BooksController {
 
     @Secured(SecurityRule.IS_AUTHENTICATED)
@@ -35,7 +36,7 @@ public class BooksController {
     @Get
     public Map<String, Object> index() {
         Map<String, Object> model = new HashMap<>();
-        model.put("books", Arrays.asList("Developing Microservices"));
+        model.put("books", Collections.singletonList("Developing Microservices"));
         return model;
     }
 }
