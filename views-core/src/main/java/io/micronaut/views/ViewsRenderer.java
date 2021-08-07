@@ -18,6 +18,7 @@ package io.micronaut.views;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.beans.BeanMap;
 import io.micronaut.core.io.Writable;
+import io.micronaut.core.order.Ordered;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.core.annotation.Nullable;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ import java.util.Map;
  * @author Sergio del Amo
  * @since 1.0
  */
-public interface ViewsRenderer {
+public interface ViewsRenderer extends Ordered {
 
     /**
      * The extension separator.
