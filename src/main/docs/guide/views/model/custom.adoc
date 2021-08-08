@@ -1,0 +1,13 @@
+To write your own api:views.model.ViewModelProcessor[] you must implement the an interface and make Micronaut aware of its existence, for example, the
+
+Here's a sample processor that ensures the rendering context always include a fictitious configuration object:
+
+[source,java]
+.src/main/java/myapp/model/ConfigViewModelProcessor.java
+----
+include::{testsSuite}/java/io/micronaut/views/model/ConfigViewModelProcessor.java[tag=class]
+----
+
+Please note that the ``@Singleton` annotation above is what makes Micronaut aware of this processor.
+
+Micronaut itself uses this to enrich models with security related information.

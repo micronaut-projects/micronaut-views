@@ -1,0 +1,3 @@
+Micronaut provides a simple way to modify and enhance a model prior to being sent to a template engine for rendering.
+
+Any class that implements the api:views.model.ViewModelProcessor[] interface known to Micronaut will be called prior to rendering. It's important to note that view processors are matched to models based upon their applicable types. That is, a view model processor of generic type `Book` will be applied to all models of type `Book` and ignored for any other types.

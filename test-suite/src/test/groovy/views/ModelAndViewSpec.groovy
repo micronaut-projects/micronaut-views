@@ -22,19 +22,20 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.views.model.ConfigViewModelProcessor
 import io.micronaut.views.model.FruitsController
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
 class ModelAndViewSpec extends Specification {
-
     @Shared
     @AutoCleanup
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
             'spec.name'                                       : 'ModelAndViewSpec',
             'micronaut.views.soy.enabled'                     : false,
             'micronaut.security.views-model-decorator.enabled': false,
+            'micronaut.application.name'                      : 'test'
     ]) as EmbeddedServer
 
     @AutoCleanup
@@ -99,5 +100,29 @@ class ModelAndViewSpec extends Specification {
 
         and:
         html.contains('<h1>color: orange</h1>')
+    }
+
+    def "models can be dynamically enhanced"() {
+        expect:
+        embeddedServer.applicationContext.containsBean(FruitsController)
+
+        when:
+        HttpRequest request = HttpRequest.GET("/processor")
+        HttpResponse<String> response = httpClient.toBlocking().exchange(request, String)
+
+        then:
+        response.status() == HttpStatus.OK
+
+        when:
+        String html = response.body()
+
+        then:
+        html
+
+        and:
+        embeddedServer.applicationContext.containsBean(ConfigViewModelProcessor.class)
+
+        and:
+        html.contains('<h1>config: test</h1>')
     }
 }
