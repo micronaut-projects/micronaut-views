@@ -2,21 +2,28 @@ introduction: Introduction
 releaseHistory: Release History
 views:
   title: Server Side View Rendering
-  thymeleaf: Thymeleaf
-  handlebars: Handlebars.java
-  velocity: Apache Velocity
-  freemarker: Apache Freemarker
-  rocker: Rocker
-  soy:
-    title: Soy/Closure Support
-    soyconfiguration: Soy Configuration
-    soyusage: Soy Usage
-    soyfeaturestemplatesecurity: Soy Features - Template Security
-    soyfeaturesremaining: Soy Features - Remaining
-    buildingsoy: Building Soy
-  pebble: Pebble
-  csp: Content Security Policy
-  views-security: Security Integration
+  templates:
+    title: Template Engines
+    thymeleaf: Thymeleaf
+    handlebars: Handlebars.java
+    velocity: Apache Velocity
+    freemarker: Apache Freemarker
+    rocker: Rocker
+    soy:
+      title: Soy/Closure Support
+      soyconfiguration: Soy Configuration
+      soyusage: Soy Usage
+      soyfeaturestemplatesecurity: Soy Features - Template Security
+      soyfeaturesremaining: Soy Features - Remaining
+      buildingsoy: Building Soy
+    pebble: Pebble
+  model:
+    title: Working with Models
+    custom: Dynamically Enriching Models
+  security:
+    title: Security
+    csp: Content Security Policy
+    security-model-enhancement: Integration with Micronaut Security
   graal: GraalVM Support
 breaks: Breaking Changes
 repository: Repository

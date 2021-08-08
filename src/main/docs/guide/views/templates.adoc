@@ -1,0 +1,1 @@
+Micronaut Views provides out-of-the-box support for multiple template languages.
