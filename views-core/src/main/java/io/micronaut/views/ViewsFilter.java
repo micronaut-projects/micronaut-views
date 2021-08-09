@@ -15,11 +15,12 @@
  */
 package io.micronaut.views;
 
+import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.context.BeanLocator;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationMetadata;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
-import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.*;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.annotation.Produces;
@@ -33,7 +34,6 @@ import reactor.core.publisher.Flux;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,7 +104,7 @@ public class ViewsFilter implements HttpServerFilter {
                         // the method includes a view annotation:
                         if (body instanceof ModelAndView || body instanceof Map) {
                             Map<String, Object> context = populateModel(request, viewsRenderer, body);
-                            modelAndView  = processModelAndView(request, optionalView.get(), context);
+                            modelAndView  = new ModelAndView<>(optionalView.get(), context);
                         } else {
                             // these arbitrary models do not get processed by the view model processors:
                             modelAndView = new ModelAndView<>(optionalView.get(), body);
@@ -113,6 +113,7 @@ public class ViewsFilter implements HttpServerFilter {
                         if (modelAndView.getView().isPresent()) {
                             String view = modelAndView.getView().get();
                             if (viewsRenderer.exists(view)) {
+                                enhanceModel(request, modelAndView);
                                 Writable writable = viewsRenderer.render(view, modelAndView.getModel().orElse(null), request);
                                 response.contentType(type);
                                 response.body(writable);
@@ -126,26 +127,6 @@ public class ViewsFilter implements HttpServerFilter {
 
                 return Flux.just(response);
             });
-    }
-
-    /**
-     *
-     * @param request The HTTP Request being processed
-     * @param view The resolved View.
-     * @param model The Model returned
-     * @return A {@link ModelAndView} after being processed by the available {@link ViewModelProcessor}s.
-     */
-    protected ModelAndView<Map<String, Object>> processModelAndView(HttpRequest<?> request, String view, Map<String, Object> model) {
-        ModelAndView<Map<String, Object>> modelAndView = new ModelAndView<>(
-                view,
-                model
-        );
-        if (CollectionUtils.isNotEmpty(viewModelProcessors)) {
-            for (ViewModelProcessor modelDecorator : viewModelProcessors) {
-                modelDecorator.process(request, modelAndView);
-            }
-        }
-        return modelAndView;
     }
 
     /**
@@ -192,6 +173,25 @@ public class ViewsFilter implements HttpServerFilter {
             return ((ModelAndView) responseBody).getView();
         }
         return Optional.empty();
+    }
+
+    /**
+     * Enhances a model by running it by all applicable ViewModelProcessors {@link ViewModelProcessor}.
+     *
+     * @param request      The http request this model relates to.
+     * @param modelAndView The ModelAndView to be enhanced.
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    protected void enhanceModel(HttpRequest<?> request, @NonNull ModelAndView<?> modelAndView) {
+        if (modelAndView.getModel().isPresent()) {
+            Collection<ViewModelProcessor> processors = beanLocator.getBeansOfType(ViewModelProcessor.class,
+                    Qualifiers.byTypeArguments(modelAndView.getModel().get().getClass())
+            );
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("located {} view model processors", processors.size());
+            }
+            processors.forEach(it -> it.process(request, modelAndView));
+        }
     }
 
 }

@@ -38,7 +38,7 @@ import java.util.Optional;
 @Requires(property = SecurityViewModelProcessorConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 @Requires(beans = {SecurityFilter.class, SecurityService.class, SecurityViewModelProcessorConfiguration.class})
 @Singleton
-public class SecurityViewModelProcessor implements ViewModelProcessor {
+public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String, Object>> {
 
     private final SecurityService securityService;
     private final SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration;

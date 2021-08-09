@@ -30,7 +30,7 @@ import java.util.TreeMap;
 
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Requires(property = "spec.name", value = "ModelAndViewSpec")
-@Controller()
+@Controller
 public class FruitsController {
 
     //tag::pojo[]
@@ -60,12 +60,6 @@ public class FruitsController {
         Map<String, Object> context = new TreeMap<>();
         context.put("fruit", new Fruit("orange", "orange"));
         return new ModelAndView<>("fruits-processor", context);
-    }
-
-    @View("fruit")
-    @Get("/pojo-processor")
-    public Fruit pojoProcessor() {
-        return new Fruit("orange", "orange");
     }
 
     @Introspected

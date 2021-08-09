@@ -11,5 +11,3 @@ include::{testsSuite}/java/io/micronaut/views/model/ConfigViewModelProcessor.jav
 <1> Use `javax.inject.Singleton` to designate this class as a singleton in the Micronaut Bean Context.
 
 If you use Micronaut Security, Micronaut Views registers a api:views.model.ViewModelProcessor[] to enrich models with security related information.
-
-WARNING: POJOs passed to views are not processed by api:io.micronaut.views.model.ViewModelProcessor[]s

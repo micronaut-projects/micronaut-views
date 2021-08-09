@@ -15,27 +15,26 @@
  */
 package io.micronaut.views.model;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ModelAndView;
-import io.micronaut.core.annotation.NonNull;
-import java.util.Map;
 
 /**
- * Implementers of {@link ViewModelProcessor} process the {@link ModelAndView} and modify it prior to rendering by
- * either adding or removing entries.
+ * Implementers of {@link ViewModelProcessor} process the {@link ModelAndView} and modify it prior to rendering.
  *
+ * @param <T> the type this model processor should apply to
  * @author Sergio del Amo
  * @since 1.0
  */
-public interface ViewModelProcessor {
+public interface ViewModelProcessor<T> {
 
     /**
      * Invoked prior to the view rendering.
      *
-     * @param request The request being processed
+     * @param request      The request being processed
      * @param modelAndView The model and view
      */
     void process(
             @NonNull HttpRequest<?> request,
-            @NonNull ModelAndView<Map<String, Object>> modelAndView);
+            @NonNull ModelAndView<T> modelAndView);
 }

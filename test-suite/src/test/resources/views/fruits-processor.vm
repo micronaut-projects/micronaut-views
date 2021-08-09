@@ -1,10 +1,9 @@
-#* @vtlvariable name="config" type="io.micronaut.runtime.ApplicationConfiguration" *#
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Fruits</title>
 </head>
 <body>
-<h1>config: $config.name.get()</h1>
+<h1>config: $applicationName</h1>
 </body>
 </html>
