@@ -107,8 +107,12 @@ public class ViewsFilter implements HttpServerFilter {
                         }
 
                         ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
-                        ModelAndView<?> modelAndView  = new ModelAndView<>(view, (body instanceof ModelAndView || body instanceof Map) ?
-                                    populateModel(request, viewsRenderer, body) : body);
+                        ModelAndView<?> modelAndView;
+                        if (body instanceof ModelAndView || body instanceof Map) {
+                            modelAndView = new ModelAndView<>(view, populateModel(request, viewsRenderer, body));
+                        } else {
+                            modelAndView = new ModelAndView<>(view, body);
+                        }
                         enhanceModel(request, modelAndView);
                         Writable writable = viewsRenderer.render(view, modelAndView.getModel().orElse(null), request);
                         response.contentType(type);
