@@ -16,17 +16,28 @@
 package views
 
 import io.micronaut.context.ApplicationContext
+import io.micronaut.context.annotation.Requires
+import io.micronaut.core.annotation.Introspected
+import io.micronaut.core.annotation.NonNull
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.BlockingHttpClient
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
+import io.micronaut.runtime.ApplicationConfiguration
 import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.security.annotation.Secured
+import io.micronaut.security.rules.SecurityRule
+import io.micronaut.views.ModelAndView
+import io.micronaut.views.View
 import io.micronaut.views.model.ConfigViewModelProcessor
 import io.micronaut.views.model.FruitsController
+import io.micronaut.views.model.ViewModelProcessor
+import jakarta.inject.Singleton
 import spock.lang.AutoCleanup
-import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -37,7 +48,9 @@ class ModelAndViewSpec extends Specification {
             'spec.name'                                       : 'ModelAndViewSpec',
             'micronaut.views.soy.enabled'                     : false,
             'micronaut.security.views-model-decorator.enabled': false,
-            'micronaut.application.name'                      : 'test'
+            'micronaut.application.name'                      : 'test',
+            'micronaut.security.enabled'                      : false
+
     ]) as EmbeddedServer
 
     @AutoCleanup
@@ -131,7 +144,6 @@ class ModelAndViewSpec extends Specification {
         html.contains('<h1>config: test</h1>')
     }
 
-    @PendingFeature
     def "ViewModelProcessors work with controllers returning POJOs"() {
         expect:
         embeddedServer.applicationContext.containsBean(FruitsController)
@@ -154,5 +166,51 @@ class ModelAndViewSpec extends Specification {
 
         and:
         html.contains('<h1>config: test</h1>')
+    }
+
+    @Requires(property = "spec.name", value = "ModelAndViewSpec")
+    @Controller
+    static class ViewModelProcessorController {
+        @View("fruits-processor")
+        @Get("/pojo-processor")
+        public Fruit pojoProcessor() {
+            return new Fruit("orange", "orange");
+        }
+    }
+
+    @Introspected
+    static abstract class AbstractView {
+        String applicationName
+    }
+
+    @Introspected
+    static class Fruit extends AbstractView {
+        String name
+        String color
+
+        Fruit(String name, String color) {
+            this.name = name
+            this.color = color
+        }
+    }
+
+    @Requires(property = "spec.name", value = "ModelAndViewSpec")
+    @Singleton
+    static class CustomViewModelProcessor implements ViewModelProcessor<AbstractView> {
+        private final ApplicationConfiguration config;
+        CustomViewModelProcessor(ApplicationConfiguration environment) {
+            this.config = environment;
+        }
+
+        @Override
+        void process(@NonNull HttpRequest<?> request,
+                            @NonNull ModelAndView<AbstractView> modelAndView) {
+            modelAndView.getModel()
+                    .ifPresent(model -> {
+                        if (config.getName().isPresent()) {
+                            model.setApplicationName(config.getName().get())
+                        }
+                    })
+        }
     }
 }

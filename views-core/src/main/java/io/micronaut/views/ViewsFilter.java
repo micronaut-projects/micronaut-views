@@ -15,12 +15,13 @@
  */
 package io.micronaut.views;
 
+import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.context.BeanLocator;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationMetadata;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.order.OrderUtil;
-import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.HttpAttributes;
@@ -37,7 +38,6 @@ import reactor.core.publisher.Flux;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -52,23 +52,19 @@ import java.util.Optional;
  * @since 1.0
  */
 @Requires(beans = ViewsRenderer.class)
-@Filter("/**")
+@Filter(Filter.MATCH_ALL_PATTERN)
 public class ViewsFilter implements HttpServerFilter {
     private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
 
     protected final BeanLocator beanLocator;
-    private final Collection<ViewModelProcessor> viewModelProcessors;
 
     /**
      * Constructor.
      *
      * @param beanLocator The bean locator
-     * @param viewModelProcessors Collection of views model decorator beans
      */
-    public ViewsFilter(BeanLocator beanLocator,
-                       Collection<ViewModelProcessor> viewModelProcessors) {
+    public ViewsFilter(BeanLocator beanLocator) {
         this.beanLocator = beanLocator;
-        this.viewModelProcessors = viewModelProcessors;
     }
 
     @Override
@@ -102,8 +98,6 @@ public class ViewsFilter implements HttpServerFilter {
                         List<ViewsRenderer> viewsRenderers = new ArrayList<>(viewsRenderersCollection);
                         OrderUtil.sort(viewsRenderers);
 
-                        ModelAndView<?> modelAndView;
-
                         String view = optionalView.get();
 
                         Optional<ViewsRenderer> optionalViewsRenderer = viewsRenderers.stream().filter(viewsRenderer -> viewsRenderer.exists(view)).findFirst();
@@ -113,14 +107,13 @@ public class ViewsFilter implements HttpServerFilter {
                         }
 
                         ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
-                        // We treat Map<String, Object> the same as a model view as long as
-                        // the method includes a view annotation:
+                        ModelAndView<?> modelAndView;
                         if (body instanceof ModelAndView || body instanceof Map) {
-                            Map<String, Object> context = populateModel(request, viewsRenderer, body);
-                            modelAndView  = processModelAndView(request, view, context);
+                            modelAndView = new ModelAndView<>(view, populateModel(request, viewsRenderer, body));
                         } else {
                             modelAndView = new ModelAndView<>(view, body);
                         }
+                        enhanceModel(request, modelAndView);
                         Writable writable = viewsRenderer.render(view, modelAndView.getModel().orElse(null), request);
                         response.contentType(type);
                         response.body(writable);
@@ -129,26 +122,6 @@ public class ViewsFilter implements HttpServerFilter {
                 }
                 return Flux.just(response);
             });
-    }
-
-    /**
-     *
-     * @param request The HTTP Request being processed
-     * @param view The resolved View.
-     * @param model The Model returned
-     * @return A {@link ModelAndView} after being processed by the available {@link ViewModelProcessor}s.
-     */
-    protected ModelAndView<Map<String, Object>> processModelAndView(HttpRequest<?> request, String view, Map<String, Object> model) {
-        ModelAndView<Map<String, Object>> modelAndView = new ModelAndView<>(
-                view,
-                model
-        );
-        if (CollectionUtils.isNotEmpty(viewModelProcessors)) {
-            for (ViewModelProcessor modelDecorator : viewModelProcessors) {
-                modelDecorator.process(request, modelAndView);
-            }
-        }
-        return modelAndView;
     }
 
     /**
@@ -177,8 +150,6 @@ public class ViewsFilter implements HttpServerFilter {
         return responseBody;
     }
 
-
-
     /**
      * Resolves the view for the given method and response body. Subclasses can override to customize.
      *
@@ -197,4 +168,22 @@ public class ViewsFilter implements HttpServerFilter {
         return Optional.empty();
     }
 
+    /**
+     * Enhances a model by running it by all applicable ViewModelProcessors {@link ViewModelProcessor}.
+     *
+     * @param request      The http request this model relates to.
+     * @param modelAndView The ModelAndView to be enhanced.
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    protected void enhanceModel(HttpRequest<?> request, @NonNull ModelAndView<?> modelAndView) {
+        if (modelAndView.getModel().isPresent()) {
+            Collection<ViewModelProcessor> processors = beanLocator.getBeansOfType(ViewModelProcessor.class,
+                    Qualifiers.byTypeArguments(modelAndView.getModel().get().getClass())
+            );
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("located {} view model processors", processors.size());
+            }
+            processors.forEach(it -> it.process(request, modelAndView));
+        }
+    }
 }

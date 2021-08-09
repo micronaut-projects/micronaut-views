@@ -13,7 +13,7 @@ import java.util.Map;
 @Requires(property = "spec.name", value = "ModelAndViewSpec")
 //tag::class[]
 @Singleton // <1>
-public class ConfigViewModelProcessor implements ViewModelProcessor {
+public class ConfigViewModelProcessor implements ViewModelProcessor<Map<String, Object>> {
     private final ApplicationConfiguration config;
 
     ConfigViewModelProcessor(ApplicationConfiguration environment) {
@@ -24,7 +24,11 @@ public class ConfigViewModelProcessor implements ViewModelProcessor {
     public void process(@NonNull HttpRequest<?> request,
                         @NonNull ModelAndView<Map<String, Object>> modelAndView) {
         modelAndView.getModel()
-                .ifPresent(model -> model.put("config", config));
+                .ifPresent(model -> {
+                    if (config.getName().isPresent()) {
+                        model.put("applicationName", config.getName().get());
+                    }
+                });
     }
 }
 //end::class[]

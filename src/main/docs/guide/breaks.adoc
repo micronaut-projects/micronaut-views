@@ -1,5 +1,9 @@
 This section outlines the breaking changes done in major versions of Micronaut Views.
 
+=== 3.0.0
+
+* api:views.model.ViewModelProcessor[] no longer assumes a `Map<String,Object>` model and must be typed to the exact type of the model you would like to process.
+
 == 2.0.0
 
 * The `micronaut-views` dependency is no longer published. Replace the dependency with the one specific to the view implementation being used.
