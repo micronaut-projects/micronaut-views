@@ -1,0 +1,88 @@
+Micronaut includes api:views.rocker.RockerEngine[] which uses
+the https://github.com/fizzed/rocker[Rocker] Java-based template engine.
+
+Add the `micronaut-views-rocker` dependency to your classpath.
+
+dependency:io.micronaut.views:micronaut-views-rocker[group="io.micronaut.views"]
+
+The example shown in the <<views, Views>> section, could be rendered with the following Rocker template:
+
+[source,html]
+.src/main/resources/views/home.rocker.html
+----
+include::{testsviewsRocker}/resources/views/home.rocker.html[tag=html]
+----
+
+=== Compiling Templates
+
+Rocker templates must be precompiled at build time. This can be done either by a Gradle or Maven plugin.
+
+.build.gradle
+[source,groovy]
+----
+plugins {
+    id "com.fizzed.rocker" version "1.2.3"
+}
+
+sourceSets {
+    main {
+        rocker {
+            srcDir('src/main/resources')
+        }
+    }
+}
+----
+
+.pom.xml
+[source,xml]
+----
+<build>
+    <plugins>
+        <plugin>
+            <groupId>com.fizzed</groupId>
+            <artifactId>rocker-maven-plugin</artifactId>
+            <version>1.2.3</version>
+            <executions>
+                <execution>
+                    <id>generate-rocker-templates</id>
+                    <phase>generate-sources</phase>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                    <configuration>
+                        <templateDirectory>src/main/resources</templateDirectory>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+----
+
+=== Compile Time Type Checking
+
+Rocker templates are compiled at build time giving the ability to statically type check template arguments.
+Using the standard `@View` annotation will invoke the template dynamically without these checks.
+Instead the compiled template should be invoked within the controller and a `RockerWritable` returned.
+
+
+[source,java]
+----
+import io.micronaut.views.rocker.RockerWritable;
+import views.index;
+...
+
+    @Get("/")
+    @Produces(TEXT_HTML)
+    public HttpResponse<?> staticTemplate() {
+        return ok(new RockerWritable(index.template("World", true)));
+    }
+
+...
+----
+
+=== Configuration
+
+The properties used can be customized by overriding the values of:
+
+include::{includedir}configurationProperties/io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties.adoc[]

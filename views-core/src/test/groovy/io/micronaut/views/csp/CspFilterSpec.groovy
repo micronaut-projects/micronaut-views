@@ -25,7 +25,7 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
-import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.HttpClient
 import io.micronaut.http.server.netty.NettyHttpServer
 import io.micronaut.runtime.server.EmbeddedServer
 import spock.lang.Ignore
@@ -79,15 +79,16 @@ class CspFilterSpec extends Specification {
     void "test no CSP configuration"() {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
+                'micronaut.security.enabled': false,
                 'spec.name': getClass().simpleName
         ])
         URL server = embeddedServer.getURL()
-        RxHttpClient rxClient = embeddedServer.applicationContext.createBean(RxHttpClient, server)
+        HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.exchange(
+        def response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
-        ).blockingFirst()
+        )
         def headerNames = response.headers.names()
 
         then:
@@ -102,15 +103,16 @@ class CspFilterSpec extends Specification {
     void "test CSP no response header"() {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
+                'micronaut.security.enabled': false,
                 'spec.name': getClass().simpleName
         ])
         URL server = embeddedServer.getURL()
-        RxHttpClient rxClient = embeddedServer.applicationContext.createBean(RxHttpClient, server)
+        HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.exchange(
+        def response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
-        ).blockingFirst()
+        )
         def headerNames = response.headers.names()
 
         then:
@@ -126,17 +128,18 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
+                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.reportOnly': false,
                 'micronaut.views.csp.policyDirectives': ""
         ])
         URL server = embeddedServer.getURL()
-        RxHttpClient rxClient = embeddedServer.applicationContext.createBean(RxHttpClient, server)
+        HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.exchange(
+        def response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
-        ).blockingFirst()
+        )
         def headerNames = response.headers.names()
 
         then:
@@ -151,18 +154,19 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
+                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.filterPath': "/csp",
                 'micronaut.views.csp.reportOnly': false,
                 'micronaut.views.csp.policyDirectives': "default-src self:"
         ])
         URL server = embeddedServer.getURL()
-        RxHttpClient rxClient = embeddedServer.applicationContext.createBean(RxHttpClient, server)
+        HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.exchange(
+        def response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
-        ).blockingFirst()
+        )
         def headerNames = response.headers.names()
 
         then:
@@ -178,18 +182,19 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
+                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.filterPath': "/csp",
                 'micronaut.views.csp.reportOnly': true,
                 'micronaut.views.csp.policyDirectives': "default-src self:"
         ])
         URL server = embeddedServer.getURL()
-        RxHttpClient rxClient = embeddedServer.applicationContext.createBean(RxHttpClient, server)
+        HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.exchange(
+        def response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
-        ).blockingFirst()
+        )
         def headerNames = response.headers.names()
 
         then:
@@ -205,18 +210,19 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
+                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.filterPath': "/csp",
                 'micronaut.views.csp.reportOnly': false,
                 'micronaut.views.csp.policyDirectives': "default-src self:"
         ])
         URL server = embeddedServer.getURL()
-        RxHttpClient rxClient = embeddedServer.applicationContext.createBean(RxHttpClient, server)
+        HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.exchange(
+        def response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp/ignore')
-        ).blockingFirst()
+        )
         def headerNames = response.headers.names()
 
         then:
@@ -232,6 +238,7 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
+                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.generateNonce': true,
                 'micronaut.views.csp.filterPath': "/csp",
@@ -239,12 +246,12 @@ class CspFilterSpec extends Specification {
                 'micronaut.views.csp.policyDirectives': "default-src self:; script-src 'nonce-{#nonceValue}';"
         ])
         URL server = embeddedServer.getURL()
-        RxHttpClient rxClient = embeddedServer.applicationContext.createBean(RxHttpClient, server)
+        HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.exchange(
+        def response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
-        ).blockingFirst()
+        )
         def headerNames = response.headers.names()
 
         then:
@@ -261,6 +268,7 @@ class CspFilterSpec extends Specification {
         given:
         EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [
                 'spec.name': getClass().simpleName,
+                'micronaut.security.enabled': false,
                 'micronaut.views.csp.enabled': true,
                 'micronaut.views.csp.generateNonce': true,
                 'micronaut.views.csp.filterPath': "/csp",
@@ -268,16 +276,16 @@ class CspFilterSpec extends Specification {
                 'micronaut.views.csp.policyDirectives': "default-src self:; script-src 'nonce-{#nonceValue}';"
         ])
         URL server = embeddedServer.getURL()
-        RxHttpClient rxClient = embeddedServer.applicationContext.createBean(RxHttpClient, server)
+        HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response1 = rxClient.exchange(
+        def response1 = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
-        ).blockingFirst()
+        )
         def headerNames1 = response1.headers.names()
-        def response2 = rxClient.exchange(
+        def response2 = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
-        ).blockingFirst()
+        )
         def headerNames2 = response2.headers.names()
 
         then:

@@ -20,7 +20,7 @@ import io.micronaut.core.io.Writable
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
-import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
@@ -37,17 +37,14 @@ import java.util.regex.Pattern
 
 
 class SoySauceViewRendererSpec extends Specification {
+
     @Shared
     @AutoCleanup
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
     [
             "spec.name": "soy",
-            "micronaut.views.soy.enabled": true,
+            "micronaut.security.enabled": false,
             "micronaut.views.soy.engine": "sauce",
-            'micronaut.views.thymeleaf.enabled': false,
-            'micronaut.views.velocity.enabled': false,
-            'micronaut.views.handlebars.enabled': false,
-            'micronaut.views.freemarker.enabled': false,
             'micronaut.views.csp.enabled': true,
             'micronaut.views.csp.generateNonce': true,
             'micronaut.views.csp.reportOnly': false,
@@ -57,7 +54,7 @@ class SoySauceViewRendererSpec extends Specification {
 
     @Shared
     @AutoCleanup
-    RxHttpClient client = embeddedServer.getApplicationContext().createBean(RxHttpClient, embeddedServer.getURL())
+    HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient, embeddedServer.getURL())
 
     def "bean is loaded"() {
         when:
@@ -115,7 +112,7 @@ class SoySauceViewRendererSpec extends Specification {
         client.toBlocking().exchange('/soy/missing', String)
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown()
 
         and:
         e.status == HttpStatus.INTERNAL_SERVER_ERROR

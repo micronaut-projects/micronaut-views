@@ -1,0 +1,3 @@
+The entire set of supported Soy configuration properties are documented below:
+
+include::{includedir}configurationProperties/io.micronaut.views.soy.SoyViewsRendererConfigurationProperties.adoc[]

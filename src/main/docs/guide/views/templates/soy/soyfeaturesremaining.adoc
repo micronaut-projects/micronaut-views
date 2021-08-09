@@ -1,0 +1,114 @@
+Soy has powerful built-in renaming features, that both obfuscate and optimize your code as it is rendered. Renaming is
+opt-in and requires a few things:
+
+* A compatible CSS compiler (https://github.com/google/closure-stylesheets[GSS / Closure Stylesheets] is a good one)
+* Special calls in your templates that map CSS classes and IDs
+* JSON renaming map provided at compile time for JS templates, and runtime for Java rendering
+
+Renaming is similar to other frameworks' correponding uglify features, but it's significantly more powerful, allowing
+you to rewrite CSS classes and IDs as you would JavaScript symbols. Here's how you can use renaming server-side with
+Micronaut:
+
+1. Configure Micronaut to enable renaming:
+[source,yaml]
+micronaut:
+  views:
+    soy:
+      enabled: true
+      renaming: true
+
+2. When building your styles with GSS, or a similar tool, generate a rewrite map:
+[source,bash]
+> java -jar closure-stylesheets.jar \
+    --output-renaming-map-format JSON \
+    --output-renaming-map src/main/resources/renaming-map.json \
+    --rename CLOSURE \
+    [...inputs...] > src/main/resources/styles/app-styles.min.css
+
+3. In your template sources, annotate CSS classes with `{css('name')}` calls. Note that the value passed into each call
+must be a string literal (variables cannot be used):
+[source,soy]
+{template .foo}
+  <div class="{css('my-cool-class')} {css('my-cool-class-active')}">
+    ... content, and stuff...
+  </div>
+{/template}
+
+4. In your CSS, use the names you mentioned in your template:
+[source,css]
+.my-cool-class {
+  color: blue;
+}
+.my-cool-class-active {
+  background: yellow;
+}
+
+5. Compile your templates (see: _Building Soy_).
+[source,bash]
+> java -jar SoyToJbcSrcCompiler.jar \
+    --output templates.jar \
+    --srcs [...templates...];
+
+The last step is to provide the renaming map to Micronaut:
+```java
+@Singleton
+public class RewriteMapProvider implements SoyNamingMapProvider {
+  /** Filename for the JSON class renaming map. */
+  private static final String RENAMING_MAP_NAME = "renaming-map.json";
+
+  /** Naming map to use for classes. */
+  private static SoyCssRenamingMap CSS_RENAMING_MAP = null;
+
+  /**
+   * Load JSON embedded in a JAR resource into a naming map for Soy rendering.
+   *
+   * @param mapPath URL to the JAR resource we should load.
+   */
+  @Nullable
+  private static Map<String, String> loadMapFromJSON(URL mapPath) {
+    try {
+      return new ObjectMapper().readValue(mapPath, new TypeReference<Map<String, String>>() { });
+    } catch (Throwable thr) {
+      //handle `JsonMappingException` and `IOException`, if, for instance, you're using Jackson
+      throw new RuntimeException(thr);
+    }
+  }
+
+  static {
+    final URL mapPath =
+        SoyRenderConfigProvider.class.getClassLoader().getResource(RENAMING_MAP_NAME);
+    if (mapPath != null) {
+      // load the renaming map
+      final Map<String, String> cssRenamingMap = loadMapFromJSON(mapPath);
+      if (renamingMapRaw != null) {
+        CSS_RENAMING_MAP = new SoyCssRenamingMap() {
+          @Nullable @Override
+          public String get(@NotNull String className) {
+            // (or whatever logic you need to rewrite the class)
+            return cssRenamingMap.get(className);
+          }
+        };
+      }
+    }
+  }
+
+  /**
+   * Provide a CSS renaming map to Soy/Micronaut.
+   *
+   * @return Inflated Soy CSS renaming map.
+   */
+  @Nullable @Override public SoyCssRenamingMap cssRenamingMap() {
+    return CSS_RENAMING_MAP;
+  }
+}
+```
+
+Then, your output will be renamed. Referencing the Soy template sample above, output would look something like this:
+```html
+<div class="a-b-c a-b-c-d">... content, and stuff...</div>
+```
+
+With your CSS rewritten and minified to match:
+```css
+.a-b-c{color:blue;}.a-b-c-d{background:yellow;}
+```

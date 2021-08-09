@@ -1,11 +1,11 @@
 /*
- * Copyright 2017-2019 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,8 +19,7 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.config.SecurityConfigurationProperties;
-
-import javax.annotation.Nonnull;
+import io.micronaut.core.annotation.NonNull;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link SecurityViewModelProcessorConfiguration}.
@@ -60,13 +59,13 @@ public class SecurityViewModelProcessorConfigurationProperties implements Securi
 
     private boolean enabled = DEFAULT_ENABLED;
 
-    @Nonnull
+    @NonNull
     private String securityKey = DEFAULT_SECURITYKEY;
 
-    @Nonnull
+    @NonNull
     private String principalNameKey = DEFAULT_PRINCIPALNAME;
 
-    @Nonnull
+    @NonNull
     private String attributesKey = DEFAULT_ATTRIBUTESKEY;
 
     @Override
@@ -103,7 +102,7 @@ public class SecurityViewModelProcessorConfigurationProperties implements Securi
      *
      * @return the key for the principal name property which is used in the nested security map.
      */
-    @Nonnull
+    @NonNull
     @Override
     public String getPrincipalNameKey() {
         return this.principalNameKey;
@@ -113,7 +112,7 @@ public class SecurityViewModelProcessorConfigurationProperties implements Securi
      *
      * @return the key for the attributes property which is used in the nested security map.
      */
-    @Nonnull
+    @NonNull
     @Override
     public String getAttributesKey() {
         return this.attributesKey;
@@ -123,7 +122,7 @@ public class SecurityViewModelProcessorConfigurationProperties implements Securi
      * Nested security map key for the user's name property. Default value ({@value #DEFAULT_PRINCIPALNAME}).
      * @param principalNameKey the key which will be used in the nested security map.
      */
-    public void setPrincipalNameKey(@Nonnull String principalNameKey) {
+    public void setPrincipalNameKey(@NonNull String principalNameKey) {
         this.principalNameKey = principalNameKey;
     }
 
@@ -131,7 +130,7 @@ public class SecurityViewModelProcessorConfigurationProperties implements Securi
      * Nested security map key for the user's attributes property. Default value ({@value #DEFAULT_ATTRIBUTESKEY}).
      * @param attributesKey the key which will be used in the nested security map.
      */
-    public void setAttributesKey(@Nonnull String attributesKey) {
+    public void setAttributesKey(@NonNull String attributesKey) {
         this.attributesKey = attributesKey;
     }
 }

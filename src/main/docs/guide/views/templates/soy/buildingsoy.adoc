@@ -1,0 +1,30 @@
+Soy has tooling support from https://github.com/Medium/soynode[Node] (https://www.npmjs.com/package/gulp-soynode[Gulp],
+https://www.npmjs.com/package/grunt-closure-soy[Grunt]),
+http://mvnrepository.com/artifact/com.google.template/soy[Maven],
+https://plugins.gradle.org/plugin/com.liferay.soy[Gradle], and
+https://github.com/bazelbuild/rules_closure/#closure_js_template_library[Bazel]. You can also invoke each
+Soy compiler directly via the runner classes for each one:
+
+* https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyHeaderCompiler.java[SoyHeaderCompiler]:
+Compile templates into light "headers," that can be used downstream as dependencies for other templates.
+* https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyMsgExtractor.java[SoyMsgExtractor]:
+Enables easy i18n by extracting `{msg desc=""}{/msg}` declarations for processing or translation.
+* https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyParseInfoGenerator.java[SoyParseInfoGenerator]:
+Generates template parser metadata information as Java sources.
+* https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyPluginValidator.java[SoyPluginValidator]:
+Validates `SoySourceFunction` definitions found in a set of JARs.
+* https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToIncrementalDomSrcCompiler.java[SoyToIncrementalDomSrcCompiler]:
+Generate client-side templates that render with http://google.github.io/incremental-dom[IncrementalDOM] (AKA `idom`).
+This compiler uses direct calls into the DOM to incrementally render content, as opposed to the traditional client-side
+approach, which renders strings into `element.innerHTML`. This support is currently experimental and involves a number
+of external dependencies.
+* https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToJbcSrcCompiler.java[SoyToJbcSrcCompiler]:
+Compiles Soy templates directly to Java bytecode, packaged up in a JAR. These templates can be used together with
+https://search.maven.org/search?q=g:com.google.template%20AND%20a:soy&core=gav[Soy Java] for highly performant
+server-side rendering.
+* https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToJsSrcCompiler.java[SoyToJsSrcCompiler]:
+Traditional JS client-side compiler, which assembles strings of rendered template content. Like `idom`, these compiled
+templates work well with Closure Compiler, and Closure Library via
+https://github.com/google/closure-library/tree/master/closure/goog/soy[`goog.soy`].
+* https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToPySrcCompiler.java[SoyToPySrcCompiler]:
+Compiles templates into Python sources for use server-side.

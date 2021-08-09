@@ -1,11 +1,11 @@
 /*
- * Copyright 2017-2019 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.micronaut.views.thymeleaf;
 
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.views.ViewsConfiguration;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.IEngineContextFactory;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.linkbuilder.ILinkBuilder;
 import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * A factory for Thymeleaf beans.
@@ -79,6 +79,7 @@ public class ThymeleafFactory {
         engine.setEngineContextFactory(engineContextFactory);
         engine.setLinkBuilder(linkBuilder);
         engine.setTemplateResolver(templateResolver);
+        engine.addDialect(new Java8TimeDialect());
         engine.addMessageResolver(messageSourceMessageResolver);
         return engine;
     }

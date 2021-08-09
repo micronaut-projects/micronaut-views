@@ -1,0 +1,54 @@
+Soy/Closure Templates has seen significant work from Google where security is concerned, both in the browser and on the
+backend. Soy is extremely strict and strongly typed, with validation being performed by Soy and then subsequently either
+by `javac` or Closure Compiler, and additionally in some cases at render-time. What follows is a brief guide of these
+security features. These are outlined in more detail over in the
+https://github.com/google/closure-templates/blob/master/documentation/reference/security.md[Closure Templates docs].
+
+==== Front-end Security
+
+* _Trusted URIs:_ Soy is smart enough to know that `scriptUrl` might be influenced by user input, and, therefore,
+introduces an https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)[XSS vulnerability] when used as a script
+`src`. To inject resources, use `uri`:
+[source,soy]
+/* I won't compile because I introduce a vulnerability */
+{template .foo}
+  {@param scriptUrl: string}
+  <script src={$scriptUrl}></script>
+{/template}
+
+    /* I will compile because I accept a URI type, which is trusted in this context */
+    {template .foo}
+      {@param scriptUrl: uri}
+      <script src={$scriptUrl}></script>
+    {/template}
+
+* _Markup:_ Passing in HTML for `content` won't work if it's a `string`. Soy will comply and inject your content, but it
+will be escaped. To inject markup, use the strict markup types (`js`, `css`, `html`).
+[source,soy]
+/* I will compile, but I may escape the injected content if it contains markup. */
+{template .foo}
+  {@param content: string}
+  <b>{$content}</b>
+{/template}
+
+    /* I allow markup because the appropriate types are used */
+    {template .foo}
+      {@param content: html}
+      <b>{$content}</b>
+    {/template}
+
+==== Back-end Security
+
+* _CSP Nonce Support_: Soy has support for _Content Security Policy_ (https://www.w3.org/TR/CSP3/[Level 3]),
+specifically, embedding server-generated `nonce` attributes in `<script>` tags. This is accomplished by providing an
+https://github.com/google/closure-templates/blob/b0b39f9af2fed78333ddb7963266e9d2db3df094/documentation/dev/security.md#content-security-policy-csp-content_security_policy["injected value"]
+with the key `"csp_nonce"`. The nonce, which
+https://csp.withgoogle.com/docs/faq.html#generating-nonces[should change on each page load], is available in the
+template like so:
+[source,soy]
+/* Soy will inject the nonce for you, but if you need it anyway, this is how you access it. */
+{template .foo}
+  {@param injectedScript: uri}
+  {@inject csp_nonce: string}
+  <script src={$injectedScript} nonce={$csp_nonce} type="text/javascript"></script>
+{/template}

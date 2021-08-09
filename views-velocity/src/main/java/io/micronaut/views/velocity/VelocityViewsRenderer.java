@@ -1,11 +1,11 @@
 /*
- * Copyright 2017-2019 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.micronaut.views.velocity;
 
 import io.micronaut.core.io.Writable;
@@ -29,11 +28,10 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -45,7 +43,7 @@ import java.util.Properties;
  * @author Sergio del Amo
  * @author graemerocher
  *
- * @see <a href="http://velocity.apache.org">http://velocity.apache.org</a>
+ * @see <a href="https://velocity.apache.org">https://velocity.apache.org</a>
  * @since 1.0
  */
 @Produces(MediaType.TEXT_HTML)
@@ -60,23 +58,10 @@ public class VelocityViewsRenderer implements ViewsRenderer {
     /**
      * @param viewsConfiguration    Views Configuration
      * @param velocityConfiguration Velocity Configuration
-     */
-    @Deprecated
-    VelocityViewsRenderer(ViewsConfiguration viewsConfiguration,
-                          VelocityViewsRendererConfiguration velocityConfiguration) {
-        this.viewsConfiguration = viewsConfiguration;
-        this.velocityConfiguration = velocityConfiguration;
-        this.velocityEngine = initializeVelocityEngine();
-        this.folder = viewsConfiguration.getFolder();
-    }
-
-    /**
-     * @param viewsConfiguration    Views Configuration
-     * @param velocityConfiguration Velocity Configuration
      * @param velocityEngine        Velocity Engine
      */
     @Inject
-    VelocityViewsRenderer(ViewsConfiguration viewsConfiguration,
+    public VelocityViewsRenderer(ViewsConfiguration viewsConfiguration,
                           VelocityViewsRendererConfiguration velocityConfiguration,
                           VelocityEngine velocityEngine) {
         this.viewsConfiguration = viewsConfiguration;
@@ -85,8 +70,9 @@ public class VelocityViewsRenderer implements ViewsRenderer {
         this.folder = viewsConfiguration.getFolder();
     }
 
+    @NonNull
     @Override
-    @Nonnull public Writable render(@Nonnull String view, @Nullable Object data) {
+    public Writable render(@NonNull String view, @Nullable Object data) {
         ArgumentUtils.requireNonNull("view", view);
         return (writer) -> {
             Map<String, Object> context = modelOf(data);
@@ -101,7 +87,7 @@ public class VelocityViewsRenderer implements ViewsRenderer {
      * @param encoding The encoding
      * @param writer The writer
      */
-    public void render(@Nonnull String view, VelocityContext context, String encoding, Writer writer) {
+    public void render(@NonNull String view, VelocityContext context, String encoding, Writer writer) {
         String viewName = viewName(view);
         try {
             velocityEngine.mergeTemplate(viewName, encoding, context, writer);
@@ -111,7 +97,7 @@ public class VelocityViewsRenderer implements ViewsRenderer {
     }
 
     @Override
-    public boolean exists(@Nonnull String viewName) {
+    public boolean exists(@NonNull String viewName) {
         try {
             velocityEngine.getTemplate(viewName(viewName));
         } catch (ResourceNotFoundException | ParseErrorException e) {
@@ -125,8 +111,8 @@ public class VelocityViewsRenderer implements ViewsRenderer {
      */
     private VelocityEngine initializeVelocityEngine() {
         final Properties p = new Properties();
-        p.setProperty("resource.loader", "class");
-        p.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        p.setProperty("resource.loaders", "class");
+        p.setProperty("resource.loader.class.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         return new VelocityEngine(p);
     }
 

@@ -1,0 +1,27 @@
+
+To use Soy integration you have to provide a bean of type api:views.soy.SoyFileSetProvider[]. Such a bean is responsible for loading the Soy templates, either in compiled or source form.
+
+Given the following Soy template:
+
+[source,soy]
+.src/main/resources/views/home.soy
+----
+include::{testsviewsSoy}/resources/views/home.soy[]
+----
+
+A naive implementation of api:views.soy.SoyFileSetProvider[] could look like:
+
+snippet::io.micronaut.docs.soy.CustomSoyFileSetProvider[tags="clazz"]
+
+The return value of the following Controller is converted to Soy template context parameters, and passed to the `@View`-annotation-bound template.
+
+snippet::io.micronaut.docs.soy.SoyController[tags="clazz"]
+
+NOTE: The api:views.View[] annotation value is set to namespace and template name.
+
+Both server-side Soy rendering layers are supported in Micronaut:
+
+* `SoySauceViewsRenderer`: This renderer uses templates pre-compiled to Java bytecode, generally AOT, with
+`SoyToJbcSrcCompiler`. If compiled templates can't be located by the `SoyFileSetProvider`, templates are pre-compiled
+into bytecode at server startup. This can be impactful on startup-time, so, if that's an important metric for your
+app, pre-compile your templates using the AOT bytecode compiler.

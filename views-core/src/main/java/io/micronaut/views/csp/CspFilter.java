@@ -1,11 +1,11 @@
 /*
- * Copyright 2017-2019 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.micronaut.views.csp;
 
 import io.micronaut.core.util.StringUtils;
@@ -22,10 +21,10 @@ import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
-import io.reactivex.Flowable;
+import reactor.core.publisher.Flux;
 import org.reactivestreams.Publisher;
 
-import javax.annotation.Nullable;
+import io.micronaut.core.annotation.Nullable;
 
 import static io.micronaut.views.csp.CspConfiguration.DEFAULT_FILTER_PATH;
 import static io.micronaut.views.csp.CspConfiguration.FILTER_PATH;
@@ -84,7 +83,7 @@ public class CspFilter implements HttpServerFilter {
     @Override
     public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
         final String nonce = nonceValue();
-        return Flowable.fromPublisher(chain.proceed(request.setAttribute(NONCE_PROPERTY, nonce)))
+        return Flux.from(chain.proceed(request.setAttribute(NONCE_PROPERTY, nonce)))
                 .doOnNext(response -> {
                     cspConfiguration.getPolicyDirectives()
                             .map(StringUtils::trimToNull)

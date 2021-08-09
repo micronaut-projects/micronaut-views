@@ -2,14 +2,13 @@ Although Micronaut is primarily designed around message encoding / decoding ther
 
 The `views` module provides support for view rendering on the server side and does so by rendering views on the I/O thread pool in order to avoid blocking the Netty event loop.
 
-To use the view rendering features described in this section, add the following dependency on your classpath.
+To use the view rendering features described in this section, add a dependency based on the view rendering engine you prefer (see the following sections).
 
-dependency:micronaut-views[]
 
 For file-based view schemes, views and templates can be placed in the `src/main/resources/views` directory of your
 project. If you use this feature and wish to use a different folder, set the property `micronaut.views.folder`.
 
-Your controller's method can render the response with a template with the the api:views.View[] annotation.
+Your controller's method can render the response with a template by using the api:views.View[] annotation.
 
 The following is an example of a controller which renders a template by passing a model as a `java.util.Map` via the returned response object.
 
@@ -39,7 +38,7 @@ include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[t
 
 <1> Use `@View` annotation to indicate the view name which should be used to render the POJO responded by the controller.
 
-Use the ann:core.annotation.Introspected[] annotation on your POJO object to avoid reflection at runtime (It will also fix a problem with OpenJ9 jvm.)
+Use the https://micronaut-projects.github.io/micronaut-core/latest/api/io/micronaut/core/annotation/Introspected.html[@Introspected] annotation on your POJO object to  generate `BeanIntrospection` metadata at compilation time.
 
 You can also return a api:views.ModelAndView[] and skip specifying the api:views.View[] annotation.
 
@@ -51,11 +50,12 @@ include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[t
 include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=modelAndView]
 ----
 
-You can also provide implementations of api:views.model.ViewsModelDecorator[] to decorate the model with
-extra properties.
+Moreover, the Controller's method can return a POJO annotated with `@Introspected` to the view:
+
+snippet::io.micronaut.views.model.FruitsController[tags="pojo"]
 
 The following sections show different template engines integrations.
 
-To create your own implementation create a class which implements api:views.ViewsRenderer[] and annotate it with api:http.annotation.Produces[@Produces] to the media types the view rendering supports producing.
+To create your own implementation create a class which implements api:views.ViewsRenderer[] and annotate it with https://micronaut-projects.github.io/micronaut-core/latest/api/io/micronaut/http/annotation/Produces.html[@Produces] to the media types the view rendering supports producing.
 
 TIP: If you want to render a template directly on your code (for example, to generate the body of an email) you can inject the ViewsRenderer bean and use its method "render".

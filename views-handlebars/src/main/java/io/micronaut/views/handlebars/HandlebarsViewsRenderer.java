@@ -1,11 +1,11 @@
 /*
- * Copyright 2017-2019 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,7 @@ package io.micronaut.views.handlebars;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
@@ -29,17 +30,15 @@ import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import io.micronaut.core.annotation.Nullable;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 /**
  * Renders Views with with Handlebars.java.
  *
  * @author Sergio del Amo
- * @see <a href="http://jknack.github.io/handlebars.java/">http://jknack.github.io/handlebars.java/</a>
+ * @see <a href="https://jknack.github.io/handlebars.java/">https://jknack.github.io/handlebars.java/</a>
  * @since 1.0
  */
 @Produces(MediaType.TEXT_HTML)
@@ -53,19 +52,6 @@ public class HandlebarsViewsRenderer implements ViewsRenderer {
     protected HandlebarsViewsRendererConfiguration handlebarsViewsRendererConfiguration;
     protected Handlebars handlebars;
     protected String folder;
-
-
-    /**
-     * @param viewsConfiguration                   Views Configuration
-     * @param resourceLoader                       Resource Loader
-     * @param handlebarsViewsRendererConfiguration Handlebars ViewRenderer Configuration.
-     */
-    @Deprecated
-    public HandlebarsViewsRenderer(ViewsConfiguration viewsConfiguration,
-                                   ClassPathResourceLoader resourceLoader,
-                                   HandlebarsViewsRendererConfiguration handlebarsViewsRendererConfiguration) {
-        this(viewsConfiguration, resourceLoader, handlebarsViewsRendererConfiguration, new Handlebars());
-    }
 
     /**
      * @param viewsConfiguration                   Views Configuration
@@ -85,8 +71,9 @@ public class HandlebarsViewsRenderer implements ViewsRenderer {
         this.handlebars = handlebars;
     }
 
+    @NonNull
     @Override
-    @Nonnull public Writable render(@Nonnull String viewName, @Nullable Object data) {
+    public Writable render(@NonNull String viewName, @Nullable Object data) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             String location = viewLocation(viewName);
@@ -100,7 +87,7 @@ public class HandlebarsViewsRenderer implements ViewsRenderer {
     }
 
     @Override
-    public boolean exists(@Nonnull String viewName) {
+    public boolean exists(@NonNull String viewName) {
         //noinspection ConstantConditions
         if (viewName == null) {
             return false;

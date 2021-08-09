@@ -1,9 +1,15 @@
 rootProject.name = 'views'
 
-include 'views'
+include 'views-bom'
 include 'views-core'
 include 'views-soy'
 include 'views-freemarker'
 include 'views-handlebars'
 include 'views-thymeleaf'
 include 'views-velocity'
+include 'views-rocker'
+include 'views-pebble'
+
+include "test-suite"
+include "test-suite-groovy"
+include "test-suite-kotlin"

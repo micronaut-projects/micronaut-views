@@ -19,13 +19,15 @@ import io.micronaut.context.ApplicationContext
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
-import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.exceptions.HttpClientException
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
 import io.micronaut.views.freemarker.FreemarkerViewsRenderer
 import io.micronaut.views.freemarker.FreemarkerViewsRendererConfigurationProperties
 import spock.lang.AutoCleanup
+import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -36,9 +38,7 @@ class FreemarkerViewRendererSpec extends Specification {
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
             [
                     'spec.name': 'freemarker',
-                    'micronaut.views.thymeleaf.enabled': false,
-                    'micronaut.views.velocity.enabled': false,
-                    'micronaut.views.handlebars.enabled': false,
+                    'micronaut.security.enabled': false,
                     'micronaut.views.freemarker.lazy-imports': true,
                     'micronaut.views.freemarker.settings.urlEscapingCharset': 'UTF-8'
             ],
@@ -46,7 +46,7 @@ class FreemarkerViewRendererSpec extends Specification {
 
     @Shared
     @AutoCleanup
-    RxHttpClient client = embeddedServer.getApplicationContext().createBean(RxHttpClient, embeddedServer.getURL())
+    HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient, embeddedServer.getURL())
 
     def "bean is loaded"() {
         when:
@@ -189,5 +189,25 @@ class FreemarkerViewRendererSpec extends Specification {
         then:
         body
         rsp.body().contains("<h1>You are not logged in</h1>")
+    }
+
+    def "invoking /freemarker/invalid returns error"() {
+        when:
+        client.toBlocking().exchange('/freemarker/invalid', String)
+
+        then:
+         thrown(HttpClientException)
+    }
+
+    @PendingFeature
+    def "invoking /freemarker/invalid returns HttpClientResponseException with 500 as status code"() {
+        when:
+        client.toBlocking().exchange('/freemarker/invalid', String)
+
+        then:
+        HttpClientResponseException e = thrown()
+
+        and:
+        e.status == HttpStatus.INTERNAL_SERVER_ERROR
     }
 }

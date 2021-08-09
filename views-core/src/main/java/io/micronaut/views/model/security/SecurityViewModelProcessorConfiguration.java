@@ -1,11 +1,11 @@
 /*
- * Copyright 2017-2019 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +16,7 @@
 package io.micronaut.views.model.security;
 
 import io.micronaut.core.util.Toggleable;
-import javax.annotation.Nonnull;
+import io.micronaut.core.annotation.NonNull;
 
 /**
  * Configuration for {@link SecurityViewModelProcessor}.
@@ -30,20 +30,20 @@ public interface SecurityViewModelProcessorConfiguration extends Toggleable {
      *
      * @return the key name which will be used in the model map.
      */
-    @Nonnull
+    @NonNull
     String getSecurityKey();
 
     /**
      *
      * @return the key for the principal name property which is used in the nested security map.
      */
-    @Nonnull
+    @NonNull
     String getPrincipalNameKey();
 
     /**
      *
      * @return the key for the attributes property which is used in the nested security map.
      */
-    @Nonnull
+    @NonNull
     String getAttributesKey();
 }

@@ -1,0 +1,19 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.5.21"
+}
+
+dependencies {
+    testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
+    testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
+    testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
+    testImplementation project(":views-soy")
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21"
+}
+
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = '1.8'
+        javaParameters = true
+    }
+}

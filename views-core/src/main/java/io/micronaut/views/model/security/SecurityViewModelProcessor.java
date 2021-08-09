@@ -1,11 +1,11 @@
 /*
- * Copyright 2017-2019 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,15 +23,14 @@ import io.micronaut.security.filters.SecurityFilter;
 import io.micronaut.security.utils.SecurityService;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.model.ViewModelProcessor;
-
-import javax.annotation.Nonnull;
-import javax.inject.Singleton;
+import io.micronaut.core.annotation.NonNull;
+import jakarta.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 /**
- * Returns information about the current user so that it can be append it to the model being rendered.
+ * Returns information about the current user so that it can be appended to the model being rendered.
  *
  * @author Sergio del Amo
  * @since 1.1.0
@@ -39,7 +38,7 @@ import java.util.Optional;
 @Requires(property = SecurityViewModelProcessorConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 @Requires(beans = {SecurityFilter.class, SecurityService.class, SecurityViewModelProcessorConfiguration.class})
 @Singleton
-public class SecurityViewModelProcessor implements ViewModelProcessor {
+public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String, Object>> {
 
     private final SecurityService securityService;
     private final SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration;
@@ -56,7 +55,7 @@ public class SecurityViewModelProcessor implements ViewModelProcessor {
     }
 
     @Override
-    public void process(@Nonnull HttpRequest<?> request, @Nonnull ModelAndView<Map<String, Object>> modelAndView) {
+    public void process(@NonNull HttpRequest<?> request, @NonNull ModelAndView<Map<String, Object>> modelAndView) {
         Optional<Authentication> authentication = securityService.getAuthentication();
         if (authentication.isPresent()) {
             Map<String, Object> securityModel = new HashMap<>();

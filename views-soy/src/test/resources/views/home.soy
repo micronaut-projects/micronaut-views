@@ -1,0 +1,23 @@
+{namespace sample}
+
+
+// Sample template.
+{template .home}
+  {@param loggedIn: bool}  // Whether the user is logged in.
+  {@param? username: string}  // The user's username, if they are logged in.
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <title>Home</title>
+    <script type="text/javascript">alert("Hello, CSP!");</script>
+  </head>
+  <body>
+  {if $loggedIn}
+      <h1>username: <span>{$username}</span></h1>
+  {else}
+      <h1>You are not logged in</h1>
+  {/if}
+  </body>
+  </html>
+{/template}

@@ -20,7 +20,7 @@ import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
-import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
@@ -36,15 +36,13 @@ class ThymeleafViewRendererSpec extends Specification {
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
             [
                     'spec.name': 'thymeleaf',
-                    'micronaut.views.velocity.enabled': false,
-                    'micronaut.views.handlebars.enabled': false,
-                    'micronaut.views.freemarker.enabled': false,
+                    'micronaut.security.enabled': false
             ],
             "test")
 
     @Shared
     @AutoCleanup
-    RxHttpClient client = embeddedServer.getApplicationContext().createBean(RxHttpClient, embeddedServer.getURL())
+    HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient, embeddedServer.getURL())
 
     def "bean is loaded"() {
         when:
@@ -119,7 +117,7 @@ class ThymeleafViewRendererSpec extends Specification {
         client.toBlocking().exchange('/views/bogus', String)
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown()
 
         and:
         e.status == HttpStatus.INTERNAL_SERVER_ERROR
@@ -146,7 +144,7 @@ class ThymeleafViewRendererSpec extends Specification {
         client.toBlocking().exchange(HttpRequest.POST('/views/error', [status: true, exception: false, global: false]), String)
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown()
 
         and:
         e.status == HttpStatus.NOT_FOUND

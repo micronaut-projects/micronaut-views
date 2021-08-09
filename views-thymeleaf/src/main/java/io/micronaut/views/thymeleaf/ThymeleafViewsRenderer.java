@@ -1,11 +1,11 @@
 /*
- * Copyright 2017-2019 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,11 +33,10 @@ import org.thymeleaf.context.IContext;
 import org.thymeleaf.exceptions.TemplateEngineException;
 import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Locale;
@@ -61,20 +60,6 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
     protected ResourceLoader resourceLoader;
 
     /**
-     * @param viewsConfiguration Views Configuration
-     * @param thConfiguration    Thymeleaf template renderer configuration
-     * @param resourceLoader     The resource loader
-     */
-    @Deprecated
-    public ThymeleafViewsRenderer(ViewsConfiguration viewsConfiguration,
-                                  ThymeleafViewsRendererConfiguration thConfiguration,
-                                  ClassPathResourceLoader resourceLoader) {
-        this.templateResolver = initializeTemplateResolver(viewsConfiguration, thConfiguration);
-        this.resourceLoader = resourceLoader;
-        this.engine = initializeTemplateEngine();
-    }
-
-    /**
      * @param templateResolver   The template resolver
      * @param templateEngine     The template engine
      * @param resourceLoader     The resource loader
@@ -88,9 +73,9 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
         this.engine = templateEngine;
     }
 
+    @NonNull
     @Override
-    @Nonnull
-    public Writable render(@Nonnull String viewName, @Nullable Object data) {
+    public Writable render(@NonNull String viewName, @Nullable Object data) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             IContext context = new Context(Locale.US, variables(data));
@@ -99,13 +84,14 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
     }
 
     @Override
-    @Nonnull
-    public Writable render(@Nonnull String viewName, @Nullable Object data,
-            @Nonnull HttpRequest<?> request) {
+    @NonNull
+    public Writable render(@NonNull String viewName,
+                           @Nullable Object data,
+                           @NonNull HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         ArgumentUtils.requireNonNull("request", request);
         return (writer) -> {
-            IContext context = new WebContext(request, Locale.US, variables(data));
+            IContext context = new WebContext(request, request.getLocale().orElse(Locale.US), variables(data));
             render(viewName, context, writer);
         };
     }
@@ -126,7 +112,7 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
     }
 
     @Override
-    public boolean exists(@Nonnull String viewName) {
+    public boolean exists(@NonNull String viewName) {
         String location = viewLocation(viewName);
         return resourceLoader.getResourceAsStream(location).isPresent();
     }
@@ -141,7 +127,7 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
                                                                    ThymeleafViewsRendererConfiguration thConfiguration) {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
 
-        templateResolver.setPrefix(normalizeFolder(viewsConfiguration.getFolder()));
+        templateResolver.setPrefix(ViewUtils.normalizeFolder(viewsConfiguration.getFolder()));
         templateResolver.setCharacterEncoding(thConfiguration.getCharacterEncoding());
         templateResolver.setTemplateMode(thConfiguration.getTemplateMode());
         templateResolver.setSuffix(thConfiguration.getSuffix());
