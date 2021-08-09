@@ -30,7 +30,7 @@ import java.util.TreeMap;
 
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Requires(property = "spec.name", value = "ModelAndViewSpec")
-@Controller()
+@Controller
 public class FruitsController {
 
     //tag::pojo[]
