@@ -37,14 +37,14 @@ public interface ViewsRenderer {
     String EXTENSION_SEPARATOR = ".";
 
     /**
-     * @param viewName view name to be render
+     * @param viewName view name to be rendered
      * @param data     response body to render it with a view
      * @return A writable where the view will be written to.
      */
     @NonNull Writable render(@NonNull String viewName, @Nullable Object data);
 
     /**
-     * @param viewName view name to be render
+     * @param viewName view name to be rendered
      * @param data     response body to render it with a view
      * @param request  HTTP request
      * @return A writable where the view will be written to.
@@ -55,7 +55,7 @@ public interface ViewsRenderer {
     }
 
     /**
-     * @param viewName view name to be render
+     * @param viewName view name to be rendered
      * @return true if a template can be found for the supplied view name.
      */
     boolean exists(@NonNull String viewName);
