@@ -21,7 +21,11 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
-import io.micronaut.http.*;
+import io.micronaut.core.order.OrderUtil;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.MutableHttpResponse;
+import io.micronaut.http.HttpAttributes;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.filter.HttpServerFilter;
@@ -34,7 +38,9 @@ import reactor.core.publisher.Flux;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -46,23 +52,19 @@ import java.util.Optional;
  * @since 1.0
  */
 @Requires(beans = ViewsRenderer.class)
-@Filter("/**")
+@Filter(Filter.MATCH_ALL_PATTERN)
 public class ViewsFilter implements HttpServerFilter {
     private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
 
     protected final BeanLocator beanLocator;
-    private final Collection<ViewModelProcessor> viewModelProcessors;
 
     /**
      * Constructor.
      *
      * @param beanLocator The bean locator
-     * @param viewModelProcessors Collection of views model decorator beans
      */
-    public ViewsFilter(BeanLocator beanLocator,
-                       Collection<ViewModelProcessor> viewModelProcessors) {
+    public ViewsFilter(BeanLocator beanLocator) {
         this.beanLocator = beanLocator;
-        this.viewModelProcessors = viewModelProcessors;
     }
 
     @Override
@@ -73,7 +75,6 @@ public class ViewsFilter implements HttpServerFilter {
     @Override
     public final Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request,
                                                             ServerFilterChain chain) {
-
         return Flux.from(chain.proceed(request))
             .switchMap(response -> {
                 Optional<AnnotationMetadata> routeMatch = response.getAttribute(HttpAttributes.ROUTE_MATCH,
@@ -88,43 +89,33 @@ public class ViewsFilter implements HttpServerFilter {
 
                         MediaType type = route.getValue(Produces.class, MediaType.class)
                                 .orElse((route.getValue(View.class).isPresent() || body instanceof ModelAndView) ? MediaType.TEXT_HTML_TYPE : MediaType.APPLICATION_JSON_TYPE);
-                        Optional<ViewsRenderer> optionalViewsRenderer = beanLocator.findBean(ViewsRenderer.class,
+                        Collection<ViewsRenderer> viewsRenderersCollection = beanLocator.getBeansOfType(ViewsRenderer.class,
                                 new ProducesMediaTypeQualifier<>(type));
-
-                        if (!optionalViewsRenderer.isPresent()) {
+                        if (viewsRenderersCollection.isEmpty()) {
                             LOG.debug("no view renderer found for media type: {}, ignoring", type);
                             return Flux.just(response);
                         }
+                        List<ViewsRenderer> viewsRenderers = new ArrayList<>(viewsRenderersCollection);
+                        OrderUtil.sort(viewsRenderers);
+
+                        String view = optionalView.get();
+
+                        Optional<ViewsRenderer> optionalViewsRenderer = viewsRenderers.stream().filter(viewsRenderer -> viewsRenderer.exists(view)).findFirst();
+
+                        if (!optionalViewsRenderer.isPresent()) {
+                            return Flux.error(new ViewNotFoundException("View [" + view + "] does not exist"));
+                        }
 
                         ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
-
-                        ModelAndView<?> modelAndView;
-
-                        // We treat Map<String, Object> the same as a model view as long as
-                        // the method includes a view annotation:
-                        if (body instanceof ModelAndView || body instanceof Map) {
-                            Map<String, Object> context = populateModel(request, viewsRenderer, body);
-                            modelAndView  = new ModelAndView<>(optionalView.get(), context);
-                        } else {
-                            // these arbitrary models do not get processed by the view model processors:
-                            modelAndView = new ModelAndView<>(optionalView.get(), body);
-                        }
-
-                        if (modelAndView.getView().isPresent()) {
-                            String view = modelAndView.getView().get();
-                            if (viewsRenderer.exists(view)) {
-                                enhanceModel(request, modelAndView);
-                                Writable writable = viewsRenderer.render(view, modelAndView.getModel().orElse(null), request);
-                                response.contentType(type);
-                                response.body(writable);
-                                return Flux.just(response);
-                            } else {
-                                return Flux.error(new ViewNotFoundException("View [" + view + "] does not exist"));
-                            }
-                        }
+                        ModelAndView<?> modelAndView  = new ModelAndView<>(view, (body instanceof ModelAndView || body instanceof Map) ?
+                                    populateModel(request, viewsRenderer, body) : body);
+                        enhanceModel(request, modelAndView);
+                        Writable writable = viewsRenderer.render(view, modelAndView.getModel().orElse(null), request);
+                        response.contentType(type);
+                        response.body(writable);
+                        return Flux.just(response);
                     }
                 }
-
                 return Flux.just(response);
             });
     }
@@ -154,8 +145,6 @@ public class ViewsFilter implements HttpServerFilter {
         }
         return responseBody;
     }
-
-
 
     /**
      * Resolves the view for the given method and response body. Subclasses can override to customize.
@@ -193,5 +182,4 @@ public class ViewsFilter implements HttpServerFilter {
             processors.forEach(it -> it.process(request, modelAndView));
         }
     }
-
 }
