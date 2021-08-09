@@ -18,8 +18,6 @@ package io.micronaut.views.rocker;
 import com.fizzed.rocker.BindableRockerModel;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.core.annotation.NonNull;
@@ -33,10 +31,10 @@ import java.util.Map;
  *
  * @author Sam Adams
  * @since 1.3.2
+ * @param <T> The model type
  */
-@Produces(MediaType.TEXT_HTML)
 @Singleton
-public class RockerViewsRenderer implements ViewsRenderer {
+public class RockerViewsRenderer<T> implements ViewsRenderer<T> {
 
     protected final RockerEngine rockerEngine;
     protected final ViewsConfiguration viewsConfiguration;
@@ -60,7 +58,7 @@ public class RockerViewsRenderer implements ViewsRenderer {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String view, @Nullable Object data) {
+    public Writable render(@NonNull String view, @Nullable T data) {
         ArgumentUtils.requireNonNull("view", view);
 
         Map<String, Object> context = modelOf(data);

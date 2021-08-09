@@ -26,8 +26,6 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.csp.CspConfiguration;
@@ -51,12 +49,12 @@ import java.util.concurrent.ExecutionException;
  *
  * @author Sam Gammon (sam@bloombox.io)
  * @since 1.2.1
+ * @param <T> The model type
  */
-@Produces(MediaType.TEXT_HTML)
 @Requires(classes = SoySauce.class)
 @Singleton
 @SuppressWarnings({"WeakerAccess", "UnstableApiUsage"})
-public class SoySauceViewsRenderer implements ViewsRenderer {
+public class SoySauceViewsRenderer<T> implements ViewsRenderer<T> {
 
   private static final Logger LOG = LoggerFactory.getLogger(SoySauceViewsRenderer.class);
   private static final String INJECTED_NONCE_PROPERTY = "csp_nonce";
@@ -102,7 +100,7 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
    * @return A writable where the view will be written to.
    */
   @NonNull
-  public Writable render(@NonNull String viewName, @Nullable Object data) {
+  public Writable render(@NonNull String viewName, @Nullable T data) {
     return render(viewName, data, null);
   }
 
@@ -114,7 +112,7 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
    */
   @NonNull
   @Override
-  public Writable render(@NonNull String viewName, @Nullable Object data, @NonNull HttpRequest<?> request) {
+  public Writable render(@NonNull String viewName, @Nullable T data, @NonNull HttpRequest<?> request) {
     ArgumentUtils.requireNonNull("viewName", viewName);
 
     Map<String, Object> ijOverlay = new HashMap<>(1);

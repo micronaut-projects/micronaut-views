@@ -15,14 +15,15 @@
  */
 package io.micronaut.views.freemarker;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.MalformedTemplateNameException;
 import io.micronaut.core.annotation.NonNull;
 import freemarker.core.ParseException;
-import freemarker.template.*;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -40,12 +41,12 @@ import java.util.Map;
  * @author Jerónimo López
  * @see <a href= "https://freemarker.apache.org/">freemarker.apache.org</a>
  * @since 1.1
+ * @param <T> The model type
  */
-@Produces(MediaType.TEXT_HTML)
 @Requires(property = FreemarkerViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Requires(classes = Configuration.class)
 @Singleton
-public class FreemarkerViewsRenderer implements ViewsRenderer {
+public class FreemarkerViewsRenderer<T> implements ViewsRenderer<T> {
 
     protected final ViewsConfiguration viewsConfiguration;
     protected final FreemarkerViewsRendererConfigurationProperties freemarkerMicronautConfiguration;
@@ -65,7 +66,7 @@ public class FreemarkerViewsRenderer implements ViewsRenderer {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String viewName, @Nullable Object data) {
+    public Writable render(@NonNull String viewName, @Nullable T data) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             Map<String, Object> context = modelOf(data);

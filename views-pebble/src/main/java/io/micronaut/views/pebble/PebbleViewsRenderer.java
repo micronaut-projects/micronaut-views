@@ -21,8 +21,6 @@ import com.mitchellbosecke.pebble.PebbleEngine;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsRenderer;
 
@@ -32,12 +30,12 @@ import io.micronaut.views.ViewsRenderer;
  * @author Ecmel Ercan
  * @see <a href="https://pebbletemplates.io/">https://pebbletemplates.io/</a>
  * @since 2.2.0
+ * @param <T> The model type
  */
 @Singleton
-@Produces(MediaType.TEXT_HTML)
 @Requires(property = PebbleConfigurationProperties.ENABLED, notEquals = StringUtils.FALSE)
 @Requires(classes = PebbleEngine.class)
-public class PebbleViewsRenderer implements ViewsRenderer {
+public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
     
     private final String extension;
     private final PebbleEngine engine;
@@ -49,7 +47,7 @@ public class PebbleViewsRenderer implements ViewsRenderer {
     }
 
     @Override
-    public Writable render(String name, Object data) {
+    public Writable render(String name, T data) {
         return (writer) -> engine.getTemplate(ViewUtils.normalizeFile(name, extension)).evaluate(writer, modelOf(data));
     }
 

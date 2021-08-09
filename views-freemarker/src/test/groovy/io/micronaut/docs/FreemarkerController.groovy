@@ -51,8 +51,8 @@ class FreemarkerController {
 
     @Produces(MediaType.TEXT_PLAIN)
     @View("home.ftl")
-    @Get("/viewWithNoViewRendererForProduces")
-    Person viewWithNoViewRendererForProduces() {
+    @Get("/plainText")
+    Person plainText() {
         new Person(loggedIn: true, username: 'sdelamo')
     }
 

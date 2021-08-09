@@ -26,11 +26,11 @@ import java.util.Map;
 
 /**
  * Interface to be implemented by View Engines implementations.
- *
+ * @param <T> The model type
  * @author Sergio del Amo
  * @since 1.0
  */
-public interface ViewsRenderer extends Ordered {
+public interface ViewsRenderer<T> extends Ordered {
 
     /**
      * The extension separator.
@@ -42,7 +42,7 @@ public interface ViewsRenderer extends Ordered {
      * @param data     response body to render it with a view
      * @return A writable where the view will be written to.
      */
-    @NonNull Writable render(@NonNull String viewName, @Nullable Object data);
+    @NonNull Writable render(@NonNull String viewName, @Nullable T data);
 
     /**
      * @param viewName view name to be rendered
@@ -50,7 +50,7 @@ public interface ViewsRenderer extends Ordered {
      * @param request  HTTP request
      * @return A writable where the view will be written to.
      */
-    default @NonNull Writable render(@NonNull String viewName, @Nullable Object data,
+    default @NonNull Writable render(@NonNull String viewName, @Nullable T data,
             @NonNull HttpRequest<?> request) {
         return render(viewName, data);
     }
@@ -66,7 +66,7 @@ public interface ViewsRenderer extends Ordered {
      * @param data The data
      * @return The model
      */
-    default @NonNull Map<String, Object> modelOf(@Nullable Object data) {
+    default @NonNull Map<String, Object> modelOf(@Nullable T data) {
         if (data == null) {
             return new HashMap<>(0);
         }

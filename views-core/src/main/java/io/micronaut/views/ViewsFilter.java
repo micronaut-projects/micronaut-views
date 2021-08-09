@@ -15,8 +15,11 @@
  */
 package io.micronaut.views;
 
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.qualifiers.Qualifiers;
-import io.micronaut.context.BeanLocator;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.NonNull;
@@ -33,17 +36,16 @@ import io.micronaut.http.filter.ServerFilterChain;
 import io.micronaut.http.filter.ServerFilterPhase;
 import io.micronaut.views.exceptions.ViewNotFoundException;
 import io.micronaut.views.model.ViewModelProcessor;
-import io.micronaut.web.router.qualifier.ProducesMediaTypeQualifier;
 import reactor.core.publisher.Flux;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Templates Filter.
@@ -56,15 +58,15 @@ import java.util.Optional;
 public class ViewsFilter implements HttpServerFilter {
     private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
 
-    protected final BeanLocator beanLocator;
+    protected final ApplicationContext applicationContext;
 
     /**
      * Constructor.
      *
-     * @param beanLocator The bean locator
+     * @param applicationContext Application Context
      */
-    public ViewsFilter(BeanLocator beanLocator) {
-        this.beanLocator = beanLocator;
+    public ViewsFilter(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
     @Override
@@ -79,49 +81,90 @@ public class ViewsFilter implements HttpServerFilter {
             .switchMap(response -> {
                 Optional<AnnotationMetadata> routeMatch = response.getAttribute(HttpAttributes.ROUTE_MATCH,
                         AnnotationMetadata.class);
-                if (routeMatch.isPresent()) {
-                    AnnotationMetadata route = routeMatch.get();
-
-                    Object body = response.body();
-                    Optional<String> optionalView = resolveView(route, body);
-
-                    if (optionalView.isPresent()) {
-
-                        MediaType type = route.getValue(Produces.class, MediaType.class)
-                                .orElse((route.getValue(View.class).isPresent() || body instanceof ModelAndView) ? MediaType.TEXT_HTML_TYPE : MediaType.APPLICATION_JSON_TYPE);
-                        Collection<ViewsRenderer> viewsRenderersCollection = beanLocator.getBeansOfType(ViewsRenderer.class,
-                                new ProducesMediaTypeQualifier<>(type));
-                        if (viewsRenderersCollection.isEmpty()) {
-                            LOG.debug("no view renderer found for media type: {}, ignoring", type);
-                            return Flux.just(response);
-                        }
-                        List<ViewsRenderer> viewsRenderers = new ArrayList<>(viewsRenderersCollection);
-                        OrderUtil.sort(viewsRenderers);
-
-                        String view = optionalView.get();
-
-                        Optional<ViewsRenderer> optionalViewsRenderer = viewsRenderers.stream().filter(viewsRenderer -> viewsRenderer.exists(view)).findFirst();
-
-                        if (!optionalViewsRenderer.isPresent()) {
-                            return Flux.error(new ViewNotFoundException("View [" + view + "] does not exist"));
-                        }
-
-                        ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
-                        ModelAndView<?> modelAndView;
-                        if (body instanceof ModelAndView || body instanceof Map) {
-                            modelAndView = new ModelAndView<>(view, populateModel(request, viewsRenderer, body));
-                        } else {
-                            modelAndView = new ModelAndView<>(view, body);
-                        }
-                        enhanceModel(request, modelAndView);
-                        Writable writable = viewsRenderer.render(view, modelAndView.getModel().orElse(null), request);
-                        response.contentType(type);
-                        response.body(writable);
-                        return Flux.just(response);
-                    }
+                if (!routeMatch.isPresent()) {
+                    return Flux.just(response);
                 }
+                AnnotationMetadata route = routeMatch.get();
+                Object body = response.body();
+                Optional<String> optionalView = resolveView(route, body);
+                if (!optionalView.isPresent()) {
+                    return Flux.just(response);
+                }
+                MediaType type = resolveMediaType(route, body);
+                List<ViewsRenderer> viewsRenderers = resolveViewsRenderer(body != null ? body.getClass() : null, type.toString());
+                if (viewsRenderers.isEmpty()) {
+                    LOG.debug("no view renderer found for media type: {}, ignoring", type);
+                    return Flux.just(response);
+                }
+                String view = optionalView.get();
+                Optional<ViewsRenderer> optionalViewsRenderer = viewsRenderers.stream()
+                        .filter(viewsRenderer -> viewsRenderer.exists(view))
+                        .findFirst();
+                if (!optionalViewsRenderer.isPresent()) {
+                    return Flux.error(new ViewNotFoundException("View [" + view + "] does not exist"));
+                }
+                ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
+                ModelAndView<?> modelAndView;
+                if (body instanceof ModelAndView || body instanceof Map) {
+                    modelAndView = new ModelAndView<>(view, populateModel(request, viewsRenderer, body));
+                } else {
+                    modelAndView = new ModelAndView<>(view, body);
+                }
+                enhanceModel(request, modelAndView);
+                Writable writable = viewsRenderer.render(view, modelAndView.getModel().orElse(null), request);
+                response.contentType(type);
+                response.body(writable);
                 return Flux.just(response);
             });
+    }
+
+    /**
+     *
+     * @param bodyClass Response Body class
+     * @param mediaType Response Content Type
+     * @return List of {@link ViewsRenderer} which includes those which do not specify an {@link @Produces} annotation or
+     * whose {link @Produces} annotation value matches the response content type. The list is sorted. The order is those {@link ViewsRenderer} which
+     * type argument matches the response body class first and then ordered by {@link OrderUtil#COMPARATOR}.
+     */
+    @NonNull
+    public List<ViewsRenderer> resolveViewsRenderer(@Nullable Class<?> bodyClass, @NonNull String mediaType) {
+        return (bodyClass == null ? applicationContext.getBeansOfType(ViewsRenderer.class) :
+                applicationContext.getBeansOfType(ViewsRenderer.class, Qualifiers.byTypeArguments(bodyClass)))
+                .stream()
+                .filter(viewsRenderer -> {
+                    BeanDefinition<? extends ViewsRenderer> beanDefinition = applicationContext.getBeanDefinition(viewsRenderer.getClass());
+                    AnnotationValue<Produces> annotation = beanDefinition.getAnnotation(Produces.class);
+                    if (annotation == null) {
+                        return true;
+                    }
+                    if (!annotation.getValue(String.class).isPresent()) {
+                        return false;
+                    }
+                    return annotation.getValue(String.class).get().equals(mediaType);
+                })
+                .sorted((o1, o2) -> {
+                    BeanDefinition<? extends ViewsRenderer> o1BeanDefinition = applicationContext.getBeanDefinition(o1.getClass());
+                    BeanDefinition<? extends ViewsRenderer> o2BeanDefinition = applicationContext.getBeanDefinition(o2.getClass());
+                    if (o1BeanDefinition.getTypeArguments().size() != o2BeanDefinition.getTypeArguments().size()) {
+                        return Integer.compare(o1BeanDefinition.getTypeArguments().size(), o2BeanDefinition.getTypeArguments().size());
+                    }
+                    return OrderUtil.COMPARATOR.compare(o1, o2);
+                })
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Resolves the response content type for the matched route.
+     * @param route The matched route
+     * @param body The response body
+     * @return The resolved content type
+     */
+    @NonNull
+    protected MediaType resolveMediaType(@NonNull AnnotationMetadata route,
+                                         @Nullable Object body) {
+        return route.getValue(Produces.class, MediaType.class)
+                .orElse((route.getValue(View.class).isPresent() || body instanceof ModelAndView)
+                        ? MediaType.TEXT_HTML_TYPE : MediaType.APPLICATION_JSON_TYPE);
     }
 
     /**
@@ -177,7 +220,7 @@ public class ViewsFilter implements HttpServerFilter {
     @SuppressWarnings({"rawtypes", "unchecked"})
     protected void enhanceModel(HttpRequest<?> request, @NonNull ModelAndView<?> modelAndView) {
         if (modelAndView.getModel().isPresent()) {
-            Collection<ViewModelProcessor> processors = beanLocator.getBeansOfType(ViewModelProcessor.class,
+            Collection<ViewModelProcessor> processors = applicationContext.getBeansOfType(ViewModelProcessor.class,
                     Qualifiers.byTypeArguments(modelAndView.getModel().get().getClass())
             );
             if (LOG.isDebugEnabled()) {

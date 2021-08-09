@@ -60,8 +60,8 @@ class RockerController {
 
     @Produces(MediaType.TEXT_PLAIN)
     @View("home.rocker.html")
-    @Get("/viewWithNoViewRendererForProduces")
-    Person viewWithNoViewRendererForProduces() {
+    @Get("/plainText")
+    Person plainText() {
         new Person(loggedIn: true, username: 'sdelamo')
     }
 
