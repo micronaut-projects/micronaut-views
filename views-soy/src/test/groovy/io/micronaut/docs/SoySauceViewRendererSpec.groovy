@@ -97,7 +97,7 @@ class SoySauceViewRendererSpec extends Specification {
         client.toBlocking().exchange('/soy/missing', String)
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown()
 
         and:
         e.status == HttpStatus.INTERNAL_SERVER_ERROR

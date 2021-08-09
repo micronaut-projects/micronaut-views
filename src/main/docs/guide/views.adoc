@@ -38,7 +38,7 @@ include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[t
 
 <1> Use `@View` annotation to indicate the view name which should be used to render the POJO responded by the controller.
 
-Use the https://micronaut-projects.github.io/micronaut-core/latest/api/io/micronaut/core/annotation/Introspected.html[@Introspected] annotation on your POJO object to avoid reflection at runtime (It will also fix a problem with OpenJ9 jvm.)
+Use the https://micronaut-projects.github.io/micronaut-core/latest/api/io/micronaut/core/annotation/Introspected.html[@Introspected] annotation on your POJO object to  generate `BeanIntrospection` metadata at compilation time.
 
 You can also return a api:views.ModelAndView[] and skip specifying the api:views.View[] annotation.
 
@@ -53,11 +53,6 @@ include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[t
 Moreover, the Controller's method can return a POJO annotated with `@Introspected` to the view:
 
 snippet::io.micronaut.views.model.FruitsController[tags="pojo"]
-
-WARNING: POJOs passed to views are not processed by api:io.micronaut.views.model.ViewModelProcessor[]s
-
-You can also provide implementations of api:views.model.ViewModelProcessor[] to decorate the model with
-extra properties.
 
 The following sections show different template engines integrations.
 

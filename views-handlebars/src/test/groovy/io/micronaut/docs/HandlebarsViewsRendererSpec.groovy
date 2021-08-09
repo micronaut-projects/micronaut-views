@@ -115,7 +115,7 @@ class HandlebarsViewsRendererSpec extends Specification {
         client.toBlocking().exchange('/handlebars/bogus', String)
 
         then:
-        def e = thrown(HttpClientResponseException)
+        HttpClientResponseException e = thrown()
 
         and:
         e.status == HttpStatus.INTERNAL_SERVER_ERROR
