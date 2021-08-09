@@ -19,12 +19,14 @@ import io.micronaut.context.ApplicationContext
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
+import io.micronaut.http.client.BlockingHttpClient
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.model.ConfigViewModelProcessor
 import io.micronaut.views.model.FruitsController
 import spock.lang.AutoCleanup
+import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -42,13 +44,16 @@ class ModelAndViewSpec extends Specification {
     @Shared
     HttpClient httpClient = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.URL)
 
+    @Shared
+    BlockingHttpClient client = httpClient.toBlocking()
+
     def "a view model can be any object"() {
         expect:
         embeddedServer.applicationContext.containsBean(FruitsController)
 
         when:
         HttpRequest request = HttpRequest.GET("/")
-        HttpResponse<String> response = httpClient.toBlocking().exchange(request, String)
+        HttpResponse<String> response = client.exchange(request, String)
 
         then:
         response.status() == HttpStatus.OK
@@ -72,7 +77,7 @@ class ModelAndViewSpec extends Specification {
 
         when:
         HttpRequest request = HttpRequest.GET("/null")
-        httpClient.toBlocking().exchange(request, String)
+        client.exchange(request, String)
 
         then:
         thrown(HttpClientResponseException)
@@ -84,7 +89,7 @@ class ModelAndViewSpec extends Specification {
 
         when:
         HttpRequest request = HttpRequest.GET("/map")
-        HttpResponse<String> response = httpClient.toBlocking().exchange(request, String)
+        HttpResponse<String> response = client.exchange(request, String)
 
         then:
         response.status() == HttpStatus.OK
@@ -108,7 +113,32 @@ class ModelAndViewSpec extends Specification {
 
         when:
         HttpRequest request = HttpRequest.GET("/processor")
-        HttpResponse<String> response = httpClient.toBlocking().exchange(request, String)
+        HttpResponse<String> response = client.exchange(request, String)
+
+        then:
+        response.status() == HttpStatus.OK
+
+        when:
+        String html = response.body()
+
+        then:
+        html
+
+        and:
+        embeddedServer.applicationContext.containsBean(ConfigViewModelProcessor.class)
+
+        and:
+        html.contains('<h1>config: test</h1>')
+    }
+
+    @PendingFeature
+    def "ViewModelProcessors work with controllers returning POJOs"() {
+        expect:
+        embeddedServer.applicationContext.containsBean(FruitsController)
+
+        when:
+        HttpRequest request = HttpRequest.GET("/pojo-processor")
+        HttpResponse<String> response = client.exchange(request, String)
 
         then:
         response.status() == HttpStatus.OK

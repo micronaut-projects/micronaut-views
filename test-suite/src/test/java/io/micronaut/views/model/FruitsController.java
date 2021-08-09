@@ -62,6 +62,12 @@ public class FruitsController {
         return new ModelAndView<>("fruits-processor", context);
     }
 
+    @View("fruit")
+    @Get("/pojo-processor")
+    public Fruit pojoProcessor() {
+        return new Fruit("orange", "orange");
+    }
+
     @Introspected
     public static class Fruit {
         private final String name;
