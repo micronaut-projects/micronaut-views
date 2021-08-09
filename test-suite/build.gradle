@@ -9,4 +9,5 @@ dependencies {
     testImplementation project(":views-velocity")
     testImplementation project(":views-core")
     testImplementation project(":views-soy")
+    testImplementation project(":views-handlebars")
 }
