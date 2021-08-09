@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Returns information about the current user so that it can be append it to the model being rendered.
+ * Returns information about the current user so that it can be appended to the model being rendered.
  *
  * @author Sergio del Amo
  * @since 1.1.0

@@ -97,7 +97,7 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
   }
 
   /**
-   * @param viewName view name to be render
+   * @param viewName view name to be rendered
    * @param data     response body to render it with a view
    * @return A writable where the view will be written to.
    */
@@ -107,7 +107,7 @@ public class SoySauceViewsRenderer implements ViewsRenderer {
   }
 
   /**
-   * @param viewName view name to be render
+   * @param viewName view name to be rendered
    * @param data     response body to render it with a view
    * @param request  HTTP request
    * @return A writable where the view will be written to.

@@ -26,7 +26,7 @@ import io.micronaut.core.util.Toggleable;
 public interface ViewsConfiguration extends Toggleable {
 
     /**
-     * @return The resources folder where views should be searched for.
+     * @return The resources' folder where views should be searched for.
      */
     String getFolder();
 }

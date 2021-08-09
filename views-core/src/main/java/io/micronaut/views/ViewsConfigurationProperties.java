@@ -59,7 +59,7 @@ public class ViewsConfigurationProperties implements ViewsConfiguration {
     }
 
     /**
-     * @return The resources folder where views should be searched for. By default {@value #DEFAULT_FOLDER}
+     * @return The resources' folder where views should be searched for. By default {@value #DEFAULT_FOLDER}
      */
     @Override
     public String getFolder() {
