@@ -150,9 +150,9 @@ class RockerViewRendererSpec extends Specification {
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
-    def "invoking /rocker/viewWithNoViewRendererForProduces skips view rendering since controller specifies a media type with no available ViewRenderer"() {
+    def "invoking /rocker/plainText renders with template but sets content type to txt/plain"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/rocker/viewWithNoViewRendererForProduces', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange('/rocker/plainText', String)
 
         then:
         noExceptionThrown()
@@ -161,9 +161,11 @@ class RockerViewRendererSpec extends Specification {
         when:
         String body = rsp.body()
 
-        then: 'default JSON rendering is used since no bean ViewRenderer is available for text/csv media type'
+        then:
         body
-        rsp.body() == 'io.micronaut.docs.Person(sdelamo, true)'
+        rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
+        rsp.getHeaders().getContentType().isPresent()
+        rsp.getHeaders().getContentType().get() == MediaType.TEXT_PLAIN
     }
 
     def "invoking /rocker/bogus returns 500 if you attempt to render a template which does not exist"() {

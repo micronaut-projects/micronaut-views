@@ -24,8 +24,6 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.core.util.ArgumentUtils;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -40,12 +38,12 @@ import jakarta.inject.Singleton;
  * @author Sergio del Amo
  * @see <a href="https://jknack.github.io/handlebars.java/">https://jknack.github.io/handlebars.java/</a>
  * @since 1.0
+ * @param <T> The model type
  */
-@Produces(MediaType.TEXT_HTML)
 @Requires(property = HandlebarsViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 @Requires(classes = Handlebars.class)
 @Singleton
-public class HandlebarsViewsRenderer implements ViewsRenderer {
+public class HandlebarsViewsRenderer<T> implements ViewsRenderer<T> {
 
     protected final ViewsConfiguration viewsConfiguration;
     protected final ResourceLoader resourceLoader;
@@ -73,7 +71,7 @@ public class HandlebarsViewsRenderer implements ViewsRenderer {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String viewName, @Nullable Object data) {
+    public Writable render(@NonNull String viewName, @Nullable T data) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             String location = viewLocation(viewName);
