@@ -54,19 +54,23 @@ import java.util.stream.Collectors;
  * @since 1.0
  */
 @Requires(beans = ViewsRenderer.class)
+@Requires(beans = ViewsResolver.class)
 @Filter(Filter.MATCH_ALL_PATTERN)
 public class ViewsFilter implements HttpServerFilter {
     private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
 
     protected final ApplicationContext applicationContext;
+    protected final ViewsResolver viewsResolver;
 
     /**
      * Constructor.
      *
      * @param applicationContext Application Context
+     * @param viewsResolver Views Resolver
      */
-    public ViewsFilter(ApplicationContext applicationContext) {
+    public ViewsFilter(ApplicationContext applicationContext, ViewsResolver viewsResolver) {
         this.applicationContext = applicationContext;
+        this.viewsResolver = viewsResolver;
     }
 
     @Override
@@ -79,6 +83,10 @@ public class ViewsFilter implements HttpServerFilter {
                                                             ServerFilterChain chain) {
         return Flux.from(chain.proceed(request))
             .switchMap(response -> {
+                Optional<String> optionalView = viewsResolver.resolveView(request, response);
+                if (!optionalView.isPresent()) {
+                    return Flux.just(response);
+                }
                 Optional<AnnotationMetadata> routeMatch = response.getAttribute(HttpAttributes.ROUTE_MATCH,
                         AnnotationMetadata.class);
                 if (!routeMatch.isPresent()) {
@@ -86,10 +94,6 @@ public class ViewsFilter implements HttpServerFilter {
                 }
                 AnnotationMetadata route = routeMatch.get();
                 Object body = response.body();
-                Optional<String> optionalView = resolveView(route, body);
-                if (!optionalView.isPresent()) {
-                    return Flux.just(response);
-                }
                 MediaType type = resolveMediaType(route, body);
                 List<ViewsRenderer> viewsRenderers = resolveViewsRenderer(body != null ? body.getClass() : null, type.toString());
                 if (viewsRenderers.isEmpty()) {
@@ -191,24 +195,6 @@ public class ViewsFilter implements HttpServerFilter {
             return ((ModelAndView) responseBody).getModel().orElse(null);
         }
         return responseBody;
-    }
-
-    /**
-     * Resolves the view for the given method and response body. Subclasses can override to customize.
-     *
-     * @param route        Request route
-     * @param responseBody Response body
-     * @return view name to be rendered
-     */
-    @SuppressWarnings({"WeakerAccess", "unchecked", "rawtypes"})
-    protected Optional<String> resolveView(AnnotationMetadata route, Object responseBody) {
-        Optional<?> optionalViewName = route.getValue(View.class);
-        if (optionalViewName.isPresent()) {
-            return Optional.of((String) optionalViewName.get());
-        } else if (responseBody instanceof ModelAndView) {
-            return ((ModelAndView) responseBody).getView();
-        }
-        return Optional.empty();
     }
 
     /**
