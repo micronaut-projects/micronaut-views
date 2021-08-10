@@ -238,16 +238,10 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
             } else {
                 // otherwise, use it directly as a map
                 //noinspection unchecked
-                context = SoyContext.fromMap(
-                        (Map<String, Object>) dataMap,
-                        Optional.of(Collections.emptyMap()),
-                        Optional.empty());
+                context = SoyContext.fromMap((Map<String, Object>) dataMap, Collections.emptyMap(), null);
             }
         } else {
-            context = SoyContext.fromMap(
-                    modelOf(data),
-                    Optional.of(Collections.emptyMap()),
-                    Optional.empty());
+            context = SoyContext.fromMap(modelOf(data), Collections.emptyMap(), null);
         }
 
         final SoySauce.Renderer renderer = soySauce.newRenderer(new SoyTemplate() {

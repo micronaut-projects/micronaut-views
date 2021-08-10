@@ -51,7 +51,7 @@ public final class SoyContext implements SoyContextMediator {
      */
     private SoyContext(@NonNull Map<String, Object> props,
                        @NonNull Map<String, Object> injected,
-                       @NonNull Optional<SoyNamingMapProvider> overrideNamingMap) {
+                       @Nullable SoyNamingMapProvider overrideNamingMap) {
         this.props = ImmutableMap.copyOf(props);
         this.injected = ImmutableMap.copyOf(injected);
         this.overrideNamingMap = overrideNamingMap;
@@ -68,16 +68,16 @@ public final class SoyContext implements SoyContextMediator {
      * @throws IllegalArgumentException If any provided argument is `null`. Pass an empty map or an empty `Optional`.
      */
     public static SoyContext fromMap(@NonNull Map<String, Object> props,
-                                     @NonNull Optional<Map<String, Object>> injected,
-                                     @NonNull Optional<SoyNamingMapProvider> overrideNamingMap) {
-        //noinspection ConstantConditions,OptionalAssignedToNull
-        if (props == null || injected == null || overrideNamingMap == null) {
+                                     @Nullable Map<String, Object> injected,
+                                     @Nullable SoyNamingMapProvider overrideNamingMap) {
+        //noinspection ConstantConditions
+        if (props == null) {
             throw new IllegalArgumentException(
                     "Must provide empty maps instead of `null` to `SoyContext`.");
         }
         return new SoyContext(
                 props,
-                injected.orElse(Collections.emptyMap()),
+                injected != null ? injected : Collections.emptyMap(),
                 overrideNamingMap);
     }
 
@@ -117,6 +117,6 @@ public final class SoyContext implements SoyContextMediator {
      */
     @Override @NonNull
     public Optional<SoyNamingMapProvider> overrideNamingMap() {
-        return overrideNamingMap;
+        return Optional.ofNullable(overrideNamingMap);
     }
 }
