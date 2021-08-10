@@ -24,6 +24,7 @@ import io.micronaut.http.HttpRequest;
  * Writes the view into {@link Writable}.
  * @author Sergio del Amo
  * @since 3.0.0
+ * @param <T> The model type
  */
 public interface WritableViewsRenderer<T> extends ViewsRenderer<T> {
 

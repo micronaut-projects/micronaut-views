@@ -24,6 +24,7 @@ import org.reactivestreams.Publisher;
 /**
  * Reactive implementation of {@link ViewsRenderer}.
  * @author Sergio del Amo
+ * @param <T> The model type
  * @since 3.0.0
  */
 public interface ReactiveViewsRenderer<T> extends ViewsRenderer<T> {

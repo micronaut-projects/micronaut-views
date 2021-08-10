@@ -31,10 +31,9 @@ import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.MutableHttpResponse;
-import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ModelAndView;
-import io.micronaut.views.ReactiveViewRenderer;
+import io.micronaut.views.ReactiveViewsRenderer;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsResolver;
 import io.micronaut.views.csp.CspConfiguration;
@@ -42,6 +41,7 @@ import io.micronaut.views.csp.CspFilter;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import jakarta.inject.Singleton;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,12 +65,12 @@ import java.util.function.Consumer;
  * @since 1.2.1
  * @param <T> The model type
  */
-@Filter(Filter.MATCH_ALL_PATTERN)
+@Singleton
 @Produces(MediaType.TEXT_HTML)
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".engine", notEquals = "tofu")
 @SuppressWarnings({"WeakerAccess", "UnstableApiUsage"})
-public class SoySauceViewsRenderer<T> implements ReactiveViewRenderer<T> {
+public class SoySauceViewsRenderer<T> implements ReactiveViewsRenderer<T> {
     private static final Logger LOG = LoggerFactory.getLogger(SoySauceViewsRenderer.class);
     private static final String INJECTED_NONCE_PROPERTY = "csp_nonce";
     private static final String SOY_CONTEXT_SENTINEL = "__soy_context__";
@@ -221,6 +221,7 @@ public class SoySauceViewsRenderer<T> implements ReactiveViewRenderer<T> {
      * @param response HTTP response object assembled so far.
      * @return A writable where the view will be written to.
      */
+    @Override
     @NonNull
     public Publisher<MutableHttpResponse<?>> render(@NonNull String viewName,
                                                    @Nullable T data,
@@ -253,7 +254,7 @@ public class SoySauceViewsRenderer<T> implements ReactiveViewRenderer<T> {
             Map dataMap = (Map) data;
             if (dataMap.size() == 1 && dataMap.containsKey(SOY_CONTEXT_SENTINEL)) {
                 // it's a packaged soy context
-                context = (SoyContextMediator)dataMap.get(SOY_CONTEXT_SENTINEL);
+                context = (SoyContextMediator) dataMap.get(SOY_CONTEXT_SENTINEL);
             } else {
                 // otherwise, use it directly as a map
                 //noinspection unchecked

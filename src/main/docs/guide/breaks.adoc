@@ -2,9 +2,16 @@ This section outlines the breaking changes done in major versions of Micronaut V
 
 === 3.0.0
 
+* A Reactive Views renderer api:views.ReactiveViewsRenderer[] has been introduced. `Soy` implementation uses it. Other template engine implementation render to a `Writable`
+by implementing `api:views.WritableViewsRenderer[]`. `ViewsRenderer` is now a interface class extended by both pi:views.ReactiveViewsRenderer[]` and api:views.WritableViewsRenderer[].
+
 * api:views.model.ViewModelProcessor[] no longer assumes a `Map<String,Object>` model and must be typed to the exact type of the model you would like to process.
 
 * api:views.model.ViewsRenderer[] are now typed. Moreover, provided `ViewsRenderer` don't specify `@Produces(MediaType.TEXT_HTML)` and responses content type respect the content type defined for the route.
+
+* `ViewsRenderer::modelOf` method has been moved to `ViewUtils::modelOf`
+
+* Constant `EXTENSION_SEPARATOR` has been moved from `ViewsRenderer` to `ViewUtils`
 
 == 2.0.0
 

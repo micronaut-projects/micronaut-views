@@ -19,8 +19,8 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.Ordered;
 
 /**
- * Interface to be implemented by View Engines implementations.
- * Implemented by either {@link WritableViewsRender} or {@link ReactiveViewsRenderer}
+ * Base Interface to be implemented by View Engines implementations.
+ * You should implement either {@link WritableViewsRenderer} or {@link ReactiveViewsRenderer}.
  * @param <T> The model type
  * @author Sergio del Amo
  * @since 1.0
@@ -31,5 +31,5 @@ public interface ViewsRenderer<T> extends Ordered {
      * @param viewName view name to be rendered
      * @return true if a template can be found for the supplied view name.
      */
-    boolean canRender(@NonNull String viewName);
+    boolean exists(@NonNull String viewName);
 }

@@ -17,6 +17,7 @@ package io.micronaut.views.pebble;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.views.WritableViewsRenderer;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import com.mitchellbosecke.pebble.PebbleEngine;
@@ -24,7 +25,6 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.ViewUtils;
-import io.micronaut.views.ViewsRenderer;
 
 /**
  * Renders Views with Pebble.
@@ -37,7 +37,7 @@ import io.micronaut.views.ViewsRenderer;
 @Singleton
 @Requires(property = PebbleConfigurationProperties.ENABLED, notEquals = StringUtils.FALSE)
 @Requires(classes = PebbleEngine.class)
-public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
+public class PebbleViewsRenderer<T> implements WritableViewsRenderer<T> {
     
     private final String extension;
     private final PebbleEngine engine;
@@ -50,7 +50,7 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
 
     @Override
     public Writable render(String name, T data, @NonNull HttpRequest<?> request) {
-        return (writer) -> engine.getTemplate(ViewUtils.normalizeFile(name, extension)).evaluate(writer, modelOf(data));
+        return (writer) -> engine.getTemplate(ViewUtils.normalizeFile(name, extension)).evaluate(writer, ViewUtils.modelOf(data));
     }
 
     @Override

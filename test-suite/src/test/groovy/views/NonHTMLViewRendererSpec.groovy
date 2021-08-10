@@ -17,6 +17,7 @@ import io.micronaut.http.client.HttpClient
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.View
 import io.micronaut.views.ViewsRenderer
+import io.micronaut.views.WritableViewsRenderer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -88,7 +89,7 @@ class NonHTMLViewRendererSpec extends Specification {
     @Produces(MediaType.TEXT_XML)
     @Requires(property = "spec.name", value = "CsvViewRendererSpec")
     @Singleton
-    static class XmlViewRenderer implements ViewsRenderer<Library> {
+    static class XmlViewRenderer implements WritableViewsRenderer<Library> {
         @Override
         Writable render(@NonNull String viewName, @Nullable Library data, @NonNull HttpRequest<?> request) {
             new Writable() {
@@ -110,7 +111,7 @@ class NonHTMLViewRendererSpec extends Specification {
     @Produces(MediaType.TEXT_CSV)
     @Requires(property = "spec.name", value = "CsvViewRendererSpec")
     @Singleton
-    static class SingleBookViewRenderer implements ViewsRenderer<Book> {
+    static class SingleBookViewRenderer implements WritableViewsRenderer<Book> {
         // this renderer should not be used because it specifies a different type
 
         @Override
@@ -137,7 +138,7 @@ class NonHTMLViewRendererSpec extends Specification {
     @Produces(MediaType.TEXT_CSV)
     @Requires(property = "spec.name", value = "CsvViewRendererSpec")
     @Singleton
-    static class CsvViewRenderer implements ViewsRenderer<Library> {
+    static class CsvViewRenderer implements WritableViewsRenderer<Library> {
         @Override
         Writable render(@NonNull String viewName, @Nullable Library data, @NonNull HttpRequest<?> request) {
             new Writable() {
