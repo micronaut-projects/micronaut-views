@@ -15,6 +15,8 @@
  */
 package io.micronaut.views.pebble;
 
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.http.HttpRequest;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import com.mitchellbosecke.pebble.PebbleEngine;
@@ -47,7 +49,7 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
     }
 
     @Override
-    public Writable render(String name, T data) {
+    public Writable render(String name, T data, @NonNull HttpRequest<?> request) {
         return (writer) -> engine.getTemplate(ViewUtils.normalizeFile(name, extension)).evaluate(writer, modelOf(data));
     }
 

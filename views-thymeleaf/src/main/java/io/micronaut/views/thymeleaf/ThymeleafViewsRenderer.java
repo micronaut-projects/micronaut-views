@@ -67,16 +67,6 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
         this.engine = templateEngine;
     }
 
-    @NonNull
-    @Override
-    public Writable render(@NonNull String viewName, @Nullable T data) {
-        ArgumentUtils.requireNonNull("viewName", viewName);
-        return (writer) -> {
-            IContext context = new Context(Locale.US, modelOf(data));
-            render(viewName, context, writer);
-        };
-    }
-
     @Override
     @NonNull
     public Writable render(@NonNull String viewName,
