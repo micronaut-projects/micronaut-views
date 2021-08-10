@@ -7,6 +7,7 @@ import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
+import spock.lang.Issue
 import spock.lang.Specification
 
 @Property(name = "spec.name", value = "AsyncSpec")
@@ -17,6 +18,7 @@ class AsyncSpec extends Specification {
     @Client("/")
     HttpClient client
 
+    @Issue("https://github.com/micronaut-projects/micronaut-views/issues/68")
     void "verify a controller which returns a model with an async coroutine works"() {
         when:
         HttpRequest request = HttpRequest.GET("/async")
