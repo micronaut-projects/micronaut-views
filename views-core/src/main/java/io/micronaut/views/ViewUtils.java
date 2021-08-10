@@ -29,6 +29,9 @@ import java.util.Map;
  * @since 1.1.0
  */
 public class ViewUtils {
+    /**
+     * Extension separator.
+     */
     public static final String EXTENSION_SEPARATOR = ".";
 
     /**
