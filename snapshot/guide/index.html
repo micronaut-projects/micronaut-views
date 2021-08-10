@@ -1952,7 +1952,19 @@ Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graa
 <p><a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a> no longer assumes a <code>Map&lt;String,Object&gt;</code> model and must be typed to the exact type of the model you would like to process.</p>
 </li>
 <li>
-<p><a href="../api/io/micronaut/views/model/ViewsRenderer.html">ViewsRenderer</a> are now typed. Moreover, provided <code>ViewsRenderer</code> don&#8217;t specify <code>@Produces(MediaType.TEXT_HTML)</code> and responses content type respect the content type defined for the route.</p>
+<p><a href="../api/io/micronaut/views/ViewsRenderer.html">ViewsRenderer</a> are now typed. Moreover, provided <code>ViewsRenderer</code> don&#8217;t specify <code>@Produces(MediaType.TEXT_HTML)</code> and responses content type respect the content type defined for the route.</p>
+</li>
+<li>
+<p>Method <code>ViewsRenderer::render(String, T)</code> was removed. Use <code>ViewsRenderer::render(String, T, HttpRequest)</code> instead.</p>
+</li>
+<li>
+<p>Decoration of view model is now handled by <a href="../api/io/micronaut/views/ViewsModelDecorator.html">ViewsModelDecorator</a> and its default implementation <a href="../api/io/micronaut/views/DefaultViewsModelDecorator.html">DefaultViewsModelDecorator</a></p>
+</li>
+<li>
+<p>Resolution of view name is now handled by <a href="../api/io/micronaut/views/ViewsResolver.html">ViewsResolver</a> and its default implementation <a href="../api/io/micronaut/views/DefaultViewsResolver.html">DefaultViewsResolver</a></p>
+</li>
+<li>
+<p>Resolution of <a href="../api/io/micronaut/views/ViewsRenderer.html">ViewsRenderer</a> used to render a view is now handled by <a href="../api/io/micronaut/views/ViewsRendererLocator.html">ViewsRendererLocator</a> and its default implementation <a href="../api/io/micronaut/views/DefaultViewsRendererLocator.html">DefaultViewsRendererLocator</a></p>
 </li>
 <li>
 <p><code>ViewsRenderer::modelOf</code> method has been moved to <code>ViewUtils::modelOf</code></p>
