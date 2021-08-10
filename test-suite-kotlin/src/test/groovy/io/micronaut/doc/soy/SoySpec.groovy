@@ -16,7 +16,7 @@ import jakarta.inject.Inject
 class SoySpec extends Specification {
     @Inject
     @Client("/")
-    public HttpClient httpClient;
+    public HttpClient httpClient
 
     def "invoking /soy renders soy template from a controller returning a map"() {
         when:
