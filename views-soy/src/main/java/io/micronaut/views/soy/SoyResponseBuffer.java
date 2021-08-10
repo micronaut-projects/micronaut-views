@@ -28,7 +28,6 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-
 /**
  * Implements a response buffer for Soy-rendered content, that complies with {@link AdvisingAppendable}. Backed by a
  * Netty {@link ByteBuf}, acquired by default from the {@link PooledByteBufAllocator}. Once content in the buffer

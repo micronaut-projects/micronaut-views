@@ -17,10 +17,8 @@ package io.micronaut.views.soy;
 
 import com.google.template.soy.jbcsrc.api.AdvisingAppendable;
 import io.micronaut.core.io.Writable;
-
 import java.io.IOException;
 import java.io.Writer;
-
 
 /**
  * Adapts {@link Appendable} to {@link Writable} for use when rendering Soy templates.
@@ -58,5 +56,4 @@ public class AppendableToWritable implements Writable, Appendable, AdvisingAppen
     public void writeTo(Writer out) throws IOException {
         out.write(builder.toString());
     }
-
 }

@@ -15,7 +15,6 @@
  */
 package io.micronaut.views.soy;
 
-
 import com.google.template.soy.jbcsrc.api.AdvisingAppendable;
 import com.google.template.soy.jbcsrc.api.RenderResult;
 import com.google.template.soy.jbcsrc.api.SoySauce;
@@ -32,7 +31,6 @@ import javax.annotation.concurrent.Immutable;
 import java.io.*;
 import java.security.MessageDigest;
 import java.util.concurrent.*;
-
 
 /**
  * Describes an individual render routine via SoySauce, with a continuation, context,

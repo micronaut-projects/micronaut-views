@@ -21,9 +21,7 @@ import com.google.template.soy.jbcsrc.api.SoySauce;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsConfigurationProperties;
-
 import io.micronaut.core.annotation.Nullable;
-
 
 /**
  * {@link ConfigurationProperties} implementation for {@link SoyTofuViewsRenderer}.
@@ -149,5 +147,4 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
     public void setChunkSize(int chunkSize) {
         this.chunkSize = chunkSize;
     }
-
 }

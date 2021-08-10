@@ -15,13 +15,10 @@
  */
 package io.micronaut.views.soy;
 
-
 import io.micronaut.views.exceptions.ViewRenderingException;
-
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import java.util.concurrent.Future;
-
 
 /**
  * Exception type that wraps errors encountered while rendering a Soy template.

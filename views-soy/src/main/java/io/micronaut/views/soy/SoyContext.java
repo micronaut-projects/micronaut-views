@@ -119,5 +119,4 @@ public final class SoyContext implements SoyContextMediator {
     public Optional<SoyNamingMapProvider> overrideNamingMap() {
         return overrideNamingMap;
     }
-
 }

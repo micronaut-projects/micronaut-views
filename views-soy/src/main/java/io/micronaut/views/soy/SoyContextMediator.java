@@ -15,16 +15,13 @@
  */
 package io.micronaut.views.soy;
 
-
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MutableHttpResponse;
-
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import java.security.MessageDigest;
 import java.util.Map;
 import java.util.Optional;
-
 
 /**
  * Interface by which Soy render context can be managed and orchestrated by a custom {@link SoyContext} object. Provides
