@@ -134,20 +134,22 @@ class VelocityViewRendererSpec extends Specification {
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
-    def "invoking /velocity/viewWithNoViewRendererForProduces skips view rendering since controller specifies a media type with no available ViewRenderer"() {
+    def "invoking /velocity/plainText renders with template but sets content type to txt/plain"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/velocity/viewWithNoViewRendererForProduces', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange('/velocity/plainText', String)
 
         then:
         noExceptionThrown()
         rsp.status() == HttpStatus.OK
+        rsp.getHeaders().getContentType().isPresent()
+        rsp.getHeaders().getContentType().get() == MediaType.TEXT_PLAIN
 
         when:
         String body = rsp.body()
 
-        then: 'default JSON rendering is used since no bean ViewRenderer is available for text/csv media type'
+        then:
         body
-        rsp.body() == 'io.micronaut.docs.Person(sdelamo, true)'
+        body.contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
     def "invoking /velocity/bogus returns 404 if you attempt to render a template which does not exist"() {

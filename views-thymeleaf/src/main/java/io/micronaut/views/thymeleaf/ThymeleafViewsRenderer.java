@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 package io.micronaut.views.thymeleaf;
-
-import io.micronaut.core.beans.BeanMap;
 import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -38,9 +34,7 @@ import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * Renders templates Thymeleaf Java template engine.
@@ -50,10 +44,10 @@ import java.util.Map;
  *
  * @see <a href="https://www.thymeleaf.org">https://www.thymeleaf.org</a>
  * @since 1.0
+ * @param <T> The model type
  */
-@Produces(MediaType.TEXT_HTML)
 @Singleton
-public class ThymeleafViewsRenderer implements ViewsRenderer {
+public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
 
     protected final AbstractConfigurableTemplateResolver templateResolver;
     protected final TemplateEngine engine;
@@ -75,10 +69,10 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String viewName, @Nullable Object data) {
+    public Writable render(@NonNull String viewName, @Nullable T data) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
-            IContext context = new Context(Locale.US, variables(data));
+            IContext context = new Context(Locale.US, modelOf(data));
             render(viewName, context, writer);
         };
     }
@@ -86,12 +80,12 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
     @Override
     @NonNull
     public Writable render(@NonNull String viewName,
-                           @Nullable Object data,
+                           @Nullable T data,
                            @NonNull HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         ArgumentUtils.requireNonNull("request", request);
         return (writer) -> {
-            IContext context = new WebContext(request, request.getLocale().orElse(Locale.US), variables(data));
+            IContext context = new WebContext(request, request.getLocale().orElse(Locale.US), modelOf(data));
             render(viewName, context, writer);
         };
     }
@@ -137,17 +131,6 @@ public class ThymeleafViewsRenderer implements ViewsRenderer {
         templateResolver.setCheckExistence(thConfiguration.getCheckExistence());
         templateResolver.setCacheable(thConfiguration.getCacheable());
         return templateResolver;
-    }
-
-    private static Map<String, Object> variables(@Nullable Object data) {
-        if (data == null) {
-            return new HashMap<>();
-        }
-        if (data instanceof Map) {
-            return (Map<String, Object>) data;
-        } else {
-            return BeanMap.of(data);
-        }
     }
 
     private String viewLocation(final String name) {

@@ -17,8 +17,6 @@ package io.micronaut.views.velocity;
 
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -45,10 +43,10 @@ import java.util.Properties;
  *
  * @see <a href="https://velocity.apache.org">https://velocity.apache.org</a>
  * @since 1.0
+ * @param <T> The model type
  */
-@Produces(MediaType.TEXT_HTML)
 @Singleton
-public class VelocityViewsRenderer implements ViewsRenderer {
+public class VelocityViewsRenderer<T> implements ViewsRenderer<T> {
 
     protected final VelocityEngine velocityEngine;
     protected final ViewsConfiguration viewsConfiguration;
@@ -72,7 +70,7 @@ public class VelocityViewsRenderer implements ViewsRenderer {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String view, @Nullable Object data) {
+    public Writable render(@NonNull String view, @Nullable T data) {
         ArgumentUtils.requireNonNull("view", view);
         return (writer) -> {
             Map<String, Object> context = modelOf(data);

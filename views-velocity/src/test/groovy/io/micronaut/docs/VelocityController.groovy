@@ -51,8 +51,8 @@ class VelocityController {
 
     @Produces(MediaType.TEXT_PLAIN)
     @View("home.vm")
-    @Get("/viewWithNoViewRendererForProduces")
-    Person viewWithNoViewRendererForProduces() {
+    @Get("/plainText")
+    Person plainText() {
         new Person(loggedIn: true, username: 'sdelamo')
     }
 
