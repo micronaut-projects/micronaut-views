@@ -11,6 +11,8 @@ dependencies {
     testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
     testImplementation project(":views-soy")
     testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21"
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    testImplementation project(":views-velocity")
 }
 
 
