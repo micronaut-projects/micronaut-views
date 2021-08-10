@@ -17,6 +17,7 @@ package io.micronaut.views.velocity;
 
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -70,7 +71,7 @@ public class VelocityViewsRenderer<T> implements ViewsRenderer<T> {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String view, @Nullable T data) {
+    public Writable render(@NonNull String view, @Nullable T data, @NonNull HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("view", view);
         return (writer) -> {
             Map<String, Object> context = modelOf(data);

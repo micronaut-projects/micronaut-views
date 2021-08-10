@@ -94,15 +94,6 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T> {
         }
     }
 
-    /**
-     * @param viewName view name to be rendered
-     * @param data     response body to render it with a view
-     * @return A writable where the view will be written to.
-     */
-    @NonNull
-    public Writable render(@NonNull String viewName, @Nullable T data) {
-        return render(viewName, data, null);
-    }
 
     /**
      * @param viewName view name to be rendered
@@ -129,7 +120,7 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T> {
             }
         });
         renderer.setData(context);
-        if (injectNonce && request != null) {
+        if (injectNonce) {
             Optional<Object> nonceObj = request.getAttribute(CspFilter.NONCE_PROPERTY);
             if (nonceObj.isPresent()) {
                 String nonceValue = ((String) nonceObj.get());
