@@ -35,83 +35,83 @@ import io.micronaut.core.annotation.Nullable;
 @ConfigurationProperties(SoyViewsRendererConfigurationProperties.PREFIX)
 public class SoyViewsRendererConfigurationProperties implements SoyViewsRendererConfiguration {
 
-  public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".soy";
+    public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".soy";
 
-  /**
-   * The default enable value.
-   */
-  @SuppressWarnings("WeakerAccess")
-  public static final boolean DEFAULT_ENABLED = true;
+    /**
+     * The default enable value.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static final boolean DEFAULT_ENABLED = true;
 
-  /**
-   * Whether to mount renaming maps.
-   */
-  @SuppressWarnings("WeakerAccess")
-  public static final boolean DEFAULT_RENAMING = true;
+    /**
+     * Whether to mount renaming maps.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static final boolean DEFAULT_RENAMING = true;
 
-  private boolean enabled = DEFAULT_ENABLED;
-  private boolean renaming = DEFAULT_RENAMING;
-  private final SoyFileSetProvider fileSetProvider;
+    private boolean enabled = DEFAULT_ENABLED;
+    private boolean renaming = DEFAULT_RENAMING;
+    private final SoyFileSetProvider fileSetProvider;
 
-  /**
-   * Default constructor for Soy views renderer config properties.
-   *
-   * @param viewsConfiguration The views configuration
-   * @param fileSetProvider Soy file set provider (template sources)
-   */
-  public SoyViewsRendererConfigurationProperties(
-    ViewsConfiguration viewsConfiguration,
-    SoyFileSetProvider fileSetProvider) {
-    this.fileSetProvider = fileSetProvider;
-  }
+    /**
+     * Default constructor for Soy views renderer config properties.
+     *
+     * @param viewsConfiguration The views configuration
+     * @param fileSetProvider Soy file set provider (template sources)
+     */
+    public SoyViewsRendererConfigurationProperties(
+            ViewsConfiguration viewsConfiguration,
+            SoyFileSetProvider fileSetProvider) {
+        this.fileSetProvider = fileSetProvider;
+    }
 
-  @Override
-  public boolean isEnabled() {
-    return enabled;
-  }
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-  /**
-   * Whether Soy-backed views are enabled. Default value `{@value #DEFAULT_ENABLED}`
-   *
-   * @param enabled True if they are.
-   */
-  public void setEnabled(boolean enabled) {
-    this.enabled = enabled;
-  }
+    /**
+     * Whether Soy-backed views are enabled. Default value `{@value #DEFAULT_ENABLED}`
+     *
+     * @param enabled True if they are.
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-  /**
-   * Specifies whether renaming is enabled. Defaults to `{@value #DEFAULT_RENAMING}`.
-   *
-   * @return True if it is enabled.
-   */
-  @Override
-  public boolean isRenamingEnabled() {
-    return renaming;
-  }
+    /**
+     * Specifies whether renaming is enabled. Defaults to `{@value #DEFAULT_RENAMING}`.
+     *
+     * @return True if it is enabled.
+     */
+    @Override
+    public boolean isRenamingEnabled() {
+        return renaming;
+    }
 
-  /**
-   * Turns renaming on or off. Default value `{@value #DEFAULT_RENAMING}`
-   *
-   * @param renaming Renaming status.
-   */
-  @Override
-  public void setRenamingEnabled(boolean renaming) {
-    this.renaming = renaming;
-  }
+    /**
+     * Turns renaming on or off. Default value `{@value #DEFAULT_RENAMING}`
+     *
+     * @param renaming Renaming status.
+     */
+    @Override
+    public void setRenamingEnabled(boolean renaming) {
+        this.renaming = renaming;
+    }
 
-  /**
-   * @return The Soy file set to render from
-   */
-  public @Nullable SoyFileSet getFileSet() {
-    return fileSetProvider.provideSoyFileSet();
-  }
+    /**
+     * @return The Soy file set to render from
+     */
+    public @Nullable SoyFileSet getFileSet() {
+        return fileSetProvider.provideSoyFileSet();
+    }
 
-  /**
-   * @return Return a set of pre-compiled Soy templates, if supported
-   */
-  @Nullable @Override
-  public SoySauce getCompiledTemplates() {
-    return fileSetProvider.provideCompiledTemplates();
-  }
+    /**
+     * @return Return a set of pre-compiled Soy templates, if supported
+     */
+    @Nullable @Override
+    public SoySauce getCompiledTemplates() {
+        return fileSetProvider.provideCompiledTemplates();
+    }
 
 }
