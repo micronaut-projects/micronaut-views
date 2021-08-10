@@ -4,7 +4,15 @@ This section outlines the breaking changes done in major versions of Micronaut V
 
 * api:views.model.ViewModelProcessor[] no longer assumes a `Map<String,Object>` model and must be typed to the exact type of the model you would like to process.
 
-* api:views.model.ViewsRenderer[] are now typed. Moreover, provided `ViewsRenderer` don't specify `@Produces(MediaType.TEXT_HTML)` and responses content type respect the content type defined for the route.
+* api:views.ViewsRenderer[] are now typed. Moreover, provided `ViewsRenderer` don't specify `@Produces(MediaType.TEXT_HTML)` and responses content type respect the content type defined for the route.
+
+* Method `ViewsRenderer::render(String, T)` was removed. Use `ViewsRenderer::render(String, T, HttpRequest)` instead.
+
+* Decoration of view model is now handled by api:views.ViewsModelDecorator[] and its default implementation api:views.DefaultViewsModelDecorator[]
+
+* Resolution of view name is now handled by api:views.ViewsResolver[] and its default implementation api:views.DefaultViewsResolver[]
+
+* Resolution of api:views.ViewsRenderer[] used to render a view is now handled by api:views.ViewsRendererLocator[] and its default implementation api:views.DefaultViewsRendererLocator[]
 
 * `ViewsRenderer::modelOf` method has been moved to `ViewUtils::modelOf`
 
