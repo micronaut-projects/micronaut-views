@@ -70,7 +70,7 @@ public class FreemarkerViewsRenderer<T> implements ViewsRenderer<T> {
     public Writable render(@NonNull String viewName, @Nullable T data, @NonNull HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
-            Map<String, Object> context = modelOf(data);
+            Map<String, Object> context = ViewUtils.modelOf(data);
             String location = viewLocation(viewName);
             Template template = freemarkerMicronautConfiguration.getTemplate(location);
             try {
@@ -96,7 +96,7 @@ public class FreemarkerViewsRenderer<T> implements ViewsRenderer<T> {
 
     private String viewLocation(String name) {
         return ViewUtils.normalizeFile(name, extension) +
-                EXTENSION_SEPARATOR +
+                ViewUtils.EXTENSION_SEPARATOR +
                 extension;
     }
 

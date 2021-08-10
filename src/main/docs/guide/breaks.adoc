@@ -6,6 +6,10 @@ This section outlines the breaking changes done in major versions of Micronaut V
 
 * api:views.model.ViewsRenderer[] are now typed. Moreover, provided `ViewsRenderer` don't specify `@Produces(MediaType.TEXT_HTML)` and responses content type respect the content type defined for the route.
 
+* `ViewsRenderer::modelOf` method has been moved to `ViewUtils::modelOf`
+
+* Constant `EXTENSION_SEPARATOR` has been moved from `ViewsRenderer` to `ViewUtils`
+
 == 2.0.0
 
 * The `micronaut-views` dependency is no longer published. Replace the dependency with the one specific to the view implementation being used.

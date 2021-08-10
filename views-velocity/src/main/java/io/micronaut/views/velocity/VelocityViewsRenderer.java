@@ -74,7 +74,7 @@ public class VelocityViewsRenderer<T> implements ViewsRenderer<T> {
     public Writable render(@NonNull String view, @Nullable T data, @NonNull HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("view", view);
         return (writer) -> {
-            Map<String, Object> context = modelOf(data);
+            Map<String, Object> context = ViewUtils.modelOf(data);
             final VelocityContext velocityContext = new VelocityContext(context);
             render(view, velocityContext, StandardCharsets.UTF_8.name(), writer);
         };

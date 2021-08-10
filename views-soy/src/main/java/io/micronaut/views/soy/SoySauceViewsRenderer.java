@@ -26,6 +26,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.csp.CspConfiguration;
@@ -107,7 +108,7 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T> {
         ArgumentUtils.requireNonNull("viewName", viewName);
 
         Map<String, Object> ijOverlay = new HashMap<>(1);
-        Map<String, Object> context = modelOf(data);
+        Map<String, Object> context = ViewUtils.modelOf(data);
         final SoySauce.Renderer renderer = soySauce.newRenderer(new SoyTemplate() {
             @Override
             public String getTemplateName() {
