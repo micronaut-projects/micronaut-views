@@ -90,7 +90,7 @@ class NonHTMLViewRendererSpec extends Specification {
     @Singleton
     static class XmlViewRenderer implements ViewsRenderer<Library> {
         @Override
-        Writable render(@NonNull String viewName, @Nullable Library data) {
+        Writable render(@NonNull String viewName, @Nullable Library data, @NonNull HttpRequest<?> request) {
             new Writable() {
                 @Override
                 void writeTo(Writer out) throws IOException {
@@ -114,7 +114,7 @@ class NonHTMLViewRendererSpec extends Specification {
         // this renderer should not be used because it specifies a different type
 
         @Override
-        Writable render(@NonNull String viewName, @Nullable Book data) {
+        Writable render(@NonNull String viewName, @Nullable Book data, @NonNull HttpRequest<?> request) {
             new Writable() {
                 @Override
                 void writeTo(Writer out) throws IOException {
@@ -139,7 +139,7 @@ class NonHTMLViewRendererSpec extends Specification {
     @Singleton
     static class CsvViewRenderer implements ViewsRenderer<Library> {
         @Override
-        Writable render(@NonNull String viewName, @Nullable Library data) {
+        Writable render(@NonNull String viewName, @Nullable Library data, @NonNull HttpRequest<?> request) {
             new Writable() {
                 @Override
                 void writeTo(Writer out) throws IOException {

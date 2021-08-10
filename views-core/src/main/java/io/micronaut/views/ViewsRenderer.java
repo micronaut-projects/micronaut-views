@@ -40,20 +40,10 @@ public interface ViewsRenderer<T> extends Ordered {
     /**
      * @param viewName view name to be rendered
      * @param data     response body to render it with a view
-     * @return A writable where the view will be written to.
-     */
-    @NonNull Writable render(@NonNull String viewName, @Nullable T data);
-
-    /**
-     * @param viewName view name to be rendered
-     * @param data     response body to render it with a view
      * @param request  HTTP request
      * @return A writable where the view will be written to.
      */
-    default @NonNull Writable render(@NonNull String viewName, @Nullable T data,
-            @NonNull HttpRequest<?> request) {
-        return render(viewName, data);
-    }
+    @NonNull Writable render(@NonNull String viewName, @Nullable T data, @NonNull HttpRequest<?> request);
 
     /**
      * @param viewName view name to be rendered
