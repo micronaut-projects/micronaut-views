@@ -35,7 +35,6 @@ import spock.lang.Specification
 import java.nio.charset.StandardCharsets
 import java.util.regex.Pattern
 
-
 class SoySauceViewRendererSpec extends Specification {
 
     @Shared
@@ -59,14 +58,12 @@ class SoySauceViewRendererSpec extends Specification {
     def "bean is loaded"() {
         when:
         embeddedServer.applicationContext.getBean(SoySauceViewsRenderer)
-        embeddedServer.applicationContext.getBean(ViewsFilter)
 
         then:
         noExceptionThrown()
 
         when:
-        SoyViewsRendererConfigurationProperties props = embeddedServer.applicationContext.getBean(
-                SoyViewsRendererConfigurationProperties)
+        SoyViewsRendererConfigurationProperties props = embeddedServer.applicationContext.getBean(SoyViewsRendererConfigurationProperties)
 
         then:
         props.isEnabled()

@@ -94,10 +94,19 @@ public class ViewsFilter implements HttpServerFilter {
                     }
                     ModelAndView<?> modelAndView = new ModelAndView<>(view, body instanceof ModelAndView ? ((ModelAndView<?>) body).getModel().orElse(null) : body);
                     viewsModelDecorator.decorate(request, modelAndView);
-                    Writable writable = optionalViewsRenderer.get().render(view, modelAndView.getModel().orElse(null), request);
-                    response.contentType(type);
-                    response.body(writable);
-                    return Flux.just(response);
+                    ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
+                    if (viewsRenderer instanceof WritableViewsRenderer) {
+                        Writable writable = ((WritableViewsRenderer) viewsRenderer).render(view, modelAndView.getModel().orElse(null), request);
+                        response.contentType(type);
+                        response.body(writable);
+                        return Flux.just(response);
+                    } else if (viewsRenderer instanceof ReactiveViewsRenderer ) {
+                        return ((ReactiveViewsRenderer) viewsRenderer).render(view, modelAndView.getModel().orElse(null), request, response);
+
+                    } else {
+                        return Flux.just(response);
+                    }
+
                 } catch (ViewNotFoundException e) {
                     return Flux.error(e);
                 }

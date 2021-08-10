@@ -22,12 +22,11 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.views.View
 
-
 @Requires(property = "spec.name", value = "soy")
 @Controller("/soy")
 class SoyController {
     @View("sample.home")
-    @Get("/")
+    @Get
     HttpResponse index() {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sgammon"))
     }

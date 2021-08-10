@@ -25,12 +25,10 @@ import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
 import io.micronaut.views.soy.AppendableToWritable
-import io.micronaut.views.soy.SoyTofuViewsRenderer
 import io.micronaut.views.soy.SoyViewsRendererConfigurationProperties
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
-
 import java.nio.charset.StandardCharsets
 
 
@@ -55,17 +53,10 @@ class SoyTofuViewRendererSpec extends Specification {
 
     def "bean is loaded"() {
         when:
-        embeddedServer.applicationContext.getBean(SoyTofuViewsRenderer)
-        embeddedServer.applicationContext.getBean(ViewsFilter)
+        SoyViewsRendererConfigurationProperties props = embeddedServer.applicationContext.getBean(SoyViewsRendererConfigurationProperties)
 
         then:
         noExceptionThrown()
-
-        when:
-        SoyViewsRendererConfigurationProperties props = embeddedServer.applicationContext.getBean(
-                SoyViewsRendererConfigurationProperties)
-
-        then:
         props.isEnabled()
     }
 
