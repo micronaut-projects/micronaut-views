@@ -19,6 +19,7 @@ import com.fizzed.rocker.BindableRockerModel;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.core.annotation.NonNull;
@@ -62,7 +63,7 @@ public class RockerViewsRenderer<T> implements ViewsRenderer<T> {
     public Writable render(@NonNull String view, @Nullable T data, @NonNull HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("view", view);
 
-        Map<String, Object> context = modelOf(data);
+        Map<String, Object> context = ViewUtils.modelOf(data);
         BindableRockerModel model = rockerConfiguration.isRelaxed()
                 ? rockerEngine.template(view).relaxedBind(context)
                 : rockerEngine.template(view).bind(context);

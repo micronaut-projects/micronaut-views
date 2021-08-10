@@ -17,6 +17,8 @@ package io.micronaut.views.pebble;
 
 import java.util.List;
 import java.util.Optional;
+
+import io.micronaut.views.ViewUtils;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import com.mitchellbosecke.pebble.PebbleEngine;
@@ -30,7 +32,6 @@ import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
 import java.util.concurrent.ExecutorService;
 import jakarta.inject.Named;
 
@@ -110,7 +111,7 @@ public class PebbleEngineFactory {
         } else {
             Loader<?> loader = new ClasspathLoader();
             loader.setPrefix(viewsConfiguration.getFolder());
-            loader.setSuffix(ViewsRenderer.EXTENSION_SEPARATOR + configuration.getDefaultExtension());
+            loader.setSuffix(ViewUtils.EXTENSION_SEPARATOR + configuration.getDefaultExtension());
             builder.loader(loader);
         }
 

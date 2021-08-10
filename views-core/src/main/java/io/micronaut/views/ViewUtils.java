@@ -17,6 +17,10 @@ package io.micronaut.views;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.beans.BeanMap;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Utility methods for views.
@@ -25,7 +29,26 @@ import io.micronaut.core.annotation.Nullable;
  * @since 1.1.0
  */
 public class ViewUtils {
+    /**
+     * Extension separator.
+     */
+    public static final String EXTENSION_SEPARATOR = ".";
 
+    /**
+     * Creates a view model for the given data.
+     * @param data The data
+     * @return The model
+     */
+    @NonNull
+    public static Map<String, Object> modelOf(@Nullable Object data) {
+        if (data == null) {
+            return new HashMap<>(0);
+        }
+        if (data instanceof Map) {
+            return (Map<String, Object>) data;
+        }
+        return BeanMap.of(data);
+    }
     /**
      * Returns a path with unix style folder
      * separators that starts and ends with a "/".

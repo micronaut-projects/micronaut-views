@@ -16,13 +16,10 @@
 package io.micronaut.views;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.beans.BeanMap;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.core.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Interface to be implemented by View Engines implementations.
@@ -31,11 +28,6 @@ import java.util.Map;
  * @since 1.0
  */
 public interface ViewsRenderer<T> extends Ordered {
-
-    /**
-     * The extension separator.
-     */
-    String EXTENSION_SEPARATOR = ".";
 
     /**
      * @param viewName view name to be rendered
@@ -50,20 +42,5 @@ public interface ViewsRenderer<T> extends Ordered {
      * @return true if a template can be found for the supplied view name.
      */
     boolean exists(@NonNull String viewName);
-
-    /**
-     * Creates a view model for the given data.
-     * @param data The data
-     * @return The model
-     */
-    default @NonNull Map<String, Object> modelOf(@Nullable T data) {
-        if (data == null) {
-            return new HashMap<>(0);
-        }
-        if (data instanceof Map) {
-            return (Map<String, Object>) data;
-        }
-        return BeanMap.of(data);
-    }
 
 }

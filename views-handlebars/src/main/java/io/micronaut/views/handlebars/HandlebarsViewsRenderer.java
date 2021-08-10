@@ -91,7 +91,7 @@ public class HandlebarsViewsRenderer<T> implements ViewsRenderer<T> {
         if (viewName == null) {
             return false;
         }
-        String location = viewLocation(viewName) + EXTENSION_SEPARATOR + extension();
+        String location = viewLocation(viewName) + ViewUtils.EXTENSION_SEPARATOR + extension();
         return resourceLoader.getResource(location).isPresent();
     }
 
