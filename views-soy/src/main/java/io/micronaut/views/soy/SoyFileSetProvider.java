@@ -26,15 +26,15 @@ import io.micronaut.core.annotation.Nullable;
  * @since 1.2.1
  */
 public interface SoyFileSetProvider {
-  /**
-   * @return Soy file set to render templates with
-   */
-  @Nullable SoyFileSet provideSoyFileSet();
+    /**
+     * @return Soy file set to render templates with
+     */
+    @Nullable SoyFileSet provideSoyFileSet();
 
-  /**
-   * @return Compiled set of Soy templates, if supported
-   */
-  default @Nullable SoySauce provideCompiledTemplates() {
-    return null;
-  }
+    /**
+     * @return Compiled set of Soy templates, if supported
+     */
+    default @Nullable SoySauce provideCompiledTemplates() {
+        return null;
+    }
 }
