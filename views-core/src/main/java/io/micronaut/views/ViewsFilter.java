@@ -16,15 +16,12 @@
 package io.micronaut.views;
 
 import io.micronaut.context.ApplicationContext;
-import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
-import io.micronaut.core.order.OrderUtil;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.HttpAttributes;
@@ -41,11 +38,9 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Collection;
-import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Templates Filter.
@@ -60,16 +55,21 @@ public class ViewsFilter implements HttpServerFilter {
     private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
 
     protected final ApplicationContext applicationContext;
+    protected final ViewsRendererLocator viewsRendererLocator;
     protected final ViewsResolver viewsResolver;
 
     /**
      * Constructor.
      *
-     * @param applicationContext Application Context
+     * @param applicationContext Application context
+     * @param viewsRendererLocator ViewsRenderer locator
      * @param viewsResolver Views Resolver
      */
-    public ViewsFilter(ApplicationContext applicationContext, ViewsResolver viewsResolver) {
+    public ViewsFilter(ApplicationContext applicationContext,
+                       ViewsRendererLocator viewsRendererLocator,
+                       ViewsResolver viewsResolver) {
         this.applicationContext = applicationContext;
+        this.viewsRendererLocator = viewsRendererLocator;
         this.viewsResolver = viewsResolver;
     }
 
@@ -95,66 +95,30 @@ public class ViewsFilter implements HttpServerFilter {
                 AnnotationMetadata route = routeMatch.get();
                 Object body = response.body();
                 MediaType type = resolveMediaType(route, body);
-                List<ViewsRenderer> viewsRenderers = resolveViewsRenderer(body != null ? body.getClass() : null, type.toString());
-                if (viewsRenderers.isEmpty()) {
-                    LOG.debug("no view renderer found for media type: {}, ignoring", type);
-                    return Flux.just(response);
-                }
                 String view = optionalView.get();
-                Optional<ViewsRenderer> optionalViewsRenderer = viewsRenderers.stream()
-                        .filter(viewsRenderer -> viewsRenderer.exists(view))
-                        .findFirst();
-                if (!optionalViewsRenderer.isPresent()) {
-                    return Flux.error(new ViewNotFoundException("View [" + view + "] does not exist"));
-                }
-                ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
-                ModelAndView<?> modelAndView;
-                if (body instanceof ModelAndView || body instanceof Map) {
-                    modelAndView = new ModelAndView<>(view, populateModel(request, viewsRenderer, body));
-                } else {
-                    modelAndView = new ModelAndView<>(view, body);
-                }
-                enhanceModel(request, modelAndView);
-                Writable writable = viewsRenderer.render(view, modelAndView.getModel().orElse(null), request);
-                response.contentType(type);
-                response.body(writable);
-                return Flux.just(response);
-            });
-    }
+                try {
+                    Optional<ViewsRenderer> optionalViewsRenderer = viewsRendererLocator.resolveViewsRenderer(view,  type, body);
+                    if (!optionalViewsRenderer.isPresent()) {
+                        LOG.debug("no view renderer found for media type: {}, ignoring", type.toString());
+                        return Flux.just(response);
+                    }
+                    ViewsRenderer viewsRenderer = optionalViewsRenderer.get();
+                    ModelAndView<?> modelAndView;
+                    if (body instanceof ModelAndView || body instanceof Map) {
+                        modelAndView = new ModelAndView<>(view, populateModel(request, viewsRenderer, body));
+                    } else {
+                        modelAndView = new ModelAndView<>(view, body);
+                    }
+                    enhanceModel(request, modelAndView);
+                    Writable writable = viewsRenderer.render(view, modelAndView.getModel().orElse(null), request);
+                    response.contentType(type);
+                    response.body(writable);
+                    return Flux.just(response);
 
-    /**
-     *
-     * @param bodyClass Response Body class
-     * @param mediaType Response Content Type
-     * @return List of {@link ViewsRenderer} which includes those which do not specify an {@link @Produces} annotation or
-     * whose {link @Produces} annotation value matches the response content type. The list is sorted. The order is those {@link ViewsRenderer} which
-     * type argument matches the response body class first and then ordered by {@link OrderUtil#COMPARATOR}.
-     */
-    @NonNull
-    public List<ViewsRenderer> resolveViewsRenderer(@Nullable Class<?> bodyClass, @NonNull String mediaType) {
-        return (bodyClass == null ? applicationContext.getBeansOfType(ViewsRenderer.class) :
-                applicationContext.getBeansOfType(ViewsRenderer.class, Qualifiers.byTypeArguments(bodyClass)))
-                .stream()
-                .filter(viewsRenderer -> {
-                    BeanDefinition<? extends ViewsRenderer> beanDefinition = applicationContext.getBeanDefinition(viewsRenderer.getClass());
-                    AnnotationValue<Produces> annotation = beanDefinition.getAnnotation(Produces.class);
-                    if (annotation == null) {
-                        return true;
-                    }
-                    if (!annotation.getValue(String.class).isPresent()) {
-                        return false;
-                    }
-                    return annotation.getValue(String.class).get().equals(mediaType);
-                })
-                .sorted((o1, o2) -> {
-                    BeanDefinition<? extends ViewsRenderer> o1BeanDefinition = applicationContext.getBeanDefinition(o1.getClass());
-                    BeanDefinition<? extends ViewsRenderer> o2BeanDefinition = applicationContext.getBeanDefinition(o2.getClass());
-                    if (o1BeanDefinition.getTypeArguments().size() != o2BeanDefinition.getTypeArguments().size()) {
-                        return Integer.compare(o1BeanDefinition.getTypeArguments().size(), o2BeanDefinition.getTypeArguments().size());
-                    }
-                    return OrderUtil.COMPARATOR.compare(o1, o2);
-                })
-                .collect(Collectors.toList());
+                } catch (ViewNotFoundException e) {
+                    return Flux.error(e);
+                }
+            });
     }
 
     /**
