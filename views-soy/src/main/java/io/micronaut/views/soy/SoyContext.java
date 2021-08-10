@@ -15,15 +15,13 @@
  */
 package io.micronaut.views.soy;
 
-
 import com.google.common.collect.ImmutableMap;
-
-import javax.annotation.Nonnull;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.annotation.NonNull;
 import javax.annotation.concurrent.Immutable;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
-
 
 /**
  * Data class representing render flow context for a single Soy template render execution. Holds regular render values
@@ -36,13 +34,13 @@ import java.util.Optional;
 @SuppressWarnings("WeakerAccess")
 public final class SoyContext implements SoyContextMediator {
     /** Properties for template render. */
-    private final @Nonnull Map<String, Object> props;
+    private final @NonNull Map<String, Object> props;
 
     /** Injected values for template render. */
-    private final @Nonnull Map<String, Object> injected;
+    private final @NonNull Map<String, Object> injected;
 
     /** Naming map provider. Overrides globally-installed provider if set. */
-    private final @Nonnull Optional<SoyNamingMapProvider> overrideNamingMap;
+    private final @Nullable SoyNamingMapProvider overrideNamingMap;
 
     /**
      * Private constructor. See static factory methods to create a new `SoyContext`.
@@ -51,9 +49,9 @@ public final class SoyContext implements SoyContextMediator {
      * @param injected Properties/values to make available via `@inject` declarations.
      * @param overrideNamingMap Naming map to apply, overrides any global rewrite map.
      */
-    private SoyContext(@Nonnull Map<String, Object> props,
-                       @Nonnull Map<String, Object> injected,
-                       @Nonnull Optional<SoyNamingMapProvider> overrideNamingMap) {
+    private SoyContext(@NonNull Map<String, Object> props,
+                       @NonNull Map<String, Object> injected,
+                       @NonNull Optional<SoyNamingMapProvider> overrideNamingMap) {
         this.props = ImmutableMap.copyOf(props);
         this.injected = ImmutableMap.copyOf(injected);
         this.overrideNamingMap = overrideNamingMap;
@@ -69,9 +67,9 @@ public final class SoyContext implements SoyContextMediator {
      * @return Instance of `SoyContext` that holds the properties specified.
      * @throws IllegalArgumentException If any provided argument is `null`. Pass an empty map or an empty `Optional`.
      */
-    public static SoyContext fromMap(@Nonnull Map<String, Object> props,
-                                     @Nonnull Optional<Map<String, Object>> injected,
-                                     @Nonnull Optional<SoyNamingMapProvider> overrideNamingMap) {
+    public static SoyContext fromMap(@NonNull Map<String, Object> props,
+                                     @NonNull Optional<Map<String, Object>> injected,
+                                     @NonNull Optional<SoyNamingMapProvider> overrideNamingMap) {
         //noinspection ConstantConditions,OptionalAssignedToNull
         if (props == null || injected == null || overrideNamingMap == null) {
             throw new IllegalArgumentException(
@@ -90,7 +88,7 @@ public final class SoyContext implements SoyContextMediator {
      *
      * @return Map of regular template properties.
      */
-    @Override @Nonnull
+    @Override @NonNull
     public Map<String, Object> getProperties() {
         return props;
     }
@@ -104,7 +102,7 @@ public final class SoyContext implements SoyContextMediator {
      */
     @Override
     @SuppressWarnings("UnstableApiUsage")
-    public @Nonnull Map<String, Object> getInjectedProperties(@Nonnull Map<String, Object> framework) {
+    public @NonNull Map<String, Object> getInjectedProperties(@NonNull Map<String, Object> framework) {
         ImmutableMap.Builder<String, Object> merged = ImmutableMap.builderWithExpectedSize(injected.size() + framework.size());
         merged.putAll(injected);
         merged.putAll(framework);
@@ -117,7 +115,7 @@ public final class SoyContext implements SoyContextMediator {
      *
      * @return {@link SoyNamingMapProvider} that should be used for this render routine.
      */
-    @Override @Nonnull
+    @Override @NonNull
     public Optional<SoyNamingMapProvider> overrideNamingMap() {
         return overrideNamingMap;
     }

@@ -26,8 +26,8 @@ import io.netty.buffer.ByteBufAllocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import java.io.*;
 import java.security.MessageDigest;
@@ -67,10 +67,10 @@ public final class SoyRender implements Closeable, AutoCloseable, AdvisingAppend
     }
 
     // -- Internals -- //
-    private @Nonnull State renderState;
+    private @NonNull State renderState;
     private @Nullable Future blocker;
     private @Nullable SoySauce.WriteContinuation continuation;
-    private @Nonnull final SoyResponseBuffer soyBuffer;
+    private @NonNull final SoyResponseBuffer soyBuffer;
 
     /**
      * Initial constructor: an empty Soy render.
@@ -97,14 +97,14 @@ public final class SoyRender implements Closeable, AutoCloseable, AdvisingAppend
     /**
      * @return Current state of this render.
      */
-    @Nonnull State getRenderState() {
+    @NonNull State getRenderState() {
         return renderState;
     }
 
     /**
      * @return Current Soy response buffer.
      */
-    public @Nonnull SoyResponseBuffer getSoyBuffer() {
+    public @NonNull SoyResponseBuffer getSoyBuffer() {
         return soyBuffer;
     }
 
@@ -211,7 +211,7 @@ public final class SoyRender implements Closeable, AutoCloseable, AdvisingAppend
      * @param digester Digester to factor the chunk into, if applicable.
      * @return Exported chunk from the underlying buffer.
      */
-    @Nonnull ByteBuffer exportChunk(@Nonnull ByteBufferFactory<ByteBufAllocator, ByteBuf> factory,
+    @NonNull ByteBuffer exportChunk(@NonNull ByteBufferFactory<ByteBufAllocator, ByteBuf> factory,
                                     @Nullable MessageDigest digester) {
         ByteBuf buf = soyBuffer.exportChunk();
         if (LOG.isDebugEnabled()) {
@@ -235,7 +235,7 @@ public final class SoyRender implements Closeable, AutoCloseable, AdvisingAppend
      * @param maxSize Maximum chunk size to specify.
      * @return Exported chunk from the underlying buffer.
      */
-    @Nonnull ByteBuffer exportChunk(@Nonnull ByteBufferFactory<ByteBufAllocator, ByteBuf> factory,
+    @NonNull ByteBuffer exportChunk(@NonNull ByteBufferFactory<ByteBufAllocator, ByteBuf> factory,
                                     @Nullable MessageDigest digester,
                                     int maxSize) {
         ByteBuf buf = soyBuffer.exportChunk(maxSize);
@@ -261,7 +261,7 @@ public final class SoyRender implements Closeable, AutoCloseable, AdvisingAppend
      *         future doesn't finish in time or is interrupted or fails, and runtime exceptions from Soy templates
      *         (like {@link NullPointerException}, {@link IllegalArgumentException} and so on).
      */
-    void advance(@Nonnull SoySauce.WriteContinuation op) throws SoyViewException {
+    void advance(@NonNull SoySauce.WriteContinuation op) throws SoyViewException {
         this.continuation = op;
         try {
             // resume with the continuation we were given, or the one we have.

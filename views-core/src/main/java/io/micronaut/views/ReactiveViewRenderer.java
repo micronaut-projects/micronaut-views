@@ -19,8 +19,8 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MutableHttpResponse;
 import io.reactivex.Flowable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 
 
 /**
@@ -39,10 +39,10 @@ public interface ReactiveViewRenderer extends BaseViewsRenderer {
    * @param response HTTP response object assembled so far.
    * @return A writable where the view will be written to.
    */
-  @Nonnull
+  @NonNull
   Flowable<MutableHttpResponse<?>> render(
-    @Nonnull String viewName,
+    @NonNull String viewName,
     @Nullable Object data,
-    @Nonnull HttpRequest<?> request,
-    @Nonnull MutableHttpResponse<Object> response);
+    @NonNull HttpRequest<?> request,
+    @NonNull MutableHttpResponse<Object> response);
 }

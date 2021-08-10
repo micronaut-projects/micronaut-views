@@ -19,8 +19,8 @@ package io.micronaut.views.soy;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MutableHttpResponse;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import java.security.MessageDigest;
 import java.util.Map;
 import java.util.Optional;
@@ -51,7 +51,7 @@ public interface SoyContextMediator {
      *
      * @return Map of regular template properties.
      */
-    @Nonnull Map<String, Object> getProperties();
+    @NonNull Map<String, Object> getProperties();
 
     /**
      * Retrieve properties and values that should be made available via `@inject`.
@@ -59,7 +59,7 @@ public interface SoyContextMediator {
      * @param framework Properties auto-injected by the framework.
      * @return Map of injected properties and their values.
      */
-    @Nonnull Map<String, Object> getInjectedProperties(Map<String, Object> framework);
+    @NonNull Map<String, Object> getInjectedProperties(Map<String, Object> framework);
 
     /**
      * Specify a Soy renaming map which overrides the globally-installed map, if any. Renaming must still be activated via
@@ -67,7 +67,7 @@ public interface SoyContextMediator {
      *
      * @return {@link SoyNamingMapProvider} that should be used for this render routine.
      */
-    default @Nonnull Optional<SoyNamingMapProvider> overrideNamingMap() {
+    default @NonNull Optional<SoyNamingMapProvider> overrideNamingMap() {
         return Optional.empty();
     }
 
@@ -82,9 +82,9 @@ public interface SoyContextMediator {
      * @param <T> Body object type.
      * @return Response, but finalized.
      */
-    default @Nonnull <T> MutableHttpResponse<T> finalizeResponse(@Nonnull HttpRequest<?> request,
-                                                                 @Nonnull MutableHttpResponse<T> response,
-                                                                 @Nonnull T body,
+    default @NonNull <T> MutableHttpResponse<T> finalizeResponse(@NonNull HttpRequest<?> request,
+                                                                 @NonNull MutableHttpResponse<T> response,
+                                                                 @NonNull T body,
                                                                  @Nullable MessageDigest digester) {
         return response.body(body);
     }

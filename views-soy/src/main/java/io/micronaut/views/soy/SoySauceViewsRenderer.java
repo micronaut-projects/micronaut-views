@@ -43,8 +43,8 @@ import io.reactivex.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
@@ -120,9 +120,9 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
         return soyConfiguration.getFileSet().compileTemplates();
     }
 
-    private void continueRender(@Nonnull SoySauce.WriteContinuation continuation,
-                                @Nonnull SoyRender target,
-                                @Nonnull Emitter<ByteBuffer> emitter,
+    private void continueRender(@NonNull SoySauce.WriteContinuation continuation,
+                                @NonNull SoyRender target,
+                                @NonNull Emitter<ByteBuffer> emitter,
                                 @Nullable MessageDigest digester) throws SoyViewException {
         try {
             target.advance(continuation);
@@ -141,8 +141,8 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
         }
     }
 
-    private void emitChunk(@Nonnull SoyRender target,
-                           @Nonnull Emitter<ByteBuffer> emitter,
+    private void emitChunk(@NonNull SoyRender target,
+                           @NonNull Emitter<ByteBuffer> emitter,
                            @Nullable MessageDigest digester) {
         LOG.debug("Render emitting chunk");
         emitter.onNext(
@@ -152,9 +152,9 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
                         soyMicronautConfiguration.getChunkSize()));
     }
 
-    private void handleRender(@Nonnull SoySauce.WriteContinuation continuation,
-                              @Nonnull SoyRender target,
-                              @Nonnull Emitter<ByteBuffer> emitter,
+    private void handleRender(@NonNull SoySauce.WriteContinuation continuation,
+                              @NonNull SoyRender target,
+                              @NonNull Emitter<ByteBuffer> emitter,
                               @Nullable MessageDigest digester) throws SoyViewException {
         // Emit the next chunk and keep processing.
         if (!EMIT_ONE_CHUNK) {
@@ -179,7 +179,7 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
      * @param data The data to render a Soy view with.
      * @return Packaged or converted model data to render the Soy view with.
      */
-    @Nonnull
+    @NonNull
     @Override
     public Map<String, Object> modelOf(@Nullable Object data) {
         if (data == null) {
@@ -201,12 +201,12 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
      * @param response HTTP response object assembled so far.
      * @return A writable where the view will be written to.
      */
-    @Nonnull
+    @NonNull
     @Override
-    public Flowable<MutableHttpResponse<?>> render(@Nonnull String viewName,
+    public Flowable<MutableHttpResponse<?>> render(@NonNull String viewName,
                                                    @Nullable Object data,
-                                                   @Nonnull HttpRequest<?> request,
-                                                   @Nonnull MutableHttpResponse<Object> response) {
+                                                   @NonNull HttpRequest<?> request,
+                                                   @NonNull MutableHttpResponse<Object> response) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         LOG.debug("Preparing render for template path '" + viewName + "'");
 
@@ -326,7 +326,7 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
      * @return true if a template can be found for the supplied view name.
      */
     @Override
-    public boolean exists(@Nonnull String view) {
+    public boolean exists(@NonNull String view) {
         return soySauce.hasTemplate(view);
     }
 

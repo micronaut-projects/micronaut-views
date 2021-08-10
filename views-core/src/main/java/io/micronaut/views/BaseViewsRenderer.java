@@ -17,8 +17,8 @@ package io.micronaut.views;
 
 import io.micronaut.core.beans.BeanMap;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,14 +52,14 @@ public interface BaseViewsRenderer {
    * @param viewName view name to be render
    * @return true if a template can be found for the supplied view name.
    */
-  boolean exists(@Nonnull String viewName);
+  boolean exists(@NonNull String viewName);
 
   /**
    * Creates a view model for the given data.
    * @param data The data
    * @return The model
    */
-  default @Nonnull Map<String, Object> modelOf(@Nullable Object data) {
+  default @NonNull Map<String, Object> modelOf(@Nullable Object data) {
     if (data == null) {
       return new HashMap<>(0);
     }
@@ -77,7 +77,7 @@ public interface BaseViewsRenderer {
    * @deprecated Use {@link ViewUtils#normalizeFolder(String)} instead
    * @return The normalized path
    */
-  @Nonnull
+  @NonNull
   @Deprecated
   default String normalizeFolder(@Nullable String path) {
     return ViewUtils.normalizeFolder(path);
@@ -95,9 +95,9 @@ public interface BaseViewsRenderer {
    * @deprecated Use {@link ViewUtils#normalizeFile(String, String)} instead
    * @return The normalized path
    */
-  @Nonnull
+  @NonNull
   @Deprecated
-  default String normalizeFile(@Nonnull String path, String extension) {
+  default String normalizeFile(@NonNull String path, String extension) {
     return ViewUtils.normalizeFile(path, extension);
   }
 }

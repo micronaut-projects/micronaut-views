@@ -22,7 +22,7 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsConfigurationProperties;
 
-import javax.annotation.Nullable;
+import io.micronaut.core.annotation.Nullable;
 
 
 /**

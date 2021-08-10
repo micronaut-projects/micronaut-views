@@ -18,8 +18,8 @@ package io.micronaut.views.soy;
 
 import io.micronaut.views.exceptions.ViewRenderingException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import java.util.concurrent.Future;
 
 
@@ -38,7 +38,7 @@ public class SoyViewException extends ViewRenderingException {
      *
      * @param cause Inner cause of the error encountered while rendering.
      */
-    SoyViewException(final @Nonnull Throwable cause) {
+    SoyViewException(final @NonNull Throwable cause) {
         super(cause.getMessage(), cause);
         this.future = null;
     }
@@ -50,7 +50,7 @@ public class SoyViewException extends ViewRenderingException {
      * @param cause Inner cause of the error encountered while rendering.
      * @param future Future value which failed.
      */
-    SoyViewException(final @Nonnull Throwable cause,
+    SoyViewException(final @NonNull Throwable cause,
                      final @Nullable Future future) {
         super(cause.getMessage(), cause);
         this.future = future;
