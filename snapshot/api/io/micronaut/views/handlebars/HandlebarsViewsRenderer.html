@@ -222,8 +222,9 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>io.micronaut.core.io.Writable</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/handlebars/HandlebarsViewsRenderer.html#render-java.lang.String-T-">render</a></span>(java.lang.String&nbsp;viewName,
-      <a href="../../../../io/micronaut/views/handlebars/HandlebarsViewsRenderer.html" title="type parameter in HandlebarsViewsRenderer">T</a>&nbsp;data)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/handlebars/HandlebarsViewsRenderer.html#render-java.lang.String-T-io.micronaut.http.HttpRequest-">render</a></span>(java.lang.String&nbsp;viewName,
+      <a href="../../../../io/micronaut/views/handlebars/HandlebarsViewsRenderer.html" title="type parameter in HandlebarsViewsRenderer">T</a>&nbsp;data,
+      io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -238,7 +239,7 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.views.<a href="../../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a></h3>
-<code><a href="../../../../io/micronaut/views/ViewsRenderer.html#modelOf-T-">modelOf</a>, <a href="../../../../io/micronaut/views/ViewsRenderer.html#render-java.lang.String-T-io.micronaut.http.HttpRequest-">render</a></code></li>
+<code><a href="../../../../io/micronaut/views/ViewsRenderer.html#modelOf-T-">modelOf</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.order.Ordered">
@@ -342,9 +343,9 @@ public&nbsp;HandlebarsViewsRenderer(<a href="../../../../io/micronaut/views/View
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="render-java.lang.String-java.lang.Object-">
+<a name="render-java.lang.String-java.lang.Object-io.micronaut.http.HttpRequest-">
 <!--   -->
-</a><a name="render-java.lang.String-T-">
+</a><a name="render-java.lang.String-T-io.micronaut.http.HttpRequest-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -354,13 +355,16 @@ public&nbsp;HandlebarsViewsRenderer(<a href="../../../../io/micronaut/views/View
 public&nbsp;io.micronaut.core.io.Writable&nbsp;render(@NonNull
                                                      java.lang.String&nbsp;viewName,
                                                      @Nullable
-                                                     <a href="../../../../io/micronaut/views/handlebars/HandlebarsViewsRenderer.html" title="type parameter in HandlebarsViewsRenderer">T</a>&nbsp;data)</pre>
+                                                     <a href="../../../../io/micronaut/views/handlebars/HandlebarsViewsRenderer.html" title="type parameter in HandlebarsViewsRenderer">T</a>&nbsp;data,
+                                                     @NonNull
+                                                     io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../io/micronaut/views/ViewsRenderer.html#render-java.lang.String-T-">render</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="../../../../io/micronaut/views/handlebars/HandlebarsViewsRenderer.html" title="type parameter in HandlebarsViewsRenderer">T</a>&gt;</code></dd>
+<dd><code><a href="../../../../io/micronaut/views/ViewsRenderer.html#render-java.lang.String-T-io.micronaut.http.HttpRequest-">render</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="../../../../io/micronaut/views/handlebars/HandlebarsViewsRenderer.html" title="type parameter in HandlebarsViewsRenderer">T</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>viewName</code> - view name to be rendered</dd>
 <dd><code>data</code> - response body to render it with a view</dd>
+<dd><code>request</code> - HTTP request</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A writable where the view will be written to.</dd>
 </dl>
