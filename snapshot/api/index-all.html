@@ -265,6 +265,12 @@
 <dd>
 <div class="block">The default suffix.</div>
 </dd>
+<dt><a href="io/micronaut/views/DefaultViewsResolver.html" title="class in io.micronaut.views"><span class="typeNameLink">DefaultViewsResolver</span></a> - Class in <a href="io/micronaut/views/package-summary.html">io.micronaut.views</a></dt>
+<dd>
+<div class="block">Default implementation of <a href="io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views"><code>ViewsResolver</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/DefaultViewsResolver.html#DefaultViewsResolver--">DefaultViewsResolver()</a></span> - Constructor for class io.micronaut.views.<a href="io/micronaut/views/DefaultViewsResolver.html" title="class in io.micronaut.views">DefaultViewsResolver</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/csp/CspFilter.html#doFilter-io.micronaut.http.HttpRequest-io.micronaut.http.filter.ServerFilterChain-">doFilter(HttpRequest&lt;?&gt;, ServerFilterChain)</a></span> - Method in class io.micronaut.views.csp.<a href="io/micronaut/views/csp/CspFilter.html" title="class in io.micronaut.views.csp">CspFilter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/ViewsFilter.html#doFilter-io.micronaut.http.HttpRequest-io.micronaut.http.filter.ServerFilterChain-">doFilter(HttpRequest&lt;?&gt;, ServerFilterChain)</a></span> - Method in class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
@@ -830,10 +836,14 @@
 <dd>
 <div class="block">Resolves the model for the given response body.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/views/ViewsFilter.html#resolveView-io.micronaut.core.annotation.AnnotationMetadata-java.lang.Object-">resolveView(AnnotationMetadata, Object)</a></span> - Method in class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/DefaultViewsResolver.html#resolveView-io.micronaut.http.HttpRequest-io.micronaut.http.HttpResponse-">resolveView(HttpRequest&lt;?&gt;, HttpResponse&lt;?&gt;)</a></span> - Method in class io.micronaut.views.<a href="io/micronaut/views/DefaultViewsResolver.html" title="class in io.micronaut.views">DefaultViewsResolver</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/DefaultViewsResolver.html#resolveView-io.micronaut.core.annotation.AnnotationMetadata-java.lang.Object-">resolveView(AnnotationMetadata, Object)</a></span> - Method in class io.micronaut.views.<a href="io/micronaut/views/DefaultViewsResolver.html" title="class in io.micronaut.views">DefaultViewsResolver</a></dt>
 <dd>
 <div class="block">Resolves the view for the given method and response body.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/ViewsResolver.html#resolveView-io.micronaut.http.HttpRequest-io.micronaut.http.HttpResponse-">resolveView(HttpRequest&lt;?&gt;, HttpResponse&lt;?&gt;)</a></span> - Method in interface io.micronaut.views.<a href="io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/ViewsFilter.html#resolveViewsRenderer-java.lang.Class-java.lang.String-">resolveViewsRenderer(Class&lt;?&gt;, String)</a></span> - Method in class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/handlebars/HandlebarsViewsRenderer.html#resourceLoader">resourceLoader</a></span> - Variable in class io.micronaut.views.handlebars.<a href="io/micronaut/views/handlebars/HandlebarsViewsRenderer.html" title="class in io.micronaut.views.handlebars">HandlebarsViewsRenderer</a></dt>
@@ -1289,13 +1299,19 @@
 <dd>
 <div class="block">Templates Filter.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.context.ApplicationContext-">ViewsFilter(ApplicationContext)</a></span> - Constructor for class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.context.ApplicationContext-io.micronaut.views.ViewsResolver-">ViewsFilter(ApplicationContext, ViewsResolver)</a></span> - Constructor for class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
 <dd>
 <div class="block">Constructor.</div>
 </dd>
 <dt><a href="io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views"><span class="typeNameLink">ViewsRenderer</span></a>&lt;<a href="io/micronaut/views/ViewsRenderer.html" title="type parameter in ViewsRenderer">T</a>&gt; - Interface in <a href="io/micronaut/views/package-summary.html">io.micronaut.views</a></dt>
 <dd>
 <div class="block">Interface to be implemented by View Engines implementations.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/ViewsFilter.html#viewsResolver">viewsResolver</a></span> - Variable in class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views"><span class="typeNameLink">ViewsResolver</span></a> - Interface in <a href="io/micronaut/views/package-summary.html">io.micronaut.views</a></dt>
+<dd>
+<div class="block">Contract to resolve the view.</div>
 </dd>
 <dt><a href="io/micronaut/views/ViewUtils.html" title="class in io.micronaut.views"><span class="typeNameLink">ViewUtils</span></a> - Class in <a href="io/micronaut/views/package-summary.html">io.micronaut.views</a></dt>
 <dd>

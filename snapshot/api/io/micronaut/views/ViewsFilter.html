@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -111,7 +111,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre>@Requires(beans=<a href="../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer.class</a>)
+<pre>@Requires(beans=<a href="../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer.class</a>) @Requires(beans=<a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver.class</a>)
  @Filter(value="/**")
 public class <span class="typeNameLabel">ViewsFilter</span>
 extends java.lang.Object
@@ -145,6 +145,10 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <td class="colFirst"><code>protected io.micronaut.context.ApplicationContext</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#applicationContext">applicationContext</a></span></code>&nbsp;</td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected <a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#viewsResolver">viewsResolver</a></span></code>&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="fields.inherited.from.class.io.micronaut.core.order.Ordered">
@@ -167,7 +171,8 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.context.ApplicationContext-">ViewsFilter</a></span>(io.micronaut.context.ApplicationContext&nbsp;applicationContext)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.context.ApplicationContext-io.micronaut.views.ViewsResolver-">ViewsFilter</a></span>(io.micronaut.context.ApplicationContext&nbsp;applicationContext,
+           <a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a>&nbsp;viewsResolver)</code>
 <div class="block">Constructor.</div>
 </td>
 </tr>
@@ -224,13 +229,6 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>protected java.util.Optional&lt;java.lang.String&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#resolveView-io.micronaut.core.annotation.AnnotationMetadata-java.lang.Object-">resolveView</a></span>(io.micronaut.core.annotation.AnnotationMetadata&nbsp;route,
-           java.lang.Object&nbsp;responseBody)</code>
-<div class="block">Resolves the view for the given method and response body.</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#resolveViewsRenderer-java.lang.Class-java.lang.String-">resolveViewsRenderer</a></span>(java.lang.Class&lt;?&gt;&nbsp;bodyClass,
                     java.lang.String&nbsp;mediaType)</code>&nbsp;</td>
@@ -267,10 +265,19 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <a name="applicationContext">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>applicationContext</h4>
 <pre>protected final&nbsp;io.micronaut.context.ApplicationContext applicationContext</pre>
+</li>
+</ul>
+<a name="viewsResolver">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>viewsResolver</h4>
+<pre>protected final&nbsp;<a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a> viewsResolver</pre>
 </li>
 </ul>
 </li>
@@ -281,17 +288,19 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ViewsFilter-io.micronaut.context.ApplicationContext-">
+<a name="ViewsFilter-io.micronaut.context.ApplicationContext-io.micronaut.views.ViewsResolver-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ViewsFilter</h4>
-<pre>public&nbsp;ViewsFilter(io.micronaut.context.ApplicationContext&nbsp;applicationContext)</pre>
+<pre>public&nbsp;ViewsFilter(io.micronaut.context.ApplicationContext&nbsp;applicationContext,
+                   <a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a>&nbsp;viewsResolver)</pre>
 <div class="block">Constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>applicationContext</code> - Application Context</dd>
+<dd><code>viewsResolver</code> - Views Resolver</dd>
 </dl>
 </li>
 </ul>
@@ -406,24 +415,6 @@ protected&nbsp;io.micronaut.http.MediaType&nbsp;resolveMediaType(@NonNull
 <dd><code>responseBody</code> - Response body</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the model to be rendered</dd>
-</dl>
-</li>
-</ul>
-<a name="resolveView-io.micronaut.core.annotation.AnnotationMetadata-java.lang.Object-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>resolveView</h4>
-<pre>protected&nbsp;java.util.Optional&lt;java.lang.String&gt;&nbsp;resolveView(io.micronaut.core.annotation.AnnotationMetadata&nbsp;route,
-                                                           java.lang.Object&nbsp;responseBody)</pre>
-<div class="block">Resolves the view for the given method and response body. Subclasses can override to customize.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>route</code> - Request route</dd>
-<dd><code>responseBody</code> - Response body</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>view name to be rendered</dd>
 </dl>
 </li>
 </ul>
