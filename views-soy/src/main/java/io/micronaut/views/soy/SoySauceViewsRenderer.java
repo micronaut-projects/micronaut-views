@@ -208,14 +208,14 @@ public class SoySauceViewsRenderer implements ReactiveViewRenderer {
                                                    @NonNull HttpRequest<?> request,
                                                    @NonNull MutableHttpResponse<Object> response) {
         ArgumentUtils.requireNonNull("viewName", viewName);
-        LOG.debug("Preparing render for template path '" + viewName + "'");
+        LOG.debug("Preparing render for template path '{}'",  viewName);
 
         int statusCode = response.getStatus().getCode();
         if ((!(data instanceof Map) && !(data instanceof SoyData) && !(data instanceof SoyContext))
                 || statusCode != 200) {
             // we were passed something other than context data for a render operation. so, duck out gracefully.
-            LOG.debug("Data was not a `Map` or `SoyData`. Returning untouched by Soy for view '" + viewName + "'.");
-            return Flowable.just(response);
+            LOG.debug("Data was not a `Map` or `SoyData`. Returning untouched by Soy for view '{}'.", viewName);
+            return Flux.just(response);
         }
 
         Map<String, Object> injectedPropsOverlay = new HashMap<>(1);
