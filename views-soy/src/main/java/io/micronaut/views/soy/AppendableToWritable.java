@@ -29,34 +29,34 @@ import java.io.Writer;
  * @since 1.2.1
  */
 public class AppendableToWritable implements Writable, Appendable, AdvisingAppendable {
-  private final StringBuilder builder = new StringBuilder();
+    private final StringBuilder builder = new StringBuilder();
 
-  @Override
-  public AdvisingAppendable append(CharSequence charSequence) {
-    builder.append(charSequence);
-    return this;
-  }
+    @Override
+    public AdvisingAppendable append(CharSequence charSequence) {
+        builder.append(charSequence);
+        return this;
+    }
 
-  @Override
-  public AdvisingAppendable append(CharSequence charSequence, int i, int i1) {
-    builder.append(charSequence, i, i1);
-    return this;
-  }
+    @Override
+    public AdvisingAppendable append(CharSequence charSequence, int i, int i1) {
+        builder.append(charSequence, i, i1);
+        return this;
+    }
 
-  @Override
-  public AdvisingAppendable append(char c) {
-    builder.append(c);
-    return this;
-  }
+    @Override
+    public AdvisingAppendable append(char c) {
+        builder.append(c);
+        return this;
+    }
 
-  @Override
-  public boolean softLimitReached() {
-    return false;
-  }
+    @Override
+    public boolean softLimitReached() {
+        return false;
+    }
 
-  @Override
-  public void writeTo(Writer out) throws IOException {
-    out.write(builder.toString());
-  }
+    @Override
+    public void writeTo(Writer out) throws IOException {
+        out.write(builder.toString());
+    }
 
 }

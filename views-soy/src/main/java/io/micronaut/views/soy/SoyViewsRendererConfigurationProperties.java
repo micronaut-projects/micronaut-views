@@ -38,116 +38,116 @@ import javax.annotation.Nullable;
 @ConfigurationProperties(SoyViewsRendererConfigurationProperties.PREFIX)
 public class SoyViewsRendererConfigurationProperties implements SoyViewsRendererConfiguration {
 
-  public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".soy";
+    public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".soy";
 
-  /**
-   * The default enable value.
-   */
-  @SuppressWarnings("WeakerAccess")
-  public static final boolean DEFAULT_ENABLED = true;
+    /**
+     * The default enable value.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static final boolean DEFAULT_ENABLED = true;
 
-  /**
-   * Default buffer/chunk size.
-   *
-   * @since 1.3.2
-   */
-  public static final int DEFAULT_CHUNK_SIZE = SoyResponseBuffer.MAX_CHUNK_SIZE;
+    /**
+     * Default buffer/chunk size.
+     *
+     * @since 1.3.2
+     */
+    public static final int DEFAULT_CHUNK_SIZE = SoyResponseBuffer.MAX_CHUNK_SIZE;
 
-  /**
-   * The default Soy rendering engine.
-   */
-  @SuppressWarnings("WeakerAccess")
-  public static final String DEFAULT_ENGINE = "tofu";
+    /**
+     * The default Soy rendering engine.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static final String DEFAULT_ENGINE = "tofu";
 
-  /**
-   * Whether to mount renaming maps.
-   */
-  @SuppressWarnings("WeakerAccess")
-  public static final boolean DEFAULT_RENAMING = true;
+    /**
+     * Whether to mount renaming maps.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static final boolean DEFAULT_RENAMING = true;
 
-  private boolean enabled = DEFAULT_ENABLED;
-  private boolean renaming = DEFAULT_RENAMING;
-  private int chunkSize = DEFAULT_CHUNK_SIZE;
-  private String engine = DEFAULT_ENGINE;
-  private SoyFileSetProvider fileSetProvider;
+    private boolean enabled = DEFAULT_ENABLED;
+    private boolean renaming = DEFAULT_RENAMING;
+    private int chunkSize = DEFAULT_CHUNK_SIZE;
+    private String engine = DEFAULT_ENGINE;
+    private SoyFileSetProvider fileSetProvider;
 
-  /**
-   * Default constructor for Soy views renderer config properties.
-   *
-   * @param viewsConfiguration The views configuration
-   * @param fileSetProvider Soy file set provider (template sources)
-   */
-  public SoyViewsRendererConfigurationProperties(
-    ViewsConfiguration viewsConfiguration,
-    SoyFileSetProvider fileSetProvider) {
-    this.fileSetProvider = fileSetProvider;
-  }
+    /**
+     * Default constructor for Soy views renderer config properties.
+     *
+     * @param viewsConfiguration The views configuration
+     * @param fileSetProvider Soy file set provider (template sources)
+     */
+    public SoyViewsRendererConfigurationProperties(
+            ViewsConfiguration viewsConfiguration,
+            SoyFileSetProvider fileSetProvider) {
+        this.fileSetProvider = fileSetProvider;
+    }
 
-  @Override
-  public boolean isEnabled() {
-    return enabled;
-  }
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-  /**
-   * Whether Soy-backed views are enabled.
-   *
-   * @param enabled True if they are.
-   */
-  public void setEnabled(boolean enabled) {
-    this.enabled = enabled;
-  }
+    /**
+     * Whether Soy-backed views are enabled.
+     *
+     * @param enabled True if they are.
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-  /**
-   * Specifies whether renaming is enabled. Defaults to `true`.
-   *
-   * @return True if it is enabled.
-   */
-  @Override
-  public boolean isRenamingEnabled() {
-    return renaming;
-  }
+    /**
+     * Specifies whether renaming is enabled. Defaults to `true`.
+     *
+     * @return True if it is enabled.
+     */
+    @Override
+    public boolean isRenamingEnabled() {
+        return renaming;
+    }
 
-  /**
-   * Turns renaming on or off.
-   *
-   * @param renaming Renaming status.
-   */
-  @Override
-  public void setRenamingEnabled(boolean renaming) {
-    this.renaming = renaming;
-  }
+    /**
+     * Turns renaming on or off.
+     *
+     * @param renaming Renaming status.
+     */
+    @Override
+    public void setRenamingEnabled(boolean renaming) {
+        this.renaming = renaming;
+    }
 
-  /**
-   * @return The Soy file set to render from
-   */
-  public @Nullable SoyFileSet getFileSet() {
-    return fileSetProvider.provideSoyFileSet();
-  }
+    /**
+     * @return The Soy file set to render from
+     */
+    public @Nullable SoyFileSet getFileSet() {
+        return fileSetProvider.provideSoyFileSet();
+    }
 
-  /**
-   * @return Return a set of pre-compiled Soy templates, if supported
-   */
-  @Nullable @Override
-  public SoySauce getCompiledTemplates() {
-    return fileSetProvider.provideCompiledTemplates();
-  }
+    /**
+     * @return Return a set of pre-compiled Soy templates, if supported
+     */
+    @Nullable @Override
+    public SoySauce getCompiledTemplates() {
+        return fileSetProvider.provideCompiledTemplates();
+    }
 
-  /**
-   * @since 1.3.2
-   * @return The current chunk size, used when sizing buffers for render
-   */
-  public int getChunkSize() {
-    return chunkSize;
-  }
+    /**
+     * @since 1.3.2
+     * @return The current chunk size, used when sizing buffers for render
+     */
+    public int getChunkSize() {
+        return chunkSize;
+    }
 
-  /**
-   * Set the chunk size for render buffers.
-   *
-   * @since 1.3.2
-   * @param chunkSize Buffer chunk size
-   */
-  public void setChunkSize(int chunkSize) {
-    this.chunkSize = chunkSize;
-  }
+    /**
+     * Set the chunk size for render buffers.
+     *
+     * @since 1.3.2
+     * @param chunkSize Buffer chunk size
+     */
+    public void setChunkSize(int chunkSize) {
+        this.chunkSize = chunkSize;
+    }
 
 }

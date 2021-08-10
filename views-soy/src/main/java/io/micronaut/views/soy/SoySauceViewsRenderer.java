@@ -68,266 +68,266 @@ import java.util.Optional;
 @Requires(property = SoyViewsRendererConfigurationProperties.PREFIX + ".engine", notEquals = "tofu")
 @SuppressWarnings({"WeakerAccess", "UnstableApiUsage"})
 public class SoySauceViewsRenderer implements ReactiveViewRenderer {
-  private static final Logger LOG = LoggerFactory.getLogger(SoySauceViewsRenderer.class);
-  private static final String INJECTED_NONCE_PROPERTY = "csp_nonce";
-  private static final String SOY_CONTEXT_SENTINEL = "__soy_context__";
-  private static final String ETAG_HASH_ALGORITHM = "MD5";
-  private static final Boolean EMIT_ONE_CHUNK = true;
+    private static final Logger LOG = LoggerFactory.getLogger(SoySauceViewsRenderer.class);
+    private static final String INJECTED_NONCE_PROPERTY = "csp_nonce";
+    private static final String SOY_CONTEXT_SENTINEL = "__soy_context__";
+    private static final String ETAG_HASH_ALGORITHM = "MD5";
+    private static final Boolean EMIT_ONE_CHUNK = true;
 
-  protected final ViewsConfiguration viewsConfiguration;
-  protected final SoyViewsRendererConfigurationProperties soyMicronautConfiguration;
-  protected final SoyNamingMapProvider namingMapProvider;
-  protected final SoySauce soySauce;
-  private final ByteBufferFactory<ByteBufAllocator, ByteBuf> bufferFactory;
-  private final boolean injectNonce;
-  private volatile boolean digesterActive = false;
+    protected final ViewsConfiguration viewsConfiguration;
+    protected final SoyViewsRendererConfigurationProperties soyMicronautConfiguration;
+    protected final SoyNamingMapProvider namingMapProvider;
+    protected final SoySauce soySauce;
+    private final ByteBufferFactory<ByteBufAllocator, ByteBuf> bufferFactory;
+    private final boolean injectNonce;
+    private volatile boolean digesterActive = false;
 
-  /**
-   * @param viewsConfiguration Views configuration properties.
-   * @param namingMapProvider Provider for renaming maps in Soy.
-   * @param cspConfiguration Content-Security-Policy configuration.
-   * @param bufferFactory Factory with which to create byte buffers.
-   * @param soyConfiguration   Soy configuration properties.
-   */
-  @Inject
-  SoySauceViewsRenderer(ViewsConfiguration viewsConfiguration,
-                        @Nullable SoyNamingMapProvider namingMapProvider,
-                        @Nullable CspConfiguration cspConfiguration,
-                        ByteBufferFactory<ByteBufAllocator, ByteBuf> bufferFactory,
-                        SoyViewsRendererConfigurationProperties soyConfiguration) {
-    this.bufferFactory = bufferFactory;
-    this.viewsConfiguration = viewsConfiguration;
-    this.soyMicronautConfiguration = soyConfiguration;
-    this.injectNonce = cspConfiguration != null && cspConfiguration.isNonceEnabled();
-    this.namingMapProvider = namingMapProvider;
-    final SoySauce precompiled = soyConfiguration.getCompiledTemplates();
-    this.soySauce = precompiled != null ? precompiled : precompileTemplates(soyConfiguration);
-  }
-
-  /**
-   * Precompile templates into a {@link SoySauce} instance.
-   *
-   * @param soyConfiguration Configuration for Soy.
-   * @return Precompiled templates.
-   */
-  private static SoySauce precompileTemplates(SoyViewsRendererConfigurationProperties soyConfiguration) {
-    LOG.warn("Compiling Soy templates (this may take a moment)...");
-    SoyFileSet fileSet = soyConfiguration.getFileSet();
-    if (fileSet == null) {
-      throw new IllegalStateException(
-        "Unable to load Soy templates: no file set, no compiled templates provided.");
+    /**
+     * @param viewsConfiguration Views configuration properties.
+     * @param namingMapProvider Provider for renaming maps in Soy.
+     * @param cspConfiguration Content-Security-Policy configuration.
+     * @param bufferFactory Factory with which to create byte buffers.
+     * @param soyConfiguration   Soy configuration properties.
+     */
+    @Inject
+    SoySauceViewsRenderer(ViewsConfiguration viewsConfiguration,
+                          @Nullable SoyNamingMapProvider namingMapProvider,
+                          @Nullable CspConfiguration cspConfiguration,
+                          ByteBufferFactory<ByteBufAllocator, ByteBuf> bufferFactory,
+                          SoyViewsRendererConfigurationProperties soyConfiguration) {
+        this.bufferFactory = bufferFactory;
+        this.viewsConfiguration = viewsConfiguration;
+        this.soyMicronautConfiguration = soyConfiguration;
+        this.injectNonce = cspConfiguration != null && cspConfiguration.isNonceEnabled();
+        this.namingMapProvider = namingMapProvider;
+        final SoySauce precompiled = soyConfiguration.getCompiledTemplates();
+        this.soySauce = precompiled != null ? precompiled : precompileTemplates(soyConfiguration);
     }
-    return soyConfiguration.getFileSet().compileTemplates();
-  }
 
-  private void continueRender(@Nonnull SoySauce.WriteContinuation continuation,
+    /**
+     * Precompile templates into a {@link SoySauce} instance.
+     *
+     * @param soyConfiguration Configuration for Soy.
+     * @return Precompiled templates.
+     */
+    private static SoySauce precompileTemplates(SoyViewsRendererConfigurationProperties soyConfiguration) {
+        LOG.warn("Compiling Soy templates (this may take a moment)...");
+        SoyFileSet fileSet = soyConfiguration.getFileSet();
+        if (fileSet == null) {
+            throw new IllegalStateException(
+                    "Unable to load Soy templates: no file set, no compiled templates provided.");
+        }
+        return soyConfiguration.getFileSet().compileTemplates();
+    }
+
+    private void continueRender(@Nonnull SoySauce.WriteContinuation continuation,
+                                @Nonnull SoyRender target,
+                                @Nonnull Emitter<ByteBuffer> emitter,
+                                @Nullable MessageDigest digester) throws SoyViewException {
+        try {
+            target.advance(continuation);
+            if (target.getRenderState() == SoyRender.State.READY) {
+                LOG.debug("Render is READY to proceed. Continuing.");
+                SoySauce.WriteContinuation next = continuation.continueRender();
+                handleRender(next, target, emitter, digester);
+            } else {
+                LOG.debug("Render is NOT READY.");
+            }
+
+        } catch (IOException ioe) {
+            LOG.warn("Soy encountered IOException while rendering: '" + ioe.getMessage() + "'.");
+            emitter.onError(ioe);
+
+        }
+    }
+
+    private void emitChunk(@Nonnull SoyRender target,
+                           @Nonnull Emitter<ByteBuffer> emitter,
+                           @Nullable MessageDigest digester) {
+        LOG.debug("Render emitting chunk");
+        emitter.onNext(
+                target.exportChunk(
+                        bufferFactory,
+                        this.digesterActive ? digester : null,
+                        soyMicronautConfiguration.getChunkSize()));
+    }
+
+    private void handleRender(@Nonnull SoySauce.WriteContinuation continuation,
                               @Nonnull SoyRender target,
                               @Nonnull Emitter<ByteBuffer> emitter,
                               @Nullable MessageDigest digester) throws SoyViewException {
-    try {
-      target.advance(continuation);
-      if (target.getRenderState() == SoyRender.State.READY) {
-        LOG.debug("Render is READY to proceed. Continuing.");
-        SoySauce.WriteContinuation next = continuation.continueRender();
-        handleRender(next, target, emitter, digester);
-      } else {
-        LOG.debug("Render is NOT READY.");
-      }
-
-    } catch (IOException ioe) {
-      LOG.warn("Soy encountered IOException while rendering: '" + ioe.getMessage() + "'.");
-      emitter.onError(ioe);
-
-    }
-  }
-
-  private void emitChunk(@Nonnull SoyRender target,
-                         @Nonnull Emitter<ByteBuffer> emitter,
-                         @Nullable MessageDigest digester) {
-    LOG.debug("Render emitting chunk");
-    emitter.onNext(
-      target.exportChunk(
-        bufferFactory,
-        this.digesterActive ? digester : null,
-        soyMicronautConfiguration.getChunkSize()));
-  }
-
-  private void handleRender(@Nonnull SoySauce.WriteContinuation continuation,
-                            @Nonnull SoyRender target,
-                            @Nonnull Emitter<ByteBuffer> emitter,
-                            @Nullable MessageDigest digester) throws SoyViewException {
-    // Emit the next chunk and keep processing.
-    if (!EMIT_ONE_CHUNK) {
-      emitChunk(target, emitter, digester);
-      this.digesterActive = false;
-    }
-    target.advance(continuation);
-    if (continuation.result().type() == RenderResult.Type.DONE) {
-      LOG.debug("Finished Soy render routine. Calling `onComplete`.");
-      if (EMIT_ONE_CHUNK) {
-        emitChunk(target, emitter, digester);
-        this.digesterActive = false;
-      }
-      emitter.onComplete();
-    }
-  }
-
-  /**
-   * Package the {@link SoyContextMediator} in a singleton map if we are handed one directly. If not, fallback to the
-   * default functionality, which passes through Map instances, and then falls back to generating Bean maps.
-   *
-   * @param data The data to render a Soy view with.
-   * @return Packaged or converted model data to render the Soy view with.
-   */
-  @Nonnull
-  @Override
-  public Map<String, Object> modelOf(@Nullable Object data) {
-    if (data == null) {
-      return Collections.emptyMap();
-    } else if (data instanceof SoyContextMediator) {
-      return Collections.singletonMap(SOY_CONTEXT_SENTINEL, data);
-    } else if (data instanceof Map) {
-      //noinspection unchecked
-      return (Map<String, Object>) data;
-    } else {
-      return BeanMap.of(data);
-    }
-  }
-
-  /**
-   * @param viewName view name to be rendered
-   * @param data     response body to render it with a view
-   * @param request  HTTP request
-   * @param response HTTP response object assembled so far.
-   * @return A writable where the view will be written to.
-   */
-  @Nonnull
-  @Override
-  public Flowable<MutableHttpResponse<?>> render(@Nonnull String viewName,
-                                                 @Nullable Object data,
-                                                 @Nonnull HttpRequest<?> request,
-                                                 @Nonnull MutableHttpResponse<Object> response) {
-    ArgumentUtils.requireNonNull("viewName", viewName);
-    LOG.debug("Preparing render for template path '" + viewName + "'");
-
-    int statusCode = response.getStatus().getCode();
-    if ((!(data instanceof Map) && !(data instanceof SoyData) && !(data instanceof SoyContext))
-        || statusCode != 200) {
-      // we were passed something other than context data for a render operation. so, duck out gracefully.
-      LOG.debug("Data was not a `Map` or `SoyData`. Returning untouched by Soy for view '" + viewName + "'.");
-      return Flowable.just(response);
-    }
-
-    Map<String, Object> injectedPropsOverlay = new HashMap<>(1);
-    if (injectNonce) {
-      Optional<Object> nonceObj = request.getAttribute(CspFilter.NONCE_PROPERTY);
-      if (nonceObj.isPresent()) {
-        String nonceValue = ((String) nonceObj.get());
-        injectedPropsOverlay.put(INJECTED_NONCE_PROPERTY, nonceValue);
-      }
-    }
-
-    final SoyContextMediator context;
-    if (data instanceof SoyContextMediator) {
-      context = (SoyContextMediator) data;
-    } else if (data instanceof Map) {
-      Map dataMap = (Map) data;
-      if (dataMap.size() == 1 && dataMap.containsKey(SOY_CONTEXT_SENTINEL)) {
-        // it's a packaged soy context
-        context = (SoyContextMediator)dataMap.get(SOY_CONTEXT_SENTINEL);
-      } else {
-        // otherwise, use it directly as a map
-        //noinspection unchecked
-        context = SoyContext.fromMap(
-          (Map<String, Object>) dataMap,
-          Optional.of(Collections.emptyMap()),
-          Optional.empty());
-      }
-    } else {
-      context = SoyContext.fromMap(
-        modelOf(data),
-        Optional.of(Collections.emptyMap()),
-        Optional.empty());
-    }
-
-    final SoySauce.Renderer renderer = soySauce.newRenderer(new SoyTemplate() {
-      @Override
-      public String getTemplateName() {
-        return viewName;
-      }
-
-      @Override
-      public Map<String, SoyValueProvider> getParamsAsMap() {
-        return null;
-      }
-    });
-    renderer.setData(context.getProperties());
-    renderer.setIj(context.getInjectedProperties(injectedPropsOverlay));
-
-    if (this.soyMicronautConfiguration.isRenamingEnabled()) {
-      SoyNamingMapProvider renamingProvider = (
-        context.overrideNamingMap().orElse(this.namingMapProvider));
-      if (renamingProvider != null) {
-        SoyCssRenamingMap cssMap = renamingProvider.cssRenamingMap();
-        SoyIdRenamingMap idMap = renamingProvider.idRenamingMap();
-        if (cssMap != null) {
-          renderer.setCssRenamingMap(cssMap);
+        // Emit the next chunk and keep processing.
+        if (!EMIT_ONE_CHUNK) {
+            emitChunk(target, emitter, digester);
+            this.digesterActive = false;
         }
-        if (idMap != null) {
-          renderer.setXidRenamingMap(idMap);
+        target.advance(continuation);
+        if (continuation.result().type() == RenderResult.Type.DONE) {
+            LOG.debug("Finished Soy render routine. Calling `onComplete`.");
+            if (EMIT_ONE_CHUNK) {
+                emitChunk(target, emitter, digester);
+                this.digesterActive = false;
+            }
+            emitter.onComplete();
         }
-      }
     }
 
-    // handle a streaming message digester for etags, if directed
-    final MessageDigest digester;
-    if (context.enableETags() && context.strongETags()) {
-      try {
-        digester = MessageDigest.getInstance(ETAG_HASH_ALGORITHM);
-        this.digesterActive = true;
-      } catch (NoSuchAlgorithmException nsa) {
-        throw new IllegalStateException(nsa);
-      }
-    } else {
-      digester = null;
-    }
-
-    // prime the initial render
-    return Flowable.<ByteBuffer, SoyRender>generate(SoyRender::create, (buffer, emitter) -> {
-      // trigger initial render cycle, which may finish the response
-      try {
-        final SoySauce.WriteContinuation op = buffer.getContinuation();
-        if (op == null) {
-          // no continuation means we are doing the first render run, which may complete it
-          LOG.trace("Initial render for view '" + viewName + "'");
-          handleRender(renderer.renderHtml(buffer), buffer, emitter, digester);
+    /**
+     * Package the {@link SoyContextMediator} in a singleton map if we are handed one directly. If not, fallback to the
+     * default functionality, which passes through Map instances, and then falls back to generating Bean maps.
+     *
+     * @param data The data to render a Soy view with.
+     * @return Packaged or converted model data to render the Soy view with.
+     */
+    @Nonnull
+    @Override
+    public Map<String, Object> modelOf(@Nullable Object data) {
+        if (data == null) {
+            return Collections.emptyMap();
+        } else if (data instanceof SoyContextMediator) {
+            return Collections.singletonMap(SOY_CONTEXT_SENTINEL, data);
+        } else if (data instanceof Map) {
+            //noinspection unchecked
+            return (Map<String, Object>) data;
         } else {
-          // otherwise, pick up where we left off
-          LOG.trace("Continue render for view '" + viewName + "'");
-          continueRender(op, buffer, emitter, digester);
+            return BeanMap.of(data);
+        }
+    }
+
+    /**
+     * @param viewName view name to be rendered
+     * @param data     response body to render it with a view
+     * @param request  HTTP request
+     * @param response HTTP response object assembled so far.
+     * @return A writable where the view will be written to.
+     */
+    @Nonnull
+    @Override
+    public Flowable<MutableHttpResponse<?>> render(@Nonnull String viewName,
+                                                   @Nullable Object data,
+                                                   @Nonnull HttpRequest<?> request,
+                                                   @Nonnull MutableHttpResponse<Object> response) {
+        ArgumentUtils.requireNonNull("viewName", viewName);
+        LOG.debug("Preparing render for template path '" + viewName + "'");
+
+        int statusCode = response.getStatus().getCode();
+        if ((!(data instanceof Map) && !(data instanceof SoyData) && !(data instanceof SoyContext))
+                || statusCode != 200) {
+            // we were passed something other than context data for a render operation. so, duck out gracefully.
+            LOG.debug("Data was not a `Map` or `SoyData`. Returning untouched by Soy for view '" + viewName + "'.");
+            return Flowable.just(response);
         }
 
-      } catch (SoyViewException sre) {
-        emitter.onError(new ViewRenderingException(
-          "Soy render exception of type '" + sre.getClass().getSimpleName() +
-            "' (view: '" + viewName + "'): " + sre.getMessage(), sre.getCause()));
+        Map<String, Object> injectedPropsOverlay = new HashMap<>(1);
+        if (injectNonce) {
+            Optional<Object> nonceObj = request.getAttribute(CspFilter.NONCE_PROPERTY);
+            if (nonceObj.isPresent()) {
+                String nonceValue = ((String) nonceObj.get());
+                injectedPropsOverlay.put(INJECTED_NONCE_PROPERTY, nonceValue);
+            }
+        }
 
-      } catch (RuntimeException | IOException rxe) {
-        emitter.onError(new ViewRenderingException(
-          "Unhandled error of type '" + rxe.getClass().getSimpleName() +
-            "' rendering Soy Sauce view [" + viewName + "]: " + rxe.getMessage(), rxe));
+        final SoyContextMediator context;
+        if (data instanceof SoyContextMediator) {
+            context = (SoyContextMediator) data;
+        } else if (data instanceof Map) {
+            Map dataMap = (Map) data;
+            if (dataMap.size() == 1 && dataMap.containsKey(SOY_CONTEXT_SENTINEL)) {
+                // it's a packaged soy context
+                context = (SoyContextMediator)dataMap.get(SOY_CONTEXT_SENTINEL);
+            } else {
+                // otherwise, use it directly as a map
+                //noinspection unchecked
+                context = SoyContext.fromMap(
+                        (Map<String, Object>) dataMap,
+                        Optional.of(Collections.emptyMap()),
+                        Optional.empty());
+            }
+        } else {
+            context = SoyContext.fromMap(
+                    modelOf(data),
+                    Optional.of(Collections.emptyMap()),
+                    Optional.empty());
+        }
 
-      }
-    }, SoyRender::close).map((buffer) -> context.finalizeResponse(request, response, buffer, digester));
-  }
+        final SoySauce.Renderer renderer = soySauce.newRenderer(new SoyTemplate() {
+            @Override
+            public String getTemplateName() {
+                return viewName;
+            }
 
-  /**
-   * @param view view name to be rendered
-   * @return true if a template can be found for the supplied view name.
-   */
-  @Override
-  public boolean exists(@Nonnull String view) {
-    return soySauce.hasTemplate(view);
-  }
+            @Override
+            public Map<String, SoyValueProvider> getParamsAsMap() {
+                return null;
+            }
+        });
+        renderer.setData(context.getProperties());
+        renderer.setIj(context.getInjectedProperties(injectedPropsOverlay));
+
+        if (this.soyMicronautConfiguration.isRenamingEnabled()) {
+            SoyNamingMapProvider renamingProvider = (
+                    context.overrideNamingMap().orElse(this.namingMapProvider));
+            if (renamingProvider != null) {
+                SoyCssRenamingMap cssMap = renamingProvider.cssRenamingMap();
+                SoyIdRenamingMap idMap = renamingProvider.idRenamingMap();
+                if (cssMap != null) {
+                    renderer.setCssRenamingMap(cssMap);
+                }
+                if (idMap != null) {
+                    renderer.setXidRenamingMap(idMap);
+                }
+            }
+        }
+
+        // handle a streaming message digester for etags, if directed
+        final MessageDigest digester;
+        if (context.enableETags() && context.strongETags()) {
+            try {
+                digester = MessageDigest.getInstance(ETAG_HASH_ALGORITHM);
+                this.digesterActive = true;
+            } catch (NoSuchAlgorithmException nsa) {
+                throw new IllegalStateException(nsa);
+            }
+        } else {
+            digester = null;
+        }
+
+        // prime the initial render
+        return Flowable.<ByteBuffer, SoyRender>generate(SoyRender::create, (buffer, emitter) -> {
+            // trigger initial render cycle, which may finish the response
+            try {
+                final SoySauce.WriteContinuation op = buffer.getContinuation();
+                if (op == null) {
+                    // no continuation means we are doing the first render run, which may complete it
+                    LOG.trace("Initial render for view '" + viewName + "'");
+                    handleRender(renderer.renderHtml(buffer), buffer, emitter, digester);
+                } else {
+                    // otherwise, pick up where we left off
+                    LOG.trace("Continue render for view '" + viewName + "'");
+                    continueRender(op, buffer, emitter, digester);
+                }
+
+            } catch (SoyViewException sre) {
+                emitter.onError(new ViewRenderingException(
+                        "Soy render exception of type '" + sre.getClass().getSimpleName() +
+                                "' (view: '" + viewName + "'): " + sre.getMessage(), sre.getCause()));
+
+            } catch (RuntimeException | IOException rxe) {
+                emitter.onError(new ViewRenderingException(
+                        "Unhandled error of type '" + rxe.getClass().getSimpleName() +
+                                "' rendering Soy Sauce view [" + viewName + "]: " + rxe.getMessage(), rxe));
+
+            }
+        }, SoyRender::close).map((buffer) -> context.finalizeResponse(request, response, buffer, digester));
+    }
+
+    /**
+     * @param view view name to be rendered
+     * @return true if a template can be found for the supplied view name.
+     */
+    @Override
+    public boolean exists(@Nonnull String view) {
+        return soySauce.hasTemplate(view);
+    }
 
 }

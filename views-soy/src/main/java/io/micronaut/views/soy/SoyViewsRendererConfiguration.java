@@ -27,27 +27,27 @@ import io.micronaut.core.annotation.Nullable;
  * @since 1.2.1
  */
 public interface SoyViewsRendererConfiguration extends Toggleable {
-  /**
-   * @return The backing Soy file set
-   */
-  SoyFileSet getFileSet();
+    /**
+     * @return The backing Soy file set
+     */
+    SoyFileSet getFileSet();
 
-  /**
-   * @return Whether renaming is enabled
-   */
-  boolean isRenamingEnabled();
+    /**
+     * @return Whether renaming is enabled
+     */
+    boolean isRenamingEnabled();
 
-  /**
-   * Turns renaming on or off.
-   *
-   * @param renaming Renaming status.
-   */
-  void setRenamingEnabled(boolean renaming);
+    /**
+     * Turns renaming on or off.
+     *
+     * @param renaming Renaming status.
+     */
+    void setRenamingEnabled(boolean renaming);
 
-  /**
-   * @return Return a set of pre-compiled Soy templates, if supported
-   */
-  @Nullable default SoySauce getCompiledTemplates() {
-    return null;
-  }
+    /**
+     * @return Return a set of pre-compiled Soy templates, if supported
+     */
+    @Nullable default SoySauce getCompiledTemplates() {
+        return null;
+    }
 }

@@ -36,56 +36,56 @@ import java.util.Optional;
  * @since 1.3.2
  */
 public interface SoyContextMediator {
-  /** @return Whether to enable {@code ETag} support within the Soy rendering layer. */
-  default boolean enableETags() {
-    return false;
-  }
+    /** @return Whether to enable {@code ETag} support within the Soy rendering layer. */
+    default boolean enableETags() {
+        return false;
+    }
 
-  /** @return Whether to calculate strong {@code ETag} values while rendering. */
-  default boolean strongETags() {
-    return false;
-  }
+    /** @return Whether to calculate strong {@code ETag} values while rendering. */
+    default boolean strongETags() {
+        return false;
+    }
 
-  /**
-   * Retrieve properties which should be made available via regular, declared `@param` statements.
-   *
-   * @return Map of regular template properties.
-   */
-  @Nonnull Map<String, Object> getProperties();
+    /**
+     * Retrieve properties which should be made available via regular, declared `@param` statements.
+     *
+     * @return Map of regular template properties.
+     */
+    @Nonnull Map<String, Object> getProperties();
 
-  /**
-   * Retrieve properties and values that should be made available via `@inject`.
-   *
-   * @param framework Properties auto-injected by the framework.
-   * @return Map of injected properties and their values.
-   */
-  @Nonnull Map<String, Object> getInjectedProperties(Map<String, Object> framework);
+    /**
+     * Retrieve properties and values that should be made available via `@inject`.
+     *
+     * @param framework Properties auto-injected by the framework.
+     * @return Map of injected properties and their values.
+     */
+    @Nonnull Map<String, Object> getInjectedProperties(Map<String, Object> framework);
 
-  /**
-   * Specify a Soy renaming map which overrides the globally-installed map, if any. Renaming must still be activated via
-   * config, or manually, for the return value of this method to have any effect.
-   *
-   * @return {@link SoyNamingMapProvider} that should be used for this render routine.
-   */
-  default @Nonnull Optional<SoyNamingMapProvider> overrideNamingMap() {
-    return Optional.empty();
-  }
+    /**
+     * Specify a Soy renaming map which overrides the globally-installed map, if any. Renaming must still be activated via
+     * config, or manually, for the return value of this method to have any effect.
+     *
+     * @return {@link SoyNamingMapProvider} that should be used for this render routine.
+     */
+    default @Nonnull Optional<SoyNamingMapProvider> overrideNamingMap() {
+        return Optional.empty();
+    }
 
-  /**
-   * Finalize an HTTP response rendered by the Micronaut Soy layer. This may include adding any final headers, or
-   * adjusting headers, before the response is sent.
-   *
-   * @param request Request that produced this response.
-   * @param response HTTP response to finalize.
-   * @param body Rendered HTTP response body.
-   * @param digester Pre-filled message digest for the first chunk. Only provided if enabled by {@link #enableETags()}.
-   * @param <T> Body object type.
-   * @return Response, but finalized.
-   */
-  default @Nonnull <T> MutableHttpResponse<T> finalizeResponse(@Nonnull HttpRequest<?> request,
-                                                               @Nonnull MutableHttpResponse<T> response,
-                                                               @Nonnull T body,
-                                                               @Nullable MessageDigest digester) {
-    return response.body(body);
-  }
+    /**
+     * Finalize an HTTP response rendered by the Micronaut Soy layer. This may include adding any final headers, or
+     * adjusting headers, before the response is sent.
+     *
+     * @param request Request that produced this response.
+     * @param response HTTP response to finalize.
+     * @param body Rendered HTTP response body.
+     * @param digester Pre-filled message digest for the first chunk. Only provided if enabled by {@link #enableETags()}.
+     * @param <T> Body object type.
+     * @return Response, but finalized.
+     */
+    default @Nonnull <T> MutableHttpResponse<T> finalizeResponse(@Nonnull HttpRequest<?> request,
+                                                                 @Nonnull MutableHttpResponse<T> response,
+                                                                 @Nonnull T body,
+                                                                 @Nullable MessageDigest digester) {
+        return response.body(body);
+    }
 }

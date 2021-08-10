@@ -30,37 +30,37 @@ import java.util.concurrent.Future;
  * @since 1.3.2
  */
 public class SoyViewException extends ViewRenderingException {
-  /** Future value that caused this failure, if applicable. */
-  private @Nullable final Future future;
+    /** Future value that caused this failure, if applicable. */
+    private @Nullable final Future future;
 
-  /**
-   * Soy render exceptions always wrap other exceptions.
-   *
-   * @param cause Inner cause of the error encountered while rendering.
-   */
-  SoyViewException(final @Nonnull Throwable cause) {
-    super(cause.getMessage(), cause);
-    this.future = null;
-  }
+    /**
+     * Soy render exceptions always wrap other exceptions.
+     *
+     * @param cause Inner cause of the error encountered while rendering.
+     */
+    SoyViewException(final @Nonnull Throwable cause) {
+        super(cause.getMessage(), cause);
+        this.future = null;
+    }
 
-  /**
-   * In some cases, an async operation may cause a failure. In that case, we
-   * include the future value for debugging.
-   *
-   * @param cause Inner cause of the error encountered while rendering.
-   * @param future Future value which failed.
-   */
-  SoyViewException(final @Nonnull Throwable cause,
-                   final @Nullable Future future) {
-    super(cause.getMessage(), cause);
-    this.future = future;
-  }
+    /**
+     * In some cases, an async operation may cause a failure. In that case, we
+     * include the future value for debugging.
+     *
+     * @param cause Inner cause of the error encountered while rendering.
+     * @param future Future value which failed.
+     */
+    SoyViewException(final @Nonnull Throwable cause,
+                     final @Nullable Future future) {
+        super(cause.getMessage(), cause);
+        this.future = future;
+    }
 
-  // -- Getters -- //
-  /**
-   * @return Future value that caused this error, if applicable.
-   */
-  public @Nullable Future getFuture() {
-    return future;
-  }
+    // -- Getters -- //
+    /**
+     * @return Future value that caused this error, if applicable.
+     */
+    public @Nullable Future getFuture() {
+        return future;
+    }
 }
