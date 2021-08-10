@@ -17,18 +17,12 @@ package io.micronaut.views.csp
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.DefaultApplicationContext
-import io.micronaut.context.annotation.Infrastructure
-import io.micronaut.context.annotation.Requires
 import io.micronaut.context.env.PropertySource
 import io.micronaut.http.HttpRequest
-import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.server.netty.NettyHttpServer
 import io.micronaut.runtime.server.EmbeddedServer
-import spock.lang.Ignore
 import spock.lang.Specification
 
 class CspFilterSpec extends Specification {
