@@ -20,7 +20,7 @@ import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.WritableViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -47,7 +47,7 @@ import java.util.Properties;
  * @param <T> The model type
  */
 @Singleton
-public class VelocityViewsRenderer<T> implements ViewsRenderer<T> {
+public class VelocityViewsRenderer<T> implements WritableViewsRenderer<T> {
 
     protected final VelocityEngine velocityEngine;
     protected final ViewsConfiguration viewsConfiguration;

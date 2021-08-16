@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,12 @@ import io.micronaut.views.ViewsConfigurationProperties;
 import io.micronaut.core.annotation.Nullable;
 
 /**
- * {@link ConfigurationProperties} implementation for soy views renderer.
+ * {@link ConfigurationProperties} implementation for {@link SoyTofuViewsRenderer}.
  *
  * Configured properties support a {@link SoyFileSet}, which is rendered via a from-source renderer. Template sources
  * are provided via DI, using a {@link SoyFileSetProvider}.
  *
- * @author Sam Gammon (sam@bloombox.io)
+ * @author Sam Gammon (sam@momentum.io)
  * @since 1.2.1
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
@@ -44,6 +44,19 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
     public static final boolean DEFAULT_ENABLED = true;
 
     /**
+     * Default buffer/chunk size.
+     *
+     * @since 1.3.2
+     */
+    public static final int DEFAULT_CHUNK_SIZE = SoyResponseBuffer.MAX_CHUNK_SIZE;
+
+    /**
+     * The default Soy rendering engine.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static final String DEFAULT_ENGINE = "tofu";
+
+    /**
      * Whether to mount renaming maps.
      */
     @SuppressWarnings("WeakerAccess")
@@ -51,7 +64,9 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
 
     private boolean enabled = DEFAULT_ENABLED;
     private boolean renaming = DEFAULT_RENAMING;
-    private final SoyFileSetProvider fileSetProvider;
+    private int chunkSize = DEFAULT_CHUNK_SIZE;
+    private String engine = DEFAULT_ENGINE;
+    private SoyFileSetProvider fileSetProvider;
 
     /**
      * Default constructor for Soy views renderer config properties.
@@ -71,7 +86,7 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
     }
 
     /**
-     * Whether Soy-backed views are enabled. Default value `{@value #DEFAULT_ENABLED}`
+     * Whether Soy-backed views are enabled.
      *
      * @param enabled True if they are.
      */
@@ -80,7 +95,7 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
     }
 
     /**
-     * Specifies whether renaming is enabled. Defaults to `{@value #DEFAULT_RENAMING}`.
+     * Specifies whether renaming is enabled. Defaults to `true`.
      *
      * @return True if it is enabled.
      */
@@ -90,7 +105,7 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
     }
 
     /**
-     * Turns renaming on or off. Default value `{@value #DEFAULT_RENAMING}`
+     * Turns renaming on or off.
      *
      * @param renaming Renaming status.
      */
@@ -114,4 +129,21 @@ public class SoyViewsRendererConfigurationProperties implements SoyViewsRenderer
         return fileSetProvider.provideCompiledTemplates();
     }
 
+    /**
+     * @since 1.3.2
+     * @return The current chunk size, used when sizing buffers for render
+     */
+    public int getChunkSize() {
+        return chunkSize;
+    }
+
+    /**
+     * Set the chunk size for render buffers.
+     *
+     * @since 1.3.2
+     * @param chunkSize Buffer chunk size
+     */
+    public void setChunkSize(int chunkSize) {
+        this.chunkSize = chunkSize;
+    }
 }

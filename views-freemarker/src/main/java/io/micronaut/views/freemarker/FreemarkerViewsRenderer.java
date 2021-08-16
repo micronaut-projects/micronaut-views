@@ -27,7 +27,7 @@ import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.WritableViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 
 import io.micronaut.core.annotation.Nullable;
@@ -47,7 +47,7 @@ import java.util.Map;
 @Requires(property = FreemarkerViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Requires(classes = Configuration.class)
 @Singleton
-public class FreemarkerViewsRenderer<T> implements ViewsRenderer<T> {
+public class FreemarkerViewsRenderer<T> implements WritableViewsRenderer<T> {
 
     protected final ViewsConfiguration viewsConfiguration;
     protected final FreemarkerViewsRendererConfigurationProperties freemarkerMicronautConfiguration;

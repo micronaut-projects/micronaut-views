@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 package io.micronaut.views.thymeleaf;
+
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
@@ -21,18 +24,16 @@ import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.WritableViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 import org.thymeleaf.context.IContext;
 import org.thymeleaf.exceptions.TemplateEngineException;
 import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
-import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
+
 import java.io.Writer;
 import java.util.Locale;
 
@@ -47,7 +48,7 @@ import java.util.Locale;
  * @param <T> The model type
  */
 @Singleton
-public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
+public class ThymeleafViewsRenderer<T> implements WritableViewsRenderer<T> {
 
     protected final AbstractConfigurableTemplateResolver templateResolver;
     protected final TemplateEngine engine;

@@ -27,14 +27,14 @@ import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.WritableViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 /**
- * Renders Views with with Handlebars.java.
+ * Renders Views with Handlebars.java.
  *
  * @author Sergio del Amo
  * @see <a href="https://jknack.github.io/handlebars.java/">https://jknack.github.io/handlebars.java/</a>
@@ -44,7 +44,7 @@ import jakarta.inject.Singleton;
 @Requires(property = HandlebarsViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 @Requires(classes = Handlebars.class)
 @Singleton
-public class HandlebarsViewsRenderer<T> implements ViewsRenderer<T> {
+public class HandlebarsViewsRenderer<T> implements WritableViewsRenderer<T> {
 
     protected final ViewsConfiguration viewsConfiguration;
     protected final ResourceLoader resourceLoader;

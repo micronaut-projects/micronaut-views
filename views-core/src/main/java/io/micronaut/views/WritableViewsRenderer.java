@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,24 @@
 package io.micronaut.views;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.order.Ordered;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.io.Writable;
+import io.micronaut.http.HttpRequest;
 
 /**
- * Base Interface to be implemented by View Engines implementations.
- * You should implement either {@link WritableViewsRenderer} or {@link ReactiveViewsRenderer}.
- * @param <T> The model type
+ * Writes the view into {@link Writable}.
  * @author Sergio del Amo
- * @since 1.0
+ * @since 3.0.0
+ * @param <T> The model type
  */
-public interface ViewsRenderer<T> extends Ordered {
+public interface WritableViewsRenderer<T> extends ViewsRenderer<T> {
 
     /**
      * @param viewName view name to be rendered
-     * @return true if a template can be found for the supplied view name.
+     * @param data     response body to render it with a view
+     * @param request  HTTP request
+     * @return A writable where the view will be written to.
      */
-    boolean exists(@NonNull String viewName);
+    @NonNull
+    Writable render(@NonNull String viewName, @Nullable T data, @NonNull HttpRequest<?> request);
 }
