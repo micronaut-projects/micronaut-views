@@ -49,6 +49,7 @@ public class ViewUtils {
         }
         return BeanMap.of(data);
     }
+
     /**
      * Returns a path with unix style folder
      * separators that starts and ends with a "/".
