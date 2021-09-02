@@ -22,6 +22,7 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.http.server.util.locale.HttpLocaleResolver;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -52,20 +53,24 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
 
     protected final AbstractConfigurableTemplateResolver templateResolver;
     protected final TemplateEngine engine;
+    protected final HttpLocaleResolver httpLocaleResolver;
     protected ResourceLoader resourceLoader;
 
     /**
      * @param templateResolver   The template resolver
      * @param templateEngine     The template engine
      * @param resourceLoader     The resource loader
+     * @param httpLocaleResolver The locale resolver
      */
     @Inject
     public ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver templateResolver,
                                   TemplateEngine templateEngine,
-                                  ClassPathResourceLoader resourceLoader) {
+                                  ClassPathResourceLoader resourceLoader,
+                                  HttpLocaleResolver httpLocaleResolver) {
         this.templateResolver = templateResolver;
         this.resourceLoader = resourceLoader;
         this.engine = templateEngine;
+        this.httpLocaleResolver = httpLocaleResolver;
     }
 
     @Override
@@ -76,7 +81,8 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
         ArgumentUtils.requireNonNull("viewName", viewName);
         ArgumentUtils.requireNonNull("request", request);
         return (writer) -> {
-            IContext context = new WebContext(request, request.getLocale().orElse(Locale.US), ViewUtils.modelOf(data));
+            IContext context = new WebContext(request, httpLocaleResolver.resolve(request).orElse(Locale.US),
+                    ViewUtils.modelOf(data));
             render(viewName, context, writer);
         };
     }
