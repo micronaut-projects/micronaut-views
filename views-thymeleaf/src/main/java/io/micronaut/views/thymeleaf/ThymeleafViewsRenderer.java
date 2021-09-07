@@ -42,11 +42,12 @@ import java.util.Optional;
 /**
  * Renders templates Thymeleaf Java template engine.
  *
- * @param <T> The model type
  * @author Sergio del Amo
  * @author graemerocher
+ *
  * @see <a href="https://www.thymeleaf.org">https://www.thymeleaf.org</a>
  * @since 1.0
+ * @param <T> The model type
  */
 @Singleton
 public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
@@ -113,8 +114,8 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
      * Passes the arguments as is to {@link TemplateEngine#process(String, IContext, Writer)}.
      *
      * @param viewName The view name
-     * @param context  The context
-     * @param writer   The writer
+     * @param context The context
+     * @param writer The writer
      */
     public void render(String viewName, IContext context, Writer writer) {
         try {
