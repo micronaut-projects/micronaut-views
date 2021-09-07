@@ -37,16 +37,16 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.io.Writer;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * Renders templates Thymeleaf Java template engine.
  *
+ * @param <T> The model type
  * @author Sergio del Amo
  * @author graemerocher
- *
  * @see <a href="https://www.thymeleaf.org">https://www.thymeleaf.org</a>
  * @since 1.0
- * @param <T> The model type
  */
 @Singleton
 public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
@@ -73,6 +73,28 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
         this.httpLocaleResolver = httpLocaleResolver;
     }
 
+    /**
+     * @param templateResolver   The template resolver
+     * @param templateEngine     The template engine
+     * @param resourceLoader     The resource loader
+     */
+    @Deprecated
+    public ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver templateResolver,
+                                  TemplateEngine templateEngine,
+                                  ClassPathResourceLoader resourceLoader) {
+        this(templateResolver, templateEngine, resourceLoader, new HttpLocaleResolver() {
+            @Override @NonNull public Optional<Locale> resolve(@NonNull HttpRequest<?> context) {
+                return context.getLocale();
+            }
+
+            @Override @NonNull public Locale resolveOrDefault(@NonNull HttpRequest<?> context) {
+//                Returns US locale by default to simulate previous incorrect behavior to ensure it is non-breaking for
+//                people relying on this behavior.
+                return Locale.US;
+            }
+        });
+    }
+
     @Override
     @NonNull
     public Writable render(@NonNull String viewName,
@@ -91,8 +113,8 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
      * Passes the arguments as is to {@link TemplateEngine#process(String, IContext, Writer)}.
      *
      * @param viewName The view name
-     * @param context The context
-     * @param writer The writer
+     * @param context  The context
+     * @param writer   The writer
      */
     public void render(String viewName, IContext context, Writer writer) {
         try {
