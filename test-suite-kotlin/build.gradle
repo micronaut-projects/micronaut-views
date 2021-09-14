@@ -1,6 +1,6 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.5.30"
-    id("org.jetbrains.kotlin.kapt") version "1.5.30"
+    id "org.jetbrains.kotlin.jvm" version "1.5.21"
+    id("org.jetbrains.kotlin.kapt") version "1.5.21"
 }
 
 dependencies {
@@ -10,7 +10,7 @@ dependencies {
     testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
     testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
     testImplementation project(":views-soy")
-    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.30"
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21"
     testImplementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2')
     testImplementation project(":views-velocity")
 }
