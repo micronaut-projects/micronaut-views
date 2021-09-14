@@ -1,5 +1,5 @@
 plugins {
-    id 'nu.studer.rocker' version '3.0.3'
+    id 'nu.studer.rocker' version '3.0.4'
 }
 rocker {
     configurations {
