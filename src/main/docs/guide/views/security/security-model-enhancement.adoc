@@ -1,4 +1,10 @@
-The views project has integration with the Micronaut security project. api:views.model.security.SecurityViewModelProcessor[] is enabled by default and injects the current username in the view. The following properties allow you to customize the injection:
+The views project has integration with the Micronaut security project.
+
+api:views.model.security.SecurityViewModelProcessor[] is enabled by default and injects the current username in the view.
+
+NOTE: `SecurityViewModelProcessor` is typed to `Map<String, Object>`. If are models are POJOs you will need to implement your own security api:views.model.ViewModelProcessor[].
+
+The following properties allow you to customize the injection:
 
 include::{includedir}configurationProperties/io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties.adoc[]
 
