@@ -22,6 +22,7 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.http.server.util.locale.HttpLocaleResolver;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -36,6 +37,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.io.Writer;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * Renders templates Thymeleaf Java template engine.
@@ -52,20 +54,47 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
 
     protected final AbstractConfigurableTemplateResolver templateResolver;
     protected final TemplateEngine engine;
+    protected final HttpLocaleResolver httpLocaleResolver;
     protected ResourceLoader resourceLoader;
 
     /**
      * @param templateResolver   The template resolver
      * @param templateEngine     The template engine
      * @param resourceLoader     The resource loader
+     * @param httpLocaleResolver The locale resolver
      */
     @Inject
     public ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver templateResolver,
                                   TemplateEngine templateEngine,
-                                  ClassPathResourceLoader resourceLoader) {
+                                  ClassPathResourceLoader resourceLoader,
+                                  HttpLocaleResolver httpLocaleResolver) {
         this.templateResolver = templateResolver;
         this.resourceLoader = resourceLoader;
         this.engine = templateEngine;
+        this.httpLocaleResolver = httpLocaleResolver;
+    }
+
+    /**
+     * @param templateResolver   The template resolver
+     * @param templateEngine     The template engine
+     * @param resourceLoader     The resource loader
+     * @deprecated Use {@link ThymeleafViewsRenderer#ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver, TemplateEngine, ClassPathResourceLoader, HttpLocaleResolver)} instead
+     */
+    @Deprecated
+    public ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver templateResolver,
+                                  TemplateEngine templateEngine,
+                                  ClassPathResourceLoader resourceLoader) {
+        this(templateResolver, templateEngine, resourceLoader, new HttpLocaleResolver() {
+            @Override @NonNull public Optional<Locale> resolve(@NonNull HttpRequest<?> context) {
+                return context.getLocale();
+            }
+
+            @Override @NonNull public Locale resolveOrDefault(@NonNull HttpRequest<?> context) {
+//                Returns US locale by default to simulate previous incorrect behavior to ensure it is non-breaking for
+//                people relying on this behavior.
+                return Locale.US;
+            }
+        });
     }
 
     @Override
@@ -76,7 +105,8 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
         ArgumentUtils.requireNonNull("viewName", viewName);
         ArgumentUtils.requireNonNull("request", request);
         return (writer) -> {
-            IContext context = new WebContext(request, request.getLocale().orElse(Locale.US), ViewUtils.modelOf(data));
+            IContext context = new WebContext(request, httpLocaleResolver.resolveOrDefault(request),
+                    ViewUtils.modelOf(data));
             render(viewName, context, writer);
         };
     }
