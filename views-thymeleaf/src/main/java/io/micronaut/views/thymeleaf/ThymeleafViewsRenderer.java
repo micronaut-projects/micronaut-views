@@ -78,6 +78,7 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
      * @param templateResolver   The template resolver
      * @param templateEngine     The template engine
      * @param resourceLoader     The resource loader
+     * @deprecated Use {@link ThymeleafViewsRenderer#ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver, TemplateEngine, ClassPathResourceLoader, HttpLocaleResolver)} instead
      */
     @Deprecated
     public ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver templateResolver,
