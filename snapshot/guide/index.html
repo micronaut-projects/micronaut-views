@@ -1809,7 +1809,25 @@ mode. Inline scripts can be whitelisted with the syntax:</p>
 
 
 <div class="paragraph">
-<p>The views project has integration with the Micronaut security project. <a href="../api/io/micronaut/views/model/security/SecurityViewModelProcessor.html">SecurityViewModelProcessor</a> is enabled by default and injects the current username in the view. The following properties allow you to customize the injection:</p>
+<p>The views project has integration with the Micronaut security project.</p>
+</div>
+<div class="paragraph">
+<p><a href="../api/io/micronaut/views/model/security/SecurityViewModelProcessor.html">SecurityViewModelProcessor</a> is enabled by default and injects the current username in the view.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>SecurityViewModelProcessor</code> is typed to <code>Map&lt;String, Object&gt;</code>. If are models are POJOs you will need to implement your own security <a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following properties allow you to customize the injection:</p>
 </div>
 <a id="io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties" href="#io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all spread">
