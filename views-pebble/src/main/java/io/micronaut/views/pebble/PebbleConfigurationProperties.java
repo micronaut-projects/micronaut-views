@@ -33,6 +33,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     public static final String ENABLED = PREFIX + ".enabled";
 
     public static final boolean DEFAULT_ENABLED = true;
+    public static final String DEFAULT_LOCALE = StringUtils.EMPTY_STRING;
     public static final String DEFAULT_EXTENSION = "html";
     public static final boolean DEFAULT_CACHE_ACTIVE = true;    
     public static final boolean DEFAULT_NEW_LINE_TRIMMING = true;
@@ -45,6 +46,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     public static final boolean DEFAULT_LITERAL_NUMBERS_AS_BIG_DECIMALS = false;
 
     private boolean enabled = DEFAULT_ENABLED;
+    private String defaultLocale = DEFAULT_LOCALE;
     private String defaultExtension = DEFAULT_EXTENSION;
     private boolean cacheActive = DEFAULT_CACHE_ACTIVE;
     private boolean newLineTrimming = DEFAULT_NEW_LINE_TRIMMING;
@@ -227,5 +229,19 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
      */
     public void setLiteralNumbersAsBigDecimals(boolean literalNumbersAsBigDecimals) {
         this.literalNumbersAsBigDecimals = literalNumbersAsBigDecimals;
+    }
+
+    @Override
+    public String getDefaultLocale() {
+        return defaultLocale;
+    }
+
+    /**
+     * The default locale. Default value ({@value #DEFAULT_LOCALE}).
+     *
+     * @param defaultExtension The extension
+     */
+    public void setDefaultLocale(String defaultLocale) {
+        this.defaultLocale = defaultLocale;
     }
 }

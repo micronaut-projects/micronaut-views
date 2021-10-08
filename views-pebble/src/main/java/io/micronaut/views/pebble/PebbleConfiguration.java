@@ -26,6 +26,11 @@ import io.micronaut.core.util.Toggleable;
 public interface PebbleConfiguration extends Toggleable {
 
     /**
+     * @return Gets <code>defaultLocale</code> property
+     */
+    String getDefaultLocale();
+    
+    /**
      * @return Gets <code>defaultExtension</code> property
      */
     String getDefaultExtension();

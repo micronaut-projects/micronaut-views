@@ -18,7 +18,6 @@ package io.micronaut.views.pebble;
 import java.util.List;
 import java.util.Optional;
 
-import io.micronaut.views.ViewUtils;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import com.mitchellbosecke.pebble.PebbleEngine;
@@ -34,6 +33,8 @@ import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.views.ViewsConfiguration;
 import java.util.concurrent.ExecutorService;
 import jakarta.inject.Named;
+import java.util.Locale;
+import io.micronaut.core.util.StringUtils;
 
 /**
  * Factory for PebbleEngine beans.
@@ -102,6 +103,12 @@ public class PebbleEngineFactory {
             .literalDecimalTreatedAsInteger(configuration.isLiteralDecimalsAsIntegers())
             .literalNumbersAsBigDecimals(configuration.isLiteralNumbersAsBigDecimals());
 
+        String defaultLocale = configuration.getDefaultLocale();
+
+        if (StringUtils.isNotEmpty(defaultLocale)) {
+            builder.defaultLocale(Locale.forLanguageTag(defaultLocale));
+        }
+
         if (executorService != null) {
             builder.executorService(executorService);
         }
@@ -109,10 +116,9 @@ public class PebbleEngineFactory {
         if (loader.isPresent()) {
             builder.loader(loader.get());
         } else {
-            Loader<?> loader = new ClasspathLoader();
-            loader.setPrefix(viewsConfiguration.getFolder());
-            loader.setSuffix(ViewUtils.EXTENSION_SEPARATOR + configuration.getDefaultExtension());
-            builder.loader(loader);
+            Loader<?> classpathLoader = new ClasspathLoader();
+            classpathLoader.setPrefix(viewsConfiguration.getFolder());
+            builder.loader(classpathLoader);
         }
 
         syntax.ifPresent(bean -> builder.syntax(bean));
@@ -120,7 +126,7 @@ public class PebbleEngineFactory {
         extensions.forEach(bean -> builder.extension(bean));
 
         // Not implemented:
-        // defaultLocale, templateCache, tagCache, addEscapingStrategy 
+        // templateCache, tagCache, addEscapingStrategy 
         
         return builder.build();
     }
