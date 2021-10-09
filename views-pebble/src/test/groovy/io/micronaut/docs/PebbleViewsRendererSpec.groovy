@@ -110,6 +110,22 @@ class PebbleViewsRendererSpec extends Specification {
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
+    def "invoking /pebble/xml renders pebble template from a controller returning a xml"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/pebble/xml', String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+
+        then:
+        body
+        rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
+    }
+
     def "invoking /pebble/bogus returns 404 if you attempt to render a template which does not exist"() {
         when:
         client.toBlocking().exchange('/pebble/bogus', String)
