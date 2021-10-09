@@ -45,7 +45,7 @@ public class PebbleController {
     }
     //end::pogo[]
 
-    @View("test.xml")
+    @View("home.xml")
     @Get("/xml")
     public HttpResponse<Person> xml() {
         return HttpResponse.ok(new Person("sdelamo", true));
