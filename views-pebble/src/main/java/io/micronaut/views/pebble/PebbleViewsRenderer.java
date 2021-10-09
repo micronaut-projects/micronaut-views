@@ -42,14 +42,6 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
     private final String extension;
     private final PebbleEngine engine;
 
-    private String getTemplateName(String name) {
-        String templateName = ViewUtils.normalizeFile(name, extension);
-
-        return templateName.contains(ViewUtils.EXTENSION_SEPARATOR) 
-            ? templateName 
-            : templateName + ViewUtils.EXTENSION_SEPARATOR + extension;
-    }
-
     @Inject
     public PebbleViewsRenderer(PebbleConfiguration configuration, PebbleEngine engine) {    
         this.extension = configuration.getDefaultExtension();
@@ -64,5 +56,13 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
     @Override
     public boolean exists(String name) {
         return engine.getLoader().resourceExists(getTemplateName(name));
+    }
+
+    private String getTemplateName(String name) {
+        String templateName = ViewUtils.normalizeFile(name, extension);
+
+        return templateName.contains(ViewUtils.EXTENSION_SEPARATOR) 
+            ? templateName 
+            : templateName + ViewUtils.EXTENSION_SEPARATOR + extension;
     }
 }

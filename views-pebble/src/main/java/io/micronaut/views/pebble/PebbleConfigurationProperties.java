@@ -239,7 +239,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     /**
      * The default locale. Default value ({@value #DEFAULT_LOCALE}).
      *
-     * @param defaultExtension The extension
+     * @param defaultLocale The extension
      */
     public void setDefaultLocale(String defaultLocale) {
         this.defaultLocale = defaultLocale;
