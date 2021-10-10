@@ -39,22 +39,20 @@ import io.micronaut.views.ViewsRenderer;
 @Requires(classes = PebbleEngine.class)
 public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
     
-    private final String extension;
     private final PebbleEngine engine;
 
     @Inject
-    public PebbleViewsRenderer(PebbleConfiguration configuration, PebbleEngine engine) {    
-        this.extension = configuration.getDefaultExtension();
+    public PebbleViewsRenderer(PebbleEngine engine) {    
         this.engine = engine;
     }
 
     @Override
     public Writable render(String name, T data, @NonNull HttpRequest<?> request) {
-        return (writer) -> engine.getTemplate(ViewUtils.normalizeFile(name, extension)).evaluate(writer, ViewUtils.modelOf(data));
+        return (writer) -> engine.getTemplate(name).evaluate(writer, ViewUtils.modelOf(data));
     }
 
     @Override
     public boolean exists(String name) {
-        return engine.getLoader().resourceExists(ViewUtils.normalizeFile(name, extension));
+        return engine.getLoader().resourceExists(name);
     }
 }
