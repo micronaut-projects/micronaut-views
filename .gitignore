@@ -20,6 +20,7 @@ bin/
 *.iws
 .kotlintest
 */.kotlintest/
+jte-classes/
 
 # ignore resources, are downloaded via a gradle task from micronaut_docs
 src/main/docs/resources/css/highlight/*.css
