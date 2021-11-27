@@ -26,10 +26,8 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Produces
 import io.micronaut.views.ModelAndView
 import io.micronaut.views.View
-//import io.micronaut.views.jte.JteWritable
 import org.reactivestreams.Publisher
 import reactor.core.publisher.Mono
-//TODO import views.home
 
 @Requires(property = "spec.name", value = "jte")
 @Controller("/jte")
@@ -51,12 +49,6 @@ class JteController {
     HttpResponse<Person> home() {
         HttpResponse.ok(new Person(loggedIn: true, username: 'sdelamo'))
     }
-
-    // TODO
-//    @Get("/static")
-//    public HttpResponse<JteWritable> staticTemplate() {
-//        return ok(new JteWritable(home.template(true, "sdelamo")));
-//    }
 
     @Produces(MediaType.TEXT_PLAIN)
     @View("home.jte")

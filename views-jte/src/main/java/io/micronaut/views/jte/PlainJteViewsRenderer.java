@@ -31,7 +31,7 @@ import java.nio.file.Paths;
  * JTE renderer constrained to text/plain.
  *
  * @param <T> type of input model.
- * @author eharman
+ * @author edward3h
  * @since 2021-11-25
  */
 @Produces(MediaType.TEXT_PLAIN)

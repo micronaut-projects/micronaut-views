@@ -103,23 +103,6 @@ class JteViewRendererSpec extends Specification {
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
-    // TODO
-//    def "invoking /jte/static renders jte template from a controller returning a static template"() {
-//        when:
-//        HttpResponse<String> rsp = client.toBlocking().exchange('/jte/static', String)
-//
-//        then:
-//        noExceptionThrown()
-//        rsp.status() == HttpStatus.OK
-//
-//        when:
-//        String body = rsp.body()
-//
-//        then:
-//        body
-//        rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
-//    }
-
     def "invoking /jte/reactive renders jte template from a controller returning a reactive type"() {
         when:
         HttpResponse<String> rsp = client.toBlocking().exchange('/jte/reactive', String)
