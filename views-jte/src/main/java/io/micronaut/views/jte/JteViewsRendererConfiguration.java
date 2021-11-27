@@ -22,4 +22,9 @@ package io.micronaut.views.jte;
  * @since 2021-11-24
  */
 public interface JteViewsRendererConfiguration {
+    /**
+     * Use dynamic/hot reload templates.
+     * @return true to enable reloading templates.
+     */
+    boolean isDynamic();
 }

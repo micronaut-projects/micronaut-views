@@ -28,4 +28,18 @@ import io.micronaut.views.ViewsConfigurationProperties;
 public class JteViewsRendererConfigurationProperties implements JteViewsRendererConfiguration {
     public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".jte";
 
+    private boolean dynamic;
+
+    /**
+     * Whether to enable dynamic reloading of templates.
+     * @param dynamic true to enable dynamic reloading
+     */
+    public void setDynamic(boolean dynamic) {
+        this.dynamic = dynamic;
+    }
+
+    @Override
+    public boolean isDynamic() {
+        return dynamic;
+    }
 }

@@ -21,6 +21,8 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewsConfiguration;
 import jakarta.inject.Singleton;
 
+import java.nio.file.Paths;
+
 /**
  * JTE renderer constrained to text/html.
  *
@@ -32,6 +34,6 @@ import jakarta.inject.Singleton;
 @Singleton
 public class HtmlJteViewsRenderer<T> extends JteViewsRenderer<T> {
     protected HtmlJteViewsRenderer(ViewsConfiguration viewsConfiguration, JteViewsRendererConfiguration jteViewsRendererConfiguration) {
-        super(viewsConfiguration, jteViewsRendererConfiguration, ContentType.Html);
+        super(viewsConfiguration, jteViewsRendererConfiguration, ContentType.Html, Paths.get("build/jte-classes/html"));
     }
 }

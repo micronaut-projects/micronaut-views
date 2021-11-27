@@ -28,6 +28,8 @@ import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 
+import java.io.Writer;
+import java.nio.file.Path;
 import java.util.Map;
 
 /**
@@ -44,20 +46,36 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
     protected JteViewsRenderer(
             ViewsConfiguration viewsConfiguration,
             JteViewsRendererConfiguration jteViewsRendererConfiguration,
-            ContentType contentType) {
+            ContentType contentType,
+            Path classDirectory) {
 
-        CodeResolver codeResolver = new ResourceCodeResolver(viewsConfiguration.getFolder());
-        templateEngine = TemplateEngine.create(codeResolver, contentType);
+        if (jteViewsRendererConfiguration.isDynamic()) {
+            CodeResolver codeResolver = new ResourceCodeResolver(viewsConfiguration.getFolder());
+            templateEngine = TemplateEngine.create(codeResolver, classDirectory, contentType);
+        } else {
+            templateEngine = TemplateEngine.createPrecompiled(contentType);
+        }
     }
 
     @NonNull
     @Override
     public Writable render(@NonNull String viewName, T data, @NonNull HttpRequest<?> request) {
         return out -> {
-            TemplateOutput output = new WriterOutput(out);
+            TemplateOutput output = getOutput(out);
             Map<String, Object> dataMap = ViewUtils.modelOf(data);
             templateEngine.render(viewName(viewName), dataMap, output);
         };
+    }
+
+    /**
+     * Used during render to construct a JTE TemplateOutput. This is overridable to allow subclasses to specialize
+     * the output.
+     * @param out Writer to use as target.
+     * @return a TemplateOutput appropriate for the context
+     */
+    @NonNull
+    protected TemplateOutput getOutput(Writer out) {
+        return new WriterOutput(out);
     }
 
     @Override

@@ -19,4 +19,5 @@ dependencies {
 
 jte {
     sourceDirectory = file('src/test/resources/views').toPath()
+    generate()
 }
