@@ -1,0 +1,37 @@
+Micronaut includes api:views.jte.JteViewsRenderer[] which uses
+the https://jte.gg[Jte] Java-based template engine.
+
+Add the `micronaut-views-jte` dependency to your classpath.
+
+dependency:io.micronaut.views:micronaut-views-jte[group="io.micronaut.views"]
+
+The example shown in the <<views, Views>> section, could be rendered with the following Jte template:
+
+[source,html]
+.src/main/resources/views/home.jte
+----
+include::{testsviewsJte}/resources/views/home.jte[]
+----
+
+=== Compiling Templates
+
+Jte templates may be precompiled at build time. This can be done by a Gradle plugin. If not precompiled, the application will need a JDK so it can compile templates at runtime.
+
+.build.gradle
+[source,groovy]
+----
+plugins {
+    id 'gg.jte.gradle' version "$jteVersion"
+}
+
+jte {
+    sourceDirectory = file('src/main/resources/views').toPath()
+    generate()
+}
+----
+
+=== Configuration
+
+The properties used can be customized by overriding the values of:
+
+include::{includedir}configurationProperties/io.micronaut.views.jte.JteViewsRendererConfigurationProperties.adoc[]
