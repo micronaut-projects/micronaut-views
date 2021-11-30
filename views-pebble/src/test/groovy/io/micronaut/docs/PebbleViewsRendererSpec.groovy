@@ -136,4 +136,23 @@ class PebbleViewsRendererSpec extends Specification {
         body
         rsp.body().contains("<h1>You are not logged in</h1>")
     }
+
+    def "invoking /text renders pebble text template from a controller returning a map"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/text', String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+
+        then:
+        body
+        rsp.body().contains("username: sdelamo")
+        rsp.contentType.isPresent()
+        rsp.contentType.get() == MediaType.TEXT_PLAIN
+    }
+
 }
