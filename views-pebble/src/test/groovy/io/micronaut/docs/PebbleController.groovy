@@ -21,7 +21,6 @@ import io.micronaut.docs.Person
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
-import io.micronaut.http.MediaType
 import io.micronaut.views.View
 
 @Requires(property = "spec.name", value = "pebble")
@@ -64,7 +63,7 @@ public class PebbleController {
     }
 
     @View("text.txt")
-    @Get(uri="/text", produces=MediaType.TEXT_PLAIN)
+    @Get("/text")
     HttpResponse text() {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"));
     }

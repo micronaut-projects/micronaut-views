@@ -139,7 +139,7 @@ class PebbleViewsRendererSpec extends Specification {
 
     def "invoking /text renders pebble text template from a controller returning a map"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/text', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange('/pebble/text', String)
 
         then:
         noExceptionThrown()
@@ -151,8 +151,5 @@ class PebbleViewsRendererSpec extends Specification {
         then:
         body
         rsp.body().contains("username: sdelamo")
-        rsp.contentType.isPresent()
-        rsp.contentType.get() == MediaType.TEXT_PLAIN
     }
-
 }
