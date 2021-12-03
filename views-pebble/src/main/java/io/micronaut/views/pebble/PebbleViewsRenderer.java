@@ -41,8 +41,20 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
     
     private final PebbleEngine engine;
 
+    /**
+     * @param engine Pebble Engine
+     */
     @Inject
     public PebbleViewsRenderer(PebbleEngine engine) {    
+        this.engine = engine;
+    }
+
+    /**
+     * @param configuration Pebble Configuration
+     * @param engine Pebble Engine
+     */
+    @Deprecated
+    public PebbleViewsRenderer(PebbleConfiguration configuration, PebbleEngine engine) {    
         this.engine = engine;
     }
 

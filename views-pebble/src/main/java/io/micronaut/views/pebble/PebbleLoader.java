@@ -16,6 +16,7 @@
 package io.micronaut.views.pebble;
 
 import com.mitchellbosecke.pebble.loader.ClasspathLoader;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 
@@ -29,12 +30,17 @@ public class PebbleLoader extends ClasspathLoader {
 
     private final String extension;
 
-    public PebbleLoader(ViewsConfiguration views, PebbleConfiguration pebble){
+    /**
+     * @param views Views Configuration
+     * @param pebble Pebble Configuration
+     */
+    public PebbleLoader(ViewsConfiguration views, PebbleConfiguration pebble) {
         super.setPrefix(ViewUtils.normalizeFolder(views.getFolder()));
         extension = ViewUtils.EXTENSION_SEPARATOR + pebble.getDefaultExtension();
     }
-
-    private String normalizeTemplateName(String templateName) {
+  
+    @NonNull
+    private String normalizeTemplateName(@NonNull String templateName) {
         templateName = templateName.replace("\\", "/");
 
         if (templateName.startsWith("/")) {
