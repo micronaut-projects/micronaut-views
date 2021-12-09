@@ -1,3 +1,6 @@
+plugins {
+    id("io.micronaut.build.internal.module")
+}
 dependencies {
     api project(":views-core")
     api "com.google.template:soy:$soyVersion"

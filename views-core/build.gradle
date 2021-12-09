@@ -1,6 +1,7 @@
+plugins {
+    id("io.micronaut.build.internal.module")
+}
 dependencies {
-    annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
-
     compileOnly "io.micronaut.security:micronaut-security:$micronautSecurityVersion"
     compileOnly "io.micronaut:micronaut-management:$micronautVersion"
     compileOnly "io.micronaut:micronaut-validation:$micronautVersion"

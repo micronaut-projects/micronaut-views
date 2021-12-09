@@ -1,3 +1,6 @@
+plugins {
+    id("io.micronaut.build.internal.module")
+}
 dependencies {
     annotationProcessor "io.micronaut:micronaut-graal:$micronautVersion"
 
