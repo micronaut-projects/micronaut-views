@@ -66,7 +66,7 @@ class ModelAndViewTest {
         assertTrue(beanContext.containsBean(FruitsController.class));
 
         ////when:
-        HttpRequest request = HttpRequest.GET("/");
+        HttpRequest<?> request = HttpRequest.GET("/");
         HttpResponse<String> response = client.exchange(request, String.class);
 
         //then:
@@ -107,7 +107,7 @@ class ModelAndViewTest {
         assertTrue(beanContext.containsBean(FruitsController.class));
 
         //when:
-        HttpRequest request = HttpRequest.GET("/map");
+        HttpRequest<?> request = HttpRequest.GET("/map");
         HttpResponse<String> response = client.exchange(request, String.class);
 
         //then:
@@ -135,7 +135,7 @@ class ModelAndViewTest {
         assertTrue(beanContext.containsBean(FruitsController.class));
 
         //when:
-        HttpRequest request = HttpRequest.GET("/processor");
+        HttpRequest<?> request = HttpRequest.GET("/processor");
         HttpResponse<String> response = client.exchange(request, String.class);
 
         //then:
@@ -151,7 +151,7 @@ class ModelAndViewTest {
         assertTrue(beanContext.containsBean(ConfigViewModelProcessor.class));
 
         //and:
-        html.contains("<h1>config: test</h1>");
+        assertTrue(html.contains("<h1>config: test</h1>"));
     }
 
     @Test
@@ -163,7 +163,7 @@ class ModelAndViewTest {
         assertTrue(beanContext.containsBean(FruitsController.class));
 
         //when:
-        HttpRequest request = HttpRequest.GET("/pojo-processor");
+        HttpRequest<?> request = HttpRequest.GET("/pojo-processor");
         HttpResponse<String> response = client.exchange(request, String.class);
 
         //then:
