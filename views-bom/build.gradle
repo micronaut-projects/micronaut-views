@@ -1,15 +1,12 @@
-dependencies {
-    constraints {
-        for (Project p : rootProject.subprojects) {
-            if (p.name == "views-bom" || p.name == 'views') continue
-            api "$p.group:micronaut-$p.name:$p.version"
-        }
+plugins {
+    id "io.micronaut.build.internal.bom"
+}
 
-        runtime "org.freemarker:freemarker:$freemarkerVersion"
-        runtime "com.github.jknack:handlebars:$handlebarsVersion"
-        runtime "com.fizzed:rocker-runtime:$rockerVersion"
-        runtime "com.google.template:soy:$soyVersion"
-        runtime "org.thymeleaf:thymeleaf:$thymeleafVersion"
-        runtime "org.apache.velocity:velocity-engine-core:$velocityVersion"
-    }
+dependencies {
+    api("org.freemarker:freemarker:$freemarkerVersion")
+    api("com.github.jknack:handlebars:$handlebarsVersion")
+    api("com.fizzed:rocker-runtime:$rockerVersion")
+    api("com.google.template:soy:$soyVersion")
+    api("org.thymeleaf:thymeleaf:$thymeleafVersion")
+    api("org.apache.velocity:velocity-engine-core:$velocityVersion")
 }
