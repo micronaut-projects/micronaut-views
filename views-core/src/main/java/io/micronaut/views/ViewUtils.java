@@ -87,8 +87,10 @@ public class ViewUtils {
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
-        if (extension != null && !extension.startsWith(".")) {
-            extension = "." + extension;
+        if (extension != null) {
+            if (!extension.startsWith(".")) {
+                extension = "." + extension;
+            }
             if (path.endsWith(extension)) {
                 int idx = path.indexOf(extension);
                 path = path.substring(0, idx);
