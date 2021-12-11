@@ -59,8 +59,6 @@ class CspFilterSpec extends Specification {
 
         when:
         CspConfiguration config = applicationContext.getBean(CspConfiguration)
-        NettyHttpServer server = applicationContext.getBean(NettyHttpServer)
-        server.start()
 
         then:
         config.enabled
