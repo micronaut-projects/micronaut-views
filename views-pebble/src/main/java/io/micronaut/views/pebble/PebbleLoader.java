@@ -24,7 +24,7 @@ import io.micronaut.views.ViewsConfiguration;
  * Loader for Pebble templates.
  *
  * @author Ecmel Ercan
- * @since 3.0.2
+ * @since 3.1.0
  */
 public class PebbleLoader extends ClasspathLoader {
 
