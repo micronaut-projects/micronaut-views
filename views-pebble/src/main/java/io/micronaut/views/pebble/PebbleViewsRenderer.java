@@ -52,6 +52,7 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
     /**
      * @param configuration Pebble Configuration
      * @param engine Pebble Engine
+     * @deprecated Use {@link #PebbleViewsRenderer(PebbleEngine)} instead.
      */
     @Deprecated
     public PebbleViewsRenderer(PebbleConfiguration configuration, PebbleEngine engine) {    
