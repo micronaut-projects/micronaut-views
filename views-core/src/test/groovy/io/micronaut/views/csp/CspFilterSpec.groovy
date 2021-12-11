@@ -19,6 +19,7 @@ import io.micronaut.context.ApplicationContext
 import io.micronaut.context.DefaultApplicationContext
 import io.micronaut.context.env.PropertySource
 import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.server.netty.NettyHttpServer
@@ -77,13 +78,13 @@ class CspFilterSpec extends Specification {
                 'spec.name': getClass().simpleName
         ])
         URL server = embeddedServer.getURL()
-        HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
+        HttpClient httpClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.toBlocking().exchange(
+        HttpResponse<?> response = httpClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
         )
-        def headerNames = response.headers.names()
+        Set<String> headerNames = response.headers.names()
 
         then:
         response.code() == HttpStatus.OK.code
@@ -104,10 +105,10 @@ class CspFilterSpec extends Specification {
         HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.toBlocking().exchange(
+        HttpResponse<?>  response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
         )
-        def headerNames = response.headers.names()
+        Set<String> headerNames = response.headers.names()
 
         then:
         response.code() == HttpStatus.OK.code
@@ -131,10 +132,10 @@ class CspFilterSpec extends Specification {
         HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.toBlocking().exchange(
+        HttpResponse<?> response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
         )
-        def headerNames = response.headers.names()
+        Set<String> headerNames = response.headers.names()
 
         then:
         response.code() == HttpStatus.OK.code
@@ -158,10 +159,10 @@ class CspFilterSpec extends Specification {
         HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.toBlocking().exchange(
+        HttpResponse<?> response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
         )
-        def headerNames = response.headers.names()
+        Set<String> headerNames = response.headers.names()
 
         then:
         response.code() == HttpStatus.OK.code
@@ -186,10 +187,10 @@ class CspFilterSpec extends Specification {
         HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.toBlocking().exchange(
+        HttpResponse<?> response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
         )
-        def headerNames = response.headers.names()
+        Set<String> headerNames = response.headers.names()
 
         then:
         response.code() == HttpStatus.OK.code
@@ -214,10 +215,10 @@ class CspFilterSpec extends Specification {
         HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.toBlocking().exchange(
+        HttpResponse<?> response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp/ignore')
         )
-        def headerNames = response.headers.names()
+        Set<String> headerNames = response.headers.names()
 
         then:
         response.code() == HttpStatus.OK.code
@@ -243,10 +244,10 @@ class CspFilterSpec extends Specification {
         HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response = rxClient.toBlocking().exchange(
+        HttpResponse<?> response = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
         )
-        def headerNames = response.headers.names()
+        Set<String> headerNames = response.headers.names()
 
         then:
         response.code() == HttpStatus.OK.code
@@ -273,14 +274,14 @@ class CspFilterSpec extends Specification {
         HttpClient rxClient = embeddedServer.applicationContext.createBean(HttpClient, server)
 
         when:
-        def response1 = rxClient.toBlocking().exchange(
+        HttpResponse<?> response1 = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
         )
-        def headerNames1 = response1.headers.names()
-        def response2 = rxClient.toBlocking().exchange(
+        Set<String> headerNames1 = response1.headers.names()
+        HttpResponse<?> response2 = rxClient.toBlocking().exchange(
                 HttpRequest.GET('/csp')
         )
-        def headerNames2 = response2.headers.names()
+        Set<String> headerNames2 = response2.headers.names()
 
         then:
         response1.code() == HttpStatus.OK.code
