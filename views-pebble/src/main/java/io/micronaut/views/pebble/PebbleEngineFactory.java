@@ -104,11 +104,7 @@ public class PebbleEngineFactory {
             builder.executorService(executorService);
         }
 
-        if (loader.isPresent()) {
-            builder.loader(loader.get());
-        } else {
-            builder.loader(new PebbleLoader(viewsConfiguration, configuration));
-        }
+        builder.loader(loader.orElseGet(() -> new PebbleLoader(viewsConfiguration, configuration)));
 
         syntax.ifPresent(bean -> builder.syntax(bean));
         methodAccessValidator.ifPresent(bean -> builder.methodAccessValidator(bean));
