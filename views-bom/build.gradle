@@ -11,5 +11,6 @@ dependencies {
         runtime "com.google.template:soy:$soyVersion"
         runtime "org.thymeleaf:thymeleaf:$thymeleafVersion"
         runtime "org.apache.velocity:velocity-engine-core:$velocityVersion"
+        runtime "gg.jte:jte:$jteVersion"
     }
 }
