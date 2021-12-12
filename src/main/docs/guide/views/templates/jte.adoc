@@ -15,7 +15,7 @@ include::{testsviewsJte}/resources/views/home.jte[]
 
 === Compiling Templates
 
-Jte templates may be precompiled at build time. This can be done by a Gradle plugin. If not precompiled, the application will need a JDK so it can compile templates at runtime.
+Jte templates may be precompiled at build time. This can be done by a https://plugins.gradle.org/plugin/gg.jte.gradle[Gradle plugin]. If not precompiled, the application will need a JDK so it can compile templates at runtime.
 
 .build.gradle
 [source,groovy]
