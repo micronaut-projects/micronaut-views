@@ -21,3 +21,10 @@ jte {
     sourceDirectory = file('src/test/resources/views').toPath()
     generate()
 }
+
+// Workaround because jte gradle plugin currently hardcodes adding generated sources to 'main'
+// sourceset. In this project they _should_ be a dependency of 'test'.
+tasks.getByName('sourcesJar') {
+    dependsOn generateJte
+    exclude "gg"
+}
