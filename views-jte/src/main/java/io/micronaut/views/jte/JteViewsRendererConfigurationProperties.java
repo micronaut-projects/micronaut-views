@@ -22,7 +22,7 @@ import io.micronaut.views.ViewsConfigurationProperties;
  * ConfigurationProperties for JTE.
  *
  * @author edward3h
- * @since 2021-11-24
+ * @since 3.1.0
  */
 @ConfigurationProperties(JteViewsRendererConfigurationProperties.PREFIX)
 public class JteViewsRendererConfigurationProperties implements JteViewsRendererConfiguration {

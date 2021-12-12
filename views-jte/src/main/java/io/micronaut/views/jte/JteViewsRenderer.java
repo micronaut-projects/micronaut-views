@@ -37,7 +37,7 @@ import java.util.Map;
  *
  * @param <T> type of input model.
  * @author edward3h
- * @since 2021-11-24
+ * @since 3.1.0
  */
 public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
     public static final String DEFAULT_EXTENSION = ".jte";

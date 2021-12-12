@@ -19,7 +19,7 @@ package io.micronaut.views.jte;
  * Configuration for JTE views.
  *
  * @author edward3h
- * @since 2021-11-24
+ * @since 3.1.0
  */
 public interface JteViewsRendererConfiguration {
     /**

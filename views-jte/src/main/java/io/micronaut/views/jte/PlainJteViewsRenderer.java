@@ -32,7 +32,7 @@ import java.nio.file.Paths;
  *
  * @param <T> type of input model.
  * @author edward3h
- * @since 2021-11-25
+ * @since 3.1.0
  */
 @Produces(MediaType.TEXT_PLAIN)
 @Singleton
