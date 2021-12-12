@@ -102,7 +102,7 @@ public class CspConfiguration implements Toggleable {
      * @return The policy directives
      */
     public Optional<String> getPolicyDirectives() {
-        return Optional.of(policyDirectives);
+        return Optional.ofNullable(policyDirectives);
     }
 
     /**

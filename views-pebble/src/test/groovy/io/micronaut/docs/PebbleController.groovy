@@ -61,4 +61,10 @@ public class PebbleController {
     HttpResponse nullBody() {
         HttpResponse.ok()
     }
+
+    @View("text.txt")
+    @Get("/text")
+    HttpResponse text() {
+        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"));
+    }
 }

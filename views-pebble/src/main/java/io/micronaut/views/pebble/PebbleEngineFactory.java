@@ -18,7 +18,6 @@ package io.micronaut.views.pebble;
 import java.util.List;
 import java.util.Optional;
 
-import io.micronaut.views.ViewUtils;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import com.mitchellbosecke.pebble.PebbleEngine;
@@ -26,7 +25,6 @@ import com.mitchellbosecke.pebble.PebbleEngine.Builder;
 import com.mitchellbosecke.pebble.attributes.methodaccess.MethodAccessValidator;
 import com.mitchellbosecke.pebble.extension.Extension;
 import com.mitchellbosecke.pebble.lexer.Syntax;
-import com.mitchellbosecke.pebble.loader.ClasspathLoader;
 import com.mitchellbosecke.pebble.loader.Loader;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.Nullable;
@@ -106,14 +104,7 @@ public class PebbleEngineFactory {
             builder.executorService(executorService);
         }
 
-        if (loader.isPresent()) {
-            builder.loader(loader.get());
-        } else {
-            Loader<?> loader = new ClasspathLoader();
-            loader.setPrefix(viewsConfiguration.getFolder());
-            loader.setSuffix(ViewUtils.EXTENSION_SEPARATOR + configuration.getDefaultExtension());
-            builder.loader(loader);
-        }
+        builder.loader(loader.orElseGet(() -> new PebbleLoader(viewsConfiguration, configuration)));
 
         syntax.ifPresent(bean -> builder.syntax(bean));
         methodAccessValidator.ifPresent(bean -> builder.methodAccessValidator(bean));

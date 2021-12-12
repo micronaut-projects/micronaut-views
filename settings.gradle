@@ -1,3 +1,15 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'io.micronaut.build.shared.settings' version '5.0.2'
+}
+
+
 rootProject.name = 'views'
 
 include 'views-bom'
