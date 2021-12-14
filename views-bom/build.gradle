@@ -3,10 +3,12 @@ plugins {
 }
 
 dependencies {
-    api("org.freemarker:freemarker:$freemarkerVersion")
-    api("com.github.jknack:handlebars:$handlebarsVersion")
-    api("com.fizzed:rocker-runtime:$rockerVersion")
-    api("com.google.template:soy:$soyVersion")
-    api("org.thymeleaf:thymeleaf:$thymeleafVersion")
-    api("org.apache.velocity:velocity-engine-core:$velocityVersion")
+    constraints {
+        api("org.freemarker:freemarker:$freemarkerVersion")
+        api("com.github.jknack:handlebars:$handlebarsVersion")
+        api("com.fizzed:rocker-runtime:$rockerVersion")
+        api("com.google.template:soy:$soyVersion")
+        api("org.thymeleaf:thymeleaf:$thymeleafVersion")
+        api("org.apache.velocity:velocity-engine-core:$velocityVersion")
+    }
 }
