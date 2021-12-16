@@ -34,7 +34,7 @@ import reactor.core.publisher.Mono
 class JteController {
 
     @View("home")
-    @Get("/")
+    @Get
     HttpResponse index() {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"));
     }

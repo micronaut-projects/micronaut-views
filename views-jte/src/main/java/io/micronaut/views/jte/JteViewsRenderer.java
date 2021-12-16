@@ -15,7 +15,6 @@
  */
 package io.micronaut.views.jte;
 
-import gg.jte.CodeResolver;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.TemplateOutput;
@@ -43,18 +42,21 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
     public static final String DEFAULT_EXTENSION = ".jte";
     private final TemplateEngine templateEngine;
 
+    /**
+     * @param viewsConfiguration Views configuration
+     * @param jteViewsRendererConfiguration JTE specific configuration
+     * @param contentType JTE content type of this renderer
+     * @param classDirectory When using dynamic templates, where to generate source and class files
+     */
     protected JteViewsRenderer(
             ViewsConfiguration viewsConfiguration,
             JteViewsRendererConfiguration jteViewsRendererConfiguration,
             ContentType contentType,
             Path classDirectory) {
 
-        if (jteViewsRendererConfiguration.isDynamic()) {
-            CodeResolver codeResolver = new ResourceCodeResolver(viewsConfiguration.getFolder());
-            templateEngine = TemplateEngine.create(codeResolver, classDirectory, contentType);
-        } else {
-            templateEngine = TemplateEngine.createPrecompiled(contentType);
-        }
+        templateEngine = jteViewsRendererConfiguration.isDynamic() ?
+                    TemplateEngine.create(new ResourceCodeResolver(viewsConfiguration.getFolder()), classDirectory, contentType) :
+                    TemplateEngine.createPrecompiled(contentType);
     }
 
     @NonNull

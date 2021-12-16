@@ -27,4 +27,10 @@ public interface JteViewsRendererConfiguration {
      * @return true to enable reloading templates.
      */
     boolean isDynamic();
+
+    /**
+     * When using dynamic templates, the root directory to write generated source and classes under.
+     * @return the directory
+     */
+    String getDynamicPath();
 }

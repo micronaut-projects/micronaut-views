@@ -25,10 +25,11 @@ import io.micronaut.views.ViewsConfigurationProperties;
  * @since 3.1.0
  */
 @ConfigurationProperties(JteViewsRendererConfigurationProperties.PREFIX)
-public class JteViewsRendererConfigurationProperties implements JteViewsRendererConfiguration {
+public final class JteViewsRendererConfigurationProperties implements JteViewsRendererConfiguration {
     public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".jte";
 
     private boolean dynamic;
+    private String dynamicPath = "build/jte-classes";
 
     /**
      * Whether to enable dynamic reloading of templates.
@@ -41,5 +42,18 @@ public class JteViewsRendererConfigurationProperties implements JteViewsRenderer
     @Override
     public boolean isDynamic() {
         return dynamic;
+    }
+
+    /**
+     * Root directory under which to write generated source and class files.
+     * @param path the directory
+     */
+    public void setDynamicPath(String path) {
+        this.dynamicPath = path;
+    }
+
+    @Override
+    public String getDynamicPath() {
+        return dynamicPath;
     }
 }

@@ -35,7 +35,8 @@ class JteViewRendererSpec extends Specification {
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
             [
                     'spec.name': 'jte',
-                    'micronaut.security.enabled': false
+                    'micronaut.security.enabled': false,
+                    'micronaut.views.jte.dynamic': true
             ],
             "test")
 
@@ -45,7 +46,7 @@ class JteViewRendererSpec extends Specification {
 
     def "bean is loaded"() {
         when:
-        def jteBeans = embeddedServer.applicationContext.getBeansOfType(JteViewsRenderer)
+        List<JteViewsRenderer> jteBeans = embeddedServer.applicationContext.getBeansOfType(JteViewsRenderer)
         embeddedServer.applicationContext.getBean(ViewsFilter)
 
         then:
