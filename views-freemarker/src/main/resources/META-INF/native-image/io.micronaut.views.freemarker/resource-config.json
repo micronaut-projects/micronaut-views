@@ -1,0 +1,11 @@
+{
+  "resources":{
+  "includes":[
+    {
+      "pattern":"\\Qfreemarker/ext/beans/DefaultMemberAccessPolicy-rules\\E"
+    }, 
+    {
+      "pattern":"\\Qfreemarker/version.properties\\E"
+    }
+  ]}
+}
