@@ -18,7 +18,9 @@ jte {
 
 // Workaround because jte gradle plugin currently hardcodes adding generated sources to 'main'
 // sourceset. In this project they _should_ be a dependency of 'test'.
-tasks.getByName('sourcesJar') {
-    dependsOn generateJte
-    exclude "gg"
+['jar', 'sourcesJar'].each { name ->
+    tasks.getByName(name) {
+        dependsOn generateJte
+        exclude "gg"
+    }
 }
