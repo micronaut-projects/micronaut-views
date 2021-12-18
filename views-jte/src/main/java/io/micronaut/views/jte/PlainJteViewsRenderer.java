@@ -57,7 +57,7 @@ public class PlainJteViewsRenderer<T> extends JteViewsRenderer<T> {
     }
 
     /**
-     * workaround to render plain text from a template that was compiled as HTML.
+     * If JTE templates were pre-compiled in Html mode, this workaround allows them to be rendered in Plain mode.
      */
     private static class PlainHtmlTemplateOutput implements HtmlTemplateOutput {
         private final TemplateOutput delegate;
