@@ -1,4 +1,4 @@
-Micronaut includes api:views.jte.JteViewsRenderer[] which uses
+Micronaut Views Jte includes api:views.jte.JteViewsRenderer[] which uses
 the https://jte.gg[Jte] Java-based template engine.
 
 Add the `micronaut-views-jte` dependency to your classpath.
