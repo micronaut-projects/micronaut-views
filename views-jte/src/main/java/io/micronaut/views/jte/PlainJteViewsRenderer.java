@@ -41,7 +41,6 @@ public class PlainJteViewsRenderer<T> extends JteViewsRenderer<T> {
      * @param viewsConfiguration Views Configuration
      * @param jteViewsRendererConfiguration JTE specific configuration
      */
-
     protected PlainJteViewsRenderer(ViewsConfiguration viewsConfiguration, JteViewsRendererConfiguration jteViewsRendererConfiguration) {
         super(viewsConfiguration, jteViewsRendererConfiguration, ContentType.Plain, Paths.get(jteViewsRendererConfiguration.getDynamicPath()).resolve("plain"));
     }
