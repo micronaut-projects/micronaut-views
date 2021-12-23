@@ -26,13 +26,26 @@ import io.micronaut.views.ViewsConfigurationProperties;
  */
 @ConfigurationProperties(JteViewsRendererConfigurationProperties.PREFIX)
 public final class JteViewsRendererConfigurationProperties implements JteViewsRendererConfiguration {
+    @SuppressWarnings("WeakerAccess")
     public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".jte";
 
-    private boolean dynamic;
-    private String dynamicPath = "build/jte-classes";
+    /**
+     * The default dynamic value.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static final boolean DEFAULT_DYNAMIC = false;
 
     /**
-     * Whether to enable dynamic reloading of templates.
+     * The default dynamic value.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static final String DEFAULT_DYNAMIC_PATH = "build/jte-classes";
+
+    private boolean dynamic = DEFAULT_DYNAMIC;
+    private String dynamicPath = DEFAULT_DYNAMIC_PATH;
+
+    /**
+     * Whether to enable dynamic reloading of templates. Default value ({@value #DEFAULT_DYNAMIC}).
      * @param dynamic true to enable dynamic reloading
      */
     public void setDynamic(boolean dynamic) {
@@ -45,7 +58,7 @@ public final class JteViewsRendererConfigurationProperties implements JteViewsRe
     }
 
     /**
-     * Root directory under which to write generated source and class files.
+     * Root directory under which to write generated source and class files. . Default value ({@value #DEFAULT_DYNAMIC_PATH}).
      * @param path the directory
      */
     public void setDynamicPath(String path) {
