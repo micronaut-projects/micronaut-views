@@ -1,0 +1,10 @@
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": "\\Qhelpers.nashorn.js\\E"
+      }
+    ]
+  },
+  "bundles": []
+}
