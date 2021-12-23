@@ -1,4 +1,4 @@
-Micronaut includes api:views.pebble.PebbleViewsRenderer[] which uses
+Micronaut Views Pebble includes api:views.pebble.PebbleViewsRenderer[] which uses
 the https://pebbletemplates.io/[Pebble] project.
 
 Add the following dependency on your classpath. For example, in `build.gradle`

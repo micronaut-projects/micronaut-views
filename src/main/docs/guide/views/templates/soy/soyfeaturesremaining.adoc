@@ -7,9 +7,9 @@ opt-in and requires a few things:
 
 Renaming is similar to other frameworks' correponding uglify features, but it's significantly more powerful, allowing
 you to rewrite CSS classes and IDs as you would JavaScript symbols. Here's how you can use renaming server-side with
-Micronaut:
+Micronaut Views Soy:
 
-1. Configure Micronaut to enable renaming:
+1. Configure Micronaut Views Soy to enable renaming:
 [source,yaml]
 micronaut:
   views:
@@ -49,7 +49,7 @@ must be a string literal (variables cannot be used):
     --output templates.jar \
     --srcs [...templates...];
 
-The last step is to provide the renaming map to Micronaut:
+The last step is to provide the renaming map to Micronaut Views Soy:
 ```java
 @Singleton
 public class RewriteMapProvider implements SoyNamingMapProvider {

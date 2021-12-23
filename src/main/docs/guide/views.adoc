@@ -1,4 +1,4 @@
-Although Micronaut is primarily designed around message encoding / decoding there are occasions where it is convenient to render a view on the server side.
+Although the Micronaut framework is primarily designed around message encoding / decoding there are occasions where it is convenient to render a view on the server side.
 
 The `views` module provides support for view rendering on the server side and does so by rendering views on the I/O thread pool in order to avoid blocking the Netty event loop.
 

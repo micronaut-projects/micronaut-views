@@ -1,4 +1,4 @@
-Micronaut includes api:views.handlebars.HandlebarsViewsRenderer[] which uses
+Micronaut Views Handlebars includes api:views.handlebars.HandlebarsViewsRenderer[] which uses
 the http://jknack.github.io/handlebars.java/[Handlebars.java] project.
 
 Add the following dependency on your classpath. For example, in `build.gradle`

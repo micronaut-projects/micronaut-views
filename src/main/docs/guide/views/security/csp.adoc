@@ -1,4 +1,4 @@
-Micronaut supports CSP (_link:https://www.w3.org/TR/CSP3/[Content Security Policy, Level 3]_) out of the box.
+Micronaut Views supports CSP (_link:https://www.w3.org/TR/CSP3/[Content Security Policy, Level 3]_) out of the box.
 By default, CSP is disabled. To enable CSP, modify your configuration. For example:
 
 .application.yml
@@ -17,11 +17,11 @@ include::{includedir}configurationProperties/io.micronaut.views.csp.CspConfigura
 
 === Nonce Support
 
-At the developer's option, Micronaut can generate a nonce with each render cycle. This nonce value can be used in
+At the developer's option, Micronaut Views can generate a nonce with each render cycle. This nonce value can be used in
 `script-src` and `style-src` directives in a CSP response header (note that `nonce` values generally do not have any
 effect when _Content Security Policy_ is set via a `<meta http-equiv>` tag).
 
-To opt-in to this behavior, configure Micronaut with `generateNonce` set to `true`. Additionally, provide a spot for the
+To opt-in to this behavior, configure Micronaut Views with `generateNonce` set to `true`. Additionally, provide a spot for the
 nonce value in your CSP directives, with the token `{#nonceValue}`. It must be preceded by `nonce-` and wrapped in
 single quotes, https://www.w3.org/TR/CSP3/#framework-directive-source-list[as per the CSP3 spec]:
 

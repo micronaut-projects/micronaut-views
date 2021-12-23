@@ -19,7 +19,7 @@ snippet::io.micronaut.docs.soy.SoyController[tags="clazz"]
 
 NOTE: The api:views.View[] annotation value is set to namespace and template name.
 
-Both server-side Soy rendering layers are supported in Micronaut:
+Both server-side Soy rendering layers are supported in Micronaut Views Soy:
 
 * `SoySauceViewsRenderer`: This renderer uses templates pre-compiled to Java bytecode, generally AOT, with
 `SoyToJbcSrcCompiler`. If compiled templates can't be located by the `SoyFileSetProvider`, templates are pre-compiled
