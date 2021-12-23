@@ -17,6 +17,7 @@ views:
       soyfeaturesremaining: Soy Features - Remaining
       buildingsoy: Building Soy
     pebble: Pebble
+    jte: JTE
   model:
     title: Working with Models
     custom: Dynamically Enriching Models

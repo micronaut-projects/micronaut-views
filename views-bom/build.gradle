@@ -10,5 +10,6 @@ dependencies {
         api("com.google.template:soy:$soyVersion")
         api("org.thymeleaf:thymeleaf:$thymeleafVersion")
         api("org.apache.velocity:velocity-engine-core:$velocityVersion")
+        api("gg.jte:jte:$jteVersion")
     }
 }
