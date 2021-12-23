@@ -153,7 +153,7 @@
 
 
 <div class="paragraph">
-<p>This project integrates Micronaut and Server Side View Rendering.</p>
+<p>This project integrates the Micronaut framework and Server Side View Rendering.</p>
 </div>
 
 <h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>2 Release History</h1>
@@ -182,7 +182,7 @@
 
 
 <div class="paragraph">
-<p>Although Micronaut is primarily designed around message encoding / decoding there are occasions where it is convenient to render a view on the server side.</p>
+<p>Although the Micronaut framework is primarily designed around message encoding / decoding there are occasions where it is convenient to render a view on the server side.</p>
 </div>
 <div class="paragraph">
 <p>The <code>views</code> module provides support for view rendering on the server side and does so by rendering views on the I/O thread pool in order to avoid blocking the Netty event loop.</p>
@@ -322,7 +322,7 @@ If you want to render a template directly on your code (for example, to generate
 
 
 <div class="paragraph">
-<p>Micronaut includes <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html">ThymeleafViewsRenderer</a> which uses
+<p>Micronaut Views Thymeleaf includes <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html">ThymeleafViewsRenderer</a> which uses
 the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 </div>
 <div class="paragraph">
@@ -477,7 +477,7 @@ MessageSource automatically. For more information on the MessageSource, see the 
 
 
 <div class="paragraph">
-<p>Micronaut includes <a href="../api/io/micronaut/views/handlebars/HandlebarsViewsRenderer.html">HandlebarsViewsRenderer</a> which uses
+<p>Micronaut Views Handlebars includes <a href="../api/io/micronaut/views/handlebars/HandlebarsViewsRenderer.html">HandlebarsViewsRenderer</a> which uses
 the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> project.</p>
 </div>
 <div class="paragraph">
@@ -532,7 +532,7 @@ the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> proje
 
 
 <div class="paragraph">
-<p>Micronaut includes <a href="../api/io/micronaut/views/velocity/VelocityViewsRenderer.html">VelocityViewsRenderer</a> which uses
+<p>Micronaut Views Velocity includes <a href="../api/io/micronaut/views/velocity/VelocityViewsRenderer.html">VelocityViewsRenderer</a> which uses
 the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template engine.</p>
 </div>
 <div class="paragraph">
@@ -587,7 +587,7 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
 
 
 <div class="paragraph">
-<p>Micronaut includes <a href="../api/io/micronaut/views/freemarker/FreemarkerViewsRenderer.html">FreemarkerViewsRenderer</a> which uses
+<p>Micronaut Views Freemarker includes <a href="../api/io/micronaut/views/freemarker/FreemarkerViewsRenderer.html">FreemarkerViewsRenderer</a> which uses
 the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based template engine.</p>
 </div>
 <div class="paragraph">
@@ -656,7 +656,7 @@ the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based tem
 <a href="https://freemarker.apache.org/docs/api/freemarker/core/Configurable.html"><code>Configurable</code></a>, and properties names are reused in the Micronaut configuration.</p>
 </div>
 <div class="paragraph">
-<p>If a value is not declared and is null, the default configuration from Freemarker is used. The expected format of each value is the same from Freemarker, and no conversion or validation is done by Micronaut. You can find in <a href="https://freemarker.apache.org/docs/pgui_config.html">Freemarker documentation</a> how to configure each one.</p>
+<p>If a value is not declared and is null, the default configuration from Freemarker is used. The expected format of each value is the same from Freemarker, and no conversion or validation is done by the Micronaut framework. You can find in <a href="https://freemarker.apache.org/docs/pgui_config.html">Freemarker documentation</a> how to configure each one.</p>
 </div>
 
 <h2 id="rocker"><a class="anchor" href="#rocker"></a>3.1.5 Rocker</h2>
@@ -669,7 +669,7 @@ the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based tem
 
 
 <div class="paragraph">
-<p>Micronaut includes <a href="../api/io/micronaut/views/rocker/RockerEngine.html">RockerEngine</a> which uses
+<p>Micronaut Views Rocker includes <a href="../api/io/micronaut/views/rocker/RockerEngine.html">RockerEngine</a> which uses
 the <a href="https://github.com/fizzed/rocker">Rocker</a> Java-based template engine.</p>
 </div>
 <div class="paragraph">
@@ -838,7 +838,7 @@ import views.index;
 
 
 <div class="paragraph">
-<p>Micronaut includes <a href="../api/io/micronaut/views/soy/SoySauceViewsRenderer.html">SoySauceViewsRenderer</a> which uses
+<p>Micronaut Views Soy includes <a href="../api/io/micronaut/views/soy/SoySauceViewsRenderer.html">SoySauceViewsRenderer</a> which uses
 <a href="https://github.com/google/closure-templates">Soy, also known as Closure Templates</a>, a template
 compiler from Google. Soy is usable standalone, or together with the rest of the
 <a href="https://developers.google.com/closure">Closure Tools ecosystem</a>, and targets both server-side and
@@ -1115,7 +1115,7 @@ The <a href="../api/io/micronaut/views/View.html">View</a> annotation value is s
 </table>
 </div>
 <div class="paragraph">
-<p>Both server-side Soy rendering layers are supported in Micronaut:</p>
+<p>Both server-side Soy rendering layers are supported in Micronaut Views Soy:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1251,12 +1251,12 @@ opt-in and requires a few things:</p>
 <div class="paragraph">
 <p>Renaming is similar to other frameworks' correponding uglify features, but it&#8217;s significantly more powerful, allowing
 you to rewrite CSS classes and IDs as you would JavaScript symbols. Here&#8217;s how you can use renaming server-side with
-Micronaut:</p>
+Micronaut Views Soy:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Configure Micronaut to enable renaming:</p>
+<p>Configure Micronaut Views Soy to enable renaming:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
@@ -1318,7 +1318,7 @@ must be a string literal (variables cannot be used):</p>
 </ol>
 </div>
 <div class="paragraph">
-<p>The last step is to provide the renaming map to Micronaut:</p>
+<p>The last step is to provide the renaming map to Micronaut Views Soy:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1462,7 +1462,7 @@ Compiles templates into Python sources for use server-side.</p>
 
 
 <div class="paragraph">
-<p>Micronaut includes <a href="../api/io/micronaut/views/pebble/PebbleViewsRenderer.html">PebbleViewsRenderer</a> which uses
+<p>Micronaut Views Pebble includes <a href="../api/io/micronaut/views/pebble/PebbleViewsRenderer.html">PebbleViewsRenderer</a> which uses
 the <a href="https://pebbletemplates.io/">Pebble</a> project.</p>
 </div>
 <div class="paragraph">
@@ -1703,7 +1703,7 @@ the <a href="https://jte.gg">Jte</a> Java-based template engine.</p>
 
 
 <div class="paragraph">
-<p>Micronaut provides a simple way to modify and enhance a model prior to being sent to a template engine for rendering.</p>
+<p>The Micronaut framework provides a simple way to modify and enhance a model prior to being sent to a template engine for rendering.</p>
 </div>
 
 <h2 id="custom"><a class="anchor" href="#custom"></a>3.2.1 Dynamically Enriching Models</h2>
@@ -1778,7 +1778,7 @@ public class ConfigViewModelProcessor implements ViewModelProcessor&lt;Map&lt;St
 
 
 <div class="paragraph">
-<p>Micronaut supports CSP (<em><a href="https://www.w3.org/TR/CSP3/">Content Security Policy, Level 3</a></em>) out of the box.
+<p>Micronaut Views supports CSP (<em><a href="https://www.w3.org/TR/CSP3/">Content Security Policy, Level 3</a></em>) out of the box.
 By default, CSP is disabled. To enable CSP, modify your configuration. For example:</p>
 </div>
 <div class="listingblock">
@@ -1856,12 +1856,12 @@ By default, CSP is disabled. To enable CSP, modify your configuration. For examp
 <div class="sect2">
 <h3 id="_nonce_support">Nonce Support</h3>
 <div class="paragraph">
-<p>At the developer&#8217;s option, Micronaut can generate a nonce with each render cycle. This nonce value can be used in
+<p>At the developer&#8217;s option, Micronaut Views can generate a nonce with each render cycle. This nonce value can be used in
 <code>script-src</code> and <code>style-src</code> directives in a CSP response header (note that <code>nonce</code> values generally do not have any
 effect when <em>Content Security Policy</em> is set via a <code>&lt;meta http-equiv&gt;</code> tag).</p>
 </div>
 <div class="paragraph">
-<p>To opt-in to this behavior, configure Micronaut with <code>generateNonce</code> set to <code>true</code>. Additionally, provide a spot for the
+<p>To opt-in to this behavior, configure Micronaut Views with <code>generateNonce</code> set to <code>true</code>. Additionally, provide a spot for the
 nonce value in your CSP directives, with the token <code>{#nonceValue}</code>. It must be preceded by <code>nonce-</code> and wrapped in
 single quotes, <a href="https://www.w3.org/TR/CSP3/#framework-directive-source-list">as per the CSP3 spec</a>:</p>
 </div>
@@ -2027,10 +2027,10 @@ public class BooksController {
 
 
 <div class="paragraph">
-<p>Micronaut supports GraalVM and starting in <code>1.2.0</code> special configuration files have been added to make easier the native image creation.</p>
+<p>The Micronaut framework supports GraalVM and starting in <code>1.2.0</code> special configuration files have been added to make easier the native image creation.</p>
 </div>
 <div class="paragraph">
-<p>For Micronaut 2.0 the support for GraalVM has been improved and now it&#8217;s not necessary to declare any view.
+<p>For Micronaut framework 2.0 the support for GraalVM has been improved and now it&#8217;s not necessary to declare any view.
 This also applies if you <a href="https://docs.micronaut.io/latest/guide/index.html#staticResources">serve static resources</a> like
 html, css and javascript files. Everything in the <code>public</code> directory will also be added to the GraalVM resource configuration
 automatically.</p>
@@ -2042,7 +2042,7 @@ automatically.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graal">Micronaut&#8217;s GraalVM support</a>.
+Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graal">Micronaut framework&#8217;s GraalVM support</a>.
 </td>
 </tr>
 </table>
