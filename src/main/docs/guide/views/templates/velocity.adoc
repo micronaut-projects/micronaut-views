@@ -1,4 +1,4 @@
-Micronaut includes api:views.velocity.VelocityViewsRenderer[] which uses
+Micronaut Views Velocity includes api:views.velocity.VelocityViewsRenderer[] which uses
 the http://velocity.apache.org[Apache Velocity] Java-based template engine.
 
 Add the `micronaut-views-velocity` dependency to your classpath.

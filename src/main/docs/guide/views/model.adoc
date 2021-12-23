@@ -1,1 +1,1 @@
-Micronaut provides a simple way to modify and enhance a model prior to being sent to a template engine for rendering.
+The Micronaut framework provides a simple way to modify and enhance a model prior to being sent to a template engine for rendering.

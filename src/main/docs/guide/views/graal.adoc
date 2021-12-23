@@ -1,8 +1,8 @@
-Micronaut supports GraalVM and starting in `1.2.0` special configuration files have been added to make easier the native image creation.
+The Micronaut framework supports GraalVM and starting in `1.2.0` special configuration files have been added to make easier the native image creation.
 
-For Micronaut 2.0 the support for GraalVM has been improved and now it's not necessary to declare any view.
+For Micronaut framework 2.0 the support for GraalVM has been improved and now it's not necessary to declare any view.
 This also applies if you https://docs.micronaut.io/latest/guide/index.html#staticResources[serve static resources] like
 html, css and javascript files. Everything in the `public` directory will also be added to the GraalVM resource configuration
 automatically.
 
-NOTE: Learn more about https://docs.micronaut.io/latest/guide/index.html#graal[Micronaut's GraalVM support].
+NOTE: Learn more about https://docs.micronaut.io/latest/guide/index.html#graal[Micronaut framework's GraalVM support].

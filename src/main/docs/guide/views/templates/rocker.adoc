@@ -1,4 +1,4 @@
-Micronaut includes api:views.rocker.RockerEngine[] which uses
+Micronaut Views Rocker includes api:views.rocker.RockerEngine[] which uses
 the https://github.com/fizzed/rocker[Rocker] Java-based template engine.
 
 Add the `micronaut-views-rocker` dependency to your classpath.

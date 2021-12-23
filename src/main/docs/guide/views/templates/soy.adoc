@@ -1,4 +1,4 @@
-Micronaut includes api:views.soy.SoySauceViewsRenderer[] which uses
+Micronaut Views Soy includes api:views.soy.SoySauceViewsRenderer[] which uses
 https://github.com/google/closure-templates[Soy, also known as Closure Templates], a template
 compiler from Google. Soy is usable standalone, or together with the rest of the
 https://developers.google.com/closure[Closure Tools ecosystem], and targets both server-side and

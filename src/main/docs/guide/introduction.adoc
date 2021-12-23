@@ -1,1 +1,1 @@
-This project integrates Micronaut and Server Side View Rendering.
+This project integrates the Micronaut framework and Server Side View Rendering.
