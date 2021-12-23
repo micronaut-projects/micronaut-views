@@ -33,11 +33,13 @@ import java.nio.file.Paths;
 @Produces(MediaType.TEXT_HTML)
 @Singleton
 public class HtmlJteViewsRenderer<T> extends JteViewsRenderer<T> {
+    private static final String HTML = "html";
+
     /**
      * @param viewsConfiguration Views Configuration
      * @param jteViewsRendererConfiguration JTE specific configuration
      */
     protected HtmlJteViewsRenderer(ViewsConfiguration viewsConfiguration, JteViewsRendererConfiguration jteViewsRendererConfiguration) {
-        super(viewsConfiguration, jteViewsRendererConfiguration, ContentType.Html, Paths.get(jteViewsRendererConfiguration.getDynamicPath()).resolve("html"));
+        super(viewsConfiguration, jteViewsRendererConfiguration, ContentType.Html, Paths.get(jteViewsRendererConfiguration.getDynamicPath()).resolve(HTML));
     }
 }
