@@ -15,11 +15,13 @@
  */
 package io.micronaut.views.thymeleaf;
 
+import io.micronaut.context.annotation.Property;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.exceptions.TemplateProcessingException;
 import org.thymeleaf.linkbuilder.StandardLinkBuilder;
 import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Singleton;
+import jakarta.inject.Inject;
 import java.util.Map;
 
 /**
@@ -32,6 +34,13 @@ import java.util.Map;
 @Singleton
 public class LinkBuilder extends StandardLinkBuilder {
 
+    @Inject
+    @Nullable
+    @Property(name = "micronaut.server.context-path")
+    private String contextPath;
+
+    public LinkBuilder() { }
+
     /**
      * @return {@code null}.
      */
@@ -42,11 +51,11 @@ public class LinkBuilder extends StandardLinkBuilder {
         if (!(context instanceof WebEngineContext)) {
             throw new TemplateProcessingException(
                     "Link base \"" + base
-                            + "\" cannot be context relative (/...) unless the context " +
-                            "used for executing the engine implements the " + WebEngineContext.class
+                    + "\" cannot be context relative (/...) unless the context " +
+                    "used for executing the engine implements the " + WebEngineContext.class
                             .getName() + " interface");
         }
-        return null;
+        return contextPath;
     }
 
     @Override
