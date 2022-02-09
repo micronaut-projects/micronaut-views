@@ -25,6 +25,9 @@ import io.micronaut.views.ModelAndView;
 import io.micronaut.views.model.ViewModelProcessor;
 import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -39,6 +42,8 @@ import java.util.Optional;
 @Requires(beans = {SecurityFilter.class, SecurityService.class, SecurityViewModelProcessorConfiguration.class})
 @Singleton
 public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String, Object>> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SecurityViewModelProcessor.class);
 
     private final SecurityService securityService;
     private final SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration;
@@ -67,7 +72,11 @@ public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String
                 modelAndView.setModel(newModel);
                 return newModel;
             });
-            viewModel.putIfAbsent(securityViewModelProcessorConfiguration.getSecurityKey(), securityModel);
+            try {
+                viewModel.putIfAbsent(securityViewModelProcessorConfiguration.getSecurityKey(), securityModel);
+            } catch (UnsupportedOperationException ex) {
+                LOG.error("Could not decorate unmodifiable view model with the security model (path '{}')", request.getPath(), ex);
+            }
         }
     }
 }
