@@ -86,8 +86,11 @@ public class MessageSourceMessageResolver extends AbstractMessageResolver {
             int i;
             Map<String, Object> messageMap = new HashMap<>();
             for (i = 0; i < messageParameters.length; i++) {
-                String value = (String) messageParameters[i];
-                messageMap.put(String.valueOf(i), value);
+                Object val = messageParameters[i];
+                if (val != null) {
+                    String value = val.toString();
+                    messageMap.put(String.valueOf(i), value);
+                }
             }
             return messageMap;
         } else {
