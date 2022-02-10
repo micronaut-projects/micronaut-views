@@ -81,7 +81,7 @@ class UnmodifiableModelAndViewTest {
         assertNotNull(html);
 
         //and:
-        assertFalse(html.contains("<blink>Security was added</blink>"));
+        assertTrue(html.contains("<blink>Security was added</blink>"));
 
         //and:
         assertTrue(html.contains("<h1>fruit: plum</h1>"));

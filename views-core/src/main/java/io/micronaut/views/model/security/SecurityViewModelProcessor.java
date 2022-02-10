@@ -75,7 +75,9 @@ public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String
             try {
                 viewModel.putIfAbsent(securityViewModelProcessorConfiguration.getSecurityKey(), securityModel);
             } catch (UnsupportedOperationException ex) {
-                LOG.error("Could not decorate unmodifiable view model with the security model (path '{}')", request.getPath(), ex);
+                final HashMap<String, Object> modifiableModel = new HashMap<>(viewModel);
+                modifiableModel.putIfAbsent(securityViewModelProcessorConfiguration.getSecurityKey(), securityModel);
+                modelAndView.setModel(modifiableModel);
             }
         }
     }
