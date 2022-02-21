@@ -3,6 +3,7 @@ package io.micronaut.views.thymeleaf
 import io.micronaut.context.ApplicationContext
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context
+import org.thymeleaf.context.IContext
 import spock.lang.Specification
 
 class MicronautThymeMessageResolverSpec extends Specification {
@@ -75,6 +76,22 @@ class MicronautThymeMessageResolverSpec extends Specification {
 
         then:
         content.contains("nothing_en_US")
+
+        cleanup:
+        ctx.close()
+    }
+
+    void "test message resolver translates non-string parameters"() {
+        given:
+        ApplicationContext ctx = ApplicationContext.run()
+        TemplateEngine templateEngine = ctx.getBean(TemplateEngine)
+        IContext ictx = new Context(null, ['int1': 123, 'int2': 456])
+
+        when:
+        String content = templateEngine.process("thymeleaf/sample_int_params", ictx)
+
+        then:
+        content.contains("This is a message with first substitution 123 and then second substitution 456.")
 
         cleanup:
         ctx.close()
