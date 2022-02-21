@@ -34,10 +34,13 @@ import java.util.Map;
 @Singleton
 public class LinkBuilder extends StandardLinkBuilder {
 
-    @Inject
     @Nullable
-    @Property(name = "micronaut.server.context-path")
     private String contextPath;
+
+    @Inject
+    public LinkBuilder(@Nullable @Property(name = "micronaut.server.context-path") String contextPath) {
+        this.contextPath = contextPath;
+    }
 
     public LinkBuilder() { }
 
