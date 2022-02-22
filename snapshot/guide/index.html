@@ -273,7 +273,7 @@ class ViewsController {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">    @View("fruits")
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @View("fruits")
     @Get
     public Fruit index() {
         return new Fruit("apple", "red");
@@ -342,8 +342,7 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
     &lt;artifactId&gt;micronaut-views-thymeleaf&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>Thymeleaf integration instantiates a <code>ClassLoaderTemplateResolver</code>.</p>
@@ -352,7 +351,7 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 <p>The properties used can be customized by overriding the values of:</p>
 </div>
 <a id="io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties" href="#io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html">ThymeleafViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
@@ -497,8 +496,7 @@ the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> proje
     &lt;artifactId&gt;micronaut-views-handlebars&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Handlebars template:</p>
@@ -552,8 +550,7 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
     &lt;artifactId&gt;micronaut-views-velocity&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Velocity template:</p>
@@ -607,8 +604,7 @@ the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based tem
     &lt;artifactId&gt;micronaut-views-freemarker&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Freemarker template:</p>
@@ -689,8 +685,7 @@ the <a href="https://github.com/fizzed/rocker">Rocker</a> Java-based template en
     &lt;artifactId&gt;micronaut-views-rocker&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Rocker template:</p>
@@ -789,7 +784,7 @@ import views.index;
 <p>The properties used can be customized by overriding the values of:</p>
 </div>
 <a id="io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties" href="#io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html">RockerViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
@@ -861,8 +856,7 @@ client-side, with the ability to compile templates into Java, Python, or JavaScr
     &lt;artifactId&gt;micronaut-views-soy&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 
 <h2 id="soyconfiguration"><a class="anchor" href="#soyconfiguration"></a>3.1.6.1 Soy Configuration</h2>
@@ -878,7 +872,7 @@ client-side, with the ability to compile templates into Java, Python, or JavaScr
 <p>The entire set of supported Soy configuration properties are documented below:</p>
 </div>
 <a id="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties" href="#io.micronaut.views.soy.SoyViewsRendererConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html">SoyViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
@@ -954,7 +948,7 @@ client-side, with the ability to compile templates into Java, Python, or JavaScr
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Singleton
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
 public class CustomSoyFileSetProvider implements SoyFileSetProvider {
     private static final Logger LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider.class);
     private static final String[] VIEWS = {
@@ -989,7 +983,7 @@ public class CustomSoyFileSetProvider implements SoyFileSetProvider {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Singleton
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Singleton
 class CustomSoyFileSetProvider implements SoyFileSetProvider {
     private static final Logger LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider.class)
 
@@ -1027,7 +1021,7 @@ class CustomSoyFileSetProvider implements SoyFileSetProvider {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Singleton
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Singleton
 class CustomSoyFileSetProvider(val resourceLoader: ResourceLoader, viewsConfiguration: ViewsConfiguration) :
     SoyFileSetProvider {
     private val folder: String
@@ -1068,7 +1062,7 @@ class CustomSoyFileSetProvider(val resourceLoader: ResourceLoader, viewsConfigur
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Controller("/soy")
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/soy")
 public class SoyController {
     @View("sample.home")
     @Get
@@ -1080,7 +1074,7 @@ public class SoyController {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">@Controller("/soy")
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Controller("/soy")
 class SoyController {
     @View("sample.home")
     @Get
@@ -1092,7 +1086,7 @@ class SoyController {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@Controller("/soy")
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Controller("/soy")
 class SoyController {
     @View("sample.home")
     @Get
@@ -1482,8 +1476,7 @@ the <a href="https://pebbletemplates.io/">Pebble</a> project.</p>
     &lt;artifactId&gt;micronaut-views-pebble&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Pebble template:</p>
@@ -1510,7 +1503,7 @@ the <a href="https://pebbletemplates.io/">Pebble</a> project.</p>
 <p>The properties used can be customized by overriding the values of:</p>
 </div>
 <a id="io.micronaut.views.pebble.PebbleConfigurationProperties" href="#io.micronaut.views.pebble.PebbleConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/pebble/PebbleConfigurationProperties.html">PebbleConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
@@ -1627,8 +1620,7 @@ the <a href="https://jte.gg">Jte</a> Java-based template engine.</p>
     &lt;artifactId&gt;micronaut-views-jte&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div>
-</p>
+</div></p>
 </div>
 <div class="paragraph">
 <p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Jte template:</p>
@@ -1664,7 +1656,7 @@ the <a href="https://jte.gg">Jte</a> Java-based template engine.</p>
 <p>The properties used can be customized by overriding the values of:</p>
 </div>
 <a id="io.micronaut.views.jte.JteViewsRendererConfigurationProperties" href="#io.micronaut.views.jte.JteViewsRendererConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html">JteViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
@@ -1794,7 +1786,7 @@ By default, CSP is disabled. To enable CSP, modify your configuration. For examp
 <p>See the following table for all configuration options:</p>
 </div>
 <a id="io.micronaut.views.csp.CspConfiguration" href="#io.micronaut.views.csp.CspConfiguration">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/csp/CspConfiguration.html">CspConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
@@ -1928,7 +1920,7 @@ mode. Inline scripts can be whitelisted with the syntax:</p>
 <p>The following properties allow you to customize the injection:</p>
 </div>
 <a id="io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties" href="#io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all spread">
+<table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html">SecurityViewModelProcessorConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
