@@ -61,7 +61,7 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
 
     @Override
     public Writable render(String name, T data, @NonNull HttpRequest<?> request) {
-        return (writer) -> engine.getTemplate(name).evaluate(writer, ViewUtils.modelOf(data));
+        return (writer) -> engine.getTemplate(name).evaluate(writer, ViewUtils.modelOf(data), request.getLocale().orElse(null));
     }
 
     @Override

@@ -27,6 +27,10 @@ import io.micronaut.views.pebble.PebbleViewsRenderer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Unroll
+
+import static io.micronaut.http.HttpHeaders.ACCEPT_LANGUAGE
+import static io.micronaut.http.HttpRequest.GET
 
 class PebbleViewsRendererSpec extends Specification {
 
@@ -151,5 +155,47 @@ class PebbleViewsRendererSpec extends Specification {
         then:
         body
         rsp.body().contains("username: sdelamo")
+    }
+
+    def "invoking /i18n without accept language header"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/pebble/i18n', String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+
+        then:
+        body
+        rsp.body().contains("i18n: value-en")
+    }
+
+    @Unroll
+    def "invoking /i18n renders pebble i18n in different locales (#acceptLanguage)"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange(GET('/pebble/i18n').header(ACCEPT_LANGUAGE, acceptLanguage), String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+
+        then:
+        body
+        rsp.body() == expectedBody
+
+        where:
+        acceptLanguage || expectedBody
+        "en"           || "i18n: value-en"
+        "en-US"        || "i18n: value-en"
+        "fr"           || "i18n: value-en"
+        "de"           || "i18n: value-de"
+        "de-DE"        || "i18n: value-de"
+        "it"           || "i18n: value-it"
     }
 }
