@@ -19,6 +19,7 @@ import com.mitchellbosecke.pebble.PebbleEngine;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
+import io.micronaut.core.util.LocaleResolver;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.server.util.locale.HttpLocaleResolver;
@@ -44,7 +45,7 @@ import java.util.Optional;
 public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
 
     private final PebbleEngine engine;
-    private final HttpLocaleResolver httpLocaleResolver;
+    private final LocaleResolver<HttpRequest<?>> httpLocaleResolver;
 
     /**
      * @param engine Pebble Engine
@@ -52,7 +53,7 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
      */
     @Inject
     public PebbleViewsRenderer(PebbleEngine engine,
-                               HttpLocaleResolver httpLocaleResolver) {
+                               LocaleResolver<HttpRequest<?>> httpLocaleResolver) {
         this.engine = engine;
         this.httpLocaleResolver = httpLocaleResolver;
     }
