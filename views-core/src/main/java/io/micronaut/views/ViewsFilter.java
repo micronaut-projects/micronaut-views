@@ -21,6 +21,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.HttpAttributes;
@@ -78,6 +79,10 @@ public class ViewsFilter implements HttpServerFilter {
                                                             ServerFilterChain chain) {
         return Flux.from(chain.proceed(request))
             .switchMap(response -> {
+                if(response.getStatus() == HttpStatus.MOVED_PERMANENTLY) {
+                    LOG.debug("redirect, passing through");
+                    return Flux.just(response);
+                }
                 Optional<String> optionalView = viewsResolver.resolveView(request, response);
                 if (!optionalView.isPresent()) {
                     LOG.debug("no view found");
