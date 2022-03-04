@@ -48,6 +48,7 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
 
     /**
      * @param engine Pebble Engine
+     * @param httpLocaleResolver The locale resolver
      */
     @Inject
     public PebbleViewsRenderer(PebbleEngine engine,
