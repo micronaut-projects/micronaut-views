@@ -37,6 +37,9 @@ import java.util.Optional;
  */
 public final class TurboStream implements Writable {
 
+    private static final String MEMBER_ACTION = "action";
+    private static final String MEMBER_TARGET_DOM_ID = "targetDomId";
+    private static final String MEMBER_TARGET_CSS_QUERY_SELECTOR = "targetCssQuerySelector";
     private static final String TURBO_TEMPLATE_TAG = "template";
     private static final String TURBO_STREAM_TAG = "turbo-stream";
     private static final String TURBO_STREAM_CLOSING_TAG = "</turbo-stream>";
@@ -78,26 +81,46 @@ public final class TurboStream implements Writable {
         this.template = template;
     }
 
+    /**
+     *
+     * @return Turbo Stream Action.
+     */
     @NonNull
     public TurboStreamAction getAction() {
         return action;
     }
 
+    /**
+     *
+     * @return Target DOM ID.
+     */
     @NonNull
     public Optional<String> getTargetDomId() {
         return Optional.ofNullable(targetDomId);
     }
 
+    /**
+     *
+     * @return Target CSS Selector
+     */
     @NonNull
     public Optional<String> getTargetCssQuerySelector() {
         return Optional.ofNullable(targetCssQuerySelector);
     }
 
+    /**
+     *
+     * @return Template.
+     */
     @NonNull
     public Optional<Object> getTemplate() {
         return Optional.ofNullable(template);
     }
 
+    /**
+     *
+     * @return Creates a TurboStream Builder.
+     */
     @NonNull
     public static Builder builder() {
         return new Builder();
@@ -108,6 +131,10 @@ public final class TurboStream implements Writable {
         out.write(toString());
     }
 
+    /**
+     *
+     * @return Renders a TurboStream as a {@link Writable}
+     */
     @NonNull
     public Optional<Writable> render() {
         if (getTemplate().isPresent()) {
@@ -133,7 +160,7 @@ public final class TurboStream implements Writable {
         }
     }
 
-    private String renderTurboStreamClosingTag() {
+    private static String renderTurboStreamClosingTag() {
         return TURBO_STREAM_CLOSING_TAG;
     }
 
@@ -358,6 +385,12 @@ public final class TurboStream implements Writable {
             return Optional.ofNullable(targetCssQuerySelector);
         }
 
+        /**
+         * Creates a Turbo Stream builder if annotation {@link TurboView} is found in the route and the request is a turbo request.
+         * @param request HTTP Request
+         * @param response HTTP Response
+         * @return Creates a Turbo Stream builder if annotation {@link TurboView} is found in the route and the request is a turbo request.
+         */
         @NonNull
         public static Optional<TurboStream.Builder> of(@NonNull HttpRequest<?> request,
                                                        @NonNull HttpResponse<?> response) {
@@ -385,9 +418,9 @@ public final class TurboStream implements Writable {
             }
             TurboStream.Builder builder = TurboStream.builder();
             route.getValue(TurboView.class, String.class).ifPresent(builder::templateView);
-            route.getValue(TurboView.class, "action", TurboStreamAction.class).ifPresent(builder::action);
-            route.getValue(TurboView.class, "targetDomId", String.class).ifPresent(builder::targetDomId);
-            route.getValue(TurboView.class, "targetCssQuerySelector", String.class).ifPresent(builder::targetCssQuerySelector);
+            route.getValue(TurboView.class, MEMBER_ACTION, TurboStreamAction.class).ifPresent(builder::action);
+            route.getValue(TurboView.class, MEMBER_TARGET_DOM_ID, String.class).ifPresent(builder::targetDomId);
+            route.getValue(TurboView.class, MEMBER_TARGET_CSS_QUERY_SELECTOR, String.class).ifPresent(builder::targetCssQuerySelector);
 
             if (!builder.getTargetCssQuerySelector().isPresent() &&
                     !builder.getTargetDomId().isPresent()) {
@@ -396,5 +429,4 @@ public final class TurboStream implements Writable {
             return Optional.of(builder);
         }
     }
-
 }

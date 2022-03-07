@@ -20,6 +20,9 @@ package io.micronaut.views.turbo.http;
  * @since 3.3.0
  */
 public final class TurboHttpHeaders {
+    /**
+     * Turbo Frame HTTP Header Name.
+     */
     public static final String TURBO_FRAME = "Turbo-Frame";
 
     private TurboHttpHeaders() {

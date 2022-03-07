@@ -24,28 +24,67 @@ import io.micronaut.core.annotation.NonNull;
  * @since 3.3.0
  */
 public enum TurboStreamAction {
+    /**
+     * Appends the content within the template tag to the container designated by the target dom id.
+     */
     APPEND("append"),
+
+    /**
+     * Prepends the content within the template tag to the container designated by the target dom id.
+     */
     PREPEND("prepend"),
+
+    /**
+     * Replaces the element designated by the target dom id.
+     */
     REPLACE("replace"),
+
+    /**
+     * Updates the content within the template tag to the container designated by the target dom id.
+     */
     UPDATE("update"),
+
+    /**
+     * Removes the element designated by the target dom id.
+     */
     REMOVE("remove"),
+
+    /**
+     * Inserts the content within the template tag before the element designated by the target dom id.
+     */
     BEFORE("before"),
+
+    /**
+     * Inserts the content within the template tag after the element designated by the target dom id.
+     */
     AFTER("after");
 
     @NonNull
     private final String action;
 
+    /**
+     *
+     * @param action turob stream action
+     */
     TurboStreamAction(String action) {
         this.action = action;
     }
 
+    /**
+     *
+     * @return Turbo action in lowercase
+     */
     @NonNull
     public String getAction() {
         return action;
     }
 
+    /**
+     *
+     * @return Turbo action in lowercase
+     */
     @Override
     public String toString() {
-        return this.action;
+        return getAction();
     }
 }

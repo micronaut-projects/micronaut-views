@@ -58,12 +58,12 @@ public class ViewsFilter implements HttpServerFilter {
      */
     protected final ViewsResolver viewsResolver;
 
-    /*
+    /**
      * Views Render Locator.
      */
     protected final ViewsRendererLocator viewsRendererLocator;
 
-    /*
+    /**
      * Views Model Decorator.
      */
     protected final ViewsModelDecorator viewsModelDecorator;

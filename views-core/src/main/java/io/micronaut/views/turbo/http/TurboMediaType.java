@@ -23,7 +23,14 @@ import io.micronaut.http.MediaType;
  * @since 3.3.0
  */
 public final class TurboMediaType {
+    /**
+     * Turbo Stream Content Type.
+     */
     public static final String TURBO_STREAM = "text/vnd.turbo-stream.html";
+
+    /**
+     * Turbo Stream Content Type.
+     */
     public static final MediaType TURBO_STREAM_TYPE = new MediaType(TURBO_STREAM);
 
     private TurboMediaType() {
