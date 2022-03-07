@@ -150,7 +150,7 @@ class TurboStreamSpec extends Specification {
         "<turbo-stream action=\"remove\" target=\"main-container\"></turbo-stream>" == html
     }
 
-    void "verify a route could have both View and TurboView annotations. if it is not a turbo request the View Annotation is used"() {
+    void "verify a route could have both View and TurboView annotations. if it is a turbo request the TuboView Annotation is used"() {
         given:
         BlockingHttpClient client = httpClient.toBlocking()
 
@@ -161,6 +161,11 @@ class TurboStreamSpec extends Specification {
         HttpStatus.OK == responseTurbo.status()
         'text/vnd.turbo-stream.html' == responseTurbo.contentType.get().toString()
         "<turbo-stream action=\"update\" target=\"main-container\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == responseTurbo.body()
+    }
+
+    void "verify a route could have both View and TurboView annotations. if it is not a turbo request the View Annotation is used"() {
+        given:
+        BlockingHttpClient client = httpClient.toBlocking()
 
         when: 'if it is not a turbo request, then render the view specified with the View annotation'
         HttpResponse<String> responseHtml = client.exchange(HttpRequest.GET("/turbo/withBothAnnotations"), String)
@@ -170,7 +175,6 @@ class TurboStreamSpec extends Specification {
         responseHtml.contentType.isPresent()
         responseHtml.contentType.get().toString() == MediaType.TEXT_HTML
         "<!DOCTYPE html><html><head><title>Page Title</title></head><body><h1>Hello World</h1></body></html>" == responseHtml.body()
-
     }
 
     @Requires(property = "spec.name", value = "TurboStreamSpec")
@@ -227,11 +231,17 @@ class TurboStreamSpec extends Specification {
     static class MockViewsRenderer<T> implements ViewsRenderer<T> {
 
         @Override
-        Writable render(@NonNull String viewName, @Nullable T data, @NonNull HttpRequest<?> request) {
+        @NonNull
+        Writable render(@NonNull String viewName,
+                        @Nullable T data,
+                        @Nullable HttpRequest<?> request) {
             if (viewName == 'home') {
-                return (writer) -> {
-                    writer.write("<!DOCTYPE html><html><head><title>Page Title</title></head><body><h1>" + data.toString() + "</h1></body></html>")
-                };
+                return new Writable() {
+                    @Override
+                    void writeTo(Writer out) throws IOException {
+                        out.write("<!DOCTYPE html><html><head><title>Page Title</title></head><body><h1>" + data.toString() + "</h1></body></html>")
+                    }
+                }
             }
             return (writer) -> {
                 if (data != null) {
