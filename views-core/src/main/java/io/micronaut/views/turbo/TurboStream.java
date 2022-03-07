@@ -119,7 +119,9 @@ public final class TurboStream implements Writable {
             } else if (template instanceof Writable) {
                 return Optional.of((writer) -> {
                     writer.write(renderTurboStreamOpeningTag());
+                    writer.write(OPEN_TAG + TURBO_TEMPLATE_TAG + CLOSE_TAG);
                     ((Writable) template).writeTo(writer);
+                    writer.write(OPEN_TAG + SLASH + TURBO_TEMPLATE_TAG + CLOSE_TAG);
                     writer.write(renderTurboStreamClosingTag());
                 });
             }

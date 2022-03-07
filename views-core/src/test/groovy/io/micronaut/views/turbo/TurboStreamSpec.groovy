@@ -114,7 +114,7 @@ class TurboStreamSpec extends Specification {
         html = client.retrieve(HttpRequest.GET("/turbo/update").header(TurboHttpHeaders.TURBO_FRAME, "main-container"))
 
         then:
-        "<turbo-stream action=\"update\" target=\"main-container\"><div class=\"message\">Hello World</div></turbo-stream>" == html
+        "<turbo-stream action=\"update\" target=\"main-container\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == html
     }
 
     void "verify TurboView annotation can specify targetDomId"() {
@@ -125,7 +125,7 @@ class TurboStreamSpec extends Specification {
         String html = client.retrieve(HttpRequest.GET("/turbo/targetDomId"))
 
         then:
-        "<turbo-stream action=\"update\" target=\"main-container\"><div class=\"message\">Hello World</div></turbo-stream>" == html
+        "<turbo-stream action=\"update\" target=\"main-container\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == html
     }
 
     void "verify TurboView annotation can specify targetCssQuerySelector"() {
@@ -136,7 +136,7 @@ class TurboStreamSpec extends Specification {
         String html = client.retrieve(HttpRequest.GET("/turbo/targetCssQuerySelector"))
 
         then:
-        "<turbo-stream action=\"after\" targets=\".elementsWithClass\"><div class=\"message\">Hello World</div></turbo-stream>" == html
+        "<turbo-stream action=\"after\" targets=\".elementsWithClass\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == html
     }
 
     void "verify a method annotated with TurboView and return void"() {
@@ -160,7 +160,7 @@ class TurboStreamSpec extends Specification {
         then:
         HttpStatus.OK == responseTurbo.status()
         'text/vnd.turbo-stream.html' == responseTurbo.contentType.get().toString()
-        "<turbo-stream action=\"update\" target=\"main-container\"><div class=\"message\">Hello World</div></turbo-stream>" == responseTurbo.body()
+        "<turbo-stream action=\"update\" target=\"main-container\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == responseTurbo.body()
 
         when: 'if it is not a turbo request, then render the view specified with the View annotation'
         HttpResponse<String> responseHtml = client.exchange(HttpRequest.GET("/turbo/withBothAnnotations"), String)
@@ -203,7 +203,7 @@ class TurboStreamSpec extends Specification {
             "Hello World"
         }
 
-        @TurboView(value = "fragments/message", action = TurboStreamAction.REMOVE)
+        @TurboView(action = TurboStreamAction.REMOVE)
         @Get("/del")
         void del() {
         }
