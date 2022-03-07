@@ -138,26 +138,26 @@ public final class TurboStream implements Writable {
     @NonNull
     public Optional<Writable> render() {
         if (getTemplate().isPresent()) {
-            Object template = getTemplate().get();
-            if (template instanceof CharSequence) {
-                return Optional.of((writer) -> {
-                    writer.write(renderTurboStreamOpeningTag() + OPEN_TAG + TURBO_TEMPLATE_TAG + CLOSE_TAG + template + OPEN_TAG + SLASH + TURBO_TEMPLATE_TAG + CLOSE_TAG + renderTurboStreamClosingTag());
-                });
-            } else if (template instanceof Writable) {
-                return Optional.of((writer) -> {
-                    writer.write(renderTurboStreamOpeningTag());
-                    writer.write(OPEN_TAG + TURBO_TEMPLATE_TAG + CLOSE_TAG);
-                    ((Writable) template).writeTo(writer);
-                    writer.write(OPEN_TAG + SLASH + TURBO_TEMPLATE_TAG + CLOSE_TAG);
-                    writer.write(renderTurboStreamClosingTag());
-                });
-            }
-            return Optional.empty();
-        } else {
-            return Optional.of((writer) -> {
-                writer.write(renderTurboStreamOpeningTag() + renderTurboStreamClosingTag());
+            return getTemplate().flatMap(this::writableOfTemplate);
+        }
+        return Optional.of((writer) -> {
+            writer.write(renderTurboStreamOpeningTag() + renderTurboStreamClosingTag());
+        });
+    }
+
+    private Optional<Writable> writableOfTemplate(Object template) {
+        if (template instanceof CharSequence) {
+            return Optional.of(out -> out.write(renderTurboStreamOpeningTag() + OPEN_TAG + TURBO_TEMPLATE_TAG + CLOSE_TAG + template + OPEN_TAG + SLASH + TURBO_TEMPLATE_TAG + CLOSE_TAG + renderTurboStreamClosingTag()));
+        } else if (template instanceof Writable) {
+            return Optional.of(out -> {
+                out.write(renderTurboStreamOpeningTag());
+                out.write(OPEN_TAG + TURBO_TEMPLATE_TAG + CLOSE_TAG);
+                ((Writable) template).writeTo(out);
+                out.write(OPEN_TAG + SLASH + TURBO_TEMPLATE_TAG + CLOSE_TAG);
+                out.write(renderTurboStreamClosingTag());
             });
         }
+        return Optional.empty();
     }
 
     private static String renderTurboStreamClosingTag() {

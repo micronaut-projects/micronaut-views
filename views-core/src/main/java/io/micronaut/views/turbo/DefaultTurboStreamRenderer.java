@@ -45,15 +45,15 @@ public class DefaultTurboStreamRenderer implements TurboStreamRenderer {
     @NonNull
     public Optional<Writable> render(@NonNull TurboStream.Builder builder,
                                      @Nullable HttpRequest<?> request) {
-        if (builder.getTemplateView().isPresent()) {
-            String viewName = builder.getTemplateView().get();
-            Object model =  builder.getTemplateModel().orElse(null);
-            return viewsRendererLocator.resolveViewsRenderer(viewName, TurboMediaType.TURBO_STREAM_TYPE, model)
-                    .flatMap(renderer -> builder.template(renderer.render(viewName, model, request))
-                            .build()
-                            .render());
-        } else {
-            return builder.build().render();
-        }
+
+        return builder.getTemplateView()
+                .map(viewName ->  {
+                    Object model =  builder.getTemplateModel().orElse(null);
+                    return viewsRendererLocator.resolveViewsRenderer(viewName, TurboMediaType.TURBO_STREAM_TYPE, model)
+                            .flatMap(renderer -> builder.template(renderer.render(viewName, model, request))
+                                    .build()
+                                    .render());
+                })
+                .orElseGet(() -> builder.build().render());
     }
 }
