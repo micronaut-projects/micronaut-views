@@ -165,20 +165,12 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html#PebbleViewsRenderer-io.micronaut.views.pebble.PebbleConfiguration-com.mitchellbosecke.pebble.PebbleEngine-">PebbleViewsRenderer</a></span>(<a href="../../../../io/micronaut/views/pebble/PebbleConfiguration.html" title="interface in io.micronaut.views.pebble">PebbleConfiguration</a>&nbsp;configuration,
                    com.mitchellbosecke.pebble.PebbleEngine&nbsp;engine)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Use <a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html#PebbleViewsRenderer-com.mitchellbosecke.pebble.PebbleEngine-io.micronaut.core.util.LocaleResolver-"><code>PebbleViewsRenderer(PebbleEngine, LocaleResolver)</code></a> instead.</span></div>
+<div class="block"><span class="deprecationComment">Use <a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html#PebbleViewsRenderer-com.mitchellbosecke.pebble.PebbleEngine-"><code>PebbleViewsRenderer(PebbleEngine)</code></a> instead.</span></div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html#PebbleViewsRenderer-com.mitchellbosecke.pebble.PebbleEngine-">PebbleViewsRenderer</a></span>(com.mitchellbosecke.pebble.PebbleEngine&nbsp;engine)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Use <a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html#PebbleViewsRenderer-com.mitchellbosecke.pebble.PebbleEngine-io.micronaut.core.util.LocaleResolver-"><code>PebbleViewsRenderer(PebbleEngine, LocaleResolver)</code></a> instead.</span></div>
-</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html#PebbleViewsRenderer-com.mitchellbosecke.pebble.PebbleEngine-io.micronaut.core.util.LocaleResolver-">PebbleViewsRenderer</a></span>(com.mitchellbosecke.pebble.PebbleEngine&nbsp;engine,
-                   io.micronaut.core.util.LocaleResolver&lt;io.micronaut.http.HttpRequest&lt;?&gt;&gt;&nbsp;httpLocaleResolver)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html#PebbleViewsRenderer-com.mitchellbosecke.pebble.PebbleEngine-">PebbleViewsRenderer</a></span>(com.mitchellbosecke.pebble.PebbleEngine&nbsp;engine)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -234,31 +226,14 @@ implements <a href="../../../../io/micronaut/views/ViewsRenderer.html" title="in
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="PebbleViewsRenderer-com.mitchellbosecke.pebble.PebbleEngine-io.micronaut.core.util.LocaleResolver-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>PebbleViewsRenderer</h4>
-<pre>@Inject
-public&nbsp;PebbleViewsRenderer(com.mitchellbosecke.pebble.PebbleEngine&nbsp;engine,
-                                   io.micronaut.core.util.LocaleResolver&lt;io.micronaut.http.HttpRequest&lt;?&gt;&gt;&nbsp;httpLocaleResolver)</pre>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>engine</code> - Pebble Engine</dd>
-<dd><code>httpLocaleResolver</code> - The locale resolver</dd>
-</dl>
-</li>
-</ul>
 <a name="PebbleViewsRenderer-com.mitchellbosecke.pebble.PebbleEngine-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>PebbleViewsRenderer</h4>
-<pre>@Deprecated
+<pre>@Inject
 public&nbsp;PebbleViewsRenderer(com.mitchellbosecke.pebble.PebbleEngine&nbsp;engine)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html#PebbleViewsRenderer-com.mitchellbosecke.pebble.PebbleEngine-io.micronaut.core.util.LocaleResolver-"><code>PebbleViewsRenderer(PebbleEngine, LocaleResolver)</code></a> instead.</span></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>engine</code> - Pebble Engine</dd>
@@ -274,7 +249,7 @@ public&nbsp;PebbleViewsRenderer(com.mitchellbosecke.pebble.PebbleEngine&nbsp;eng
 <pre>@Deprecated
 public&nbsp;PebbleViewsRenderer(<a href="../../../../io/micronaut/views/pebble/PebbleConfiguration.html" title="interface in io.micronaut.views.pebble">PebbleConfiguration</a>&nbsp;configuration,
                                        com.mitchellbosecke.pebble.PebbleEngine&nbsp;engine)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html#PebbleViewsRenderer-com.mitchellbosecke.pebble.PebbleEngine-io.micronaut.core.util.LocaleResolver-"><code>PebbleViewsRenderer(PebbleEngine, LocaleResolver)</code></a> instead.</span></div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html#PebbleViewsRenderer-com.mitchellbosecke.pebble.PebbleEngine-"><code>PebbleViewsRenderer(PebbleEngine)</code></a> instead.</span></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>configuration</code> - Pebble Configuration</dd>
