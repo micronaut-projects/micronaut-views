@@ -21,6 +21,7 @@ import gg.jte.TemplateOutput;
 import gg.jte.output.WriterOutput;
 import gg.jte.resolve.ResourceCodeResolver;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
@@ -61,7 +62,9 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String viewName, T data, @NonNull HttpRequest<?> request) {
+    public Writable render(@NonNull String viewName,
+                           @Nullable T data,
+                           @Nullable HttpRequest<?> request) {
         return out -> {
             TemplateOutput output = getOutput(out);
             Map<String, Object> dataMap = ViewUtils.modelOf(data);

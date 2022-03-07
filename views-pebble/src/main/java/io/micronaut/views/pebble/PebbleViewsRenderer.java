@@ -18,6 +18,7 @@ package io.micronaut.views.pebble;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.LocaleResolver;
 import io.micronaut.core.util.StringUtils;
@@ -88,12 +89,15 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
     }
 
     @Override
-    public Writable render(String name, T data, @NonNull HttpRequest<?> request) {
-        return (writer) -> engine.getTemplate(name).evaluate(writer, ViewUtils.modelOf(data), httpLocaleResolver.resolveOrDefault(request));
+    @NonNull
+    public Writable render(@NonNull String name,
+                           @Nullable T data,
+                           @Nullable HttpRequest<?> request) {
+        return (writer) -> engine.getTemplate(name).evaluate(writer, ViewUtils.modelOf(data), request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault());
     }
 
     @Override
-    public boolean exists(String name) {
+    public boolean exists(@NonNull String name) {
         return engine.getLoader().resourceExists(name);
     }
 }
