@@ -53,9 +53,24 @@ import java.util.Optional;
 public class ViewsFilter implements HttpServerFilter {
     private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
 
+    /**
+     * Views Resolver.
+     */
     protected final ViewsResolver viewsResolver;
+
+    /*
+     * Views Render Locator.
+     */
     protected final ViewsRendererLocator viewsRendererLocator;
+
+    /*
+     * Views Model Decorator.
+     */
     protected final ViewsModelDecorator viewsModelDecorator;
+
+    /**
+     * Turbo Stream Renderer.
+     */
     protected final TurboStreamRenderer turboStreamRenderer;
 
     /**
