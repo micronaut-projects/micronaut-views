@@ -143,11 +143,15 @@ extends org.thymeleaf.context.AbstractContext</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/WebContext.html#WebContext-io.micronaut.http.HttpRequest-">WebContext</a></span>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/WebContext.html#WebContext-io.micronaut.http.HttpRequest-">WebContext</a></span>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/WebContext.html#WebContext-io.micronaut.http.HttpRequest-java.util.Locale-">WebContext</a></span>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
-          java.util.Locale&nbsp;locale)</code>&nbsp;</td>
+          java.util.Locale&nbsp;locale)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/WebContext.html#WebContext-io.micronaut.http.HttpRequest-java.util.Locale-java.util.Map-">WebContext</a></span>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
@@ -208,7 +212,10 @@ extends org.thymeleaf.context.AbstractContext</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>WebContext</h4>
-<pre>public&nbsp;WebContext(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</pre>
+<pre>@Deprecated
+public&nbsp;WebContext(@Nullable
+                              io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>request</code> - HTTP request.</dd>
@@ -223,8 +230,11 @@ extends org.thymeleaf.context.AbstractContext</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>WebContext</h4>
-<pre>public&nbsp;WebContext(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
-                  java.util.Locale&nbsp;locale)</pre>
+<pre>@Deprecated
+public&nbsp;WebContext(@Nullable
+                              io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
+                              java.util.Locale&nbsp;locale)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>locale</code> - the locale.</dd>
@@ -240,7 +250,8 @@ extends org.thymeleaf.context.AbstractContext</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>WebContext</h4>
-<pre>public&nbsp;WebContext(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
+<pre>public&nbsp;WebContext(@Nullable
+                  io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
                   java.util.Locale&nbsp;locale,
                   java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;variables)</pre>
 <dl>
@@ -267,7 +278,8 @@ extends org.thymeleaf.context.AbstractContext</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getRequest</h4>
-<pre>public&nbsp;io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;getRequest()</pre>
+<pre>@Nullable
+public&nbsp;io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;getRequest()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>HTTP request.</dd>

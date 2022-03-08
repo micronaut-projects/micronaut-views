@@ -298,10 +298,13 @@ public&nbsp;PebbleViewsRenderer(<a href="../../../../io/micronaut/views/pebble/P
 <ul class="blockList">
 <li class="blockList">
 <h4>render</h4>
-<pre>public&nbsp;io.micronaut.core.io.Writable&nbsp;render(java.lang.String&nbsp;name,
-                                            <a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html" title="type parameter in PebbleViewsRenderer">T</a>&nbsp;data,
-                                            @NonNull
-                                            io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</pre>
+<pre>@NonNull
+public&nbsp;io.micronaut.core.io.Writable&nbsp;render(@NonNull
+                                                     java.lang.String&nbsp;name,
+                                                     @Nullable
+                                                     <a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html" title="type parameter in PebbleViewsRenderer">T</a>&nbsp;data,
+                                                     @Nullable
+                                                     io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../io/micronaut/views/ViewsRenderer.html#render-java.lang.String-T-io.micronaut.http.HttpRequest-">render</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html" title="type parameter in PebbleViewsRenderer">T</a>&gt;</code></dd>
@@ -320,7 +323,8 @@ public&nbsp;PebbleViewsRenderer(<a href="../../../../io/micronaut/views/pebble/P
 <ul class="blockListLast">
 <li class="blockList">
 <h4>exists</h4>
-<pre>public&nbsp;boolean&nbsp;exists(java.lang.String&nbsp;name)</pre>
+<pre>public&nbsp;boolean&nbsp;exists(@NonNull
+                      java.lang.String&nbsp;name)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../io/micronaut/views/ViewsRenderer.html#exists-java.lang.String-">exists</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="../../../../io/micronaut/views/pebble/PebbleViewsRenderer.html" title="type parameter in PebbleViewsRenderer">T</a>&gt;</code></dd>
