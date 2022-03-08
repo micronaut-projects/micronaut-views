@@ -104,7 +104,9 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T> {
      */
     @NonNull
     @Override
-    public Writable render(@NonNull String viewName, @Nullable T data, @NonNull HttpRequest<?> request) {
+    public Writable render(@NonNull String viewName,
+                           @Nullable T data,
+                           @Nullable HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
 
         Map<String, Object> ijOverlay = new HashMap<>(1);
@@ -122,7 +124,7 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T> {
         });
         renderer.setData(context);
         if (injectNonce) {
-            Optional<Object> nonceObj = request.getAttribute(CspFilter.NONCE_PROPERTY);
+            Optional<Object> nonceObj = request != null ? request.getAttribute(CspFilter.NONCE_PROPERTY) : Optional.empty();
             if (nonceObj.isPresent()) {
                 String nonceValue = ((String) nonceObj.get());
                 ijOverlay.put(INJECTED_NONCE_PROPERTY, nonceValue);
