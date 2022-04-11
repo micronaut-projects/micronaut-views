@@ -32,6 +32,7 @@ import java.util.Optional;
 
 /**
  * Turbo Stream.
+ * <a href="https://turbo.hotwired.dev/reference/streams">Streams</a>.
  * @author Sergio del Amo
  * @since 3.3.0
  */
@@ -173,13 +174,13 @@ public final class TurboStream implements Writable {
     @NonNull
     private Optional<String> getTargetDomIdHtmlAttribute() {
         return getTargetDomId()
-                .map(targetDomId -> SPACE + htmlAttribute(TURBO_STREAM_ATTRIBUTE_TARGET, targetDomId));
+                .map(domId -> SPACE + htmlAttribute(TURBO_STREAM_ATTRIBUTE_TARGET, domId));
     }
 
     @NonNull
     private Optional<String> getTargetCssQuerySelectorHtmlAttribute() {
         return getTargetCssQuerySelector()
-                .map(targetCssQuerySelector -> SPACE + htmlAttribute(TURBO_STREAM_ATTRIBUTE_TARGETS, targetCssQuerySelector));
+                .map(cssSelector -> SPACE + htmlAttribute(TURBO_STREAM_ATTRIBUTE_TARGETS, cssSelector));
     }
 
     @NonNull
@@ -436,8 +437,8 @@ public final class TurboStream implements Writable {
                     .anyMatch(mediaType -> mediaType.getName().contains(TurboMediaType.TURBO_STREAM));
         }
 
-        private static Optional<TurboStream.Builder> of (@NonNull HttpRequest<?> request,
-                                                         @NonNull AnnotationMetadata route) {
+        private static Optional<TurboStream.Builder> of(@NonNull HttpRequest<?> request,
+                                                        @NonNull AnnotationMetadata route) {
             Optional<String> turboFrameOptional = request.getHeaders().get(TurboHttpHeaders.TURBO_FRAME, String.class);
             if (!route.hasAnnotation(TurboView.class) ||
                     (!accepts(request) && !turboFrameOptional.isPresent() && route.hasAnnotation(View.class))) {
