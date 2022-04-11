@@ -208,7 +208,8 @@ class TurboStreamSpec extends Specification {
         where:
         domId << [
                 "*",
-                "?"
+                "?",
+                '"'
         ]
     }
 
@@ -226,7 +227,8 @@ class TurboStreamSpec extends Specification {
         where:
         domId << [
                 "*",
-                "?"
+                "?",
+                '"'
         ]
     }
 
@@ -262,6 +264,7 @@ class TurboStreamSpec extends Specification {
         domId << [
                 "a*",
                 "a?",
+                'a"',
                 "1",
                 ".",
                 ":",
@@ -285,6 +288,7 @@ class TurboStreamSpec extends Specification {
         domId << [
                 "a*",
                 "a?",
+                'a"',
                 "1",
                 ".",
                 ":",
