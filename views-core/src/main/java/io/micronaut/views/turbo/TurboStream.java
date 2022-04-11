@@ -27,6 +27,7 @@ import io.micronaut.views.turbo.http.TurboHttpHeaders;
 import io.micronaut.views.turbo.http.TurboMediaType;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 /**
  * Turbo Stream.
@@ -200,12 +201,42 @@ public final class TurboStream {
      * Turbo Stream Builder.
      */
     public static class Builder {
+        private static final Pattern DEFAULT_DOM_ID_PATTERN = Pattern.compile("^[A-Za-z]+[\\w\\-\\:\\.]*$");
+        private static final Pattern TARGET_CSS_QUERY_SELECTOR_PATTERN = Pattern.compile("^[\\w\\-\\:\\.]*$");
         private TurboStreamAction action;
         private String targetDomId;
         private String targetCssQuerySelector;
         private Object template;
         private String templateView;
         private Object templateModel;
+
+        @Nullable
+        private Pattern targetDomIdPattern = DEFAULT_DOM_ID_PATTERN;
+
+        @Nullable
+        private Pattern targetCssQuerySelectorPattern = TARGET_CSS_QUERY_SELECTOR_PATTERN;
+
+        /**
+         *
+         * @param pattern HTML attributes validation Pattern
+         * @return The Builder
+         */
+        @NonNull
+        public Builder targetCssQuerySelectorPattern(@Nullable Pattern pattern) {
+            this.targetCssQuerySelectorPattern = pattern;
+            return this;
+        }
+
+        /**
+         *
+         * @param pattern HTML attributes validation Pattern
+         * @return The Builder
+         */
+        @NonNull
+        public Builder targetDomIdPattern(@Nullable Pattern pattern) {
+            this.targetDomIdPattern = pattern;
+            return this;
+        }
 
         /**
          *
@@ -366,6 +397,12 @@ public final class TurboStream {
          */
         @NonNull
         public TurboStream build() {
+            if (targetDomId != null && targetDomIdPattern != null && !targetDomIdPattern.matcher(targetDomId).matches()) {
+                throw new IllegalArgumentException(targetDomId + " is not a valid attribute");
+            }
+            if (targetCssQuerySelector != null && targetCssQuerySelectorPattern != null && !targetCssQuerySelectorPattern.matcher(targetCssQuerySelector).matches()) {
+                throw new IllegalArgumentException(targetCssQuerySelector + " is not a valid attribute");
+            }
             return new TurboStream(action,
                     targetDomId,
                     targetCssQuerySelector,

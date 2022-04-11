@@ -21,6 +21,7 @@ import io.micronaut.views.turbo.http.TurboHttpHeaders
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
 import spock.lang.Specification
+import spock.lang.Unroll
 
 @Property(name = "spec.name", value = "TurboStreamSpec")
 @MicronautTest
@@ -175,6 +176,121 @@ class TurboStreamSpec extends Specification {
         responseHtml.contentType.isPresent()
         responseHtml.contentType.get().toString() == MediaType.TEXT_HTML
         "<!DOCTYPE html><html><head><title>Page Title</title></head><body><h1>Hello World</h1></body></html>" == responseHtml.body()
+    }
+
+    @Unroll
+    void "target CSS Query Selector must have letters, digits, hyphens underscores colons, and periods"(String domId) {
+        when:
+        TurboStream.builder().targetCssQuerySelector(domId).build()
+
+        then:
+        noExceptionThrown()
+
+        where:
+        domId << [
+                "a",
+                "1",
+                ".",
+                ":",
+                "-",
+                "_",
+        ]
+    }
+
+    @Unroll
+    void "Illegal argument exception thrown if target CSS Query Selector contains something but letters, digits, hyphens underscores colons, and periods"(String domId) {
+        when:
+        TurboStream.builder().targetCssQuerySelector(domId).build()
+
+        then:
+        thrown(IllegalArgumentException)
+
+        where:
+        domId << [
+                "*",
+                "?"
+        ]
+    }
+
+    @Unroll
+    void "target CSS Query Selector validation can be disabled"(String domId) {
+        when:
+        TurboStream.builder()
+                .targetCssQuerySelector(domId)
+                .targetCssQuerySelectorPattern(null)
+                .build()
+
+        then:
+        noExceptionThrown()
+
+        where:
+        domId << [
+                "*",
+                "?"
+        ]
+    }
+
+    @Unroll
+    void "target DOM Id attribute must begin with a letter and may be followed by any number of letters, digits, hyphens underscores colons, and periods"(String domId) {
+        when:
+        TurboStream.builder().targetDomId(domId).build()
+
+        then:
+        noExceptionThrown()
+
+        where:
+        domId << [
+                "a",
+                "ab",
+                "a1",
+                "a.",
+                "a:",
+                "a-",
+                "a_",
+        ]
+    }
+
+    @Unroll
+    void "Illegal argument exception thrown if target DOM Id attribute does not begin with a letter and may be followed by any number of letters, digits, hyphens underscores colons, and periods"(String domId) {
+        when:
+        TurboStream.builder().targetDomId(domId).build()
+
+        then:
+        thrown(IllegalArgumentException)
+
+        where:
+        domId << [
+                "a*",
+                "a?",
+                "1",
+                ".",
+                ":",
+                "-",
+                "_",
+        ]
+    }
+
+    @Unroll
+    void "Target DOM Id attribute validation can be disabled"(String domId) {
+        when:
+        TurboStream.builder()
+                .targetDomId(domId)
+                .targetDomIdPattern(null)
+                .build()
+
+        then:
+        noExceptionThrown()
+
+        where:
+        domId << [
+                "a*",
+                "a?",
+                "1",
+                ".",
+                ":",
+                "-",
+                "_",
+        ]
     }
 
     @Requires(property = "spec.name", value = "TurboStreamSpec")
