@@ -140,20 +140,19 @@ public final class TurboStream implements Writable {
         if (getTemplate().isPresent()) {
             return getTemplate().flatMap(this::writableOfTemplate);
         }
-        return Optional.of((writer) -> {
-            writer.write(renderTurboStreamOpeningTag() + renderTurboStreamClosingTag());
-        });
+        return Optional.of(writer -> writer.write(renderTurboStreamOpeningTag() + renderTurboStreamClosingTag()));
     }
 
     private Optional<Writable> writableOfTemplate(Object template) {
         if (template instanceof CharSequence) {
-            return Optional.of(out -> out.write(renderTurboStreamOpeningTag() + OPEN_TAG + TURBO_TEMPLATE_TAG + CLOSE_TAG + template + OPEN_TAG + SLASH + TURBO_TEMPLATE_TAG + CLOSE_TAG + renderTurboStreamClosingTag()));
-        } else if (template instanceof Writable) {
+            return Optional.of(out -> out.write(renderTurboStreamOpeningTag() + htmlTag(TURBO_TEMPLATE_TAG, (CharSequence) template) + renderTurboStreamClosingTag()));
+        }
+        if (template instanceof Writable) {
             return Optional.of(out -> {
                 out.write(renderTurboStreamOpeningTag());
-                out.write(OPEN_TAG + TURBO_TEMPLATE_TAG + CLOSE_TAG);
+                out.write(openHtmlTag(TURBO_TEMPLATE_TAG));
                 ((Writable) template).writeTo(out);
-                out.write(OPEN_TAG + SLASH + TURBO_TEMPLATE_TAG + CLOSE_TAG);
+                out.write(closeHtmlTag(TURBO_TEMPLATE_TAG));
                 out.write(renderTurboStreamClosingTag());
             });
         }
@@ -165,14 +164,42 @@ public final class TurboStream implements Writable {
     }
 
     private String renderTurboStreamOpeningTag() {
-        String html = OPEN_TAG + TURBO_STREAM_TAG + SPACE + TURBO_STREAM_ATTRIBUTE_ACTION + EQUALS + DOUBLE_QUOTE + getAction() + DOUBLE_QUOTE + SPACE;
-        if (getTargetDomId().isPresent()) {
-            html += TURBO_STREAM_ATTRIBUTE_TARGET + EQUALS + DOUBLE_QUOTE + getTargetDomId().get() + DOUBLE_QUOTE;
-        } else if (getTargetCssQuerySelector().isPresent()) {
-            html += TURBO_STREAM_ATTRIBUTE_TARGETS + EQUALS + DOUBLE_QUOTE + getTargetCssQuerySelector().get() + DOUBLE_QUOTE;
-        }
-        html += CLOSE_TAG;
-        return html;
+        return OPEN_TAG + TURBO_STREAM_TAG + SPACE + htmlAttribute(TURBO_STREAM_ATTRIBUTE_ACTION, getAction().toString())
+                + getTargetDomIdHtmlAttribute().orElse("")
+                + getTargetCssQuerySelectorHtmlAttribute().orElse("")
+                + CLOSE_TAG;
+    }
+
+    @NonNull
+    private Optional<String> getTargetDomIdHtmlAttribute() {
+        return getTargetDomId()
+                .map(targetDomId -> SPACE + htmlAttribute(TURBO_STREAM_ATTRIBUTE_TARGET, targetDomId));
+    }
+
+    @NonNull
+    private Optional<String> getTargetCssQuerySelectorHtmlAttribute() {
+        return getTargetCssQuerySelector()
+                .map(targetCssQuerySelector -> SPACE + htmlAttribute(TURBO_STREAM_ATTRIBUTE_TARGETS, targetCssQuerySelector));
+    }
+
+    @NonNull
+    private String htmlAttribute(@NonNull String key, @NonNull String value) {
+        return String.join(EQUALS, key, DOUBLE_QUOTE + value + DOUBLE_QUOTE);
+    }
+
+    @NonNull
+    private String htmlTag(@NonNull String tag, @NonNull CharSequence content) {
+        return openHtmlTag(tag) + content + closeHtmlTag(tag);
+    }
+
+    @NonNull
+    private String openHtmlTag(@NonNull String tag) {
+        return OPEN_TAG + tag + CLOSE_TAG;
+    }
+
+    @NonNull
+    private String closeHtmlTag(@NonNull String tag) {
+        return OPEN_TAG + SLASH + tag + CLOSE_TAG;
     }
 
     /**

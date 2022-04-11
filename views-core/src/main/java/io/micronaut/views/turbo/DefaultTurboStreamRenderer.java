@@ -22,9 +22,6 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewsRendererLocator;
 import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Singleton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Optional;
 
 /**
@@ -34,7 +31,6 @@ import java.util.Optional;
  */
 @Singleton
 public class DefaultTurboStreamRenderer implements TurboStreamRenderer {
-    private static final Logger LOG = LoggerFactory.getLogger(DefaultTurboStreamRenderer.class);
     protected final ViewsRendererLocator viewsRendererLocator;
 
     public DefaultTurboStreamRenderer(ViewsRendererLocator viewsRendererLocator) {
@@ -45,7 +41,6 @@ public class DefaultTurboStreamRenderer implements TurboStreamRenderer {
     @NonNull
     public Optional<Writable> render(@NonNull TurboStream.Builder builder,
                                      @Nullable HttpRequest<?> request) {
-
         return builder.getTemplateView()
                 .map(viewName ->  {
                     Object model =  builder.getTemplateModel().orElse(null);

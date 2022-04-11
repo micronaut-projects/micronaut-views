@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 /**
- * Turbo related classes
+ * Turbo related classes.
  * <a href="https://turbo.hotwired.dev">Turbo</a>
  * @author Sergio del Amo
  * @since 3.3.0
  */
+package io.micronaut.views.turbo;
