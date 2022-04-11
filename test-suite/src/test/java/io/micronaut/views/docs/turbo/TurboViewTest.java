@@ -34,7 +34,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TurboViewTest {
+class TurboViewTest {
 
     @Test
     void turboView()  throws IOException {

@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TurboStreamTest {
+class TurboStreamTest {
 
     @Test
     void turboStreamFluidApi() throws IOException {
