@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.thymeleaf;
 
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpRequest;
 import org.thymeleaf.IEngineConfiguration;
 import org.thymeleaf.context.EngineContext;
@@ -31,6 +32,7 @@ import java.util.Map;
  */
 public class WebEngineContext extends EngineContext {
 
+    @Nullable
     private final HttpRequest<?> request;
 
     /**
@@ -45,7 +47,9 @@ public class WebEngineContext extends EngineContext {
      */
     public WebEngineContext(
             IEngineConfiguration configuration, TemplateData templateData,
-            Map<String, Object> templateResolutionAttributes, HttpRequest<?> request, Locale locale,
+            Map<String, Object> templateResolutionAttributes,
+            @Nullable HttpRequest<?> request,
+            Locale locale,
             Map<String, Object> variables) {
         super(configuration, templateData, templateResolutionAttributes, locale, variables);
         this.request = request;
@@ -54,6 +58,7 @@ public class WebEngineContext extends EngineContext {
     /**
      * @return HTTP request.
      */
+    @Nullable
     public HttpRequest<?> getRequest() {
         return request;
     }

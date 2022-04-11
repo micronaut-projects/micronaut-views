@@ -101,11 +101,10 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
     @NonNull
     public Writable render(@NonNull String viewName,
                            @Nullable T data,
-                           @NonNull HttpRequest<?> request) {
+                           @Nullable HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
-        ArgumentUtils.requireNonNull("request", request);
         return (writer) -> {
-            IContext context = new WebContext(request, httpLocaleResolver.resolveOrDefault(request),
+            IContext context = new WebContext(request, request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault(),
                     ViewUtils.modelOf(data));
             render(viewName, context, writer);
         };

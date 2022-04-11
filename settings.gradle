@@ -6,11 +6,11 @@ pluginManagement {
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '5.2.1'
+    id 'io.micronaut.build.shared.settings' version '5.2.3'
 }
 
 
-rootProject.name = 'views'
+rootProject.name = 'views-parent'
 
 include 'views-bom'
 include 'views-core'
