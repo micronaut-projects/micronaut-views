@@ -1,0 +1,4 @@
+You can use api:views.turbo.TurboStreamRenderer[] to render https://turbo.hotwired.dev/reference/streams[Turbo Streams]
+with server side templates.
+
+snippet::io.micronaut.views.docs.turbo.TurboStreamTemplateTest[tags="turbostreamrenderer"]

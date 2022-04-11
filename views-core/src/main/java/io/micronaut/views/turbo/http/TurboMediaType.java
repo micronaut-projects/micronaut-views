@@ -15,6 +15,8 @@
  */
 package io.micronaut.views.turbo.http;
 
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 
 /**
@@ -34,5 +36,12 @@ public final class TurboMediaType {
     public static final MediaType TURBO_STREAM_TYPE = new MediaType(TURBO_STREAM);
 
     private TurboMediaType() {
+    }
+
+    public static boolean acceptsTurboStream(@NonNull HttpRequest<?> request) {
+        return request.getHeaders()
+                .accept()
+                .stream()
+                .anyMatch(mediaType -> mediaType.toString().equals(TurboMediaType.TURBO_STREAM));
     }
 }

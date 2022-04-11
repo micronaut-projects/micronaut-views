@@ -26,8 +26,6 @@ import io.micronaut.views.View;
 import io.micronaut.views.turbo.http.TurboHttpHeaders;
 import io.micronaut.views.turbo.http.TurboMediaType;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.util.Optional;
 
 /**
@@ -36,7 +34,7 @@ import java.util.Optional;
  * @author Sergio del Amo
  * @since 3.3.0
  */
-public final class TurboStream implements Writable {
+public final class TurboStream {
 
     private static final String MEMBER_ACTION = "action";
     private static final String MEMBER_TARGET_DOM_ID = "targetDomId";
@@ -125,11 +123,6 @@ public final class TurboStream implements Writable {
     @NonNull
     public static Builder builder() {
         return new Builder();
-    }
-
-    @Override
-    public void writeTo(Writer out) throws IOException {
-        out.write(toString());
     }
 
     /**
@@ -430,18 +423,11 @@ public final class TurboStream implements Writable {
             return of(request, routeMatch.get());
         }
 
-        private static boolean accepts(@NonNull HttpRequest<?> request) {
-            return request.getHeaders()
-                    .accept()
-                    .stream()
-                    .anyMatch(mediaType -> mediaType.getName().contains(TurboMediaType.TURBO_STREAM));
-        }
-
         private static Optional<TurboStream.Builder> of(@NonNull HttpRequest<?> request,
                                                         @NonNull AnnotationMetadata route) {
             Optional<String> turboFrameOptional = request.getHeaders().get(TurboHttpHeaders.TURBO_FRAME, String.class);
             if (!route.hasAnnotation(TurboView.class) ||
-                    (!accepts(request) && !turboFrameOptional.isPresent() && route.hasAnnotation(View.class))) {
+                    (!TurboMediaType.acceptsTurboStream(request) && !turboFrameOptional.isPresent() && route.hasAnnotation(View.class))) {
                 return Optional.empty();
             }
             TurboStream.Builder builder = TurboStream.builder();
