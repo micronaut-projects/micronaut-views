@@ -21,7 +21,7 @@ dependencies {
     testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
     testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
     
-    testImplementation "io.micronaut.security:micronaut-security:$micronautSecurityVersion"
+    testImplementation "io.micronaut.security:micronaut-security"
     testImplementation "io.projectreactor:reactor-core:$reactorVersion"
 
     testImplementation project(":views-velocity")
