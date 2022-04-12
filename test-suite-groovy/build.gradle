@@ -17,6 +17,7 @@ dependencies {
     testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
     testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
     testImplementation project(":views-soy")
+    testImplementation project(":views-velocity")
 }
 
 tasks.named('test') {
