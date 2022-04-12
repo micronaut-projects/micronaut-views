@@ -172,14 +172,14 @@ public class ViewsFilter implements HttpServerFilter {
     @NonNull
     private Optional<TurboStream.Builder> parseTurboStream(@NonNull HttpRequest<?> request,
                                                            @NonNull MutableHttpResponse<?> response) {
-        Object body = response.body();
-        Optional<TurboStream.Builder> turboStreamBuilderOptional = TurboStream.Builder.of(request, response);
-        if (turboStreamBuilderOptional.isPresent()) {
-            return Optional.of(turboStreamBuilderOptional.get()
-                    .templateModel(body));
-        } else if (body instanceof TurboStream.Builder) {
-            return Optional.of((TurboStream.Builder) body);
-        }
-        return Optional.empty();
+        final Object body = response.body();
+        return Optional.ofNullable(TurboStream.Builder.of(request, response)
+                .map(builder -> builder.templateModel(body))
+                .orElseGet(() -> {
+                    if (body instanceof TurboStream.Builder) {
+                        return (TurboStream.Builder) body;
+                    }
+                    return null;
+                }));
     }
 }
