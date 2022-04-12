@@ -181,7 +181,10 @@ class TurboStreamSpec extends Specification {
     @Unroll
     void "target CSS Query Selector must have letters, digits, hyphens underscores colons, and periods"(String domId) {
         when:
-        TurboStream.builder().targetCssQuerySelector(domId).build()
+        TurboStream.builder()
+                .targetCssQuerySelector(domId)
+                .replace()
+                .build()
 
         then:
         noExceptionThrown()
@@ -200,7 +203,10 @@ class TurboStreamSpec extends Specification {
     @Unroll
     void "Illegal argument exception thrown if target CSS Query Selector contains something but letters, digits, hyphens underscores colons, and periods"(String domId) {
         when:
-        TurboStream.builder().targetCssQuerySelector(domId).build()
+        TurboStream.builder()
+                .targetCssQuerySelector(domId)
+                .replace()
+                .build()
 
         then:
         thrown(IllegalArgumentException)
@@ -219,6 +225,7 @@ class TurboStreamSpec extends Specification {
         TurboStream.builder()
                 .targetCssQuerySelector(domId)
                 .targetCssQuerySelectorPattern(null)
+                .replace()
                 .build()
 
         then:
@@ -235,7 +242,10 @@ class TurboStreamSpec extends Specification {
     @Unroll
     void "target DOM Id attribute must begin with a letter and may be followed by any number of letters, digits, hyphens underscores colons, and periods"(String domId) {
         when:
-        TurboStream.builder().targetDomId(domId).build()
+        TurboStream.builder()
+                .targetDomId(domId)
+                .replace()
+                .build()
 
         then:
         noExceptionThrown()
@@ -255,7 +265,10 @@ class TurboStreamSpec extends Specification {
     @Unroll
     void "Illegal argument exception thrown if target DOM Id attribute does not begin with a letter and may be followed by any number of letters, digits, hyphens underscores colons, and periods"(String domId) {
         when:
-        TurboStream.builder().targetDomId(domId).build()
+        TurboStream.builder()
+                .targetDomId(domId)
+                .replace()
+                .build()
 
         then:
         thrown(IllegalArgumentException)
@@ -279,6 +292,7 @@ class TurboStreamSpec extends Specification {
         TurboStream.builder()
                 .targetDomId(domId)
                 .targetDomIdPattern(null)
+                .replace()
                 .build()
 
         then:

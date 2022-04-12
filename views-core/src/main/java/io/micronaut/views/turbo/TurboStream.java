@@ -26,6 +26,7 @@ import io.micronaut.views.View;
 import io.micronaut.views.turbo.http.TurboHttpHeaders;
 import io.micronaut.views.turbo.http.TurboMediaType;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -403,6 +404,7 @@ public final class TurboStream {
             if (targetCssQuerySelector != null && targetCssQuerySelectorPattern != null && !targetCssQuerySelectorPattern.matcher(targetCssQuerySelector).matches()) {
                 throw new IllegalArgumentException(targetCssQuerySelector + " is not a valid attribute");
             }
+            Objects.requireNonNull(action, "action cannot be null");
             return new TurboStream(action,
                     targetDomId,
                     targetCssQuerySelector,
