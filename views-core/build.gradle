@@ -2,7 +2,7 @@ plugins {
     id("io.micronaut.build.internal.module")
 }
 dependencies {
-    compileOnly "io.micronaut.security:micronaut-security:$micronautSecurityVersion"
+    compileOnly "io.micronaut.security:micronaut-security"
     compileOnly "io.micronaut:micronaut-management:$micronautVersion"
     compileOnly "io.micronaut:micronaut-validation:$micronautVersion"
     api "io.micronaut:micronaut-runtime:$micronautVersion"
