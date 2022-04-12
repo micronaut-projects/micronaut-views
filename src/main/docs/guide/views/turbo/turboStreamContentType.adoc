@@ -1,0 +1,5 @@
+You can use api:views.turbo.http.TurboMediaType[TurboMediaType::acceptsTurboStream] to evaluate whether a https://turbo.hotwired.dev/handbook/streams#streaming-from-http-responses[request accepts Turbo Streams].
+
+____
+When submitting a <form> element whose method attribute is set to POST, PUT, PATCH, or DELETE, Turbo injects text/vnd.turbo-stream.html into the set of response formats in the request’s Accept header.
+____

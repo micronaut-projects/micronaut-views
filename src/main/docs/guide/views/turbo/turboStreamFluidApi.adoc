@@ -1,0 +1,7 @@
+You can create a https://turbo.hotwired.dev/reference/streams[Turbo Stream] with a fluid API:
+
+snippet::io.micronaut.views.docs.turbo.TurboStreamTest[tags="turbofluidapi"]
+
+The previous example generates:
+
+snippet::io.micronaut.views.docs.turbo.TurboStreamTest[tags="turbofluidapiresult"]
