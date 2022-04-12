@@ -468,10 +468,10 @@ public final class TurboStream {
                 return Optional.empty();
             }
             TurboStream.Builder builder = TurboStream.builder();
-            route.getValue(TurboView.class, String.class).ifPresent(builder::templateView);
+            route.stringValue(TurboView.class).ifPresent(builder::templateView);
             route.getValue(TurboView.class, MEMBER_ACTION, TurboStreamAction.class).ifPresent(builder::action);
-            route.getValue(TurboView.class, MEMBER_TARGET_DOM_ID, String.class).ifPresent(builder::targetDomId);
-            route.getValue(TurboView.class, MEMBER_TARGET_CSS_QUERY_SELECTOR, String.class).ifPresent(builder::targetCssQuerySelector);
+            route.stringValue(TurboView.class, MEMBER_TARGET_DOM_ID).ifPresent(builder::targetDomId);
+            route.stringValue(TurboView.class, MEMBER_TARGET_CSS_QUERY_SELECTOR).ifPresent(builder::targetCssQuerySelector);
 
             if (!builder.getTargetCssQuerySelector().isPresent() &&
                     !builder.getTargetDomId().isPresent()) {
