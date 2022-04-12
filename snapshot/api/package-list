@@ -11,4 +11,6 @@ io.micronaut.views.pebble
 io.micronaut.views.rocker
 io.micronaut.views.soy
 io.micronaut.views.thymeleaf
+io.micronaut.views.turbo
+io.micronaut.views.turbo.http
 io.micronaut.views.velocity

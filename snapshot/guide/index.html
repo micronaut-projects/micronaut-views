@@ -120,13 +120,23 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-custom"><a href="#custom"><strong>3.2.1</strong><span>Dynamically Enriching Models</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-security"><a href="#security"><strong>3.3</strong><span>Security</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-turbo"><a href="#turbo"><strong>3.3</strong><span>Turbo</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-csp"><a href="#csp"><strong>3.3.1</strong><span>Content Security Policy</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamFluidApi"><a href="#turboStreamFluidApi"><strong>3.3.1</strong><span>Turbo Stream Fluid API</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-security-model-enhancement"><a href="#security-model-enhancement"><strong>3.3.2</strong><span>Integration with Micronaut Security</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamTemplate"><a href="#turboStreamTemplate"><strong>3.3.2</strong><span>Turbo Streams with Templates</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>3.4</strong><span>GraalVM Support</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboView"><a href="#turboView"><strong>3.3.3</strong><span>TurboView Annotation</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamContentType"><a href="#turboStreamContentType"><strong>3.3.4</strong><span>Turbo Stream Media Type</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-security"><a href="#security"><strong>3.4</strong><span>Security</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-csp"><a href="#csp"><strong>3.4.1</strong><span>Content Security Policy</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-security-model-enhancement"><a href="#security-model-enhancement"><strong>3.4.2</strong><span>Integration with Micronaut Security</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>3.5</strong><span>GraalVM Support</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-breaks"><a href="#breaks"><strong>4</strong><span>Breaking Changes</span></a></div>
         
@@ -1753,7 +1763,264 @@ public class ConfigViewModelProcessor implements ViewModelProcessor&lt;Map&lt;St
 <p>If you use Micronaut Security, Micronaut Views registers a <a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a> to enrich models with security related information.</p>
 </div>
 
-<h2 id="security"><a class="anchor" href="#security"></a>3.3 Security</h2>
+<h2 id="turbo"><a class="anchor" href="#turbo"></a>3.3 Turbo</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views simplifies working with <a href="https://turbo.hotwired.dev">Turbo</a>, the heart of <a href="https://hotwired.dev">Hotwire</a> (HTML over the wire):</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>A set of complementary techniques for speeding up page changes and form submissions, dividing complex pages into components, and stream partial page updates over WebSocket. All without writing any JavaScript at all. And designed from the start to integrate perfectly with native hybrid applications for iOS and Android.</p>
+</div>
+</blockquote>
+</div>
+
+<h2 id="turboStreamFluidApi"><a class="anchor" href="#turboStreamFluidApi"></a>3.3.1 Turbo Stream Fluid API</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo/turboStreamFluidApi.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can create a <a href="https://turbo.hotwired.dev/reference/streams">Turbo Stream</a> with a fluid API:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">TurboStream turboStream = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template("Content to append to container designated with the dom_id.")
+    .build();
+Optional&lt;Writable&gt; writable = turboStream.render();</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">TurboStream turboStream = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template("Content to append to container designated with the dom_id.")
+    .build()
+Optional&lt;Writable&gt; writable = turboStream.render();</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">val turboStream = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template("Content to append to container designated with the dom_id.")
+    .build()
+val writable = turboStream.render()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous example generates:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
+    "&lt;template&gt;" +
+        "Content to append to container designated with the dom_id." +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
+    "&lt;template&gt;" +
+        "Content to append to container designated with the dom_id." +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;" +
+    "&lt;template&gt;" +
+        "Content to append to container designated with the dom_id." +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+
+<h2 id="turboStreamTemplate"><a class="anchor" href="#turboStreamTemplate"></a>3.3.2 Turbo Streams with Templates</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo/turboStreamTemplate.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can use <a href="../api/io/micronaut/views/turbo/TurboStreamRenderer.html">TurboStreamRenderer</a> to render <a href="https://turbo.hotwired.dev/reference/streams">Turbo Streams</a>
+with server side templates.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String view = "fruit";
+Map&lt;String, Object&gt; model = Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
+TurboStream.Builder builder = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template(view, model);
+Optional&lt;Writable&gt; writable = turboStreamRenderer.render(builder, null);</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">String view = "fruit"
+Map&lt;String, Object&gt; model = Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"))
+TurboStream.Builder builder = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template(view, model)
+Optional&lt;Writable&gt; writable = turboStreamRenderer.render(builder, null)</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">val view = "fruit"
+val model = Collections.singletonMap&lt;String, Any&gt;("fruit", Fruit("Banana", "Yellow"))
+val builder = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template(view, model)
+val writable = turboStreamRenderer.render(builder, null)</code></pre>
+</div>
+</div>
+
+<h2 id="turboView"><a class="anchor" href="#turboView"></a>3.3.3 TurboView Annotation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo/turboView.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can render <a href="https://turbo.hotwired.dev/reference/streams">Turbo Streams</a> easily by annotating a controller route with
+<a href="../api/io/micronaut/views/turbo/TurboView.html">TurboView</a></p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+@Get("/turbofruit")
+Map&lt;String, Object&gt; show() {
+ return Collections.singletonMap("fruit", new TurboStreamTemplateTest.Fruit("Banana", "Yellow"));
+ }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+@Get("/turbofruit")
+Map&lt;String, Object&gt; show() {
+ return Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
+ }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+@Get("/turbofruit")
+fun show(): Map&lt;String, Any&gt; {
+    return Collections.singletonMap("fruit", Fruit("Banana", "Yellow"))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Given the HTTP Request:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">HttpRequest&lt;?&gt; request = HttpRequest.GET("/turbofruit")
+        .header(TurboHttpHeaders.TURBO_FRAME, "dom_id");</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">HttpRequest&lt;?&gt; request = HttpRequest.GET("/turbofruit")
+        .header(TurboHttpHeaders.TURBO_FRAME, "dom_id");</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">val request: HttpRequest&lt;*&gt; = HttpRequest.GET&lt;Any&gt;("/turbofruit")
+    .header(TurboHttpHeaders.TURBO_FRAME, "dom_id")</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous controller returns:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
+    "&lt;template&gt;" +
+        "&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n" +
+        "&lt;h2&gt;color: Yellow&lt;/h2&gt;" +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
+    "&lt;template&gt;" +
+        "&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n" +
+        "&lt;h2&gt;color: Yellow&lt;/h2&gt;" +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;" +
+    "&lt;template&gt;" +
+        "&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n" +
+        "&lt;h2&gt;color: Yellow&lt;/h2&gt;" +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with content type <code>text/vnd.turbo-stream.html</code>.</p>
+</div>
+
+<h2 id="turboStreamContentType"><a class="anchor" href="#turboStreamContentType"></a>3.3.4 Turbo Stream Media Type</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo/turboStreamContentType.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can use <a href="../api/io/micronaut/views/turbo/http/TurboMediaType.html">TurboMediaType</a> to evaluate whether a <a href="https://turbo.hotwired.dev/handbook/streams#streaming-from-http-responses">request accepts Turbo Streams</a>.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>When submitting a &lt;form&gt; element whose method attribute is set to POST, PUT, PATCH, or DELETE, Turbo injects text/vnd.turbo-stream.html into the set of response formats in the request’s Accept header.</p>
+</div>
+</blockquote>
+</div>
+
+<h2 id="security"><a class="anchor" href="#security"></a>3.4 Security</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/security.adoc"'>
@@ -1764,7 +2031,7 @@ public class ConfigViewModelProcessor implements ViewModelProcessor&lt;Map&lt;St
 
 
 
-<h2 id="csp"><a class="anchor" href="#csp"></a>3.3.1 Content Security Policy</h2>
+<h2 id="csp"><a class="anchor" href="#csp"></a>3.4.1 Content Security Policy</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/security/csp.adoc"'>
@@ -1893,7 +2160,7 @@ mode. Inline scripts can be whitelisted with the syntax:</p>
 </div>
 </div>
 
-<h2 id="security-model-enhancement"><a class="anchor" href="#security-model-enhancement"></a>3.3.2 Integration with Micronaut Security</h2>
+<h2 id="security-model-enhancement"><a class="anchor" href="#security-model-enhancement"></a>3.4.2 Integration with Micronaut Security</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/security/security-model-enhancement.adoc"'>
@@ -2013,7 +2280,7 @@ public class BooksController {
 <p>You can access information about the current user with the <code>security</code> map.</p>
 </div>
 
-<h2 id="graal"><a class="anchor" href="#graal"></a>3.4 GraalVM Support</h2>
+<h2 id="graal"><a class="anchor" href="#graal"></a>3.5 GraalVM Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/graal.adoc"'>

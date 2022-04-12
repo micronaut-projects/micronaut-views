@@ -111,7 +111,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre>@Requires(beans=<a href="../../../io/micronaut/views/ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer.class</a>) @Requires(beans=<a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver.class</a>)
+<pre>@Requires(beans=<a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver.class</a>)
  @Filter(value="/**")
 public class <span class="typeNameLabel">ViewsFilter</span>
 extends java.lang.Object
@@ -142,16 +142,28 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../io/micronaut/views/ViewsModelDecorator.html" title="interface in io.micronaut.views">ViewsModelDecorator</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#viewsModelDecorator">viewsModelDecorator</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../../../io/micronaut/views/turbo/TurboStreamRenderer.html" title="interface in io.micronaut.views.turbo">TurboStreamRenderer</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#turboStreamRenderer">turboStreamRenderer</a></span></code>
+<div class="block">Turbo Stream Renderer.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../io/micronaut/views/ViewsRendererLocator.html" title="interface in io.micronaut.views">ViewsRendererLocator</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#viewsRendererLocator">viewsRendererLocator</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="../../../io/micronaut/views/ViewsModelDecorator.html" title="interface in io.micronaut.views">ViewsModelDecorator</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#viewsModelDecorator">viewsModelDecorator</a></span></code>
+<div class="block">Views Model Decorator.</div>
+</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>protected <a href="../../../io/micronaut/views/ViewsRendererLocator.html" title="interface in io.micronaut.views">ViewsRendererLocator</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#viewsRendererLocator">viewsRendererLocator</a></span></code>
+<div class="block">Views Render Locator.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#viewsResolver">viewsResolver</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#viewsResolver">viewsResolver</a></span></code>
+<div class="block">Views Resolver.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -178,6 +190,16 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.views.ViewsResolver-io.micronaut.views.ViewsRendererLocator-io.micronaut.views.ViewsModelDecorator-">ViewsFilter</a></span>(<a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a>&nbsp;viewsResolver,
            <a href="../../../io/micronaut/views/ViewsRendererLocator.html" title="interface in io.micronaut.views">ViewsRendererLocator</a>&nbsp;viewsRendererLocator,
            <a href="../../../io/micronaut/views/ViewsModelDecorator.html" title="interface in io.micronaut.views">ViewsModelDecorator</a>&nbsp;viewsModelDecorator)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Use <a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.views.ViewsResolver-io.micronaut.views.ViewsRendererLocator-io.micronaut.views.ViewsModelDecorator-io.micronaut.views.turbo.TurboStreamRenderer-"><code>ViewsFilter(ViewsResolver, ViewsRendererLocator, ViewsModelDecorator, TurboStreamRenderer)</code></a> instead.</span></div>
+</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.views.ViewsResolver-io.micronaut.views.ViewsRendererLocator-io.micronaut.views.ViewsModelDecorator-io.micronaut.views.turbo.TurboStreamRenderer-">ViewsFilter</a></span>(<a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a>&nbsp;viewsResolver,
+           <a href="../../../io/micronaut/views/ViewsRendererLocator.html" title="interface in io.micronaut.views">ViewsRendererLocator</a>&nbsp;viewsRendererLocator,
+           <a href="../../../io/micronaut/views/ViewsModelDecorator.html" title="interface in io.micronaut.views">ViewsModelDecorator</a>&nbsp;viewsModelDecorator,
+           <a href="../../../io/micronaut/views/turbo/TurboStreamRenderer.html" title="interface in io.micronaut.views.turbo">TurboStreamRenderer</a>&nbsp;turboStreamRenderer)</code>
 <div class="block">Constructor.</div>
 </td>
 </tr>
@@ -248,6 +270,7 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <li class="blockList">
 <h4>viewsResolver</h4>
 <pre>protected final&nbsp;<a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a> viewsResolver</pre>
+<div class="block">Views Resolver.</div>
 </li>
 </ul>
 <a name="viewsRendererLocator">
@@ -257,15 +280,27 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <li class="blockList">
 <h4>viewsRendererLocator</h4>
 <pre>protected final&nbsp;<a href="../../../io/micronaut/views/ViewsRendererLocator.html" title="interface in io.micronaut.views">ViewsRendererLocator</a> viewsRendererLocator</pre>
+<div class="block">Views Render Locator.</div>
 </li>
 </ul>
 <a name="viewsModelDecorator">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>viewsModelDecorator</h4>
 <pre>protected final&nbsp;<a href="../../../io/micronaut/views/ViewsModelDecorator.html" title="interface in io.micronaut.views">ViewsModelDecorator</a> viewsModelDecorator</pre>
+<div class="block">Views Model Decorator.</div>
+</li>
+</ul>
+<a name="turboStreamRenderer">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>turboStreamRenderer</h4>
+<pre>protected final&nbsp;<a href="../../../io/micronaut/views/turbo/TurboStreamRenderer.html" title="interface in io.micronaut.views.turbo">TurboStreamRenderer</a> turboStreamRenderer</pre>
+<div class="block">Turbo Stream Renderer.</div>
 </li>
 </ul>
 </li>
@@ -276,15 +311,38 @@ implements io.micronaut.http.filter.HttpServerFilter</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a name="ViewsFilter-io.micronaut.views.ViewsResolver-io.micronaut.views.ViewsRendererLocator-io.micronaut.views.ViewsModelDecorator-io.micronaut.views.turbo.TurboStreamRenderer-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ViewsFilter</h4>
+<pre>@Inject
+public&nbsp;ViewsFilter(<a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a>&nbsp;viewsResolver,
+                           <a href="../../../io/micronaut/views/ViewsRendererLocator.html" title="interface in io.micronaut.views">ViewsRendererLocator</a>&nbsp;viewsRendererLocator,
+                           <a href="../../../io/micronaut/views/ViewsModelDecorator.html" title="interface in io.micronaut.views">ViewsModelDecorator</a>&nbsp;viewsModelDecorator,
+                           <a href="../../../io/micronaut/views/turbo/TurboStreamRenderer.html" title="interface in io.micronaut.views.turbo">TurboStreamRenderer</a>&nbsp;turboStreamRenderer)</pre>
+<div class="block">Constructor.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>viewsResolver</code> - Views Resolver</dd>
+<dd><code>viewsRendererLocator</code> - ViewRendererLocator</dd>
+<dd><code>viewsModelDecorator</code> - Views Model Decorator</dd>
+<dd><code>turboStreamRenderer</code> - Turbo Stream renderer</dd>
+</dl>
+</li>
+</ul>
 <a name="ViewsFilter-io.micronaut.views.ViewsResolver-io.micronaut.views.ViewsRendererLocator-io.micronaut.views.ViewsModelDecorator-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ViewsFilter</h4>
-<pre>public&nbsp;ViewsFilter(<a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a>&nbsp;viewsResolver,
-                   <a href="../../../io/micronaut/views/ViewsRendererLocator.html" title="interface in io.micronaut.views">ViewsRendererLocator</a>&nbsp;viewsRendererLocator,
-                   <a href="../../../io/micronaut/views/ViewsModelDecorator.html" title="interface in io.micronaut.views">ViewsModelDecorator</a>&nbsp;viewsModelDecorator)</pre>
+<pre>@Deprecated
+public&nbsp;ViewsFilter(<a href="../../../io/micronaut/views/ViewsResolver.html" title="interface in io.micronaut.views">ViewsResolver</a>&nbsp;viewsResolver,
+                               <a href="../../../io/micronaut/views/ViewsRendererLocator.html" title="interface in io.micronaut.views">ViewsRendererLocator</a>&nbsp;viewsRendererLocator,
+                               <a href="../../../io/micronaut/views/ViewsModelDecorator.html" title="interface in io.micronaut.views">ViewsModelDecorator</a>&nbsp;viewsModelDecorator)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../io/micronaut/views/ViewsFilter.html#ViewsFilter-io.micronaut.views.ViewsResolver-io.micronaut.views.ViewsRendererLocator-io.micronaut.views.ViewsModelDecorator-io.micronaut.views.turbo.TurboStreamRenderer-"><code>ViewsFilter(ViewsResolver, ViewsRendererLocator, ViewsModelDecorator, TurboStreamRenderer)</code></a> instead.</span></div>
 <div class="block">Constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
