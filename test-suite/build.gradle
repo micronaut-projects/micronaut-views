@@ -22,7 +22,7 @@ dependencies {
     testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
     
     testImplementation "io.micronaut.security:micronaut-security"
-    testImplementation "io.projectreactor:reactor-core:$reactorVersion"
+    testImplementation "io.projectreactor:reactor-core"
 
     testImplementation project(":views-velocity")
     testImplementation project(":views-core")
