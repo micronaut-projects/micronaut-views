@@ -12,5 +12,5 @@
     <suppress checks="MissingJavadocType" files=".*generated-sources.*" />
     <suppress checks="WhitespaceAfter" files=".*generated-sources.*" />
     <suppress checks="FileTabCharacter" files=".*generated-sources.*" />
-    <suppress checks="EmptyLineSeparator" files=".*generated-sources.*" />        
+    <suppress checks="EmptyLineSeparator" files=".*generated-sources.*" />
 </suppressions>
