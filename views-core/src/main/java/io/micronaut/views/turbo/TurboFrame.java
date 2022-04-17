@@ -221,37 +221,37 @@ public final class TurboFrame {
     @NonNull
     private Optional<String> getIdHtmlAttribute() {
         return getId()
-            .map(id -> SPACE + htmlAttribute(ATTRIBUTE_ID, id));
+            .map(value -> SPACE + htmlAttribute(ATTRIBUTE_ID, value));
     }
 
     @NonNull
     private Optional<String> getBusyHtmlAttribute() {
         return getBusy()
-            .map(b -> SPACE + htmlAttribute(ATTRIBUTE_BUSY, b ? StringUtils.TRUE : StringUtils.FALSE));
+            .map(b -> SPACE + htmlAttribute(ATTRIBUTE_BUSY, Boolean.TRUE.equals(b) ? StringUtils.TRUE : StringUtils.FALSE));
     }
 
     @NonNull
     private Optional<String> getDisabledHtmlAttribute() {
         return getDisabled()
-            .map(b -> SPACE + htmlAttribute(ATTRIBUTE_DISABLED, b ? StringUtils.TRUE : StringUtils.FALSE));
+            .map(b -> SPACE + htmlAttribute(ATTRIBUTE_DISABLED, Boolean.TRUE.equals(b) ? StringUtils.TRUE : StringUtils.FALSE));
     }
 
     @NonNull
     private Optional<String> getAutoScrollHtmlAttribute() {
         return getAutoScroll()
-            .map(b -> SPACE + htmlAttribute(ATTRIBUTE_AUTOSCROLL, b ? StringUtils.TRUE : StringUtils.FALSE));
+            .map(b -> SPACE + htmlAttribute(ATTRIBUTE_AUTOSCROLL, Boolean.TRUE.equals(b) ? StringUtils.TRUE : StringUtils.FALSE));
     }
 
     @NonNull
     private Optional<String> getLoadingHtmlAttribute() {
         return getLoading()
-            .map(loading -> SPACE + htmlAttribute(ATTRIBUTE_LOADING, loading.toString()));
+            .map(value -> SPACE + htmlAttribute(ATTRIBUTE_LOADING, value.toString()));
     }
 
     @NonNull
     private Optional<String> getSrcHtmlAttribute() {
         return getSrc()
-            .map(src -> SPACE + htmlAttribute(ATTRIBUTE_SRC, src));
+            .map(value -> SPACE + htmlAttribute(ATTRIBUTE_SRC, value));
     }
 
     @NonNull
@@ -269,16 +269,6 @@ public final class TurboFrame {
     @NonNull
     private String htmlAttribute(@NonNull String key, @NonNull String value) {
         return String.join(EQUALS, key, DOUBLE_QUOTE + value + DOUBLE_QUOTE);
-    }
-
-    @NonNull
-    private String openHtmlTag(@NonNull String tag) {
-        return OPEN_TAG + tag + CLOSE_TAG;
-    }
-
-    @NonNull
-    private String closeHtmlTag(@NonNull String tag) {
-        return OPEN_TAG + SLASH + tag + CLOSE_TAG;
     }
 
     /**
