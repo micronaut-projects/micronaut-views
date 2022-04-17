@@ -27,7 +27,7 @@ import java.util.Optional;
 /**
  * {@link io.micronaut.context.annotation.DefaultImplementation} of {@link TurboFrameRenderer}.
  * @author Sergio del Amo
- * @since 3.3.0
+ * @since 3.4.0
  */
 @Singleton
 public class DefaultTurboFrameRenderer implements TurboFrameRenderer {

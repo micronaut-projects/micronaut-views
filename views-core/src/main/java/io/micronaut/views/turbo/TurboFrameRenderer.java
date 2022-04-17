@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * Renders a {@link TurboStream} into a {@link Writable}.
  * @author Sergio del Amo
- * @since 3.3.0
+ * @since 3.4.0
  */
 @DefaultImplementation(DefaultTurboFrameRenderer.class)
 @FunctionalInterface

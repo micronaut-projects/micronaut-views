@@ -26,7 +26,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * Annotation to ease the return of {@link TurboFrame} in routes.
  *
  * @author Sergio del Amo
- * @since 3.3.0
+ * @since 3.4.0
  */
 @Documented
 @Retention(RUNTIME)
