@@ -9,7 +9,7 @@ class LoadingSpec extends Specification {
     void "Loading::toString() returns the loading in lowercase"(Loading loading, String expected) {
         expect:
         expected == loading.toString()
-        expected == loading.getLoading()
+        expected == loading.getValue()
 
         where:
         loading       || expected

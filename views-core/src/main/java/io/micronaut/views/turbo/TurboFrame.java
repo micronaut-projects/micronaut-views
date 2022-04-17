@@ -59,7 +59,6 @@ public final class TurboFrame {
     private static final String SPACE = " ";
     private static final String EQUALS = "=";
     private static final String DOUBLE_QUOTE = "\"";
-    private static final String SLASH = "/";
 
     @Nullable
     private final String id;

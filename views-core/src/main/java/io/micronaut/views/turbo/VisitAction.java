@@ -16,7 +16,13 @@
 package io.micronaut.views.turbo;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -30,6 +36,8 @@ public enum VisitAction {
     REPLACE("replace"),
     ADVANCE("advance");
 
+    private static final Map<String, VisitAction> ACTION_MAP = Collections.unmodifiableMap(initializeMapping());
+
     @NonNull
     private final String action;
 
@@ -39,18 +47,6 @@ public enum VisitAction {
      */
     VisitAction(String action) {
         this.action = action;
-    }
-
-    @NonNull
-    public static Optional<VisitAction> of(@NonNull String str) {
-        if (str.equals(RESTORE.toString())) {
-            return Optional.of(RESTORE);
-        } else if (str.equals(REPLACE.toString())) {
-            return Optional.of(REPLACE);
-        } else if (str.equals(ADVANCE.toString())) {
-            return Optional.of(ADVANCE);
-        }
-        return Optional.empty();
     }
 
     /**
@@ -69,5 +65,21 @@ public enum VisitAction {
     @Override
     public String toString() {
         return getAction();
+    }
+
+    @NonNull
+    public static Optional<VisitAction> of(@Nullable String str) {
+        if (StringUtils.isEmpty(str)) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(ACTION_MAP.get(str.toLowerCase(Locale.ENGLISH)));
+    }
+
+    private static Map<String, VisitAction> initializeMapping() {
+        Map<String, VisitAction> m = new HashMap<>();
+        for (VisitAction v : VisitAction.values()) {
+            m.put(v.toString(), v);
+        }
+        return m;
     }
 }

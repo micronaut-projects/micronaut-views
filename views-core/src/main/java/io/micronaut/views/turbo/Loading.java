@@ -16,7 +16,13 @@
 package io.micronaut.views.turbo;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -26,6 +32,7 @@ import java.util.Optional;
  * @since 3.4.0
  */
 public enum Loading {
+
     /**
      * When loading="eager", changes to the src attribute will immediately navigate the element.
      */
@@ -36,24 +43,16 @@ public enum Loading {
      */
     LAZY("lazy");
 
-    private final String loading;
+    private static final Map<String, Loading> LOADING_MAP = Collections.unmodifiableMap(initializeMapping());
+
+    private final String value;
 
     /**
      *
-     * @param loading `eager` or `lazy`.
+     * @param value `eager` or `lazy`.
      */
-    Loading(String loading) {
-        this.loading = loading;
-    }
-
-    @NonNull
-    public static Optional<Loading> of(@NonNull String str) {
-        if (str.equals(LAZY.toString())) {
-            return Optional.of(LAZY);
-        } else if (str.equals(EAGER.toString())) {
-            return Optional.of(EAGER);
-        }
-        return Optional.empty();
+    Loading(String value) {
+        this.value = value;
     }
 
     /**
@@ -61,12 +60,28 @@ public enum Loading {
      * @return `eager` or `lazy`.
      */
     @NonNull
-    public String getLoading() {
-        return loading;
+    public String getValue() {
+        return value;
     }
 
     @Override
     public String toString() {
-        return getLoading();
+        return getValue();
+    }
+
+    @NonNull
+    public static Optional<Loading> of(@Nullable String str) {
+        if (StringUtils.isEmpty(str)) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(LOADING_MAP.get(str.toLowerCase(Locale.ENGLISH)));
+    }
+
+    private static Map<String, Loading> initializeMapping() {
+        Map<String, Loading> m = new HashMap<>();
+        for (Loading v : Loading.values()) {
+            m.put(v.toString(), v);
+        }
+        return m;
     }
 }
