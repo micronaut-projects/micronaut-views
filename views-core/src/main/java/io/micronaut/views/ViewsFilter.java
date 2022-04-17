@@ -87,7 +87,7 @@ public class ViewsFilter implements HttpServerFilter {
      * @param viewsRendererLocator ViewRendererLocator
      * @param viewsModelDecorator Views Model Decorator
      * @param turboStreamRenderer Turbo Stream renderer
-     * @param turboFrameRenderer Turbo Stream renderer
+     * @param turboFrameRenderer Turbo Frame renderer
      */
     @Inject
     public ViewsFilter(ViewsResolver viewsResolver,
