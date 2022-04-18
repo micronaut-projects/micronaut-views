@@ -61,7 +61,7 @@ class TurboFrameBuilderTest extends Specification {
 HttpResponse<?> index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) String turboFrame) {
     Long messageId = 1L
     Map<String, Object> model = [
-            "message": new Message(messageId, "My message title", "My message content")
+            "message": new Message(id: messageId, name: "My message title", content: "My message content")
     ]
     HttpResponse.ok(turboFrame == null ? new ModelAndView("edit", model) :
             TurboFrame.builder()
@@ -74,26 +74,8 @@ HttpResponse<?> index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) String tur
     }
 
     static class Message {
-        private final Long id
-        private final String name
-        private final String content
-
-        Message(Long id, String name, String content) {
-            this.id = id
-            this.name = name
-            this.content = content
-        }
-
-        Long getId() {
-            return id
-        }
-
-        String getName() {
-            return name
-        }
-
-        String getContent() {
-            return content
-        }
+        Long id
+        String name
+        String content
     }
 }

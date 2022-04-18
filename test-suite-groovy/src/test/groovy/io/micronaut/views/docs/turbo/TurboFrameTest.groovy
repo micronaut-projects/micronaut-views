@@ -63,32 +63,14 @@ class TurboFrameTest extends Specification {
 @View("edit")
 @Get
 Map<String, Object> index() {
-    ["message": new Message(1L, "My message title", "My message content")]
+    ["message": new Message(id: 1L, name: "My message title", content: "My message content")]
 }
 //end::turboFrameView[]
     }
 
     static class Message {
-        private final Long id
-        private final String name
-        private final String content
-
-        Message(Long id, String name, String content) {
-            this.id = id
-            this.name = name
-            this.content = content
-        }
-
-        Long getId() {
-            return id
-        }
-
-        String getName() {
-            return name
-        }
-
-        String getContent() {
-            return content
-        }
+        Long id
+        String name
+        String content
     }
 }
