@@ -177,30 +177,24 @@ public final class TurboFrame {
      */
     @NonNull
     public Optional<Writable> render() {
-        if (template != null) {
-            return writableOfTemplate(template);
-        }
-        return Optional.of(writer -> writer.write(renderTurboFrameOpeningTag() + renderTurboFrameClosingTag()));
+        return template != null ?
+                writableOfTemplate(template) :
+                Optional.of(writer -> writer.write(renderTurboFrameOpeningTag() + TURBO_FRAME_CLOSING_TAG));
     }
 
     @NonNull
     private Optional<Writable> writableOfTemplate(@NonNull Object template) {
         if (template instanceof CharSequence) {
-            return Optional.of(out -> out.write(renderTurboFrameOpeningTag() + template + renderTurboFrameClosingTag()));
+            return Optional.of(out -> out.write(renderTurboFrameOpeningTag() + template + TURBO_FRAME_CLOSING_TAG));
         }
         if (template instanceof Writable) {
             return Optional.of(out -> {
                 out.write(renderTurboFrameOpeningTag());
                 ((Writable) template).writeTo(out);
-                out.write(renderTurboFrameClosingTag());
+                out.write(TURBO_FRAME_CLOSING_TAG);
             });
         }
         return Optional.empty();
-    }
-
-    @NonNull
-    private static String renderTurboFrameClosingTag() {
-        return TURBO_FRAME_CLOSING_TAG;
     }
 
     @NonNull
@@ -504,10 +498,13 @@ public final class TurboFrame {
 
         @NonNull
         private static Optional<TurboFrame.Builder> of(@NonNull HttpRequest<?> request,
-                                                        @NonNull AnnotationMetadata route) {
+                                                       @NonNull AnnotationMetadata route) {
+            if (!route.hasAnnotation(TurboFrameView.class)) {
+                return Optional.empty();
+            }
+
             Optional<String> turboFrameOptional = request.getHeaders().get(TurboHttpHeaders.TURBO_FRAME, String.class);
-            Optional<String> idOptional = route.stringValue(TurboFrameView.class, MEMBER_ID);
-            if (!route.hasAnnotation(TurboFrameView.class) || (!turboFrameOptional.isPresent() && route.hasAnnotation(View.class))) {
+            if (!turboFrameOptional.isPresent() && route.hasAnnotation(View.class)) {
                 return Optional.empty();
             }
 
@@ -518,6 +515,7 @@ public final class TurboFrame {
                 .flatMap(VisitAction::of)
                 .ifPresent(builder::visitAction);
             route.stringValue(TurboFrameView.class, MEMBER_TARGET).ifPresent(builder::target);
+            Optional<String> idOptional = route.stringValue(TurboFrameView.class, MEMBER_ID);
             idOptional.ifPresent(builder::id);
             if (!idOptional.isPresent()) {
                 turboFrameOptional.ifPresent(builder::id);
@@ -537,14 +535,17 @@ public final class TurboFrame {
         private static Optional<Boolean> parseBoolean(@NonNull AnnotationMetadata route,
                                                       @NonNull String member) {
             return route.stringValue(TurboFrameView.class, member)
-                .flatMap(str -> {
-                if (str.equals(StringUtils.TRUE)) {
-                    return Optional.of(Boolean.TRUE);
-                } else if (str.equals(StringUtils.FALSE)) {
-                    return Optional.of(Boolean.FALSE);
-                }
-                return Optional.empty();
-            });
+                .flatMap(Builder::stringAsBoolean);
+        }
+
+        @NonNull
+        private static Optional<Boolean> stringAsBoolean(@NonNull String str) {
+            if (str.equals(StringUtils.TRUE)) {
+                return Optional.of(Boolean.TRUE);
+            } else if (str.equals(StringUtils.FALSE)) {
+                return Optional.of(Boolean.FALSE);
+            }
+            return Optional.empty();
         }
     }
 }
