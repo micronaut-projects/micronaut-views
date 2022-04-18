@@ -39,7 +39,7 @@ class TurboFrameBuilderTest extends Specification {
 
         then:
         html.contains("<h1>Editing message</h1>")
-        html.contains("<turbo-frame id=\"message_1\">")
+        html.contains('<turbo-frame id="message_1">')
         html.contains("<form action=\"/messages/1\">")
 
         when:
