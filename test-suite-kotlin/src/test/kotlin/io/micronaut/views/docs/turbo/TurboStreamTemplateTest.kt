@@ -30,7 +30,7 @@ val builder = TurboStream.builder()
     .action(TurboStreamAction.APPEND)
     .targetDomId("dom_id")
     .template(view, model)
-val writable = turboStreamRenderer.render(builder, null)
+val writable = turboStreamRenderer.render(builder as TurboStream.Builder, null)
 //end::turbostreamrenderer[]
         Assertions.assertTrue(writable.isPresent)
         val writer = StringWriter()

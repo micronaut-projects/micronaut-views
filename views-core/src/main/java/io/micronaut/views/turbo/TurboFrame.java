@@ -33,7 +33,7 @@ import java.util.Optional;
  * @author Sergio del Amo
  * @since 3.4.0
  */
-public final class TurboFrame {
+public final class TurboFrame implements Renderable {
     private static final String MEMBER_ACTION = "action";
     private static final String MEMBER_TARGET = "target";
     private static final String MEMBER_ID = "id";
@@ -176,6 +176,7 @@ public final class TurboFrame {
      * @return Renders a TurboStream as a {@link Writable}
      */
     @NonNull
+    @Override
     public Optional<Writable> render() {
         return template != null ?
                 writableOfTemplate(template) :
@@ -267,7 +268,7 @@ public final class TurboFrame {
     /**
      * Turbo Frame Builder.
      */
-    public static class Builder {
+    public static class Builder extends TemplatedBuilder<TurboFrame> {
 
         @Nullable
         private String id;
@@ -289,15 +290,6 @@ public final class TurboFrame {
 
         @Nullable
         private Boolean autoscroll;
-
-        @Nullable
-        private Object template;
-
-        @Nullable
-        private String templateView;
-
-        @Nullable
-        private Object templateModel;
 
         @Nullable
         private VisitAction visitAction;
@@ -380,63 +372,6 @@ public final class TurboFrame {
         }
 
         /**
-         * Sets the template with a View and Model.
-         * @param view The View name
-         * @param model The Model
-         * @return The Builder
-         */
-        @NonNull
-        public Builder template(@NonNull String view, Object model) {
-            this.templateView = view;
-            this.templateModel = model;
-            return this;
-        }
-
-        /**
-         * Sets the Turbo Frame  with a String. E.g. HTML.
-         * @param html The turbo frame content
-         * @return The Builder
-         */
-        @NonNull
-        public Builder template(@NonNull String html) {
-            this.template = html;
-            return this;
-        }
-
-        /**
-         * Sets the Turbo frame content with a {@link Writable}.
-         * @param writable The template as a {@link Writable}.
-         * @return The Builder
-         */
-        @NonNull
-        public Builder template(@NonNull Writable writable) {
-            this.template = writable;
-            return this;
-        }
-
-        /**
-         * Sets the template's view name.
-         * @param templateView The View name
-         * @return The Builder
-         */
-        @NonNull
-        public Builder templateView(@NonNull String templateView) {
-            this.templateView = templateView;
-            return this;
-        }
-
-        /**
-         * Sets the template's model.
-         * @param templateModel template model.
-         * @return The Builder
-         */
-        @NonNull
-        public Builder templateModel(@NonNull Object templateModel) {
-            this.templateModel = templateModel;
-            return this;
-        }
-
-        /**
          *
          * @param visitAction Visit Action
          * @return The builder.
@@ -461,27 +396,8 @@ public final class TurboFrame {
                 target,
                 autoscroll,
                 visitAction,
-                template);
+                getTemplate());
         }
-
-        /**
-         *
-         * @return The TurboStream template view name.
-         */
-        @NonNull
-        public Optional<String> getTemplateView() {
-            return Optional.ofNullable(templateView);
-        }
-
-        /**
-         *
-         * @return The TurboStream template model.
-         */
-        @NonNull
-        public Optional<Object> getTemplateModel() {
-            return Optional.ofNullable(templateModel);
-        }
-
 
         /**
          * Creates a Turbo Frame builder if annotation {@link TurboFrameView} is found in the route and the request is a turbo request.

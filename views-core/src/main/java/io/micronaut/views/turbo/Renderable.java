@@ -15,22 +15,25 @@
  */
 package io.micronaut.views.turbo;
 
-import io.micronaut.http.MediaType;
-import io.micronaut.views.ViewsRendererLocator;
-import jakarta.inject.Singleton;
+import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.io.Writable;
+
+import java.util.Optional;
 
 /**
- * {@link io.micronaut.context.annotation.DefaultImplementation} of {@link TurboFrameRenderer}.
+ * Functional interface for class which can render to writable.
+ *
  * @author Sergio del Amo
  * @since 3.4.0
  */
-@Singleton
-public class DefaultTurboFrameRenderer extends AbstractTurboRenderer<TurboFrame.Builder> implements TurboFrameRenderer {
+@FunctionalInterface
+@Internal
+public interface Renderable {
     /**
-     * Constructor.
-     * @param viewsRendererLocator Views Renderer Locator.
+     *
+     * @return An optional Writable if the class can be rendered.
      */
-    public DefaultTurboFrameRenderer(ViewsRendererLocator viewsRendererLocator) {
-        super(viewsRendererLocator, MediaType.TEXT_HTML_TYPE);
-    }
+    @NonNull
+    Optional<Writable> render();
 }

@@ -212,7 +212,7 @@ public class ViewsFilter implements HttpServerFilter {
                                                            @NonNull MutableHttpResponse<?> response) {
         final Object body = response.body();
         return Optional.ofNullable(TurboStream.Builder.of(request, response)
-                .map(builder -> builder.templateModel(body))
+                .map(builder -> (TurboStream.Builder) builder.templateModel(body))
                 .orElseGet(() -> {
                     if (body instanceof TurboStream.Builder) {
                         return (TurboStream.Builder) body;
@@ -226,7 +226,7 @@ public class ViewsFilter implements HttpServerFilter {
                                                          @NonNull MutableHttpResponse<?> response) {
         final Object body = response.body();
         return Optional.ofNullable(TurboFrame.Builder.of(request, response)
-            .map(builder -> builder.templateModel(body))
+            .map(builder -> (TurboFrame.Builder) builder.templateModel(body))
             .orElseGet(() -> {
                 if (body instanceof TurboFrame.Builder) {
                     return (TurboFrame.Builder) body;

@@ -29,7 +29,7 @@ class TurboStreamTemplateTest {
 //tag::turbostreamrenderer[]
 String view = "fruit";
 Map<String, Object> model = Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
-TurboStream.Builder builder = TurboStream.builder()
+TurboStream.Builder builder = (TurboStream.Builder) TurboStream.builder()
     .action(TurboStreamAction.APPEND)
     .targetDomId("dom_id")
     .template(view, model);
