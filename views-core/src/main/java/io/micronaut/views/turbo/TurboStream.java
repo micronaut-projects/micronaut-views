@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
  * @author Sergio del Amo
  * @since 3.3.0
  */
-public final class TurboStream {
+public final class TurboStream implements Renderable {
 
     private static final String MEMBER_ACTION = "action";
     private static final String MEMBER_TARGET_DOM_ID = "targetDomId";
@@ -132,6 +132,7 @@ public final class TurboStream {
      * @return Renders a TurboStream as a {@link Writable}
      */
     @NonNull
+    @Override
     public Optional<Writable> render() {
         if (getTemplate().isPresent()) {
             return getTemplate().flatMap(this::writableOfTemplate);
