@@ -12,3 +12,4 @@ The previous controller returns:
 snippet::io.micronaut.views.docs.turbo.TurboViewTest[tags="turboviewresponse"]
 
 with content type `text/vnd.turbo-stream.html`.
+

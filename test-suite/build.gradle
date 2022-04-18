@@ -20,7 +20,8 @@ dependencies {
     testImplementation "io.micronaut:micronaut-management:$micronautVersion"
     testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
     testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    
+    testRuntimeOnly("ch.qos.logback:logback-classic")
+
     testImplementation "io.micronaut.security:micronaut-security"
     testImplementation "io.projectreactor:reactor-core"
 
