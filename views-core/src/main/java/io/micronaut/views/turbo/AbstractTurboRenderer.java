@@ -39,8 +39,8 @@ public abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?>> {
      * @param viewsRendererLocator Views renderer Locator
      * @param mediaType Media Type
      */
-    public AbstractTurboRenderer(ViewsRendererLocator viewsRendererLocator,
-                                 MediaType mediaType) {
+    protected AbstractTurboRenderer(ViewsRendererLocator viewsRendererLocator,
+                                    MediaType mediaType) {
         this.viewsRendererLocator = viewsRendererLocator;
         this.mediaType = mediaType;
     }
