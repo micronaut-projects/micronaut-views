@@ -1,4 +1,4 @@
-Turbo fetch request includes an HTTP Header `Turbo-Frame`, and you click a link within a Turbo Frame.
+Turbo fetch request includes an HTTP Header `Turbo-Frame` when you click a link within a Turbo Frame.
 
 For example, for a frame id `message_1` and a response such as:
 
