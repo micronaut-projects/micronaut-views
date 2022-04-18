@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Property(name = "micronaut.security.enabled", value = StringUtils.FALSE)
 @Property(name = "spec.name", value = "TurboFrameBuilderTest")
 @MicronautTest
-public class TurboFrameBuilderTest {
+class TurboFrameBuilderTest {
     @Inject
     @Client("/")
     HttpClient httpClient;
