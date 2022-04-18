@@ -54,23 +54,23 @@ class TurboFrameBuilderTest {
     @Controller("/frame")
     internal class TurboFrameController {
 //tag::turboFrameBuilder[]
-        @Produces(MediaType.TEXT_HTML)
-        @Get("/builder")
-        fun index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) turboFrame: String?): HttpResponse<*> {
-            val messageId = 1L
-            val model = mapOf("message" to Message(messageId,
-                "My message title",
-                "My message content"))
-            return HttpResponse.ok(
-                if (turboFrame == null)
-                    ModelAndView<Any?>("edit", model)
-                else
-                    TurboFrame.builder()
-                        .id("message_$messageId")
-                        .templateModel(model)
-                        .templateView("form")
-            ).contentType(MediaType.TEXT_HTML)
-        }
+@Produces(MediaType.TEXT_HTML)
+@Get("/builder")
+fun index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) turboFrame: String?): HttpResponse<*> {
+    val messageId = 1L
+    val model = mapOf("message" to Message(messageId,
+"My message title",
+"My message content"))
+    return HttpResponse.ok(
+        if (turboFrame == null)
+            ModelAndView<Any?>("edit", model)
+        else
+            TurboFrame.builder()
+                .id("message_$messageId")
+                .templateModel(model)
+                .templateView("form")
+    ).contentType(MediaType.TEXT_HTML)
+}
 //end::turboFrameBuilder[]
     }
 
