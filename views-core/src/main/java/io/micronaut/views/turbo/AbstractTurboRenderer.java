@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
+import io.micronaut.views.TemplatedBuilder;
 import io.micronaut.views.ViewsRendererLocator;
 
 import java.util.Optional;
@@ -30,7 +31,7 @@ import java.util.Optional;
  * @param <T> The class to be built
  */
 public abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?>> {
-    protected final ViewsRendererLocator viewsRendererLocator;
+    private final ViewsRendererLocator viewsRendererLocator;
     private final MediaType mediaType;
 
     /**
