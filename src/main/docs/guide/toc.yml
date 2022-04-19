@@ -23,10 +23,12 @@ views:
     custom: Dynamically Enriching Models
   turbo:
     title: Turbo
+    turboFrameView: TurboFrameView annotation
+    turboFrameBuilder:  TurboFrame Builder
     turboStreamFluidApi: Turbo Stream Fluid API
-    turboStreamTemplate: Turbo Streams with Templates
     turboView: TurboView Annotation
     turboStreamContentType: Turbo Stream Media Type
+    turboStreamTemplate: Turbo Streams with Templates
   security:
     title: Security
     csp: Content Security Policy

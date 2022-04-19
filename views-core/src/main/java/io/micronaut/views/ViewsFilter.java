@@ -31,7 +31,10 @@ import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import io.micronaut.http.filter.ServerFilterPhase;
 import io.micronaut.views.exceptions.ViewNotFoundException;
+import io.micronaut.views.turbo.DefaultTurboFrameRenderer;
 import io.micronaut.views.turbo.DefaultTurboStreamRenderer;
+import io.micronaut.views.turbo.TurboFrame;
+import io.micronaut.views.turbo.TurboFrameRenderer;
 import io.micronaut.views.turbo.TurboStream;
 import io.micronaut.views.turbo.TurboStreamRenderer;
 import io.micronaut.views.turbo.http.TurboMediaType;
@@ -74,21 +77,29 @@ public class ViewsFilter implements HttpServerFilter {
     protected final TurboStreamRenderer turboStreamRenderer;
 
     /**
+     * Turbo Stream Renderer.
+     */
+    protected final TurboFrameRenderer turboFrameRenderer;
+
+    /**
      * Constructor.
      * @param viewsResolver Views Resolver
      * @param viewsRendererLocator ViewRendererLocator
      * @param viewsModelDecorator Views Model Decorator
      * @param turboStreamRenderer Turbo Stream renderer
+     * @param turboFrameRenderer Turbo Frame renderer
      */
     @Inject
     public ViewsFilter(ViewsResolver viewsResolver,
                        ViewsRendererLocator viewsRendererLocator,
                        ViewsModelDecorator viewsModelDecorator,
-                       TurboStreamRenderer turboStreamRenderer) {
+                       TurboStreamRenderer turboStreamRenderer,
+                       TurboFrameRenderer turboFrameRenderer) {
         this.viewsResolver = viewsResolver;
         this.viewsRendererLocator = viewsRendererLocator;
         this.viewsModelDecorator = viewsModelDecorator;
         this.turboStreamRenderer = turboStreamRenderer;
+        this.turboFrameRenderer = turboFrameRenderer;
     }
 
     /**
@@ -96,7 +107,27 @@ public class ViewsFilter implements HttpServerFilter {
      * @param viewsResolver Views Resolver
      * @param viewsRendererLocator ViewRendererLocator
      * @param viewsModelDecorator Views Model Decorator
-     * @deprecated Use {@link #ViewsFilter(ViewsResolver, ViewsRendererLocator, ViewsModelDecorator, TurboStreamRenderer)} instead.
+     * @param turboStreamRenderer Turbo Stream renderer
+     * @deprecated Use {@link #ViewsFilter(ViewsResolver, ViewsRendererLocator, ViewsModelDecorator, TurboStreamRenderer, TurboFrameRenderer)} instead.
+     */
+    @Deprecated
+    public ViewsFilter(ViewsResolver viewsResolver,
+                       ViewsRendererLocator viewsRendererLocator,
+                       ViewsModelDecorator viewsModelDecorator,
+                       TurboStreamRenderer turboStreamRenderer) {
+        this(viewsResolver,
+            viewsRendererLocator,
+            viewsModelDecorator,
+            turboStreamRenderer,
+            new DefaultTurboFrameRenderer(viewsRendererLocator));
+    }
+
+    /**
+     * Constructor.
+     * @param viewsResolver Views Resolver
+     * @param viewsRendererLocator ViewRendererLocator
+     * @param viewsModelDecorator Views Model Decorator
+     * @deprecated Use {@link #ViewsFilter(ViewsResolver, ViewsRendererLocator, ViewsModelDecorator, TurboStreamRenderer, TurboFrameRenderer)} instead.
      */
     @Deprecated
     public ViewsFilter(ViewsResolver viewsResolver,
@@ -120,6 +151,13 @@ public class ViewsFilter implements HttpServerFilter {
                 if (writableOptional.isPresent()) {
                     response.body(writableOptional.get());
                     response.contentType(TurboMediaType.TURBO_STREAM_TYPE);
+                    return Flux.just(response);
+                }
+                writableOptional = parseTurboFrame(request, response)
+                    .flatMap(builder -> turboFrameRenderer.render(builder, request));
+                if (writableOptional.isPresent()) {
+                    response.body(writableOptional.get());
+                    response.contentType(MediaType.TEXT_HTML);
                     return Flux.just(response);
                 }
 
@@ -181,5 +219,19 @@ public class ViewsFilter implements HttpServerFilter {
                     }
                     return null;
                 }));
+    }
+
+    @NonNull
+    private Optional<TurboFrame.Builder> parseTurboFrame(@NonNull HttpRequest<?> request,
+                                                         @NonNull MutableHttpResponse<?> response) {
+        final Object body = response.body();
+        return Optional.ofNullable(TurboFrame.Builder.of(request, response)
+            .map(builder -> (TurboFrame.Builder) builder.templateModel(body))
+            .orElseGet(() -> {
+                if (body instanceof TurboFrame.Builder) {
+                    return (TurboFrame.Builder) body;
+                }
+                return null;
+            }));
     }
 }

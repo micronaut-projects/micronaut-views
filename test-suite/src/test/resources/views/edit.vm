@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit</title>
+</head>
+<body>
+<h1>Editing message</h1>
+<turbo-frame id="message_$message.getId()">
+#parse("views/form.vm")
+</turbo-frame>
+</body>
+</html>
