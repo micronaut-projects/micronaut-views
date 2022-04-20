@@ -146,27 +146,21 @@ public class ViewsFilter implements HttpServerFilter {
                                                             ServerFilterChain chain) {
         return Flux.from(chain.proceed(request))
             .switchMap(response -> {
-                Optional<Writable> writableOptional = parseTurboStream(request, response)
-                        .flatMap(builder -> turboStreamRenderer.render(builder, request));
+                Object body = response.body();
+                Optional<Writable> writableOptional = parseTurboStreamWritable(request, response, body);
                 if (writableOptional.isPresent()) {
-                    response.body(writableOptional.get());
-                    response.contentType(TurboMediaType.TURBO_STREAM_TYPE);
-                    return Flux.just(response);
+                    return responseForWritable(response, writableOptional.get(), TurboMediaType.TURBO_STREAM_TYPE);
                 }
-                writableOptional = parseTurboFrame(request, response)
-                    .flatMap(builder -> turboFrameRenderer.render(builder, request));
+                writableOptional = parseTurboFrameWritable(request, response, body);
                 if (writableOptional.isPresent()) {
-                    response.body(writableOptional.get());
-                    response.contentType(MediaType.TEXT_HTML);
-                    return Flux.just(response);
+                    return responseForWritable(response, writableOptional.get(), MediaType.TEXT_HTML_TYPE);
                 }
-
                 Optional<String> optionalView = viewsResolver.resolveView(request, response);
                 if (!optionalView.isPresent()) {
                     LOG.debug("no view found");
                     return Flux.just(response);
                 }
-                Object body = response.body();
+
                 MediaType type = resolveMediaType(response, body);
                 String view = optionalView.get();
                 try {
@@ -233,5 +227,38 @@ public class ViewsFilter implements HttpServerFilter {
                 }
                 return null;
             }));
+    }
+
+    @NonNull
+    private Optional<Writable> parseTurboStreamWritable(@NonNull HttpRequest<?> request,
+                                                       @NonNull MutableHttpResponse<?> response,
+                                                       @Nullable Object body) {
+        Optional<Writable> optionalWritable = parseTurboStream(request, response)
+                .flatMap(builder -> turboStreamRenderer.render(builder, request));
+        return optionalWritable.isPresent() ? optionalWritable : parseRenderableBody(body);
+    }
+
+    @NonNull
+    private Optional<Writable> parseRenderableBody(@Nullable Object body) {
+        return body instanceof Renderable ? ((Renderable) body).render() : Optional.empty();
+    }
+
+    @NonNull
+    private Optional<Writable> parseTurboFrameWritable(@NonNull HttpRequest<?> request,
+                                                       @NonNull MutableHttpResponse<?> response,
+                                                       @Nullable Object body) {
+        Optional<Writable> optionalWritable = parseTurboFrame(request, response)
+                .flatMap(builder -> turboFrameRenderer.render(builder, request));
+        return optionalWritable.isPresent() ? optionalWritable : parseRenderableBody(body);
+
+    }
+
+    @NonNull
+    private Publisher<MutableHttpResponse<?>> responseForWritable(@NonNull MutableHttpResponse<?> response,
+                                                                  @NonNull Writable writable,
+                                                                  @NonNull MediaType mediaType) {
+        response.body(writable);
+        response.contentType(mediaType);
+        return Flux.just(response);
     }
 }

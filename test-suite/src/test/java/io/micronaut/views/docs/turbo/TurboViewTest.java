@@ -10,6 +10,7 @@ import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
@@ -46,6 +47,7 @@ class TurboViewTest {
         BlockingHttpClient client = httpClient.toBlocking();
 //tag::turboviewrequest[]
 HttpRequest<?> request = HttpRequest.GET("/turbofruit")
+        .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
         .header(TurboHttpHeaders.TURBO_FRAME, "dom_id");
 //end::turboviewrequest[]
         HttpResponse<String> response = client.exchange(request, String.class);
@@ -72,6 +74,7 @@ HttpRequest<?> request = HttpRequest.GET("/turbofruit")
     static class FruitController {
 
 //tag::turboview[]
+@Produces(MediaType.TEXT_HTML)
 @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
 Map<String, Object> show() {
