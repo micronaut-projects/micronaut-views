@@ -9,6 +9,7 @@ import io.micronaut.core.util.StringUtils
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Header
 import io.micronaut.http.client.BlockingHttpClient
 import io.micronaut.http.client.HttpClient
 import io.micronaut.runtime.server.EmbeddedServer
@@ -85,6 +86,18 @@ class TurboFrameSpec extends Specification {
 
         when:
         html = client.retrieve(HttpRequest.GET('/frame/eager').header(TurboHttpHeaders.TURBO_FRAME, "main"), String)
+
+        then:
+        html == "<turbo-frame id=\"main\" loading=\"eager\"><div class=\"message\">Hello world</div></turbo-frame>"
+
+        when:
+        html = client.retrieve(HttpRequest.GET('/frame/eager/withbuilder').header(TurboHttpHeaders.TURBO_FRAME, "main"), String)
+
+        then:
+        html == "<turbo-frame id=\"main\" loading=\"eager\"><div class=\"message\">Hello world</div></turbo-frame>"
+
+        when:
+        html = client.retrieve(HttpRequest.GET('/frame/eager/withoutbuilder').header(TurboHttpHeaders.TURBO_FRAME, "main"), String)
 
         then:
         html == "<turbo-frame id=\"main\" loading=\"eager\"><div class=\"message\">Hello world</div></turbo-frame>"
@@ -182,6 +195,23 @@ class TurboFrameSpec extends Specification {
         @TurboFrameView(value = "fragments/_messages", loading = "eager")
         String eager() {
             "Hello world"
+        }
+
+        @Get("/eager/withbuilder")
+        TurboFrame.Builder eagerWithBuilder(@Header(TurboHttpHeaders.TURBO_FRAME) String frame) {
+            (TurboFrame.Builder) TurboFrame.builder()
+                    .loading(Loading.EAGER)
+                    .id(frame)
+                    .template("fragments/_messages", "Hello world");
+        }
+
+        @Get("/eager/withoutbuilder")
+        TurboFrame eagerWithoutBuilder(@Header(TurboHttpHeaders.TURBO_FRAME) String frame) {
+            TurboFrame.builder()
+                    .loading(Loading.EAGER)
+                    .id(frame)
+                    .template("<div class=\"message\">Hello world</div>")
+            .build()
         }
 
         @Get("/advance")

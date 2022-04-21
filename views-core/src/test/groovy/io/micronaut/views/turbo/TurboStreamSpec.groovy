@@ -5,12 +5,16 @@ import io.micronaut.context.annotation.Requires
 import io.micronaut.core.annotation.NonNull
 import io.micronaut.core.annotation.Nullable
 import io.micronaut.core.io.Writable
+import io.micronaut.core.util.StringUtils
+import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Produces
 import io.micronaut.http.client.BlockingHttpClient
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
@@ -18,11 +22,13 @@ import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import io.micronaut.views.View
 import io.micronaut.views.ViewsRenderer
 import io.micronaut.views.turbo.http.TurboHttpHeaders
+import io.micronaut.views.turbo.http.TurboMediaType
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
 import spock.lang.Specification
 import spock.lang.Unroll
 
+@Property(name = "micronaut.http.client.follow-redirects", value = StringUtils.FALSE)
 @Property(name = "spec.name", value = "TurboStreamSpec")
 @MicronautTest
 class TurboStreamSpec extends Specification {
@@ -92,7 +98,7 @@ class TurboStreamSpec extends Specification {
         BlockingHttpClient client = httpClient.toBlocking()
 
         when:
-        HttpResponse<String> responseHtml = client.exchange(HttpRequest.GET("/turbo/append"), String)
+        HttpResponse<String> responseHtml = client.exchange(HttpRequest.GET("/turbo/append").accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML), String)
 
         then:
         HttpStatus.OK == responseHtml.status()
@@ -106,13 +112,21 @@ class TurboStreamSpec extends Specification {
         "<turbo-stream action=\"append\" target=\"dom_id\"><template>Content to append to container designated with the dom_id.</template></turbo-stream>" == html
 
         when:
-        html = client.retrieve(HttpRequest.GET("/turbo/remove"))
+        html = client.retrieve(HttpRequest.GET("/turbo/remove").accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML))
 
         then:
         "<turbo-stream action=\"remove\" target=\"dom_id\"></turbo-stream>" == html
 
         when:
-        html = client.retrieve(HttpRequest.GET("/turbo/update").header(TurboHttpHeaders.TURBO_FRAME, "main-container"))
+        html = client.retrieve(HttpRequest.GET("/turbo/remove/nobuilder").accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML))
+
+        then:
+        "<turbo-stream action=\"remove\" target=\"dom_id\"></turbo-stream>" == html
+
+        when:
+        html = client.retrieve(HttpRequest.GET("/turbo/update")
+                .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
+                .header(TurboHttpHeaders.TURBO_FRAME, "main-container"))
 
         then:
         "<turbo-stream action=\"update\" target=\"main-container\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == html
@@ -123,7 +137,7 @@ class TurboStreamSpec extends Specification {
         BlockingHttpClient client = httpClient.toBlocking()
 
         when:
-        String html = client.retrieve(HttpRequest.GET("/turbo/targetDomId"))
+        String html = client.retrieve(HttpRequest.GET("/turbo/targetDomId").accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML))
 
         then:
         "<turbo-stream action=\"update\" target=\"main-container\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == html
@@ -134,7 +148,7 @@ class TurboStreamSpec extends Specification {
         BlockingHttpClient client = httpClient.toBlocking()
 
         when:
-        String html = client.retrieve(HttpRequest.GET("/turbo/targetCssQuerySelector"))
+        String html = client.retrieve(HttpRequest.GET("/turbo/targetCssQuerySelector").accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML))
 
         then:
         "<turbo-stream action=\"after\" targets=\".elementsWithClass\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == html
@@ -145,7 +159,9 @@ class TurboStreamSpec extends Specification {
         BlockingHttpClient client = httpClient.toBlocking()
 
         when:
-        String html = client.retrieve(HttpRequest.GET("/turbo/del").header(TurboHttpHeaders.TURBO_FRAME, "main-container"))
+        String html = client.retrieve(HttpRequest.GET("/turbo/del")
+                .header(TurboHttpHeaders.TURBO_FRAME, "main-container")
+                .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML))
 
         then:
         "<turbo-stream action=\"remove\" target=\"main-container\"></turbo-stream>" == html
@@ -156,7 +172,9 @@ class TurboStreamSpec extends Specification {
         BlockingHttpClient client = httpClient.toBlocking()
 
         when: 'if it is not a turbo request, then render the view specified with the View annotation'
-        HttpResponse<String> responseTurbo = client.exchange(HttpRequest.GET("/turbo/withBothAnnotations").header(TurboHttpHeaders.TURBO_FRAME, "main-container"), String)
+        HttpResponse<String> responseTurbo = client.exchange(HttpRequest.GET("/turbo/withBothAnnotations")
+                .header(TurboHttpHeaders.TURBO_FRAME, "main-container")
+                .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML), String)
 
         then:
         HttpStatus.OK == responseTurbo.status()
@@ -169,7 +187,8 @@ class TurboStreamSpec extends Specification {
         BlockingHttpClient client = httpClient.toBlocking()
 
         when: 'if it is not a turbo request, then render the view specified with the View annotation'
-        HttpResponse<String> responseHtml = client.exchange(HttpRequest.GET("/turbo/withBothAnnotations"), String)
+        HttpResponse<String> responseHtml = client.exchange(HttpRequest.GET("/turbo/withBothAnnotations")
+                .accept(MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML), String)
 
         then:
         HttpStatus.OK == responseHtml.status()
@@ -311,9 +330,35 @@ class TurboStreamSpec extends Specification {
         ]
     }
 
+    void "Turbo Stream not answered unless Accept header contains turbo-stream"() {
+        given:
+        BlockingHttpClient client = httpClient.toBlocking()
+
+        when:
+        HttpRequest<?> request = HttpRequest.POST("/customers/delete", Collections.emptyMap())
+                .header(HttpHeaders.ACCEPT, "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+        HttpResponse<String> response = client.exchange(request, String)
+
+        then:
+        HttpStatus.SEE_OTHER == response.status()
+        null == response.body()
+        !response.contentType.isPresent()
+
+        when:
+        request = HttpRequest.POST("/customers/delete", Collections.emptyMap())
+                .header(HttpHeaders.ACCEPT, "text/vnd.turbo-stream.html, text/html, application/xhtml+xml")
+        response = client.exchange(request, String)
+
+        then:
+        '<turbo-stream action="remove" target="foo"></turbo-stream>' == response.body()
+        response.contentType.isPresent()
+        response.contentType.get() == TurboMediaType.TURBO_STREAM_TYPE
+    }
+
     @Requires(property = "spec.name", value = "TurboStreamSpec")
     @Controller("/turbo")
     static class TurboStreamWriteableController {
+        @Produces(TurboMediaType.TURBO_STREAM)
         @Get("/append")
         TurboStream.Builder index() {
             TurboStream.builder()
@@ -322,6 +367,7 @@ class TurboStreamSpec extends Specification {
                     .append()
         }
 
+        @Produces(TurboMediaType.TURBO_STREAM)
         @Get("/remove")
         TurboStream.Builder remove() {
             TurboStream.builder()
@@ -329,29 +375,43 @@ class TurboStreamSpec extends Specification {
                     .remove()
         }
 
+        @Produces(TurboMediaType.TURBO_STREAM)
+        @Get("/remove/nobuilder")
+        TurboStream removeNoBuilder() {
+            TurboStream.builder()
+                    .targetDomId("dom_id")
+                    .remove()
+                    .build()
+        }
+
+        @Produces(TurboMediaType.TURBO_STREAM)
         @TurboView("fragments/message")
         @Get("/update")
         String update() {
             "Hello World";
         }
 
+        @Produces(TurboMediaType.TURBO_STREAM)
         @TurboView(value = "fragments/message", targetDomId = "main-container")
         @Get("/targetDomId")
         String targetDomId() {
             "Hello World"
         }
 
+        @Produces(TurboMediaType.TURBO_STREAM)
         @TurboView(action = TurboStreamAction.REMOVE)
         @Get("/del")
         void del() {
         }
 
+        @Produces(TurboMediaType.TURBO_STREAM)
         @TurboView(value = "fragments/message", targetCssQuerySelector = ".elementsWithClass", action = TurboStreamAction.AFTER)
         @Get("/targetCssQuerySelector")
         String targetCssQuerySelector() {
             "Hello World"
         }
 
+        @Produces(value = MediaType.TEXT_HTML)
         @View("home")
         @TurboView(value = "fragments/message")
         @Get("/withBothAnnotations")
@@ -391,4 +451,22 @@ class TurboStreamSpec extends Specification {
             true
         }
     }
+
+    @Requires(property = "spec.name", value = "TurboStreamSpec")
+    @Controller("/customers")
+    static class CustomersController {
+
+        @Get
+        Map<String, Object> index() {
+            [:]
+        }
+
+        @Produces(value = MediaType.TEXT_HTML)
+        @TurboView(action = TurboStreamAction.REMOVE, targetDomId = "foo")
+        @Post("/delete")
+        HttpResponse<?> delete() {
+            return HttpResponse.seeOther(URI.create("/customers"))
+        }
+    }
+
 }

@@ -23,7 +23,6 @@ import io.micronaut.http.HttpAttributes;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.views.Renderable;
-import io.micronaut.views.View;
 import io.micronaut.views.turbo.http.TurboHttpHeaders;
 import io.micronaut.views.turbo.http.TurboMediaType;
 
@@ -456,19 +455,17 @@ public final class TurboStream implements Renderable {
         @NonNull
         public static Optional<TurboStream.Builder> of(@NonNull HttpRequest<?> request,
                                                        @NonNull HttpResponse<?> response) {
-            Optional<AnnotationMetadata> routeMatch = response.getAttribute(HttpAttributes.ROUTE_MATCH,
-                    AnnotationMetadata.class);
-            if (!routeMatch.isPresent()) {
+            if (!TurboMediaType.acceptsTurboStream(request)) {
                 return Optional.empty();
             }
-            return of(request, routeMatch.get());
+            return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
+                    .flatMap(routeMatch -> of(request, routeMatch));
         }
 
+        @NonNull
         private static Optional<TurboStream.Builder> of(@NonNull HttpRequest<?> request,
                                                         @NonNull AnnotationMetadata route) {
-            Optional<String> turboFrameOptional = request.getHeaders().get(TurboHttpHeaders.TURBO_FRAME, String.class);
-            if (!route.hasAnnotation(TurboView.class) ||
-                    (!TurboMediaType.acceptsTurboStream(request) && !turboFrameOptional.isPresent() && route.hasAnnotation(View.class))) {
+            if (!route.hasAnnotation(TurboView.class)) {
                 return Optional.empty();
             }
             TurboStream.Builder builder = TurboStream.builder();
@@ -479,7 +476,8 @@ public final class TurboStream implements Renderable {
 
             if (!builder.getTargetCssQuerySelector().isPresent() &&
                     !builder.getTargetDomId().isPresent()) {
-                        turboFrameOptional.ifPresent(builder::targetDomId);
+                request.getHeaders().get(TurboHttpHeaders.TURBO_FRAME, String.class)
+                        .ifPresent(builder::targetDomId);
             }
             return Optional.of(builder);
         }
