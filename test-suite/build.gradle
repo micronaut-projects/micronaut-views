@@ -5,25 +5,25 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    testAnnotationProcessor(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
-    testAnnotationProcessor("io.micronaut:micronaut-validation")
+    testAnnotationProcessor(platform(libs.boms.micronaut))
+    testAnnotationProcessor(libs.micronaut.inject.java)
+    testAnnotationProcessor(libs.micronaut.validation)
 
-    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    testImplementation("io.micronaut:micronaut-validation")
+    testImplementation(platform(libs.boms.micronaut))
+    testImplementation(libs.micronaut.validation)
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testImplementation "io.micronaut.test:micronaut-test-junit5"
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.micronaut.test.junit5)
+    testRuntimeOnly(libs.junit.jupiter.engine)
 
-    testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-management:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    testRuntimeOnly("ch.qos.logback:logback-classic")
+    testCompileOnly(libs.micronaut.inject.groovy)
+    testImplementation(libs.micronaut.management)
+    testImplementation(libs.micronaut.http.server.netty)
+    testImplementation(libs.micronaut.http.client)
+    testRuntimeOnly(libs.logback.classic)
 
-    testImplementation "io.micronaut.security:micronaut-security"
-    testImplementation "io.projectreactor:reactor-core"
+    testImplementation(libs.micronaut.security)
+    testImplementation(libs.reactor.core)
 
     testImplementation project(":views-velocity")
     testImplementation project(":views-core")

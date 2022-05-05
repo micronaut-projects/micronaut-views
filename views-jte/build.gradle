@@ -4,11 +4,11 @@ plugins {
 }
 
 dependencies {
-    api "gg.jte:jte:$jteVersion"
+    api(libs.jte)
     api project(":views-core")
-    testImplementation "io.projectreactor:reactor-core"
-    testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
+    testImplementation(libs.reactor.core)
+    testImplementation(libs.micronaut.http.client)
+    testImplementation(libs.micronaut.http.server.netty)
 }
 
 jte {

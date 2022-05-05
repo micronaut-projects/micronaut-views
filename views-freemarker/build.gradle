@@ -3,24 +3,24 @@ plugins {
 }
 dependencies {
     api project(":views-core")
-    implementation "org.freemarker:freemarker:$freemarkerVersion"
-    compileOnly "io.micronaut:micronaut-management:$micronautVersion"
-    compileOnly "io.micronaut:micronaut-validation:$micronautVersion"
+    implementation(libs.freemarker)
+    compileOnly(libs.micronaut.management)
+    compileOnly(libs.micronaut.validation)
 
-    api "io.micronaut:micronaut-runtime:$micronautVersion"
-    api "io.micronaut:micronaut-http:$micronautVersion"
-    api "io.micronaut:micronaut-http-server:$micronautVersion"
+    api(libs.micronaut.runtime)
+    api(libs.micronaut.http)
+    api(libs.micronaut.http.server)
 
-    testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
+    testCompileOnly(libs.micronaut.inject.groovy)
+    testAnnotationProcessor(libs.micronaut.inject.java)
 
-    testImplementation "io.projectreactor:reactor-core"
-    testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-management:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-validation:$micronautVersion"
+    testImplementation(libs.reactor.core)
+    testImplementation(libs.micronaut.http.client)
+    testImplementation(libs.micronaut.http.server.netty)
+    testImplementation(libs.micronaut.management)
+    testImplementation(libs.micronaut.validation)
 
 
-    testImplementation "org.yaml:snakeyaml:$snakeYamlVersion"
+    testImplementation(libs.snakeyaml)
 
 }
