@@ -3,7 +3,7 @@ plugins {
 }
 dependencies {
     api project(":views-core")
-    api(libs.thymeleaf)
+    api(libs.managed.thymeleaf)
     api(libs.thymeleaf.extras.java8time)
     compileOnly(libs.micronaut.management)
     compileOnly(libs.micronaut.validation)

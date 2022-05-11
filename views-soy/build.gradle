@@ -3,7 +3,7 @@ plugins {
 }
 dependencies {
     api project(":views-core")
-    api(libs.soy)
+    api(libs.managed.soy)
     compileOnly(libs.micronaut.management)
     compileOnly(libs.micronaut.validation)
 

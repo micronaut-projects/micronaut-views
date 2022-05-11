@@ -1,6 +1,6 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.6.20"
-    id("org.jetbrains.kotlin.kapt") version "1.6.20"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 repositories {
@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform(libs.boms.micronaut))
+    testImplementation(platform(libs.micronaut.bom))
     testImplementation(libs.micronaut.validation)
 
     testImplementation(libs.junit.jupiter.api)

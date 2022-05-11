@@ -3,7 +3,7 @@ plugins {
 }
 dependencies {
     api project(":views-core")
-    api(libs.handlebars)
+    api(libs.managed.handlebars)
 
     compileOnly(libs.micronaut.management)
     compileOnly(libs.micronaut.validation)

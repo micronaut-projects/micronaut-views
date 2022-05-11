@@ -13,7 +13,7 @@ rocker {
 }
 dependencies {
     api project(":views-core")
-    api(libs.rocker.runtime)
+    api(libs.managed.rocker.runtime)
     compileOnly(libs.micronaut.management)
     compileOnly(libs.micronaut.validation)
 

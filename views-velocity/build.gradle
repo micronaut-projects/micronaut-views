@@ -5,7 +5,7 @@ dependencies {
     annotationProcessor(libs.micronaut.graal)
 
     api project(":views-core")
-    api(libs.velocity.engine.core)
+    api(libs.managed.velocity.engine.core)
     compileOnly(libs.micronaut.management)
     compileOnly(libs.micronaut.validation)
 

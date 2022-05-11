@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    api(libs.jte)
+    api(libs.managed.jte)
     api project(":views-core")
     testImplementation(libs.reactor.core)
     testImplementation(libs.micronaut.http.client)

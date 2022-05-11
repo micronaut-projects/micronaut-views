@@ -3,7 +3,7 @@ plugins {
 }
 dependencies {
     api project(":views-core")
-    implementation(libs.freemarker)
+    implementation(libs.managed.freemarker)
     compileOnly(libs.micronaut.management)
     compileOnly(libs.micronaut.validation)
 

@@ -1,15 +1,3 @@
 plugins {
     id "io.micronaut.build.internal.bom"
 }
-
-dependencies {
-    constraints {
-        api(libs.freemarker)
-        api(libs.handlebars)
-        api(libs.rocker.runtime)
-        api(libs.soy)
-        api(libs.thymeleaf)
-        api(libs.velocity.engine.core)
-        api(libs.jte)
-    }
-}
