@@ -36,7 +36,8 @@ class JteViewRendererSpec extends Specification {
             [
                     'spec.name': 'jte',
                     'micronaut.security.enabled': false,
-                    'micronaut.views.jte.dynamic': true
+                    'micronaut.views.jte.dynamic': true,
+                    'micronaut.views.jte.binaryStaticContent': true
             ],
             "test")
 

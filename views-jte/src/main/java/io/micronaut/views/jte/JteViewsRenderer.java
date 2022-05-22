@@ -15,22 +15,16 @@
  */
 package io.micronaut.views.jte;
 
-import gg.jte.ContentType;
-import gg.jte.TemplateEngine;
-import gg.jte.TemplateOutput;
-import gg.jte.output.WriterOutput;
-import gg.jte.resolve.ResourceCodeResolver;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
-import io.micronaut.core.io.Writable;
-import io.micronaut.http.HttpRequest;
-import io.micronaut.views.ViewUtils;
-import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
+import gg.jte.*;
+import gg.jte.output.*;
+import gg.jte.resolve.*;
+import io.micronaut.core.annotation.*;
+import io.micronaut.core.io.*;
+import io.micronaut.http.*;
+import io.micronaut.views.*;
 
-import java.io.Writer;
-import java.nio.file.Path;
-import java.util.Map;
+import java.io.*;
+import java.nio.file.*;
 
 /**
  * View renderer using JTE.
@@ -58,6 +52,7 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
         templateEngine = jteViewsRendererConfiguration.isDynamic() ?
                     TemplateEngine.create(new ResourceCodeResolver(viewsConfiguration.getFolder()), classDirectory, contentType) :
                     TemplateEngine.createPrecompiled(contentType);
+        templateEngine.setBinaryStaticContent(jteViewsRendererConfiguration.isBinaryStaticContent());
     }
 
     @NonNull
@@ -65,18 +60,26 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
     public Writable render(@NonNull String viewName,
                            @Nullable T data,
                            @Nullable HttpRequest<?> request) {
-        return out -> {
-            TemplateOutput output = getOutput(out);
-            Map<String, Object> dataMap = ViewUtils.modelOf(data);
-            templateEngine.render(viewName(viewName), dataMap, output);
-        };
+        return new JteWritable(templateEngine, viewName(viewName), ViewUtils.modelOf(data), this::decorateOutput);
     }
 
     /**
      * Used during render to construct a JTE TemplateOutput. This is overridable to allow subclasses to specialize
      * the output.
-     * @param out Writer to use as target.
+     *
+     * @param output
      * @return a TemplateOutput appropriate for the context
+     */
+    @NonNull
+    TemplateOutput decorateOutput(@NonNull TemplateOutput output) {
+        return output;
+    }
+
+    /**
+     * No longer used. Retained for binary compatibility.
+     *
+     * @param out output writer
+     * @return JTE output
      */
     @NonNull
     protected TemplateOutput getOutput(Writer out) {

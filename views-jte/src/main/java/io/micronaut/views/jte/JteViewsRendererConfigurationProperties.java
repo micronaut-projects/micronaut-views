@@ -41,8 +41,11 @@ public final class JteViewsRendererConfigurationProperties implements JteViewsRe
     @SuppressWarnings("WeakerAccess")
     public static final String DEFAULT_DYNAMIC_PATH = "build/jte-classes";
 
+    public static final boolean DEFAULT_BINARY_STATIC_CONTENT = false;
+
     private boolean dynamic = DEFAULT_DYNAMIC;
     private String dynamicPath = DEFAULT_DYNAMIC_PATH;
+    private boolean binaryStaticContent = DEFAULT_BINARY_STATIC_CONTENT;
 
     /**
      * Whether to enable dynamic reloading of templates. Default value ({@value #DEFAULT_DYNAMIC}).
@@ -68,5 +71,19 @@ public final class JteViewsRendererConfigurationProperties implements JteViewsRe
     @Override
     public String getDynamicPath() {
         return dynamicPath;
+    }
+
+    @Override
+    public boolean isBinaryStaticContent() {
+        return binaryStaticContent;
+    }
+
+    /**
+     * Enable building binary content for templates. Default value ({@value #DEFAULT_BINARY_STATIC_CONTENT}).
+     * (Only has an effect when 'dynamic' is true. To use with precompiled templates, enable it in the build plugin)
+     * @param binaryStaticContent true to enable binary content
+     */
+    public void setBinaryStaticContent(boolean binaryStaticContent) {
+        this.binaryStaticContent = binaryStaticContent;
     }
 }
