@@ -5,24 +5,24 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    testAnnotationProcessor(platform(libs.micronaut.bom))
-    testAnnotationProcessor(libs.micronaut.inject.java)
-    testAnnotationProcessor(libs.micronaut.validation)
+    testAnnotationProcessor(platform(mn.micronaut.bom))
+    testAnnotationProcessor(mn.micronaut.inject.java)
+    testAnnotationProcessor(mn.micronaut.validation)
 
-    testImplementation(platform(libs.micronaut.bom))
-    testImplementation(libs.micronaut.validation)
+    testImplementation(platform(mn.micronaut.bom))
+    testImplementation(mn.micronaut.validation)
 
     testImplementation(libs.junit.jupiter.api)
-    testImplementation(libs.micronaut.test.junit5)
+    testImplementation(mn.micronaut.test.junit5)
     testRuntimeOnly(libs.junit.jupiter.engine)
 
-    testCompileOnly(libs.micronaut.inject.groovy)
-    testImplementation(libs.micronaut.management)
-    testImplementation(libs.micronaut.http.server.netty)
-    testImplementation(libs.micronaut.http.client)
+    testCompileOnly(mn.micronaut.inject.groovy)
+    testImplementation(mn.micronaut.management)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.http.client)
     testRuntimeOnly(libs.logback.classic)
 
-    testImplementation(libs.micronaut.security)
+    testImplementation(mn.micronaut.security)
     testImplementation(libs.reactor.core)
 
     testImplementation project(":views-velocity")

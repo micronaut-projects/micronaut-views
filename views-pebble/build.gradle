@@ -5,20 +5,20 @@ dependencies {
     api project(":views-core")    
     api(libs.pebble)
 
-    compileOnly(libs.micronaut.management)
-    compileOnly(libs.micronaut.validation)
+    compileOnly(mn.micronaut.management)
+    compileOnly(mn.micronaut.validation)
 
-    api(libs.micronaut.runtime)
-    api(libs.micronaut.http)
-    api(libs.micronaut.http.server)
+    api(mn.micronaut.runtime)
+    api(mn.micronaut.http)
+    api(mn.micronaut.http.server)
 
-    testCompileOnly(libs.micronaut.inject.groovy)
-    testAnnotationProcessor(libs.micronaut.inject.java)
+    testCompileOnly(mn.micronaut.inject.groovy)
+    testAnnotationProcessor(mn.micronaut.inject.java)
 
-    testImplementation(libs.micronaut.http.client)
-    testImplementation(libs.micronaut.http.server.netty)
-    testImplementation(libs.micronaut.management)
-    testImplementation(libs.micronaut.validation)
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.management)
+    testImplementation(mn.micronaut.validation)
     
     testImplementation(libs.snakeyaml)
 }

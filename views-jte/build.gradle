@@ -1,14 +1,15 @@
 plugins {
     id("io.micronaut.build.internal.module")
-    id 'gg.jte.gradle' version "$jteVersion"
+    alias(libs.plugins.jte)
 }
 
 dependencies {
     api(libs.managed.jte)
     api project(":views-core")
+
     testImplementation(libs.reactor.core)
-    testImplementation(libs.micronaut.http.client)
-    testImplementation(libs.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.http.server.netty)
 }
 
 jte {

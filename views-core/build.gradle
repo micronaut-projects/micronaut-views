@@ -1,21 +1,22 @@
 plugins {
     id("io.micronaut.build.internal.module")
 }
+
 dependencies {
-    compileOnly(libs.micronaut.security)
-    compileOnly(libs.micronaut.management)
-    compileOnly(libs.micronaut.validation)
-    api(libs.micronaut.runtime)
-    api(libs.micronaut.http)
-    api(libs.micronaut.http.server)
+    compileOnly(mn.micronaut.security)
+    compileOnly(mn.micronaut.management)
+    compileOnly(mn.micronaut.validation)
+
+    api(mn.micronaut.runtime)
+    api(mn.micronaut.http)
+    api(mn.micronaut.http.server)
 
     implementation(libs.reactor.core)
 
-    testImplementation(libs.micronaut.http.client)
-    testImplementation(libs.micronaut.inject.groovy)
-    testImplementation(libs.micronaut.inject.java)
-    testImplementation(libs.micronaut.http.server.netty)
-    testImplementation(libs.micronaut.management)
-    testImplementation(libs.micronaut.validation)
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.inject.java)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.management)
+    testImplementation(mn.micronaut.validation)
     testImplementation(libs.snakeyaml)
 }

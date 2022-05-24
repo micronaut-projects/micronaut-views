@@ -12,11 +12,6 @@ snake-yaml = "1.30"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.6.20"
 kotlinx-coroutines = "1.6.1"
-spock = "2.0-groovy-3.0"
-
-# Micronaut
-micronaut = "3.4.3"
-
 
 [libraries]
 managed-freemarker = { module = "org.freemarker:freemarker", version.ref = "managed-freemarker" }
@@ -27,23 +22,6 @@ managed-soy = { module = "com.google.template:soy", version.ref = "managed-soy" 
 managed-thymeleaf = { module = "org.thymeleaf:thymeleaf", version.ref = "managed-thymeleaf" }
 managed-velocity-engine-core = { module = "org.apache.velocity:velocity-engine-core", version.ref = "managed-velocity" }
 
-# Micronaut
-micronaut-bom = { module = "io.micronaut:micronaut-bom", version.ref = "micronaut" }
-micronaut-graal = { module = "io.micronaut:micronaut-graal", version.ref = "micronaut" }
-micronaut-http = { module = "io.micronaut:micronaut-http", version.ref = "micronaut" }
-micronaut-http-client = { module = "io.micronaut:micronaut-http-client", version.ref = "micronaut" }
-micronaut-http-server = { module = "io.micronaut:micronaut-http-server", version.ref = "micronaut" }
-micronaut-http-server-netty = { module = "io.micronaut:micronaut-http-server-netty", version.ref = "micronaut" }
-micronaut-inject = { module = "io.micronaut:micronaut-inject", version.ref = "micronaut" }
-micronaut-inject-groovy = { module = "io.micronaut:micronaut-inject-groovy", version.ref = "micronaut" }
-micronaut-inject-java = { module = "io.micronaut:micronaut-inject-java", version.ref = "micronaut" }
-micronaut-management = { module = "io.micronaut:micronaut-management", version.ref = "micronaut" }
-micronaut-runtime = { module = "io.micronaut:micronaut-runtime", version.ref = "micronaut" }
-micronaut-security = { module = "io.micronaut.security:micronaut-security" }
-micronaut-test-junit5 = { module = "io.micronaut.test:micronaut-test-junit5" }
-micronaut-test-spock = { module = "io.micronaut.test:micronaut-test-spock" }
-micronaut-validation = { module = "io.micronaut:micronaut-validation", version.ref = "micronaut" }
-
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
 logback-classic = { module = "ch.qos.logback:logback-classic" }
@@ -53,8 +31,9 @@ snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snake-yaml" }
 thymeleaf-extras-java8time = { module = "org.thymeleaf.extras:thymeleaf-extras-java8time", version.ref = "thymeleaf-extra-java8time" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
-spock-core = { module = "org.spockframework:spock-core", version.ref = "spock" }
+spock-core = { module = "org.spockframework:spock-core" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+jte = { id = "gg.jte.gradle", version.ref = "managed-jte" }
