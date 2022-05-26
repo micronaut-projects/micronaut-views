@@ -28,22 +28,19 @@ import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
-class JteViewRendererSpec extends Specification {
+abstract class JteViewRendererSpec extends Specification {
 
     @Shared
     @AutoCleanup
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
-            [
-                    'spec.name': 'jte',
-                    'micronaut.security.enabled': false,
-                    'micronaut.views.jte.dynamic': true,
-                    'micronaut.views.jte.binaryStaticContent': true
-            ],
+            testProperties,
             "test")
 
     @Shared
     @AutoCleanup
     HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient, embeddedServer.getURL())
+
+    abstract Map<String, Object> getTestProperties()
 
     def "bean is loaded"() {
         when:

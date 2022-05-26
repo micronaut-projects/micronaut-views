@@ -15,16 +15,21 @@
  */
 package io.micronaut.views.jte;
 
-import gg.jte.*;
-import gg.jte.output.*;
-import gg.jte.resolve.*;
-import io.micronaut.core.annotation.*;
-import io.micronaut.core.io.*;
-import io.micronaut.http.*;
-import io.micronaut.views.*;
+import gg.jte.ContentType;
+import gg.jte.TemplateEngine;
+import gg.jte.TemplateOutput;
+import gg.jte.output.WriterOutput;
+import gg.jte.resolve.ResourceCodeResolver;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.io.Writable;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.views.ViewUtils;
+import io.micronaut.views.ViewsConfiguration;
+import io.micronaut.views.ViewsRenderer;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.Writer;
+import java.nio.file.Path;
 
 /**
  * View renderer using JTE.

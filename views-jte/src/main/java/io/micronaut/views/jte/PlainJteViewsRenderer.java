@@ -15,7 +15,9 @@
  */
 package io.micronaut.views.jte;
 
-import gg.jte.*;
+import gg.jte.Content;
+import gg.jte.ContentType;
+import gg.jte.TemplateOutput;
 import gg.jte.html.HtmlTemplateOutput;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.MediaType;

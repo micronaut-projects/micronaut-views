@@ -15,14 +15,19 @@
  */
 package io.micronaut.views.jte;
 
-import gg.jte.*;
-import gg.jte.output.*;
-import io.micronaut.core.io.*;
+import gg.jte.TemplateEngine;
+import gg.jte.TemplateOutput;
+import gg.jte.output.Utf8ByteOutput;
+import gg.jte.output.WriterOutput;
+import io.micronaut.core.io.Writable;
 
-import java.io.*;
-import java.nio.charset.*;
-import java.util.*;
-import java.util.function.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Turn JTE rendering logic into a Writable
