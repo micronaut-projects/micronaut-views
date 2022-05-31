@@ -24,7 +24,7 @@ For example, for a frame id `message_1` and a response such as:
 
 Turbo extracts `<turbo-frame id="message_1">` and it replaces the frame content from where the click originated.  When Turbo updates the frame, it uses only content inside a matching `<turbo-frame>`.
 
-You can render a https://turbo.hotwired.dev/reference/streams[Turbo Frame] easily by annotating a controller route with
+You can render a https://turbo.hotwired.dev/reference/frames[Turbo Frame] easily by annotating a controller route with
 api:views.turbo.TurboFrameView[] and returning only the HTML used by Turbo.
 
 [source, html]
