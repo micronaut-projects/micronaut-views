@@ -30,7 +30,6 @@ import io.micronaut.views.ViewsRenderer;
 
 import java.io.Writer;
 import java.nio.file.Path;
-import java.util.Map;
 
 /**
  * View renderer using JTE.
@@ -58,6 +57,7 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
         templateEngine = jteViewsRendererConfiguration.isDynamic() ?
                     TemplateEngine.create(new ResourceCodeResolver(viewsConfiguration.getFolder()), classDirectory, contentType) :
                     TemplateEngine.createPrecompiled(contentType);
+        templateEngine.setBinaryStaticContent(jteViewsRendererConfiguration.isBinaryStaticContent());
     }
 
     @NonNull
@@ -65,18 +65,26 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
     public Writable render(@NonNull String viewName,
                            @Nullable T data,
                            @Nullable HttpRequest<?> request) {
-        return out -> {
-            TemplateOutput output = getOutput(out);
-            Map<String, Object> dataMap = ViewUtils.modelOf(data);
-            templateEngine.render(viewName(viewName), dataMap, output);
-        };
+        return new JteWritable(templateEngine, viewName(viewName), ViewUtils.modelOf(data), this::decorateOutput);
     }
 
     /**
      * Used during render to construct a JTE TemplateOutput. This is overridable to allow subclasses to specialize
      * the output.
-     * @param out Writer to use as target.
+     *
+     * @param output
      * @return a TemplateOutput appropriate for the context
+     */
+    @NonNull
+    TemplateOutput decorateOutput(@NonNull TemplateOutput output) {
+        return output;
+    }
+
+    /**
+     * No longer used. Retained for binary compatibility.
+     *
+     * @param out output writer
+     * @return JTE output
      */
     @NonNull
     protected TemplateOutput getOutput(Writer out) {
