@@ -42,6 +42,10 @@ public class LinkBuilder extends StandardLinkBuilder {
         this.contextPath = contextPath;
     }
 
+    /**
+     * @deprecated User {@link LinkBuilder(HttpServerConfiguration)} instead.
+     */
+    @Deprecated
     public LinkBuilder() { }
 
     /**
