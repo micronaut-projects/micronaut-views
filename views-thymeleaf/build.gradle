@@ -1,26 +1,26 @@
 plugins {
     id("io.micronaut.build.internal.module")
 }
+
 dependencies {
     api project(":views-core")
-    api "org.thymeleaf:thymeleaf:$thymeleafVersion"
-    api "org.thymeleaf.extras:thymeleaf-extras-java8time:$thymeleafExtraJava8timeVersion"
-    compileOnly "io.micronaut:micronaut-management:$micronautVersion"
-    compileOnly "io.micronaut:micronaut-validation:$micronautVersion"
+    api(libs.managed.thymeleaf)
+    api(libs.thymeleaf.extras.java8time)
+    compileOnly(mn.micronaut.management)
+    compileOnly(mn.micronaut.validation)
 
-    api "io.micronaut:micronaut-runtime:$micronautVersion"
-    api "io.micronaut:micronaut-http:$micronautVersion"
-    api "io.micronaut:micronaut-http-server:$micronautVersion"
-    api "io.micronaut:micronaut-inject:$micronautVersion"
+    api(mn.micronaut.runtime)
+    api(mn.micronaut.http)
+    api(mn.micronaut.http.server)
+    api(mn.micronaut.inject)
 
-    testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
+    testCompileOnly(mn.micronaut.inject.groovy)
+    testAnnotationProcessor(mn.micronaut.inject.java)
 
-    testImplementation "io.projectreactor:reactor-core"
-    testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-management:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-validation:$micronautVersion"
-    testImplementation "org.yaml:snakeyaml:$snakeYamlVersion"
-
+    testImplementation(libs.reactor.core)
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.management)
+    testImplementation(mn.micronaut.validation)
+    testImplementation(libs.snakeyaml)
 }
