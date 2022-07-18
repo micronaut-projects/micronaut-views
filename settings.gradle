@@ -6,11 +6,10 @@ pluginManagement {
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '5.2.1'
+    id("io.micronaut.build.shared.settings") version "5.3.10"
 }
 
-
-rootProject.name = 'views'
+rootProject.name = 'views-parent'
 
 include 'views-bom'
 include 'views-core'
@@ -26,3 +25,7 @@ include 'views-jte'
 include "test-suite"
 include "test-suite-groovy"
 include "test-suite-kotlin"
+
+micronautBuild {
+    importMicronautCatalog()
+}

@@ -21,6 +21,7 @@ import gg.jte.TemplateOutput;
 import gg.jte.output.WriterOutput;
 import gg.jte.resolve.ResourceCodeResolver;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
@@ -29,7 +30,6 @@ import io.micronaut.views.ViewsRenderer;
 
 import java.io.Writer;
 import java.nio.file.Path;
-import java.util.Map;
 
 /**
  * View renderer using JTE.
@@ -57,24 +57,37 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
         templateEngine = jteViewsRendererConfiguration.isDynamic() ?
                     TemplateEngine.create(new ResourceCodeResolver(viewsConfiguration.getFolder()), classDirectory, contentType) :
                     TemplateEngine.createPrecompiled(contentType);
+        templateEngine.setBinaryStaticContent(jteViewsRendererConfiguration.isBinaryStaticContent());
     }
 
     @NonNull
     @Override
-    public Writable render(@NonNull String viewName, T data, @NonNull HttpRequest<?> request) {
-        return out -> {
-            TemplateOutput output = getOutput(out);
-            Map<String, Object> dataMap = ViewUtils.modelOf(data);
-            templateEngine.render(viewName(viewName), dataMap, output);
-        };
+    public Writable render(@NonNull String viewName,
+                           @Nullable T data,
+                           @Nullable HttpRequest<?> request) {
+        return new JteWritable(templateEngine, viewName(viewName), ViewUtils.modelOf(data), this::decorateOutput);
     }
 
     /**
      * Used during render to construct a JTE TemplateOutput. This is overridable to allow subclasses to specialize
      * the output.
-     * @param out Writer to use as target.
+     *
+     * @param output
      * @return a TemplateOutput appropriate for the context
      */
+    @NonNull
+    TemplateOutput decorateOutput(@NonNull TemplateOutput output) {
+        return output;
+    }
+
+    /**
+     * @deprecated No longer used. Retained for binary compatibility.
+     *
+     * @param out output writer
+     * @return JTE output
+     *
+     */
+    @Deprecated
     @NonNull
     protected TemplateOutput getOutput(Writer out) {
         return new WriterOutput(out);

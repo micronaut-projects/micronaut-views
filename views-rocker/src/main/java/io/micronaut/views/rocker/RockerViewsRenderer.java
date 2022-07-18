@@ -60,7 +60,9 @@ public class RockerViewsRenderer<T> implements ViewsRenderer<T> {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String view, @Nullable T data, @NonNull HttpRequest<?> request) {
+    public Writable render(@NonNull String view,
+                           @Nullable T data,
+                           @Nullable HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("view", view);
 
         Map<String, Object> context = ViewUtils.modelOf(data);

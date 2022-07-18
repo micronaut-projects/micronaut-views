@@ -72,7 +72,9 @@ public class HandlebarsViewsRenderer<T> implements ViewsRenderer<T> {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String viewName, @Nullable T data, @NonNull HttpRequest<?> request) {
+    public Writable render(@NonNull String viewName,
+                           @Nullable T data,
+                           @Nullable HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             String location = viewLocation(viewName);

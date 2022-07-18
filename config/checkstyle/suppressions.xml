@@ -9,7 +9,8 @@
               <!-- files="DefaultBeanContext.java|BeanDefinitionWriter.java|DefaultHttpClient.java"/> -->
 
     <suppress checks="MissingJavadocType" files=".*doc-examples.*" />
-
-    <!-- suppress checks of generated source -->
-    <suppress checks=".*" files="build/generated.*/.*" />
+    <suppress checks="MissingJavadocType" files=".*generated-sources.*" />
+    <suppress checks="WhitespaceAfter" files=".*generated-sources.*" />
+    <suppress checks="FileTabCharacter" files=".*generated-sources.*" />
+    <suppress checks="EmptyLineSeparator" files=".*generated-sources.*" />
 </suppressions>

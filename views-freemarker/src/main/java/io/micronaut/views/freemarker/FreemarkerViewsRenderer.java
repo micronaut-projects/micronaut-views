@@ -49,8 +49,19 @@ import java.util.Map;
 @Singleton
 public class FreemarkerViewsRenderer<T> implements ViewsRenderer<T> {
 
+    /**
+     * Views Configuration.
+     */
     protected final ViewsConfiguration viewsConfiguration;
+
+    /**
+     * Freemarker Configuration.
+     */
     protected final FreemarkerViewsRendererConfigurationProperties freemarkerMicronautConfiguration;
+
+    /**
+     * Default extension.
+     */
     protected final String extension;
 
     /**
@@ -67,7 +78,9 @@ public class FreemarkerViewsRenderer<T> implements ViewsRenderer<T> {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String viewName, @Nullable T data, @NonNull HttpRequest<?> request) {
+    public Writable render(@NonNull String viewName,
+                           @Nullable T data,
+                           @Nullable HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             Map<String, Object> context = ViewUtils.modelOf(data);

@@ -1,0 +1,9 @@
+You can render https://turbo.hotwired.dev/reference/streams[Turbo Stream]s by returning a `TurboStream.Builder` from a controller.
+
+`TurboStream` features a fluid API:
+
+snippet::io.micronaut.views.docs.turbo.TurboStreamTest[tags="turbofluidapi"]
+
+The previous example generates:
+
+snippet::io.micronaut.views.docs.turbo.TurboStreamTest[tags="turbofluidapiresult"]

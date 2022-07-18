@@ -1,0 +1,5 @@
+<form action="/messages/$message.getId()">
+    <input name="name" type="text" value="$message.getName()">
+    <textarea name="content">$message.getContent()</textarea>
+    <input type="submit">
+</form>
