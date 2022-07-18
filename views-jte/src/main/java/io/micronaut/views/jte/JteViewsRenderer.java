@@ -81,11 +81,13 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
     }
 
     /**
-     * No longer used. Retained for binary compatibility.
+     * @deprecated No longer used. Retained for binary compatibility.
      *
      * @param out output writer
      * @return JTE output
+     *
      */
+    @Deprecated
     @NonNull
     protected TemplateOutput getOutput(Writer out) {
         return new WriterOutput(out);
