@@ -1,6 +1,6 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.6.20"
-    id("org.jetbrains.kotlin.kapt") version "1.6.20"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 repositories {
@@ -8,20 +8,20 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    testImplementation("io.micronaut:micronaut-validation")
+    testImplementation(platform(mn.micronaut.bom))
+    testImplementation(mn.micronaut.validation)
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testImplementation "io.micronaut.test:micronaut-test-junit5"
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(mn.micronaut.test.junit5)
+    testRuntimeOnly(libs.junit.jupiter.engine)
 
-    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20"
-    kaptTest "io.micronaut:micronaut-inject-java:$micronautVersion"
+    testImplementation(libs.kotlin.stdlib.jdk8)
+    kaptTest(mn.micronaut.inject.java)
 
-    testImplementation "io.micronaut:micronaut-http-server-netty"
-    testImplementation "io.micronaut:micronaut-http-client"
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.http.client)
     testImplementation project(":views-soy")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    testImplementation(libs.kotlinx.coroutines.core)
     testImplementation project(":views-velocity")
 }
 
