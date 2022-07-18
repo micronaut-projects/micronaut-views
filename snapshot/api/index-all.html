@@ -195,6 +195,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html#DEFAULT_AUTO_ESCAPING">DEFAULT_AUTO_ESCAPING</a></span> - Static variable in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html" title="class in io.micronaut.views.pebble">PebbleConfigurationProperties</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#DEFAULT_BINARY_STATIC_CONTENT">DEFAULT_BINARY_STATIC_CONTENT</a></span> - Static variable in class io.micronaut.views.jte.<a href="io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jte">JteViewsRendererConfigurationProperties</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html#DEFAULT_CACHE_ACTIVE">DEFAULT_CACHE_ACTIVE</a></span> - Static variable in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html" title="class in io.micronaut.views.pebble">PebbleConfigurationProperties</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html#DEFAULT_CHARACTER_ENCODING">DEFAULT_CHARACTER_ENCODING</a></span> - Static variable in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.thymeleaf">ThymeleafViewsRendererConfigurationProperties</a></dt>
@@ -552,10 +554,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/jte/JteViewsRenderer.html#getOutput-java.io.Writer-">getOutput(Writer)</a></span> - Method in class io.micronaut.views.jte.<a href="io/micronaut/views/jte/JteViewsRenderer.html" title="class in io.micronaut.views.jte">JteViewsRenderer</a></dt>
 <dd>
-<div class="block">Used during render to construct a JTE TemplateOutput.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="block"><span class="deprecationComment">No longer used. Retained for binary compatibility.</span></div>
+</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/views/jte/PlainJteViewsRenderer.html#getOutput-java.io.Writer-">getOutput(Writer)</a></span> - Method in class io.micronaut.views.jte.<a href="io/micronaut/views/jte/PlainJteViewsRenderer.html" title="class in io.micronaut.views.jte">PlainJteViewsRenderer</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/csp/CspConfiguration.html#getPolicyDirectives--">getPolicyDirectives()</a></span> - Method in class io.micronaut.views.csp.<a href="io/micronaut/views/csp/CspConfiguration.html" title="class in io.micronaut.views.csp">CspConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/model/security/SecurityViewModelProcessorConfiguration.html#getPrincipalNameKey--">getPrincipalNameKey()</a></span> - Method in interface io.micronaut.views.model.security.<a href="io/micronaut/views/model/security/SecurityViewModelProcessorConfiguration.html" title="interface in io.micronaut.views.model.security">SecurityViewModelProcessorConfiguration</a></dt>
@@ -734,6 +736,12 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html#isAutoEscaping--">isAutoEscaping()</a></span> - Method in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html" title="class in io.micronaut.views.pebble">PebbleConfigurationProperties</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/jte/JteViewsRendererConfiguration.html#isBinaryStaticContent--">isBinaryStaticContent()</a></span> - Method in interface io.micronaut.views.jte.<a href="io/micronaut/views/jte/JteViewsRendererConfiguration.html" title="interface in io.micronaut.views.jte">JteViewsRendererConfiguration</a></dt>
+<dd>
+<div class="block">When using dynamic templates, build them with binary content (see https://github.com/casid/jte/blob/master/DOCUMENTATION.md#binary-rendering-for-max-throughput).</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#isBinaryStaticContent--">isBinaryStaticContent()</a></span> - Method in class io.micronaut.views.jte.<a href="io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jte">JteViewsRendererConfigurationProperties</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/pebble/PebbleConfiguration.html#isCacheActive--">isCacheActive()</a></span> - Method in interface io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfiguration.html" title="interface in io.micronaut.views.pebble">PebbleConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html#isCacheActive--">isCacheActive()</a></span> - Method in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html" title="class in io.micronaut.views.pebble">PebbleConfigurationProperties</a></dt>
@@ -855,6 +863,12 @@
 <div class="block">ConfigurationProperties for JTE.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#JteViewsRendererConfigurationProperties--">JteViewsRendererConfigurationProperties()</a></span> - Constructor for class io.micronaut.views.jte.<a href="io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jte">JteViewsRendererConfigurationProperties</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/jte/JteWritable.html" title="class in io.micronaut.views.jte"><span class="typeNameLink">JteWritable</span></a> - Class in <a href="io/micronaut/views/jte/package-summary.html">io.micronaut.views.jte</a></dt>
+<dd>
+<div class="block">Turn JTE rendering logic into a Writable</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/jte/JteWritable.html#JteWritable-gg.jte.TemplateEngine-java.lang.String-java.util.Map-java.util.function.Function-">JteWritable(TemplateEngine, String, Map&lt;String, Object&gt;, Function&lt;TemplateOutput, TemplateOutput&gt;)</a></span> - Constructor for class io.micronaut.views.jte.<a href="io/micronaut/views/jte/JteWritable.html" title="class in io.micronaut.views.jte">JteWritable</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a name="I:L">
@@ -1225,6 +1239,10 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html#setAutoEscaping-boolean-">setAutoEscaping(boolean)</a></span> - Method in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html" title="class in io.micronaut.views.pebble">PebbleConfigurationProperties</a></dt>
 <dd>
 <div class="block">Sets whether or not escaping should be performed automatically.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#setBinaryStaticContent-boolean-">setBinaryStaticContent(boolean)</a></span> - Method in class io.micronaut.views.jte.<a href="io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jte">JteViewsRendererConfigurationProperties</a></dt>
+<dd>
+<div class="block">Enable building binary content for templates.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html#setCacheable-boolean-">setCacheable(boolean)</a></span> - Method in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.thymeleaf">ThymeleafViewsRendererConfigurationProperties</a></dt>
 <dd>
@@ -1853,6 +1871,10 @@ the order they are declared.</div>
 <div class="block">Implementation of the <code>IEngineContext</code> interface for web processing.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/thymeleaf/WebEngineContext.html#WebEngineContext-org.thymeleaf.IEngineConfiguration-org.thymeleaf.engine.TemplateData-java.util.Map-io.micronaut.http.HttpRequest-java.util.Locale-java.util.Map-">WebEngineContext(IEngineConfiguration, TemplateData, Map&lt;String, Object&gt;, HttpRequest&lt;?&gt;, Locale, Map&lt;String, Object&gt;)</a></span> - Constructor for class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/WebEngineContext.html" title="class in io.micronaut.views.thymeleaf">WebEngineContext</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/jte/JteWritable.html#writeTo-java.io.Writer-">writeTo(Writer)</a></span> - Method in class io.micronaut.views.jte.<a href="io/micronaut/views/jte/JteWritable.html" title="class in io.micronaut.views.jte">JteWritable</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/views/jte/JteWritable.html#writeTo-java.io.OutputStream-java.nio.charset.Charset-">writeTo(OutputStream, Charset)</a></span> - Method in class io.micronaut.views.jte.<a href="io/micronaut/views/jte/JteWritable.html" title="class in io.micronaut.views.jte">JteWritable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/views/rocker/RockerWritable.html#writeTo-java.io.Writer-">writeTo(Writer)</a></span> - Method in class io.micronaut.views.rocker.<a href="io/micronaut/views/rocker/RockerWritable.html" title="class in io.micronaut.views.rocker">RockerWritable</a></dt>
 <dd>&nbsp;</dd>

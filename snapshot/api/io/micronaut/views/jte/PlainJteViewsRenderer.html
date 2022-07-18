@@ -17,12 +17,6 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
 </script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -47,7 +41,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jte"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/views/jte/JteWritable.html" title="class in io.micronaut.views.jte"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li>Next&nbsp;Class</li>
 </ul>
 <ul class="navList">
@@ -75,13 +69,13 @@ var activeTableTab = "activeTableTab";
 <li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#fields.inherited.from.class.io.micronaut.views.jte.JteViewsRenderer">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#methods.inherited.from.class.io.micronaut.views.jte.JteViewsRenderer">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li>Method</li>
 </ul>
 </div>
 <a name="skip.navbar.top">
@@ -185,25 +179,12 @@ extends <a href="../../../../io/micronaut/views/jte/JteViewsRenderer.html" title
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Method and Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code>protected gg.jte.TemplateOutput</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/jte/PlainJteViewsRenderer.html#getOutput-java.io.Writer-">getOutput</a></span>(java.io.Writer&nbsp;out)</code>
-<div class="block">Used during render to construct a JTE TemplateOutput.</div>
-</td>
-</tr>
-</table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.views.jte.JteViewsRenderer">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.views.jte.<a href="../../../../io/micronaut/views/jte/JteViewsRenderer.html" title="class in io.micronaut.views.jte">JteViewsRenderer</a></h3>
-<code><a href="../../../../io/micronaut/views/jte/JteViewsRenderer.html#exists-java.lang.String-">exists</a>, <a href="../../../../io/micronaut/views/jte/JteViewsRenderer.html#render-java.lang.String-T-io.micronaut.http.HttpRequest-">render</a></code></li>
+<code><a href="../../../../io/micronaut/views/jte/JteViewsRenderer.html#exists-java.lang.String-">exists</a>, <a href="../../../../io/micronaut/views/jte/JteViewsRenderer.html#getOutput-java.io.Writer-">getOutput</a>, <a href="../../../../io/micronaut/views/jte/JteViewsRenderer.html#render-java.lang.String-T-io.micronaut.http.HttpRequest-">render</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -250,35 +231,6 @@ extends <a href="../../../../io/micronaut/views/jte/JteViewsRenderer.html" title
 </ul>
 </li>
 </ul>
-<!-- ============ METHOD DETAIL ========== -->
-<ul class="blockList">
-<li class="blockList"><a name="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a name="getOutput-java.io.Writer-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getOutput</h4>
-<pre>@NonNull
-protected&nbsp;gg.jte.TemplateOutput&nbsp;getOutput(java.io.Writer&nbsp;out)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../io/micronaut/views/jte/JteViewsRenderer.html#getOutput-java.io.Writer-">JteViewsRenderer</a></code></span></div>
-<div class="block">Used during render to construct a JTE TemplateOutput. This is overridable to allow subclasses to specialize
- the output.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../io/micronaut/views/jte/JteViewsRenderer.html#getOutput-java.io.Writer-">getOutput</a></code>&nbsp;in class&nbsp;<code><a href="../../../../io/micronaut/views/jte/JteViewsRenderer.html" title="class in io.micronaut.views.jte">JteViewsRenderer</a>&lt;<a href="../../../../io/micronaut/views/jte/PlainJteViewsRenderer.html" title="type parameter in PlainJteViewsRenderer">T</a>&gt;</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>out</code> - Writer to use as target.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a TemplateOutput appropriate for the context</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
 </li>
 </ul>
 </div>
@@ -304,7 +256,7 @@ protected&nbsp;gg.jte.TemplateOutput&nbsp;getOutput(java.io.Writer&nbsp;out)</pr
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jte"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/views/jte/JteWritable.html" title="class in io.micronaut.views.jte"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li>Next&nbsp;Class</li>
 </ul>
 <ul class="navList">
@@ -332,13 +284,13 @@ protected&nbsp;gg.jte.TemplateOutput&nbsp;getOutput(java.io.Writer&nbsp;out)</pr
 <li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#fields.inherited.from.class.io.micronaut.views.jte.JteViewsRenderer">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#methods.inherited.from.class.io.micronaut.views.jte.JteViewsRenderer">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li>Method</li>
 </ul>
 </div>
 <a name="skip.navbar.bottom">
