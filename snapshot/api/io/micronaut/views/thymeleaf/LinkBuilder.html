@@ -165,7 +165,14 @@ extends org.thymeleaf.linkbuilder.StandardLinkBuilder</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/LinkBuilder.html#LinkBuilder--">LinkBuilder</a></span>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/LinkBuilder.html#LinkBuilder--">LinkBuilder</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">User <a href="../../../../io/micronaut/views/thymeleaf/LinkBuilder.html#LinkBuilder-io.micronaut.http.server.HttpServerConfiguration-"><code>LinkBuilder(HttpServerConfiguration)</code></a> instead.</span></div>
+</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/thymeleaf/LinkBuilder.html#LinkBuilder-io.micronaut.http.server.HttpServerConfiguration-">LinkBuilder</a></span>(io.micronaut.http.server.HttpServerConfiguration&nbsp;httpServerConfiguration)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -229,13 +236,29 @@ extends org.thymeleaf.linkbuilder.StandardLinkBuilder</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a name="LinkBuilder-io.micronaut.http.server.HttpServerConfiguration-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LinkBuilder</h4>
+<pre>@Inject
+public&nbsp;LinkBuilder(io.micronaut.http.server.HttpServerConfiguration&nbsp;httpServerConfiguration)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>httpServerConfiguration</code> - HTTP Server Configuration</dd>
+</dl>
+</li>
+</ul>
 <a name="LinkBuilder--">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>LinkBuilder</h4>
-<pre>public&nbsp;LinkBuilder()</pre>
+<pre>@Deprecated
+public&nbsp;LinkBuilder()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">User <a href="../../../../io/micronaut/views/thymeleaf/LinkBuilder.html#LinkBuilder-io.micronaut.http.server.HttpServerConfiguration-"><code>LinkBuilder(HttpServerConfiguration)</code></a> instead.</span></div>
 </li>
 </ul>
 </li>
