@@ -15,8 +15,6 @@
  */
 package io.micronaut.views.thymeleaf;
 
-import io.micronaut.context.annotation.Property;
-import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.server.HttpServerConfiguration;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.exceptions.TemplateProcessingException;
@@ -33,7 +31,6 @@ import java.util.Map;
  * @author Semyon Gashchenko
  * @since 1.1.0
  */
-@Requires(beans = HttpServerConfiguration.class)
 @Singleton
 public class LinkBuilder extends StandardLinkBuilder {
 
