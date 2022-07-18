@@ -5,17 +5,17 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    testCompileOnly("io.micronaut:micronaut-inject-groovy:$micronautVersion")
+    testCompileOnly(mn.micronaut.inject.groovy)
 
-    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    testImplementation("io.micronaut:micronaut-validation")
-    testImplementation("org.spockframework:spock-core:${spockVersion}") {
+    testImplementation(platform(mn.micronaut.bom))
+    testImplementation(mn.micronaut.validation)
+    testImplementation(libs.spock.core) {
         exclude module: 'groovy-all'
     }
-    testImplementation "io.micronaut.test:micronaut-test-spock"
+    testImplementation(mn.micronaut.test.spock)
 
-    testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.http.client)
     testImplementation project(":views-soy")
     testImplementation project(":views-velocity")
 }
