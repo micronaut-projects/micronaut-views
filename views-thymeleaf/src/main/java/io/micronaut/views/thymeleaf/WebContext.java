@@ -36,26 +36,6 @@ public class WebContext extends AbstractContext {
 
     /**
      * @param request HTTP request.
-     * @see AbstractContext#AbstractContext().
-     */
-    @Deprecated
-    public WebContext(@Nullable HttpRequest<?> request) {
-        this.request = request;
-    }
-
-    /**
-     * @param locale the locale.
-     * @param request HTTP request.
-     * @see AbstractContext#AbstractContext(Locale).
-     */
-    @Deprecated
-    public WebContext(@Nullable HttpRequest<?> request, Locale locale) {
-        super(locale);
-        this.request = request;
-    }
-
-    /**
-     * @param request HTTP request.
      * @param locale the locale.
      * @param variables the variables.
      * @see AbstractContext#AbstractContext(Locale, Map).

@@ -15,13 +15,13 @@
  */
 package io.micronaut.views.thymeleaf;
 
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.server.HttpServerConfiguration;
+import jakarta.inject.Singleton;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.exceptions.TemplateProcessingException;
 import org.thymeleaf.linkbuilder.StandardLinkBuilder;
-import io.micronaut.core.annotation.Nullable;
-import jakarta.inject.Singleton;
-import jakarta.inject.Inject;
+
 import java.util.Map;
 
 /**
@@ -41,16 +41,9 @@ public class LinkBuilder extends StandardLinkBuilder {
      *
      * @param httpServerConfiguration HTTP Server Configuration
      */
-    @Inject
     public LinkBuilder(HttpServerConfiguration httpServerConfiguration) {
         this.contextPath = httpServerConfiguration.getContextPath();
     }
-
-    /**
-     * @deprecated User {@link LinkBuilder(HttpServerConfiguration)} instead.
-     */
-    @Deprecated
-    public LinkBuilder() { }
 
     /**
      * @return {@code null}.

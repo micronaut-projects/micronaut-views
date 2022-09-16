@@ -18,7 +18,6 @@ package io.micronaut.views.jte;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.TemplateOutput;
-import gg.jte.output.WriterOutput;
 import gg.jte.resolve.ResourceCodeResolver;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -28,7 +27,6 @@ import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 
-import java.io.Writer;
 import java.nio.file.Path;
 
 /**
@@ -78,19 +76,6 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
     @NonNull
     TemplateOutput decorateOutput(@NonNull TemplateOutput output) {
         return output;
-    }
-
-    /**
-     * @deprecated No longer used. Retained for binary compatibility.
-     *
-     * @param out output writer
-     * @return JTE output
-     *
-     */
-    @Deprecated
-    @NonNull
-    protected TemplateOutput getOutput(Writer out) {
-        return new WriterOutput(out);
     }
 
     @Override

@@ -1,5 +1,5 @@
 plugins {
-    id("io.micronaut.build.internal.module")
+    id "io.micronaut.build.internal.views-module"
 }
 
 dependencies {
@@ -20,6 +20,6 @@ dependencies {
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.management)
     testImplementation(mn.micronaut.validation)
-    
+
     testImplementation(libs.snakeyaml)
 }

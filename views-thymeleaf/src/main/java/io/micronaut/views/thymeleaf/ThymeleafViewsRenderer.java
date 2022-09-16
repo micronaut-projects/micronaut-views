@@ -27,7 +27,6 @@ import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.IContext;
@@ -37,7 +36,6 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.io.Writer;
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * Renders templates Thymeleaf Java template engine.
@@ -63,7 +61,6 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
      * @param resourceLoader     The resource loader
      * @param httpLocaleResolver The locale resolver
      */
-    @Inject
     public ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver templateResolver,
                                   TemplateEngine templateEngine,
                                   ClassPathResourceLoader resourceLoader,
@@ -74,28 +71,6 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
         this.httpLocaleResolver = httpLocaleResolver;
     }
 
-    /**
-     * @param templateResolver   The template resolver
-     * @param templateEngine     The template engine
-     * @param resourceLoader     The resource loader
-     * @deprecated Use {@link ThymeleafViewsRenderer#ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver, TemplateEngine, ClassPathResourceLoader, HttpLocaleResolver)} instead
-     */
-    @Deprecated
-    public ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver templateResolver,
-                                  TemplateEngine templateEngine,
-                                  ClassPathResourceLoader resourceLoader) {
-        this(templateResolver, templateEngine, resourceLoader, new HttpLocaleResolver() {
-            @Override @NonNull public Optional<Locale> resolve(@NonNull HttpRequest<?> context) {
-                return context.getLocale();
-            }
-
-            @Override @NonNull public Locale resolveOrDefault(@NonNull HttpRequest<?> context) {
-//                Returns US locale by default to simulate previous incorrect behavior to ensure it is non-breaking for
-//                people relying on this behavior.
-                return Locale.US;
-            }
-        });
-    }
 
     @Override
     @NonNull
