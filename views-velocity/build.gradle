@@ -1,5 +1,5 @@
 plugins {
-    id("io.micronaut.build.internal.module")
+    id "io.micronaut.build.internal.views-module"
 }
 
 dependencies {
@@ -13,7 +13,7 @@ dependencies {
     api(mn.micronaut.runtime)
     api(mn.micronaut.http)
     api(mn.micronaut.http.server)
-    
+
     testCompileOnly(mn.micronaut.inject.groovy)
     testAnnotationProcessor(mn.micronaut.inject.java)
 

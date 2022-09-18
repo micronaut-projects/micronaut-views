@@ -31,18 +31,16 @@ import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import io.micronaut.http.filter.ServerFilterPhase;
 import io.micronaut.views.exceptions.ViewNotFoundException;
-import io.micronaut.views.turbo.DefaultTurboFrameRenderer;
-import io.micronaut.views.turbo.DefaultTurboStreamRenderer;
 import io.micronaut.views.turbo.TurboFrame;
 import io.micronaut.views.turbo.TurboFrameRenderer;
 import io.micronaut.views.turbo.TurboStream;
 import io.micronaut.views.turbo.TurboStreamRenderer;
 import io.micronaut.views.turbo.http.TurboMediaType;
-import jakarta.inject.Inject;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
+
 import java.util.Optional;
 
 /**
@@ -89,7 +87,6 @@ public class ViewsFilter implements HttpServerFilter {
      * @param turboStreamRenderer Turbo Stream renderer
      * @param turboFrameRenderer Turbo Frame renderer
      */
-    @Inject
     public ViewsFilter(ViewsResolver viewsResolver,
                        ViewsRendererLocator viewsRendererLocator,
                        ViewsModelDecorator viewsModelDecorator,
@@ -100,40 +97,6 @@ public class ViewsFilter implements HttpServerFilter {
         this.viewsModelDecorator = viewsModelDecorator;
         this.turboStreamRenderer = turboStreamRenderer;
         this.turboFrameRenderer = turboFrameRenderer;
-    }
-
-    /**
-     * Constructor.
-     * @param viewsResolver Views Resolver
-     * @param viewsRendererLocator ViewRendererLocator
-     * @param viewsModelDecorator Views Model Decorator
-     * @param turboStreamRenderer Turbo Stream renderer
-     * @deprecated Use {@link #ViewsFilter(ViewsResolver, ViewsRendererLocator, ViewsModelDecorator, TurboStreamRenderer, TurboFrameRenderer)} instead.
-     */
-    @Deprecated
-    public ViewsFilter(ViewsResolver viewsResolver,
-                       ViewsRendererLocator viewsRendererLocator,
-                       ViewsModelDecorator viewsModelDecorator,
-                       TurboStreamRenderer turboStreamRenderer) {
-        this(viewsResolver,
-            viewsRendererLocator,
-            viewsModelDecorator,
-            turboStreamRenderer,
-            new DefaultTurboFrameRenderer(viewsRendererLocator));
-    }
-
-    /**
-     * Constructor.
-     * @param viewsResolver Views Resolver
-     * @param viewsRendererLocator ViewRendererLocator
-     * @param viewsModelDecorator Views Model Decorator
-     * @deprecated Use {@link #ViewsFilter(ViewsResolver, ViewsRendererLocator, ViewsModelDecorator, TurboStreamRenderer, TurboFrameRenderer)} instead.
-     */
-    @Deprecated
-    public ViewsFilter(ViewsResolver viewsResolver,
-                       ViewsRendererLocator viewsRendererLocator,
-                       ViewsModelDecorator viewsModelDecorator) {
-        this(viewsResolver, viewsRendererLocator, viewsModelDecorator, new DefaultTurboStreamRenderer(viewsRendererLocator));
     }
 
     @Override

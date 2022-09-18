@@ -1,8 +1,8 @@
 plugins {
-    id("io.micronaut.build.internal.module")
+    id "io.micronaut.build.internal.views-module"
 }
 dependencies {
-    api project(":views-core")    
+    api project(":views-core")
     api(libs.pebble)
 
     compileOnly(mn.micronaut.management)
@@ -19,6 +19,6 @@ dependencies {
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.management)
     testImplementation(mn.micronaut.validation)
-    
+
     testImplementation(libs.snakeyaml)
 }

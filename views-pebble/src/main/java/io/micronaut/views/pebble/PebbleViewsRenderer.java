@@ -25,11 +25,9 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsRenderer;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * Renders Views with Pebble.
@@ -51,42 +49,12 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
      * @param engine Pebble Engine
      * @param httpLocaleResolver The locale resolver
      */
-    @Inject
     public PebbleViewsRenderer(PebbleEngine engine,
                                LocaleResolver<HttpRequest<?>> httpLocaleResolver) {
         this.engine = engine;
         this.httpLocaleResolver = httpLocaleResolver;
     }
 
-    /**
-     * @param engine Pebble Engine
-     * @deprecated Use {@link #PebbleViewsRenderer(PebbleEngine, LocaleResolver)} instead.
-     */
-    @Deprecated
-    public PebbleViewsRenderer(PebbleEngine engine) {
-        this.engine = engine;
-        this.httpLocaleResolver = new LocaleResolver<HttpRequest<?>>() {
-            @Override @NonNull public Optional<Locale> resolve(@NonNull HttpRequest<?> context) {
-                return context.getLocale();
-            }
-
-            @Override @NonNull public Locale resolveOrDefault(@NonNull HttpRequest<?> context) {
-//                Returns US locale by default to simulate previous incorrect behavior to ensure it is non-breaking for
-//                people relying on this behavior.
-                return Locale.US;
-            }
-        };
-    }
-
-    /**
-     * @param configuration Pebble Configuration
-     * @param engine Pebble Engine
-     * @deprecated Use {@link #PebbleViewsRenderer(PebbleEngine, LocaleResolver)} instead.
-     */
-    @Deprecated
-    public PebbleViewsRenderer(PebbleConfiguration configuration, PebbleEngine engine) {
-        this(engine);
-    }
 
     @Override
     @NonNull

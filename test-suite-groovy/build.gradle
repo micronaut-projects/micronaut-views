@@ -1,9 +1,8 @@
 plugins {
     id 'groovy'
+    id "io.micronaut.build.internal.views-tests"
 }
-repositories {
-    mavenCentral()
-}
+
 dependencies {
     testCompileOnly(mn.micronaut.inject.groovy)
 
