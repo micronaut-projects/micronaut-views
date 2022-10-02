@@ -83,4 +83,10 @@ class JteController {
     HttpResponse nullBody() {
         HttpResponse.ok()
     }
+
+    @View("dynamic")
+    @Get("/hello")
+    HttpResponse hello() {
+        HttpResponse.ok([message: 'world'])
+    }
 }

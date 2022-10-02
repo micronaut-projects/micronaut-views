@@ -46,6 +46,7 @@ public final class JteViewsRendererConfigurationProperties implements JteViewsRe
     private boolean dynamic = DEFAULT_DYNAMIC;
     private String dynamicPath = DEFAULT_DYNAMIC_PATH;
     private boolean binaryStaticContent = DEFAULT_BINARY_STATIC_CONTENT;
+    private String dynamicSourcePath;
 
     /**
      * Whether to enable dynamic reloading of templates. Default value ({@value #DEFAULT_DYNAMIC}).
@@ -71,6 +72,15 @@ public final class JteViewsRendererConfigurationProperties implements JteViewsRe
     @Override
     public String getDynamicPath() {
         return dynamicPath;
+    }
+
+    @Override
+    public String getDynamicSourcePath() {
+        return dynamicSourcePath;
+    }
+
+    public void setDynamicSourcePath(String path) {
+        this.dynamicSourcePath = path;
     }
 
     @Override

@@ -15,10 +15,12 @@
  */
 package io.micronaut.views.jte;
 
+import gg.jte.CodeResolver;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.TemplateOutput;
 import gg.jte.output.WriterOutput;
+import gg.jte.resolve.DirectoryCodeResolver;
 import gg.jte.resolve.ResourceCodeResolver;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -28,8 +30,14 @@ import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 
+import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * View renderer using JTE.
@@ -54,10 +62,53 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
             ContentType contentType,
             Path classDirectory) {
 
-        templateEngine = jteViewsRendererConfiguration.isDynamic() ?
-                    TemplateEngine.create(new ResourceCodeResolver(viewsConfiguration.getFolder()), classDirectory, contentType) :
-                    TemplateEngine.createPrecompiled(contentType);
+        if (jteViewsRendererConfiguration.isDynamic()) {
+            CodeResolver codeResolver = newDynamicCodeResolver(jteViewsRendererConfiguration, viewsConfiguration.getFolder());
+            templateEngine = TemplateEngine.create(codeResolver, classDirectory, contentType);
+        } else {
+            templateEngine = TemplateEngine.createPrecompiled(contentType);
+        }
         templateEngine.setBinaryStaticContent(jteViewsRendererConfiguration.isBinaryStaticContent());
+    }
+
+    private CodeResolver newDynamicCodeResolver(JteViewsRendererConfiguration jteViewsRendererConfiguration, String folder) {
+        if (jteViewsRendererConfiguration.getDynamicSourcePath() != null) {
+            // explicit setting - trust it
+            return new DirectoryCodeResolver(Paths.get(jteViewsRendererConfiguration.getDynamicSourcePath()));
+        }
+        // do we have a conventional 'src' folder?
+        try {
+            Path src = Paths.get("src");
+            if (Files.exists(src)) {
+                // micronaut-views convention - templates are in a folder under src/<sourceset>/resources
+                try (Stream<Path> search = Files.find(src, 2, ((path, basicFileAttributes) ->
+                    path.endsWith("resources") && basicFileAttributes.isDirectory()
+                ))) {
+                    List<Path> jteSrc = search.map(p -> p.resolve(folder))
+                        .filter(Files::exists)
+                        .collect(Collectors.toList());
+                    if (jteSrc.size() == 1) {
+                        return new DirectoryCodeResolver(jteSrc.get(0));
+                    }
+                }
+
+                // JTE convention src/<sourceset>/jte
+                try (Stream<Path> search = Files.find(src, 2, ((path, basicFileAttributes) ->
+                    path.endsWith("jte") && basicFileAttributes.isDirectory()
+                ))) {
+                    List<Path> jteSrc = search
+                        .filter(Files::exists)
+                        .collect(Collectors.toList());
+                    if (jteSrc.size() == 1) {
+                        return new DirectoryCodeResolver(jteSrc.get(0));
+                    }
+                }
+            }
+        }
+        catch (IOException e) {
+            // TODO log error
+        }
+        return new ResourceCodeResolver(folder);
     }
 
     @NonNull

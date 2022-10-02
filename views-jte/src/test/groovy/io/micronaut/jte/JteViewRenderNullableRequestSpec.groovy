@@ -3,6 +3,7 @@ package io.micronaut.jte
 import io.micronaut.core.io.Writable
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import io.micronaut.views.ViewsRenderer
+import io.micronaut.views.jte.HtmlJteViewsRenderer
 import io.micronaut.views.jte.JteViewsRenderer
 import io.micronaut.views.jte.PlainJteViewsRenderer
 import jakarta.inject.Inject
@@ -15,7 +16,7 @@ class JteViewRenderNullableRequestSpec extends Specification {
     PlainJteViewsRenderer<?> plainJteViewsRenderer
 
     @Inject
-    PlainJteViewsRenderer<?> htmlJteViewsRenderer
+    HtmlJteViewsRenderer<?> htmlJteViewsRenderer
 
     void "views can be render with no request"() {
         expect:
