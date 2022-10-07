@@ -9,6 +9,7 @@ import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
+
 class DynamicRendererSpec extends Specification {
     @Shared
     @AutoCleanup
@@ -20,12 +21,13 @@ class DynamicRendererSpec extends Specification {
             'micronaut.views.jte.dynamicSourcePath': 'src/test/jte'],
             "test")
 
+    def sourceFile = new File("src/test/jte/dynamic.jte")
+
     @Shared
     @AutoCleanup
     HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient, embeddedServer.getURL())
 
     def 'invoking /jte/hello returns a page'() {
-
         when:
         HttpResponse<String> rsp = client.toBlocking().exchange('/jte/hello', String)
 
@@ -41,4 +43,39 @@ class DynamicRendererSpec extends Specification {
         rsp.body().contains("world")
     }
 
+    def 'after the source is modified, the page content changes'() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/jte/hello', String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+
+        then:
+        body
+        rsp.body().contains("Hello")
+
+        when:
+        modifySource()
+        rsp = client.toBlocking().exchange('/jte/hello', String)
+        body = rsp.body()
+
+        then:
+        body
+        rsp.body().contains("Goodbye")
+
+        cleanup:
+        revertSource()
+    }
+
+    void modifySource() {
+        sourceFile.text = sourceFile.text.replaceAll("Hello", "Goodbye")
+    }
+
+    void revertSource() {
+        sourceFile.text = sourceFile.text.replaceAll("Goodbye", "Hello")
+    }
 }
