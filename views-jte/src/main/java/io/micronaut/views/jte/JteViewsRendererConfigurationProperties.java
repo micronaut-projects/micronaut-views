@@ -79,6 +79,13 @@ public final class JteViewsRendererConfigurationProperties implements JteViewsRe
         return dynamicSourcePath;
     }
 
+    /**
+     * When using dynamic templates, the root source directory to search. If not specified, jte will
+     * search src/&lt;sourceset&gt;/jte and src/&lt;sourceset&gt;/resources/&lt;folder&gt; where
+     * 'folder' is ViewsConfiguration.getFolder(). In cases where the source directory cannot be found,
+     * jte will use classpath loading instead, and will not dynamically reload templates.
+     * @param path the directory
+     */
     public void setDynamicSourcePath(String path) {
         this.dynamicSourcePath = path;
     }
