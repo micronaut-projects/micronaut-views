@@ -29,6 +29,8 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -48,6 +50,7 @@ import java.util.stream.Stream;
  */
 public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
     public static final String DEFAULT_EXTENSION = ".jte";
+    private static final Logger LOGGER = LoggerFactory.getLogger(JteViewsRenderer.class);
     private final TemplateEngine templateEngine;
 
     /**
@@ -66,6 +69,7 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
             CodeResolver codeResolver = newDynamicCodeResolver(jteViewsRendererConfiguration, viewsConfiguration.getFolder());
             templateEngine = TemplateEngine.create(codeResolver, classDirectory, contentType);
         } else {
+            LOGGER.info("Using precompiled views.");
             templateEngine = TemplateEngine.createPrecompiled(contentType);
         }
         templateEngine.setBinaryStaticContent(jteViewsRendererConfiguration.isBinaryStaticContent());
@@ -74,7 +78,9 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
     private CodeResolver newDynamicCodeResolver(JteViewsRendererConfiguration jteViewsRendererConfiguration, String folder) {
         if (jteViewsRendererConfiguration.getDynamicSourcePath() != null) {
             // explicit setting - trust it
-            return new DirectoryCodeResolver(Paths.get(jteViewsRendererConfiguration.getDynamicSourcePath()));
+            Path path = Paths.get(jteViewsRendererConfiguration.getDynamicSourcePath());
+            LOGGER.info("Using dynamic views loaded from {}", path);
+            return new DirectoryCodeResolver(path);
         }
         // do we have a conventional 'src' folder?
         try {
@@ -88,7 +94,9 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
                         .filter(Files::exists)
                         .collect(Collectors.toList());
                     if (jteSrc.size() == 1) {
-                        return new DirectoryCodeResolver(jteSrc.get(0));
+                        Path path = jteSrc.get(0);
+                        LOGGER.info("Using dynamic views loaded from {}", path);
+                        return new DirectoryCodeResolver(path);
                     }
                 }
 
@@ -100,14 +108,16 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
                         .filter(Files::exists)
                         .collect(Collectors.toList());
                     if (jteSrc.size() == 1) {
-                        return new DirectoryCodeResolver(jteSrc.get(0));
+                        Path path = jteSrc.get(0);
+                        LOGGER.info("Using dynamic views loaded from {}", path);
+                        return new DirectoryCodeResolver(path);
                     }
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             // TODO log error
         }
+        LOGGER.info("Dynamic view path not found, using views from classpath.");
         return new ResourceCodeResolver(folder);
     }
 
