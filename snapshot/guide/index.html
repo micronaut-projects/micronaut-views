@@ -1669,12 +1669,6 @@ the <a href="https://jte.gg">Jte</a> Java-based template engine.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_dynamic_reloading">Dynamic Reloading</h3>
-<div class="paragraph">
-<p>When 'dynamic' is enabled (see below), JTE will load templates from the project source directory, and will reload them after changes.</p>
-</div>
-</div>
-<div class="sect2">
 <h3 id="_configuration">Configuration</h3>
 <div class="paragraph">
 <p>The properties used can be customized by overriding the values of:</p>
@@ -1710,14 +1704,6 @@ the <a href="https://jte.gg">Jte</a> Java-based template engine.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable building binary content for templates. Default value (false).
  (Only has an effect when 'dynamic' is true. To use with precompiled templates, enable it in the build plugin)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic-source-path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">When using dynamic templates, the root source directory to search. If not specified, jte will
- search src/&lt;sourceset&gt;/jte and src/&lt;sourceset&gt;/resources/&lt;folder&gt; where
- 'folder' is ViewsConfiguration.getFolder(). In cases where the source directory cannot be found,
- jte will use classpath loading instead, and will not dynamically reload templates.</p></td>
 </tr>
 </tbody>
 </table>

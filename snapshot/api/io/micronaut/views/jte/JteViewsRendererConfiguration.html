@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6};
+var methods = {"i0":6,"i1":6,"i2":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -136,18 +136,12 @@ var activeTableTab = "activeTableTab";
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfiguration.html#getDynamicSourcePath--">getDynamicSourcePath</a></span>()</code>
-<div class="block">When using dynamic templates, the root source directory to search.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfiguration.html#isBinaryStaticContent--">isBinaryStaticContent</a></span>()</code>
 <div class="block">When using dynamic templates, build them with binary content (see https://github.com/casid/jte/blob/master/DOCUMENTATION.md#binary-rendering-for-max-throughput).</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfiguration.html#isDynamic--">isDynamic</a></span>()</code>
 <div class="block">Use dynamic/hot reload templates.</div>
@@ -190,21 +184,6 @@ var activeTableTab = "activeTableTab";
 <h4>getDynamicPath</h4>
 <pre>java.lang.String&nbsp;getDynamicPath()</pre>
 <div class="block">When using dynamic templates, the root directory to write generated source and classes under.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the directory</dd>
-</dl>
-</li>
-</ul>
-<a name="getDynamicSourcePath--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDynamicSourcePath</h4>
-<pre>java.lang.String&nbsp;getDynamicSourcePath()</pre>
-<div class="block">When using dynamic templates, the root source directory to search. If not specified, jte will
- search src/main/jte and src/main/resources/&lt;folder&gt; where folder is ViewsConfiguration.getFolder().</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the directory</dd>
