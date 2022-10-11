@@ -179,4 +179,19 @@ abstract class JteViewRendererSpec extends Specification {
         rsp.body().contains("<h1>You are not logged in</h1>")
     }
 
+    def "invoking /jte/kte renders a kotlin view"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/jte/kte', String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+
+        then:
+        body
+        rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
+    }
 }

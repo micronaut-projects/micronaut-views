@@ -83,4 +83,10 @@ class JteController {
     HttpResponse nullBody() {
         HttpResponse.ok()
     }
+
+    @View("khome")
+    @Get("/kte")
+    HttpResponse kteTemplate() {
+        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"));
+    }
 }

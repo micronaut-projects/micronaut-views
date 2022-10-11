@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * Turn JTE rendering logic into a Writable
+ * Turn JTE rendering logic into a Writable.
  */
 public class JteWritable implements Writable {
     private final TemplateEngine templateEngine;

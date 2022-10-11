@@ -30,6 +30,8 @@ import io.micronaut.views.ViewsRenderer;
 
 import java.io.Writer;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * View renderer using JTE.
@@ -39,7 +41,12 @@ import java.nio.file.Path;
  * @since 3.1.0
  */
 public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
+    /**
+     * @deprecated No longer used. Retained for binary compatibility.
+     *
+     */
     public static final String DEFAULT_EXTENSION = ".jte";
+    private static final List<String> EXTENSIONS = Arrays.asList(".jte", ".kte");
     private final TemplateEngine templateEngine;
 
     /**
@@ -95,10 +102,19 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        return templateEngine.hasTemplate(viewName(viewName));
+        return EXTENSIONS.stream()
+            .anyMatch(x -> templateEngine.hasTemplate(viewName(viewName, x)));
     }
 
-    private static String viewName(@NonNull String name) {
-        return ViewUtils.normalizeFile(name, DEFAULT_EXTENSION) + DEFAULT_EXTENSION;
+    private String viewName(@NonNull String name, @NonNull String extension) {
+        return ViewUtils.normalizeFile(name, extension) + extension;
+    }
+
+    private String viewName(@NonNull String viewName) {
+        return EXTENSIONS.stream()
+            .filter(x -> templateEngine.hasTemplate(viewName(viewName, x)))
+            .map(x -> viewName(viewName, x))
+            .findFirst()
+            .orElse(null);
     }
 }
