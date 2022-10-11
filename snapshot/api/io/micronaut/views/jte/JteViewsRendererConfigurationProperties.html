@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -199,33 +199,45 @@ implements <a href="../../../../io/micronaut/views/jte/JteViewsRendererConfigura
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#getDynamicSourcePath--">getDynamicSourcePath</a></span>()</code>
+<div class="block">When using dynamic templates, the root source directory to search.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#isBinaryStaticContent--">isBinaryStaticContent</a></span>()</code>
 <div class="block">When using dynamic templates, build them with binary content (see https://github.com/casid/jte/blob/master/DOCUMENTATION.md#binary-rendering-for-max-throughput).</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#isDynamic--">isDynamic</a></span>()</code>
 <div class="block">Use dynamic/hot reload templates.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#setBinaryStaticContent-boolean-">setBinaryStaticContent</a></span>(boolean&nbsp;binaryStaticContent)</code>
 <div class="block">Enable building binary content for templates.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#setDynamic-boolean-">setDynamic</a></span>(boolean&nbsp;dynamic)</code>
 <div class="block">Whether to enable dynamic reloading of templates.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#setDynamicPath-java.lang.String-">setDynamicPath</a></span>(java.lang.String&nbsp;path)</code>
 <div class="block">Root directory under which to write generated source and class files.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#setDynamicSourcePath-java.lang.String-">setDynamicSourcePath</a></span>(java.lang.String&nbsp;path)</code>
+<div class="block">When using dynamic templates, the root source directory to search.</div>
 </td>
 </tr>
 </table>
@@ -388,6 +400,41 @@ implements <a href="../../../../io/micronaut/views/jte/JteViewsRendererConfigura
 <dd><code><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfiguration.html#getDynamicPath--">getDynamicPath</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfiguration.html" title="interface in io.micronaut.views.jte">JteViewsRendererConfiguration</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the directory</dd>
+</dl>
+</li>
+</ul>
+<a name="getDynamicSourcePath--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDynamicSourcePath</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getDynamicSourcePath()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfiguration.html#getDynamicSourcePath--">JteViewsRendererConfiguration</a></code></span></div>
+<div class="block">When using dynamic templates, the root source directory to search. If not specified, jte will
+ search src/main/jte and src/main/resources/&lt;folder&gt; where folder is ViewsConfiguration.getFolder().</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfiguration.html#getDynamicSourcePath--">getDynamicSourcePath</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/views/jte/JteViewsRendererConfiguration.html" title="interface in io.micronaut.views.jte">JteViewsRendererConfiguration</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the directory</dd>
+</dl>
+</li>
+</ul>
+<a name="setDynamicSourcePath-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDynamicSourcePath</h4>
+<pre>public&nbsp;void&nbsp;setDynamicSourcePath(java.lang.String&nbsp;path)</pre>
+<div class="block">When using dynamic templates, the root source directory to search. If not specified, jte will
+ search src/&lt;sourceset&gt;/jte and src/&lt;sourceset&gt;/resources/&lt;folder&gt; where
+ 'folder' is ViewsConfiguration.getFolder(). In cases where the source directory cannot be found,
+ jte will use classpath loading instead, and will not dynamically reload templates.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>path</code> - the directory</dd>
 </dl>
 </li>
 </ul>
