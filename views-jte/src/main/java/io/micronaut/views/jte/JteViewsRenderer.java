@@ -15,10 +15,12 @@
  */
 package io.micronaut.views.jte;
 
+import gg.jte.CodeResolver;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.TemplateOutput;
 import gg.jte.output.WriterOutput;
+import gg.jte.resolve.DirectoryCodeResolver;
 import gg.jte.resolve.ResourceCodeResolver;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -27,9 +29,17 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * View renderer using JTE.
@@ -40,6 +50,7 @@ import java.nio.file.Path;
  */
 public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
     public static final String DEFAULT_EXTENSION = ".jte";
+    private static final Logger LOGGER = LoggerFactory.getLogger(JteViewsRenderer.class);
     private final TemplateEngine templateEngine;
 
     /**
@@ -54,10 +65,60 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
             ContentType contentType,
             Path classDirectory) {
 
-        templateEngine = jteViewsRendererConfiguration.isDynamic() ?
-                    TemplateEngine.create(new ResourceCodeResolver(viewsConfiguration.getFolder()), classDirectory, contentType) :
-                    TemplateEngine.createPrecompiled(contentType);
+        if (jteViewsRendererConfiguration.isDynamic()) {
+            CodeResolver codeResolver = newDynamicCodeResolver(jteViewsRendererConfiguration, viewsConfiguration.getFolder());
+            templateEngine = TemplateEngine.create(codeResolver, classDirectory, contentType);
+        } else {
+            LOGGER.info("Using precompiled views.");
+            templateEngine = TemplateEngine.createPrecompiled(contentType);
+        }
         templateEngine.setBinaryStaticContent(jteViewsRendererConfiguration.isBinaryStaticContent());
+    }
+
+    private CodeResolver newDynamicCodeResolver(JteViewsRendererConfiguration jteViewsRendererConfiguration, String folder) {
+        if (jteViewsRendererConfiguration.getDynamicSourcePath() != null) {
+            // explicit setting - trust it
+            Path path = Paths.get(jteViewsRendererConfiguration.getDynamicSourcePath());
+            LOGGER.info("Using dynamic views loaded from {}", path);
+            return new DirectoryCodeResolver(path);
+        }
+        // do we have a conventional 'src' folder?
+        try {
+            Path src = Paths.get("src");
+            if (Files.exists(src)) {
+                // micronaut-views convention - templates are in a folder under src/<sourceset>/resources
+                try (Stream<Path> search = Files.find(src, 2, ((path, basicFileAttributes) ->
+                    path.endsWith("resources") && basicFileAttributes.isDirectory()
+                ))) {
+                    List<Path> jteSrc = search.map(p -> p.resolve(folder))
+                        .filter(Files::exists)
+                        .collect(Collectors.toList());
+                    if (jteSrc.size() == 1) {
+                        Path path = jteSrc.get(0);
+                        LOGGER.info("Using dynamic views loaded from {}", path);
+                        return new DirectoryCodeResolver(path);
+                    }
+                }
+
+                // JTE convention src/<sourceset>/jte
+                try (Stream<Path> search = Files.find(src, 2, ((path, basicFileAttributes) ->
+                    path.endsWith("jte") && basicFileAttributes.isDirectory()
+                ))) {
+                    List<Path> jteSrc = search
+                        .filter(Files::exists)
+                        .collect(Collectors.toList());
+                    if (jteSrc.size() == 1) {
+                        Path path = jteSrc.get(0);
+                        LOGGER.info("Using dynamic views loaded from {}", path);
+                        return new DirectoryCodeResolver(path);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            // TODO log error
+        }
+        LOGGER.info("Dynamic view path not found, using views from classpath.");
+        return new ResourceCodeResolver(folder);
     }
 
     @NonNull
