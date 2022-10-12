@@ -48,11 +48,6 @@ import java.util.Arrays;
  * @since 3.1.0
  */
 public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
-    /**
-     * @deprecated No longer used. Retained for binary compatibility.
-     *
-     */
-    public static final String DEFAULT_EXTENSION = ".jte";
     private static final Logger LOGGER = LoggerFactory.getLogger(JteViewsRenderer.class);
     private static final List<String> EXTENSIONS = Arrays.asList(".jte", ".kte");
     private final TemplateEngine templateEngine;
