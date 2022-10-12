@@ -35,6 +35,13 @@ public interface JteViewsRendererConfiguration {
     String getDynamicPath();
 
     /**
+     * When using dynamic templates, the root source directory to search. If not specified, jte will
+     * search src/main/jte and src/main/resources/&lt;folder&gt; where folder is ViewsConfiguration.getFolder().
+     * @return the directory
+     */
+    String getDynamicSourcePath();
+
+    /**
      * When using dynamic templates, build them with binary content (see https://github.com/casid/jte/blob/master/DOCUMENTATION.md#binary-rendering-for-max-throughput).
      * (When using precompiled templates, this setting is determined by the build configuration.)
      * @return true to enable building binary content

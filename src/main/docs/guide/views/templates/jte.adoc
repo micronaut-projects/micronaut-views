@@ -17,6 +17,10 @@ include::{testsviewsJte}/resources/views/home.jte[]
 
 Jte templates may be precompiled at build time. This can be done by a https://github.com/casid/jte/blob/master/DOCUMENTATION.md#gradle[Gradle plugin] or https://github.com/casid/jte/blob/master/DOCUMENTATION.md#maven[Maven plugin]. If not precompiled, the application will need a JDK so it can compile templates at runtime.
 
+=== Dynamic Reloading
+
+When 'dynamic' is enabled (see below), JTE will load templates from the project source directory, and will reload them after changes.
+
 === Configuration
 
 The properties used can be customized by overriding the values of:

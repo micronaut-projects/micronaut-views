@@ -1,22 +1,23 @@
 [versions]
 managed-freemarker = "2.3.31"
 managed-handlebars = "4.3.0"
-managed-jte = "2.1.2"
+managed-jte = "2.2.2"
 managed-rocker = "1.3.0"
 managed-soy = "2022-03-02"
 managed-thymeleaf = "3.0.15.RELEASE"
 managed-velocity = "2.3"
 
-pebble = "3.1.5"
-snake-yaml = "1.32"
+pebble = "3.1.6"
+snake-yaml = "1.33"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
-kotlin = "1.7.10"
+kotlin = "1.7.20"
 kotlinx-coroutines = "1.6.4"
 
 [libraries]
 managed-freemarker = { module = "org.freemarker:freemarker", version.ref = "managed-freemarker" }
 managed-handlebars = { module = "com.github.jknack:handlebars", version.ref = "managed-handlebars" }
 managed-jte = { module = "gg.jte:jte", version.ref = "managed-jte" }
+managed-jte-kotlin = { module = "gg.jte:jte-kotlin", version.ref = "managed-jte" }
 managed-rocker-runtime = { module = "com.fizzed:rocker-runtime", version.ref = "managed-rocker" }
 managed-soy = { module = "com.google.template:soy", version.ref = "managed-soy" }
 managed-thymeleaf = { module = "org.thymeleaf:thymeleaf", version.ref = "managed-thymeleaf" }
