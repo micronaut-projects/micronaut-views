@@ -17,6 +17,7 @@ kotlinx-coroutines = "1.6.4"
 managed-freemarker = { module = "org.freemarker:freemarker", version.ref = "managed-freemarker" }
 managed-handlebars = { module = "com.github.jknack:handlebars", version.ref = "managed-handlebars" }
 managed-jte = { module = "gg.jte:jte", version.ref = "managed-jte" }
+managed-jte-kotlin = { module = "gg.jte:jte-kotlin", version.ref = "managed-jte" }
 managed-rocker-runtime = { module = "com.fizzed:rocker-runtime", version.ref = "managed-rocker" }
 managed-soy = { module = "com.google.template:soy", version.ref = "managed-soy" }
 managed-thymeleaf = { module = "org.thymeleaf:thymeleaf", version.ref = "managed-thymeleaf" }

@@ -89,4 +89,10 @@ class JteController {
     HttpResponse hello() {
         HttpResponse.ok([message: 'world'])
     }
+
+    @View("khome")
+    @Get("/kte")
+    HttpResponse kteTemplate() {
+        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"));
+    }
 }
