@@ -54,6 +54,7 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
      * @deprecated No longer used. Retained for binary compatibility.
      *
      */
+    @Deprecated
     public static final String DEFAULT_EXTENSION = ".jte";
     private static final Logger LOGGER = LoggerFactory.getLogger(JteViewsRenderer.class);
     private static final List<String> EXTENSIONS = Arrays.asList(".jte", ".kte");
