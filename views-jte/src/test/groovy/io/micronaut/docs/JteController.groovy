@@ -84,6 +84,12 @@ class JteController {
         HttpResponse.ok()
     }
 
+    @View("dynamic")
+    @Get("/hello")
+    HttpResponse hello() {
+        HttpResponse.ok([message: 'world'])
+    }
+
     @View("khome")
     @Get("/kte")
     HttpResponse kteTemplate() {
