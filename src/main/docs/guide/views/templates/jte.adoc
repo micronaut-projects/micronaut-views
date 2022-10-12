@@ -26,3 +26,7 @@ When 'dynamic' is enabled (see below), JTE will load templates from the project 
 The properties used can be customized by overriding the values of:
 
 include::{includedir}configurationProperties/io.micronaut.views.jte.JteViewsRendererConfigurationProperties.adoc[]
+
+== .kte (Kotlin) templates
+
+To use `.kte` (Kotlin) templates include the dependency https://search.maven.org/artifact/gg.jte/jte-kotlin[gg.jte:jte-kotlin].
