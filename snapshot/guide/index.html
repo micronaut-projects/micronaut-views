@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <title>Micronaut Views</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
     <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
@@ -381,49 +382,58 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether thymeleaf rendering is enabled. Default value (true).</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.character-encoding</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the character encoding to use. Default value ("UTF-8").</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return the character encoding.</p>
+<p class="tableblock"> @see AbstractConfigurableTemplateResolver#getCharacterEncoding()</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.template-mode</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.thymeleaf.templatemode.TemplateMode</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the template mode.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return the template mode to be used.
+ @see AbstractConfigurableTemplateResolver#getTemplateMode()</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.suffix</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the suffix to use.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return the suffix. Default value ".html"
+ @see AbstractConfigurableTemplateResolver#getSuffix()</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.force-suffix</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to force the suffix. Default value (false).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return whether the suffix will be forced or not.
+ @see AbstractConfigurableTemplateResolver#getForceSuffix()</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.force-template-mode</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to force template mode. Default value (false).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cacheable</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether templates are cacheable.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return whether the suffix will be forced or not.
+ @see AbstractConfigurableTemplateResolver#getForceTemplateMode()</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cache-ttlms</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the cache TTL in millis.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return the cache TTL for resolved templates.
+ @see AbstractConfigurableTemplateResolver#getCacheTTLMs()</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.check-existence</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether templates should be checked for existence.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return &lt;tt&gt;true&lt;/tt&gt; if resource existence will be checked, &lt;tt&gt;false&lt;/tt&gt; if not
+ @see AbstractConfigurableTemplateResolver#getCheckExistence()</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cacheable</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return whether templates resolved are cacheable or not.
+ @see AbstractConfigurableTemplateResolver#isCacheable()</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled getter.</p>
+<p class="tableblock"> @return boolean flag indicating whether {@link ThymeleafViewsRenderer} is enabled.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cache-ttl</code></p></td>
@@ -816,22 +826,25 @@ import views.index;
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Rocker views are enabled. Default value (true).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enabled getter.</p>
+<p class="tableblock"> @return boolean flag indicating whether {@link RockerViewsRenderer} is enabled.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.default-extension</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the default extension to use for Rocker templates. Default value ("rocker.html").</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return Default extension for templates. By default "rocker.html".</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.hot-reloading</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether hot reloading is enabled. Default value (false).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hot reloading getter.</p>
+<p class="tableblock"> @return boolean flag indicating whether hot reloading is enabled.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.relaxed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether relaxed binding is enabled for dynamic templates. Default value (false).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Relaxed binding getter.</p>
+<p class="tableblock"> @return boolean flag indicating whether relaxed binding is enabled for dynamic templates.</p></td>
 </tr>
 </tbody>
 </table>
@@ -904,12 +917,13 @@ client-side, with the ability to compile templates into Java, Python, or JavaScr
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Soy-backed views are enabled. Default value <code>true</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.renaming-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Turns renaming on or off. Default value <code>true</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether renaming is enabled. Defaults to <code>true</code>.</p>
+<p class="tableblock"> @return True if it is enabled.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1539,71 +1553,57 @@ the <a href="https://pebbletemplates.io/">Pebble</a> project.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the component is enabled. Default value (true).</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.default-extension</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The default extension. Default value ("html").</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.cache-active</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable all caches, i.e. cache used by the engine to store compiled PebbleTemplate
- instances and tags cache. Default value (true).</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.new-line-trimming</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Changes the newLineTrimming setting of the PebbleEngine. By default, Pebble
- will trim a new line that immediately follows a Pebble tag. If set to false, then the
- first newline following a Pebble tag won&#8217;t be trimmed.  All newlines will be preserved.
- Default value (true).</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.auto-escaping</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether or not escaping should be performed automatically.
- Default value (true).</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.default-escaping-strategy</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the default escaping strategy of the built-in escaper extension.
- Default value (EscapeFilter.HTML_ESCAPE_STRATEGY).</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.strict-variables</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Changes the strictVariables setting of the PebbleEngine.
- Default value (false).</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.greedy-match-method</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable greedy matching mode for finding java method. Default is disabled. If enabled,
- when can not find perfect method (method name, parameter length and parameter type are all
- satisfied), reduce the limit of the parameter type, try to find other method which has
- compatible parameter types.
- Default value (false).</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.allow-override-core-operators</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether or not core operators overrides should be allowed.
- Default value (false).</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.literal-decimals-as-integers</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable treat literal decimal as Integer.
- Default value (false), treated as Long.</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.literal-numbers-as-big-decimals</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable treat literal numbers as BigDecimals.
- Default value (false), treated as Long/Double.</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
@@ -1698,26 +1698,22 @@ the <a href="https://jte.gg">Jte</a> Java-based template engine.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable dynamic reloading of templates. Default value (false).</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic-path</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Root directory under which to write generated source and class files. . Default value ("build/jte-classes").</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.binary-static-content</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable building binary content for templates. Default value (false).
- (Only has an effect when 'dynamic' is true. To use with precompiled templates, enable it in the build plugin)</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic-source-path</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">When using dynamic templates, the root source directory to search. If not specified, jte will
- search src/&lt;sourceset&gt;/jte and src/&lt;sourceset&gt;/resources/&lt;folder&gt; where
- 'folder' is ViewsConfiguration.getFolder(). In cases where the source directory cannot be found,
- jte will use classpath loading instead, and will not dynamically reload templates.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.binary-static-content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
@@ -2296,18 +2292,22 @@ By default, CSP is disabled. To enable CSP, modify your configuration. For examp
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether CSP is enabled. Default false.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return Whether csp headers will be sent</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.policy-directives</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the policy directives.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return The policy directives</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.report-only</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If true, the Content-Security-Policy-Report-Only header will be sent instead
- of Content-Security-Policy. Default false.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return Whether the report only header should be set</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.random-engine</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Random</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return Random data engine currently in use to generate nonce values.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.generate-nonce</code></p></td>
@@ -2315,11 +2315,6 @@ By default, CSP is disabled. To enable CSP, modify your configuration. For examp
 <td class="tableblock halign-left valign-top"><p class="tableblock">If true, the CSP header will contain a generated nonce that is made available
  to view renderers. The nonce should change for each request/response cycle and
  can be used by views to authorize inlined script blocks.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.filter-path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the path the CSP filter should apply to. Default value "/**".</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.force-secure-random</code></p></td>
@@ -2330,10 +2325,9 @@ By default, CSP is disabled. To enable CSP, modify your configuration. For examp
  enough entropy.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.random-engine</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Random</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the <code>Random</code> data engine used to generate nonce values. Ignored if
- <code>forceSecureRandom</code> is set to <code>true</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.filter-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return The path the CSP filter should apply to</p></td>
 </tr>
 </tbody>
 </table>
@@ -2430,22 +2424,22 @@ mode. Inline scripts can be whitelisted with the syntax:</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable {@link SecurityViewModelProcessor}. Default value (true).</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.security-key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Model key name. Default value ("security").</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return the key name which will be used in the model map.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.principal-name-key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Nested security map key for the user&#8217;s name property. Default value ("name").</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return the key for the principal name property which is used in the nested security map.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.attributes-key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Nested security map key for the user&#8217;s attributes property. Default value ("attributes").</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">@return the key for the attributes property which is used in the nested security map.</p></td>
 </tr>
 </tbody>
 </table>
