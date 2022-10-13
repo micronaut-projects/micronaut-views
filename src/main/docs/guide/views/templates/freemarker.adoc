@@ -3,7 +3,7 @@ the https://freemarker.apache.org[Apache Freemarker] Java-based template engine.
 
 Add the following dependency on your classpath.
 
-dependency:io.micronaut.views:micronaut-views-freemarker[]
+dependency:micronaut-views-freemarker[groupId="io.micronaut.views"]
 
 The example shown in the <<views, Views>> section, could be rendered with the following Freemarker template:
 

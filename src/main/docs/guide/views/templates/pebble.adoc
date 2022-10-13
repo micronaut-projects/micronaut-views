@@ -3,7 +3,7 @@ the https://pebbletemplates.io/[Pebble] project.
 
 Add the following dependency on your classpath. For example, in `build.gradle`
 
-dependency:io.micronaut.views:micronaut-views-pebble[group="io.micronaut.views"]
+dependency:micronaut-views-pebble[groupId="io.micronaut.views"]
 
 The example shown in the <<views, Views>> section, could be rendered with the following Pebble template:
 

@@ -3,7 +3,7 @@ the https://www.thymeleaf.org[Thymeleaf] Java template engine.
 
 Add the `micronaut-views-thymeleaf` dependency to your classpath.
 
-dependency:io.micronaut.views:micronaut-views-thymeleaf[group="io.micronaut.views"]
+dependency:micronaut-views-thymeleaf[groupId="io.micronaut.views"]
 
 Thymeleaf integration instantiates a `ClassLoaderTemplateResolver`.
 

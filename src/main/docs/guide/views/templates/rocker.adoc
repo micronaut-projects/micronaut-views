@@ -3,7 +3,7 @@ the https://github.com/fizzed/rocker[Rocker] Java-based template engine.
 
 Add the `micronaut-views-rocker` dependency to your classpath.
 
-dependency:io.micronaut.views:micronaut-views-rocker[group="io.micronaut.views"]
+dependency:micronaut-views-rocker[groupId="io.micronaut.views"]
 
 The example shown in the <<views, Views>> section, could be rendered with the following Rocker template:
 

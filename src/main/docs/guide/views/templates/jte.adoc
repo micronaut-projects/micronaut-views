@@ -3,7 +3,7 @@ the https://jte.gg[Jte] Java-based template engine.
 
 Add the `micronaut-views-jte` dependency to your classpath.
 
-dependency:io.micronaut.views:micronaut-views-jte[group="io.micronaut.views"]
+dependency:micronaut-views-jte[groupId="io.micronaut.views"]
 
 The example shown in the <<views, Views>> section, could be rendered with the following Jte template:
 
