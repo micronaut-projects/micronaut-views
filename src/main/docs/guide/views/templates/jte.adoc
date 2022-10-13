@@ -3,7 +3,7 @@ the https://jte.gg[Jte] Java-based template engine.
 
 Add the `micronaut-views-jte` dependency to your classpath.
 
-dependency:io.micronaut.views:micronaut-views-jte[group="io.micronaut.views"]
+dependency:micronaut-views-jte[groupId="io.micronaut.views"]
 
 The example shown in the <<views, Views>> section, could be rendered with the following Jte template:
 
@@ -26,3 +26,10 @@ When 'dynamic' is enabled (see below), JTE will load templates from the project 
 The properties used can be customized by overriding the values of:
 
 include::{includedir}configurationProperties/io.micronaut.views.jte.JteViewsRendererConfigurationProperties.adoc[]
+
+== .kte (Kotlin) templates
+
+
+To use `.kte` (Kotlin) templates include the dependency:.
+
+dependency:jte-kotlin[groupId="gg.jte"]
