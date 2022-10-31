@@ -6,5 +6,5 @@ client-side, with the ability to compile templates into Java, Python, or JavaScr
 
 Add the `micronaut-views-soy` dependency to your classpath.
 
-dependency:io.micronaut.views:micronaut-views-soy[group="io.micronaut.views"]
+dependency:micronaut-views-soy[groupId="io.micronaut.views"]
 
