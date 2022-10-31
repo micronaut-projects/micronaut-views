@@ -38,5 +38,9 @@
     "type": "io.micronaut.views.thymeleaf.WebContext",
     "member": "Constructor io.micronaut.views.thymeleaf.WebContext(io.micronaut.http.HttpRequest,java.util.Locale)",
     "reason": "Removed deprecated constructor for Micronaut 4"
-  }
-]
+  },
+  {
+    "type": "io.micronaut.views.jte.JteViewsRenderer",
+    "member": "Field DEFAULT_EXTENSION",
+    "reason": "Removed deprecated field for Micronaut 4"
+  }]
