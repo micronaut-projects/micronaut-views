@@ -21,7 +21,13 @@ dependencies {
     testImplementation(mn.micronaut.http.client)
     testRuntimeOnly(libs.logback.classic)
 
-    testImplementation(mn.micronaut.security)
+    testImplementation(mn.micronaut.security) {
+        version {
+            strictly("4.0.0-SNAPSHOT")
+        }
+    }
+    testImplementation(mn.micronaut.serde.api)
+    testImplementation(mn.micronaut.serde.jackson)
     testImplementation(libs.reactor.core)
 
     testImplementation project(":views-velocity")
