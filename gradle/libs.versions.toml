@@ -7,7 +7,7 @@ managed-soy = "2022-03-02"
 managed-thymeleaf = "3.0.15.RELEASE"
 managed-velocity = "2.3"
 
-pebble = "3.1.6"
+pebble = "3.2.0"
 snake-yaml = "1.33"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.7.20"
