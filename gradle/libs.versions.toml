@@ -1,7 +1,7 @@
 [versions]
 managed-freemarker = "2.3.31"
 managed-handlebars = "4.3.1"
-managed-jte = "2.2.2"
+managed-jte = "2.2.3"
 managed-rocker = "1.3.0"
 managed-soy = "2022-03-02"
 managed-thymeleaf = "3.0.15.RELEASE"
