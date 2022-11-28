@@ -36,7 +36,7 @@ public class WebContext extends AbstractContext {
 
     /**
      * @param request HTTP request.
-     * @see AbstractContext#AbstractContext().
+     * @see AbstractContext {@link AbstractContext#AbstractContext()}.
      */
     @Deprecated
     public WebContext(@Nullable HttpRequest<?> request) {
@@ -46,7 +46,7 @@ public class WebContext extends AbstractContext {
     /**
      * @param locale the locale.
      * @param request HTTP request.
-     * @see AbstractContext#AbstractContext(Locale).
+     * @see AbstractContext {@link AbstractContext#AbstractContext(Locale)}.
      */
     @Deprecated
     public WebContext(@Nullable HttpRequest<?> request, Locale locale) {
@@ -58,7 +58,7 @@ public class WebContext extends AbstractContext {
      * @param request HTTP request.
      * @param locale the locale.
      * @param variables the variables.
-     * @see AbstractContext#AbstractContext(Locale, Map).
+     * @see AbstractContext {@link AbstractContext#AbstractContext(Locale, Map)}.
      */
     public WebContext(@Nullable HttpRequest<?> request, Locale locale, Map<String, Object> variables) {
         super(locale, variables);

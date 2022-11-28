@@ -134,7 +134,7 @@ public class ThymeleafViewsRendererConfigurationProperties implements ThymeleafV
     }
 
     /**
-     * @return <tt>true</tt> if resource existence will be checked, <tt>false</tt> if not
+     * @return {@literal true} if resource existence will be checked, {@literal false} if not
      * @see AbstractConfigurableTemplateResolver#getCheckExistence()
      */
     @Override
