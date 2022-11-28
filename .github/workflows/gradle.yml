@@ -73,7 +73,7 @@ jobs:
           name: binary-compatibility-reports
           path: "**/build/reports/binary-compatibility-*.html"
       - name: Publish to Sonatype Snapshots
-        if: success() && github.event_name == 'push' && matrix.java == '11'
+        if: success() && github.event_name == 'push' && matrix.java == '17'
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
@@ -89,7 +89,7 @@ jobs:
           if_true: "micronaut-projects/micronaut-docs"
           if_false: ${{ github.repository }}
       - name: Publish to Github Pages
-        if: success() && github.event_name == 'push' && matrix.java == '11'
+        if: success() && github.event_name == 'push' && matrix.java == '17'
         uses: micronaut-projects/github-pages-deploy-action@master
         env:
           TARGET_REPOSITORY: ${{ steps.docs_target.outputs.value }}
