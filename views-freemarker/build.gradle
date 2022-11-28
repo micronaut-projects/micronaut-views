@@ -16,6 +16,7 @@ dependencies {
     testCompileOnly(mn.micronaut.inject.groovy)
     testAnnotationProcessor(mn.micronaut.inject.java)
 
+    testImplementation(mn.micronaut.serde.jackson)
     testImplementation(libs.reactor.core)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)

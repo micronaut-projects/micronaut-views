@@ -13,6 +13,7 @@ dependencies {
 
     implementation(libs.reactor.core)
 
+    testImplementation(mn.micronaut.serde.jackson)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.inject.java)
     testImplementation(mn.micronaut.http.server.netty)

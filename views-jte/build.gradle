@@ -8,6 +8,7 @@ dependencies {
     implementation(libs.managed.jte.kotlin)
     api project(":views-core")
 
+    testImplementation(mn.micronaut.serde.jackson)
     testImplementation(libs.reactor.core)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
