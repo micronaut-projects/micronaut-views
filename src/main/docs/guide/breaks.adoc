@@ -2,7 +2,7 @@ This section outlines the breaking changes done in major versions of Micronaut V
 
 === 4.0.0
 
-* The Soy dependency has been upgraded to version _2022-03-07_, which includes breaking changes. Among others, `.` is no longer allowed before template names. To know the full changes, we suggest link:https://github.com/google/closure-templates/compare/release-2022-03-02%E2%80%A6release-2022-03-07[looking at the commits] since there exist no release notes.
+* The Soy dependency has been upgraded to version _2022-10-26_, which includes breaking changes. Among others, `.` is no longer allowed before template names. To know the full changes, we suggest link:https://github.com/google/closure-templates/compare/release-2022-03-02%E2%80%A6release-2022-03-07[looking at the commits] since there exist no release notes.
 
 === 3.0.0
 
