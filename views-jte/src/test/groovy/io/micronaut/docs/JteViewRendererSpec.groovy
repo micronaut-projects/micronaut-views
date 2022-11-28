@@ -28,21 +28,19 @@ import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
-class JteViewRendererSpec extends Specification {
+abstract class JteViewRendererSpec extends Specification {
 
     @Shared
     @AutoCleanup
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
-            [
-                    'spec.name': 'jte',
-                    'micronaut.security.enabled': false,
-                    'micronaut.views.jte.dynamic': true
-            ],
+            testProperties,
             "test")
 
     @Shared
     @AutoCleanup
     HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient, embeddedServer.getURL())
+
+    abstract Map<String, Object> getTestProperties()
 
     def "bean is loaded"() {
         when:
@@ -181,4 +179,19 @@ class JteViewRendererSpec extends Specification {
         rsp.body().contains("<h1>You are not logged in</h1>")
     }
 
+    def "invoking /jte/kte renders a kotlin view"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/jte/kte', String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+
+        then:
+        body
+        rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
+    }
 }

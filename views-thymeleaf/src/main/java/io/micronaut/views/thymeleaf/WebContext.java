@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.thymeleaf;
 
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpRequest;
 import org.thymeleaf.context.AbstractContext;
 
@@ -30,25 +31,8 @@ import java.util.Map;
  */
 public class WebContext extends AbstractContext {
 
+    @Nullable
     private final HttpRequest<?> request;
-
-    /**
-     * @param request HTTP request.
-     * @see AbstractContext#AbstractContext().
-     */
-    public WebContext(HttpRequest<?> request) {
-        this.request = request;
-    }
-
-    /**
-     * @param locale the locale.
-     * @param request HTTP request.
-     * @see AbstractContext#AbstractContext(Locale).
-     */
-    public WebContext(HttpRequest<?> request, Locale locale) {
-        super(locale);
-        this.request = request;
-    }
 
     /**
      * @param request HTTP request.
@@ -56,7 +40,7 @@ public class WebContext extends AbstractContext {
      * @param variables the variables.
      * @see AbstractContext#AbstractContext(Locale, Map).
      */
-    public WebContext(HttpRequest<?> request, Locale locale, Map<String, Object> variables) {
+    public WebContext(@Nullable HttpRequest<?> request, Locale locale, Map<String, Object> variables) {
         super(locale, variables);
         this.request = request;
     }
@@ -64,6 +48,7 @@ public class WebContext extends AbstractContext {
     /**
      * @return HTTP request.
      */
+    @Nullable
     public HttpRequest<?> getRequest() {
         return request;
     }

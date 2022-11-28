@@ -13,4 +13,8 @@
     </root>
     <logger name="io.micronaut.context.condition" level="DEBUG"/>
     <logger name="io.micronaut.docs" level="DEBUG"/>
+
+    <logger name="io.micronaut.http.client" level="TRACE"/>
+    <logger name="io.micronaut.http.server" level="TRACE"/>
+
 </configuration>

@@ -1,22 +1,23 @@
 plugins {
     id 'groovy'
+    id "io.micronaut.build.internal.views-tests"
 }
-repositories {
-    mavenCentral()
-}
-dependencies {
-    testCompileOnly("io.micronaut:micronaut-inject-groovy:$micronautVersion")
 
-    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    testImplementation("io.micronaut:micronaut-validation")
-    testImplementation("org.spockframework:spock-core:${spockVersion}") {
+dependencies {
+    testCompileOnly(mn.micronaut.inject.groovy)
+
+    testImplementation(platform(mn.micronaut.bom))
+    testImplementation(mn.micronaut.validation)
+    testImplementation(libs.spock.core) {
         exclude module: 'groovy-all'
     }
-    testImplementation "io.micronaut.test:micronaut-test-spock"
+    testImplementation(mn.micronaut.test.spock)
 
-    testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
+    testImplementation(mn.micronaut.serde.jackson)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.http.client)
     testImplementation project(":views-soy")
+    testImplementation project(":views-velocity")
 }
 
 tasks.named('test') {
@@ -24,6 +25,6 @@ tasks.named('test') {
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("1.8")
-    targetCompatibility = JavaVersion.toVersion("1.8")
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
 }

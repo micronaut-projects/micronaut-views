@@ -1,0 +1,46 @@
+[
+  {
+    "type": "io.micronaut.views.ViewsFilter",
+    "member": "Constructor io.micronaut.views.ViewsFilter(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator,io.micronaut.views.turbo.TurboStreamRenderer)",
+    "reason": "Removed deprecated constructor for Micronaut 4"
+  },
+  {
+    "type": "io.micronaut.views.ViewsFilter",
+    "member": "Constructor io.micronaut.views.ViewsFilter(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator)",
+    "reason": "Removed deprecated constructor for Micronaut 4"
+  },
+  {
+    "type": "io.micronaut.views.pebble.PebbleViewsRenderer",
+    "member": "Constructor io.micronaut.views.pebble.PebbleViewsRenderer(com.mitchellbosecke.pebble.PebbleEngine)",
+    "reason": "Removed deprecated constructor for Micronaut 4"
+  }
+,{
+  "type": "io.micronaut.views.pebble.PebbleViewsRenderer",
+  "member": "Constructor io.micronaut.views.pebble.PebbleViewsRenderer(io.micronaut.views.pebble.PebbleConfiguration,com.mitchellbosecke.pebble.PebbleEngine)",
+  "reason": "Removed deprecated constructor for Micronaut 4"
+  },
+  {
+    "type": "io.micronaut.views.thymeleaf.LinkBuilder",
+    "member": "Constructor io.micronaut.views.thymeleaf.LinkBuilder()",
+    "reason": "Removed deprecated constructor for Micronaut 4"
+  },
+  {
+    "type": "io.micronaut.views.thymeleaf.ThymeleafViewsRenderer",
+    "member": "Constructor io.micronaut.views.thymeleaf.ThymeleafViewsRenderer(org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver,org.thymeleaf.TemplateEngine,io.micronaut.core.io.scan.ClassPathResourceLoader)",
+    "reason": "Removed deprecated constructor for Micronaut 4"
+  },
+  {
+    "type": "io.micronaut.views.thymeleaf.WebContext",
+    "member": "Constructor io.micronaut.views.thymeleaf.WebContext(io.micronaut.http.HttpRequest)",
+    "reason": "Removed deprecated constructor for Micronaut 4"
+  },
+  {
+    "type": "io.micronaut.views.thymeleaf.WebContext",
+    "member": "Constructor io.micronaut.views.thymeleaf.WebContext(io.micronaut.http.HttpRequest,java.util.Locale)",
+    "reason": "Removed deprecated constructor for Micronaut 4"
+  },
+  {
+    "type": "io.micronaut.views.jte.JteViewsRenderer",
+    "member": "Field DEFAULT_EXTENSION",
+    "reason": "Removed deprecated field for Micronaut 4"
+  }]

@@ -1,9 +1,7 @@
 package views;
 
-import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
@@ -16,6 +14,7 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.client.BlockingHttpClient;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.View;
 import io.micronaut.views.ViewsRenderer;
@@ -29,8 +28,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Property(name = "spec.name", value = "CsvViewRendererSpec")
 @Property(name = "micronaut.views.soy.enabled", value = StringUtils.FALSE)
@@ -95,7 +94,8 @@ class NonHTMLViewRendererTest {
     @Singleton
     static class XmlViewRenderer implements ViewsRenderer<Library> {
         @Override
-        public Writable render(@NonNull String viewName, @Nullable Library data, @NonNull HttpRequest<?> request) {
+        @NonNull
+        public Writable render(@NonNull String viewName, @Nullable Library data, @Nullable HttpRequest<?> request) {
             return new Writable() {
                 @Override
                 public void writeTo(Writer out) throws IOException {
@@ -119,7 +119,10 @@ class NonHTMLViewRendererTest {
         // this renderer should not be used because it specifies a different type
 
         @Override
-        public Writable render(@NonNull String viewName, @Nullable Book data, @NonNull HttpRequest<?> request) {
+        @NonNull
+        public Writable render(@NonNull String viewName,
+                               @Nullable Book data,
+                               @Nullable HttpRequest<?> request) {
             return new Writable() {
                 @Override
                 public void writeTo(Writer out) throws IOException {
@@ -144,7 +147,10 @@ class NonHTMLViewRendererTest {
     @Singleton
     public static class CsvViewRenderer implements ViewsRenderer<Library> {
         @Override
-        public Writable render(@NonNull String viewName, @Nullable Library data, @NonNull HttpRequest<?> request) {
+        @NonNull
+        public Writable render(@NonNull String viewName,
+                               @Nullable Library data,
+                               @Nullable HttpRequest<?> request) {
             return new Writable() {
                 @Override
                 public void writeTo(Writer out) throws IOException {
@@ -161,7 +167,7 @@ class NonHTMLViewRendererTest {
         }
     }
 
-    @Introspected
+    @Serdeable
     public static class Book {
         String isbn;
         String name;
@@ -177,7 +183,7 @@ class NonHTMLViewRendererTest {
         }
     }
 
-    @Introspected
+    @Serdeable
     public static class Library {
         List<Book> books;
         public Library(List<Book> books) {

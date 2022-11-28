@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.jte;
 
+import gg.jte.Content;
 import gg.jte.ContentType;
 import gg.jte.TemplateOutput;
 import gg.jte.html.HtmlTemplateOutput;
@@ -47,12 +48,8 @@ public class PlainJteViewsRenderer<T> extends JteViewsRenderer<T> {
 
     @Override
     @NonNull
-    protected TemplateOutput getOutput(Writer out) {
-        TemplateOutput result = super.getOutput(out);
-        if (!(result instanceof HtmlTemplateOutput)) {
-            result = new PlainHtmlTemplateOutput(result);
-        }
-        return result;
+    TemplateOutput decorateOutput(@NonNull TemplateOutput output) {
+        return new PlainHtmlTemplateOutput(output);
     }
 
     /**
@@ -78,6 +75,81 @@ public class PlainJteViewsRenderer<T> extends JteViewsRenderer<T> {
         @Override
         public void setContext(String tagName, String attributeName) {
             // no-op
+        }
+
+        @Override
+        public void writeBinaryContent(byte[] value) {
+            delegate.writeBinaryContent(value);
+        }
+
+        @Override
+        public void writeUserContent(String value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(Enum<?> value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(Content content) {
+            delegate.writeUserContent(content);
+        }
+
+        @Override
+        public void writeUserContent(boolean value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(byte value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(short value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(int value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(long value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(float value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(double value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(char value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(Boolean value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(Number value) {
+            delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUserContent(Character value) {
+            delegate.writeUserContent(value);
         }
     }
 }

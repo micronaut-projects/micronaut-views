@@ -1,28 +1,30 @@
 plugins {
     id 'java-library'
+    id "io.micronaut.build.internal.views-tests"
 }
-repositories {
-    mavenCentral()
-}
+
 dependencies {
-    testAnnotationProcessor(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
-    testAnnotationProcessor("io.micronaut:micronaut-validation")
+    testAnnotationProcessor(platform(mn.micronaut.bom))
+    testAnnotationProcessor(mn.micronaut.inject.java)
+    testAnnotationProcessor(mn.micronaut.validation)
 
-    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    testImplementation("io.micronaut:micronaut-validation")
+    testImplementation(platform(mn.micronaut.bom))
+    testImplementation(mn.micronaut.validation)
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testImplementation "io.micronaut.test:micronaut-test-junit5"
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(mn.micronaut.test.junit5)
+    testRuntimeOnly(libs.junit.jupiter.engine)
 
-    testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-management:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    
-    testImplementation "io.micronaut.security:micronaut-security:$micronautSecurityVersion"
-    testImplementation "io.projectreactor:reactor-core:$reactorVersion"
+    testCompileOnly(mn.micronaut.inject.groovy)
+    testImplementation(mn.micronaut.management)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.http.client)
+    testRuntimeOnly(libs.logback.classic)
+
+    testImplementation(mn.micronaut.security)
+    testImplementation(mn.micronaut.serde.api)
+    testImplementation(mn.micronaut.serde.jackson)
+    testImplementation(libs.reactor.core)
 
     testImplementation project(":views-velocity")
     testImplementation project(":views-core")
@@ -35,6 +37,6 @@ tasks.named('test') {
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("1.8")
-    targetCompatibility = JavaVersion.toVersion("1.8")
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
 }

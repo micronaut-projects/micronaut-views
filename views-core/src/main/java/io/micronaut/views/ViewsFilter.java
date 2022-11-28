@@ -15,26 +15,31 @@
  */
 package io.micronaut.views;
 
-import io.micronaut.core.annotation.Nullable;
-import io.micronaut.http.HttpResponse;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.HttpAttributes;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import io.micronaut.http.filter.ServerFilterPhase;
 import io.micronaut.views.exceptions.ViewNotFoundException;
-import reactor.core.publisher.Flux;
+import io.micronaut.views.turbo.TurboFrame;
+import io.micronaut.views.turbo.TurboFrameRenderer;
+import io.micronaut.views.turbo.TurboStream;
+import io.micronaut.views.turbo.TurboStreamRenderer;
+import io.micronaut.views.turbo.http.TurboMediaType;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
 
 import java.util.Optional;
 
@@ -44,28 +49,54 @@ import java.util.Optional;
  * @author Sergio del Amo
  * @since 1.0
  */
-@Requires(beans = ViewsRenderer.class)
 @Requires(beans = ViewsResolver.class)
 @Filter(Filter.MATCH_ALL_PATTERN)
 public class ViewsFilter implements HttpServerFilter {
     private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
 
+    /**
+     * Views Resolver.
+     */
     protected final ViewsResolver viewsResolver;
+
+    /**
+     * Views Render Locator.
+     */
     protected final ViewsRendererLocator viewsRendererLocator;
+
+    /**
+     * Views Model Decorator.
+     */
     protected final ViewsModelDecorator viewsModelDecorator;
+
+    /**
+     * Turbo Stream Renderer.
+     */
+    protected final TurboStreamRenderer turboStreamRenderer;
+
+    /**
+     * Turbo Stream Renderer.
+     */
+    protected final TurboFrameRenderer turboFrameRenderer;
 
     /**
      * Constructor.
      * @param viewsResolver Views Resolver
      * @param viewsRendererLocator ViewRendererLocator
      * @param viewsModelDecorator Views Model Decorator
+     * @param turboStreamRenderer Turbo Stream renderer
+     * @param turboFrameRenderer Turbo Frame renderer
      */
     public ViewsFilter(ViewsResolver viewsResolver,
                        ViewsRendererLocator viewsRendererLocator,
-                       ViewsModelDecorator viewsModelDecorator) {
+                       ViewsModelDecorator viewsModelDecorator,
+                       TurboStreamRenderer turboStreamRenderer,
+                       TurboFrameRenderer turboFrameRenderer) {
         this.viewsResolver = viewsResolver;
         this.viewsRendererLocator = viewsRendererLocator;
         this.viewsModelDecorator = viewsModelDecorator;
+        this.turboStreamRenderer = turboStreamRenderer;
+        this.turboFrameRenderer = turboFrameRenderer;
     }
 
     @Override
@@ -78,12 +109,21 @@ public class ViewsFilter implements HttpServerFilter {
                                                             ServerFilterChain chain) {
         return Flux.from(chain.proceed(request))
             .switchMap(response -> {
+                Object body = response.body();
+                Optional<Writable> writableOptional = parseTurboStreamWritable(request, response, body);
+                if (writableOptional.isPresent()) {
+                    return responseForWritable(response, writableOptional.get(), TurboMediaType.TURBO_STREAM_TYPE);
+                }
+                writableOptional = parseTurboFrameWritable(request, response, body);
+                if (writableOptional.isPresent()) {
+                    return responseForWritable(response, writableOptional.get(), MediaType.TEXT_HTML_TYPE);
+                }
                 Optional<String> optionalView = viewsResolver.resolveView(request, response);
                 if (!optionalView.isPresent()) {
                     LOG.debug("no view found");
                     return Flux.just(response);
                 }
-                Object body = response.body();
+
                 MediaType type = resolveMediaType(response, body);
                 String view = optionalView.get();
                 try {
@@ -122,5 +162,66 @@ public class ViewsFilter implements HttpServerFilter {
         return route.getValue(Produces.class, MediaType.class)
                 .orElse((route.getValue(View.class).isPresent() || responseBody instanceof ModelAndView)
                         ? MediaType.TEXT_HTML_TYPE : MediaType.APPLICATION_JSON_TYPE);
+    }
+
+    @NonNull
+    private Optional<TurboStream.Builder> parseTurboStream(@NonNull HttpRequest<?> request,
+                                                           @NonNull MutableHttpResponse<?> response) {
+        final Object body = response.body();
+        return Optional.ofNullable(TurboStream.Builder.of(request, response)
+                .map(builder -> builder.templateModel(body))
+                .orElseGet(() -> {
+                    if (body instanceof TurboStream.Builder) {
+                        return (TurboStream.Builder) body;
+                    }
+                    return null;
+                }));
+    }
+
+    @NonNull
+    private Optional<TurboFrame.Builder> parseTurboFrame(@NonNull HttpRequest<?> request,
+                                                         @NonNull MutableHttpResponse<?> response) {
+        final Object body = response.body();
+        return Optional.ofNullable(TurboFrame.Builder.of(request, response)
+            .map(builder -> (TurboFrame.Builder) builder.templateModel(body))
+            .orElseGet(() -> {
+                if (body instanceof TurboFrame.Builder) {
+                    return (TurboFrame.Builder) body;
+                }
+                return null;
+            }));
+    }
+
+    @NonNull
+    private Optional<Writable> parseTurboStreamWritable(@NonNull HttpRequest<?> request,
+                                                       @NonNull MutableHttpResponse<?> response,
+                                                       @Nullable Object body) {
+        Optional<Writable> optionalWritable = parseTurboStream(request, response)
+                .flatMap(builder -> turboStreamRenderer.render(builder, request));
+        return optionalWritable.isPresent() ? optionalWritable : parseRenderableBody(body);
+    }
+
+    @NonNull
+    private Optional<Writable> parseRenderableBody(@Nullable Object body) {
+        return body instanceof Renderable ? ((Renderable) body).render() : Optional.empty();
+    }
+
+    @NonNull
+    private Optional<Writable> parseTurboFrameWritable(@NonNull HttpRequest<?> request,
+                                                       @NonNull MutableHttpResponse<?> response,
+                                                       @Nullable Object body) {
+        Optional<Writable> optionalWritable = parseTurboFrame(request, response)
+                .flatMap(builder -> turboFrameRenderer.render(builder, request));
+        return optionalWritable.isPresent() ? optionalWritable : parseRenderableBody(body);
+
+    }
+
+    @NonNull
+    private Publisher<MutableHttpResponse<?>> responseForWritable(@NonNull MutableHttpResponse<?> response,
+                                                                  @NonNull Writable writable,
+                                                                  @NonNull MediaType mediaType) {
+        response.body(writable);
+        response.contentType(mediaType);
+        return Flux.just(response);
     }
 }

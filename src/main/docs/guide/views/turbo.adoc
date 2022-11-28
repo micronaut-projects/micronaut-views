@@ -1,0 +1,5 @@
+Micronaut Views simplifies working with https://turbo.hotwired.dev[Turbo], the heart of https://hotwired.dev[Hotwire] (HTML over the wire):
+
+____
+A set of complementary techniques for speeding up page changes and form submissions, dividing complex pages into components, and stream partial page updates over WebSocket. All without writing any JavaScript at all. And designed from the start to integrate perfectly with native hybrid applications for iOS and Android.
+____

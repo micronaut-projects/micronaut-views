@@ -1,24 +1,25 @@
 plugins {
-    id("io.micronaut.build.internal.module")
+    id "io.micronaut.build.internal.views-module"
 }
 dependencies {
-    api project(":views-core")    
-    api "io.pebbletemplates:pebble:$pebbleVersion"
+    api project(":views-core")
+    api(libs.pebble)
 
-    compileOnly "io.micronaut:micronaut-management:$micronautVersion"
-    compileOnly "io.micronaut:micronaut-validation:$micronautVersion"
+    compileOnly(mn.micronaut.management)
+    compileOnly(mn.micronaut.validation)
 
-    api "io.micronaut:micronaut-runtime:$micronautVersion"
-    api "io.micronaut:micronaut-http:$micronautVersion"
-    api "io.micronaut:micronaut-http-server:$micronautVersion"
+    api(mn.micronaut.runtime)
+    api(mn.micronaut.http)
+    api(mn.micronaut.http.server)
 
-    testCompileOnly "io.micronaut:micronaut-inject-groovy:$micronautVersion"
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
+    testCompileOnly(mn.micronaut.inject.groovy)
+    testAnnotationProcessor(mn.micronaut.inject.java)
 
-    testImplementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-management:$micronautVersion"
-    testImplementation "io.micronaut:micronaut-validation:$micronautVersion"
-    
-    testImplementation "org.yaml:snakeyaml:$snakeYamlVersion"
+    testImplementation(mn.micronaut.serde.jackson)
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.management)
+    testImplementation(mn.micronaut.validation)
+
+    testImplementation(libs.snakeyaml)
 }

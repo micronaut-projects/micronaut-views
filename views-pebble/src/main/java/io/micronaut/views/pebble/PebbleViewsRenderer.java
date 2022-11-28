@@ -18,17 +18,16 @@ package io.micronaut.views.pebble;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.LocaleResolver;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsRenderer;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * Renders Views with Pebble.
@@ -50,50 +49,23 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
      * @param engine Pebble Engine
      * @param httpLocaleResolver The locale resolver
      */
-    @Inject
     public PebbleViewsRenderer(PebbleEngine engine,
                                LocaleResolver<HttpRequest<?>> httpLocaleResolver) {
         this.engine = engine;
         this.httpLocaleResolver = httpLocaleResolver;
     }
 
-    /**
-     * @param engine Pebble Engine
-     * @deprecated Use {@link #PebbleViewsRenderer(PebbleEngine, LocaleResolver)} instead.
-     */
-    @Deprecated
-    public PebbleViewsRenderer(PebbleEngine engine) {
-        this.engine = engine;
-        this.httpLocaleResolver = new LocaleResolver<HttpRequest<?>>() {
-            @Override @NonNull public Optional<Locale> resolve(@NonNull HttpRequest<?> context) {
-                return context.getLocale();
-            }
 
-            @Override @NonNull public Locale resolveOrDefault(@NonNull HttpRequest<?> context) {
-//                Returns US locale by default to simulate previous incorrect behavior to ensure it is non-breaking for
-//                people relying on this behavior.
-                return Locale.US;
-            }
-        };
-    }
-
-    /**
-     * @param configuration Pebble Configuration
-     * @param engine Pebble Engine
-     * @deprecated Use {@link #PebbleViewsRenderer(PebbleEngine, LocaleResolver)} instead.
-     */
-    @Deprecated
-    public PebbleViewsRenderer(PebbleConfiguration configuration, PebbleEngine engine) {
-        this(engine);
+    @Override
+    @NonNull
+    public Writable render(@NonNull String name,
+                           @Nullable T data,
+                           @Nullable HttpRequest<?> request) {
+        return (writer) -> engine.getTemplate(name).evaluate(writer, ViewUtils.modelOf(data), request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault());
     }
 
     @Override
-    public Writable render(String name, T data, @NonNull HttpRequest<?> request) {
-        return (writer) -> engine.getTemplate(name).evaluate(writer, ViewUtils.modelOf(data), httpLocaleResolver.resolveOrDefault(request));
-    }
-
-    @Override
-    public boolean exists(String name) {
+    public boolean exists(@NonNull String name) {
         return engine.getLoader().resourceExists(name);
     }
 }
