@@ -27,21 +27,23 @@ import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsConfigurationProperties;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+
+import java.util.Map;
 import java.util.Properties;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link FreemarkerViewsRendererConfiguration}.
- * 
+ *
  * All configured properties are extracted from {@link freemarker.template.Configuration} and
  * {@link freemarker.core.Configurable}. All Freemarker properties names are reused in the micronaut
  * configuration.
- * 
+ *
  * If a value is not declared and is null, the default configuration from Freemarker is used. The expected
  * format of each value is the same from Freemarker, and no conversion or validation is done by Micronaut.
- * 
+ *
  * All Freemarker configuration documentation is published in their
  * <a href="https://freemarker.apache.org/docs/pgui_config.html">site</a>.
- * 
+ *
  * @author Jerónimo López
  * @since 1.1
  */
@@ -132,6 +134,11 @@ public class FreemarkerViewsRendererConfigurationProperties extends Configuratio
      */
     public void setIncompatibleImprovements(Version incompatibleImprovements) {
         super.setIncompatibleImprovements(incompatibleImprovements);
+    }
+
+    @Override
+    public Map getSettings() {
+        return super.getSettings();
     }
 
     @Override
