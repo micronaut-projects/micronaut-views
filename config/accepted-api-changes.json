@@ -43,4 +43,15 @@
     "type": "io.micronaut.views.jte.JteViewsRenderer",
     "member": "Field DEFAULT_EXTENSION",
     "reason": "Removed deprecated field for Micronaut 4"
-  }]
+  },
+  {
+    "type": "io.micronaut.views.pebble.PebbleLoader",
+    "member": "Implemented interface com.mitchellbosecke.pebble.loader.Loader",
+    "reason": "Pebble library upgrade changed package name to io.pebbletemplates.pebble"
+  },
+  {
+    "type": "io.micronaut.views.pebble.PebbleViewsRenderer",
+    "member": "Constructor io.micronaut.views.pebble.PebbleViewsRenderer(com.mitchellbosecke.pebble.PebbleEngine,io.micronaut.core.util.LocaleResolver)",
+    "reason": "Pebble library upgrade changed package name to io.pebbletemplates.pebble"
+  }
+]

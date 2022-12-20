@@ -6,8 +6,10 @@ pluginManagement {
 }
 
 plugins {
-    id("io.micronaut.build.shared.settings") version "6.1.0"
+    id("io.micronaut.build.shared.settings") version "6.1.1"
 }
+
+enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
 
 rootProject.name = 'views-parent'
 
@@ -26,13 +28,9 @@ include "test-suite"
 include "test-suite-groovy"
 include "test-suite-kotlin"
 
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-    }
-}
-
 micronautBuild {
+    addSnapshotRepository()
     importMicronautCatalog()
+    importMicronautCatalog("micronaut-security")
+    importMicronautCatalog("micronaut-serde")
 }

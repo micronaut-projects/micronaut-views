@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api project(":views-core")
+    api projects.viewsCore
     api(libs.managed.thymeleaf)
     api(libs.thymeleaf.extras.java8time)
     compileOnly(mn.micronaut.management)
@@ -17,11 +17,11 @@ dependencies {
     testCompileOnly(mn.micronaut.inject.groovy)
     testAnnotationProcessor(mn.micronaut.inject.java)
 
-    testImplementation(mn.micronaut.serde.jackson)
-    testImplementation(libs.reactor.core)
+    testImplementation(mnSerde.micronaut.serde.jackson)
+    testImplementation(mn.reactor)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.management)
     testImplementation(mn.micronaut.validation)
-    testImplementation(libs.snakeyaml)
+    testImplementation(mn.snakeyaml)
 }

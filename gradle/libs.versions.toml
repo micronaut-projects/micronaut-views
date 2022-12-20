@@ -1,4 +1,15 @@
 [versions]
+
+micronaut = "4.0.0-SNAPSHOT"
+micronaut-docs = '2.0.0'
+micronaut-test = "4.0.0-SNAPSHOT"
+
+micronaut-security = "4.0.0-SNAPSHOT"
+micronaut-serde = "2.0.0-SNAPSHOT"
+
+groovy = "4.0.6"
+spock = "2.3-groovy-4.0"
+
 managed-freemarker = "2.3.31"
 managed-handlebars = "4.3.1"
 managed-jte = "2.2.3"
@@ -8,12 +19,14 @@ managed-thymeleaf = "3.1.0.RELEASE"
 managed-velocity = "2.3"
 
 pebble = "3.2.0"
-snake-yaml = "1.33"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
-kotlin = "1.7.21"
+kotlin = "1.7.22"
 kotlinx-coroutines = "1.6.4"
 
 [libraries]
+micronaut-security = { module = "io.micronaut.security:micronaut-security-bom", version.ref = "micronaut-security" }
+micronaut-serde = { module = "io.micronaut.serde:micronaut-serde-bom", version.ref = "micronaut-serde" }
+
 managed-freemarker = { module = "org.freemarker:freemarker", version.ref = "managed-freemarker" }
 managed-handlebars = { module = "com.github.jknack:handlebars", version.ref = "managed-handlebars" }
 managed-jte = { module = "gg.jte:jte", version.ref = "managed-jte" }
@@ -25,10 +38,7 @@ managed-velocity-engine-core = { module = "org.apache.velocity:velocity-engine-c
 
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
-logback-classic = { module = "ch.qos.logback:logback-classic" }
 pebble = { module = "io.pebbletemplates:pebble", version.ref = "pebble" }
-reactor-core = { module = "io.projectreactor:reactor-core" }
-snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snake-yaml" }
 thymeleaf-extras-java8time = { module = "org.thymeleaf.extras:thymeleaf-extras-java8time", version.ref = "thymeleaf-extra-java8time" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }

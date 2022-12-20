@@ -15,7 +15,6 @@
  */
 package io.micronaut.views.pebble;
 
-import com.mitchellbosecke.pebble.PebbleEngine;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -25,6 +24,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsRenderer;
+import io.pebbletemplates.pebble.PebbleEngine;
 import jakarta.inject.Singleton;
 
 import java.util.Locale;
