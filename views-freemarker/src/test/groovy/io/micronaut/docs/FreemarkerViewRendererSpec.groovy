@@ -62,7 +62,7 @@ class FreemarkerViewRendererSpec extends Specification {
         then:
         !props.isCacheStorageExplicitlySet()
         props.lazyImports
-        props.URLEscapingCharset == 'UTF-8'
+        !props.URLEscapingCharset
     }
 
     def "invoking /freemarker/home does not specify @View, thus, regular JSON rendering is used"() {
