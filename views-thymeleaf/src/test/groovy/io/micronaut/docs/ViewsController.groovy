@@ -52,19 +52,19 @@ class ViewsController {
     @Get("/modelAndView")
     ModelAndView modelAndView() {
         return new ModelAndView("home",
-                new Person(loggedIn: true, username: 'sdelamo'))
+                new Person("sdelamo", true))
     }
     //end::modelAndView[]
 
     @Get("/home")
     HttpResponse<Person> home() {
-        HttpResponse.ok(new Person(loggedIn: true, username: 'sdelamo'))
+        HttpResponse.ok(new Person("sdelamo", true))
     }
 
     @View("bogus")
     @Get("/bogus")
     HttpResponse<Person> bogus() {
-        HttpResponse.ok(new Person(loggedIn: true, username: 'sdelamo'))
+        HttpResponse.ok(new Person("sdelamo", true))
     }
 
     @View("/home")
