@@ -25,7 +25,7 @@
 @Requires(classes = PebbleEngine.class)
 package io.micronaut.views.pebble;
 
-import com.mitchellbosecke.pebble.PebbleEngine;
 import io.micronaut.context.annotation.Configuration;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
+import io.pebbletemplates.pebble.PebbleEngine;

@@ -15,10 +15,10 @@
  */
 package io.micronaut.views.pebble;
 
-import com.mitchellbosecke.pebble.extension.escaper.EscapeFilter;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.ViewsConfigurationProperties;
+import io.pebbletemplates.pebble.extension.escaper.EscapeFilter;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link PebbleConfiguration}.
@@ -34,9 +34,9 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
 
     public static final boolean DEFAULT_ENABLED = true;
     public static final String DEFAULT_EXTENSION = "html";
-    public static final boolean DEFAULT_CACHE_ACTIVE = true;    
+    public static final boolean DEFAULT_CACHE_ACTIVE = true;
     public static final boolean DEFAULT_NEW_LINE_TRIMMING = true;
-    public static final boolean DEFAULT_AUTO_ESCAPING = true;        
+    public static final boolean DEFAULT_AUTO_ESCAPING = true;
     public static final String DEFAULT_ESCAPING_STRATEGY = EscapeFilter.HTML_ESCAPE_STRATEGY;
     public static final boolean DEFAULT_STRICT_VARIABLES = false;
     public static final boolean DEFAULT_GREEDY_MATCH_METHOD = false;
@@ -69,7 +69,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-    
+
     @Override
     public String getDefaultExtension() {
         return defaultExtension;
@@ -94,7 +94,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     /**
      * Enable/disable all caches, i.e. cache used by the engine to store compiled PebbleTemplate
      * instances and tags cache. Default value ({@value #DEFAULT_CACHE_ACTIVE}).
-     * 
+     *
      * @param cacheActive toggle to enable/disable all caches
      */
     public void setCacheActive(boolean cacheActive) {
@@ -107,8 +107,8 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     }
 
     /**
-     * Changes the newLineTrimming setting of the PebbleEngine. By default, Pebble 
-     * will trim a new line that immediately follows a Pebble tag. If set to false, then the 
+     * Changes the newLineTrimming setting of the PebbleEngine. By default, Pebble
+     * will trim a new line that immediately follows a Pebble tag. If set to false, then the
      * first newline following a Pebble tag won't be trimmed.  All newlines will be preserved.
      * Default value ({@value #DEFAULT_NEW_LINE_TRIMMING}).
      *
@@ -154,7 +154,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     }
 
     /**
-     * Changes the strictVariables setting of the PebbleEngine. 
+     * Changes the strictVariables setting of the PebbleEngine.
      * Default value ({@value #DEFAULT_STRICT_VARIABLES}).
      *
      * @param strictVariables Whether or not strict variables is used
@@ -174,9 +174,9 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
      * satisfied), reduce the limit of the parameter type, try to find other method which has
      * compatible parameter types.
      * Default value ({@value #DEFAULT_GREEDY_MATCH_METHOD}).
-     * 
+     *
      * @param greedyMatchMethod toggle to enable/disable greedy match method
-     * @see com.mitchellbosecke.pebble.utils.TypeUtils#compatibleCast(Object, Class)
+     * @see io.pebbletemplates.pebble.utils.TypeUtils#compatibleCast(Object, Class)
      */
     public void setGreedyMatchMethod(boolean greedyMatchMethod) {
         this.greedyMatchMethod = greedyMatchMethod;
@@ -203,7 +203,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     }
 
     /**
-     * Enable/disable treat literal decimal as Integer. 
+     * Enable/disable treat literal decimal as Integer.
      * Default value ({@value #DEFAULT_LITERAL_DECIMALS_AS_INTEGERS}), treated as Long.
      *
      * @param literalDecimalsAsIntegers toggle to enable/disable literal decimal treated as
@@ -219,9 +219,9 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     }
 
     /**
-     * Enable/disable treat literal numbers as BigDecimals. 
+     * Enable/disable treat literal numbers as BigDecimals.
      * Default value ({@value #DEFAULT_LITERAL_NUMBERS_AS_BIG_DECIMALS}), treated as Long/Double.
-     * 
+     *
      * @param literalNumbersAsBigDecimals toggle to enable/disable literal numbers treated as
      * BigDecimals
      */

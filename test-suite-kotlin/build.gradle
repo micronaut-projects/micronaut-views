@@ -5,22 +5,21 @@ plugins {
 }
 
 dependencies {
-    testImplementation(platform(mn.micronaut.bom))
     testImplementation(mn.micronaut.validation)
 
     testImplementation(libs.junit.jupiter.api)
-    testImplementation(mn.micronaut.test.junit5)
+    testImplementation(mnTest.micronaut.test.junit5)
     testRuntimeOnly(libs.junit.jupiter.engine)
 
     testImplementation(libs.kotlin.stdlib.jdk8)
     kaptTest(mn.micronaut.inject.java)
 
-    testImplementation(mn.micronaut.serde.jackson)
+    testImplementation(mnSerde.micronaut.serde.jackson)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.http.client)
-    testImplementation project(":views-soy")
+    testImplementation projects.viewsSoy
     testImplementation(libs.kotlinx.coroutines.core)
-    testImplementation project(":views-velocity")
+    testImplementation projects.viewsVelocity
 }
 
 tasks.named('test') {
@@ -32,9 +31,4 @@ compileTestKotlin {
         jvmTarget = '17'
         javaParameters = true
     }
-}
-
-java {
-    sourceCompatibility = JavaVersion.toVersion("17")
-    targetCompatibility = JavaVersion.toVersion("17")
 }

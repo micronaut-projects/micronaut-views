@@ -15,23 +15,22 @@
  */
 package io.micronaut.views.pebble;
 
-import java.util.List;
-import java.util.Optional;
-
-import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
-import com.mitchellbosecke.pebble.PebbleEngine;
-import com.mitchellbosecke.pebble.PebbleEngine.Builder;
-import com.mitchellbosecke.pebble.attributes.methodaccess.MethodAccessValidator;
-import com.mitchellbosecke.pebble.extension.Extension;
-import com.mitchellbosecke.pebble.lexer.Syntax;
-import com.mitchellbosecke.pebble.loader.Loader;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.views.ViewsConfiguration;
-import java.util.concurrent.ExecutorService;
+import io.pebbletemplates.pebble.PebbleEngine;
+import io.pebbletemplates.pebble.attributes.methodaccess.MethodAccessValidator;
+import io.pebbletemplates.pebble.extension.Extension;
+import io.pebbletemplates.pebble.lexer.Syntax;
+import io.pebbletemplates.pebble.loader.Loader;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.inject.Singleton;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Factory for PebbleEngine beans.
@@ -69,7 +68,7 @@ public class PebbleEngineFactory {
 
     @Inject
     public PebbleEngineFactory(ViewsConfiguration viewsConfiguration,
-                               PebbleConfiguration configuration, 
+                               PebbleConfiguration configuration,
                                Optional<Loader<?>> loader,
                                Optional<Syntax> syntax,
                                Optional<MethodAccessValidator> methodAccessValidator,
@@ -89,7 +88,7 @@ public class PebbleEngineFactory {
      */
     @Singleton
     public PebbleEngine create() {
-        Builder builder = new PebbleEngine.Builder()
+        PebbleEngine.Builder builder = new PebbleEngine.Builder()
             .cacheActive(configuration.isCacheActive())
             .newLineTrimming(configuration.isNewLineTrimming())
             .autoEscaping(configuration.isAutoEscaping())
@@ -111,8 +110,8 @@ public class PebbleEngineFactory {
         extensions.forEach(bean -> builder.extension(bean));
 
         // Not implemented:
-        // defaultLocale, templateCache, tagCache, addEscapingStrategy 
-        
+        // defaultLocale, templateCache, tagCache, addEscapingStrategy
+
         return builder.build();
     }
 }
