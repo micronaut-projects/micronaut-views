@@ -48,7 +48,6 @@ class FreemarkerViewRendererSpec extends Specification {
     @AutoCleanup
     HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient, embeddedServer.getURL())
 
-    @PendingFeature
     def "bean is loaded"() {
         when:
         embeddedServer.applicationContext.getBean(FreemarkerViewsRenderer)
