@@ -14,7 +14,7 @@ views:
       soyconfiguration: Soy Configuration
       soyusage: Soy Usage
       soyfeaturestemplatesecurity: Soy Features - Template Security
-      soyfeaturesremaining: Soy Features - Remaining
+      soyfeaturesrenaming: Soy Features - Renaming
       buildingsoy: Building Soy
     pebble: Pebble
     jte: JTE
