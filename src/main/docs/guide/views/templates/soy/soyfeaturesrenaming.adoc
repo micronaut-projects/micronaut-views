@@ -5,12 +5,12 @@ opt-in and requires a few things:
 * Special calls in your templates that map CSS classes and IDs
 * JSON renaming map provided at compile time for JS templates, and runtime for Java rendering
 
-Renaming is similar to other frameworks' correponding uglify features, but it's significantly more powerful, allowing
+Renaming is similar to other frameworks' corresponding uglify features, but it's significantly more powerful, allowing
 you to rewrite CSS classes and IDs as you would JavaScript symbols. Here's how you can use renaming server-side with
 Micronaut Views Soy:
 
 1. Configure Micronaut Views Soy to enable renaming:
-[source,yaml]
+[configuration]
 micronaut:
   views:
     soy:
