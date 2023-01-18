@@ -11,11 +11,13 @@ Micronaut Views Soy:
 
 1. Configure Micronaut Views Soy to enable renaming:
 [configuration]
+----
 micronaut:
   views:
     soy:
       enabled: true
       renaming: true
+----
 
 2. When building your styles with GSS, or a similar tool, generate a rewrite map:
 [source,bash]
