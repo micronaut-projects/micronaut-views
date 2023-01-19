@@ -38,7 +38,7 @@ public class WebContext extends AbstractContext {
      * @param request HTTP request.
      * @param locale the locale.
      * @param variables the variables.
-     * @see AbstractContext#AbstractContext(Locale, Map).
+     * @see AbstractContext {@link AbstractContext#AbstractContext(Locale, Map)}.
      */
     public WebContext(@Nullable HttpRequest<?> request, Locale locale, Map<String, Object> variables) {
         super(locale, variables);

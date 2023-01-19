@@ -3,7 +3,7 @@ the http://velocity.apache.org[Apache Velocity] Java-based template engine.
 
 Add the `micronaut-views-velocity` dependency to your classpath.
 
-dependency:io.micronaut.views:micronaut-views-velocity[group="io.micronaut.views"]
+dependency:micronaut-views-velocity[groupId="io.micronaut.views"]
 
 The example shown in the <<views, Views>> section, could be rendered with the following Velocity template:
 

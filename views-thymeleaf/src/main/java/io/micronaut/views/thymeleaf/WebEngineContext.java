@@ -43,7 +43,7 @@ public class WebEngineContext extends EngineContext {
      * @param locale the locale.
      * @param variables the context variables, probably coming from another {@link
      * org.thymeleaf.context.IContext} implementation.
-     * @see EngineContext#EngineContext(IEngineConfiguration, TemplateData, Map, Locale, Map).
+     * @see EngineContext EngineContext#EngineContext(IEngineConfiguration, TemplateData, Map, Locale, Map).
      */
     public WebEngineContext(
             IEngineConfiguration configuration, TemplateData templateData,
