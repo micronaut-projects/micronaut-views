@@ -4,8 +4,12 @@ plugins {
 
 dependencies {
     api project(":views-core")
-    api(libs.managed.thymeleaf)
-    api(libs.thymeleaf.extras.java8time)
+    api(libs.managed.thymeleaf) {
+       exclude(group: "org.slf4j", module: "slf4j-api")
+    }
+    api(libs.thymeleaf.extras.java8time) {
+        exclude(group: "org.slf4j", module: "slf4j-api")
+    }
     compileOnly(mn.micronaut.management)
     compileOnly(mn.micronaut.validation)
 
