@@ -10,6 +10,7 @@ you to rewrite CSS classes and IDs as you would JavaScript symbols. Here's how y
 Micronaut Views Soy:
 
 1. Configure Micronaut Views Soy to enable renaming:
+
 [configuration]
 ----
 micronaut:
