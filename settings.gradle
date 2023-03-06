@@ -6,7 +6,7 @@ pluginManagement {
 }
 
 plugins {
-    id("io.micronaut.build.shared.settings") version "6.3.1"
+    id("io.micronaut.build.shared.settings") version "6.3.3"
 }
 
 enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
@@ -29,8 +29,10 @@ include "test-suite-groovy"
 include "test-suite-kotlin"
 
 micronautBuild {
+    useStandardizedProjectNames=true
     addSnapshotRepository()
     importMicronautCatalog()
     importMicronautCatalog("micronaut-security")
     importMicronautCatalog("micronaut-serde")
+    importMicronautCatalog("micronaut-validation")
 }

@@ -6,7 +6,7 @@ plugins {
 dependencies {
     api(libs.managed.jte)
 
-    api projects.viewsCore
+    api projects.micronautViewsCore
     implementation(libs.managed.jte.kotlin)
     testImplementation(mnSerde.micronaut.serde.jackson)
     testImplementation(mn.reactor)
