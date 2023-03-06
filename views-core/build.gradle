@@ -7,7 +7,7 @@ dependencies {
 
     compileOnly(mnSecurity.micronaut.security)
     compileOnly(mn.micronaut.management)
-    compileOnly(mmnValidation.micronaut.validationation)
+    compileOnly(mnValidation.micronaut.validation)
 
     api(mn.micronaut.runtime)
     api(mn.micronaut.http)
