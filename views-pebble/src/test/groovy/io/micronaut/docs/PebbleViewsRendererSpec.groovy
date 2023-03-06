@@ -15,6 +15,7 @@
  */
 package io.micronaut.docs
 
+import com.mitchellbosecke.pebble.error.ParserException
 import io.micronaut.context.ApplicationContext
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
@@ -25,6 +26,7 @@ import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
 import io.micronaut.views.pebble.PebbleViewsRenderer
 import spock.lang.AutoCleanup
+import spock.lang.Issue
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -139,6 +141,15 @@ class PebbleViewsRendererSpec extends Specification {
         then:
         body
         rsp.body().contains("<h1>You are not logged in</h1>")
+    }
+
+    @Issue('https://github.com/micronaut-projects/micronaut-views/issues/478')
+    def "invoking /pebble/badsyntax throws pebble ParserException"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/pebble/badsyntax', String)
+
+        then:
+        thrown(ParserException)
     }
 
     def "invoking /text renders pebble text template from a controller returning a map"() {
