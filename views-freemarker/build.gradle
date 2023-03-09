@@ -3,25 +3,28 @@ plugins {
 }
 
 dependencies {
+    annotationProcessor(mnValidation.micronaut.validation.processor)
+
     implementation(libs.managed.freemarker)
 
     compileOnly(mn.micronaut.management)
-    compileOnly(mn.micronaut.validation)
+    compileOnly(mnValidation.micronaut.validation)
 
-    api projects.viewsCore
+    api projects.micronautViewsCore
     api(mn.micronaut.runtime)
     api(mn.micronaut.http)
     api(mn.micronaut.http.server)
 
     testCompileOnly(mn.micronaut.inject.groovy)
     testAnnotationProcessor(mn.micronaut.inject.java)
+    testAnnotationProcessor(mnValidation.micronaut.validation.processor)
 
     testImplementation(mnSerde.micronaut.serde.jackson)
     testImplementation(mn.reactor)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.management)
-    testImplementation(mn.micronaut.validation)
+    testImplementation(mnValidation.micronaut.validation)
 
     testImplementation(mn.snakeyaml)
 }
