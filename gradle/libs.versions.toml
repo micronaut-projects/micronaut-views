@@ -7,7 +7,7 @@ micronaut-security = "4.0.0-SNAPSHOT"
 micronaut-serde = "2.0.0-M1"
 micronaut-validation = "4.0.0-M2"
 
-groovy = "4.0.9"
+groovy = "4.0.10"
 spock = "2.3-groovy-4.0"
 
 managed-freemarker = "2.3.32"
