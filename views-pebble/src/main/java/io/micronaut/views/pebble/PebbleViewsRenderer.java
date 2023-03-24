@@ -99,10 +99,10 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
         try {
             // this has to fail fast to avoid a ReadTimeoutException from ViewsFilter call
             template = engine.getTemplate(name);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             throw new ViewRenderingException("Error rendering Pebble view [" + name + "]: " + e.getMessage(), e);
         }
-        return (writer) -> template.evaluate(writer, ViewUtils.modelOf(data),
+        return writer -> template.evaluate(writer, ViewUtils.modelOf(data),
                     request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault());
     }
 
