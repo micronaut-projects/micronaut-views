@@ -11,7 +11,9 @@ import spock.lang.Specification
 
 import jakarta.inject.Inject
 
+@Property(name = "micronaut.security.enabled", value = StringUtils.FALSE)
 @Property(name = "spec.name", value = "soy")
+@Property(name = "micronaut.views.velocity.enabled", value = StringUtils.FALSE)
 @MicronautTest
 class SoySpec extends Specification {
     @Inject

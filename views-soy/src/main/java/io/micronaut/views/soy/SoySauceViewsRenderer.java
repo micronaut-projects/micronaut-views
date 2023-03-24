@@ -93,7 +93,7 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T> {
                         "Unable to load Soy templates: no file set, no compiled templates provided.");
             }
             try {
-                this.soySauce = soyConfiguration.getFileSet().compileTemplates();
+                this.soySauce = fileSet.compileTemplates();
             } catch (SoyCompilationException se) {
                 throw new ViewRenderingException(
                     "Soy template compilation failed: " + se.getMessage(), se);
