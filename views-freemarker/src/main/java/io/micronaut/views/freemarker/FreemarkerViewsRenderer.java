@@ -15,13 +15,14 @@
  */
 package io.micronaut.views.freemarker;
 
+import freemarker.core.ParseException;
 import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import freemarker.template.MalformedTemplateNameException;
-import io.micronaut.core.annotation.NonNull;
-import freemarker.core.ParseException;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
@@ -29,12 +30,10 @@ import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
-
-import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Renders Views with FreeMarker Java template engine.
@@ -82,15 +81,20 @@ public class FreemarkerViewsRenderer<T> implements ViewsRenderer<T> {
                            @Nullable T data,
                            @Nullable HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
+        Template template;
+        try {
+            // this has to fail fast to avoid a ReadTimeoutException from ViewsFilter call
+            template = freemarkerMicronautConfiguration.getTemplate(viewLocation(viewName));
+        } catch (IOException e) {
+            throw new ViewRenderingException(
+                    "Error rendering Freemarker view [" + viewName + "]: " + e.getMessage(), e);
+        }
         return (writer) -> {
-            Map<String, Object> context = ViewUtils.modelOf(data);
-            String location = viewLocation(viewName);
-            Template template = freemarkerMicronautConfiguration.getTemplate(location);
             try {
-                template.process(context, writer);
+                template.process(ViewUtils.modelOf(data), writer);
             } catch (TemplateException e) {
                 throw new ViewRenderingException(
-                        "Error rendering Freemarker view [" + viewName + "]: " + e.getMessage(), e);
+                    "Error rendering Freemarker view [" + viewName + "]: " + e.getMessage(), e);
             }
         };
     }

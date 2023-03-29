@@ -15,16 +15,20 @@
  */
 package io.micronaut.docs
 
+
 import io.micronaut.context.ApplicationContext
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.exceptions.HttpClientException
 import io.micronaut.http.client.exceptions.HttpClientResponseException
+import io.micronaut.http.client.exceptions.ReadTimeoutException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
 import io.micronaut.views.pebble.PebbleViewsRenderer
 import spock.lang.AutoCleanup
+import spock.lang.Issue
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -139,6 +143,16 @@ class PebbleViewsRendererSpec extends Specification {
         then:
         body
         rsp.body().contains("<h1>You are not logged in</h1>")
+    }
+
+    @Issue('https://github.com/micronaut-projects/micronaut-views/issues/478')
+    def "invoking /pebble/badsyntax throws HttpClientException that is not a read timeout"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/pebble/badsyntax', String)
+
+        then:
+        def e = thrown(HttpClientException)
+        !(e instanceof ReadTimeoutException)
     }
 
     def "invoking /text renders pebble text template from a controller returning a map"() {

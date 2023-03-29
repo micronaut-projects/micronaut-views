@@ -16,6 +16,7 @@
 package io.micronaut.views.pebble;
 
 import com.mitchellbosecke.pebble.PebbleEngine;
+import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -25,6 +26,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.exceptions.ViewRenderingException;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -93,7 +95,15 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
     public Writable render(@NonNull String name,
                            @Nullable T data,
                            @Nullable HttpRequest<?> request) {
-        return (writer) -> engine.getTemplate(name).evaluate(writer, ViewUtils.modelOf(data), request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault());
+        PebbleTemplate template;
+        try {
+            // this has to fail fast to avoid a ReadTimeoutException from ViewsFilter call
+            template = engine.getTemplate(name);
+        } catch (Exception e) {
+            throw new ViewRenderingException("Error rendering Pebble view [" + name + "]: " + e.getMessage(), e);
+        }
+        return writer -> template.evaluate(writer, ViewUtils.modelOf(data),
+                    request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault());
     }
 
     @Override

@@ -31,6 +31,7 @@ import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import io.micronaut.http.filter.ServerFilterPhase;
 import io.micronaut.views.exceptions.ViewNotFoundException;
+import io.micronaut.views.exceptions.ViewRenderingException;
 import io.micronaut.views.turbo.DefaultTurboFrameRenderer;
 import io.micronaut.views.turbo.DefaultTurboStreamRenderer;
 import io.micronaut.views.turbo.TurboFrame;
@@ -43,6 +44,7 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
+
 import java.util.Optional;
 
 /**
@@ -175,7 +177,7 @@ public class ViewsFilter implements HttpServerFilter {
                     response.contentType(type);
                     response.body(writable);
                     return Flux.just(response);
-                } catch (ViewNotFoundException e) {
+                } catch (ViewNotFoundException | ViewRenderingException e) {
                     return Flux.error(e);
                 }
             });

@@ -4,19 +4,18 @@ import com.google.template.soy.SoyFileSet
 import io.micronaut.context.annotation.Requires
 import io.micronaut.views.ViewsConfiguration
 import io.micronaut.views.soy.SoyFileSetProvider
-
 import jakarta.inject.Singleton
-
 
 /**
  * Provide a SoyFileSet
  */
 @Singleton
-@Requires(property = "spec.name", value = "soy")
-class ExampleSoyFileSetProvider implements SoyFileSetProvider {
+@Requires(property = "spec.name", value = "badsyntax")
+class BadSyntaxSoyFileSetProvider implements SoyFileSetProvider {
 
     private final ViewsConfiguration viewsConfiguration
-    ExampleSoyFileSetProvider(ViewsConfiguration viewsConfiguration) {
+
+    BadSyntaxSoyFileSetProvider(ViewsConfiguration viewsConfiguration) {
         this.viewsConfiguration = viewsConfiguration
     }
     /**
@@ -26,7 +25,7 @@ class ExampleSoyFileSetProvider implements SoyFileSetProvider {
     SoyFileSet provideSoyFileSet() {
         return SoyFileSet.builder()
             .add(new File(
-                ExampleSoyFileSetProvider.class.getClassLoader().getResource(viewsConfiguration.getFolder() + "/home.soy").getFile()))
+                BadSyntaxSoyFileSetProvider.class.getClassLoader().getResource(viewsConfiguration.getFolder() + "/badsyntax.soy").getFile()))
         .build()
     }
 }

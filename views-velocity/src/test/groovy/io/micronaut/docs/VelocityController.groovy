@@ -82,4 +82,9 @@ class VelocityController {
     HttpResponse nullBody() {
         HttpResponse.ok()
     }
+
+    @View("badsyntax.vm")
+    @Get("/badsyntax")
+    void badsyntax() {
+    }
 }

@@ -1,4 +1,4 @@
-package io.micronaut.doc.soy
+package io.micronaut.docs.soy
 
 import com.google.template.soy.SoyFileSet
 import io.micronaut.context.annotation.Requires

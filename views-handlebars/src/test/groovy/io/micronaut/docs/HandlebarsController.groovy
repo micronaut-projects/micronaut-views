@@ -61,4 +61,9 @@ public class HandlebarsController {
     HttpResponse nullBody() {
         HttpResponse.ok()
     }
+
+    @View("badsyntax.hbs")
+    @Get("/badsyntax")
+    void badsyntax() {
+    }
 }
