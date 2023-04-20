@@ -1,11 +1,11 @@
 [versions]
-micronaut = "4.0.0-M1"
+micronaut = "4.0.0-M2"
 micronaut-docs = '2.0.0'
-micronaut-test = "4.0.0-SNAPSHOT"
+micronaut-test = "4.0.0-M1"
 
-micronaut-security = "4.0.0-SNAPSHOT"
+micronaut-security = "4.0.0-M1"
 micronaut-serde = "2.0.0-M1"
-micronaut-validation = "4.0.0-M2"
+micronaut-validation = "4.0.0-M3"
 
 groovy = "4.0.10"
 spock = "2.3-groovy-4.0"
