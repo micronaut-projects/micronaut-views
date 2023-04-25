@@ -27,6 +27,9 @@ jte {
         exclude "gg"
     }
 }
+
+checkstyleMain.exclude('gg/jte/generated/precompiled/*.java')
+
 tasks.getByName("prepareJavadocAggregation") {
     dependsOn generateJte
 }
