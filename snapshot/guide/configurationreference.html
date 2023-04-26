@@ -46,48 +46,14 @@
         <div class="docs-content">
             <div class="project">
                 <h1>Configuration Reference</h1>
-                <p><strong>Version:</strong>3.8.2-SNAPSHOT</p>
+                <p><strong>Version:</strong>4.0.0-SNAPSHOT</p>
                 <p></p>
             </div>
 <div class="sect2">
-<h3 id="_views_core_config_properties">Views Core Config Properties</h3>
-<a id="io.micronaut.views.ViewsConfigurationProperties" href="#io.micronaut.views.ViewsConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/ViewsConfigurationProperties.html">ViewsConfigurationProperties</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether view rendering is enabled. Default value (true).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.folder</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The folder to look for views.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.dir</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The folder to look for views. Default value ("views").</p></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
+<h3 id="_micronaut_views_core_config_properties">Micronaut Views Core Config Properties</h3>
 <a id="io.micronaut.views.csp.CspConfiguration" href="#io.micronaut.views.csp.CspConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/views/csp/CspConfiguration.html">CspConfiguration</a></caption>
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/csp/CspConfiguration.html">CspConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -104,18 +70,22 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether CSP is enabled. Default false.</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.policy-directives</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the policy directives.</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.report-only</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If true, the Content-Security-Policy-Report-Only header will be sent instead
- of Content-Security-Policy. Default false.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.random-engine</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Random</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.generate-nonce</code></p></td>
@@ -125,30 +95,24 @@
  can be used by views to authorize inlined script blocks.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.filter-path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the path the CSP filter should apply to. Default value "/**".</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.force-secure-random</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether <code>SecureRandom</code> is forced for use in generated nonce values.
- Defaults to <code>false</code>. Enabling this requires
- careful consideration, because <code>SecureRandom</code> will block infinitely without
+ Defaults to <code>`. Enabling this requires
+ careful consideration, because `SecureRandom</code> will block infinitely without
  enough entropy.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.random-engine</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Random</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the <code>Random</code> data engine used to generate nonce values. Ignored if
- <code>forceSecureRandom</code> is set to <code>true</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.filter-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties" href="#io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Configuration Properties for <a href="../api/io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html">SecurityViewModelProcessorConfigurationProperties</a></caption>
+<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html">SecurityViewModelProcessorConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -165,29 +129,63 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable {@link SecurityViewModelProcessor}. Default value (true).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable . Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.security-key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Model key name. Default value ("security").</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.principal-name-key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Nested security map key for the user&#8217;s name property. Default value ("name").</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.attributes-key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Nested security map key for the user&#8217;s attributes property. Default value ("attributes").</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="io.micronaut.views.ViewsConfigurationProperties" href="#io.micronaut.views.ViewsConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Configuration Properties for <a href="../api/io/micronaut/views/ViewsConfigurationProperties.html">ViewsConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled getter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.folder</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.dir</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The folder to look for views. Default value ().</p></td>
 </tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_views_freemarker_config_properties">Views Freemarker Config Properties</h3>
+<h3 id="_micronaut_views_freemarker_config_properties">Micronaut Views Freemarker Config Properties</h3>
 <a id="io.micronaut.views.freemarker.FreemarkerViewsRendererConfigurationProperties" href="#io.micronaut.views.freemarker.FreemarkerViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 4. Configuration Properties for <a href="../api/io/micronaut/views/freemarker/FreemarkerViewsRendererConfigurationProperties.html">FreemarkerViewsRendererConfigurationProperties</a></caption>
@@ -212,6 +210,21 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.classic-compatible-as-int</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.locale</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Locale</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.c-format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">freemarker.core.CFormat</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.time-zone</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.TimeZone</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -255,8 +268,23 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.template-exception-handler</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">freemarker.template.TemplateExceptionHandler</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.attempt-exception-reporter</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">freemarker.template.AttemptExceptionReporter</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.arithmetic-engine</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">freemarker.core.ArithmeticEngine</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.object-wrapper</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">freemarker.template.ObjectWrapper</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -295,6 +323,16 @@
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.log-template-exceptions</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.wrap-unchecked-exceptions</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.lazy-imports</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -321,7 +359,7 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.settings</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.io.InputStream</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Properties</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -366,41 +404,6 @@
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.strict-syntax-mode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.object-wrapper</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">freemarker.template.ObjectWrapper</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.locale</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Locale</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.time-zone</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.TimeZone</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.template-exception-handler</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">freemarker.template.TemplateExceptionHandler</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.attempt-exception-reporter</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">freemarker.template.AttemptExceptionReporter</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.log-template-exceptions</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.wrap-unchecked-exceptions</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -492,21 +495,19 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.default-extension</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the default extension to use.</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.freemarker.incompatible-improvements</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">freemarker.template.Version</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">the FreeMarker version number where the not 100% backward compatible bug fixes
- and improvements that you want to enable were already implemented. Defaults to
- {@link Configuration#DEFAULT_INCOMPATIBLE_IMPROVEMENTS}.</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_views_handlebars_config_properties">Views Handlebars Config Properties</h3>
+<h3 id="_micronaut_views_handlebars_config_properties">Micronaut Views Handlebars Config Properties</h3>
 <a id="io.micronaut.views.handlebars.HandlebarsViewsRendererConfigurationProperties" href="#io.micronaut.views.handlebars.HandlebarsViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 5. Configuration Properties for <a href="../api/io/micronaut/views/handlebars/HandlebarsViewsRendererConfigurationProperties.html">HandlebarsViewsRendererConfigurationProperties</a></caption>
@@ -526,19 +527,19 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.handlebars.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether handlebars view rendering is enabled. Default value (true).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled getter.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.handlebars.default-extension</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The default extension. Default value ("hbs").</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_views_jte_config_properties">Views Jte Config Properties</h3>
+<h3 id="_micronaut_views_jte_config_properties">Micronaut Views Jte Config Properties</h3>
 <a id="io.micronaut.views.jte.JteViewsRendererConfigurationProperties" href="#io.micronaut.views.jte.JteViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 6. Configuration Properties for <a href="../api/io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html">JteViewsRendererConfigurationProperties</a></caption>
@@ -558,18 +559,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable dynamic reloading of templates. Default value (false).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable dynamic reloading of templates. Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic-path</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Root directory under which to write generated source and class files. . Default value ("build/jte-classes").</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.binary-static-content</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable building binary content for templates. Default value (false).
- (Only has an effect when 'dynamic' is true. To use with precompiled templates, enable it in the build plugin)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Root directory under which to write generated source and class files. . Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic-source-path</code></p></td>
@@ -579,12 +574,18 @@
  'folder' is ViewsConfiguration.getFolder(). In cases where the source directory cannot be found,
  jte will use classpath loading instead, and will not dynamically reload templates.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.binary-static-content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable building binary content for templates. Default value ().
+ (Only has an effect when 'dynamic' is true. To use with precompiled templates, enable it in the build plugin)</p></td>
+</tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_views_pebble_config_properties">Views Pebble Config Properties</h3>
+<h3 id="_micronaut_views_pebble_config_properties">Micronaut Views Pebble Config Properties</h3>
 <a id="io.micronaut.views.pebble.PebbleConfigurationProperties" href="#io.micronaut.views.pebble.PebbleConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 7. Configuration Properties for <a href="../api/io/micronaut/views/pebble/PebbleConfigurationProperties.html">PebbleConfigurationProperties</a></caption>
@@ -604,18 +605,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the component is enabled. Default value (true).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the component is enabled. Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.default-extension</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The default extension. Default value ("html").</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The default extension. Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.cache-active</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable all caches, i.e. cache used by the engine to store compiled PebbleTemplate
- instances and tags cache. Default value (true).</p></td>
+ instances and tags cache. Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.new-line-trimming</code></p></td>
@@ -623,25 +624,25 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">Changes the newLineTrimming setting of the PebbleEngine. By default, Pebble
  will trim a new line that immediately follows a Pebble tag. If set to false, then the
  first newline following a Pebble tag won&#8217;t be trimmed.  All newlines will be preserved.
- Default value (true).</p></td>
+ Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.auto-escaping</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether or not escaping should be performed automatically.
- Default value (true).</p></td>
+ Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.default-escaping-strategy</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets the default escaping strategy of the built-in escaper extension.
- Default value (EscapeFilter.HTML_ESCAPE_STRATEGY).</p></td>
+ Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.strict-variables</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Changes the strictVariables setting of the PebbleEngine.
- Default value (false).</p></td>
+ Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.greedy-match-method</code></p></td>
@@ -650,32 +651,32 @@
  when can not find perfect method (method name, parameter length and parameter type are all
  satisfied), reduce the limit of the parameter type, try to find other method which has
  compatible parameter types.
- Default value (false).</p></td>
+ Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.allow-override-core-operators</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether or not core operators overrides should be allowed.
- Default value (false).</p></td>
+ Default value ().</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.literal-decimals-as-integers</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable treat literal decimal as Integer.
- Default value (false), treated as Long.</p></td>
+ Default value (), treated as Long.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.literal-numbers-as-big-decimals</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable treat literal numbers as BigDecimals.
- Default value (false), treated as Long/Double.</p></td>
+ Default value (), treated as Long/Double.</p></td>
 </tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_views_rocker_config_properties">Views Rocker Config Properties</h3>
+<h3 id="_micronaut_views_rocker_config_properties">Micronaut Views Rocker Config Properties</h3>
 <a id="io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties" href="#io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 8. Configuration Properties for <a href="../api/io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html">RockerViewsRendererConfigurationProperties</a></caption>
@@ -695,29 +696,29 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Rocker views are enabled. Default value (true).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enabled getter.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.default-extension</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the default extension to use for Rocker templates. Default value ("rocker.html").</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.hot-reloading</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether hot reloading is enabled. Default value (false).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hot reloading getter.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.relaxed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether relaxed binding is enabled for dynamic templates. Default value (false).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Relaxed binding getter.</p></td>
 </tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_views_soy_config_properties">Views Soy Config Properties</h3>
+<h3 id="_micronaut_views_soy_config_properties">Micronaut Views Soy Config Properties</h3>
 <a id="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties" href="#io.micronaut.views.soy.SoyViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 9. Configuration Properties for <a href="../api/io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html">SoyViewsRendererConfigurationProperties</a></caption>
@@ -737,19 +738,19 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Soy-backed views are enabled. Default value <code>true</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Soy-backed views are enabled. Default value ``</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.renaming-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Turns renaming on or off. Default value <code>true</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether renaming is enabled. Defaults to ``.</p></td>
 </tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_views_thymeleaf_config_properties">Views Thymeleaf Config Properties</h3>
+<h3 id="_micronaut_views_thymeleaf_config_properties">Micronaut Views Thymeleaf Config Properties</h3>
 <a id="io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties" href="#io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 10. Configuration Properties for <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html">ThymeleafViewsRendererConfigurationProperties</a></caption>
@@ -767,49 +768,49 @@
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether thymeleaf rendering is enabled. Default value (true).</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.character-encoding</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the character encoding to use. Default value ("UTF-8").</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.template-mode</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.thymeleaf.templatemode.TemplateMode</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the template mode.</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.suffix</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the suffix to use.</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.force-suffix</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to force the suffix. Default value (false).</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.force-template-mode</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to force template mode. Default value (false).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cacheable</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether templates are cacheable.</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cache-ttlms</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.Long</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the cache TTL in millis.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.check-existence</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether templates should be checked for existence.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cacheable</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled getter.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cache-ttl</code></p></td>
@@ -821,7 +822,7 @@
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_views_velocity_config_properties">Views Velocity Config Properties</h3>
+<h3 id="_micronaut_views_velocity_config_properties">Micronaut Views Velocity Config Properties</h3>
 <a id="io.micronaut.views.velocity.VelocityViewsRendererConfigurationProperties" href="#io.micronaut.views.velocity.VelocityViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 11. Configuration Properties for <a href="../api/io/micronaut/views/velocity/VelocityViewsRendererConfigurationProperties.html">VelocityViewsRendererConfigurationProperties</a></caption>
@@ -841,12 +842,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.velocity.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether velocity views are enabled. Default value (true).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled getter.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.velocity.default-extension</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the defautlt extension to use for velocity templates. Default value ("vm").</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
