@@ -27,6 +27,7 @@ jte {
         exclude "gg"
     }
 }
+
 tasks.getByName("prepareJavadocAggregation") {
     dependsOn generateJte
 }
