@@ -15,15 +15,13 @@
  */
 package io.micronaut.views.exceptions;
 
-import io.micronaut.http.server.exceptions.InternalServerException;
-
 /**
  * An exception thrown when a view fails to render.
  *
  * @author James Kleeh
  * @since 1.3.1
  */
-public class ViewNotFoundException extends InternalServerException {
+public class ViewNotFoundException extends RuntimeException {
 
     /**
      * Constructor.

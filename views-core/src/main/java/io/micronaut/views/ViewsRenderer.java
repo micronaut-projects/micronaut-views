@@ -19,15 +19,15 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.order.Ordered;
-import io.micronaut.http.HttpRequest;
 
 /**
  * Interface to be implemented by View Engines implementations.
  * @param <T> The model type
+ * @param <R> Request
  * @author Sergio del Amo
  * @since 1.0
  */
-public interface ViewsRenderer<T> extends Ordered {
+public interface ViewsRenderer<T, R> extends Ordered {
 
     /**
      * @param viewName view name to be rendered
@@ -37,7 +37,7 @@ public interface ViewsRenderer<T> extends Ordered {
      */
     @NonNull Writable render(@NonNull String viewName,
                              @Nullable T data,
-                             @Nullable HttpRequest<?> request);
+                             @Nullable R request);
 
     /**
      * @param viewName view name to be rendered

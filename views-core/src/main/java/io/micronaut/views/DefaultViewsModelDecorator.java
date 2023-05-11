@@ -17,7 +17,6 @@ package io.micronaut.views;
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.http.HttpRequest;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.views.model.ViewModelProcessor;
 import jakarta.inject.Singleton;
@@ -33,7 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 3.0.0
  */
 @Singleton
-public class DefaultViewsModelDecorator implements ViewsModelDecorator {
+public class DefaultViewsModelDecorator<T> implements ViewsModelDecorator<T> {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultViewsModelDecorator.class);
 
     private final ApplicationContext applicationContext;
@@ -51,7 +50,7 @@ public class DefaultViewsModelDecorator implements ViewsModelDecorator {
      * @param modelAndView The ModelAndView to be enhanced.
      */
     @Override
-    public void decorate(HttpRequest<?> request, @NonNull ModelAndView<?> modelAndView) {
+    public void decorate(T request, @NonNull ModelAndView<?> modelAndView) {
         if (modelAndView.getModel().isPresent()) {
             Class<?> modelClass = modelAndView.getModel().get().getClass();
             Collection<ViewModelProcessor> processors = classToProcessors.computeIfAbsent(modelClass,
