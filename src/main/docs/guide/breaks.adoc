@@ -3,6 +3,8 @@ This section outlines the breaking changes done in major versions of Micronaut V
 === 4.0.0
 
 * The Soy dependency has been upgraded to version _2022-10-26_, which includes breaking changes. Among others, `.` is no longer allowed before template names. To know the full changes, we suggest link:https://github.com/google/closure-templates/compare/release-2022-03-02%E2%80%A6release-2022-03-07[looking at the commits] since there exist no release notes.
+* To reduce the size of applications where Http requests are not required, the core library has been detached from the micronaut http library and no longer declares it as an api dependency.
+  This change has added another Generic type to ViewRenderer, and breaks binary compatibility.
 
 === 3.0.0
 
