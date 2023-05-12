@@ -218,7 +218,7 @@ class ModelAndViewTest {
 
     @Requires(property = "spec.name", value = "ModelAndViewSpec")
     @Singleton
-    static class CustomViewModelProcessor implements ViewModelProcessor<AbstractView> {
+    static class CustomViewModelProcessor implements ViewModelProcessor<AbstractView, HttpRequest<?>> {
         private final ApplicationConfiguration config;
         CustomViewModelProcessor(ApplicationConfiguration environment) {
             this.config = environment;

@@ -56,7 +56,7 @@ class ViewsController {
     //tag::static[]
     @Get("/static")
     public HttpResponse<RockerWritable> staticTemplate() {
-        return ok(new RockerWritable(home.template(true, "sdelamo")));
+        return HttpResponse.ok(new RockerWritable(home.template(true, "sdelamo")));
     }
     //end::static[]
 

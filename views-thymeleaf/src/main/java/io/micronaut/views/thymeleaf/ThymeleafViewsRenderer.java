@@ -48,7 +48,7 @@ import java.util.Locale;
  * @param <T> The model type
  */
 @Singleton
-public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
+public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>> {
 
     protected final AbstractConfigurableTemplateResolver templateResolver;
     protected final TemplateEngine engine;
@@ -133,5 +133,4 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
                 ViewUtils.normalizeFile(name, templateResolver.getSuffix()) +
                 templateResolver.getSuffix();
     }
-
 }

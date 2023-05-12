@@ -15,6 +15,7 @@
  */
 package io.micronaut.views;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -31,7 +32,9 @@ import java.util.Optional;
  * @since 3.0.0
  */
 @Singleton
-public class DefaultViewsResolver implements ViewsResolver {
+@Requires(classes = {HttpRequest.class, HttpResponse.class})
+public class DefaultViewsResolver implements ViewsResolver<HttpRequest<?>, HttpResponse<?>> {
+
     @Override
     @NonNull
     public Optional<String> resolveView(HttpRequest<?> request, HttpResponse<?> response) {

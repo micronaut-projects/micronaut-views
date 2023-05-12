@@ -20,6 +20,7 @@ import gg.jte.ContentType;
 import gg.jte.TemplateOutput;
 import gg.jte.html.HtmlTemplateOutput;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewsConfiguration;
@@ -37,7 +38,7 @@ import java.nio.file.Paths;
  */
 @Produces(MediaType.TEXT_PLAIN)
 @Singleton
-public class PlainJteViewsRenderer<T> extends JteViewsRenderer<T> {
+public class PlainJteViewsRenderer<T> extends JteViewsRenderer<T, HttpRequest<?>> {
     /**
      * @param viewsConfiguration Views Configuration
      * @param jteViewsRendererConfiguration JTE specific configuration

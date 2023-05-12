@@ -9,7 +9,7 @@ import spock.lang.Specification
 class HandlebarsViewRenderNullableRequestSpec extends Specification {
 
     @Inject
-    HandlebarsViewsRenderer<?> viewRenderer
+    HandlebarsViewsRenderer<?, ?> viewRenderer
 
     void "views can be render with no request"() {
         when:

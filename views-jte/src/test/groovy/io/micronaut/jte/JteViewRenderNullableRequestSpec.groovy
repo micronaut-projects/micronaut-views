@@ -24,7 +24,7 @@ class JteViewRenderNullableRequestSpec extends Specification {
         output(htmlJteViewsRenderer).contains("username: <span>Tim</span>")
     }
 
-    private static String output(ViewsRenderer<?> viewsRenderer) {
+    private static String output(ViewsRenderer<?, ?> viewsRenderer) {
         Writable writeable = viewsRenderer.render("tim", ["username": "Tim"], null)
         new StringWriter().with {
             writeable.writeTo(it)

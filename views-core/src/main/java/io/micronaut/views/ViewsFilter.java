@@ -50,8 +50,10 @@ import java.util.Optional;
  * @since 1.0
  */
 @Requires(beans = ViewsResolver.class)
+@Requires(classes = HttpServerFilter.class)
 @Filter(Filter.MATCH_ALL_PATTERN)
 public class ViewsFilter implements HttpServerFilter {
+
     private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
 
     /**
@@ -127,7 +129,7 @@ public class ViewsFilter implements HttpServerFilter {
                 MediaType type = resolveMediaType(response, body);
                 String view = optionalView.get();
                 try {
-                    Optional<ViewsRenderer> optionalViewsRenderer = viewsRendererLocator.resolveViewsRenderer(view,  type, body);
+                    Optional<ViewsRenderer> optionalViewsRenderer = viewsRendererLocator.resolveViewsRenderer(view, type, body);
                     if (!optionalViewsRenderer.isPresent()) {
                         LOG.debug("no view renderer found for media type: {}, ignoring", type.toString());
                         return Flux.just(response);

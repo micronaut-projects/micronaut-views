@@ -24,7 +24,6 @@ import freemarker.core.ParseException;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
-import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -47,7 +46,7 @@ import java.util.Map;
 @Requires(property = FreemarkerViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Requires(classes = Configuration.class)
 @Singleton
-public class FreemarkerViewsRenderer<T> implements ViewsRenderer<T> {
+public class FreemarkerViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     /**
      * Views Configuration.
@@ -80,7 +79,7 @@ public class FreemarkerViewsRenderer<T> implements ViewsRenderer<T> {
     @Override
     public Writable render(@NonNull String viewName,
                            @Nullable T data,
-                           @Nullable HttpRequest<?> request) {
+                           @Nullable R request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             Map<String, Object> context = ViewUtils.modelOf(data);

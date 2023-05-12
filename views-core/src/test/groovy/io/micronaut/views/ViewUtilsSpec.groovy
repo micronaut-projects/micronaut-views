@@ -1,11 +1,10 @@
 package io.micronaut.views
 
 import spock.lang.Specification
-import spock.lang.Unroll
 
 class ViewUtilsSpec extends Specification {
-    @Unroll("ViewsUtils.normalizedPath(#path,#extension) == #expected")
-    def "normalizeFile handles extensions with and without ."(path, extension, expected) {
+
+    def "ViewsUtils.normalizedPath(#path,#extension) == #expected"() {
         expect:
         expected == ViewUtils.normalizeFile(path, extension)
 

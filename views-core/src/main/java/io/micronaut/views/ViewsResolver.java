@@ -17,19 +17,19 @@ package io.micronaut.views;
 
 import io.micronaut.context.annotation.DefaultImplementation;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.http.HttpRequest;
-import io.micronaut.http.HttpResponse;
 
 import java.util.Optional;
 
 /**
  * Contract to resolve the view.
+ * @param <R> request type
+ * @param <S> response type
  * @author Sergio del Amo
  * @since 3.0.0
  */
 @FunctionalInterface
 @DefaultImplementation(DefaultViewsResolver.class)
-public interface ViewsResolver {
+public interface ViewsResolver<R, S> {
 
     /**
      *
@@ -38,5 +38,5 @@ public interface ViewsResolver {
      * @return The view name if resolved
      */
     @NonNull
-    Optional<String> resolveView(HttpRequest<?> request, HttpResponse<?> response);
+    Optional<String> resolveView(R request, S response);
 }

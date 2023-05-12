@@ -54,8 +54,9 @@ class RockerController {
     }
 
     @Get("/static")
-    public HttpResponse<RockerWritable> staticTemplate() {
-        return ok(new RockerWritable(home.template(true, "sdelamo")));
+    @Produces(MediaType.TEXT_HTML)
+    HttpResponse<RockerWritable> staticTemplate() {
+        return HttpResponse.ok(new RockerWritable(home.template(true, "sdelamo")));
     }
 
     @Produces(MediaType.TEXT_PLAIN)

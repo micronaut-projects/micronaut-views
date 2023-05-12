@@ -5,24 +5,11 @@ plugins {
 dependencies {
     annotationProcessor(mnValidation.micronaut.validation.processor)
 
-    compileOnly(mnSecurity.micronaut.security) {
-        exclude(group: 'io.micronaut')
-    }
-    compileOnly(mn.micronaut.management) {
-        exclude(group: 'io.micronaut', module: 'micronaut-runtime')
-        exclude(group: 'io.micronaut', module: 'micronaut-http')
-    }
-    compileOnly(mnValidation.micronaut.validation) {
-        exclude(group: 'io.micronaut', module: 'micronaut-runtime')
-    }
+    compileOnly(mnSecurity.micronaut.security)
+    compileOnly(mn.micronaut.management)
+    compileOnly(mnValidation.micronaut.validation)
 
-    //api(mn.micronaut.runtime)
-    //api(mn.micronaut.http)
-    //api(mn.micronaut.http.server)
-
-    implementation(mn.reactor) {
-        exclude(group: 'io.micronaut', module: 'micronaut-runtime')
-    }
+    implementation(mn.reactor)
 
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
     testImplementation(mnSerde.micronaut.serde.jackson)

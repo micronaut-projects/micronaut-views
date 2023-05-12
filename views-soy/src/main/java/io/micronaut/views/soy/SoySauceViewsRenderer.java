@@ -55,7 +55,7 @@ import java.util.concurrent.ExecutionException;
 @Requires(classes = SoySauce.class)
 @Singleton
 @SuppressWarnings({"WeakerAccess", "UnstableApiUsage"})
-public class SoySauceViewsRenderer<T> implements ViewsRenderer<T> {
+public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>> {
 
     private static final Logger LOG = LoggerFactory.getLogger(SoySauceViewsRenderer.class);
     private static final String INJECTED_NONCE_PROPERTY = "csp_nonce";

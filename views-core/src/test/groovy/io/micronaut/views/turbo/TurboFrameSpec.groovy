@@ -283,7 +283,7 @@ class TurboFrameSpec extends Specification {
 
     @Requires(property = "spec.name", value = "TurboFrameSpec")
     @Singleton
-    static class MockViewsRenderer<T> implements ViewsRenderer<T> {
+    static class MockViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>> {
 
         @Override
         @NonNull

@@ -28,11 +28,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Default implementation of {@link ViewsModelDecorator} which enhances a model by running it by all applicable ViewModelProcessors {@link ViewModelProcessor}.
+ * @param <R> request type
  * @author Sergio del Amo
  * @since 3.0.0
  */
 @Singleton
-public class DefaultViewsModelDecorator<T> implements ViewsModelDecorator<T> {
+public class DefaultViewsModelDecorator<R> implements ViewsModelDecorator<R> {
+
     private static final Logger LOG = LoggerFactory.getLogger(DefaultViewsModelDecorator.class);
 
     private final ApplicationContext applicationContext;
@@ -50,7 +52,7 @@ public class DefaultViewsModelDecorator<T> implements ViewsModelDecorator<T> {
      * @param modelAndView The ModelAndView to be enhanced.
      */
     @Override
-    public void decorate(T request, @NonNull ModelAndView<?> modelAndView) {
+    public void decorate(R request, @NonNull ModelAndView<?> modelAndView) {
         if (modelAndView.getModel().isPresent()) {
             Class<?> modelClass = modelAndView.getModel().get().getClass();
             Collection<ViewModelProcessor> processors = classToProcessors.computeIfAbsent(modelClass,

@@ -21,7 +21,6 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.LocaleResolver;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsRenderer;
 import io.pebbletemplates.pebble.PebbleEngine;
@@ -36,21 +35,22 @@ import java.util.Locale;
  * @see <a href="https://pebbletemplates.io/">https://pebbletemplates.io/</a>
  * @since 2.2.0
  * @param <T> The model type
+ * @param <R> The request type
  */
 @Singleton
 @Requires(property = PebbleConfigurationProperties.ENABLED, notEquals = StringUtils.FALSE)
 @Requires(classes = PebbleEngine.class)
-public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
+public class PebbleViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     private final PebbleEngine engine;
-    private final LocaleResolver<HttpRequest<?>> httpLocaleResolver;
+    private final LocaleResolver<R> httpLocaleResolver;
 
     /**
      * @param engine Pebble Engine
      * @param httpLocaleResolver The locale resolver
      */
     public PebbleViewsRenderer(PebbleEngine engine,
-                               LocaleResolver<HttpRequest<?>> httpLocaleResolver) {
+                               LocaleResolver<R> httpLocaleResolver) {
         this.engine = engine;
         this.httpLocaleResolver = httpLocaleResolver;
     }
@@ -60,7 +60,7 @@ public class PebbleViewsRenderer<T> implements ViewsRenderer<T> {
     @NonNull
     public Writable render(@NonNull String name,
                            @Nullable T data,
-                           @Nullable HttpRequest<?> request) {
+                           @Nullable R request) {
         return (writer) -> engine.getTemplate(name).evaluate(writer, ViewUtils.modelOf(data), request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault());
     }
 

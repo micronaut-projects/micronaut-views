@@ -23,7 +23,7 @@ import io.micronaut.core.order.Ordered;
 /**
  * Interface to be implemented by View Engines implementations.
  * @param <T> The model type
- * @param <R> Request
+ * @param <R> The request type
  * @author Sergio del Amo
  * @since 1.0
  */

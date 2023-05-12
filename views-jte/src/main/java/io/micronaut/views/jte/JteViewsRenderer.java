@@ -24,7 +24,6 @@ import gg.jte.resolve.ResourceCodeResolver;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
-import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -44,10 +43,11 @@ import java.util.Arrays;
  * View renderer using JTE.
  *
  * @param <T> type of input model.
+ * @param <R> type of request.
  * @author edward3h
  * @since 3.1.0
  */
-public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
+public abstract class JteViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     private static final Logger LOGGER = LoggerFactory.getLogger(JteViewsRenderer.class);
     private static final List<String> EXTENSIONS = Arrays.asList(".jte", ".kte");
     private final TemplateEngine templateEngine;
@@ -124,7 +124,7 @@ public abstract class JteViewsRenderer<T> implements ViewsRenderer<T> {
     @Override
     public Writable render(@NonNull String viewName,
                            @Nullable T data,
-                           @Nullable HttpRequest<?> request) {
+                           @Nullable R request) {
         return new JteWritable(templateEngine, viewName(viewName), ViewUtils.modelOf(data), this::decorateOutput);
     }
 

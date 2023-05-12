@@ -84,7 +84,7 @@ public class DefaultViewsRendererLocator implements ViewsRendererLocator {
     @NonNull
     private List<ViewsRenderer> resolveViewsRenderer(Class<?> bodyClass, @NonNull String contentType) {
         return (bodyClass == null ? applicationContext.getBeansOfType(ViewsRenderer.class) :
-                applicationContext.getBeansOfType(ViewsRenderer.class, Qualifiers.byTypeArguments(bodyClass)))
+                applicationContext.getBeansOfType(ViewsRenderer.class, Qualifiers.byTypeArguments(bodyClass, Object.class)))
                 .stream()
                 .filter(viewsRenderer -> {
                     BeanDefinition<? extends ViewsRenderer> beanDefinition = applicationContext.getBeanDefinition(viewsRenderer.getClass());

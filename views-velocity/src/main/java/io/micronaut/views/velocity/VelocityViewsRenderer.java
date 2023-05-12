@@ -45,9 +45,10 @@ import java.util.Properties;
  * @see <a href="https://velocity.apache.org">https://velocity.apache.org</a>
  * @since 1.0
  * @param <T> The model type
+ * @param <R> The response type
  */
 @Singleton
-public class VelocityViewsRenderer<T> implements ViewsRenderer<T> {
+public class VelocityViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     protected final VelocityEngine velocityEngine;
     protected final ViewsConfiguration viewsConfiguration;
@@ -71,7 +72,7 @@ public class VelocityViewsRenderer<T> implements ViewsRenderer<T> {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String view, @Nullable T data, @NonNull HttpRequest<?> request) {
+    public Writable render(@NonNull String view, @Nullable T data, @NonNull R request) {
         ArgumentUtils.requireNonNull("view", view);
         return (writer) -> {
             Map<String, Object> context = ViewUtils.modelOf(data);
