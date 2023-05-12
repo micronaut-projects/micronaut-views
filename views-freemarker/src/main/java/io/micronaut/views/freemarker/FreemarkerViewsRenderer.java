@@ -84,10 +84,10 @@ public class FreemarkerViewsRenderer<T, R> implements ViewsRenderer<T, R> {
         return (writer) -> {
             Map<String, Object> context = ViewUtils.modelOf(data);
             String location = viewLocation(viewName);
-            Template template = freemarkerMicronautConfiguration.getTemplate(location);
             try {
+                Template template = freemarkerMicronautConfiguration.getTemplate(location);
                 template.process(context, writer);
-            } catch (TemplateException e) {
+            } catch (IOException | TemplateException e) {
                 throw new ViewRenderingException(
                         "Error rendering Freemarker view [" + viewName + "]: " + e.getMessage(), e);
             }

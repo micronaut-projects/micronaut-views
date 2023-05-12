@@ -202,7 +202,6 @@ class FreemarkerViewRendererSpec extends Specification {
          thrown(HttpClientException)
     }
 
-    @PendingFeature
     def "invoking /freemarker/invalid returns HttpClientResponseException with 500 as status code"() {
         when:
         client.toBlocking().exchange('/freemarker/invalid', String)
