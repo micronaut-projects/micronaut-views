@@ -11,10 +11,6 @@ dependencies {
     compileOnly(mn.micronaut.management)
     compileOnly(mnValidation.micronaut.validation)
 
-    api(mn.micronaut.runtime)
-    api(mn.micronaut.http)
-    api(mn.micronaut.http.server)
-
     testCompileOnly(mn.micronaut.inject.groovy)
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
     testAnnotationProcessor(mn.micronaut.inject.java)

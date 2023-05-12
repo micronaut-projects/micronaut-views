@@ -42,6 +42,7 @@ import java.util.Map;
  * @see <a href= "https://freemarker.apache.org/">freemarker.apache.org</a>
  * @since 1.1
  * @param <T> The model type
+ * @param <R> The request type
  */
 @Requires(property = FreemarkerViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Requires(classes = Configuration.class)

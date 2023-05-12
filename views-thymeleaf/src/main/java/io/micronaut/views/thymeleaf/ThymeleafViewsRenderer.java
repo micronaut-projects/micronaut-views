@@ -71,7 +71,6 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
         this.httpLocaleResolver = httpLocaleResolver;
     }
 
-
     @Override
     @NonNull
     public Writable render(@NonNull String viewName,

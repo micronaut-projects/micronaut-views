@@ -55,7 +55,6 @@ public class PebbleViewsRenderer<T, R> implements ViewsRenderer<T, R> {
         this.httpLocaleResolver = httpLocaleResolver;
     }
 
-
     @Override
     @NonNull
     public Writable render(@NonNull String name,
