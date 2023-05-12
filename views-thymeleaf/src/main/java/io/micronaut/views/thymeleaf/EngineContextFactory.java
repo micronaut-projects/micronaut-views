@@ -53,8 +53,7 @@ public class EngineContextFactory implements IEngineContextFactory {
                 variables.put(variableName, context.getVariable(variableName));
             }
         }
-        if (context instanceof WebContext) {
-            WebContext webContext = (WebContext) context;
+        if (context instanceof WebContext webContext) {
             return new WebEngineContext(
                     configuration, templateData, templateResolutionAttributes,
                     webContext.getRequest(),
