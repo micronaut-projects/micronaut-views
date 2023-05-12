@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@ package io.micronaut.views.velocity;
 
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
-import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -45,9 +44,10 @@ import java.util.Properties;
  * @see <a href="https://velocity.apache.org">https://velocity.apache.org</a>
  * @since 1.0
  * @param <T> The model type
+ * @param <R> The response type
  */
 @Singleton
-public class VelocityViewsRenderer<T> implements ViewsRenderer<T> {
+public class VelocityViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     protected final VelocityEngine velocityEngine;
     protected final ViewsConfiguration viewsConfiguration;
@@ -71,7 +71,7 @@ public class VelocityViewsRenderer<T> implements ViewsRenderer<T> {
 
     @NonNull
     @Override
-    public Writable render(@NonNull String view, @Nullable T data, @NonNull HttpRequest<?> request) {
+    public Writable render(@NonNull String view, @Nullable T data, @NonNull R request) {
         ArgumentUtils.requireNonNull("view", view);
         return (writer) -> {
             Map<String, Object> context = ViewUtils.modelOf(data);

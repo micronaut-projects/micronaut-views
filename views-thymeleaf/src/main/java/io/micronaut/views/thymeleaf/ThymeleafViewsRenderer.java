@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.thymeleaf;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.ResourceLoader;
@@ -48,7 +49,8 @@ import java.util.Locale;
  * @param <T> The model type
  */
 @Singleton
-public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
+@Requires(classes = {HttpRequest.class, HttpLocaleResolver.class})
+public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>> {
 
     protected final AbstractConfigurableTemplateResolver templateResolver;
     protected final TemplateEngine engine;
@@ -70,7 +72,6 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T> {
         this.engine = templateEngine;
         this.httpLocaleResolver = httpLocaleResolver;
     }
-
 
     @Override
     @NonNull

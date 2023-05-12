@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,9 +53,10 @@ import java.util.concurrent.ExecutionException;
  * @param <T> The model type
  */
 @Requires(classes = SoySauce.class)
+@Requires(classes = HttpRequest.class)
 @Singleton
 @SuppressWarnings({"WeakerAccess", "UnstableApiUsage"})
-public class SoySauceViewsRenderer<T> implements ViewsRenderer<T> {
+public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>> {
 
     private static final Logger LOG = LoggerFactory.getLogger(SoySauceViewsRenderer.class);
     private static final String INJECTED_NONCE_PROPERTY = "csp_nonce";

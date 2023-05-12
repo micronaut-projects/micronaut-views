@@ -9,7 +9,7 @@ import spock.lang.Specification
 class VelocityViewRenderNullableRequestSpec extends Specification {
 
     @Inject
-    VelocityViewsRenderer<?> viewRenderer
+    VelocityViewsRenderer<?, ?> viewRenderer
 
     void "views can be render with no request"() {
         when:

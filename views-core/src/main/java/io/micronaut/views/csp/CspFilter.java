@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.csp;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MutableHttpResponse;
@@ -60,6 +61,7 @@ import static io.micronaut.views.csp.CspConfiguration.FILTER_PATH;
  * @since 1.1.0
  */
 @Filter("${" + FILTER_PATH + ":" + DEFAULT_FILTER_PATH + "}")
+@Requires(classes = HttpRequest.class)
 public class CspFilter implements HttpServerFilter {
 
     public static final String CSP_HEADER = "Content-Security-Policy";

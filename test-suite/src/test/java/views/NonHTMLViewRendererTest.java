@@ -92,7 +92,7 @@ class NonHTMLViewRendererTest {
     @Produces(MediaType.TEXT_XML)
     @Requires(property = "spec.name", value = "CsvViewRendererSpec")
     @Singleton
-    static class XmlViewRenderer implements ViewsRenderer<Library> {
+    static class XmlViewRenderer implements ViewsRenderer<Library, HttpRequest<?>> {
         @Override
         @NonNull
         public Writable render(@NonNull String viewName, @Nullable Library data, @Nullable HttpRequest<?> request) {
@@ -115,7 +115,7 @@ class NonHTMLViewRendererTest {
     @Produces(MediaType.TEXT_CSV)
     @Requires(property = "spec.name", value = "CsvViewRendererSpec")
     @Singleton
-    public static class SingleBookViewRenderer implements ViewsRenderer<Book> {
+    public static class SingleBookViewRenderer implements ViewsRenderer<Book, HttpRequest<?>> {
         // this renderer should not be used because it specifies a different type
 
         @Override
@@ -145,7 +145,7 @@ class NonHTMLViewRendererTest {
     @Produces(MediaType.TEXT_CSV)
     @Requires(property = "spec.name", value = "CsvViewRendererSpec")
     @Singleton
-    public static class CsvViewRenderer implements ViewsRenderer<Library> {
+    public static class CsvViewRenderer implements ViewsRenderer<Library, HttpRequest<?>> {
         @Override
         @NonNull
         public Writable render(@NonNull String viewName,

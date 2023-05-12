@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import freemarker.core.ParseException;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
-import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
@@ -43,11 +42,12 @@ import java.util.Map;
  * @see <a href= "https://freemarker.apache.org/">freemarker.apache.org</a>
  * @since 1.1
  * @param <T> The model type
+ * @param <R> The response type
  */
 @Requires(property = FreemarkerViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Requires(classes = Configuration.class)
 @Singleton
-public class FreemarkerViewsRenderer<T> implements ViewsRenderer<T> {
+public class FreemarkerViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     /**
      * Views Configuration.
@@ -80,7 +80,7 @@ public class FreemarkerViewsRenderer<T> implements ViewsRenderer<T> {
     @Override
     public Writable render(@NonNull String viewName,
                            @Nullable T data,
-                           @Nullable HttpRequest<?> request) {
+                           @Nullable R request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             Map<String, Object> context = ViewUtils.modelOf(data);

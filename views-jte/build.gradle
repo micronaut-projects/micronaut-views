@@ -4,6 +4,8 @@ plugins {
 }
 
 dependencies {
+    compileOnly(mn.micronaut.http)
+
     api(libs.managed.jte)
 
     api projects.micronautViewsCore

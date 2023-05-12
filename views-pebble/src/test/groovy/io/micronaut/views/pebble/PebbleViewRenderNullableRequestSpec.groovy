@@ -10,7 +10,7 @@ import spock.lang.Specification
 class PebbleViewRenderNullableRequestSpec extends Specification {
 
     @Inject
-    PebbleViewsRenderer<?> viewRenderer
+    PebbleViewsRenderer<?, ?> viewRenderer
 
     void "views can be render with no request"() {
         when:
