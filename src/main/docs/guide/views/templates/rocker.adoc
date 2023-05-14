@@ -69,13 +69,13 @@ Instead the compiled template should be invoked within the controller and a `Roc
 [source,java]
 ----
 import io.micronaut.views.rocker.RockerWritable;
-import views.index;
+import views.home;
 ...
 
     @Get("/")
     @Produces(TEXT_HTML)
     public HttpResponse<?> staticTemplate() {
-        return ok(new RockerWritable(index.template("World", true)));
+        return HttpResponse.ok(new RockerWritable(home.template(true, "sdelamo")));
     }
 
 ...
