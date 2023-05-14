@@ -26,7 +26,6 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.views.ModelAndView
 import io.micronaut.views.View
 import io.micronaut.views.rocker.RockerWritable
-
 import views.home
 
 @Requires(property = "spec.name", value = "rocker")
@@ -38,7 +37,7 @@ class ViewsController {
     //tag::map[]
     @View("home")
     @Get("/")
-    public HttpResponse index() {
+    public HttpResponse<?> index() {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"))
     }
     //end::map[]

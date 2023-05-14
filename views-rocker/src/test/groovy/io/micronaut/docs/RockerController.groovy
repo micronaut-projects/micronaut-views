@@ -36,7 +36,7 @@ class RockerController {
 
     @View("home")
     @Get("/")
-    HttpResponse index() {
+    HttpResponse<?> index() {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"));
     }
 
