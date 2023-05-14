@@ -45,13 +45,13 @@ class ViewsController {
     }
     //end::map[]
 
-    //tag::pogo[]
+    //tag::pojo[]
     @View("home")
-    @Get("/pogo")
-    public HttpResponse<Person> pogo() {
+    @Get("/pojo")
+    public HttpResponse<Person> pojo() {
         return HttpResponse.ok(new Person("sdelamo", true))
     }
-    //end::pogo[]
+    //end::pojo[]
 
     //tag::static[]
     @Get("/static")

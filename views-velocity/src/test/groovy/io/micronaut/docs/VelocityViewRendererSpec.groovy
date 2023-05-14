@@ -86,9 +86,9 @@ class VelocityViewRendererSpec extends Specification {
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
-    def "invoking /velocity/pogo renders velocity template from a controller returning a pogo"() {
+    def "invoking /velocity/pojo renders velocity template from a controller returning a pojo"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/velocity/pogo', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange('/velocity/pojo', String)
 
         then:
         noExceptionThrown()

@@ -86,9 +86,9 @@ abstract class JteViewRendererSpec extends Specification {
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
-    def "invoking /jte/pogo renders jte template from a controller returning a pogo"() {
+    def "invoking /jte/pojo renders jte template from a controller returning a pojo"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/jte/pogo', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange('/jte/pojo', String)
 
         then:
         noExceptionThrown()

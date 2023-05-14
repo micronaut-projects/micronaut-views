@@ -99,9 +99,9 @@ class FreemarkerViewRendererSpec extends Specification {
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
-    def "invoking /freemarker/pogo renders freemarker template from a controller returning a pogo"() {
+    def "invoking /freemarker/pojo renders freemarker template from a controller returning a pojo"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/freemarker/pogo', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange('/freemarker/pojo', String)
 
         then:
         noExceptionThrown()

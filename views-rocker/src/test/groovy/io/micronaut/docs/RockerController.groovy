@@ -43,8 +43,8 @@ class RockerController {
     }
 
     @View("home.rocker.html")
-    @Get("/pogo")
-    HttpResponse<Person> pogo() {
+    @Get("/pojo")
+    HttpResponse<Person> pojo() {
         HttpResponse.ok(new Person(loggedIn: true, username: 'sdelamo'))
     }
 
