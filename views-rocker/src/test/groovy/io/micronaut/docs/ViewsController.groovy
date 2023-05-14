@@ -29,8 +29,6 @@ import io.micronaut.views.rocker.RockerWritable
 
 import views.home
 
-import static io.micronaut.http.HttpResponse.ok
-
 @Requires(property = "spec.name", value = "rocker")
 //tag::clazz[]
 @Controller("/views")
@@ -56,7 +54,7 @@ class ViewsController {
     //tag::static[]
     @Get("/static")
     public HttpResponse<RockerWritable> staticTemplate() {
-        return ok(new RockerWritable(home.template(true, "sdelamo")));
+        return HttpResponse.ok(new RockerWritable(home.template(true, "sdelamo")));
     }
     //end::static[]
 

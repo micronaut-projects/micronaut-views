@@ -30,8 +30,6 @@ import org.reactivestreams.Publisher
 import reactor.core.publisher.Mono
 import views.home
 
-import static io.micronaut.http.HttpResponse.ok
-
 @Requires(property = "spec.name", value = "rocker")
 @Controller("/rocker")
 class RockerController {
@@ -55,7 +53,7 @@ class RockerController {
 
     @Get("/static")
     public HttpResponse<RockerWritable> staticTemplate() {
-        return ok(new RockerWritable(home.template(true, "sdelamo")));
+        return HttpResponse.ok(new RockerWritable(home.template(true, "sdelamo")));
     }
 
     @Produces(MediaType.TEXT_PLAIN)
