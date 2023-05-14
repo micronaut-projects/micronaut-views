@@ -35,7 +35,7 @@ class ViewsController {
     //tag::map[]
     @View("home")
     @Get("/")
-    public HttpResponse index() {
+    public HttpResponse<?> index() {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"))
     }
     //end::map[]
