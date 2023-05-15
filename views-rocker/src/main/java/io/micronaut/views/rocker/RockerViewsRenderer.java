@@ -33,7 +33,7 @@ import java.util.Map;
  * @author Sam Adams
  * @since 1.3.2
  * @param <T> The model type
- * @param <R> The response type
+ * @param <R> The request type
  */
 @Singleton
 public class RockerViewsRenderer<T, R> implements ViewsRenderer<T, R> {

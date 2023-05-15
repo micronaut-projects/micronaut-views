@@ -35,7 +35,7 @@ import java.util.Locale;
  * @see <a href="https://pebbletemplates.io/">https://pebbletemplates.io/</a>
  * @since 2.2.0
  * @param <T> The model type
- * @param <R> The response type
+ * @param <R> The request type
  */
 @Singleton
 @Requires(property = PebbleConfigurationProperties.ENABLED, notEquals = StringUtils.FALSE)

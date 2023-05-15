@@ -44,7 +44,7 @@ import java.util.Properties;
  * @see <a href="https://velocity.apache.org">https://velocity.apache.org</a>
  * @since 1.0
  * @param <T> The model type
- * @param <R> The response type
+ * @param <R> The request type
  */
 @Singleton
 public class VelocityViewsRenderer<T, R> implements ViewsRenderer<T, R> {

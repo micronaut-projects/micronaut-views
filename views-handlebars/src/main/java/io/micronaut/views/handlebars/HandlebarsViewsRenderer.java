@@ -39,7 +39,7 @@ import jakarta.inject.Singleton;
  * @see <a href="https://jknack.github.io/handlebars.java/">https://jknack.github.io/handlebars.java/</a>
  * @since 1.0
  * @param <T> The model type
- * @param <R> The response type
+ * @param <R> The request type
  */
 @Requires(property = HandlebarsViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 @Requires(classes = Handlebars.class)
