@@ -18,7 +18,7 @@ managed-soy = "2022-10-26"
 managed-thymeleaf = "3.1.1.RELEASE"
 managed-velocity = "2.3"
 
-pebble = "3.2.0"
+pebble = "3.2.1"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.8.21"
 kotlinx-coroutines = "1.6.4"
