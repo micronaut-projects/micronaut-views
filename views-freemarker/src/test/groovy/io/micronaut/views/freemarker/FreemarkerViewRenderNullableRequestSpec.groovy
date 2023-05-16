@@ -9,7 +9,7 @@ import io.micronaut.core.io.Writable
 class FreemarkerViewRenderNullableRequestSpec extends Specification {
 
     @Inject
-    FreemarkerViewsRenderer<?> viewRenderer
+    FreemarkerViewsRenderer<?, ?> viewRenderer
 
     void "views can be render with no request"() {
         when:

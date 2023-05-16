@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package io.micronaut.views;
 
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.inject.qualifiers.Qualifiers;
@@ -33,6 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 3.0.0
  */
 @Singleton
+@Requires(classes = HttpRequest.class)
 public class DefaultViewsModelDecorator implements ViewsModelDecorator {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultViewsModelDecorator.class);
 

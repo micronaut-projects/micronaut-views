@@ -10,7 +10,7 @@ import spock.lang.Specification
 class RockerViewRenderNullableRequestSpec extends Specification {
 
     @Inject
-    RockerViewsRenderer<?> viewRenderer
+    RockerViewsRenderer<?, ?> viewRenderer
 
     void "views can be render with no request"() {
         when:

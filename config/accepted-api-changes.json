@@ -13,11 +13,11 @@
     "type": "io.micronaut.views.pebble.PebbleViewsRenderer",
     "member": "Constructor io.micronaut.views.pebble.PebbleViewsRenderer(com.mitchellbosecke.pebble.PebbleEngine)",
     "reason": "Removed deprecated constructor for Micronaut 4"
-  }
-,{
-  "type": "io.micronaut.views.pebble.PebbleViewsRenderer",
-  "member": "Constructor io.micronaut.views.pebble.PebbleViewsRenderer(io.micronaut.views.pebble.PebbleConfiguration,com.mitchellbosecke.pebble.PebbleEngine)",
-  "reason": "Removed deprecated constructor for Micronaut 4"
+  },
+  {
+    "type": "io.micronaut.views.pebble.PebbleViewsRenderer",
+    "member": "Constructor io.micronaut.views.pebble.PebbleViewsRenderer(io.micronaut.views.pebble.PebbleConfiguration,com.mitchellbosecke.pebble.PebbleEngine)",
+    "reason": "Removed deprecated constructor for Micronaut 4"
   },
   {
     "type": "io.micronaut.views.thymeleaf.LinkBuilder",
@@ -53,5 +53,40 @@
     "type": "io.micronaut.views.pebble.PebbleViewsRenderer",
     "member": "Constructor io.micronaut.views.pebble.PebbleViewsRenderer(com.mitchellbosecke.pebble.PebbleEngine,io.micronaut.core.util.LocaleResolver)",
     "reason": "Pebble library upgrade changed package name to io.pebbletemplates.pebble"
+  },
+  {
+    "type": "io.micronaut.views.csp.CspFilter",
+    "member": "Implemented interface io.micronaut.http.filter.HttpServerFilter",
+    "reason": "Removed http from api of views-core"
+  },
+  {
+    "type": "io.micronaut.views.csp.CspFilter",
+    "member": "Implemented interface io.micronaut.core.order.Ordered",
+    "reason": "Removed http from api of views-core"
+  },
+  {
+    "type": "io.micronaut.views.csp.CspFilter",
+    "member": "Implemented interface io.micronaut.http.filter.HttpFilter",
+    "reason": "Removed http from api of views-core"
+  },
+  {
+    "type": "io.micronaut.views.exceptions.ViewNotFoundException",
+    "member": "Implemented interface java.io.Serializable",
+    "reason": "Removed http from api of views-core"
+  },
+  {
+    "type": "io.micronaut.views.ViewsFilter",
+    "member": "Implemented interface io.micronaut.http.filter.HttpServerFilter",
+    "reason": "Removed http from api of views-core"
+  },
+  {
+    "type": "io.micronaut.views.ViewsFilter",
+    "member": "Implemented interface io.micronaut.core.order.Ordered",
+    "reason": "Removed http from api of views-core"
+  },
+  {
+    "type": "io.micronaut.views.ViewsFilter",
+    "member": "Implemented interface io.micronaut.http.filter.HttpFilter",
+    "reason": "Removed http from api of views-core"
   }
 ]

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,7 +84,7 @@ public class DefaultViewsRendererLocator implements ViewsRendererLocator {
     @NonNull
     private List<ViewsRenderer> resolveViewsRenderer(Class<?> bodyClass, @NonNull String contentType) {
         return (bodyClass == null ? applicationContext.getBeansOfType(ViewsRenderer.class) :
-                applicationContext.getBeansOfType(ViewsRenderer.class, Qualifiers.byTypeArguments(bodyClass)))
+                applicationContext.getBeansOfType(ViewsRenderer.class, Qualifiers.byTypeArguments(bodyClass, Object.class)))
                 .stream()
                 .filter(viewsRenderer -> {
                     BeanDefinition<? extends ViewsRenderer> beanDefinition = applicationContext.getBeanDefinition(viewsRenderer.getClass());
