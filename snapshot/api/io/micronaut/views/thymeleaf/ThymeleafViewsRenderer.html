@@ -80,13 +80,14 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>io.micronaut.core.order.Ordered</code>, <code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;T&gt;</code></dd>
+<dd><code>io.micronaut.core.order.Ordered</code>, <code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;T,<wbr>io.micronaut.http.HttpRequest&lt;?&gt;&gt;</code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="annotations">@Singleton
+@Requires(classes={io.micronaut.http.HttpRequest.class,io.micronaut.http.server.util.locale.HttpLocaleResolver.class})
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">ThymeleafViewsRenderer&lt;T&gt;</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;T&gt;</span></div>
+implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;T,<wbr>io.micronaut.http.HttpRequest&lt;?&gt;&gt;</span></div>
 <div class="block">Renders templates Thymeleaf Java template engine.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -260,7 +261,7 @@ implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.view
  io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../ViewsRenderer.html#render(java.lang.String,T,io.micronaut.http.HttpRequest)">render</a></code>&nbsp;in interface&nbsp;<code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="ThymeleafViewsRenderer.html" title="type parameter in ThymeleafViewsRenderer">T</a>&gt;</code></dd>
+<dd><code><a href="../ViewsRenderer.html#render(java.lang.String,T,R)">render</a></code>&nbsp;in interface&nbsp;<code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="ThymeleafViewsRenderer.html" title="type parameter in ThymeleafViewsRenderer">T</a>,<wbr>io.micronaut.http.HttpRequest&lt;?&gt;&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>viewName</code> - view name to be rendered</dd>
 <dd><code>data</code> - response body to render it with a view</dd>
@@ -292,7 +293,7 @@ implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.view
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;viewName)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../ViewsRenderer.html#exists(java.lang.String)">exists</a></code>&nbsp;in interface&nbsp;<code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="ThymeleafViewsRenderer.html" title="type parameter in ThymeleafViewsRenderer">T</a>&gt;</code></dd>
+<dd><code><a href="../ViewsRenderer.html#exists(java.lang.String)">exists</a></code>&nbsp;in interface&nbsp;<code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="ThymeleafViewsRenderer.html" title="type parameter in ThymeleafViewsRenderer">T</a>,<wbr>io.micronaut.http.HttpRequest&lt;?&gt;&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>viewName</code> - view name to be rendered</dd>
 <dt>Returns:</dt>

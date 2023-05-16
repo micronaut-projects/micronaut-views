@@ -2738,6 +2738,10 @@ Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graa
 <li>
 <p>The Soy dependency has been upgraded to version <em>2022-10-26</em>, which includes breaking changes. Among others, <code>.</code> is no longer allowed before template names. To know the full changes, we suggest <a href="https://github.com/google/closure-templates/compare/release-2022-03-02%E2%80%A6release-2022-03-07">looking at the commits</a> since there exist no release notes.</p>
 </li>
+<li>
+<p>To reduce the size of applications where Http requests are not required, the core library has been detached from the micronaut http library and no longer declares it as an api dependency.
+This change has added another Generic type to ViewRenderer, and breaks binary compatibility.</p>
+</li>
 </ul>
 </div>
 </div>

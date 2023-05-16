@@ -68,28 +68,29 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">io.micronaut.views.jte</a></div>
-<h1 title="Class JteViewsRenderer" class="title">Class JteViewsRenderer&lt;T&gt;</h1>
+<h1 title="Class JteViewsRenderer" class="title">Class JteViewsRenderer&lt;T,<wbr>R&gt;</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance">io.micronaut.views.jte.JteViewsRenderer&lt;T&gt;</div>
+<div class="inheritance">io.micronaut.views.jte.JteViewsRenderer&lt;T,<wbr>R&gt;</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Type Parameters:</dt>
 <dd><code>T</code> - type of input model.</dd>
+<dd><code>R</code> - type of request.</dd>
 </dl>
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>io.micronaut.core.order.Ordered</code>, <code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;T&gt;</code></dd>
+<dd><code>io.micronaut.core.order.Ordered</code>, <code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;T,<wbr>R&gt;</code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
 <dd><code><a href="HtmlJteViewsRenderer.html" title="class in io.micronaut.views.jte">HtmlJteViewsRenderer</a></code>, <code><a href="PlainJteViewsRenderer.html" title="class in io.micronaut.views.jte">PlainJteViewsRenderer</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">JteViewsRenderer&lt;T&gt;</span>
+<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">JteViewsRenderer&lt;T,<wbr>R&gt;</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;T&gt;</span></div>
+implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;T,<wbr>R&gt;</span></div>
 <div class="block">View renderer using JTE.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -142,9 +143,9 @@ implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.view
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#exists(java.lang.String)" class="member-name-link">exists</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;viewName)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>io.micronaut.core.io.Writable</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#render(java.lang.String,T,io.micronaut.http.HttpRequest)" class="member-name-link">render</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;viewName,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#render(java.lang.String,T,R)" class="member-name-link">render</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;viewName,
  <a href="JteViewsRenderer.html" title="type parameter in JteViewsRenderer">T</a>&nbsp;data,
- io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</code></div>
+ <a href="JteViewsRenderer.html" title="type parameter in JteViewsRenderer">R</a>&nbsp;request)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -191,18 +192,18 @@ implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.view
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="render(java.lang.String,T,io.micronaut.http.HttpRequest)">
-<h3 id="render(java.lang.String,java.lang.Object,io.micronaut.http.HttpRequest)">render</h3>
+<section class="detail" id="render(java.lang.String,T,R)">
+<h3 id="render(java.lang.String,java.lang.Object,java.lang.Object)">render</h3>
 <div class="member-signature"><span class="annotations">@NonNull
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">io.micronaut.core.io.Writable</span>&nbsp;<span class="element-name">render</span><wbr><span class="parameters">(@NonNull
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;viewName,
  @Nullable
  <a href="JteViewsRenderer.html" title="type parameter in JteViewsRenderer">T</a>&nbsp;data,
  @Nullable
- io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</span></div>
+ <a href="JteViewsRenderer.html" title="type parameter in JteViewsRenderer">R</a>&nbsp;request)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../ViewsRenderer.html#render(java.lang.String,T,io.micronaut.http.HttpRequest)">render</a></code>&nbsp;in interface&nbsp;<code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="JteViewsRenderer.html" title="type parameter in JteViewsRenderer">T</a>&gt;</code></dd>
+<dd><code><a href="../ViewsRenderer.html#render(java.lang.String,T,R)">render</a></code>&nbsp;in interface&nbsp;<code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="JteViewsRenderer.html" title="type parameter in JteViewsRenderer">T</a>,<wbr><a href="JteViewsRenderer.html" title="type parameter in JteViewsRenderer">R</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>viewName</code> - view name to be rendered</dd>
 <dd><code>data</code> - response body to render it with a view</dd>
@@ -219,7 +220,7 @@ implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.view
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;viewName)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../ViewsRenderer.html#exists(java.lang.String)">exists</a></code>&nbsp;in interface&nbsp;<code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="JteViewsRenderer.html" title="type parameter in JteViewsRenderer">T</a>&gt;</code></dd>
+<dd><code><a href="../ViewsRenderer.html#exists(java.lang.String)">exists</a></code>&nbsp;in interface&nbsp;<code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="JteViewsRenderer.html" title="type parameter in JteViewsRenderer">T</a>,<wbr><a href="JteViewsRenderer.html" title="type parameter in JteViewsRenderer">R</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>viewName</code> - view name to be rendered</dd>
 <dt>Returns:</dt>
