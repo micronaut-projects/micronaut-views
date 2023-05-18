@@ -116,6 +116,7 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
 
     /**
      * Whether hot reloading is enabled. Default value ({@value #DEFAULT_HOT_RELOADING}).
+     * Hot reloading requires an additional dependency on {@code com.fizzed:rocker-compiler:1.2.3:provided}.
      *
      * @param hotReloading True if it is
      */
