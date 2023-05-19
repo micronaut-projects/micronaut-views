@@ -29,6 +29,7 @@ include "test-suite-groovy"
 include "test-suite-kotlin"
 
 micronautBuild {
+    importMicronautCatalog("micronaut-logging")
     useStandardizedProjectNames=true
     importMicronautCatalog()
     importMicronautCatalog("micronaut-security")
