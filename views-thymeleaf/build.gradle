@@ -5,16 +5,14 @@ plugins {
 dependencies {
     annotationProcessor(mnValidation.micronaut.validation.processor)
 
+    compileOnly(mn.micronaut.http)
+    compileOnly(mn.micronaut.http.server)
+
     api projects.micronautViewsCore
     api(libs.managed.thymeleaf)
     api(libs.thymeleaf.extras.java8time)
     compileOnly(mn.micronaut.management)
     compileOnly(mnValidation.micronaut.validation)
-
-    api(mn.micronaut.runtime)
-    api(mn.micronaut.http)
-    api(mn.micronaut.http.server)
-    api(mn.micronaut.inject)
 
     testCompileOnly(mn.micronaut.inject.groovy)
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)

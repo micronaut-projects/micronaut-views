@@ -9,11 +9,9 @@ dependencies {
     compileOnly(mn.micronaut.management)
     compileOnly(mnValidation.micronaut.validation)
 
-    api(mn.micronaut.runtime)
-    api(mn.micronaut.http)
-    api(mn.micronaut.http.server)
-
     implementation(mn.reactor)
+
+    testRuntimeOnly(mnLogging.logback.classic)
 
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
     testImplementation(mnSerde.micronaut.serde.jackson)

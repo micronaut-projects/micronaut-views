@@ -17,7 +17,7 @@ dependencies {
     testImplementation(mn.micronaut.management)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.http.client)
-    testRuntimeOnly(mn.logback.classic)
+    testRuntimeOnly(mnLogging.logback.classic)
 
     testImplementation(mnSecurity.micronaut.security)
     testImplementation(mnSerde.micronaut.serde.api)

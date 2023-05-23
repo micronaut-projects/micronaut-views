@@ -7,12 +7,10 @@ dependencies {
 
     api projects.micronautViewsCore
     api(libs.managed.soy)
+
     compileOnly(mn.micronaut.management)
     compileOnly(mnValidation.micronaut.validation)
-
-    api(mn.micronaut.runtime)
-    api(mn.micronaut.http)
-    api(mn.micronaut.http.server)
+    compileOnly(mn.micronaut.http)
 
     testCompileOnly(mn.micronaut.inject.groovy)
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)

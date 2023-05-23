@@ -422,7 +422,7 @@ class TurboStreamSpec extends Specification {
 
     @Requires(property = "spec.name", value = "TurboStreamSpec")
     @Singleton
-    static class MockViewsRenderer<T> implements ViewsRenderer<T> {
+    static class MockViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>> {
 
         @Override
         @NonNull

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.turbo;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
@@ -30,7 +31,9 @@ import java.util.Optional;
  * @since 3.3.0
  */
 @Singleton
+@Requires(classes = HttpRequest.class)
 public class DefaultTurboStreamRenderer implements TurboStreamRenderer {
+
     protected final ViewsRendererLocator viewsRendererLocator;
 
     public DefaultTurboStreamRenderer(ViewsRendererLocator viewsRendererLocator) {

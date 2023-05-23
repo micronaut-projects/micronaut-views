@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,9 @@ import gg.jte.Content;
 import gg.jte.ContentType;
 import gg.jte.TemplateOutput;
 import gg.jte.html.HtmlTemplateOutput;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewsConfiguration;
@@ -37,7 +39,8 @@ import java.nio.file.Paths;
  */
 @Produces(MediaType.TEXT_PLAIN)
 @Singleton
-public class PlainJteViewsRenderer<T> extends JteViewsRenderer<T> {
+@Requires(classes = HttpRequest.class)
+public class PlainJteViewsRenderer<T> extends JteViewsRenderer<T, HttpRequest<?>> {
     /**
      * @param viewsConfiguration Views Configuration
      * @param jteViewsRendererConfiguration JTE specific configuration

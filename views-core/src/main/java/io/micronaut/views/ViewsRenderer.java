@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,15 +19,15 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.order.Ordered;
-import io.micronaut.http.HttpRequest;
 
 /**
  * Interface to be implemented by View Engines implementations.
  * @param <T> The model type
+ * @param <R> The request type
  * @author Sergio del Amo
  * @since 1.0
  */
-public interface ViewsRenderer<T> extends Ordered {
+public interface ViewsRenderer<T, R> extends Ordered {
 
     /**
      * @param viewName view name to be rendered
@@ -37,12 +37,11 @@ public interface ViewsRenderer<T> extends Ordered {
      */
     @NonNull Writable render(@NonNull String viewName,
                              @Nullable T data,
-                             @Nullable HttpRequest<?> request);
+                             @Nullable R request);
 
     /**
      * @param viewName view name to be rendered
      * @return true if a template can be found for the supplied view name.
      */
     boolean exists(@NonNull String viewName);
-
 }
