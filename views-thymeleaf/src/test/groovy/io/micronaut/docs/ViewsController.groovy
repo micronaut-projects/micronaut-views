@@ -35,18 +35,18 @@ class ViewsController {
     //tag::map[]
     @View("home")
     @Get("/")
-    public HttpResponse index() {
+    public HttpResponse<?> index() {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"))
     }
     //end::map[]
 
-    //tag::pogo[]
+    //tag::pojo[]
     @View("home")
-    @Get("/pogo")
-    public HttpResponse<Person> pogo() {
+    @Get("/pojo")
+    public HttpResponse<Person> pojo() {
         return HttpResponse.ok(new Person("sdelamo", true))
     }
-    //end::pogo[]
+    //end::pojo[]
 
     //tag::modelAndView[]
     @Get("/modelAndView")

@@ -39,8 +39,8 @@ class FreemarkerController {
     }
 
     @View("home.ftl")
-    @Get("/pogo")
-    HttpResponse<Person> pogo() {
+    @Get("/pojo")
+    HttpResponse<Person> pojo() {
         HttpResponse.ok(new Person(loggedIn: true, username: 'sdelamo'))
     }
 

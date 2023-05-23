@@ -31,7 +31,7 @@ In addition, you can return any POJO object and the properties of the POJO will 
 ----
 include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=clazz]
 
-include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=pogo]
+include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=pojo]
 
 }
 ----

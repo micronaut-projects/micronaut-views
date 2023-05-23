@@ -17,7 +17,6 @@ package io.micronaut.docs
 
 import io.micronaut.context.annotation.Requires
 import io.micronaut.core.util.CollectionUtils
-import io.micronaut.docs.Person
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -37,13 +36,13 @@ public class PebbleController {
     }
     //end::map[]
 
-    //tag::pogo[]
+    //tag::pojo[]
     @View("home.html")
-    @Get("/pogo")
-    public HttpResponse<Person> pogo() {
+    @Get("/pojo")
+    public HttpResponse<Person> pojo() {
         return HttpResponse.ok(new Person("sdelamo", true));
     }
-    //end::pogo[]
+    //end::pojo[]
 
     @Get("/home")
     HttpResponse<Person> home() {

@@ -93,9 +93,9 @@ class ThymeleafViewRendererSpec extends Specification {
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
-    def "invoking /views/pogo renders th template from a controller returning a pogo"() {
+    def "invoking /views/pojo renders th template from a controller returning a pojo"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/views/pogo', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange('/views/pojo', String)
 
         then:
         noExceptionThrown()

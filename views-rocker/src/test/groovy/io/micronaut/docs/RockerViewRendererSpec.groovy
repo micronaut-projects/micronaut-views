@@ -86,9 +86,9 @@ class RockerViewRendererSpec extends Specification {
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
-    def "invoking /rocker/pogo renders rocker template from a controller returning a pogo"() {
+    def "invoking /rocker/pojo renders rocker template from a controller returning a pojo"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/rocker/pogo', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange('/rocker/pojo', String)
 
         then:
         noExceptionThrown()

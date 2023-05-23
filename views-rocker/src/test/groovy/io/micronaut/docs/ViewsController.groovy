@@ -26,10 +26,7 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.views.ModelAndView
 import io.micronaut.views.View
 import io.micronaut.views.rocker.RockerWritable
-
 import views.home
-
-import static io.micronaut.http.HttpResponse.ok
 
 @Requires(property = "spec.name", value = "rocker")
 //tag::clazz[]
@@ -40,23 +37,23 @@ class ViewsController {
     //tag::map[]
     @View("home")
     @Get("/")
-    public HttpResponse index() {
+    public HttpResponse<?> index() {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"))
     }
     //end::map[]
 
-    //tag::pogo[]
+    //tag::pojo[]
     @View("home")
-    @Get("/pogo")
-    public HttpResponse<Person> pogo() {
+    @Get("/pojo")
+    public HttpResponse<Person> pojo() {
         return HttpResponse.ok(new Person("sdelamo", true))
     }
-    //end::pogo[]
+    //end::pojo[]
 
     //tag::static[]
     @Get("/static")
     public HttpResponse<RockerWritable> staticTemplate() {
-        return ok(new RockerWritable(home.template(true, "sdelamo")));
+        return HttpResponse.ok(new RockerWritable(home.template(true, "sdelamo")));
     }
     //end::static[]
 

@@ -94,9 +94,9 @@ class HandlebarsViewsRendererSpec extends Specification {
         rsp.contentType.get() == MediaType.TEXT_HTML_TYPE
     }
 
-    def "invoking /handlebars/pogo renders handlebars template from a controller returning a pogo"() {
+    def "invoking /handlebars/pojo renders handlebars template from a controller returning a pojo"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/handlebars/pogo', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange('/handlebars/pojo', String)
 
         then:
         noExceptionThrown()

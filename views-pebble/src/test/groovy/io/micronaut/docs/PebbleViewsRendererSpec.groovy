@@ -98,9 +98,9 @@ class PebbleViewsRendererSpec extends Specification {
         rsp.contentType.get() == MediaType.TEXT_HTML_TYPE
     }
 
-    def "invoking /pebble/pogo renders pebble template from a controller returning a pogo"() {
+    def "invoking /pebble/pojo renders pebble template from a controller returning a pojo"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/pebble/pogo', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange('/pebble/pojo', String)
 
         then:
         noExceptionThrown()
