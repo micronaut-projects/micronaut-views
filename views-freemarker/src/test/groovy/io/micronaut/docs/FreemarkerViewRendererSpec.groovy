@@ -27,7 +27,6 @@ import io.micronaut.views.ViewsFilter
 import io.micronaut.views.freemarker.FreemarkerViewsRenderer
 import io.micronaut.views.freemarker.FreemarkerViewsRendererConfigurationProperties
 import spock.lang.AutoCleanup
-import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -202,7 +201,6 @@ class FreemarkerViewRendererSpec extends Specification {
          thrown(HttpClientException)
     }
 
-    @PendingFeature
     def "invoking /freemarker/invalid returns HttpClientResponseException with 500 as status code"() {
         when:
         client.toBlocking().exchange('/freemarker/invalid', String)
