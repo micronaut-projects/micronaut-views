@@ -223,7 +223,7 @@ class ViewsController {
 
     @View("home")
     @Get("/")
-    public HttpResponse index() {
+    public HttpResponse&lt;?&gt; index() {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"))
     }
 
@@ -248,8 +248,8 @@ class ViewsController {
 class ViewsController {
 
     @View("home")
-    @Get("/pogo")
-    public HttpResponse&lt;Person&gt; pogo() {
+    @Get("/pojo")
+    public HttpResponse&lt;Person&gt; pojo() {
         return HttpResponse.ok(new Person("sdelamo", true))
     }
 
@@ -691,7 +691,8 @@ the <a href="https://github.com/fizzed/rocker">Rocker</a> Java-based template en
 <div class="listingblock">
 <div class="title">src/main/resources/views/home.rocker.html</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;html&gt;
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">@args (Boolean loggedIn, String username)
+&lt;html&gt;
 &lt;head&gt;
     &lt;title&gt;Home&lt;/title&gt;
 &lt;/head&gt;
@@ -763,13 +764,13 @@ Instead the compiled template should be invoked within the controller and a <cod
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.views.rocker.RockerWritable;
-import views.index;
+import views.home;
 ...
 
     @Get("/")
     @Produces(TEXT_HTML)
     public HttpResponse&lt;?&gt; staticTemplate() {
-        return ok(new RockerWritable(index.template("World", true)));
+        return HttpResponse.ok(new RockerWritable(home.template(true, "sdelamo")));
     }
 
 ...</code></pre>
