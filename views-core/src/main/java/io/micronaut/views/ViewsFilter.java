@@ -127,7 +127,7 @@ public class ViewsFilter implements HttpServerFilter {
                 MediaType type = resolveMediaType(response, body);
                 String view = optionalView.get();
                 try {
-                    Optional<ViewsRenderer> optionalViewsRenderer = viewsRendererLocator.resolveViewsRenderer(view,  type, body);
+                    Optional<ViewsRenderer> optionalViewsRenderer = viewsRendererLocator.resolveViewsRenderer(view,  type.toString(), body);
                     if (!optionalViewsRenderer.isPresent()) {
                         LOG.debug("no view renderer found for media type: {}, ignoring", type.toString());
                         return Flux.just(response);

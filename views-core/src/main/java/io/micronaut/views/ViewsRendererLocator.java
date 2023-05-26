@@ -18,7 +18,6 @@ package io.micronaut.views;
 import io.micronaut.context.annotation.DefaultImplementation;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.http.MediaType;
 import io.micronaut.views.exceptions.ViewNotFoundException;
 
 import java.util.Optional;
@@ -42,7 +41,7 @@ public interface ViewsRendererLocator {
      */
     @NonNull
     Optional<ViewsRenderer> resolveViewsRenderer(@NonNull String view,
-                                                 @NonNull MediaType mediaType,
+                                                 @NonNull String mediaType,
                                                  @Nullable Object body) throws ViewNotFoundException;
 
 }

@@ -20,7 +20,6 @@ import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.OrderUtil;
-import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.qualifiers.Qualifiers;
@@ -53,10 +52,9 @@ public class DefaultViewsRendererLocator implements ViewsRendererLocator {
     @Override
     @NonNull
     public Optional<ViewsRenderer> resolveViewsRenderer(@NonNull String view,
-                                                        @NonNull MediaType mediaType,
+                                                        @NonNull String contentType,
                                                         @Nullable Object body) throws ViewNotFoundException {
         Class<?> bodyClass = body != null ? body.getClass() : null;
-        String contentType = mediaType.toString();
         ViewsRendererKey key = new ViewsRendererKey(view, contentType, bodyClass);
         return Optional.ofNullable(viewsRendererMap.computeIfAbsent(key, (viewsRendererKey -> {
             List<ViewsRenderer> viewsRenderers = resolveViewsRenderer(bodyClass, contentType);
