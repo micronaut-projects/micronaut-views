@@ -19,7 +19,6 @@ dependencies {
 //    testImplementation(projects.micronautViewsPebble)
     testImplementation(projects.micronautViewsRocker)
 //    testImplementation(projects.micronautViewsThymeleaf)
-    testImplementation(projects.micronautViewsRocker)
 //    testImplementation(projects.micronautViewsSoy)
 //    testImplementation(projects.micronautViewsVelocity)
 }
