@@ -32,7 +32,7 @@ import java.util.Optional;
  */
 public abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?>> {
     private final ViewsRendererLocator viewsRendererLocator;
-    private final MediaType mediaType;
+    private final String mediaType;
 
     /**
      *
@@ -40,7 +40,7 @@ public abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?>> {
      * @param mediaType Media Type
      */
     protected AbstractTurboRenderer(ViewsRendererLocator viewsRendererLocator,
-                                    MediaType mediaType) {
+                                    String mediaType) {
         this.viewsRendererLocator = viewsRendererLocator;
         this.mediaType = mediaType;
     }

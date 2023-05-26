@@ -12,7 +12,7 @@ import jakarta.inject.Singleton;
 import java.util.Collections;
 
 @Singleton
-public class MockAuthenticationProvider implements AuthenticationProvider {
+public class MockAuthenticationProvider implements AuthenticationProvider<HttpRequest<?>> {
     @Override
     public Publisher<AuthenticationResponse> authenticate(@Nullable HttpRequest<?> httpRequest, AuthenticationRequest<?, ?> authenticationRequest) {
         return Flux.create(emitter -> {

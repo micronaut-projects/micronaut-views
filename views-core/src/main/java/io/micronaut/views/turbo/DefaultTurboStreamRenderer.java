@@ -47,7 +47,7 @@ public class DefaultTurboStreamRenderer implements TurboStreamRenderer {
         return builder.getTemplateView()
                 .map(viewName ->  {
                     Object model =  builder.getTemplateModel().orElse(null);
-                    return viewsRendererLocator.resolveViewsRenderer(viewName, TurboMediaType.TURBO_STREAM_TYPE, model)
+                    return viewsRendererLocator.resolveViewsRenderer(viewName, TurboMediaType.TURBO_STREAM, model)
                             .flatMap(renderer -> builder.template(renderer.render(viewName, model, request))
                                     .build()
                                     .render());

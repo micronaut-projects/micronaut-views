@@ -15,7 +15,6 @@
  */
 package io.micronaut.views.turbo;
 
-import io.micronaut.http.MediaType;
 import io.micronaut.views.ViewsRendererLocator;
 import jakarta.inject.Singleton;
 
@@ -31,6 +30,6 @@ public class DefaultTurboFrameRenderer extends AbstractTurboRenderer<TurboFrame.
      * @param viewsRendererLocator Views Renderer Locator.
      */
     public DefaultTurboFrameRenderer(ViewsRendererLocator viewsRendererLocator) {
-        super(viewsRendererLocator, MediaType.TEXT_HTML_TYPE);
+        super(viewsRendererLocator, "text/html");
     }
 }
