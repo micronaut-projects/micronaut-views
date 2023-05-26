@@ -118,8 +118,8 @@ implements <a href="ViewsRendererLocator.html" title="interface in io.micronaut.
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resolveViewsRenderer(java.lang.String,io.micronaut.http.MediaType,java.lang.Object)" class="member-name-link">resolveViewsRenderer</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;view,
- io.micronaut.http.MediaType&nbsp;mediaType,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resolveViewsRenderer(java.lang.String,java.lang.String,java.lang.Object)" class="member-name-link">resolveViewsRenderer</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;view,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;contentType,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;body)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
@@ -154,22 +154,22 @@ implements <a href="ViewsRendererLocator.html" title="interface in io.micronaut.
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="resolveViewsRenderer(java.lang.String,io.micronaut.http.MediaType,java.lang.Object)">
+<section class="detail" id="resolveViewsRenderer(java.lang.String,java.lang.String,java.lang.Object)">
 <h3>resolveViewsRenderer</h3>
 <div class="member-signature"><span class="annotations">@NonNull
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&gt;</span>&nbsp;<span class="element-name">resolveViewsRenderer</span><wbr><span class="parameters">(@NonNull
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;view,
  @NonNull
- io.micronaut.http.MediaType&nbsp;mediaType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;contentType,
  @Nullable
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;body)</span>
                                              throws <span class="exceptions"><a href="exceptions/ViewNotFoundException.html" title="class in io.micronaut.views.exceptions">ViewNotFoundException</a></span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="ViewsRendererLocator.html#resolveViewsRenderer(java.lang.String,io.micronaut.http.MediaType,java.lang.Object)">resolveViewsRenderer</a></code>&nbsp;in interface&nbsp;<code><a href="ViewsRendererLocator.html" title="interface in io.micronaut.views">ViewsRendererLocator</a></code></dd>
+<dd><code><a href="ViewsRendererLocator.html#resolveViewsRenderer(java.lang.String,java.lang.String,java.lang.Object)">resolveViewsRenderer</a></code>&nbsp;in interface&nbsp;<code><a href="ViewsRendererLocator.html" title="interface in io.micronaut.views">ViewsRendererLocator</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>view</code> - view Name</dd>
-<dd><code>mediaType</code> - Response Content Type</dd>
+<dd><code>contentType</code> - Response Content Type</dd>
 <dd><code>body</code> - Response Body</dd>
 <dt>Returns:</dt>
 <dd>The <a href="ViewsRenderer.html" title="interface in io.micronaut.views"><code>ViewsRenderer</code></a> able to resolve the view with the response body and media type</dd>
