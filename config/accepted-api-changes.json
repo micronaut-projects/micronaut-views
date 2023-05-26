@@ -1,5 +1,10 @@
 [
   {
+    "type": "io.micronaut.views.turbo.AbstractTurboRenderer",
+    "member": "Constructor io.micronaut.views.turbo.AbstractTurboRenderer(io.micronaut.views.ViewsRendererLocator,io.micronaut.http.MediaType)",
+    "reason": "make api HTTP free"
+  },
+  {
     "type": "io.micronaut.views.ViewsFilter",
     "member": "Constructor io.micronaut.views.ViewsFilter(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator,io.micronaut.views.turbo.TurboStreamRenderer)",
     "reason": "Removed deprecated constructor for Micronaut 4"
