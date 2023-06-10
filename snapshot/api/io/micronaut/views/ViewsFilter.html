@@ -171,9 +171,9 @@ implements io.micronaut.http.filter.HttpServerFilter</span></div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOrder()" class="member-name-link">getOrder</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected io.micronaut.http.MediaType</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resolveMediaType(io.micronaut.http.HttpResponse,java.lang.Object)" class="member-name-link">resolveMediaType</a><wbr>(io.micronaut.http.HttpResponse&lt;?&gt;&nbsp;response,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;responseBody)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected @NonNull io.micronaut.http.MediaType</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resolveMediaType(io.micronaut.http.HttpResponse,java.lang.Object)" class="member-name-link">resolveMediaType</a><wbr>(@NonNull io.micronaut.http.HttpResponse&lt;?&gt;&nbsp;response,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;responseBody)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Resolves the response content type for the matched route.</div>
 </div>
@@ -292,10 +292,10 @@ implements io.micronaut.http.filter.HttpServerFilter</span></div>
 <section class="detail" id="resolveMediaType(io.micronaut.http.HttpResponse,java.lang.Object)">
 <h3>resolveMediaType</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">io.micronaut.http.MediaType</span>&nbsp;<span class="element-name">resolveMediaType</span><wbr><span class="parameters">(@NonNull
- io.micronaut.http.HttpResponse&lt;?&gt;&nbsp;response,
+</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">@NonNull io.micronaut.http.MediaType</span>&nbsp;<span class="element-name">resolveMediaType</span><wbr><span class="parameters">(@NonNull
+ @NonNull io.micronaut.http.HttpResponse&lt;?&gt;&nbsp;response,
  @Nullable
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;responseBody)</span></div>
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;responseBody)</span></div>
 <div class="block">Resolves the response content type for the matched route.</div>
 <dl class="notes">
 <dt>Parameters:</dt>

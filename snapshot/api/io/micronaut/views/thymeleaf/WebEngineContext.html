@@ -106,7 +106,7 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.thymeleaf.IEngineConfiguration,org.thymeleaf.engine.TemplateData,java.util.Map,io.micronaut.http.HttpRequest,java.util.Locale,java.util.Map)" class="member-name-link">WebEngineContext</a><wbr>(org.thymeleaf.IEngineConfiguration&nbsp;configuration,
  org.thymeleaf.engine.TemplateData&nbsp;templateData,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;templateResolutionAttributes,
- io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
+ @Nullable io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Locale.html" title="class or interface in java.util" class="external-link">Locale</a>&nbsp;locale,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;variables)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -124,7 +124,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>io.micronaut.http.HttpRequest&lt;?&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable io.micronaut.http.HttpRequest&lt;?&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRequest()" class="member-name-link">getRequest</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
@@ -166,7 +166,7 @@ loadScripts(document, 'script');</script>
  org.thymeleaf.engine.TemplateData&nbsp;templateData,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;templateResolutionAttributes,
  @Nullable
- io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
+ @Nullable io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Locale.html" title="class or interface in java.util" class="external-link">Locale</a>&nbsp;locale,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;variables)</span></div>
 <dl class="notes">
@@ -198,7 +198,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getRequest()">
 <h3>getRequest</h3>
 <div class="member-signature"><span class="annotations">@Nullable
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">io.micronaut.http.HttpRequest&lt;?&gt;</span>&nbsp;<span class="element-name">getRequest</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@Nullable io.micronaut.http.HttpRequest&lt;?&gt;</span>&nbsp;<span class="element-name">getRequest</span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>HTTP request.</dd>

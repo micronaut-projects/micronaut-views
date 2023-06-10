@@ -157,8 +157,8 @@ implements <a href="FreemarkerViewsRendererConfiguration.html" title="interface 
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.views.ViewsConfiguration,java.lang.String,io.micronaut.core.io.scan.ClassPathResourceLoader)" class="member-name-link">FreemarkerViewsRendererConfigurationProperties</a><wbr>(<a href="../ViewsConfiguration.html" title="interface in io.micronaut.views">ViewsConfiguration</a>&nbsp;viewsConfiguration,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;version,
- io.micronaut.core.io.scan.ClassPathResourceLoader&nbsp;resourceLoader)</code></div>
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;version,
+ @Nullable io.micronaut.core.io.scan.ClassPathResourceLoader&nbsp;resourceLoader)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Default contructor.</div>
 </div>
@@ -176,7 +176,7 @@ implements <a href="FreemarkerViewsRendererConfiguration.html" title="interface 
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDefaultExtension()" class="member-name-link">getDefaultExtension</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>freemarker.template.Version</code></div>
@@ -287,9 +287,9 @@ implements <a href="FreemarkerViewsRendererConfiguration.html" title="interface 
 <h3>FreemarkerViewsRendererConfigurationProperties</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">FreemarkerViewsRendererConfigurationProperties</span><wbr><span class="parameters">(<a href="../ViewsConfiguration.html" title="interface in io.micronaut.views">ViewsConfiguration</a>&nbsp;viewsConfiguration,
  @Property(name="micronaut.views.freemarker.incompatible-improvements") @Nullable
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;version,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;version,
  @Nullable
- io.micronaut.core.io.scan.ClassPathResourceLoader&nbsp;resourceLoader)</span></div>
+ @Nullable io.micronaut.core.io.scan.ClassPathResourceLoader&nbsp;resourceLoader)</span></div>
 <div class="block">Default contructor.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -332,7 +332,7 @@ implements <a href="FreemarkerViewsRendererConfiguration.html" title="interface 
 <section class="detail" id="getDefaultExtension()">
 <h3>getDefaultExtension</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDefaultExtension</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDefaultExtension</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="FreemarkerViewsRendererConfiguration.html#getDefaultExtension()">getDefaultExtension</a></code>&nbsp;in interface&nbsp;<code><a href="FreemarkerViewsRendererConfiguration.html" title="interface in io.micronaut.views.freemarker">FreemarkerViewsRendererConfiguration</a></code></dd>
