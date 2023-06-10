@@ -23,7 +23,7 @@ thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.8.22"
 kotlinx-coroutines = "1.7.1"
 
-micronaut-logging = "1.0.0-M2"
+micronaut-logging = "1.0.0-M3"
 
 [libraries]
 # Core
