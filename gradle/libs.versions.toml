@@ -3,7 +3,7 @@ micronaut = "4.0.0-RC1"
 micronaut-docs = '2.0.0'
 micronaut-test = "4.0.0-M5"
 
-micronaut-security = "4.0.0-M5"
+micronaut-security = "4.0.0-M6"
 micronaut-serde = "2.0.0-M9"
 micronaut-validation = "4.0.0-M9"
 
