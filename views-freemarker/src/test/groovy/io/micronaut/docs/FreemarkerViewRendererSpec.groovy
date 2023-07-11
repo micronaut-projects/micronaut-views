@@ -22,12 +22,12 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientException
 import io.micronaut.http.client.exceptions.HttpClientResponseException
+import io.micronaut.http.client.exceptions.ReadTimeoutException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.ViewsFilter
 import io.micronaut.views.freemarker.FreemarkerViewsRenderer
 import io.micronaut.views.freemarker.FreemarkerViewsRendererConfigurationProperties
 import spock.lang.AutoCleanup
-import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -194,15 +194,16 @@ class FreemarkerViewRendererSpec extends Specification {
         rsp.body().contains("<h1>You are not logged in</h1>")
     }
 
-    def "invoking /freemarker/invalid returns error"() {
+    def "invoking /freemarker/invalid throws HttpClientException that is not a read timeout"() {
         when:
         client.toBlocking().exchange('/freemarker/invalid', String)
 
         then:
-         thrown(HttpClientException)
+        def e = thrown(HttpClientException)
+        // 'https://github.com/micronaut-projects/micronaut-views/issues/478'
+        !(e instanceof ReadTimeoutException)
     }
 
-    @PendingFeature
     def "invoking /freemarker/invalid returns HttpClientResponseException with 500 as status code"() {
         when:
         client.toBlocking().exchange('/freemarker/invalid', String)

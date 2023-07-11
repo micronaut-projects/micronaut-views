@@ -1,11 +1,13 @@
 package io.micronaut.views.soy
 
+import io.micronaut.context.annotation.Property
 import io.micronaut.core.io.Writable
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import spock.lang.Specification
 
 @MicronautTest(startApplication = false)
+@Property(name = "spec.name", value = "soy")
 class SoyViewRenderNullableRequestSpec extends Specification {
 
     @Inject

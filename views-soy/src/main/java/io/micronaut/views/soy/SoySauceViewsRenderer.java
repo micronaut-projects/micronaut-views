@@ -18,6 +18,7 @@ package io.micronaut.views.soy;
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.data.SoyTemplate;
 import com.google.template.soy.data.SoyValueProvider;
+import com.google.template.soy.error.SoyCompilationException;
 import com.google.template.soy.jbcsrc.api.RenderResult;
 import com.google.template.soy.jbcsrc.api.SoySauce;
 import com.google.template.soy.shared.SoyCssRenamingMap;
@@ -91,7 +92,12 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T> {
                 throw new IllegalStateException(
                         "Unable to load Soy templates: no file set, no compiled templates provided.");
             }
-            this.soySauce = soyConfiguration.getFileSet().compileTemplates();
+            try {
+                this.soySauce = fileSet.compileTemplates();
+            } catch (SoyCompilationException se) {
+                throw new ViewRenderingException(
+                    "Soy template compilation failed: " + se.getMessage(), se);
+            }
         }
     }
 
