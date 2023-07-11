@@ -13,6 +13,8 @@ A naive implementation of api:views.soy.SoyFileSetProvider[] could look like:
 
 snippet::io.micronaut.docs.soy.CustomSoyFileSetProvider[tags="clazz"]
 
+NOTE: Soy allows users to write custom functions that templates can call, as described by their docs for https://github.com/google/closure-templates/blob/master/documentation/dev/plugins.md[Creating a Plugin]. If you have one or more implementations of https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/plugin/restricted/SoySourceFunction.java[SoySourceFunction], you can register them in the `SoyFileSetProvider.provideSoyFileSet()` method using SoyFileSet builder's `addSourceFunction(SoySourceFunction)` or `addSourceFunction(Iterable<? extends SoySourceFunction>)` methods.
+
 The return value of the following Controller is converted to Soy template context parameters, and passed to the `@View`-annotation-bound template.
 
 snippet::io.micronaut.docs.soy.SoyController[tags="clazz"]
