@@ -100,7 +100,7 @@ public class VelocityViewsRenderer<T, R> implements ViewsRenderer<T, R> {
         try {
             velocityEngine.getTemplate(viewName(viewName));
         } catch (ResourceNotFoundException | ParseErrorException e) {
-            return false;
+            throw new ViewRenderingException("Error rendering Velocity view [" + viewName + "]: " + e.getMessage(), e);
         }
         return true;
     }

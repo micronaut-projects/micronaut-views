@@ -71,4 +71,9 @@ public class PebbleController {
     @Get("/i18n")
     void i18n() {
     }
+
+    @View("badsyntax.html")
+    @Get("/badsyntax")
+    void badsyntax() {
+    }
 }

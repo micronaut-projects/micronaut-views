@@ -23,7 +23,9 @@ import io.micronaut.core.util.LocaleResolver;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.exceptions.ViewRenderingException;
 import io.pebbletemplates.pebble.PebbleEngine;
+import io.pebbletemplates.pebble.template.PebbleTemplate;
 import jakarta.inject.Singleton;
 
 import java.util.Locale;
@@ -60,7 +62,15 @@ public class PebbleViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     public Writable render(@NonNull String name,
                            @Nullable T data,
                            @Nullable R request) {
-        return (writer) -> engine.getTemplate(name).evaluate(writer, ViewUtils.modelOf(data), request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault());
+        PebbleTemplate template;
+        try {
+            // this has to fail fast to avoid a ReadTimeoutException from ViewsFilter call
+            template = engine.getTemplate(name);
+        } catch (Exception e) {
+            throw new ViewRenderingException("Error rendering Pebble view [" + name + "]: " + e.getMessage(), e);
+        }
+        return writer -> template.evaluate(writer, ViewUtils.modelOf(data),
+                    request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault());
     }
 
     @Override

@@ -95,4 +95,9 @@ class JteController {
     HttpResponse kteTemplate() {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"));
     }
+
+    @View("badsyntax.hbs")
+    @Get("/badsyntax")
+    void badsyntax() {
+    }
 }

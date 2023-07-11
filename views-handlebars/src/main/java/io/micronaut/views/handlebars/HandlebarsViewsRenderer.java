@@ -32,6 +32,8 @@ import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+import java.io.IOException;
+
 /**
  * Renders Views with Handlebars.java.
  *
@@ -76,10 +78,15 @@ public class HandlebarsViewsRenderer<T, R> implements ViewsRenderer<T, R> {
                            @Nullable T data,
                            @Nullable R request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
+        String location = viewLocation(viewName);
+        Template template;
+        try {
+            template = handlebars.compile(location);
+        } catch (IOException e) {
+            throw new ViewRenderingException("Error rendering Handlebars view [" + viewName + "]: " + e.getMessage(), e);
+        }
         return (writer) -> {
-            String location = viewLocation(viewName);
             try {
-                Template template = handlebars.compile(location);
                 template.apply(data, writer);
             } catch (Throwable e) {
                 throw new ViewRenderingException("Error rendering Handlebars view [" + viewName + "]: " + e.getMessage(), e);
