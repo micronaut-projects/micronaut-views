@@ -22,8 +22,8 @@ class RewriteMapProviderSpec extends Specification {
         then:
         rewriteMapProvider
         SoyCssRenamingMap soyCssRenamingMap = rewriteMapProvider.cssRenamingMap();
-        soyCssRenamingMap.get("dialog") == "a"
-        soyCssRenamingMap.get("content") == "b"
-        soyCssRenamingMap.get("title") == "c"
+        soyCssRenamingMap.get('dialog') == 'a'
+        soyCssRenamingMap.get('content') == 'b'
+        soyCssRenamingMap.get('title') == 'c'
     }
 }

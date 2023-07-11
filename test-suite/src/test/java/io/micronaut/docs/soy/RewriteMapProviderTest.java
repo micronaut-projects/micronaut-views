@@ -23,8 +23,8 @@ class RewriteMapProviderTest {
         SoyNamingMapProvider rewriteMapProvider = beanContext.getBean(SoyNamingMapProvider.class);
         assertNotNull(rewriteMapProvider);
         SoyCssRenamingMap soyCssRenamingMap = rewriteMapProvider.cssRenamingMap();
-        assertEquals(soyCssRenamingMap.get("dialog"),"a");
-        assertEquals(soyCssRenamingMap.get("content"),"b");
-        assertEquals(soyCssRenamingMap.get("title"),"c");
+        assertEquals("a", soyCssRenamingMap.get("dialog"));
+        assertEquals("b", soyCssRenamingMap.get("content"));
+        assertEquals("c", soyCssRenamingMap.get("title"));
     }
 }

@@ -22,9 +22,9 @@ internal class RewriteMapProviderTest {
 
         Assertions.assertNotNull(rewriteMapProvider)
         val soyCssRenamingMap = rewriteMapProvider.cssRenamingMap()
-        Assertions.assertEquals(soyCssRenamingMap["dialog"], "a")
-        Assertions.assertEquals(soyCssRenamingMap["content"], "b")
-        Assertions.assertEquals(soyCssRenamingMap["title"], "c")
+        Assertions.assertEquals("a", soyCssRenamingMap["dialog"])
+        Assertions.assertEquals("b", soyCssRenamingMap["content"])
+        Assertions.assertEquals("c", soyCssRenamingMap["title"] )
     }
 }
 
