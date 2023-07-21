@@ -1,0 +1,29 @@
+/*
+ * Copyright 2017-2020 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/**
+ * Contains classes specific to Views rendered with JStachio.
+ * @see <a href="https://github.com/jstachio/jstachio">JStachio</a>
+ * @see io.micronaut.views.jstachio.JStachioModelAndView
+ * @see io.micronaut.views.jstachio.MicronautJStacheConfig
+ * @author Adam Gent
+ */
+@Configuration
+@Requires(classes = JStachio.class)
+package io.micronaut.views.jstachio;
+
+import io.jstach.jstachio.JStachio;
+import io.micronaut.context.annotation.Configuration;
+import io.micronaut.context.annotation.Requires;

@@ -23,6 +23,7 @@ include 'views-velocity'
 include 'views-rocker'
 include 'views-pebble'
 include 'views-jte'
+include 'views-jstachio'
 
 include "test-suite"
 include "test-suite-http"
