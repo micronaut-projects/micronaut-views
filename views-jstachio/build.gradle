@@ -27,9 +27,15 @@ dependencies {
 
  compileTestJava {
      // This is an unfortunate bug with JStachio for test template resources.
-     // This will be fixed in 1.2.1 or greater.
+     // https://github.com/jstachio/jstachio/issues/198
      options.compilerArgs += [
      '-Ajstache.resourcesPath=src/test/resources'
      ]
  }
+ 
+ micronautBuild {
+    binaryCompatibility {
+        enabled = false
+    }
+}
 
