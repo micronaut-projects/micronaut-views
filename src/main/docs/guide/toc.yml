@@ -6,6 +6,7 @@ views:
     title: Template Engines
     thymeleaf: Thymeleaf
     handlebars: Handlebars.java
+    jstachio: JStachio
     velocity: Apache Velocity
     freemarker: Apache Freemarker
     rocker: Rocker

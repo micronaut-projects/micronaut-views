@@ -16,12 +16,18 @@
 package io.micronaut.views.jstachio;
 
 import io.jstach.jstache.JStacheConfig;
+import io.jstach.jstache.JStacheInterfaces;
+import io.jstach.jstache.JStacheName;
 import io.jstach.jstache.JStachePath;
 
 /**
  * Opinionated static JStache config for Micronaut.
  */
-@JStacheConfig(pathing = @JStachePath(prefix = "views/", suffix = ".mustache"))
+@JStacheConfig(
+        pathing = @JStachePath(prefix = "views/", suffix = ".mustache"),
+        naming= @JStacheName(suffix = "View"),
+        interfacing = @JStacheInterfaces(templateImplements = MicronautJStacheTemplate.class)
+        )
 public enum MicronautJStacheConfig {
  // purposely empty
 }

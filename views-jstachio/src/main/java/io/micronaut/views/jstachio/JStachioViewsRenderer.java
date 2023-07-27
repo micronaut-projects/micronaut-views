@@ -27,10 +27,11 @@ import jakarta.inject.Singleton;
 /**
  * Renders JStachio JStache annotated models.
  * 
- * The view name is expected to be {@value JStachioModelAndView#JSTACHIO_VIEW_NAME}.
+ * The view name is expected to be {@value JStachioModelAndView#JSTACHIO_VIEW}.
  * 
  * @param <T> model data type
  * @param <R> request type
+ * @author agentgt
  */
 @Requires(classes = JStachio.class)
 @Singleton
@@ -55,7 +56,7 @@ public class JStachioViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        return viewName.equals(JStachioModelAndView.JSTACHIO_VIEW_NAME);
+        return viewName.equals(JStachioModelAndView.JSTACHIO_VIEW);
     }
 
 }

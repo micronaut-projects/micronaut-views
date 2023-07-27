@@ -34,15 +34,15 @@ public class JStachioModelAndView<T> extends ModelAndView<T> {
      * Special JStachio view name that will make sure JStachio
      * is used for rendering.
      */
-    public static final String JSTACHIO_VIEW_NAME = "jstachio";
-    private static final Optional<String> OPTIONAL_JSTACHIO_VIEW = Optional.of(JSTACHIO_VIEW_NAME);
+    public static final String JSTACHIO_VIEW = "jstachio";
+    private static final Optional<String> OPTIONAL_JSTACHIO_VIEW = Optional.of(JSTACHIO_VIEW);
 
     /**
      * Creates a JStachio ModelAndView, prefer {@link #of(Object)} when possible.
      * @param model an instance of a model annotated with {@link JStache} or a {@link TemplateModel}.
      */
     protected JStachioModelAndView(@NonNull T model) {
-        super(JSTACHIO_VIEW_NAME, requireModel(model));
+        super(JSTACHIO_VIEW, requireModel(model));
     }
     
     /**
