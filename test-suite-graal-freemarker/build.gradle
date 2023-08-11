@@ -1,0 +1,7 @@
+plugins {
+    id "io.micronaut.build.internal.views-native-tests"
+}
+
+dependencies {
+    implementation(projects.micronautViewsFreemarker)
+}
