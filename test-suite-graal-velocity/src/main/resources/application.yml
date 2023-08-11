@@ -1,0 +1,8 @@
+micronaut:
+  application:
+    name: views-graal
+  router:
+    static-resources:
+      public:
+        enabled: true
+        paths: classpath:public
