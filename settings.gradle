@@ -30,6 +30,7 @@ include "test-suite-groovy"
 include "test-suite-kotlin"
 include "test-suite-graal-freemarker"
 include "test-suite-graal-handlebars"
+include "test-suite-graal-pebble"
 
 micronautBuild {
     importMicronautCatalog("micronaut-logging")

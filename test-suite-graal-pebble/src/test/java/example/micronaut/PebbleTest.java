@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @MicronautTest
-public class HandlebarsTest {
+public class PebbleTest {
 
     @Inject
     @Client("/")
@@ -43,24 +43,24 @@ public class HandlebarsTest {
     }
 
     @Test
-    void testHandlebars() {
-        HttpRequest<?> request = HttpRequest.GET("/views/handlebars");
+    void testPebble() {
+        HttpRequest<?> request = HttpRequest.GET("/views/pebble");
         HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
         assertNotNull(response);
         Optional<String> body = response.getBody();
         assertTrue(body.isPresent());
-        assertTrue(body.get().contains("Title - Handlebars"));
+        assertTrue(body.get().contains("Title - Pebble"));
         assertTrue(body.get().contains("username: <span>test-user</span>"));
     }
 
     @Test
-    void testHandlebarsPojoView() {
-        HttpRequest<?> request = HttpRequest.GET("/views/handlebars-view");
+    void testPebblePojoView() {
+        HttpRequest<?> request = HttpRequest.GET("/views/pebble-view");
         HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
         assertNotNull(response);
         Optional<String> body = response.getBody();
         assertTrue(body.isPresent());
-        assertTrue(body.get().contains("Title - Handlebars"));
+        assertTrue(body.get().contains("Title - Pebble"));
         assertTrue(body.get().contains("username: <span>test-user</span>"));
     }
 }
