@@ -21,13 +21,13 @@ public class HandlebarsTest {
     HttpClient client;
 
     @Test
-    void testHome() {
+    void testIndex() {
         HttpRequest<?> request = HttpRequest.GET("/");
         HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
         assertNotNull(response);
         Optional<String> body = response.getBody();
         assertTrue(body.isPresent());
-        assertTrue(body.get().contains("Title - Home"));
+        assertTrue(body.get().contains("Title - Index"));
         assertTrue(body.get().contains("<img src=\"images/micronaut_mini_copy_tm.svg\" width=\"400\"/>"));
     }
 

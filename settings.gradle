@@ -31,6 +31,7 @@ include "test-suite-kotlin"
 include "test-suite-graal-freemarker"
 include "test-suite-graal-handlebars"
 include "test-suite-graal-pebble"
+include "test-suite-graal-thymeleaf"
 
 micronautBuild {
     importMicronautCatalog("micronaut-logging")
