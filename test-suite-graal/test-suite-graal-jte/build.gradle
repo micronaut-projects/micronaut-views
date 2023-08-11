@@ -1,0 +1,19 @@
+plugins {
+    id "io.micronaut.build.internal.views-native-tests-app"
+    alias(libs.plugins.jte)
+}
+
+dependencies {
+    implementation(projects.testSuiteGraal.testSuiteGraalCommon)
+    implementation(projects.micronautViewsJte)
+}
+
+jte {
+    sourceDirectory = file('src/main/resources/views').toPath()
+    generate()
+    generateNativeImageResources = true
+}
+
+tasks.getByName("inspectRuntimeClasspath") {
+    dependsOn generateJte
+}
