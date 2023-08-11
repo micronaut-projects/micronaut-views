@@ -29,6 +29,7 @@ include "test-suite-http"
 include "test-suite-groovy"
 include "test-suite-kotlin"
 include "test-suite-graal-freemarker"
+include "test-suite-graal-handlebars"
 
 micronautBuild {
     importMicronautCatalog("micronaut-logging")
