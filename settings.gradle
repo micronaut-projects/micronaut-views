@@ -33,7 +33,7 @@ include "test-suite-graal:test-suite-graal-freemarker"
 include "test-suite-graal:test-suite-graal-handlebars"
 include "test-suite-graal:test-suite-graal-pebble"
 include "test-suite-graal:test-suite-graal-thymeleaf"
-include "test-suite-graal:test-suite-graal-velocity"
+include "test-suite-graal:test-suite-graal-velocty"
 include "test-suite-graal:test-suite-graal-jte"
 include "test-suite-graal:test-suite-graal-rocker"
 
