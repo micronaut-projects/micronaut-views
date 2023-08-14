@@ -11,7 +11,7 @@ dependencies {
 jte {
     sourceDirectory = file('src/main/resources/views').toPath()
     generate()
-    generateNativeImageResources = true
+    generateNativeImageResources = false
 }
 
 tasks.getByName("inspectRuntimeClasspath") {
