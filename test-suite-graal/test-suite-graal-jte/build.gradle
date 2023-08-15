@@ -17,3 +17,8 @@ jte {
 tasks.getByName("inspectRuntimeClasspath") {
     dependsOn generateJte
 }
+
+// Disabled because there is no enough memory in github runners to create a native image
+graalvmNative {
+    testSupport = false
+}
