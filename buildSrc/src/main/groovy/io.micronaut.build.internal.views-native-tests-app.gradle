@@ -1,0 +1,28 @@
+plugins {
+    id "io.micronaut.application"
+}
+
+micronaut {
+    importMicronautPlatform = false
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        annotations("example.micronaut.*")
+    }
+}
+
+application {
+    mainClass = 'example.micronaut.Application'
+}
+
+dependencies {
+    annotationProcessor(mnSerde.micronaut.serde.processor)
+
+    implementation(mn.micronaut.http.server.netty)
+    implementation(mnSerde.micronaut.serde.jackson)
+    runtimeOnly(mnLogging.logback.classic)
+    runtimeOnly(mn.snakeyaml)
+
+    testImplementation(mnTest.micronaut.test.junit5)
+    testImplementation(mn.micronaut.http.client)
+}

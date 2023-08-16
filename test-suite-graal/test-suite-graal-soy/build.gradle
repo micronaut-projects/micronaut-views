@@ -1,0 +1,29 @@
+plugins {
+    id "io.micronaut.build.internal.views-native-tests-app"
+}
+
+ext {
+    soyDir = new File(buildDir, 'soy')
+    soyTemplateJarPath = soyDir.absolutePath + '/compiled-soy-templates.jar'
+    soyTemplatePath = projectDir.getAbsolutePath() + '/src/main/resources/views/template/home.soy'
+}
+
+dependencies {
+    implementation(projects.testSuiteGraal.testSuiteGraalCommon)
+    implementation(projects.micronautViewsSoy)
+    runtimeOnly files(soyTemplateJarPath)
+}
+
+task compileSoyTemplate(type: JavaExec) {
+    doFirst {
+        soyDir.mkdirs()
+    }
+
+    classpath = sourceSets.main.runtimeClasspath
+
+    mainClass = 'com.google.template.soy.SoyToJbcSrcCompiler'
+
+    args = ['--output', soyTemplateJarPath, '--srcs', soyTemplatePath]
+}
+
+test.dependsOn compileSoyTemplate

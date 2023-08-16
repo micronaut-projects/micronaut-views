@@ -1,0 +1,8 @@
+plugins {
+    id "io.micronaut.build.internal.views-native-tests-app"
+}
+
+dependencies {
+    implementation(projects.testSuiteGraal.testSuiteGraalCommon)
+    implementation(projects.micronautViewsHandlebars)
+}

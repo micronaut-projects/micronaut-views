@@ -1,0 +1,7 @@
+plugins {
+    id "io.micronaut.minimal.library"
+}
+
+dependencies {
+    annotationProcessor(libs.micronaut.graal)
+}

@@ -1,0 +1,30 @@
+[
+    {
+        "name": "views.template.home",
+        "queryAllPublicMethods": true,
+        "methods": [
+            {
+                "name": "<init>",
+                "parameterTypes": [
+
+                ]
+            },
+            {
+                "name": "loggedIn",
+                "parameterTypes": [
+                    "java.lang.Boolean"
+                ]
+            },
+            {
+                "name": "username",
+                "parameterTypes": [
+                    "java.lang.String"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "views.template.home$PlainText",
+        "allDeclaredFields": true
+    }
+]

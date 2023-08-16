@@ -1,0 +1,13 @@
+[
+  {
+    "name": "com.google.template.soy.jbcsrc.gen.sample",
+    "methods": [
+      {
+        "name": "home",
+        "parameterTypes": [
+
+        ]
+      }
+    ]
+  }
+]
