@@ -1,0 +1,20 @@
+{namespace sample}
+
+{template home}
+  {@param loggedIn: bool}
+  {@param? username: string}
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <title>Title - Template</title>
+  </head>
+  <body>
+  {if $loggedIn}
+      <h1>username: <span>{$username}</span></h1>
+  {else}
+      <h1>You are not logged in</h1>
+  {/if}
+  </body>
+  </html>
+{/template}

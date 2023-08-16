@@ -36,6 +36,7 @@ include "test-suite-graal:test-suite-graal-thymeleaf"
 include "test-suite-graal:test-suite-graal-velocty"
 include "test-suite-graal:test-suite-graal-jte"
 include "test-suite-graal:test-suite-graal-rocker"
+include "test-suite-graal:test-suite-graal-soy"
 
 micronautBuild {
     importMicronautCatalog("micronaut-logging")
