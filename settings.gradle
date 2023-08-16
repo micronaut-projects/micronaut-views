@@ -24,6 +24,7 @@ include 'views-rocker'
 include 'views-pebble'
 include 'views-jte'
 
+include "test-suite-geb"
 include "test-suite"
 include "test-suite-http"
 include "test-suite-groovy"
@@ -39,9 +40,10 @@ include "test-suite-graal:test-suite-graal-rocker"
 include "test-suite-graal:test-suite-graal-soy"
 
 micronautBuild {
-    importMicronautCatalog("micronaut-logging")
     useStandardizedProjectNames=true
     importMicronautCatalog()
+    importMicronautCatalog("micronaut-data")
+    importMicronautCatalog("micronaut-sql")
     importMicronautCatalog("micronaut-security")
     importMicronautCatalog("micronaut-serde")
     importMicronautCatalog("micronaut-validation")
