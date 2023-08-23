@@ -3,6 +3,7 @@ plugins {
 }
 
 micronaut {
+    version.set(libs.versions.micronaut.platform.get())
     importMicronautPlatform = false
     runtime("netty")
     testRuntime("junit5")
