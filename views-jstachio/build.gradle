@@ -9,7 +9,6 @@ dependencies {
     api(libs.managed.jstachio)
     compileOnly(mn.micronaut.management)
 
-    testCompileOnly(mn.micronaut.inject.groovy)
     testAnnotationProcessor(mn.micronaut.inject.java)
     testAnnotationProcessor(libs.managed.jstachio.apt)
 
