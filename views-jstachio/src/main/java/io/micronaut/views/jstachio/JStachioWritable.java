@@ -35,7 +35,6 @@ class JStachioWritable implements Writable {
     private final Object model;
     
     public JStachioWritable(JStachio jstachio, Object model) {
-        super();
         this.jstachio = jstachio;
         this.model = model;
     }
