@@ -26,7 +26,7 @@ import io.jstach.jstache.JStachePath;
  */
 @JStacheConfig(
         pathing = @JStachePath(prefix = "views/", suffix = ".mustache"),
-        naming= @JStacheName(suffix = "View"),
+        naming = @JStacheName(suffix = "View"),
         interfacing = @JStacheInterfaces(templateImplements = MicronautJStacheTemplate.class)
         )
 public enum MicronautJStacheConfig {
