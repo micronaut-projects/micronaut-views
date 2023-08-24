@@ -16,7 +16,6 @@
 package io.micronaut.views.jstachio;
 
 import io.jstach.jstachio.JStachio;
-import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;

@@ -23,6 +23,4 @@
 @Configuration
 package io.micronaut.views.jstachio;
 
-import io.jstach.jstachio.JStachio;
 import io.micronaut.context.annotation.Configuration;
-import io.micronaut.context.annotation.Requires;
