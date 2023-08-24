@@ -1,0 +1,11 @@
+plugins {
+    id "io.micronaut.minimal.library"
+}
+micronaut {
+    version.set(libs.versions.micronaut.platform.get())
+    importMicronautPlatform = false
+}
+
+dependencies {
+    annotationProcessor(libs.micronaut.graal)
+}

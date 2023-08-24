@@ -1,0 +1,9 @@
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": "\\Qviews/template/home$PlainText.class\\E"
+      }
+    ]
+  }
+}
