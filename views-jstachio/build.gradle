@@ -22,7 +22,6 @@ dependencies {
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.management)
     testImplementation(mnValidation.micronaut.validation)
-    testImplementation(mn.snakeyaml)
 }
 
  compileTestJava {
