@@ -1,11 +1,13 @@
 [versions]
-micronaut = "4.0.0"
+micronaut = "4.1.1"
+micronaut-platform = "4.0.3"
 micronaut-docs = '2.0.0'
 micronaut-test = "4.0.0"
 
-micronaut-security = "4.0.0"
-micronaut-serde = "2.0.0"
-micronaut-validation = "4.0.0"
+micronaut-security = "4.0.4"
+micronaut-serde = "2.2.0"
+micronaut-validation = "4.0.1"
+micronaut-gradle-plugin = "4.0.2"
 
 groovy = "4.0.13"
 spock = "2.3-groovy-4.0"
@@ -16,13 +18,13 @@ managed-jstachio = "1.2.1"
 managed-jte = "2.3.2"
 managed-rocker = "1.3.0"
 managed-soy = "2022-10-26"
-managed-thymeleaf = "3.1.1.RELEASE"
+managed-thymeleaf = "3.1.2.RELEASE"
 managed-velocity = "2.3"
 
 pebble = "3.2.1"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.9.0"
-kotlinx-coroutines = "1.7.2"
+kotlinx-coroutines = "1.7.3"
 
 micronaut-logging = "1.0.0"
 
@@ -34,6 +36,8 @@ micronaut-logging = { module = "io.micronaut.logging:micronaut-logging-bom", ver
 micronaut-security = { module = "io.micronaut.security:micronaut-security-bom", version.ref = "micronaut-security" }
 micronaut-serde = { module = "io.micronaut.serde:micronaut-serde-bom", version.ref = "micronaut-serde" }
 micronaut-validation = { module = "io.micronaut.validation:micronaut-validation-bom", version.ref = "micronaut-validation" }
+micronaut-graal = {group = "io.micronaut", name = "micronaut-graal", version.ref = "micronaut" }
+micronaut-gradle-plugin = { module = "io.micronaut.gradle:micronaut-gradle-plugin", version.ref = "micronaut-gradle-plugin" }
 
 managed-freemarker = { module = "org.freemarker:freemarker", version.ref = "managed-freemarker" }
 managed-handlebars = { module = "com.github.jknack:handlebars", version.ref = "managed-handlebars" }

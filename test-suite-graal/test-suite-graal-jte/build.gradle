@@ -1,0 +1,24 @@
+plugins {
+    id "io.micronaut.build.internal.views-native-tests-app"
+    alias(libs.plugins.jte)
+}
+
+dependencies {
+    implementation(projects.testSuiteGraal.testSuiteGraalCommon)
+    implementation(projects.micronautViewsJte)
+}
+
+jte {
+    sourceDirectory = file('src/main/resources/views').toPath()
+    generate()
+    generateNativeImageResources = false
+}
+
+tasks.getByName("inspectRuntimeClasspath") {
+    dependsOn generateJte
+}
+
+// Disabled because there is no enough memory in github runners to create a native image
+graalvmNative {
+    testSupport = false
+}

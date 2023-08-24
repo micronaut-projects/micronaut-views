@@ -6,7 +6,7 @@ pluginManagement {
 }
 
 plugins {
-    id("io.micronaut.build.shared.settings") version "6.5.3"
+    id("io.micronaut.build.shared.settings") version "6.5.5"
 }
 
 enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
@@ -29,6 +29,15 @@ include "test-suite"
 include "test-suite-http"
 include "test-suite-groovy"
 include "test-suite-kotlin"
+include "test-suite-graal:test-suite-graal-common"
+include "test-suite-graal:test-suite-graal-freemarker"
+include "test-suite-graal:test-suite-graal-handlebars"
+include "test-suite-graal:test-suite-graal-pebble"
+include "test-suite-graal:test-suite-graal-thymeleaf"
+include "test-suite-graal:test-suite-graal-velocty"
+include "test-suite-graal:test-suite-graal-jte"
+include "test-suite-graal:test-suite-graal-rocker"
+include "test-suite-graal:test-suite-graal-soy"
 
 micronautBuild {
     importMicronautCatalog("micronaut-logging")

@@ -1,0 +1,19 @@
+plugins {
+    id "io.micronaut.build.internal.views-native-tests-app"
+    id 'nu.studer.rocker' version '3.0.4'
+}
+
+dependencies {
+    implementation(projects.testSuiteGraal.testSuiteGraalCommon)
+    implementation(projects.micronautViewsRocker)
+}
+
+rocker {
+    configurations {
+        main {
+            templateDir = file('src/main/resources')
+            outputDir = file('build/generated/rocker')
+            optimize = true
+        }
+    }
+}
