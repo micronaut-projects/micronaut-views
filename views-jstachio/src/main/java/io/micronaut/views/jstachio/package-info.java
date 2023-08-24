@@ -21,7 +21,6 @@
  * @author Adam Gent
  */
 @Configuration
-@Requires(classes = JStachio.class)
 package io.micronaut.views.jstachio;
 
 import io.jstach.jstachio.JStachio;

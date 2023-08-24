@@ -26,15 +26,14 @@ import jakarta.inject.Singleton;
 
 /**
  * Renders JStachio JStache annotated models.
- * 
+ *
  * The view name is expected to be {@value JStachioModelAndView#JSTACHIO_VIEW}.
- * 
+ *
  * @param <T> model data type
  * @param <R> request type
  * @author agentgt
  * @since 4.1.0
  */
-@Requires(classes = JStachio.class)
 @Singleton
 public class JStachioViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
