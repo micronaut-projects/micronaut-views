@@ -4,15 +4,12 @@ plugins {
 
 
 dependencies {
-    annotationProcessor(mnValidation.micronaut.validation.processor)
 
     api projects.micronautViewsCore
     api(libs.managed.jstachio)
     compileOnly(mn.micronaut.management)
-    compileOnly(mnValidation.micronaut.validation)
 
     testCompileOnly(mn.micronaut.inject.groovy)
-    testAnnotationProcessor(mnValidation.micronaut.validation.processor)
     testAnnotationProcessor(mn.micronaut.inject.java)
     testAnnotationProcessor(libs.managed.jstachio.apt)
 
@@ -21,7 +18,6 @@ dependencies {
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.management)
-    testImplementation(mnValidation.micronaut.validation)
 }
 
  compileTestJava {
