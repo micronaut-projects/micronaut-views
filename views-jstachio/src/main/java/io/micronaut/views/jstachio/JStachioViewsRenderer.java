@@ -32,6 +32,7 @@ import jakarta.inject.Singleton;
  * @param <T> model data type
  * @param <R> request type
  * @author agentgt
+ * @since 4.1.0
  */
 @Requires(classes = JStachio.class)
 @Singleton

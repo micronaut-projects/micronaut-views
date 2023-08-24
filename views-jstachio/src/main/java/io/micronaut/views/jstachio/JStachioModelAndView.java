@@ -27,6 +27,7 @@ import io.micronaut.views.ModelAndView;
 /**
  * Creates a ModelAndView that will use JStachio for rendering.
  * @param <T> JStache annotated model type
+ * @since 4.1.0
  */
 public class JStachioModelAndView<T> extends ModelAndView<T> {
 

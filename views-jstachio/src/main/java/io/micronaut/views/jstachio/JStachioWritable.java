@@ -27,6 +27,9 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 
 
+/**
+ * @since 4.1.0
+ */
 class JStachioWritable implements Writable {
     private final JStachio jstachio;
     private final Object model;
