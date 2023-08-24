@@ -12,17 +12,13 @@ dependencies {
     testImplementation(mn.micronaut.http.server.netty)
 }
 
- compileTestJava {
-     // This is an unfortunate bug with JStachio for test template resources.
-     // https://github.com/jstachio/jstachio/issues/198
-     options.compilerArgs += [
-     '-Ajstache.resourcesPath=src/test/resources'
-     ]
- }
-
- micronautBuild {
-    binaryCompatibility {
-        enabled = false
-    }
+tasks.withType<JavaCompile> {
+    val compilerArgs = options.compilerArgs
+    compilerArgs.add("-Ajstache.resourcesPath=src/test/resources")
 }
 
+micronautBuild {
+    binaryCompatibility {
+        enabled.set(false)
+    }
+}
