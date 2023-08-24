@@ -1,9 +1,9 @@
 plugins {
-    id "io.micronaut.build.internal.views-module"
+    id("io.micronaut.build.internal.views-module")
 }
 
 dependencies {
-    api projects.micronautViewsCore
+    api(projects.micronautViewsCore)
     api(libs.managed.jstachio)
     testAnnotationProcessor(mn.micronaut.inject.java)
     testAnnotationProcessor(libs.managed.jstachio.apt)
