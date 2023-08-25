@@ -26,6 +26,7 @@ import jakarta.inject.Singleton;
  * JStachio does not have much dynamic configuration because it is driven by
  * compile time annotations.
  * @author agentgt
+ * @since 4.1.0
  */
 @Factory
 public class JStachioFactory {

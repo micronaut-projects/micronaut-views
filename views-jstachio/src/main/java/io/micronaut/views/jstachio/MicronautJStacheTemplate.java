@@ -29,6 +29,7 @@ import io.micronaut.views.ModelAndView;
  * 
  * @param <T> the model type
  * @author agentgt
+ * @since 4.1.0
  */
 public interface MicronautJStacheTemplate<T> extends Template<T> {
 

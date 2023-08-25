@@ -22,6 +22,8 @@ import io.jstach.jstache.JStachePath;
 
 /**
  * Opinionated static JStache config for Micronaut.
+ * @author agentgt
+ * @since 4.1.0
  */
 @JStacheConfig(
         pathing = @JStachePath(prefix = "views/", suffix = ".mustache"),

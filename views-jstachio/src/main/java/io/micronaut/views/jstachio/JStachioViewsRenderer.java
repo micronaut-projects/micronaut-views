@@ -16,7 +16,6 @@
 package io.micronaut.views.jstachio;
 
 import io.jstach.jstachio.JStachio;
-import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
@@ -32,8 +31,8 @@ import jakarta.inject.Singleton;
  * @param <T> model data type
  * @param <R> request type
  * @author agentgt
+ * @since 4.1.0
  */
-@Requires(classes = JStachio.class)
 @Singleton
 public class JStachioViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 

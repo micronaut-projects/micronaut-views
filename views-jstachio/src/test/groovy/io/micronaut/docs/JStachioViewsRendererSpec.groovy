@@ -78,6 +78,27 @@ class JStachioViewsRendererSpec extends Specification {
         rsp.contentType.isPresent()
         rsp.contentType.get() == MediaType.APPLICATION_JSON_TYPE
     }
+    
+    def "invoking /jstachio/bodyWriter uses produces text/html"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/jstachio/bodyWriter', String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+
+        then:
+        body
+        rsp.body().contains("<h1>username: <span>sdelamo body writer</span></h1>")
+        rsp.contentType.isPresent()
+        rsp.contentType.get().getCharset().get().toString() == "UTF-8"
+        rsp.contentType.get().name == MediaType.TEXT_HTML
+        
+        rsp.contentLength == 140
+    }
 
 
 

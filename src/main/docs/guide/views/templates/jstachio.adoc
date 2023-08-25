@@ -1,12 +1,18 @@
-Micronaut Views JStachio includes api:views.jstachio.JStachioViewsRenderer[] which uses
-https://github.com/jstachio/jstachio[JStachio] A type-safe compiled Mustache based template engine.
+Micronaut Views JStachio includes api:views.jstachio.JStachioViewsRenderer[] and 
+api:views.jstachio.JStachioMessageBodyWriter[], which uses
+https://github.com/jstachio/jstachio[JStachio], a type-safe compiled Mustache-based template engine.
 
 Add the `micronaut-views-jstachio` dependency to your classpath.
 
 dependency:micronaut-views-jstachio[groupId="io.micronaut.views"]
 
+Next add the annotation processor.
+
+dependency:jstachio-apt[groupId="io.jstach",scope="annotationProcessor"]
+
+
 The example shown in the <<views, Views>> section, could be rendered with the following JStachio 
-annotated model and template:
+annotated model and template however the view name should be "jstachio":
 
 [source,java]
 .src/main/java/myapp/HomeModel.java
@@ -27,12 +33,58 @@ include::{testsviewsJstachio}/resources/views/home.mustache[]
 ----
 
 JStachio unlike most templating engines must have an annotated model class
-that then references the template.
+that then references the template. Strings are not used to reference a
+view or template but rather the model class itself. Thus the view name
+for correct resolution should always be `jstachio` (`JStachioModelAndView.JSTACHIO_VIEW`).
+
+Besides annotating controller methods with `@View("jstachio")`
+JStachio includes a variety of other techniques for returning views:
+
+[source,java]
+.src/main/java/myapp/HomeController.java
+----
+
+@Contoller("/")
+public class HomeController {
+
+  // This method uses the traditional micronaut view
+  // the view name should always be "jstachio"
+  @View(JStachioModelAndView.JSTACHIO_VIEW)
+  @Get("")
+  public HttpResponse<HomeModel> homeView() {
+    return HttpResponse.ok(new HomeModel("sdelamo", true));
+  }
+ 
+  // This method uses the body writer which requires
+  // produces of "text/html" to work
+  @Produces(MediaType.TEXT_HTML)
+  @Get("/bodyWriter")
+  public HttpResponse<HomeModel> homeBodyWriter() {
+    return HttpResponse.ok(new HomeModel("sdelamo", true));
+  }
+
+  // This method shows ModelAndView return
+  // which requires no view or produces annotation
+  @Get("/modelAndView")
+  public ModelAndView homeModelAndView() {
+    return JStachioModelAndView.of(new HomeModel("sdelamo", true));
+  }
+
+  // This method shows using the generated template code directly
+  // which has be decorated with a toModelAndView
+  @Get("/template")
+  public ModelAndView homeTemplate() {
+    return HomeModelView.of().toModelAndView(new HomeModel("sdelamo", true));
+  }
+
+}
+
+----
 
 === Compiling Templates
 
 JStachio model and templates must be compiled. JStachio uses the Java annotation processor to do this.
-The JStachio user guide covers how to set this up 
+The JStachio user guide covers how to set this up in
 https://jstach.io/doc/jstachio/1.2.1/apidocs/#installation[Gradle or Maven].
 
 === Configuration
@@ -41,3 +93,4 @@ Because of the static nature of JStachio almost all configuration is done throug
 See the https://jstach.io/doc/jstachio/1.2.1/apidocs/#configuration[JStachio user guide] for more details.
 Micronaut Views includes an opinionated static configuration of JStachio
 api:views.jstachio.MicronautJStacheConfig[]. 
+

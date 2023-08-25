@@ -18,12 +18,10 @@
  * @see <a href="https://github.com/jstachio/jstachio">JStachio</a>
  * @see io.micronaut.views.jstachio.JStachioModelAndView
  * @see io.micronaut.views.jstachio.MicronautJStacheConfig
- * @author Adam Gent
+ * @author Adam Gent (agentgt)
+ * @since 4.1.0
  */
 @Configuration
-@Requires(classes = JStachio.class)
 package io.micronaut.views.jstachio;
 
-import io.jstach.jstachio.JStachio;
 import io.micronaut.context.annotation.Configuration;
-import io.micronaut.context.annotation.Requires;

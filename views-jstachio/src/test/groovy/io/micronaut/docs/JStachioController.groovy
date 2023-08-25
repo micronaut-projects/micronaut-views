@@ -19,8 +19,10 @@ import io.micronaut.context.annotation.Requires
 import io.micronaut.core.async.annotation.SingleResult
 import io.micronaut.core.util.CollectionUtils
 import io.micronaut.http.HttpResponse
+import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Produces
 import io.micronaut.views.ModelAndView
 import io.micronaut.views.View
 import io.micronaut.views.jstachio.JStachioModelAndView
@@ -47,6 +49,12 @@ public class JStachioController {
     @Get("/home")
     HttpResponse<Person> home() {
         return HttpResponse.ok(new Person("sdelamo", true));
+    }
+    
+    @Produces(MediaType.TEXT_HTML)
+    @Get("/bodyWriter")
+    HttpResponse<Person> bodyWriter() {
+        return HttpResponse.ok(new Person("sdelamo body writer", true));
     }
     
     @Get("/modelAndView")
