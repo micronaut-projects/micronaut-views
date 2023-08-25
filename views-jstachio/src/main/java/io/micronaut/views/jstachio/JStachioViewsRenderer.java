@@ -18,15 +18,15 @@ package io.micronaut.views.jstachio;
 import io.jstach.jstachio.JStachio;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
 import io.micronaut.views.ViewsRenderer;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+import java.util.Objects;
+
 /**
- * Renders JStachio JStache annotated models.
- *
- * The view name is expected to be {@value JStachioModelAndView#JSTACHIO_VIEW}.
+ * {@link ViewsRenderer} implementation which renders using {@link JStachio}.
  *
  * @param <T> model data type
  * @param <R> request type
@@ -38,24 +38,24 @@ public class JStachioViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     private final JStachio jstachio;
 
+    private final ResourceLoader resourceLoader;
+
     /**
-     * Will be called by Micronaut.
-     * @param jstachio to be used for rendering
+     * @param jstachio       to be used for rendering
+     * @param resourceLoader Resource Loader
      */
-    @Inject
-    public JStachioViewsRenderer(JStachio jstachio) {
-        super();
+    public JStachioViewsRenderer(JStachio jstachio, ResourceLoader resourceLoader) {
         this.jstachio = jstachio;
+        this.resourceLoader = resourceLoader;
     }
 
     @Override
     public @NonNull Writable render(@NonNull String viewName, @Nullable T data, @Nullable R request) {
-        return new JStachioWritable(jstachio, JStachioModelAndView.requireModel(data));
+        return new JStachioWritable(jstachio, Objects.requireNonNull(data, "jstachio requires a NonNull model"));
     }
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        return viewName.equals(JStachioModelAndView.JSTACHIO_VIEW);
+        return resourceLoader.getResource(viewName).isPresent();
     }
-
 }

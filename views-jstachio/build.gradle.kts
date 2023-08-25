@@ -5,6 +5,7 @@ plugins {
 dependencies {
     api(projects.micronautViewsCore)
     api(libs.managed.jstachio)
+    compileOnly(mn.micronaut.http)
     testAnnotationProcessor(mn.micronaut.inject.java)
     testAnnotationProcessor(libs.managed.jstachio.apt)
     testImplementation(mnSerde.micronaut.serde.jackson)

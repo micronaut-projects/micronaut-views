@@ -16,8 +16,6 @@
 /**
  * Contains classes specific to Views rendered with JStachio.
  * @see <a href="https://github.com/jstachio/jstachio">JStachio</a>
- * @see io.micronaut.views.jstachio.JStachioModelAndView
- * @see io.micronaut.views.jstachio.MicronautJStacheConfig
  * @author Adam Gent
  */
 @Configuration

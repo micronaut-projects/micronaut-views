@@ -1,0 +1,34 @@
+IMPORTANT: With Micronaut JStachio, you cannot use the api:views.View[] annotation, respond in your controller a api:views.ModelAndView[] or use https://micronaut-projects.github.io/micronaut-views/latest/guide/configurationreference.html#io.micronaut.views.ViewsConfigurationProperties[Micronaut Views Configuration] to configure the views directory.
+
+Instead, a controller returns a model annotated with `@JStache` referencing the `view` name.
+
+[source,java]
+.src/main/java/io/micronaut/views/jstachio/pkginfo/HomeController.java
+----
+include::{testsviewsJstachio}/java/io/micronaut/views/jstachio/pkginfo/HomeController.java[tag=clazz]
+----
+
+[source,java]
+.src/main/java/io/micronaut/views/jstachio/pkginfo/HomeModel.java
+----
+include::{testsviewsJstachio}/java/io/micronaut/views/jstachio/pkginfo/HomeModel.java[]
+----
+
+You can provide a `suffix` and `prefix` for every model with the `@JStacheConfig` annotation.
+
+Add a `package-info.java` in the same package of your model classes.
+
+[source,java]
+.src/main/java/io/micronaut/views/jstachio/pkginfo/package-info.java
+----
+include::{testsviewsJstachio}/java/io/micronaut/views/jstachio/pkginfo/package-info.java[]
+----
+
+The previous example renders the following template:
+
+[source,html]
+.src/main/resources/views/home.mustache
+----
+include::{testsviewsJstachio}/resources/views/home.mustache[]
+----
+

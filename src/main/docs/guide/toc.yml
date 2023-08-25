@@ -6,7 +6,6 @@ views:
     title: Template Engines
     thymeleaf: Thymeleaf
     handlebars: Handlebars.java
-    jstachio: JStachio
     velocity: Apache Velocity
     freemarker: Apache Freemarker
     rocker: Rocker
@@ -19,6 +18,10 @@ views:
       buildingsoy: Building Soy
     pebble: Pebble
     jte: JTE
+    jstachio:
+      title: JStachio
+      jstachioInstallation: JStachio Installation
+      jstachioExample: JStachio Example
   model:
     title: Working with Models
     custom: Dynamically Enriching Models
