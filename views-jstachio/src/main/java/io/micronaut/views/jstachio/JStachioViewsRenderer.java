@@ -15,15 +15,14 @@
  */
 package io.micronaut.views.jstachio;
 
+import java.util.Objects;
+
 import io.jstach.jstachio.JStachio;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
 import io.micronaut.views.ViewsRenderer;
 import jakarta.inject.Singleton;
-
-import java.util.Objects;
 
 /**
  * {@link ViewsRenderer} implementation which renders using {@link JStachio}.
@@ -37,16 +36,15 @@ import java.util.Objects;
 public class JStachioViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     private final JStachio jstachio;
-
-    private final ResourceLoader resourceLoader;
+    private final JStachioViewNameRegistry registry;
 
     /**
      * @param jstachio       to be used for rendering
-     * @param resourceLoader Resource Loader
+     * @param registry Resource Loader
      */
-    public JStachioViewsRenderer(JStachio jstachio, ResourceLoader resourceLoader) {
+    public JStachioViewsRenderer(JStachio jstachio, JStachioViewNameRegistry registry) {
         this.jstachio = jstachio;
-        this.resourceLoader = resourceLoader;
+        this.registry = registry;
     }
 
     @Override
@@ -56,6 +54,6 @@ public class JStachioViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        return resourceLoader.getResource(viewName).isPresent();
+        return registry.supportsViewName(viewName);
     }
 }
