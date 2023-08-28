@@ -14,8 +14,6 @@ include::{testsviewsJstachio}/java/io/micronaut/views/jstachio/pkginfo/HomeContr
 include::{testsviewsJstachio}/java/io/micronaut/views/jstachio/pkginfo/HomeModel.java[]
 ----
 
-NOTE: Models need to be https://docs.micronaut.io/latest/guide/#introspection[`@Introspected`].
-
 You can provide a `suffix` and `prefix` for every model with the `@JStacheConfig` annotation.
 
 Add a `package-info.java` in the same package of your model classes.
