@@ -17,4 +17,10 @@ public class HtmlController {
     Person html() {
         return new Person("Sergio");
     }
+
+    @Produces(MediaType.TEXT_HTML)
+    @Get("/noview")
+    Person htmlWithoutView() {
+        return new Person("Sergio");
+    }
 }

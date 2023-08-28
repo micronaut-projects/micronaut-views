@@ -28,4 +28,16 @@ class HtmlControllerSpec extends Specification {
         then:
         "<!DOCTYPE html><html><head></head><body><h1>Sergio</h1></body></html>" == html
     }
+
+    @PendingFeature(reason = "https://github.com/micronaut-projects/micronaut-core/pull/9789")
+    void "it is possible to return html without view and not handled by JStachioMessageBodyWriter"() {
+        given:
+        BlockingHttpClient client = httpClient.toBlocking()
+
+        when:
+        String html = client.retrieve(HttpRequest.GET("/html/noview"), String)
+
+        then:
+        "<!DOCTYPE html><html><head></head><body><h1>Sergio</h1></body></html>" == html
+    }
 }
