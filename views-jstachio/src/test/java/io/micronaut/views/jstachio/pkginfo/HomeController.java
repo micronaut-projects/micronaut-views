@@ -10,7 +10,6 @@ import io.micronaut.http.annotation.Produces;
 //tag::clazz[]
 @Controller("/views")
 public class HomeController {
-
     @Produces(MediaType.TEXT_HTML)
     @Get
     HomeModel index() {

@@ -1,4 +1,7 @@
-IMPORTANT: With Micronaut JStachio, you cannot use the api:views.View[] annotation, respond in your controller a api:views.ModelAndView[] or use https://micronaut-projects.github.io/micronaut-views/latest/guide/configurationreference.html#io.micronaut.views.ViewsConfigurationProperties[Micronaut Views Configuration] to configure the views directory.
+IMPORTANT: With Micronaut JStachio, you cannot use the api:views.View[] annotation,
+respond in your controller a api:views.ModelAndView[] or use
+https://micronaut-projects.github.io/micronaut-views/latest/guide/configurationreference.html#io.micronaut.views.ViewsConfigurationProperties[Micronaut Views Configuration]
+to configure the views directory since it does not use the api:views.ViewsFilter[].
 
 Instead, a controller returns a model annotated with `@JStache` referencing the `view` name.
 
