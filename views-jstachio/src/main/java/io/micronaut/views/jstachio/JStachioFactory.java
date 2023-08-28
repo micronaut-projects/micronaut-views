@@ -29,7 +29,7 @@ import jakarta.inject.Singleton;
  * @since 4.1.0
  */
 @Factory
-public class JStachioFactory {
+class JStachioFactory {
     /**
      * Provides a jstachio instance.
      * @return by default the JStachio static singleton which will use the {@link ServiceLoader} for
