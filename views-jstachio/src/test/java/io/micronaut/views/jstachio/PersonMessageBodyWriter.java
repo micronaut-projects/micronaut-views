@@ -20,17 +20,17 @@ import java.io.OutputStream;
 @Order(Ordered.LOWEST_PRECEDENCE)
 @Produces(MediaType.TEXT_HTML)
 @Singleton
-public class PersonMessageBodyWriter implements MessageBodyWriter {
+public class PersonMessageBodyWriter<T> implements MessageBodyWriter<T> {
 
     @Override
-    public boolean isWriteable(@NonNull Argument type, @Nullable MediaType mediaType) {
+    public boolean isWriteable(@NonNull Argument<T> type, @Nullable MediaType mediaType) {
         return type.getType().equals(Person.class);
     }
 
     @Override
-    public void writeTo(@NonNull Argument type,
+    public void writeTo(@NonNull Argument<T> type,
                         @NonNull MediaType mediaType,
-                        Object object,
+                        T object,
                         @NonNull MutableHeaders outgoingHeaders,
                         @NonNull OutputStream outputStream) throws CodecException {
         if (object instanceof Person person) {
@@ -43,6 +43,8 @@ public class PersonMessageBodyWriter implements MessageBodyWriter {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        } else {
+            throw new UnsupportedOperationException();
         }
     }
 }
