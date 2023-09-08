@@ -1,0 +1,1 @@
+Micronaut Views JStachio includes api:views.jstachio.JStachioMessageBodyWriter[], which uses https://github.com/jstachio/jstachio[JStachio], a type-safe compiled Mustache-based template engine, to render templates.

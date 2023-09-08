@@ -1,0 +1,9 @@
+To use Micronaut Jstachio, add the `micronaut-views-jstachio` dependency to your classpath.
+
+dependency:micronaut-views-jstachio[groupId="io.micronaut.views"]
+
+Additionally, you need to add JStachio's Java annotation processor.
+
+dependency:jstachio-apt[groupId="io.jstach",scope="annotationProcessor"]
+
+Read the https://jstach.io/doc/jstachio/1.2.1/apidocs/#installation[Jstachio's user guide] to learn more.

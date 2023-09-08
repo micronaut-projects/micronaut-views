@@ -121,12 +121,18 @@ public class ViewsFilter implements HttpServerFilter {
                 }
                 Optional<String> optionalView = viewsResolver.resolveView(request, response);
                 if (!optionalView.isPresent()) {
-                    LOG.debug("no view found");
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("no view found");
+                    }
                     return Flux.just(response);
                 }
 
                 MediaType type = resolveMediaType(response, body);
                 String view = optionalView.get();
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("view resolved: {}", view);
+                }
+
                 try {
                     Optional<ViewsRenderer> optionalViewsRenderer = viewsRendererLocator.resolveViewsRenderer(view,  type.toString(), body);
                     if (!optionalViewsRenderer.isPresent()) {
