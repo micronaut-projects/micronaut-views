@@ -117,6 +117,12 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-jte"><a href="#jte"><strong>3.1.8</strong><span>JTE</span></a></div>
         
+        <div class="toc-item" style="margin-left:20px" id="toc-item-jstachio"><a href="#jstachio"><strong>3.1.9</strong><span>JStachio</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-jstachioInstallation"><a href="#jstachioInstallation"><strong>3.1.9.1</strong><span>JStachio Installation</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-jstachioExample"><a href="#jstachioExample"><strong>3.1.9.2</strong><span>JStachio Example</span></a></div>
+        
         <div class="toc-item" style="margin-left:10px" id="toc-item-model"><a href="#model"><strong>3.2</strong><span>Working with Models</span></a></div>
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-custom"><a href="#custom"><strong>3.2.1</strong><span>Dynamically Enriching Models</span></a></div>
@@ -1804,6 +1810,166 @@ the <a href="https://jte.gg">Jte</a> Java-based template engine.</p>
 </div>
 </div></p>
 </div>
+</div>
+</div>
+
+<h2 id="jstachio"><a class="anchor" href="#jstachio"></a>3.1.9 JStachio</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/templates/jstachio.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views JStachio includes <a href="../api/io/micronaut/views/jstachio/JStachioMessageBodyWriter.html">JStachioMessageBodyWriter</a>, which uses <a href="https://github.com/jstachio/jstachio">JStachio</a>, a type-safe compiled Mustache-based template engine, to render templates.</p>
+</div>
+
+<h2 id="jstachioInstallation"><a class="anchor" href="#jstachioInstallation"></a>3.1.9.1 JStachio Installation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/templates/jstachio/jstachioInstallation.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To use Micronaut Jstachio, add the <code>micronaut-views-jstachio</code> dependency to your classpath.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-jstachio")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-jstachio&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Additionally, you need to add JStachio&#8217;s Java annotation processor.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.jstach:jstachio-apt")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
+    &lt;path&gt;
+        &lt;groupId&gt;io.jstach&lt;/groupId&gt;
+        &lt;artifactId&gt;jstachio-apt&lt;/artifactId&gt;
+    &lt;/path&gt;
+&lt;/annotationProcessorPaths&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Read the <a href="https://jstach.io/doc/jstachio/1.2.1/apidocs/#installation">Jstachio&#8217;s user guide</a> to learn more.</p>
+</div>
+
+<h2 id="jstachioExample"><a class="anchor" href="#jstachioExample"></a>3.1.9.2 JStachio Example</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/templates/jstachio/jstachioExample.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+With Micronaut JStachio, you cannot use the <a href="../api/io/micronaut/views/View.html">View</a> annotation,
+respond in your controller a <a href="../api/io/micronaut/views/ModelAndView.html">ModelAndView</a> or use
+<a href="https://micronaut-projects.github.io/micronaut-views/latest/guide/configurationreference.html#io.micronaut.views.ViewsConfigurationProperties">Micronaut Views Configuration</a>
+to configure the views directory since it does not use the <a href="../api/io/micronaut/views/ViewsFilter.html">ViewsFilter</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Instead, a controller returns a model annotated with <code>@JStache</code> referencing the <code>view</code> name.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/io/micronaut/views/jstachio/pkginfo/HomeController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/views")
+public class HomeController {
+    @Produces(MediaType.TEXT_HTML)
+    @Get
+    HomeModel index() {
+        return new HomeModel("sdelamo", true);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/io/micronaut/views/jstachio/pkginfo/HomeModel.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.jstachio.pkginfo;
+
+import io.jstach.jstache.JStache;
+import io.micronaut.core.annotation.Nullable;
+
+@JStache(path = "home")
+public record HomeModel(@Nullable String username, boolean loggedIn) {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can provide a <code>suffix</code> and <code>prefix</code> for every model with the <code>@JStacheConfig</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p>Add a <code>package-info.java</code> in the same package of your model classes.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/io/micronaut/views/jstachio/pkginfo/package-info.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@JStacheConfig(
+    pathing = @JStachePath(prefix = "views/", suffix = ".mustache")
+)
+package io.micronaut.views.jstachio.pkginfo;
+import io.jstach.jstache.JStacheConfig;
+import io.jstach.jstache.JStachePath;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous example renders the following template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.mustache</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    {{#loggedIn}}
+    &lt;h1&gt;username: &lt;span&gt;{{username}}&lt;/span&gt;&lt;/h1&gt;
+    {{/loggedIn}}
+    {{^loggedIn}}
+    &lt;h1&gt;You are not logged in&lt;/h1&gt;
+    {{/loggedIn}}
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
 </div>
 </div>
 
