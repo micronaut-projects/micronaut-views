@@ -40,7 +40,6 @@ include "test-suite-graal:test-suite-graal-rocker"
 include "test-suite-graal:test-suite-graal-soy"
 
 micronautBuild {
-    importMicronautCatalog("micronaut-logging")
     useStandardizedProjectNames=true
     importMicronautCatalog()
     importMicronautCatalog("micronaut-security")
