@@ -56,14 +56,6 @@ class ViewsController {
     }
     //end::modelAndView[]
 
-    @Get("/modelAndViewWithList")
-    ModelAndView modelAndViewWithList() {
-        new ModelAndView(
-                "list",
-                List.of("a", "b", "c")
-        )
-    }
-
     @Get("/home")
     HttpResponse<Person> home() {
         HttpResponse.ok(new Person("sdelamo", true))

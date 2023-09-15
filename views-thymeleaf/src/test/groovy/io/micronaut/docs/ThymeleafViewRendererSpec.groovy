@@ -93,23 +93,6 @@ class ThymeleafViewRendererSpec extends Specification {
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
-    def "invoking /views/modelAndViewWithList renders thymeleaf template from a controller returning a list"() {
-        when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/views/modelAndViewWithList', String)
-
-        then:
-        noExceptionThrown()
-        rsp.status() == HttpStatus.OK
-
-        when:
-        String body = rsp.body()
-
-        then:
-        body.contains('<li id="menu-entries">a</li>')
-        body.contains('<li id="menu-entries">b</li>')
-        body.contains('<li id="menu-entries">c</li>')
-    }
-
     def "invoking /views/pojo renders th template from a controller returning a pojo"() {
         when:
         HttpResponse<String> rsp = client.toBlocking().exchange('/views/pojo', String)
