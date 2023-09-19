@@ -54,6 +54,8 @@ Moreover, the Controller's method can return a POJO annotated with `@Introspecte
 
 snippet::io.micronaut.views.model.FruitsController[tags="pojo"]
 
+NOTE: Models need to be Introspected objects with properties, or Maps. Passing a Collection or List as a model is not supported. If you need a List in your model, wrap it in a Map or POJO.
+
 The following sections show different template engines integrations.
 
 To create your own implementation create a class which implements api:views.ViewsRenderer[] and annotate it with https://micronaut-projects.github.io/micronaut-core/latest/api/io/micronaut/http/annotation/Produces.html[@Produces] to the media types the view rendering supports producing.
