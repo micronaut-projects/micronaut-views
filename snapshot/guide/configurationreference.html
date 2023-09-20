@@ -46,48 +46,14 @@
         <div class="docs-content">
             <div class="project">
                 <h1>Configuration Reference</h1>
-                <p><strong>Version:</strong>4.0.2-SNAPSHOT</p>
+                <p><strong>Version:</strong>4.1.0-SNAPSHOT</p>
                 <p></p>
             </div>
 <div class="sect2">
 <h3 id="_micronaut_views_core_config_properties">Micronaut Views Core Config Properties</h3>
-<a id="io.micronaut.views.ViewsConfigurationProperties" href="#io.micronaut.views.ViewsConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/ViewsConfigurationProperties.html">ViewsConfigurationProperties</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enabled getter.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.folder</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.dir</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The folder to look for views. Default value ().</p></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
 <a id="io.micronaut.views.csp.CspConfiguration" href="#io.micronaut.views.csp.CspConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/views/csp/CspConfiguration.html">CspConfiguration</a></caption>
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/csp/CspConfiguration.html">CspConfiguration</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -132,14 +98,48 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.force-secure-random</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether <code>SecureRandom</code> is forced for use in generated nonce values.
- Defaults to <code>`. Enabling this requires
- careful consideration, because `SecureRandom</code> will block infinitely without
+ Defaults to <code>false</code>. Enabling this requires
+ careful consideration, because <code>SecureRandom</code> will block infinitely without
  enough entropy.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.filter-path</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="io.micronaut.views.ViewsConfigurationProperties" href="#io.micronaut.views.ViewsConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/views/ViewsConfigurationProperties.html">ViewsConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled getter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.folder</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.dir</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The folder to look for views. Default value ("views").</p></td>
 </tr>
 </tbody>
 </table>
@@ -163,7 +163,7 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable . Default value ().</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable {@link SecurityViewModelProcessor}. Default value (true).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.security-key</code></p></td>
@@ -559,12 +559,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable dynamic reloading of templates. Default value ().</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable dynamic reloading of templates. Default value (false).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic-path</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Root directory under which to write generated source and class files. . Default value ().</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Root directory under which to write generated source and class files. . Default value ("build/jte-classes").</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic-source-path</code></p></td>
@@ -577,7 +577,7 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.binary-static-content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable building binary content for templates. Default value ().
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable building binary content for templates. Default value (false).
  (Only has an effect when 'dynamic' is true. To use with precompiled templates, enable it in the build plugin)</p></td>
 </tr>
 </tbody>
@@ -605,18 +605,18 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the component is enabled. Default value ().</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the component is enabled. Default value (true).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.default-extension</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The default extension. Default value ().</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The default extension. Default value ("html").</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.cache-active</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable all caches, i.e. cache used by the engine to store compiled PebbleTemplate
- instances and tags cache. Default value ().</p></td>
+ instances and tags cache. Default value (true).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.new-line-trimming</code></p></td>
@@ -624,25 +624,25 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">Changes the newLineTrimming setting of the PebbleEngine. By default, Pebble
  will trim a new line that immediately follows a Pebble tag. If set to false, then the
  first newline following a Pebble tag won&#8217;t be trimmed.  All newlines will be preserved.
- Default value ().</p></td>
+ Default value (true).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.auto-escaping</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether or not escaping should be performed automatically.
- Default value ().</p></td>
+ Default value (true).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.default-escaping-strategy</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets the default escaping strategy of the built-in escaper extension.
- Default value ().</p></td>
+ Default value (EscapeFilter.HTML_ESCAPE_STRATEGY).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.strict-variables</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Changes the strictVariables setting of the PebbleEngine.
- Default value ().</p></td>
+ Default value (false).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.greedy-match-method</code></p></td>
@@ -651,25 +651,25 @@
  when can not find perfect method (method name, parameter length and parameter type are all
  satisfied), reduce the limit of the parameter type, try to find other method which has
  compatible parameter types.
- Default value ().</p></td>
+ Default value (false).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.allow-override-core-operators</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether or not core operators overrides should be allowed.
- Default value ().</p></td>
+ Default value (false).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.literal-decimals-as-integers</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable treat literal decimal as Integer.
- Default value (), treated as Long.</p></td>
+ Default value (false), treated as Long.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.literal-numbers-as-big-decimals</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable treat literal numbers as BigDecimals.
- Default value (), treated as Long/Double.</p></td>
+ Default value (false), treated as Long/Double.</p></td>
 </tr>
 </tbody>
 </table>
@@ -738,12 +738,12 @@
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Soy-backed views are enabled. Default value ``</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Soy-backed views are enabled. Default value <code>true</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.renaming-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether renaming is enabled. Defaults to ``.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether renaming is enabled. Defaults to <code>true</code>.</p></td>
 </tr>
 </tbody>
 </table>
