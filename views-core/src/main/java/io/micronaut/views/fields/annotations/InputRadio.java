@@ -13,7 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.fields;
+package io.micronaut.views.fields.annotations;
+
+import io.micronaut.views.fields.EnumOptionFetcher;
+import io.micronaut.views.fields.EnumRadioFetcher;
+import io.micronaut.views.fields.OptionFetcher;
+import io.micronaut.views.fields.RadioFetcher;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -22,19 +27,13 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * Annotation to specify a field is an email input.
+ * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio">Input Radio</a>
+ */
 @Documented
 @Retention(RUNTIME)
 @Target({ElementType.FIELD})
-public @interface Select {
-    /**
-     * @return The name attribute.
-     */
-    String value() default "";
-
-    /**
-     * @return The id attribute.
-     */
-    String id() default "";
-
-    Class<? extends OptionFetcher> fetcher() default EnumOptionFetcher.class;
+public @interface InputRadio {
+    Class<? extends RadioFetcher> fetcher() default EnumRadioFetcher.class;
 }

@@ -14,11 +14,11 @@ import java.util.List;
 
 @Named("enum")
 @Singleton
-public class EnumOptionFetcher implements OptionFetcher {
+public class EnumOptionFetcher<T> implements OptionFetcher<T> {
     private static final Logger LOG = LoggerFactory.getLogger(EnumOptionFetcher.class);
 
     @Override
-    public <T> List<Option> generate(Class<T> type) {
+    public List<Option> generate(Class<T> type) {
         if (type.isEnum()) {
             return generateEnumOptions((Class<? extends Enum>) type, null);
         } else {
@@ -28,7 +28,7 @@ public class EnumOptionFetcher implements OptionFetcher {
     }
 
     @Override
-    public <T> List<Option> generate(T instance) {
+    public List<Option> generate(T instance) {
         if (instance.getClass().isEnum()) {
             return generateEnumOptions((Class<? extends Enum>) instance.getClass(), (Enum) instance);
         } else {
@@ -38,7 +38,7 @@ public class EnumOptionFetcher implements OptionFetcher {
     }
 
     @NonNull
-    private  <T extends Enum> List<Option> generateEnumOptions(@NonNull Class<? extends Enum> type,
+    private <T extends Enum> List<Option> generateEnumOptions(@NonNull Class<? extends Enum> type,
                                                                @Nullable Enum instance) {
         return EnumSet.allOf(type).stream()
             .map(it -> {
@@ -62,5 +62,4 @@ public class EnumOptionFetcher implements OptionFetcher {
         return Message.of(type.getSimpleName().toLowerCase() + "." + name.toLowerCase(),
             StringUtils.capitalize(name.toLowerCase().replaceAll("(.)([A-Z])", "$1 $2")));
     }
-
 }

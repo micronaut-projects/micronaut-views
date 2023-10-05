@@ -4,9 +4,9 @@ import io.micronaut.core.annotation.NonNull;
 
 import java.util.List;
 
-public interface OptionFetcher {
+public interface OptionFetcher<T> {
 
-    <T> List<Option> generate(@NonNull Class<T> type);
+    List<Option> generate(@NonNull Class<T> type);
 
-    <T> List<Option> generate(@NonNull T instance);
+    List<Option> generate(@NonNull T instance);
 }

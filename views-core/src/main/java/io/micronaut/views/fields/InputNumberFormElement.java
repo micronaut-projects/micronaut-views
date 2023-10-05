@@ -19,6 +19,8 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 
+import java.util.Objects;
+
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number">input number</a>
  */
@@ -65,6 +67,9 @@ public class InputNumberFormElement extends FormElement {
     @Nullable
     private final String step;
 
+    @NonNull
+    private final Message label;
+
     public InputNumberFormElement(@NonNull String name,
                                   @Nullable String id,
                                   @Nullable Number value,
@@ -73,7 +78,8 @@ public class InputNumberFormElement extends FormElement {
                                   @Nullable String placeholder,
                                   boolean required,
                                   boolean readOnly,
-                                  @Nullable String step) {
+                                  @Nullable String step,
+                                  @NonNull Message label) {
         this.name = name;
         this.id = id;
         this.value = value;
@@ -83,6 +89,7 @@ public class InputNumberFormElement extends FormElement {
         this.required = required;
         this.readOnly = readOnly;
         this.step = step;
+        this.label = label;
     }
 
     @NonNull
@@ -129,6 +136,44 @@ public class InputNumberFormElement extends FormElement {
     }
 
     @NonNull
+    public Message getLabel() {
+        return label;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof InputNumberFormElement that)) return false;
+
+        if (required != that.required) return false;
+        if (readOnly != that.readOnly) return false;
+        if (!Objects.equals(name, that.name)) return false;
+        if (!Objects.equals(id, that.id)) return false;
+        if (!Objects.equals(value, that.value)) return false;
+        if (!Objects.equals(max, that.max)) return false;
+        if (!Objects.equals(min, that.min)) return false;
+        if (!Objects.equals(placeholder, that.placeholder))
+            return false;
+        if (!Objects.equals(step, that.step)) return false;
+        return Objects.equals(label, that.label);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (max != null ? max.hashCode() : 0);
+        result = 31 * result + (min != null ? min.hashCode() : 0);
+        result = 31 * result + (placeholder != null ? placeholder.hashCode() : 0);
+        result = 31 * result + (required ? 1 : 0);
+        result = 31 * result + (readOnly ? 1 : 0);
+        result = 31 * result + (step != null ? step.hashCode() : 0);
+        result = 31 * result + (label != null ? label.hashCode() : 0);
+        return result;
+    }
+
+    @NonNull
     public static Builder builder() {
         return new Builder();
     }
@@ -160,6 +205,7 @@ public class InputNumberFormElement extends FormElement {
 
         private boolean readOnly;
 
+        private Message label;
 
         @NonNull
         public Builder required(boolean required) {
@@ -216,9 +262,16 @@ public class InputNumberFormElement extends FormElement {
             return this;
         }
 
+
+        @NonNull
+        public Builder label(Message label) {
+            this.label = label;
+            return this;
+        }
+
         @NonNull
         public InputNumberFormElement build() {
-            return new InputNumberFormElement(name, id, value, max, min, placeholder, required, readOnly, step);
+            return new InputNumberFormElement(name, id, value, max, min, placeholder, required, readOnly, step, label);
         }
 
     }

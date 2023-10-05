@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.fields;
+package io.micronaut.views.fields.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -26,25 +26,4 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target({ElementType.FIELD})
 public @interface TextArea {
-    /**
-     * @return The name attribute.
-     */
-    String value() default "";
-
-    /**
-     * @return The id attribute.
-     */
-    String id() default "";
-
-    /**
-     *
-     * @return The number of visible text lines for the control.
-     */
-    int rows() default -1;
-
-    /**
-     *
-     * @return The visible width of the text control, in average character widths.
-     */
-    int cols() default -1;
 }

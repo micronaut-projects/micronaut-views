@@ -23,15 +23,14 @@ import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.core.beans.BeanProperty;
 import io.micronaut.core.beans.BeanWrapper;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.views.fields.annotations.InputEmail;
-import io.micronaut.views.fields.annotations.InputPassword;
-import io.micronaut.views.fields.annotations.InputTel;
+import io.micronaut.views.fields.annotations.*;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -52,14 +51,23 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private static final String BUILDER_METHOD_CHECKED = "checked";
     private static final String BUILDER_METHOD_OPTIONS = "options";
     private static final String MEMBER_FETCHER = "fetcher";
+    public static final String BUILDER_METHOD_BUTTONS = "buttons";
+    public static final String BULDER_METHOD_MIN = "min";
 
-    private final EnumOptionFetcher enumOptionFetcher;
+    private final EnumOptionFetcher<?> enumOptionFetcher;
+
+    private final EnumRadioFetcher<?> enumRadioFetcher;
     private final BeanContext beanContext;
 
     private final ConcurrentHashMap<Class<? extends OptionFetcher>, OptionFetcher> optionFetcherCache = new ConcurrentHashMap<>();
 
-    public DefaultFieldGenerator(EnumOptionFetcher enumOptionFetcher, BeanContext beanContext) {
+    private final ConcurrentHashMap<Class<? extends RadioFetcher>, RadioFetcher> radioFetcherCache = new ConcurrentHashMap<>();
+
+    public DefaultFieldGenerator(EnumOptionFetcher<?> enumOptionFetcher,
+                                 EnumRadioFetcher<?> enumRadioFetcher,
+                                 BeanContext beanContext) {
         this.enumOptionFetcher = enumOptionFetcher;
+        this.enumRadioFetcher = enumRadioFetcher;
         this.beanContext = beanContext;
     }
 
@@ -99,11 +107,17 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     }
 
     private <T> Class<? extends FormElement> formElementClassForBeanProperty(BeanProperty<T, ?> beanProperty) {
+        if (beanProperty.hasAnnotation(InputRadio.class)) {
+            return InputRadioFormElement.class;
+        }
         if (beanProperty.hasAnnotation(InputPassword.class)) {
             return InputPasswordFormElement.class;
         }
         if (beanProperty.hasAnnotation(InputEmail.class)) {
             return InputEmailFormElement.class;
+        }
+        if (beanProperty.hasAnnotation(InputUrl.class)) {
+            return InputUrlFormElement.class;
         }
         if (beanProperty.hasAnnotation(InputTel.class)) {
             return InputTelFormElement.class;
@@ -116,6 +130,10 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
             return InputDataTimeLocalFormElement.class;
         }
 
+        if (Number.class.isAssignableFrom(beanProperty.getType())) {
+            return InputNumberFormElement.class;
+        }
+
         if (beanProperty.getType() == boolean.class) {
             return InputCheckboxFormElement.class;
         }
@@ -126,6 +144,31 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
 
         return InputTextFormElement.class;
     }
+
+    @NonNull
+    private <T> Optional<RadioFetcher> radioFetcherForBeanProperty(@NonNull BeanProperty<T, ?> beanProperty) {
+        if (beanProperty.hasAnnotation(InputRadio.class)) {
+            AnnotationValue<InputRadio> annotation = beanProperty.getAnnotation(InputRadio.class);
+            Optional<Class<?>> radioFetcherClassOptional = annotation.classValue(MEMBER_FETCHER);
+            if (radioFetcherClassOptional.isPresent()) {
+                Class<? extends RadioFetcher> radioFetcherClass = (Class<? extends RadioFetcher>) radioFetcherClassOptional.get();
+                if (radioFetcherCache.containsKey(radioFetcherClass)) {
+                    return Optional.of(radioFetcherCache.get(radioFetcherClass));
+                }
+                Optional<?> radioFetcherOptional = beanContext.findBean(radioFetcherClass);
+                if (radioFetcherOptional.isPresent()) {
+                    RadioFetcher radioFetcher = (RadioFetcher) radioFetcherOptional.get();
+                    radioFetcherCache.putIfAbsent(radioFetcherClass, radioFetcher);
+                    return Optional.of(radioFetcher);
+                }
+            }
+        }
+        if (beanProperty.getType().isEnum()) {
+            return Optional.of(enumRadioFetcher);
+        }
+        return Optional.empty();
+    }
+
 
     private <T> Optional<OptionFetcher> optionFetcherForBeanProperty(BeanProperty<T, ?> beanProperty) {
         if (beanProperty.hasAnnotation(Select.class)) {
@@ -157,7 +200,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         BeanIntrospection.Builder<? extends FormElement> builder = BeanIntrospection.getIntrospection(formElementClazz).builder();
         if (formElementClazz == InputCheckboxFormElement.class) {
             FormElement formElement = formElementBuilderForBeanProperty(beanProperty, Checkbox.class, beanWrapper, ex)
-                    .with(BUILDER_METHOD_CHECKED, valueForBeanProperty(beanWrapper, beanProperty).orElse(false))
+                    .with(BUILDER_METHOD_CHECKED, valueForBeanProperty(beanWrapper, beanProperty).map(v -> Boolean.valueOf(v.toString())).orElse(false))
                     .build();
             builder.with(BUILDER_METHOD_CHECKBOXES, Collections.singletonList(formElement));
         } else if (formElementClazz == SelectFormElement.class) {
@@ -170,23 +213,44 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
                             builder.with(BUILDER_METHOD_OPTIONS, optionFetcher.generate(beanProperty.getType()));
                         }
                     });
+        } else if (formElementClazz == InputRadioFormElement.class) {
+            radioFetcherForBeanProperty(beanProperty)
+                    .ifPresent(fetcher -> {
+                        Optional<Object> valueOptional = valueForBeanProperty(beanWrapper, beanProperty);
+                        if (valueOptional.isPresent()) {
+                            builder.with(BUILDER_METHOD_BUTTONS, fetcher.generate(valueOptional.get()));
+                        } else {
+                            builder.with(BUILDER_METHOD_BUTTONS, fetcher.generate(beanProperty.getType()));
+                        }
+                    });
         }
-
         builder
             .with(BUILDER_METHOD_NAME, beanProperty.getName())
             .with(BUILDER_METHOD_ID, idForBeanProperty(beanProperty))
             .with(BUILDER_METHOD_LABEL, labelForBeanProperty(beanProperty))
             .with(BUILDER_METHOD_REQUIRED, requiredForBeanProperty(beanProperty));
-
         valueForBeanProperty(beanWrapper, beanProperty)
-                .ifPresent(value -> builder.with(BUILDER_METHOD_VALUE, value.toString()));
+                .ifPresent(value -> {
+                    try {
+                        builder.with(BUILDER_METHOD_VALUE, value);
+                    } catch (IllegalArgumentException e) {
+                        builder.with(BUILDER_METHOD_VALUE, value.toString());
+                    }
+                });
 
         if (beanWrapper != null) {
             builder.with(BUILDER_METHOD_ERRORS, messagesForBeanProperty(beanProperty, ex));
         }
+        minForBeanProperty(beanProperty).ifPresent(min -> builder.with(BULDER_METHOD_MIN, min));
         return builder;
     }
 
+    private Optional<Object> minForBeanProperty(BeanProperty<?, ?> beanProperty) {
+        if (beanProperty.hasAnnotation(Positive.class)) {
+            return Optional.of(1);
+        }
+        return Optional.empty();
+    }
 
     private Message labelForBeanProperty(BeanProperty<?, ?> beanProperty) {
         return Message.of(beanProperty.getDeclaringBean().getBeanType().getSimpleName().toLowerCase() + "." + beanProperty.getName(),
@@ -218,11 +282,14 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
 
     private <T> Optional<Object> valueForBeanProperty(@Nullable BeanWrapper<T> beanWrapper, BeanProperty<T, ?> beanProperty) {
         if (beanWrapper != null) {
-            return Optional.ofNullable(beanProperty.get(beanWrapper.getBean()));
+            Object value = beanProperty.get(beanWrapper.getBean());
+            if (beanProperty.getType() == boolean.class) {
+                return Optional.of(((boolean) value) ? StringUtils.TRUE : StringUtils.FALSE);
+            }
+            return Optional.ofNullable(value);
         }
-
         if (beanProperty.getType() == boolean.class) {
-            return Optional.of(false);
+            return Optional.of(StringUtils.FALSE);
         }
 
         return Optional.empty();

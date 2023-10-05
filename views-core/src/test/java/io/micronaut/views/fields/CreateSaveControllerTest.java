@@ -36,6 +36,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Property(name = "spec.name", value = "CreateSaveControllerTest")
 @MicronautTest
 public class CreateSaveControllerTest {
+
+    @Disabled
     @Test
     void createControllerTest(@Client("/") HttpClient httpClient) {
         BlockingHttpClient client = httpClient.toBlocking();

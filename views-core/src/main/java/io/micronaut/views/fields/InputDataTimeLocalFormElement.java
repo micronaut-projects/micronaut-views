@@ -37,15 +37,15 @@ public class InputDataTimeLocalFormElement extends FormElement {
     private final String id;
 
     @Nullable
-    private final String min;
+    private final LocalDateTime min;
 
     @Nullable
-    private final String max;
+    private final LocalDateTime max;
 
     private final boolean required;
 
     @Nullable
-    private final String value;
+    private final LocalDateTime value;
 
     @Nullable
     private final Message label;
@@ -56,9 +56,9 @@ public class InputDataTimeLocalFormElement extends FormElement {
     public InputDataTimeLocalFormElement(@NonNull String name,
                                          @NonNull String id,
                                          boolean required,
-                                         @Nullable String max,
-                                         @Nullable String min,
-                                         @Nullable String value,
+                                         @Nullable LocalDateTime max,
+                                         @Nullable LocalDateTime min,
+                                         @Nullable LocalDateTime value,
                                          @Nullable Message label,
                                          @NonNull Collection<Message> errors) {
         this.name = name;
@@ -86,17 +86,17 @@ public class InputDataTimeLocalFormElement extends FormElement {
     }
 
     @Nullable
-    public String getMax() {
+    public LocalDateTime getMax() {
         return max;
     }
 
     @Nullable
-    public String getMin() {
+    public LocalDateTime getMin() {
         return min;
     }
 
     @Nullable
-    public String getValue() {
+    public LocalDateTime getValue() {
         return value;
     }
 
@@ -151,11 +151,11 @@ public class InputDataTimeLocalFormElement extends FormElement {
 
         private boolean required;
 
-        private String max;
+        private LocalDateTime max;
 
-        private String min;
+        private LocalDateTime min;
 
-        private String value;
+        private LocalDateTime value;
 
         private List<Message> errors;
 
@@ -169,13 +169,13 @@ public class InputDataTimeLocalFormElement extends FormElement {
 
         @NonNull
         public Builder max(@NonNull LocalDateTime max) {
-            this.max = max.toString();
+            this.max = max;
             return this;
         }
 
         @NonNull
         public Builder min(@NonNull LocalDateTime min) {
-            this.min = min.toString();
+            this.min = min;
             return this;
         }
 
@@ -197,7 +197,7 @@ public class InputDataTimeLocalFormElement extends FormElement {
          * @return the Builder
          */
         @NonNull
-        public Builder value(@NonNull String value) {
+        public Builder value(@NonNull LocalDateTime value) {
             this.value = value;
             return this;
         }

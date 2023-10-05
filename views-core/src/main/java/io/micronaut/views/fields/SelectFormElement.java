@@ -115,6 +115,7 @@ public class SelectFormElement extends FormElement {
     }
 
     public static class Builder {
+
         private boolean required;
 
         @NonNull
@@ -156,6 +157,7 @@ public class SelectFormElement extends FormElement {
             this.label = label;
             return this;
         }
+
         @NonNull
         public SelectFormElement build() {
             return new SelectFormElement(
