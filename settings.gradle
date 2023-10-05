@@ -25,7 +25,6 @@ include 'views-pebble'
 include 'views-jte'
 include 'views-jstachio'
 
-include "test-suite-geb"
 include "test-suite"
 include "test-suite-http"
 include "test-suite-groovy"

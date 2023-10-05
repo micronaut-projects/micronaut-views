@@ -3,8 +3,6 @@ micronaut = "4.1.8"
 micronaut-platform = "4.0.4"
 micronaut-docs = '2.0.0'
 micronaut-test = "4.0.1"
-geb = "7.0"
-selenium = "4.2.2"
 micronaut-data = "4.0.4"
 micronaut-sql = "5.0.1"
 micronaut-security = "4.1.0"
@@ -34,14 +32,7 @@ micronaut-logging = "1.1.2"
 [libraries]
 # Core
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut' }
-geb-spock = { module = "org.gebish:geb-spock", version.ref = "geb" }
-selenium-api = { module = "org.seleniumhq.selenium:selenium-api", version.ref = "selenium" }
-selenium-chrome-driver = { module = "org.seleniumhq.selenium:selenium-chrome-driver", version.ref = "selenium" }
-selenium-firefox-driver = { module = "org.seleniumhq.selenium:selenium-firefox-driver", version.ref = "selenium" }
-selenium-remote-driver = { module = "org.seleniumhq.selenium:selenium-remote-driver", version.ref = "selenium" }
-selenium-support = { module = "org.seleniumhq.selenium:selenium-support", version.ref = "selenium" }
 testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
-testcontainers-selenium = { module = "org.testcontainers:selenium"}
 micronaut-sql = { module = "io.micronaut.sql:micronaut-sql-bom", version.ref = "micronaut-sql" }
 micronaut-logging = { module = "io.micronaut.logging:micronaut-logging-bom", version.ref = "micronaut-logging" }
 micronaut-security = { module = "io.micronaut.security:micronaut-security-bom", version.ref = "micronaut-security" }
