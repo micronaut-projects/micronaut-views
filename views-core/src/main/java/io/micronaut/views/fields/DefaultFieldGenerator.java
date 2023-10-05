@@ -32,9 +32,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 
 @Singleton
 public class DefaultFieldGenerator implements FieldsetGenerator {
@@ -75,17 +77,40 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     @NonNull
     public <T> Fieldset generate(@NonNull Class<T> type) {
         BeanIntrospection<T> introspection = BeanIntrospection.getIntrospection(type);
-        return new Fieldset(formElements(introspection.getBeanProperties()), Collections.emptyList());
+        return new Fieldset(formElements(introspection.getBeanProperties(), null), Collections.emptyList());
+    }
+
+    @Override
+    public <T> Fieldset generate(@NonNull Class<T> type,
+                                 @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
+        BeanIntrospection<T> introspection = BeanIntrospection.getIntrospection(type);
+        return new Fieldset(formElements(introspection.getBeanProperties(), builderConsumer), Collections.emptyList());
     }
 
     @Override
     public Fieldset generate(@NonNull Object instance) {
-        return new Fieldset(generate(BeanWrapper.getWrapper(instance), null), Collections.emptyList());
+        return new Fieldset(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), null, null), Collections.emptyList());
+    }
+
+    @Override
+    @NonNull
+    public Fieldset generate(@NonNull Object instance,
+                             @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
+        return new Fieldset(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), null, builderConsumer), Collections.emptyList());
     }
 
     @Override
     public Fieldset generate(@NonNull Object instance, @NonNull ConstraintViolationException ex) {
-        List<? extends FormElement> fields = generate(BeanWrapper.getWrapper(instance), ex);
+        return generate(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), ex, null), ex);
+    }
+
+    @Override
+    public Fieldset generate(Object instance, ConstraintViolationException ex, BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
+        return generate(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), ex, builderConsumer), ex);
+    }
+
+    @NonNull
+    private Fieldset generate(@NonNull List<? extends FormElement> fields, @NonNull ConstraintViolationException ex) {
         List<Message> errors = new ArrayList<>();
         for (ConstraintViolation<?> constraintViolation : ex.getConstraintViolations()) {
             if (ConstraintViolationUtils.lastNode(constraintViolation).isEmpty()) {
@@ -96,53 +121,66 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     }
 
     @NonNull
-    private <T> List<? extends FormElement> generate(@NonNull BeanWrapper<T> beanWrapper, @Nullable ConstraintViolationException ex) {
+    private <T> List<? extends FormElement> generateOfBeanWrapper(@NonNull BeanWrapper<T> beanWrapper,
+                                                                  @Nullable ConstraintViolationException ex,
+                                                                  @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
         List<FormElement> result = new ArrayList<>();
         for (BeanProperty<T, ?> beanProperty : beanWrapper.getBeanProperties()) {
-            Class<? extends FormElement> formElementClazz = formElementClassForBeanProperty(beanProperty);
-            BeanIntrospection.Builder<? extends FormElement> builder = formElementBuilderForBeanProperty(beanProperty, formElementClazz, beanWrapper, ex);
-            result.add(builder.build());
+            formElementClassForBeanProperty(beanProperty).ifPresent(formElementClazz  -> {
+                BeanIntrospection.Builder<? extends FormElement> builder = formElementBuilderForBeanProperty(beanProperty, formElementClazz, beanWrapper, ex, builderConsumer);
+                result.add(builder.build());
+            });
         }
         return result;
     }
 
-    private <T> Class<? extends FormElement> formElementClassForBeanProperty(BeanProperty<T, ?> beanProperty) {
+    @NonNull
+    private <T> Optional<Class<? extends FormElement>> formElementClassForBeanProperty(@NonNull BeanProperty<T, ?> beanProperty) {
         if (beanProperty.hasAnnotation(InputRadio.class)) {
-            return InputRadioFormElement.class;
+            return Optional.of(InputRadioFormElement.class);
         }
         if (beanProperty.hasAnnotation(InputPassword.class)) {
-            return InputPasswordFormElement.class;
+            return Optional.of(InputPasswordFormElement.class);
         }
         if (beanProperty.hasAnnotation(InputEmail.class)) {
-            return InputEmailFormElement.class;
+            return Optional.of(InputEmailFormElement.class);
         }
         if (beanProperty.hasAnnotation(InputUrl.class)) {
-            return InputUrlFormElement.class;
+            return Optional.of(InputUrlFormElement.class);
         }
         if (beanProperty.hasAnnotation(InputTel.class)) {
-            return InputTelFormElement.class;
+            return Optional.of(InputTelFormElement.class);
         }
         if (beanProperty.hasAnnotation(Select.class)) {
-            return SelectFormElement.class;
+            return Optional.of(SelectFormElement.class);
         }
-
+        if (beanProperty.hasAnnotation(Textarea.class)) {
+            return Optional.of(TextareaFormElement.class);
+        }
+        if (beanProperty.getType() == LocalDate.class) {
+            return Optional.of(InputDateFormElement.class);
+        }
         if (beanProperty.getType() == LocalDateTime.class) {
-            return InputDataTimeLocalFormElement.class;
+            return Optional.of(InputDataTimeLocalFormElement.class);
         }
 
         if (Number.class.isAssignableFrom(beanProperty.getType())) {
-            return InputNumberFormElement.class;
+            return Optional.of(InputNumberFormElement.class);
         }
 
         if (beanProperty.getType() == boolean.class) {
-            return InputCheckboxFormElement.class;
+            return Optional.of(InputCheckboxFormElement.class);
         }
 
         if (beanProperty.getType().isEnum()) {
-            return SelectFormElement.class;
+            return Optional.of(SelectFormElement.class);
         }
 
-        return InputTextFormElement.class;
+        if (CharSequence.class.isAssignableFrom(beanProperty.getType())) {
+            return Optional.of(InputTextFormElement.class);
+        }
+
+        return Optional.empty();
     }
 
     @NonNull
@@ -196,10 +234,11 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private <T> BeanIntrospection.Builder<? extends FormElement> formElementBuilderForBeanProperty(BeanProperty<T, ?> beanProperty,
                                                                                                    Class<? extends FormElement> formElementClazz,
                                                                                                    @Nullable BeanWrapper<T> beanWrapper,
-                                                                                                   @Nullable ConstraintViolationException ex) {
+                                                                                                   @Nullable ConstraintViolationException ex,
+                                                                                                   @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
         BeanIntrospection.Builder<? extends FormElement> builder = BeanIntrospection.getIntrospection(formElementClazz).builder();
         if (formElementClazz == InputCheckboxFormElement.class) {
-            FormElement formElement = formElementBuilderForBeanProperty(beanProperty, Checkbox.class, beanWrapper, ex)
+            FormElement formElement = formElementBuilderForBeanProperty(beanProperty, Checkbox.class, beanWrapper, ex, null)
                     .with(BUILDER_METHOD_CHECKED, valueForBeanProperty(beanWrapper, beanProperty).map(v -> Boolean.valueOf(v.toString())).orElse(false))
                     .build();
             builder.with(BUILDER_METHOD_CHECKBOXES, Collections.singletonList(formElement));
@@ -242,6 +281,9 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
             builder.with(BUILDER_METHOD_ERRORS, messagesForBeanProperty(beanProperty, ex));
         }
         minForBeanProperty(beanProperty).ifPresent(min -> builder.with(BULDER_METHOD_MIN, min));
+        if (builderConsumer != null) {
+            builderConsumer.accept(beanProperty.getName(), builder);
+        }
         return builder;
     }
 
@@ -269,14 +311,15 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         return Collections.emptyList();
     }
 
-    private <T> List<? extends FormElement> formElements(Collection<BeanProperty<T, Object>> beanProperties) {
-        return beanProperties.stream().map(this::formElementOfBeanProperty).toList();
+    private <T> List<? extends FormElement> formElements(Collection<BeanProperty<T, Object>> beanProperties, @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
+        return beanProperties.stream().map(beanProperty -> formElementOfBeanProperty(beanProperty, builderConsumer)).filter(Objects::nonNull).toList();
     }
 
-    private FormElement formElementOfBeanProperty(BeanProperty<?, ?> beanProperty) {
-        Class<? extends FormElement> formElementClass = formElementClassForBeanProperty(beanProperty);
-        BeanIntrospection.Builder<? extends FormElement> builder = formElementBuilderForBeanProperty(beanProperty, formElementClass, null, null);
-        return builder.build();
+    @Nullable
+    private FormElement formElementOfBeanProperty(@NonNull BeanProperty<?, ?> beanProperty, @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
+        return formElementClassForBeanProperty(beanProperty)
+                .map(formElementClass -> formElementBuilderForBeanProperty(beanProperty, formElementClass, null, null, builderConsumer).build())
+                        .orElse(null);
     }
 
 

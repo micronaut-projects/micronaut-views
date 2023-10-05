@@ -22,8 +22,11 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea">Textarea</a>
+ */
 @Documented
 @Retention(RUNTIME)
 @Target({ElementType.FIELD})
-public @interface TextArea {
+public @interface Textarea {
 }

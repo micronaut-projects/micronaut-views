@@ -4,11 +4,13 @@ import io.micronaut.context.annotation.Property;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.*;
 import io.micronaut.views.fields.annotations.InputRadio;
 import io.micronaut.views.fields.annotations.InputUrl;
 import io.micronaut.views.fields.annotations.Select;
+import io.micronaut.views.fields.annotations.Textarea;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
@@ -17,6 +19,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,26 +33,46 @@ import static org.junit.jupiter.api.Assertions.*;
 @Property(name = "spec.name", value = "EventCreateFormTest")
 @MicronautTest(startApplication = false)
 public class EventCreateFormTest {
+    private final static LocalDateTime EVENT_START = LocalDateTime.of(2023, 8, 31, 18, 0);
+
+    private final static LocalDateTime DOORS_OPENING = LocalDateTime.of(2023, 8, 31, 16, 0);
+    private final static LocalDateTime SALE_CLOSING_DATE = LocalDateTime.of(2023, 8, 30, 23, 59);
+    private final static LocalDate EVENT_DATE = LocalDate.of(2023, 8, 31);
 
     @Introspected
     record EventCreateForm(@NotBlank String name,
                            @InputRadio @NotNull Status status,
-
                            boolean highlighted,
-
                            @Positive @NotNull Integer capacity,
                            @NotNull Genre genre,
+
+                           @NotNull LocalDate eventDate,
                            @NotNull LocalDateTime eventStart,
+                           @NotNull LocalDateTime doorsOpening,
+                           @NotNull LocalDateTime saleClosingDate,
                            @Select(fetcher = OrganizerOptionFetcher.class) @NotNull Long organizerId,
                            @InputUrl @NotBlank String url,
-                           String additionalInfo) {
+                           @Textarea String additionalInfo) {
     }
 
     @Test
     void fieldsetGenerationForALoginForm(FieldsetGenerator fieldsetGenerator, EventCreateFormValidator validator) {
-        Fieldset fieldset = fieldsetGenerator.generate(EventCreateForm.class);
+        Fieldset fieldset = fieldsetGenerator.generate(EventCreateForm.class, (propertyName, builder) -> {
+            if ("eventStart".equals(propertyName)) {
+                builder.with("min", DOORS_OPENING);
+            }
+            if ("doorsOpening".equals(propertyName)) {
+                builder.with("min", SALE_CLOSING_DATE);
+            }
+        });
         assertNotNull(fieldset);
-        assertEquals(9, fieldset.getFields().size());
+        assertEquals(12, fieldset.getFields().size());
+        assertTrue(fieldset.getFields().stream().anyMatch(formElement -> formElement instanceof TextareaFormElement));
+
+        assertTrue(fieldset.getFields().stream().anyMatch(formElement -> formElement instanceof InputDateFormElement));
+
+        TextareaFormElement additionalInfoExpectation = additionalInfoExpectation().build();
+        assertTrue(assertFormElement(fieldset, additionalInfoExpectation));
 
         InputTextFormElement nameExpectation = nameExpectation().build();
         assertTrue(assertFormElement(fieldset, nameExpectation));
@@ -75,6 +98,15 @@ public class EventCreateFormTest {
         InputDataTimeLocalFormElement eventStartExpectation = eventStartExpectation().build();
         assertTrue(assertFormElement(fieldset, eventStartExpectation));
 
+        InputDataTimeLocalFormElement saleClosingDateExpectation = saleClosingDateExpectation().build();
+        assertTrue(assertFormElement(fieldset, saleClosingDateExpectation));
+
+        InputDataTimeLocalFormElement doorsOpeningExpectation = doorsOpeningExpectation().build();
+        assertTrue(assertFormElement(fieldset, doorsOpeningExpectation));
+
+        InputDateFormElement eventDateExpectation = eventDateExpectation().build();
+        assertTrue(assertFormElement(fieldset, eventDateExpectation));
+
         SelectFormElement organizerExpectation = organizerExpectation().build();
         assertTrue(assertFormElement(fieldset, organizerExpectation));
 
@@ -82,9 +114,16 @@ public class EventCreateFormTest {
         assertTrue(assertFormElement(fieldset, urlExpectation));
 
         String url = "https://festivalgigante.com/";
-        LocalDateTime eventStart = LocalDateTime.of(2023, 8, 31, 16, 0);
-        EventCreateForm valid = new EventCreateForm("Festival Gigante 2023", Status.CLOSED, true, 4000, Genre.SPORT, eventStart, 2L, url, null);
-        fieldset = fieldsetGenerator.generate(valid);
+
+        EventCreateForm valid = new EventCreateForm("Festival Gigante 2023", Status.CLOSED, true, 4000, Genre.SPORT, EVENT_DATE, EVENT_START, DOORS_OPENING, SALE_CLOSING_DATE, 2L, url, null);
+        fieldset = fieldsetGenerator.generate(valid, (propertyName, builder) -> {
+            if ("eventStart".equals(propertyName)) {
+                builder.with("min", DOORS_OPENING);
+            }
+            if ("doorsOpening".equals(propertyName)) {
+                builder.with("min", SALE_CLOSING_DATE);
+            }
+        });
         nameExpectation = nameExpectation().value("Festival Gigante 2023").build();
         assertTrue(assertFormElement(fieldset, nameExpectation));
 
@@ -107,9 +146,22 @@ public class EventCreateFormTest {
         statusExpectation = statusExpectationWithClosedStatus().build();
         assertTrue(assertFormElement(fieldset, statusExpectation));
 
-        EventCreateForm invalid = new EventCreateForm("", Status.CLOSED, true, 4000, Genre.MUSIC,  eventStart, 2L, url, null);
+        additionalInfoExpectation = additionalInfoExpectation().build();
+        assertTrue(assertFormElement(fieldset, additionalInfoExpectation));
+
+        eventDateExpectation = eventDateExpectation().value(EVENT_DATE).build();
+        assertTrue(assertFormElement(fieldset, eventDateExpectation));
+
+        EventCreateForm invalid = new EventCreateForm("", Status.CLOSED, true, 4000, Genre.MUSIC, EVENT_DATE, EVENT_START, DOORS_OPENING, SALE_CLOSING_DATE, 2L, url, "It was a dark and stormy night...");
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> validator.validate(invalid));
-        fieldset = fieldsetGenerator.generate(invalid, ex);
+        fieldset = fieldsetGenerator.generate(invalid, ex, (propertyName, builder) -> {
+            if ("eventStart".equals(propertyName)) {
+                builder.with("min", DOORS_OPENING);
+            }
+            if ("doorsOpening".equals(propertyName)) {
+                builder.with("min", SALE_CLOSING_DATE);
+            }
+        });
         nameExpectation = nameExpectation().value("").errors(Collections.singletonList(new SimpleMessage("eventcreateform.name.notblank", "must not be blank"))).build();
         assertTrue(assertFormElement(fieldset, nameExpectation));
 
@@ -124,6 +176,16 @@ public class EventCreateFormTest {
 
         statusExpectation = statusExpectationWithClosedStatus().build();
         assertTrue(assertFormElement(fieldset, statusExpectation));
+
+        additionalInfoExpectation = additionalInfoExpectation().value("It was a dark and stormy night...").build();
+        assertTrue(assertFormElement(fieldset, additionalInfoExpectation));
+
+        eventDateExpectation = eventDateExpectation().value(EVENT_DATE).build();
+        assertTrue(assertFormElement(fieldset, eventDateExpectation));
+    }
+
+    private TextareaFormElement.Builder additionalInfoExpectation() {
+        return TextareaFormElement.builder().required(false).id("additionalInfo").name("additionalInfo").label(new SimpleMessage("eventcreateform.additionalInfo", "Additional Info"));
     }
 
     private InputTextFormElement.Builder nameExpectation() {
@@ -161,7 +223,29 @@ public class EventCreateFormTest {
     }
 
     private InputDataTimeLocalFormElement.Builder eventStartExpectation() {
-        return InputDataTimeLocalFormElement.builder().required(true).id("eventStart").name("eventStart").label(new SimpleMessage("eventcreateform.eventStart", "Event Start"));
+        return InputDataTimeLocalFormElement.builder()
+            .min(DOORS_OPENING)
+            .required(true)
+            .id("eventStart")
+            .name("eventStart")
+            .label(new SimpleMessage("eventcreateform.eventStart", "Event Start"));
+    }
+
+    private InputDataTimeLocalFormElement.Builder doorsOpeningExpectation() {
+        return InputDataTimeLocalFormElement.builder()
+            .min(SALE_CLOSING_DATE)
+            .required(true)
+            .id("doorsOpening")
+            .name("doorsOpening")
+            .label(new SimpleMessage("eventcreateform.doorsOpening", "Doors Opening"));
+    }
+
+    private InputDataTimeLocalFormElement.Builder saleClosingDateExpectation() {
+        return InputDataTimeLocalFormElement.builder().required(true).id("saleClosingDate").name("saleClosingDate").label(new SimpleMessage("eventcreateform.saleClosingDate", "Sale Closing Date"));
+    }
+
+    private InputDateFormElement.Builder eventDateExpectation() {
+        return InputDateFormElement.builder().required(true).id("eventDate").name("eventDate").label(new SimpleMessage("eventcreateform.eventDate", "Event Date"));
     }
 
     private InputUrlFormElement.Builder urlExpectation() {

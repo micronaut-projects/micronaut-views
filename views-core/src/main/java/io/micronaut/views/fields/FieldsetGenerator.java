@@ -17,11 +17,13 @@ package io.micronaut.views.fields;
 
 import io.micronaut.context.annotation.DefaultImplementation;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.beans.BeanIntrospection;
 import jakarta.validation.ConstraintViolationException;
+
+import java.util.function.BiConsumer;
 
 @DefaultImplementation(DefaultFieldGenerator.class)
 public interface FieldsetGenerator {
-
     /**
      *
      * @param type A class which should be {@link io.micronaut.core.annotation.Introspected}.
@@ -32,12 +34,29 @@ public interface FieldsetGenerator {
 
     /**
      *
+     * @param type A class which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param builderConsumer A biconsumer with the property name and the builder
+     * @return A Fieldset
+     */
+    @NonNull
+    <T> Fieldset generate(@NonNull Class<T> type, @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer);
+
+    /**
+     *
      * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
      * @return A Fieldset
      */
     @NonNull
     Fieldset generate(@NonNull Object instance);
 
+    /**
+     *
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param builderConsumer A biconsumer with the property name and the builder
+     * @return A Fieldset
+     */
+    @NonNull
+    Fieldset generate(@NonNull Object instance, @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer);
 
     /**
      *
@@ -48,4 +67,16 @@ public interface FieldsetGenerator {
     @NonNull
     Fieldset generate(@NonNull Object instance,
                       @NonNull ConstraintViolationException ex);
+
+    /**
+     *
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param ex A Validation exception
+     * @param builderConsumer A biconsumer with the property name and the builder
+     * @return A Fieldset
+     */
+    @NonNull
+    Fieldset generate(@NonNull Object instance,
+                      @NonNull ConstraintViolationException ex,
+                      @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer);
 }
