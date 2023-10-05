@@ -14,15 +14,13 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.json.JsonMapper;
 import io.micronaut.json.tree.JsonNode;
-import io.micronaut.views.fields.FieldGenerator;
+import io.micronaut.views.fields.FieldsetGenerator;
 import io.micronaut.views.fields.Fieldset;
-import io.micronaut.views.fields.InputField;
 import io.micronaut.views.fields.controllers.FieldsetRenderer;
 import jakarta.validation.ConstraintViolationException;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @EachBean(CreateHtmlResource.class)
@@ -30,7 +28,7 @@ public class DefaultCreateSaveController<T> implements CreateSaveController<T> {
     private final CreateHtmlResource<T> createResource;
 
     private final SaveService<T> saveService;
-    private final FieldGenerator fieldGenerator;
+    private final FieldsetGenerator fieldsetGenerator;
     private final FieldsetRenderer fieldsetRenderer;
 
     private final LocaleResolver<HttpRequest<?>> localeResolver;
@@ -40,7 +38,7 @@ public class DefaultCreateSaveController<T> implements CreateSaveController<T> {
     private final Class<T> createType;
     public DefaultCreateSaveController(CreateHtmlResource<T> createResource,
                                        BeanContext beanContext,
-                                       FieldGenerator fieldGenerator,
+                                       FieldsetGenerator fieldsetGenerator,
                                        FieldsetRenderer fieldsetRenderer,
                                        LocaleResolver<HttpRequest<?>> localeResolver,
                                        JsonMapper jsonMapper) {
@@ -48,7 +46,7 @@ public class DefaultCreateSaveController<T> implements CreateSaveController<T> {
         this.jsonMapper = jsonMapper;
         this.saveService = beanContext.getBean(SaveService.class, Qualifiers.byName(createResource.getName()));
         this.createType = createResource.createClass();
-        this.fieldGenerator = fieldGenerator;
+        this.fieldsetGenerator = fieldsetGenerator;
         this.fieldsetRenderer = fieldsetRenderer;
         this.localeResolver = localeResolver;
     }
@@ -57,7 +55,7 @@ public class DefaultCreateSaveController<T> implements CreateSaveController<T> {
     @Executable
     @Override
     public String create(HttpRequest<?> request) {
-        Fieldset fieldList = fieldGenerator.generate(createType);
+        Fieldset fieldList = fieldsetGenerator.generate(createType);
         return fieldsetRenderer.render(localeResolver.resolveOrDefault(request), createResource.savePath() , fieldList);
     }
 
@@ -71,7 +69,7 @@ public class DefaultCreateSaveController<T> implements CreateSaveController<T> {
             try {
                 return HttpResponse.seeOther(saveService.save(obj));
             } catch (ConstraintViolationException e) {
-                Fieldset fieldset = fieldGenerator.generate(obj, e);
+                Fieldset fieldset = fieldsetGenerator.generate(obj, e);
                 return HttpResponse.unprocessableEntity()
                     .contentType(MediaType.TEXT_HTML)
                     .body(fieldsetRenderer.render(localeResolver.resolveOrDefault(request), createResource.savePath() , fieldset));

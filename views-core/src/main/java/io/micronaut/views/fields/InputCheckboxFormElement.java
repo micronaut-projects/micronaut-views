@@ -22,6 +22,7 @@ import io.micronaut.core.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">Input Checkbox</a>
@@ -41,6 +42,20 @@ public class InputCheckboxFormElement extends FormElement {
 
     public List<Checkbox> getCheckboxes() {
         return checkboxes;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof InputCheckboxFormElement that)) return false;
+
+        return Objects.equals(checkboxes, that.checkboxes);
+    }
+
+    @Override
+    public int hashCode() {
+        return checkboxes != null ? checkboxes.hashCode() : 0;
     }
 
     @NonNull

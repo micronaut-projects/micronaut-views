@@ -16,44 +16,38 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+
+import java.util.Objects;
 
 /**
  * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/option">Option</a>
  */
 public class Option {
 
-    private final boolean selected;
     private final boolean disabled;
 
-    @Nullable
-    private final String label;
+    private final boolean selected;
 
     @NonNull
-    private final String text;
-
-    @Nullable
     private final String value;
 
-
+    @NonNull
+    private final Message label;
 
     /**
      * @param selected If present, this Boolean attribute indicates that the option is initially selected.
      * @param disabled If this Boolean attribute is set, this option is not checkable.
-     * @param text Text Option text
      * @param value The content of this attribute represents the value to be submitted with the form, should this option be selected.
      * @param label This attribute is text for the label indicating the meaning of the option.
      */
-    public Option(@NonNull String text,
-                  @Nullable String value,
+    public Option(boolean disabled,
                   boolean selected,
-                  boolean disabled,
-                  @Nullable String label) {
+                  @NonNull String value,
+                  @NonNull Message label) {
         this.selected = selected;
         this.disabled = disabled;
-        this.text = text;
-        this.label = label;
         this.value = value;
+        this.label = label;
     }
 
     /**
@@ -74,16 +68,9 @@ public class Option {
 
     /**
      *
-     * @return Option Text
-     */
-    public String getText() {
-        return text;
-    }
-
-    /**
-     *
      * @return The content of this attribute represents the value to be submitted with the form, should this option be selected.
      */
+    @NonNull
     public String getValue() {
         return value;
     }
@@ -92,8 +79,71 @@ public class Option {
      *
      * @return This attribute is text for the label indicating the meaning of the option.
      */
-    @Nullable
-    public String getLabel() {
+    @NonNull
+    public Message getLabel() {
         return label;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Option option)) return false;
+
+        if (disabled != option.disabled) return false;
+        if (selected != option.selected) return false;
+        if (!Objects.equals(value, option.value)) return false;
+        return Objects.equals(label, option.label);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (disabled ? 1 : 0);
+        result = 31 * result + (selected ? 1 : 0);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (label != null ? label.hashCode() : 0);
+        return result;
+    }
+
+    @NonNull
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private boolean disabled;
+        private String value;
+        private boolean selected;
+        private Message label;
+
+        @NonNull
+        public Builder disabled(boolean disabled) {
+            this.disabled = disabled;
+            return this;
+        }
+
+        @NonNull
+        public Builder selected(boolean selected) {
+            this.selected = selected;
+            return this;
+        }
+
+        @NonNull
+        public Builder value(@NonNull String value) {
+            this.value = value;
+            return this;
+        }
+
+
+        @NonNull
+        public Builder label(Message label) {
+            this.label = label;
+            return this;
+        }
+
+        @NonNull
+        public Option build() {
+            return new Option(disabled, selected, value, label);
+        }
+    }
+
 }

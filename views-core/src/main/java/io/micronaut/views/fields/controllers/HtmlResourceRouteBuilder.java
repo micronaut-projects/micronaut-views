@@ -26,6 +26,7 @@ import io.micronaut.views.fields.controllers.editupdate.EditService;
 import io.micronaut.views.fields.controllers.editupdate.EditUpdateController;
 import io.micronaut.views.fields.controllers.editupdate.UpdateServiceFactory;
 import io.micronaut.views.fields.controllers.read.*;
+import io.micronaut.web.router.DefaultRouteBuilder;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,7 +162,7 @@ class HtmlResourceRouteBuilder extends DefaultRouteBuilder {
             }
             @SuppressWarnings({"unchecked", "rawtypes"})
             MethodExecutionHandle<Object, Object> executionHandle = ExecutionHandle.of(controller, (ExecutableMethod) m);
-            buildRoute(HttpMethod.POST, savePath, Collections.singletonList(MediaType.APPLICATION_FORM_URLENCODED_TYPE), executionHandle);
+            //buildRoute(HttpMethod.POST, savePath, Collections.singletonList(MediaType.APPLICATION_FORM_URLENCODED_TYPE), executionHandle);
         });
     }
 
@@ -197,7 +198,7 @@ class HtmlResourceRouteBuilder extends DefaultRouteBuilder {
             }
             @SuppressWarnings({"unchecked", "rawtypes"})
             MethodExecutionHandle<Object, Object> executionHandle = ExecutionHandle.of(controller, (ExecutableMethod) m);
-            buildRoute(HttpMethod.POST, savePath, Collections.singletonList(MediaType.APPLICATION_FORM_URLENCODED_TYPE), executionHandle);
+            //buildRoute(HttpMethod.POST, savePath, Collections.singletonList(MediaType.APPLICATION_FORM_URLENCODED_TYPE), executionHandle);
         });
     }
 

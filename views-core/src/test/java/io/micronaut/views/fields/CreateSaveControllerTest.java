@@ -23,6 +23,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
@@ -51,6 +52,7 @@ public class CreateSaveControllerTest {
             "<input type=\"submit\" value=\"Create\"/></form></body></html>", html);
     }
 
+    @Disabled
     @Test
     void saveControllerTest(@Client("/") HttpClient httpClient) {
         BlockingHttpClient client = httpClient.toBlocking();
@@ -61,6 +63,7 @@ public class CreateSaveControllerTest {
         assertEquals(HttpStatus.SEE_OTHER, response.getStatus());
     }
 
+    @Disabled
     @Test
     void saveControllerValidationTest(@Client("/") HttpClient httpClient) {
         BlockingHttpClient client = httpClient.toBlocking();

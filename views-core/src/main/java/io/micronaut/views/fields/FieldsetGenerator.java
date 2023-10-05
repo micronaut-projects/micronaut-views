@@ -19,28 +19,32 @@ import io.micronaut.context.annotation.DefaultImplementation;
 import io.micronaut.core.annotation.NonNull;
 import jakarta.validation.ConstraintViolationException;
 
-import java.util.List;
-
 @DefaultImplementation(DefaultFieldGenerator.class)
-public interface FieldGenerator {
+public interface FieldsetGenerator {
 
     /**
      *
-     * @param type The class
-     * @return List of fields
+     * @param type A class which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @return A Fieldset
      */
     @NonNull
     <T> Fieldset generate(@NonNull Class<T> type);
 
     /**
      *
-     * @param instance The Object instance
-     * @return List of fields
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @return A Fieldset
      */
     @NonNull
     Fieldset generate(@NonNull Object instance);
 
 
+    /**
+     *
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param ex A Validation exception
+     * @return A Fieldset
+     */
     @NonNull
     Fieldset generate(@NonNull Object instance,
                       @NonNull ConstraintViolationException ex);

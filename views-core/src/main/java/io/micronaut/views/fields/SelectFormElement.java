@@ -25,6 +25,7 @@ import java.util.Objects;
 
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = SelectFormElement.Builder.class))
 public class SelectFormElement extends FormElement {
+    private final boolean required;
     @NonNull
     private final String name;
 
@@ -34,18 +35,33 @@ public class SelectFormElement extends FormElement {
     @NonNull
     private final List<Option> options;
 
+    @NonNull
+    private final Message label;
 
     /**
      *
      * @param name The name attribute.
      * @param id The id attribute.
      */
-    public SelectFormElement(@NonNull String name,
+    public SelectFormElement(boolean required,
+                             @NonNull String name,
                              @Nullable String id,
-                             @NonNull List<Option> options) {
+                             @NonNull List<Option> options,
+                             Message label) {
+        this.required = required;
         this.name = name;
         this.id = id;
         this.options = options;
+        this.label = label;
+    }
+
+    public boolean isRequired() {
+        return required;
+    }
+
+    @NonNull
+    public Message getLabel() {
+        return label;
     }
 
     /*
@@ -76,7 +92,30 @@ public class SelectFormElement extends FormElement {
         return options;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SelectFormElement that)) return false;
+
+        if (required != that.required) return false;
+        if (!Objects.equals(name, that.name)) return false;
+        if (!Objects.equals(id, that.id)) return false;
+        if (!Objects.equals(options, that.options)) return false;
+        return Objects.equals(label, that.label);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (required ? 1 : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (options != null ? options.hashCode() : 0);
+        result = 31 * result + (label != null ? label.hashCode() : 0);
+        return result;
+    }
+
     public static class Builder {
+        private boolean required;
 
         @NonNull
         private String name;
@@ -85,6 +124,14 @@ public class SelectFormElement extends FormElement {
         private String id;
 
         private List<Option> options;
+
+        private Message label;
+
+        @NonNull
+        public Builder required(boolean required) {
+            this.required = required;
+            return this;
+        }
 
         @NonNull
         public Builder name(@NonNull String name) {
@@ -105,11 +152,18 @@ public class SelectFormElement extends FormElement {
         }
 
         @NonNull
-        SelectFormElement build() {
+        public Builder label(Message label) {
+            this.label = label;
+            return this;
+        }
+        @NonNull
+        public SelectFormElement build() {
             return new SelectFormElement(
-                    Objects.requireNonNull(name),
-                    id,
-                    options == null ? Collections.emptyList() : options);
+                required,
+                Objects.requireNonNull(name),
+                id,
+                options == null ? Collections.emptyList() : options,
+                label);
         }
     }
 }

@@ -16,7 +16,6 @@
 package io.micronaut.views.fields.controllers.editupdate;
 
 import io.micronaut.context.BeanContext;
-import io.micronaut.context.Qualifier;
 import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Executable;
 import io.micronaut.core.util.LocaleResolver;
@@ -29,14 +28,12 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.json.JsonMapper;
 import io.micronaut.json.tree.JsonNode;
-import io.micronaut.views.fields.FieldGenerator;
+import io.micronaut.views.fields.FieldsetGenerator;
 import io.micronaut.views.fields.Fieldset;
-import io.micronaut.views.fields.InputField;
 import io.micronaut.views.fields.controllers.FieldsetRenderer;
 import jakarta.validation.ConstraintViolationException;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -45,7 +42,7 @@ public class DefaultEditUpdateController<E, ID> implements EditUpdateController<
 
     private final EditHtmlResource<E> resource;
     private final EditService service;
-    private final FieldGenerator fieldGenerator;
+    private final FieldsetGenerator fieldsetGenerator;
     private final FieldsetRenderer fieldsetRenderer;
     private final LocaleResolver<HttpRequest<?>> localeResolver;
 
@@ -53,13 +50,13 @@ public class DefaultEditUpdateController<E, ID> implements EditUpdateController<
 
     public DefaultEditUpdateController(EditHtmlResource<E> resource,
                                        BeanContext beanContext,
-                                       FieldGenerator fieldGenerator,
+                                       FieldsetGenerator fieldsetGenerator,
                                        FieldsetRenderer fieldsetRenderer,
                                        LocaleResolver<HttpRequest<?>> localeResolver,
                                        JsonMapper jsonMapper) {
         this.resource = resource;
         this.service = beanContext.getBean(EditService.class, Qualifiers.byName(resource.getName()));
-        this.fieldGenerator = fieldGenerator;
+        this.fieldsetGenerator = fieldsetGenerator;
         this.fieldsetRenderer = fieldsetRenderer;
         this.localeResolver = localeResolver;
         this.jsonMapper = jsonMapper;
@@ -74,7 +71,7 @@ public class DefaultEditUpdateController<E, ID> implements EditUpdateController<
             return HttpResponse.notFound();
         }
         E instance = instanceOptional.get();
-        Fieldset fieldset = fieldGenerator.generate(instance);
+        Fieldset fieldset = fieldsetGenerator.generate(instance);
         return HttpResponse.ok(fieldsetRenderer.render(localeResolver.resolveOrDefault(request), resource.updatePath() , fieldset));
     }
 
@@ -87,7 +84,7 @@ public class DefaultEditUpdateController<E, ID> implements EditUpdateController<
             try {
                 return HttpResponse.seeOther(service.update(obj));
             } catch (ConstraintViolationException e) {
-                Fieldset fieldset = fieldGenerator.generate(obj, e);
+                Fieldset fieldset = fieldsetGenerator.generate(obj, e);
                 return HttpResponse.unprocessableEntity()
                     .contentType(MediaType.TEXT_HTML)
                     .body(fieldsetRenderer.render(localeResolver.resolveOrDefault(request), resource.updatePath(), fieldset));

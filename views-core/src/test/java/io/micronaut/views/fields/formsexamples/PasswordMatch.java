@@ -1,4 +1,4 @@
-package io.micronaut.views.fields.classlevelvalidation;
+package io.micronaut.views.fields.formsexamples;
 
 
 import jakarta.validation.Constraint;
@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
     /**
      * AnyRecipient message.
      */
-    String MESSAGE = "io.micronaut.views.fields.classlevelvalidation.PasswordMatch.message";
+    String MESSAGE = "io.micronaut.views.fields.formsexamples.PasswordMatch.message";
 
     /**
      * @return message The error message

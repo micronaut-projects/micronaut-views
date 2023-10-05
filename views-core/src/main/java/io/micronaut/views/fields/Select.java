@@ -35,4 +35,6 @@ public @interface Select {
      * @return The id attribute.
      */
     String id() default "";
+
+    Class<? extends OptionFetcher> fetcher() default EnumOptionFetcher.class;
 }

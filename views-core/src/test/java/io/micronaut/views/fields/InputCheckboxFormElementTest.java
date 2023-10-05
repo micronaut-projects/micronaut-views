@@ -15,8 +15,8 @@ class InputCheckboxFormElementTest {
 
     @Test
     void builder() {
-        Checkbox interest = new Checkbox("interest", "coding", false, "coding", new SimpleMessage("interest.coding", "Coding"));
-        Checkbox music = new Checkbox("interest", "music", false, "music", new SimpleMessage("interest.music", "Music"));
+        Checkbox interest = Checkbox.builder().name("interest").value("coding").checked(false).id("coding").label(new SimpleMessage("interest.coding", "Coding")).build();
+        Checkbox music = Checkbox.builder().name("interest").value("music").checked(false).id("music").label(new SimpleMessage("interest.music", "Coding")).build();
 
         InputCheckboxFormElement formElement = InputCheckboxFormElement.builder()
             .checkbox(interest)

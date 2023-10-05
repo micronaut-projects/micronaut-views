@@ -1,5 +1,5 @@
 [versions]
-micronaut = "4.1.1"
+micronaut = "4.1.8"
 micronaut-platform = "4.0.4"
 micronaut-docs = '2.0.0'
 micronaut-test = "4.0.1"
@@ -7,16 +7,17 @@ geb = "7.0"
 selenium = "4.2.2"
 micronaut-data = "4.0.4"
 micronaut-sql = "5.0.1"
-micronaut-security = "4.0.3"
-micronaut-serde = "2.2.0"
-micronaut-validation = "4.0.1"
-micronaut-gradle-plugin = "4.0.2"
+micronaut-security = "4.1.0"
+micronaut-serde = "2.2.5"
+micronaut-validation = "4.0.3"
+micronaut-gradle-plugin = "4.1.1"
 testcontainers = "1.19.0"
-groovy = "4.0.13"
+groovy = "4.0.14"
 spock = "2.3-groovy-4.0"
 
 managed-freemarker = "2.3.32"
 managed-handlebars = "4.3.1"
+managed-jstachio = "1.3.2"
 managed-jte = "2.3.2"
 managed-rocker = "1.3.0"
 managed-soy = "2022-10-26"
@@ -25,10 +26,10 @@ managed-velocity = "2.3"
 
 pebble = "3.2.1"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
-kotlin = "1.9.0"
+kotlin = "1.9.10"
 kotlinx-coroutines = "1.7.3"
 
-micronaut-logging = "1.0.0"
+micronaut-logging = "1.1.2"
 
 [libraries]
 # Core
@@ -52,6 +53,8 @@ micronaut-gradle-plugin = { module = "io.micronaut.gradle:micronaut-gradle-plugi
 
 managed-freemarker = { module = "org.freemarker:freemarker", version.ref = "managed-freemarker" }
 managed-handlebars = { module = "com.github.jknack:handlebars", version.ref = "managed-handlebars" }
+managed-jstachio = { module = "io.jstach:jstachio", version.ref = "managed-jstachio" }
+managed-jstachio-apt = { module = "io.jstach:jstachio-apt", version.ref = "managed-jstachio" }
 managed-jte = { module = "gg.jte:jte", version.ref = "managed-jte" }
 managed-jte-kotlin = { module = "gg.jte:jte-kotlin", version.ref = "managed-jte" }
 managed-rocker-runtime = { module = "com.fizzed:rocker-runtime", version.ref = "managed-rocker" }

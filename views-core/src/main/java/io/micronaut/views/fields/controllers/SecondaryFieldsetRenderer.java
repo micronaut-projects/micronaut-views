@@ -7,10 +7,7 @@ import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.data.annotation.event.PostLoad;
 import io.micronaut.http.HttpMethod;
-import io.micronaut.views.fields.Fieldset;
-import io.micronaut.views.fields.InputField;
-import io.micronaut.views.fields.InputType;
-import io.micronaut.views.fields.Message;
+import io.micronaut.views.fields.*;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -58,7 +55,7 @@ public class SecondaryFieldsetRenderer implements FieldsetRenderer {
                              @NonNull String action,
                              @NonNull Fieldset fieldset) {
         String fieldsHtml = "";
-        for (InputField field : fieldset.getFields()) {
+        for (FormElement field : fieldset.getFields()) {
             fieldsHtml += renderField(field, locale);
         }
         fieldsHtml += renderGlobalErrors(fieldset, locale);
@@ -81,12 +78,13 @@ public class SecondaryFieldsetRenderer implements FieldsetRenderer {
     }
 
     @NonNull
-    public String renderField(@NonNull InputField field, @NonNull Locale locale) {
-        String html = renderInputLabel(field, locale);
-        List<HtmlAttribute> attributes = attributesForField(field);
-        html += renderInput(field, attributes);
-        html += renderInputErrors(field, locale);
-        return html;
+    public String renderField(@NonNull FormElement field, @NonNull Locale locale) {
+//        String html = renderInputLabel(field, locale);
+//        List<HtmlAttribute> attributes = attributesForField(field);
+//        html += renderInput(field, attributes);
+//        html += renderInputErrors(field, locale);
+//        return html;
+        return "";
     }
 
     @NonNull

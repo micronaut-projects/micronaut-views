@@ -10,20 +10,20 @@ import java.util.List;
 public class Fieldset {
 
     @NonNull
-    private final List<InputField> fields;
+    private final List<? extends FormElement> fields;
 
     @NonNull
     private final List<Message> errors;
 
 
-    public Fieldset(@NonNull List<InputField> fields,
+    public Fieldset(@NonNull List<? extends FormElement> fields,
                     @NonNull List<Message> errors) {
         this.fields = fields;
         this.errors = errors;
     }
 
     @NonNull
-    public List<InputField> getFields() {
+    public List<? extends FormElement> getFields() {
         return fields;
     }
 
