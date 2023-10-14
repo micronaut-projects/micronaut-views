@@ -27,7 +27,6 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewsConfiguration;
 import jakarta.inject.Singleton;
 
-import java.io.Writer;
 import java.nio.file.Paths;
 
 /**
@@ -66,8 +65,8 @@ public class PlainJteViewsRenderer<T> extends JteViewsRenderer<T, HttpRequest<?>
         }
 
         @Override
-        public Writer getWriter() {
-            return delegate.getWriter();
+        public void setContext(String tagName, String attributeName) {
+            // no-op
         }
 
         @Override
@@ -76,8 +75,8 @@ public class PlainJteViewsRenderer<T> extends JteViewsRenderer<T, HttpRequest<?>
         }
 
         @Override
-        public void setContext(String tagName, String attributeName) {
-            // no-op
+        public void writeContent(String value, int beginIndex, int endIndex) {
+            delegate.writeContent(value, beginIndex, endIndex);
         }
 
         @Override
@@ -153,6 +152,11 @@ public class PlainJteViewsRenderer<T> extends JteViewsRenderer<T, HttpRequest<?>
         @Override
         public void writeUserContent(Character value) {
             delegate.writeUserContent(value);
+        }
+
+        @Override
+        public void writeUnsafeContent(String value) {
+            delegate.writeUnsafeContent(value);
         }
     }
 }
