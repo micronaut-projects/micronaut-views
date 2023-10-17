@@ -25,7 +25,7 @@ class AutomaticallyPopulatedTest {
                 @DateCreated @Nullable LocalDate dateCreated,
                 @DateUpdated @Nullable LocalDateTime lastUpdated) {
     }
-    
+
     @Test
     void fieldsAnnotatedWithAutoPopulatedAreSkipped(FieldsetGenerator fieldsetGenerator) {
         Fieldset fieldset = fieldsetGenerator.generate(Book.class);
