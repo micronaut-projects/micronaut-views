@@ -136,6 +136,9 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
 
     @NonNull
     private <T> Optional<Class<? extends FormElement>> formElementClassForBeanProperty(@NonNull BeanProperty<T, ?> beanProperty) {
+        if (beanProperty.hasAnnotation(InputHidden.class)) {
+            return Optional.of(InputHiddenFormElement.class);
+        }
         if (beanProperty.hasAnnotation(InputRadio.class)) {
             return Optional.of(InputRadioFormElement.class);
         }
