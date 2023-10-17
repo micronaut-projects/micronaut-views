@@ -23,6 +23,7 @@ import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.core.beans.BeanProperty;
 import io.micronaut.core.beans.BeanWrapper;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.data.annotation.AutoPopulated;
 import io.micronaut.views.fields.annotations.*;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Singleton;
@@ -136,6 +137,9 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
 
     @NonNull
     private <T> Optional<Class<? extends FormElement>> formElementClassForBeanProperty(@NonNull BeanProperty<T, ?> beanProperty) {
+        if (beanProperty.hasStereotype(AutoPopulated.class)) {
+            return Optional.empty();
+        }
         if (beanProperty.hasAnnotation(InputHidden.class)) {
             return Optional.of(InputHiddenFormElement.class);
         }

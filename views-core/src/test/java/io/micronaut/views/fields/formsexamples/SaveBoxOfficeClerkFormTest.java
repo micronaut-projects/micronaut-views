@@ -16,7 +16,6 @@ import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
@@ -38,7 +37,7 @@ public class SaveBoxOfficeClerkFormTest {
     }
 
     @Test
-    void fieldsetGenerationForALoginForm(FieldsetGenerator fieldsetGenerator, SaveBoxOfficeClerkFormValidator validator) {
+    void fieldsetGenerationForALoginForm(FieldsetGenerator fieldsetGenerator) {
         SaveBoxOfficeClerkForm form = new SaveBoxOfficeClerkForm(2L,10L);
         Fieldset fieldset = fieldsetGenerator.generate(form);
         assertNotNull(fieldset);

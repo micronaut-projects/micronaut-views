@@ -20,6 +20,7 @@ dependencies {
     testImplementation(mn.micronaut.management)
     testImplementation(mnValidation.micronaut.validation)
     testImplementation(mn.snakeyaml)
+    testImplementation(mnData.micronaut.data.model)
 
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(libs.junit.jupiter.api)
