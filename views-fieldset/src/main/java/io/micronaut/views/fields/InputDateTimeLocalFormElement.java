@@ -52,7 +52,7 @@ public class InputDateTimeLocalFormElement implements FormElement, GlobalAttribu
     private final Message label;
 
     @NonNull
-    private List<Message> errors;
+    private final List<Message> errors;
 
     /**
      *
