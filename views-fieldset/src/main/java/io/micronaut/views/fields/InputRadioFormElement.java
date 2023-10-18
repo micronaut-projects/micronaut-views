@@ -20,83 +20,21 @@ import io.micronaut.core.annotation.NonNull;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Input Radio.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio">Input Radio</a>
+ * @param name Name of the form control. Submitted with the form as part of a name/value pair
+ * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+ * @param buttons Radio Buttons
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputRadioFormElement.Builder.class))
-public class InputRadioFormElement implements FormElement {
-    @NonNull
-    private final String name;
-
-    private final boolean required;
-
-    @NonNull
-    private final List<Radio> buttons;
-
-    /**
-     *
-     * @param name Name of the form control. Submitted with the form as part of a name/value pair
-     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
-     * @param buttons Radio Buttons
-     */
-    public InputRadioFormElement(@NonNull String name,
-                                 boolean required,
-                                 @NonNull List<Radio> buttons) {
-        this.name = name;
-        this.required = required;
-        this.buttons = buttons;
-    }
-
-    /**
-     *
-     * @return Name of the form control. Submitted with the form as part of a name/value pair
-     */
-    @NonNull
-    public String getName() {
-        return name;
-    }
-
-    /**
-     *
-     * @return If true indicates that the user must specify a value for the input before the owning form can be submitted.
-     */
-    public boolean isRequired() {
-        return required;
-    }
-
-    /**
-     *
-     * @return Radio Buttons
-     */
-    @NonNull
-    public List<Radio> getButtons() {
-        return buttons;
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof InputRadioFormElement that)) return false;
-
-        if (required != that.required) return false;
-        if (!Objects.equals(name, that.name)) return false;
-        return Objects.equals(buttons, that.buttons);
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (required ? 1 : 0);
-        result = 31 * result + (buttons != null ? buttons.hashCode() : 0);
-        return result;
-    }
+public record InputRadioFormElement(@NonNull String name,
+                                    boolean required,
+                                    @NonNull List<Radio> buttons) implements FormElement {
 
     /**
      *

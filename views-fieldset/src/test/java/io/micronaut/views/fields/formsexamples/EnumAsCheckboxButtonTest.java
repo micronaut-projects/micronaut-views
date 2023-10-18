@@ -26,9 +26,9 @@ class EnumAsCheckboxButtonTest {
     void renderEnumAsCheckboxButton(FieldsetGenerator fieldsetGenerator) {
         Fieldset fieldset = fieldsetGenerator.generate(EventCreateForm.class);
         assertNotNull(fieldset);
-        assertEquals(2, fieldset.getFields().size());
-        assertTrue(fieldset.getFields().stream().anyMatch(formElement -> formElement instanceof InputTextFormElement));
-        assertTrue(fieldset.getFields().stream().anyMatch(formElement -> formElement instanceof InputCheckboxFormElement));
+        assertEquals(2, fieldset.fields().size());
+        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputTextFormElement));
+        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputCheckboxFormElement));
 
         InputCheckboxFormElement genreExpectation = genreExpectation().build();
         assertTrue(assertFormElement(fieldset, genreExpectation));

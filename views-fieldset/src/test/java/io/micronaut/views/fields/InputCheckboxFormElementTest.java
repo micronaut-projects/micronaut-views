@@ -35,6 +35,6 @@ class InputCheckboxFormElementTest {
     private void assertFormElement(List<Checkbox> checkboxes,
                                    InputCheckboxFormElement formElement) {
         assertNotNull(formElement);
-        assertEquals(checkboxes.size(), formElement.getCheckboxes().size());
+        assertEquals(checkboxes.size(), formElement.checkboxes().size());
     }
 }

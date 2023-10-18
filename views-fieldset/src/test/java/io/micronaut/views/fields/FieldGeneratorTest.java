@@ -36,9 +36,9 @@ class FieldGeneratorTest  {
         Executable executable = () -> contactValidator.validate(instance);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, executable);
         Fieldset fieldset = fieldGenerator.generate(instance, ex);
-        assertNotNull(fieldset.getErrors());
-        assertEquals(0, fieldset.getErrors().size());
-        List<? extends FormElement> fields = fieldset.getFields();
+        assertNotNull(fieldset.errors());
+        assertEquals(0, fieldset.errors().size());
+        List<? extends FormElement> fields = fieldset.fields();
         assertTrue(fields.stream().anyMatch(f -> f.equals(InputEmailFormElement.builder().name("email")
                 .id("email")
                 .label(Message.of("Email", "contactrecordvalidationannotations.email"))
@@ -63,10 +63,10 @@ class FieldGeneratorTest  {
     @Test
     void itIsPossibleToGenerateAFieldFromAPojo(FieldsetGenerator fieldsetGenerator) {
         Fieldset fieldset = fieldsetGenerator.generate(Contact.class);
-        assertNotNull(fieldset.getErrors());
-        assertEquals(0, fieldset.getErrors().size());
+        assertNotNull(fieldset.errors());
+        assertEquals(0, fieldset.errors().size());
 
-        List<? extends FormElement> fields = fieldset.getFields();
+        List<? extends FormElement> fields = fieldset.fields();
         assertNotNull(fields);
         assertEquals(2, fields.size());
         assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder()
@@ -87,9 +87,9 @@ class FieldGeneratorTest  {
     @Test
     void itIsPossibleToGenerateAFieldFromARecord(FieldsetGenerator fieldsetGenerator) {
         Fieldset fieldset = fieldsetGenerator.generate(ContactRecord.class);
-        assertNotNull(fieldset.getErrors());
-        assertEquals(0, fieldset.getErrors().size());
-        List<? extends FormElement> fields = fieldset.getFields();
+        assertNotNull(fieldset.errors());
+        assertEquals(0, fieldset.errors().size());
+        List<? extends FormElement> fields = fieldset.fields();
         assertNotNull(fields);
         assertEquals(2, fields.size());
         assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder()
@@ -109,10 +109,10 @@ class FieldGeneratorTest  {
     @Test
     void itIsPossibleToGenerateAFieldFromARecordWithValidationAnnotations(FieldsetGenerator fieldGenerator) {
         Fieldset fieldset = fieldGenerator.generate(ContactRecordValidationAnnotations.class);
-        assertNotNull(fieldset.getErrors());
-        assertEquals(0, fieldset.getErrors().size());
+        assertNotNull(fieldset.errors());
+        assertEquals(0, fieldset.errors().size());
 
-        List<? extends FormElement> fields = fieldset.getFields();
+        List<? extends FormElement> fields = fieldset.fields();
         assertNotNull(fields);
         assertEquals(3, fields.size());
 
@@ -140,10 +140,10 @@ class FieldGeneratorTest  {
     @Test
     void itIsPossibleToGenerateAFieldFromARecordInstanceWithValidationAnnotations(FieldsetGenerator fieldGenerator) {
         Fieldset fieldset = fieldGenerator.generate(new ContactRecordValidationAnnotations("Sergio", "del Amo", null));
-        assertNotNull(fieldset.getErrors());
-        assertEquals(0, fieldset.getErrors().size());
+        assertNotNull(fieldset.errors());
+        assertEquals(0, fieldset.errors().size());
 
-        List<? extends FormElement> fields = fieldset.getFields();
+        List<? extends FormElement> fields = fieldset.fields();
         assertNotNull(fields);
         assertEquals(3, fields.size());
 
@@ -178,10 +178,10 @@ class FieldGeneratorTest  {
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, e);
 
         Fieldset fieldset = fieldGenerator.generate(instance, ex);
-        assertNotNull(fieldset.getErrors());
-        assertEquals(0, fieldset.getErrors().size());
+        assertNotNull(fieldset.errors());
+        assertEquals(0, fieldset.errors().size());
 
-        List<? extends FormElement> fields = fieldset.getFields();
+        List<? extends FormElement> fields = fieldset.fields();
         assertNotNull(fields);
         assertEquals(3, fields.size());
 

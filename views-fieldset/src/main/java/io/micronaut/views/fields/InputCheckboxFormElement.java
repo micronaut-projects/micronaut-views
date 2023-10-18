@@ -18,49 +18,19 @@ package io.micronaut.views.fields;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">Input Checkbox</a>
+ * @param checkboxes Checkboxes
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputCheckboxFormElement.Builder.class))
-public class InputCheckboxFormElement implements FormElement {
-    @NonNull
-    private final List<Checkbox> checkboxes;
-
-    /**
-     *
-     * @param checkboxes Checkboxes
-     */
-    public InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes) {
-        this.checkboxes = checkboxes;
-    }
-
-    /**
-     *
-     * @return Checkboxes
-     */
-    public List<Checkbox> getCheckboxes() {
-        return checkboxes;
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof InputCheckboxFormElement that)) return false;
-
-        return Objects.equals(checkboxes, that.checkboxes);
-    }
-
-    @Override
-    public int hashCode() {
-        return checkboxes != null ? checkboxes.hashCode() : 0;
-    }
+public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes) implements FormElement {
 
     /**
      *

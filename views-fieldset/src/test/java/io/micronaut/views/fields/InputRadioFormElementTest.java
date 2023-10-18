@@ -23,10 +23,10 @@ class InputRadioFormElementTest {
             .build();
         List<Radio> buttons = Collections.singletonList(radio);
         InputRadioFormElement input = InputRadioFormElement.builder().name(name).buttons(buttons).build();
-        assertEquals(name, input.getName());
-        assertEquals(id, input.getButtons().get(0).getId());
-        assertEquals(label, input.getButtons().get(0).getLabel());
-        assertEquals(value, input.getButtons().get(0).getValue());
+        assertEquals(name, input.name());
+        assertEquals(id, input.buttons().get(0).getId());
+        assertEquals(label, input.buttons().get(0).getLabel());
+        assertEquals(value, input.buttons().get(0).getValue());
 
         BeanIntrospection<InputRadioFormElement> introspection = BeanIntrospection.getIntrospection(InputRadioFormElement.class);
         BeanIntrospection.Builder<InputRadioFormElement> builder = introspection.builder();
@@ -35,9 +35,9 @@ class InputRadioFormElementTest {
             .with("buttons", buttons)
             .build();
 
-        assertEquals(name, input.getName());
-        assertEquals(id, input.getButtons().get(0).getId());
-        assertEquals(label, input.getButtons().get(0).getLabel());
-        assertEquals(value, input.getButtons().get(0).getValue());
+        assertEquals(name, input.name());
+        assertEquals(id, input.buttons().get(0).getId());
+        assertEquals(label, input.buttons().get(0).getLabel());
+        assertEquals(value, input.buttons().get(0).getValue());
     }
 }

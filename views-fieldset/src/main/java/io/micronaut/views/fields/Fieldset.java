@@ -24,46 +24,15 @@ import java.util.List;
 /**
  * Represents an HTML fieldset.
  * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset">The Fieldset element</a>
+ * @param fields Fieldset fields
+ * @param errors Global Validation errors
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected
-public class Fieldset {
-
-    @NonNull
-    private final List<? extends FormElement> fields;
-
-    @NonNull
-    private final List<Message> errors;
-
-    /**
-     *
-     * @param fields Fieldset fields
-     * @param errors Global Validation errors
-     */
-    public Fieldset(@NonNull List<? extends FormElement> fields,
-                    @NonNull List<Message> errors) {
-        this.fields = fields;
-        this.errors = errors;
-    }
-
-    /**
-     *
-     * @return fieldset fields
-     */
-    @NonNull
-    public List<? extends FormElement> getFields() {
-        return fields;
-    }
-
-    /**
-     *
-     * @return Global validation errors
-     */
-    @NonNull
-    public List<Message> getErrors() {
-        return errors;
-    }
+public record Fieldset(@NonNull List<? extends FormElement> fields,
+                       @NonNull List<Message> errors) {
 
     /**
      *

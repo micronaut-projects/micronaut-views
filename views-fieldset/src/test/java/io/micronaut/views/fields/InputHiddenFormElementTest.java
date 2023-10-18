@@ -30,7 +30,7 @@ class InputHiddenFormElementTest {
                                    String value,
                                    InputHiddenFormElement formElement) {
         assertNotNull(formElement);
-        assertEquals(name, formElement.getName());
-        assertEquals(value, formElement.getValue());
+        assertEquals(name, formElement.name());
+        assertEquals(value, formElement.value());
     }
 }

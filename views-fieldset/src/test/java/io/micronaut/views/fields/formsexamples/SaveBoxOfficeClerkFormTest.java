@@ -41,9 +41,9 @@ class SaveBoxOfficeClerkFormTest {
         SaveBoxOfficeClerkForm form = new SaveBoxOfficeClerkForm(2L,10L);
         Fieldset fieldset = fieldsetGenerator.generate(form);
         assertNotNull(fieldset);
-        assertEquals(2, fieldset.getFields().size());
-        assertTrue(fieldset.getFields().stream().anyMatch(formElement -> formElement instanceof InputHiddenFormElement));
-        assertTrue(fieldset.getFields().stream().anyMatch(formElement -> formElement instanceof SelectFormElement));
+        assertEquals(2, fieldset.fields().size());
+        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputHiddenFormElement));
+        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof SelectFormElement));
 
         InputHiddenFormElement eventIdExpectation = eventIdExpectation().build();
         assertTrue(assertFormElement(fieldset, eventIdExpectation));

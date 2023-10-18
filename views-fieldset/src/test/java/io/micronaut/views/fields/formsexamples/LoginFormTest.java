@@ -26,9 +26,9 @@ class LoginFormTest {
     void fieldsetGenerationForALoginForm(FieldsetGenerator fieldsetGenerator, LoginFormValidator validator) {
         Fieldset fieldset = fieldsetGenerator.generate(LoginForm.class);
         assertNotNull(fieldset);
-        assertEquals(2, fieldset.getFields().size());
-        assertTrue(fieldset.getFields().stream().anyMatch( it -> it instanceof InputTextFormElement));
-        assertTrue(fieldset.getFields().stream().anyMatch( it -> it instanceof InputPasswordFormElement));
+        assertEquals(2, fieldset.fields().size());
+        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputTextFormElement));
+        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputPasswordFormElement));
         InputTextFormElement usernameExpectation = usernameExpectation().build();
         assertTrue(assertFormElement(fieldset, usernameExpectation));
         InputPasswordFormElement inputPasswordFormElement = passwordExpectation().build();
@@ -37,9 +37,9 @@ class LoginFormTest {
         LoginForm loginForm = new LoginForm("sherlock", "elementary");
         fieldset = fieldsetGenerator.generate(loginForm);
         assertNotNull(fieldset);
-        assertEquals(2, fieldset.getFields().size());
-        assertTrue(fieldset.getFields().stream().anyMatch( it -> it instanceof InputTextFormElement));
-        assertTrue(fieldset.getFields().stream().anyMatch( it -> it instanceof InputPasswordFormElement));
+        assertEquals(2, fieldset.fields().size());
+        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputTextFormElement));
+        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputPasswordFormElement));
         usernameExpectation = usernameExpectation().value("sherlock").build();
         assertTrue(assertFormElement(fieldset, usernameExpectation));
         inputPasswordFormElement = passwordExpectation().value("elementary").build();
@@ -49,9 +49,9 @@ class LoginFormTest {
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> validator.validate(invalid));
         fieldset = fieldsetGenerator.generate(invalid, ex);
         assertNotNull(fieldset);
-        assertEquals(2, fieldset.getFields().size());
-        assertTrue(fieldset.getFields().stream().anyMatch( it -> it instanceof InputTextFormElement));
-        assertTrue(fieldset.getFields().stream().anyMatch( it -> it instanceof InputPasswordFormElement));
+        assertEquals(2, fieldset.fields().size());
+        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputTextFormElement));
+        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputPasswordFormElement));
         usernameExpectation = usernameExpectation().value("sherlock").build();
         assertTrue(assertFormElement(fieldset, usernameExpectation));
         inputPasswordFormElement = passwordExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "loginform.password.notblank"))).build();

@@ -30,6 +30,6 @@ class AutomaticallyPopulatedTest {
     void fieldsAnnotatedWithAutoPopulatedAreSkipped(FieldsetGenerator fieldsetGenerator) {
         Fieldset fieldset = fieldsetGenerator.generate(Book.class);
         assertNotNull(fieldset);
-        assertEquals(1, fieldset.getFields().size());
+        assertEquals(1, fieldset.fields().size());
     }
 }

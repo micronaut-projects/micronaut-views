@@ -31,12 +31,12 @@ class SignupFormTest {
         Fieldset fieldset = fieldsetGenerator.generate(SignupForm.class);
         assertNotNull(fieldset);
         assertFalse(fieldset.hasErrors());
-        assertNotNull(fieldset.getErrors());
-        assertEquals(0, fieldset.getErrors().size());
+        assertNotNull(fieldset.errors());
+        assertEquals(0, fieldset.errors().size());
 
-        assertEquals(8, fieldset.getFields().size());
+        assertEquals(8, fieldset.fields().size());
 
-        assertTrue(fieldset.getFields().stream().anyMatch( it -> it instanceof InputCheckboxFormElement));
+        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputCheckboxFormElement));
 
         InputTextFormElement firstNameExpectation = firstNameExpectation().build();
         assertTrue(assertFormElement(fieldset, firstNameExpectation));
@@ -66,8 +66,8 @@ class SignupFormTest {
         assertDoesNotThrow(() -> validator.validate(valid));
         assertNotNull(fieldset);
         assertFalse(fieldset.hasErrors());
-        assertNotNull(fieldset.getErrors());
-        assertEquals(0, fieldset.getErrors().size());
+        assertNotNull(fieldset.errors());
+        assertEquals(0, fieldset.errors().size());
 
         fieldset = fieldsetGenerator.generate(valid);
         assertNotNull(fieldset);
@@ -129,8 +129,8 @@ class SignupFormTest {
         assertTrue(assertFormElement(fieldset, confirmPasswordExpectation));
 
         assertTrue(fieldset.hasErrors());
-        assertEquals(1, fieldset.getErrors().size());
-        assertEquals(new SimpleMessage( "Passwords do not match", "signupform.passwordmatch"), fieldset.getErrors().get(0));
+        assertEquals(1, fieldset.errors().size());
+        assertEquals(new SimpleMessage( "Passwords do not match", "signupform.passwordmatch"), fieldset.errors().get(0));
 
         acceptTermsExpectation = acceptTermsExpectation(checkboxBuilder -> checkboxBuilder.checked(true).value("true")).build();
         assertTrue(assertFormElement(fieldset, acceptTermsExpectation));

@@ -26,9 +26,9 @@ class EnumDefaultsToSelectTest {
     void renderEnumByDefaultAsSelect(FieldsetGenerator fieldsetGenerator) {
         Fieldset fieldset = fieldsetGenerator.generate(EventCreateForm.class);
         assertNotNull(fieldset);
-        assertEquals(2, fieldset.getFields().size());
-        assertTrue(fieldset.getFields().stream().anyMatch(formElement -> formElement instanceof InputTextFormElement));
-        assertTrue(fieldset.getFields().stream().anyMatch(formElement -> formElement instanceof SelectFormElement));
+        assertEquals(2, fieldset.fields().size());
+        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputTextFormElement));
+        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof SelectFormElement));
 
         SelectFormElement genreExpectation = genreExpectation(null).build();
         assertTrue(assertFormElement(fieldset, genreExpectation));
