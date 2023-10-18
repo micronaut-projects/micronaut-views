@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Annotation to specify a field is a checbox input.
+ * Annotation to specify a field is a checkbox input.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">Input Checkbox</a>
  * @author Sergio del Amo
  * @since 4.1.0
