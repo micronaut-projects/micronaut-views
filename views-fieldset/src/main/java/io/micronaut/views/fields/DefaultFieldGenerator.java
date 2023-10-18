@@ -46,15 +46,12 @@ import java.util.function.BiConsumer;
  */
 @Singleton
 public class DefaultFieldGenerator implements FieldsetGenerator {
-
-    private static final String BUILDER_METHOD_TYPE = "type";
     private static final String BUILDER_METHOD_NAME = "name";
     private static final String BUILDER_METHOD_REQUIRED = "required";
     private static final String BUILDER_METHOD_VALUE = "value";
     private static final String BUILDER_METHOD_ERRORS = "errors";
     private static final String BUILDER_METHOD_ID = "id";
     private static final String BUILDER_METHOD_LABEL = "label";
-    private static final String MICRONAUT_DATA_ANNOTATION_ID = "io.micronaut.data.annotation.Id";
     private static final String BUILDER_METHOD_CHECKBOXES = "checkboxes";
     private static final String BUILDER_METHOD_CHECKED = "checked";
     private static final String BUILDER_METHOD_OPTIONS = "options";
