@@ -58,7 +58,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private static final String BUILDER_METHOD_OPTIONS = "options";
     private static final String MEMBER_FETCHER = "fetcher";
     private static final String BUILDER_METHOD_BUTTONS = "buttons";
-    private static final String BULDER_METHOD_MIN = "min";
+    private static final String BUILDER_METHOD_MIN = "min";
 
     private final EnumOptionFetcher<?> enumOptionFetcher;
 
