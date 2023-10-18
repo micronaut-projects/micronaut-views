@@ -51,7 +51,7 @@ public class InputTelFormElement implements FormElement, GlobalAttributes, FormE
      * The maximum string length that the user can enter into the text input.
      */
     @Nullable
-    private Integer maxLength;
+    private final Integer maxLength;
 
     /**
      * The minimum string length that the user can enter into the text input.
