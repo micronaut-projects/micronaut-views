@@ -4,9 +4,13 @@ plugins {
 
 dependencies {
     annotationProcessor(mnValidation.micronaut.validation.processor)
+
     compileOnly(mnSecurity.micronaut.security)
     compileOnly(mn.micronaut.management)
+    compileOnly(mnValidation.micronaut.validation)
+
     implementation(mn.reactor)
+
     testRuntimeOnly(mnLogging.logback.classic)
 
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
