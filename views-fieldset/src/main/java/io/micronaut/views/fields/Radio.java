@@ -19,44 +19,19 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 
-import java.util.Objects;
-
 /**
  * A Radio Form Element.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio">Input Radio</a>
+ * @param value the value of the input radio element
+ * @param id It defines an identifier (ID) which must be unique in the whole document
+ * @param label represents a caption for an item in a user interface
+ * @param checked whether the radio button is checked
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = Radio.Builder.class))
-public class Radio implements FormElement {
-    @NonNull
-    private final String value;
-
-    @NonNull
-    private final String id;
-
-    @NonNull
-    private final Message label;
-
-    @NonNull
-    private final boolean checked;
-
-    /**
-     *
-     * @param value the value of the input radio element
-     * @param id It defines an identifier (ID) which must be unique in the whole document
-     * @param label represents a caption for an item in a user interface
-     * @param checked whether the radio button is checked
-     */
-    public Radio(String value,
-                 String id,
-                 Message label,
-                 boolean checked) {
-        this.value = value;
-        this.id = id;
-        this.label = label;
-        this.checked = checked;
-    }
+public record Radio(@NonNull String value, @NonNull String id, @NonNull Message label, @NonNull boolean checked) implements FormElement {
 
     /**
      *
@@ -91,28 +66,6 @@ public class Radio implements FormElement {
     @NonNull
     public Message getLabel() {
         return label;
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Radio radio)) return false;
-
-        if (checked != radio.checked) return false;
-        if (!Objects.equals(value, radio.value)) return false;
-        if (!Objects.equals(id, radio.id)) return false;
-        return Objects.equals(label, radio.label);
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public int hashCode() {
-        int result = value != null ? value.hashCode() : 0;
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (label != null ? label.hashCode() : 0);
-        result = 31 * result + (checked ? 1 : 0);
-        return result;
     }
 
     /**

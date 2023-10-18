@@ -26,109 +26,17 @@ import java.util.Objects;
 /**
  * HTML Select.
  * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">Select</a>
+ * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+ * @param name Name of the form control. Submitted with the form as part of a name/value pair
+ * @param id It defines an identifier (ID) which must be unique in the whole document
+ * @param options Select Options
+ * @param label represents a caption for an item in a user interface
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = SelectFormElement.Builder.class))
-public class SelectFormElement implements FormElement, GlobalAttributes {
-    private final boolean required;
-    @NonNull
-    private final String name;
-
-    @Nullable
-    private final String id;
-
-    @NonNull
-    private final List<Option> options;
-
-    @NonNull
-    private final Message label;
-
-    /**
-     *
-     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
-     * @param name Name of the form control. Submitted with the form as part of a name/value pair
-     * @param id It defines an identifier (ID) which must be unique in the whole document
-     * @param options Select Options
-     * @param label represents a caption for an item in a user interface
-     */
-    public SelectFormElement(boolean required,
-                             @NonNull String name,
-                             @Nullable String id,
-                             @NonNull List<Option> options,
-                             Message label) {
-        this.required = required;
-        this.name = name;
-        this.id = id;
-        this.options = options;
-        this.label = label;
-    }
-
-    @Override
-    public boolean isRequired() {
-        return required;
-    }
-
-    /**
-     *
-     * @return represents a caption for an item in a user interface
-     */
-    @NonNull
-    public Message getLabel() {
-        return label;
-    }
-
-    /**
-     *
-     * @return The name of the control.
-     */
-    @NonNull
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     *
-     * @return An id attribute. Often used to allow the form element to be associated with a label element for accessibility purposes.
-     */
-    @Override
-    @Nullable
-    public String getId() {
-        return this.id;
-    }
-
-    /**
-     *
-     * @return Select Options
-     */
-    @NonNull
-    public List<Option> getOptions() {
-        return options;
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SelectFormElement that)) return false;
-
-        if (required != that.required) return false;
-        if (!Objects.equals(name, that.name)) return false;
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(options, that.options)) return false;
-        return Objects.equals(label, that.label);
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public int hashCode() {
-        int result = (required ? 1 : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (options != null ? options.hashCode() : 0);
-        result = 31 * result + (label != null ? label.hashCode() : 0);
-        return result;
-    }
+public record SelectFormElement(@NonNull boolean required, @NonNull String name, @Nullable String id, @NonNull List<Option> options, @NonNull Message label) implements FormElement, GlobalAttributes {
 
     /**
      *
@@ -138,7 +46,6 @@ public class SelectFormElement implements FormElement, GlobalAttributes {
     public static Builder builder() {
         return new Builder();
     }
-
 
     /**
      * Select Builder.

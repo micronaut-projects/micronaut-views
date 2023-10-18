@@ -21,192 +21,36 @@ import io.micronaut.core.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Text Area.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea">Textarea</a>
+ * @param name Name of the form control. Submitted with the form as part of a name/value pair
+ * @param id It defines an identifier (ID) which must be unique in the whole document
+ * @param cols The visible width of the text control, in average character widths
+ * @param rows The number of visible text lines for the control.
+ * @param placeholder A hint to the user of what can be entered in the control
+ * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+ * @param readOnly indicates that the user cannot modify the value of the control
+ * @param value text area content
+ * @param label represents a caption for an item in a user interface
+ * @param errors Form element validation Errors.
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = TextareaFormElement.Builder.class))
-public class TextareaFormElement implements FormElement, FormElementAttributes, GlobalAttributes {
-    @NonNull
-    private final String name;
+public record TextareaFormElement(@NonNull String name,
+                                  @NonNull String id,
+                                  @Nullable Integer cols,
+                                  @Nullable Integer rows,
+                                  @Nullable String placeholder,
+                                  boolean required,
+                                  boolean readOnly,
+                                  @Nullable String value,
+                                  @Nullable Message label,
+                                  @NonNull List<Message> errors) implements FormElement, FormElementAttributes, GlobalAttributes {
 
-    @Nullable
-    private final String id;
-
-    @Nullable
-    private final Integer cols;
-
-    @Nullable
-    private final Integer rows;
-
-    /**
-     * The placeholder attribute is a string that provides a brief hint to the user as to what kind of information is expected in the field.
-     */
-    @Nullable
-    private final String placeholder;
-
-    private final boolean required;
-
-    private final boolean readOnly;
-
-    @Nullable
-    private final String value;
-
-    @Nullable
-    private final Message label;
-
-    @NonNull
-    private final List<Message> errors;
-
-    /**
-     *
-     * @param name Name of the form control. Submitted with the form as part of a name/value pair
-     * @param id It defines an identifier (ID) which must be unique in the whole document
-     * @param cols The visible width of the text control, in average character widths
-     * @param rows The number of visible text lines for the control.
-     * @param placeholder A hint to the user of what can be entered in the control
-     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
-     * @param readOnly indicates that the user cannot modify the value of the control
-     * @param value text area content
-     * @param label represents a caption for an item in a user interface
-     * @param errors Form element validation Errors.
-     */
-    public TextareaFormElement(@NonNull String name,
-                               @NonNull String id,
-                               @Nullable Integer cols,
-                               @Nullable Integer rows,
-                               @Nullable String placeholder,
-                               boolean required,
-                               boolean readOnly,
-                               @Nullable String value,
-                               @Nullable Message label,
-                               @NonNull List<Message> errors) {
-        this.name = name;
-        this.id = id;
-        this.cols = cols;
-        this.rows = rows;
-        this.placeholder = placeholder;
-        this.required = required;
-        this.readOnly = readOnly;
-        this.value = value;
-        this.label = label;
-        this.errors = errors;
-    }
-
-    @Override
-    @NonNull
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    @Nullable
-    public String getId() {
-        return id;
-    }
-
-    /**
-     *
-     * @return The placeholder attribute is a string that provides a brief hint to the user as to what kind of information is expected in the field.
-     */
-    @Nullable
-    public String getPlaceholder() {
-        return placeholder;
-    }
-
-    /**
-     *
-     * @return A Boolean attribute which, if present, means this field cannot be edited by the user.
-     */
-    public boolean isReadOnly() {
-        return readOnly;
-    }
-
-    /**
-     *
-     * @return If true indicates that the user must specify a value for the input before the owning form can be submitted.
-     */
-    public boolean isRequired() {
-        return required;
-    }
-
-    /**
-     *
-     * @return The visible width of the text control, in average character widths
-     */
-    @Nullable
-    public Integer getCols() {
-        return cols;
-    }
-
-    /**
-     *
-     * @return The number of visible text lines for the control.
-     */
-    @Nullable
-    public Integer getRows() {
-        return rows;
-    }
-
-    /**
-     *
-     * @return text area content
-     */
-    @Nullable
-    public String getValue() {
-        return value;
-    }
-
-    @Override
-    @Nullable
-    public Message getLabel() {
-        return label;
-    }
-
-    @Override
-    @NonNull
-    public List<Message> getErrors() {
-        return errors;
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TextareaFormElement that)) return false;
-
-        if (required != that.required) return false;
-        if (readOnly != that.readOnly) return false;
-        if (!Objects.equals(name, that.name)) return false;
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(cols, that.cols)) return false;
-        if (!Objects.equals(rows, that.rows)) return false;
-        if (!Objects.equals(placeholder, that.placeholder))
-            return false;
-        if (!Objects.equals(value, that.value)) return false;
-        if (!Objects.equals(label, that.label)) return false;
-        return Objects.equals(errors, that.errors);
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (cols != null ? cols.hashCode() : 0);
-        result = 31 * result + (rows != null ? rows.hashCode() : 0);
-        result = 31 * result + (placeholder != null ? placeholder.hashCode() : 0);
-        result = 31 * result + (required ? 1 : 0);
-        result = 31 * result + (readOnly ? 1 : 0);
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        result = 31 * result + (label != null ? label.hashCode() : 0);
-        result = 31 * result + (errors != null ? errors.hashCode() : 0);
-        return result;
-    }
 
     /**
      *

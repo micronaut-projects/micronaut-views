@@ -45,17 +45,14 @@ class InputTextFormElementTest {
 
     private void assertFormElement(InputTextFormElement formElement) {
         assertNotNull(formElement);
-        assertEquals(ID, formElement.getId());
-        assertEquals(NAME, formElement.getName());
-        assertEquals(REQUIRED, formElement.isRequired());
-        assertEquals(READONLY, formElement.isReadOnly());
-        assertEquals(SIZE, formElement.getSize());
-        assertEquals(PLACEHOLDER, formElement.getPlaceholder());
-        assertEquals(MINLENGTH, formElement.getMinLength());
-        assertEquals(MAXLENGTH, formElement.getMaxLength());
-
-
-
+        assertEquals(ID, formElement.id());
+        assertEquals(NAME, formElement.name());
+        assertEquals(REQUIRED, formElement.required());
+        assertEquals(READONLY, formElement.readOnly());
+        assertEquals(SIZE, formElement.size());
+        assertEquals(PLACEHOLDER, formElement.placeholder());
+        assertEquals(MINLENGTH, formElement.minLength());
+        assertEquals(MAXLENGTH, formElement.maxLength());
     }
 
 }

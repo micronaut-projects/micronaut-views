@@ -32,19 +32,19 @@ public interface FormElementAttributes {
      * @return Name of the form control. Submitted with the form as part of a name/value pair
      */
     @NonNull
-    String getName();
+    String name();
 
     /**
      *
      * @return represents a caption for an item in a user interface
      */
     @Nullable
-    Message getLabel();
+    Message label();
 
     /**
      *
      * @return Form element validation Errors.
      */
     @NonNull
-    List<Message> getErrors();
+    List<Message> errors();
 }

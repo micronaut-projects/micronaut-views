@@ -43,10 +43,10 @@ class TextAreaFormElementTest {
                                            String content,
                                            TextareaFormElement formElement) {
         assertNotNull(formElement);
-        assertEquals(name, formElement.getName());
-        assertEquals(id, formElement.getId());
-        assertEquals(rows, formElement.getRows());
-        assertEquals(cols, formElement.getCols());
-        assertEquals(content, formElement.getValue());
+        assertEquals(name, formElement.name());
+        assertEquals(id, formElement.id());
+        assertEquals(rows, formElement.rows());
+        assertEquals(cols, formElement.cols());
+        assertEquals(content, formElement.value());
     }
 }

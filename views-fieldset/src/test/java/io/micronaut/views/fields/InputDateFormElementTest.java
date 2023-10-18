@@ -24,11 +24,11 @@ class InputDateFormElementTest {
             .max(max)
             .build();
         assertNotNull(formElement);
-        assertEquals(id, formElement.getId());
-        assertEquals(name, formElement.getName());
-        assertEquals(value, formElement.getValue());
-        assertEquals(min, formElement.getMin());
-        assertEquals(max, formElement.getMax());
+        assertEquals(id, formElement.id());
+        assertEquals(name, formElement.name());
+        assertEquals(value, formElement.value());
+        assertEquals(min, formElement.min());
+        assertEquals(max, formElement.max());
 
         BeanIntrospection<InputDateFormElement> introspection = BeanIntrospection.getIntrospection(InputDateFormElement.class);
         BeanIntrospection.Builder<InputDateFormElement> builder = introspection.builder();
@@ -40,10 +40,10 @@ class InputDateFormElementTest {
             .with("max", max)
             .build();
         assertNotNull(formElement);
-        assertEquals(id, formElement.getId());
-        assertEquals(name, formElement.getName());
-        assertEquals(value, formElement.getValue());
-        assertEquals(min, formElement.getMin());
-        assertEquals(max, formElement.getMax());
+        assertEquals(id, formElement.id());
+        assertEquals(name, formElement.name());
+        assertEquals(value, formElement.value());
+        assertEquals(min, formElement.min());
+        assertEquals(max, formElement.max());
     }
 }

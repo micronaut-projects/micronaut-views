@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 
 import java.util.Objects;
@@ -25,6 +26,7 @@ import java.util.Objects;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = Option.Builder.class))
 public class Option implements FormElement {
 
     private final boolean disabled;

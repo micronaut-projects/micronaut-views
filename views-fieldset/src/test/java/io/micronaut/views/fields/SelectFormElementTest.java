@@ -42,9 +42,9 @@ class SelectFormElementTest {
                                          List<Option> options,
                                          SelectFormElement selectFormElement) {
         assertNotNull(selectFormElement);
-        assertEquals(name, selectFormElement.getName());
-        assertEquals(id, selectFormElement.getId());
-        assertNotNull(selectFormElement.getOptions());
-        assertEquals(4, selectFormElement.getOptions().size());
+        assertEquals(name, selectFormElement.name());
+        assertEquals(id, selectFormElement.id());
+        assertNotNull(selectFormElement.options());
+        assertEquals(4, selectFormElement.options().size());
     }
 }

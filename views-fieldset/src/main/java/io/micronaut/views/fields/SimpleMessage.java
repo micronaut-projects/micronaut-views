@@ -23,28 +23,14 @@ import java.util.Objects;
 
 /**
  * Simple implementation of {@link Message}.
+ * @param defaultMessage The default message to use if no code is specified or no localized message found.
+ * @param code The i18n code which can be used to fetch a localized message.
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected
-public class SimpleMessage implements Message {
-
-    @Nullable
-    private final String code;
-
-    @NonNull
-    private final String defaultMessage;
-
-    /**
-     *
-     * @param defaultMessage The default message to use if no code is specified or no localized message found.
-     * @param code The i18n code which can be used to fetch a localized message.
-     */
-    public SimpleMessage(@NonNull String defaultMessage,
-                         @Nullable String code) {
-        this.defaultMessage = defaultMessage;
-        this.code = code;
-    }
+public record SimpleMessage(@NonNull String defaultMessage, @Nullable String code) implements Message {
 
     @SuppressWarnings("NeedBraces")
     @Override
@@ -52,27 +38,14 @@ public class SimpleMessage implements Message {
         if (this == o) return true;
         if (!(o instanceof Message that)) return false;
 
-        if (!Objects.equals(code, that.getCode())) return false;
-        return Objects.equals(defaultMessage, that.getDefaultMessage());
+        if (!Objects.equals(code, that.code())) return false;
+        return Objects.equals(defaultMessage, that.defaultMessage());
     }
 
-    @SuppressWarnings("NeedBraces")
     @Override
     public int hashCode() {
         int result = code != null ? code.hashCode() : 0;
         result = 31 * result + (defaultMessage != null ? defaultMessage.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    @Nullable
-    public String getCode() {
-        return code;
-    }
-
-    @Override
-    @NonNull
-    public String getDefaultMessage() {
-        return defaultMessage;
     }
 }
