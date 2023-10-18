@@ -60,17 +60,23 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private final EnumOptionFetcher<?> enumOptionFetcher;
 
     private final EnumRadioFetcher<?> enumRadioFetcher;
+
+    private final EnumCheckboxFetcher<?> enumCheckboxFetcher;
     private final BeanContext beanContext;
 
     private final ConcurrentHashMap<Class<? extends OptionFetcher>, OptionFetcher> optionFetcherCache = new ConcurrentHashMap<>();
 
     private final ConcurrentHashMap<Class<? extends RadioFetcher>, RadioFetcher> radioFetcherCache = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Class<? extends CheckboxFetcher>, CheckboxFetcher> checkboxFetcherCache = new ConcurrentHashMap<>();
+
 
     public DefaultFieldGenerator(EnumOptionFetcher<?> enumOptionFetcher,
                                  EnumRadioFetcher<?> enumRadioFetcher,
+                                 EnumCheckboxFetcher<?> enumCheckboxFetcher,
                                  BeanContext beanContext) {
         this.enumOptionFetcher = enumOptionFetcher;
         this.enumRadioFetcher = enumRadioFetcher;
+        this.enumCheckboxFetcher = enumCheckboxFetcher;
         this.beanContext = beanContext;
     }
 
@@ -146,6 +152,9 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         if (beanProperty.hasAnnotation(InputRadio.class)) {
             return Optional.of(InputRadioFormElement.class);
         }
+        if (beanProperty.hasAnnotation(InputCheckbox.class)) {
+            return Optional.of(InputCheckboxFormElement.class);
+        }
         if (beanProperty.hasAnnotation(InputPassword.class)) {
             return Optional.of(InputPasswordFormElement.class);
         }
@@ -214,6 +223,30 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         return Optional.empty();
     }
 
+    @NonNull
+    private <T> Optional<CheckboxFetcher> checkboxFetcherForBeanProperty(@NonNull BeanProperty<T, ?> beanProperty) {
+        if (beanProperty.hasAnnotation(InputCheckbox.class)) {
+            AnnotationValue<InputCheckbox> annotation = beanProperty.getAnnotation(InputCheckbox.class);
+            Optional<Class<?>> fetcherClassOptional = annotation.classValue(MEMBER_FETCHER);
+            if (fetcherClassOptional.isPresent()) {
+                Class<? extends CheckboxFetcher> fetcherClass = (Class<? extends CheckboxFetcher>) fetcherClassOptional.get();
+                if (checkboxFetcherCache.containsKey(fetcherClass)) {
+                    return Optional.of(checkboxFetcherCache.get(fetcherClass));
+                }
+                Optional<?> fetcherOptional = beanContext.findBean(fetcherClass);
+                if (fetcherOptional.isPresent()) {
+                    CheckboxFetcher fetcher = (CheckboxFetcher) fetcherOptional.get();
+                    checkboxFetcherCache.putIfAbsent(fetcherClass, fetcher);
+                    return Optional.of(fetcher);
+                }
+            }
+        }
+        if (beanProperty.getType().isEnum()) {
+            return Optional.of(enumCheckboxFetcher);
+        }
+        return Optional.empty();
+    }
+
 
     private <T> Optional<OptionFetcher> optionFetcherForBeanProperty(BeanProperty<T, ?> beanProperty) {
         if (beanProperty.hasAnnotation(Select.class)) {
@@ -245,10 +278,21 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
                                                                                                    @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
         BeanIntrospection.Builder<? extends FormElement> builder = BeanIntrospection.getIntrospection(formElementClazz).builder();
         if (formElementClazz == InputCheckboxFormElement.class) {
-            FormElement formElement = formElementBuilderForBeanProperty(beanProperty, Checkbox.class, beanWrapper, ex, null)
-                    .with(BUILDER_METHOD_CHECKED, valueForBeanProperty(beanWrapper, beanProperty).map(v -> Boolean.valueOf(v.toString())).orElse(false))
-                    .build();
-            builder.with(BUILDER_METHOD_CHECKBOXES, Collections.singletonList(formElement));
+            List checkboxes = checkboxFetcherForBeanProperty(beanProperty)
+                .map(fetcher -> {
+                    Optional<Object> valueOptional = valueForBeanProperty(beanWrapper, beanProperty);
+                    if (valueOptional.isPresent()) {
+                        return fetcher.generate(valueOptional.get());
+                    }
+                    return fetcher.generate(beanProperty.getType());
+                }).orElseGet(() -> {
+                    FormElement formElement = formElementBuilderForBeanProperty(beanProperty, Checkbox.class, beanWrapper, ex, null)
+                        .with(BUILDER_METHOD_CHECKED, valueForBeanProperty(beanWrapper, beanProperty).map(v -> Boolean.valueOf(v.toString())).orElse(false))
+                        .build();
+                    return Collections.singletonList(formElement);
+                });
+            builder.with(BUILDER_METHOD_CHECKBOXES, checkboxes);
+
         } else if (formElementClazz == SelectFormElement.class) {
             optionFetcherForBeanProperty(beanProperty)
                     .ifPresent(optionFetcher -> {
