@@ -22,7 +22,7 @@ import io.micronaut.core.util.CollectionUtils;
 import java.util.List;
 
 /**
- * Represents a HTML fieldset.
+ * Represents an HTML fieldset.
  * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset">The Fieldset element</a>
  * @author Sergio del Amo
  * @since 4.1.0
