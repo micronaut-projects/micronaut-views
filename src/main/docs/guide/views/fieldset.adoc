@@ -1,0 +1,5 @@
+The API api:views.fields.FieldsetGenerator[] simplifies the generation of an HTML Fieldset representation for a given type or instance. It leverages the https://docs.micronaut.io/latest/guide/#introspectionBuilders[introspection builder support].
+
+You need the dependency:
+
+dependency:micronaut-views-fieldset[groupId="io.micronaut.views"]

@@ -74,6 +74,13 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private final ConcurrentHashMap<Class<? extends RadioFetcher>, RadioFetcher> radioFetcherCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Class<? extends CheckboxFetcher>, CheckboxFetcher> checkboxFetcherCache = new ConcurrentHashMap<>();
 
+    /**
+     *
+     * @param enumOptionFetcher Enum fetcher for {@link Option}.
+     * @param enumRadioFetcher Enum fetcher for {@link Radio}.
+     * @param enumCheckboxFetcher Enum fetcher for {@link Checkbox}.
+     * @param beanContext Bean Context
+     */
     public DefaultFieldGenerator(EnumOptionFetcher<?> enumOptionFetcher,
                                  EnumRadioFetcher<?> enumRadioFetcher,
                                  EnumCheckboxFetcher<?> enumCheckboxFetcher,

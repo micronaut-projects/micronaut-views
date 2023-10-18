@@ -151,6 +151,10 @@ public class Checkbox implements FormElement, GlobalAttributes, FormElementAttri
         return result;
     }
 
+    /**
+     *
+     * @return A checkbox builder.
+     */
     @NonNull
     public static Builder builder() {
         return new Builder();
