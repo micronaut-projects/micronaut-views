@@ -54,7 +54,7 @@ public class InputUrlFormElement implements FormElement, GlobalAttributes, FormE
      * The minimum string length that the user can enter into the text input.
      */
     @Nullable
-    private Integer minLength;
+    private final Integer minLength;
 
     /**
      * The size attribute is a numeric value indicating how many characters wide the input field should be.
