@@ -34,7 +34,7 @@ import java.util.List;
  */
 @Singleton
 public class EnumCheckboxFetcher<T> implements CheckboxFetcher<T> {
-    private static final Logger LOG = LoggerFactory.getLogger(EnumOptionFetcher.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EnumCheckboxFetcher.class);
 
     @Override
     public List<Checkbox> generate(Class<T> type) {
