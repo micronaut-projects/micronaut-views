@@ -9,9 +9,20 @@ class OptionTest {
     @Test
     void builder() {
         Option option = Option.builder().value("MUSIC").label(new SimpleMessage( "Music", "genre.music")).build();
+
         assertNotNull(option);
-        assertEquals("MUSIC", option.getValue());
-        assertEquals("genre.music", option.getLabel().getCode());
-        assertEquals("Music", option.getLabel().getDefaultMessage());
+        assertEquals("MUSIC", option.value());
+        assertEquals("genre.music", option.label().code());
+        assertEquals("Music", option.label().defaultMessage());
+
+        BeanIntrospection<Option> introspection = BeanIntrospection.getIntrospection(Option.class);
+        BeanIntrospection.Builder<Option> builder = introspection.builder();
+        option = builder
+            .with("value", "MUSIC")
+            .with("label", new SimpleMessage( "Music", "genre.music"))
+            .build();
+
+        assertEquals("MUSIC", option.value());
+        assertEquals("Music", option.label().defaultMessage());
     }
 }

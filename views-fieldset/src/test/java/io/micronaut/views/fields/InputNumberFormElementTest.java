@@ -46,14 +46,14 @@ class InputNumberFormElementTest {
 
     private void assertFormElement(InputNumberFormElement formElement) {
         assertNotNull(formElement);
-        assertEquals(ID, formElement.getId());
-        assertEquals(NAME, formElement.getName());
-        assertEquals(REQUIRED, formElement.isRequired());
-        assertEquals(READONLY, formElement.isReadOnly());
-        assertEquals(PLACEHOLDER, formElement.getPlaceholder());
-        assertEquals(MIN, formElement.getMin());
-        assertEquals(MAX, formElement.getMax());
-        assertEquals(STEP, formElement.getStep());
+        assertEquals(ID, formElement.id());
+        assertEquals(NAME, formElement.name());
+        assertEquals(REQUIRED, formElement.required());
+        assertEquals(READONLY, formElement.readOnly());
+        assertEquals(PLACEHOLDER, formElement.placeholder());
+        assertEquals(MIN, formElement.min());
+        assertEquals(MAX, formElement.max());
+        assertEquals(STEP, formElement.step());
     }
 
 }

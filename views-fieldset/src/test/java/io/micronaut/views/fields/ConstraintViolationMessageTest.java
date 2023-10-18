@@ -35,8 +35,8 @@ class ConstraintViolationMessageTest {
         assertEquals(1, ex.getConstraintViolations().size());
         ConstraintViolation<?> violation = ex.getConstraintViolations().iterator().next();
         Message message = new ConstraintViolationMessage(violation);
-        assertEquals("must be a well-formed email address", message.getDefaultMessage());
-        assertEquals("contact.email.email", message.getCode());
+        assertEquals("must be a well-formed email address", message.defaultMessage());
+        assertEquals("contact.email.email", message.code());
 
     }
 

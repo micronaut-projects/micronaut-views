@@ -29,14 +29,14 @@ public interface Message {
      * @return The i18n code which can be used to fetch a localized message.
      */
     @Nullable
-    String getCode();
+    String code();
 
     /**
      *
      * @return The default message to use if no code is specified or no localized message found
      */
     @NonNull
-    String getDefaultMessage();
+    String defaultMessage();
 
     /**
      *

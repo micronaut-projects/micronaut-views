@@ -18,31 +18,30 @@ package io.micronaut.views.fields;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import jakarta.validation.ConstraintViolation;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * {@link Message} implementation backed by a {@link ConstraintViolation}.
+ * @param defaultMessage The default message to use if no code is specified or no localized message found.
+ * @param code The i18n code which can be used to fetch a localized message.
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected
-public class ConstraintViolationMessage implements Message {
-    private static final String DOT = ".";
-    @NonNull
-    private final String code;
+public record ConstraintViolationMessage(@NonNull String code, @NonNull String defaultMessage) implements Message {
 
-    @NonNull
-    private final String defaultMessage;
+    private static final String DOT = ".";
 
     /**
      *
      * @param constraintViolation Constraint Violation.
      */
     public ConstraintViolationMessage(ConstraintViolation<?> constraintViolation) {
-        this.code = code(constraintViolation);
-        this.defaultMessage = constraintViolation.getMessage();
+        this(code(constraintViolation), constraintViolation.getMessage());
     }
 
     @SuppressWarnings("NeedBraces")
@@ -51,11 +50,10 @@ public class ConstraintViolationMessage implements Message {
         if (this == o) return true;
         if (!(o instanceof Message that)) return false;
 
-        if (!Objects.equals(code, that.getCode())) return false;
-        return Objects.equals(defaultMessage, that.getDefaultMessage());
+        if (!Objects.equals(code, that.code())) return false;
+        return Objects.equals(defaultMessage, that.defaultMessage());
     }
 
-    @SuppressWarnings("NeedBraces")
     @Override
     public int hashCode() {
         int result = code != null ? code.hashCode() : 0;
@@ -63,19 +61,7 @@ public class ConstraintViolationMessage implements Message {
         return result;
     }
 
-    @Override
-    @NonNull
-    public String getCode() {
-        return code;
-    }
-
-    @Override
-    @NonNull
-    public String getDefaultMessage() {
-        return defaultMessage;
-    }
-
-    private String code(ConstraintViolation<?> violation) {
+    private static String code(ConstraintViolation<?> violation) {
         List<String> parts = new ArrayList<>();
         parts.add(violation.getLeafBean().getClass().getSimpleName());
         ConstraintViolationUtils.lastNode(violation).ifPresent(parts::add);

@@ -21,233 +21,35 @@ import io.micronaut.core.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text">Input Text</a>
+ * @param name Name of the form control. Submitted with the form as part of a name/value pair
+ * @param id It defines an identifier (ID) which must be unique in the whole document
+ * @param placeholder The placeholder attribute is a string that provides a brief hint to the user as to what kind of information is expected in the field.
+ * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+ * @param readOnly A Boolean attribute which, if present, means this field cannot be edited by the user.
+ * @param maxLength The maximum string length that the user can enter into the text input.
+ * @param minLength The minimum string length that the user can enter into the text input.
+ * @param pattern The pattern attribute, when specified, is a regular expression that the input's value must match for the value to pass constraint validation.
+ * @param size The size attribute is a numeric value indicating how many characters wide the input field should be.
+ * @param value input url value
+ * @param label the input label
+ * @param errors errors associated with this input
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputUrlFormElement.Builder.class))
-public class InputUrlFormElement implements FormElement, GlobalAttributes, FormElementAttributes {
-    @NonNull
-    private final String name;
-
-    @Nullable
-    private final String id;
-
-    /**
-     * The placeholder attribute is a string that provides a brief hint to the user as to what kind of information is expected in the field.
-     */
-    @Nullable
-    private final String placeholder;
-
-    private final boolean required;
-
-    private final boolean readOnly;
-
-    /**
-     * The maximum string length that the user can enter into the text input.
-     */
-    @Nullable
-    private final Integer maxLength;
-
-    /**
-     * The minimum string length that the user can enter into the text input.
-     */
-    @Nullable
-    private final Integer minLength;
-
-    /**
-     * The size attribute is a numeric value indicating how many characters wide the input field should be.
-     */
-    @Nullable
-    private final Integer size;
-
-    /**
-     * The pattern attribute, when specified, is a regular expression that the input's value must match for the value to pass constraint validation.
-     */
-    @Nullable
-    private final String pattern;
-
-    @Nullable
-    private final String value;
-
-    @Nullable
-    private final Message label;
-
-    @NonNull
-    private final List<Message> errors;
-
-    /**
-     *
-     * @param name Name of the form control. Submitted with the form as part of a name/value pair
-     * @param id It defines an identifier (ID) which must be unique in the whole document
-     * @param placeholder The placeholder attribute is a string that provides a brief hint to the user as to what kind of information is expected in the field.
-     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
-     * @param readOnly A Boolean attribute which, if present, means this field cannot be edited by the user.
-     * @param maxLength The maximum string length that the user can enter into the text input.
-     * @param minLength The minimum string length that the user can enter into the text input.
-     * @param pattern The pattern attribute, when specified, is a regular expression that the input's value must match for the value to pass constraint validation.
-     * @param size The size attribute is a numeric value indicating how many characters wide the input field should be.
-     * @param value input url value
-     * @param label the input label
-     * @param errors errors associated with this input
-     */
-    public InputUrlFormElement(@NonNull String name,
-                               @NonNull String id,
-                               @Nullable String placeholder,
-                               boolean required,
-                               boolean readOnly,
-                               @Nullable Integer maxLength,
-                               @Nullable Integer minLength,
-                               @Nullable String pattern,
-                               @Nullable Integer size,
-                               @Nullable String value,
-                               @Nullable Message label,
-                               @NonNull List<Message> errors) {
-        this.name = name;
-        this.id = id;
-        this.placeholder = placeholder;
-        this.required = required;
-        this.readOnly = readOnly;
-        this.maxLength = maxLength;
-        this.minLength = minLength;
-        this.pattern = pattern;
-        this.size = size;
-        this.value = value;
-        this.label = label;
-        this.errors = errors;
-    }
-
-    @Override
-    @NonNull
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    @Nullable
-    public String getId() {
-        return id;
-    }
-
-    /**
-     *
-     * @return The placeholder attribute is a string that provides a brief hint to the user as to what kind of information is expected in the field.
-     */
-    @Nullable
-    public String getPlaceholder() {
-        return placeholder;
-    }
-
-    /**
-     *
-     * @return A Boolean attribute which, if present, means this field cannot be edited by the user.
-     */
-    public boolean isReadOnly() {
-        return readOnly;
-    }
-
-    @Override
-    public boolean isRequired() {
-        return required;
-    }
-
-    /**
-     *
-     * @return The maximum string length that the user can enter into the text input.
-     */
-    @Nullable
-    public Integer getMaxLength() {
-        return maxLength;
-    }
-
-    /**
-     *
-     * @return The minimum string length that the user can enter into the text input.
-     */
-    @Nullable
-    public Integer getMinLength() {
-        return minLength;
-    }
-
-    /**
-     *
-     * @return The pattern attribute, when specified, is a regular expression that the input's value must match for the value to pass constraint validation.
-     */
-    @Nullable
-    public String getPattern() {
-        return pattern;
-    }
-
-    /**
-     *
-     * @return The size attribute is a numeric value indicating how many characters wide the input field should be.
-     */
-    public Integer getSize() {
-        return size;
-    }
-
-    /**
-     *
-     * @return Input url value.
-     */
-    @Nullable
-    public String getValue() {
-        return value;
-    }
-
-    @Override
-    @Nullable
-    public Message getLabel() {
-        return label;
-    }
-
-    @Override
-    @NonNull
-    public List<Message> getErrors() {
-        return errors;
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof InputUrlFormElement that)) return false;
-
-        if (required != that.required) return false;
-        if (readOnly != that.readOnly) return false;
-        if (!Objects.equals(name, that.name)) return false;
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(placeholder, that.placeholder))
-            return false;
-        if (!Objects.equals(maxLength, that.maxLength))
-            return false;
-        if (!Objects.equals(minLength, that.minLength))
-            return false;
-        if (!Objects.equals(size, that.size)) return false;
-        if (!Objects.equals(pattern, that.pattern)) return false;
-        if (!Objects.equals(value, that.value)) return false;
-        if (!Objects.equals(label, that.label)) return false;
-        return Objects.equals(errors, that.errors);
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (placeholder != null ? placeholder.hashCode() : 0);
-        result = 31 * result + (required ? 1 : 0);
-        result = 31 * result + (readOnly ? 1 : 0);
-        result = 31 * result + (maxLength != null ? maxLength.hashCode() : 0);
-        result = 31 * result + (minLength != null ? minLength.hashCode() : 0);
-        result = 31 * result + (size != null ? size.hashCode() : 0);
-        result = 31 * result + (pattern != null ? pattern.hashCode() : 0);
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        result = 31 * result + (label != null ? label.hashCode() : 0);
-        result = 31 * result + (errors != null ? errors.hashCode() : 0);
-        return result;
-    }
+public record InputUrlFormElement(@NonNull String name,
+                                  @NonNull String id,
+                                  @Nullable String placeholder,
+                                  boolean required,
+                                  boolean readOnly,
+                                  @Nullable Integer maxLength,
+                                  @Nullable Integer minLength,
+                                  @Nullable String pattern,
+                                  @Nullable Integer size,
+                                  @Nullable String value,
+                                  @Nullable Message label,
+                                  @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes {
 
     /**
      *

@@ -22,152 +22,30 @@ import io.micronaut.core.annotation.Nullable;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local">Input datetime-local</a>
+ * @param name Name of the form control. Submitted with the form as part of a name/value pair
+ * @param id It defines an identifier (ID) which must be unique in the whole document
+ * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+ * @param max The latest date and time to accept
+ * @param min The earliest date and time to accept
+ * @param value The value of the Input Datetime Local
+ * @param label represents a caption for an item in a user interface
+ * @param errors Form element validation Errors.
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputDateTimeLocalFormElement.Builder.class))
-public class InputDateTimeLocalFormElement implements FormElement, GlobalAttributes, FormElementAttributes {
-    @NonNull
-    private final String name;
-
-    @Nullable
-    private final String id;
-
-    @Nullable
-    private final LocalDateTime min;
-
-    @Nullable
-    private final LocalDateTime max;
-
-    private final boolean required;
-
-    @Nullable
-    private final LocalDateTime value;
-
-    @Nullable
-    private final Message label;
-
-    @NonNull
-    private final List<Message> errors;
-
-    /**
-     *
-     * @param name Name of the form control. Submitted with the form as part of a name/value pair
-     * @param id It defines an identifier (ID) which must be unique in the whole document
-     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
-     * @param max The latest date and time to accept
-     * @param min The earliest date and time to accept
-     * @param value The value of the Input Datetime Local
-     * @param label represents a caption for an item in a user interface
-     * @param errors Form element validation Errors.
-     */
-    public InputDateTimeLocalFormElement(@NonNull String name,
-                                         @NonNull String id,
-                                         boolean required,
-                                         @Nullable LocalDateTime max,
-                                         @Nullable LocalDateTime min,
-                                         @Nullable LocalDateTime value,
-                                         @Nullable Message label,
-                                         @NonNull List<Message> errors) {
-        this.name = name;
-        this.id = id;
-        this.required = required;
-        this.max = max;
-        this.min = min;
-        this.value = value;
-        this.label = label;
-        this.errors = errors;
-    }
-
-    @Override
-    @NonNull
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    @Nullable
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public boolean isRequired() {
-        return required;
-    }
-
-    /**
-     *
-     * @return The latest date and time to accept
-     */
-    @Nullable
-    public LocalDateTime getMax() {
-        return max;
-    }
-
-    /**
-     *
-     * @return The earliest date and time to accept
-     */
-    @Nullable
-    public LocalDateTime getMin() {
-        return min;
-    }
-
-    /**
-     *
-     * @return The value of the Input Datetime Local
-     */
-    @Nullable
-    public LocalDateTime getValue() {
-        return value;
-    }
-
-    @Override
-    @Nullable
-    public Message getLabel() {
-        return label;
-    }
-
-    @Override
-    @NonNull
-    public List<Message> getErrors() {
-        return errors;
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof InputDateTimeLocalFormElement that)) return false;
-
-        if (required != that.required) return false;
-        if (!Objects.equals(name, that.name)) return false;
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(min, that.min)) return false;
-        if (!Objects.equals(max, that.max)) return false;
-        if (!Objects.equals(value, that.value)) return false;
-        if (!Objects.equals(label, that.label)) return false;
-        return Objects.equals(errors, that.errors);
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (min != null ? min.hashCode() : 0);
-        result = 31 * result + (max != null ? max.hashCode() : 0);
-        result = 31 * result + (required ? 1 : 0);
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        result = 31 * result + (label != null ? label.hashCode() : 0);
-        result = 31 * result + (errors != null ? errors.hashCode() : 0);
-        return result;
-    }
+public record InputDateTimeLocalFormElement(@NonNull String name,
+                                            @NonNull String id,
+                                            boolean required,
+                                            @Nullable LocalDateTime max,
+                                            @Nullable LocalDateTime min,
+                                            @Nullable LocalDateTime value,
+                                            @Nullable Message label,
+                                            @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes {
 
     /**
      *

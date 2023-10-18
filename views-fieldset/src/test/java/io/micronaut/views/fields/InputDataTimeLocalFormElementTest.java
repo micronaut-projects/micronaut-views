@@ -26,12 +26,12 @@ class InputDataTimeLocalFormElementTest {
             .build();
 
         assertNotNull(formElement);
-        assertEquals(id, formElement.getId());
-        assertFalse(formElement.isRequired());
-        assertEquals(name, formElement.getName());
-        assertEquals("2018-06-12T19:30", formElement.getValue().toString());
-        assertEquals("2018-06-07T00:00", formElement.getMin().toString());
-        assertEquals("2018-06-14T00:00", formElement.getMax().toString());
+        assertEquals(id, formElement.id());
+        assertFalse(formElement.required());
+        assertEquals(name, formElement.name());
+        assertEquals("2018-06-12T19:30", formElement.value().toString());
+        assertEquals("2018-06-07T00:00", formElement.min().toString());
+        assertEquals("2018-06-14T00:00", formElement.max().toString());
     }
 
 }

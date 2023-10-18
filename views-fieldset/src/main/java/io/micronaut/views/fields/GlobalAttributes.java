@@ -29,12 +29,12 @@ public interface GlobalAttributes {
      * @return It defines an identifier (ID) which must be unique in the whole document
      */
     @Nullable
-    String getId();
+    String id();
 
 
     /**
      *
      * @return If true indicates that the user must specify a value for the input before the owning form can be submitted.
      */
-    boolean isRequired();
+    boolean required();
 }
