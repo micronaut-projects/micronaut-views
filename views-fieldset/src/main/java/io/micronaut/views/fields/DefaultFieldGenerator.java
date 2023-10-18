@@ -29,6 +29,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -166,7 +167,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         if (beanProperty.hasAnnotation(InputPassword.class)) {
             return Optional.of(InputPasswordFormElement.class);
         }
-        if (beanProperty.hasAnnotation(InputEmail.class)) {
+        if (beanProperty.hasAnnotation(InputEmail.class) || beanProperty.hasAnnotation(Email.class)) {
             return Optional.of(InputEmailFormElement.class);
         }
         if (beanProperty.hasAnnotation(InputUrl.class)) {
