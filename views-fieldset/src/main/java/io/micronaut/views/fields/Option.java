@@ -18,98 +18,22 @@ package io.micronaut.views.fields;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 
-import java.util.Objects;
-
 /**
  * HTML Option.
  * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/option">Option</a>
+ * @param selected If present, this Boolean attribute indicates that the option is initially selected.
+ * @param disabled If this Boolean attribute is set, this option is not checkable.
+ * @param value The content of this attribute represents the value to be submitted with the form, should this option be selected.
+ * @param label This attribute is text for the label indicating the meaning of the option.
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = Option.Builder.class))
-public class Option implements FormElement {
-
-    private final boolean disabled;
-
-    private final boolean selected;
-
-    @NonNull
-    private final String value;
-
-    @NonNull
-    private final Message label;
-
-    /**
-     * @param selected If present, this Boolean attribute indicates that the option is initially selected.
-     * @param disabled If this Boolean attribute is set, this option is not checkable.
-     * @param value The content of this attribute represents the value to be submitted with the form, should this option be selected.
-     * @param label This attribute is text for the label indicating the meaning of the option.
-     */
-    public Option(boolean disabled,
-                  boolean selected,
-                  @NonNull String value,
-                  @NonNull Message label) {
-        this.selected = selected;
-        this.disabled = disabled;
-        this.value = value;
-        this.label = label;
-    }
-
-    /**
-     *
-     * @return If present, this Boolean attribute indicates that the option is initially selected.
-     */
-    public boolean isSelected() {
-        return selected;
-    }
-
-    /**
-     *
-     * @return If this Boolean attribute is set, this option is not checkable.
-     */
-    public boolean isDisabled() {
-        return disabled;
-    }
-
-    /**
-     *
-     * @return The content of this attribute represents the value to be submitted with the form, should this option be selected.
-     */
-    @NonNull
-    public String getValue() {
-        return value;
-    }
-
-    /**
-     *
-     * @return This attribute is text for the label indicating the meaning of the option.
-     */
-    @NonNull
-    public Message getLabel() {
-        return label;
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Option option)) return false;
-
-        if (disabled != option.disabled) return false;
-        if (selected != option.selected) return false;
-        if (!Objects.equals(value, option.value)) return false;
-        return Objects.equals(label, option.label);
-    }
-
-    @SuppressWarnings("NeedBraces")
-    @Override
-    public int hashCode() {
-        int result = (disabled ? 1 : 0);
-        result = 31 * result + (selected ? 1 : 0);
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        result = 31 * result + (label != null ? label.hashCode() : 0);
-        return result;
-    }
+public record Option(boolean disabled,
+                     boolean selected,
+                     @NonNull String value,
+                     @NonNull Message label) implements FormElement {
 
     /**
      *

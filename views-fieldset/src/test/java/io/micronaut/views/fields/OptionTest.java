@@ -11,9 +11,9 @@ class OptionTest {
         Option option = Option.builder().value("MUSIC").label(new SimpleMessage( "Music", "genre.music")).build();
 
         assertNotNull(option);
-        assertEquals("MUSIC", option.getValue());
-        assertEquals("genre.music", option.getLabel().code());
-        assertEquals("Music", option.getLabel().defaultMessage());
+        assertEquals("MUSIC", option.value());
+        assertEquals("genre.music", option.label().code());
+        assertEquals("Music", option.label().defaultMessage());
 
         BeanIntrospection<Option> introspection = BeanIntrospection.getIntrospection(Option.class);
         BeanIntrospection.Builder<Option> builder = introspection.builder();
@@ -22,7 +22,7 @@ class OptionTest {
             .with("label", new SimpleMessage( "Music", "genre.music"))
             .build();
 
-        assertEquals("MUSIC", option.getValue());
-        assertEquals("Music", option.getLabel().defaultMessage());
+        assertEquals("MUSIC", option.value());
+        assertEquals("Music", option.label().defaultMessage());
     }
 }
