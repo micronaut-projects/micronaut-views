@@ -38,19 +38,19 @@ class FieldGeneratorTest  {
 //                .type(InputType.EMAIL)
 //                .required(true)
 //                .value(email)
-//                .errors(List.of(new SimpleMessage("contactrecordvalidationannotations.email.size", "size must be between 0 and 255"),
-//                    new SimpleMessage("contactrecordvalidationannotations.email.email", "must be a well-formed email address")))
+//                .errors(List.of(new SimpleMessage("size must be between 0 and 255", "contactrecordvalidationannotations.email.size"),
+//                    new SimpleMessage("must be a well-formed email address", "contactrecordvalidationannotations.email.email")))
 //                .build()) ||
 //            f.equals(InputField.builder()
 //                .name("email")
 //                .id("email")
-//                .label(Message.of("contactrecordvalidationannotations.email", "Email"))
+//                .label(Message.of("Email", "contactrecordvalidationannotations.email"))
 //                .type(InputType.EMAIL)
 //                .required(true)
 //                .value(email)
 //                .errors(List.of(
-//                    new SimpleMessage("contactrecordvalidationannotations.email.email", "must be a well-formed email address"),
-//                    new SimpleMessage("contactrecordvalidationannotations.email.size", "size must be between 0 and 255")))
+//                    new SimpleMessage("must be a well-formed email address", "contactrecordvalidationannotations.email.email"),
+//                    new SimpleMessage("size must be between 0 and 255", "contactrecordvalidationannotations.email.size")))
 //                .build())
 //        ));
     }
@@ -202,7 +202,7 @@ class FieldGeneratorTest  {
 //            .type(InputType.EMAIL)
 //            .required(true)
 //            .value("notanemail")
-//            .errors(Collections.singletonList(new SimpleMessage("contactrecordvalidationannotations.email.email", "must be a well-formed email address")))
+//            .errors(Collections.singletonList(new SimpleMessage("must be a well-formed email address", "contactrecordvalidationannotations.email.email")))
 //            .build();
 //        assertTrue(fields.stream().anyMatch(expectedEmail::equals));
     }

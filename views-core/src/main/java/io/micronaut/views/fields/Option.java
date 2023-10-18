@@ -20,9 +20,12 @@ import io.micronaut.core.annotation.NonNull;
 import java.util.Objects;
 
 /**
+ * HTML Option.
  * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/option">Option</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
-public class Option {
+public class Option implements FormElement {
 
     private final boolean disabled;
 
@@ -84,6 +87,7 @@ public class Option {
         return label;
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,6 +99,7 @@ public class Option {
         return Objects.equals(label, option.label);
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public int hashCode() {
         int result = (disabled ? 1 : 0);
@@ -104,42 +109,72 @@ public class Option {
         return result;
     }
 
+    /**
+     *
+     * @return Option Builder.
+     */
     @NonNull
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * Option Builder.
+     */
     public static class Builder {
         private boolean disabled;
         private String value;
         private boolean selected;
         private Message label;
 
+        /**
+         *
+         * @param disabled If this Boolean attribute is set, this option is not checkable.
+         * @return the Builder
+         */
         @NonNull
         public Builder disabled(boolean disabled) {
             this.disabled = disabled;
             return this;
         }
 
+        /**
+         *
+         * @param selected If present, this Boolean attribute indicates that the option is initially selected.
+         * @return the Builder
+         */
         @NonNull
         public Builder selected(boolean selected) {
             this.selected = selected;
             return this;
         }
 
+        /**
+         *
+         * @param value The content of this attribute represents the value to be submitted with the form, should this option be selected.
+         * @return The Builder
+         */
         @NonNull
         public Builder value(@NonNull String value) {
             this.value = value;
             return this;
         }
 
-
+        /**
+         *
+         * @param label represents a caption for an item in a user interface
+         * @return The Builder
+         */
         @NonNull
         public Builder label(Message label) {
             this.label = label;
             return this;
         }
 
+        /**
+         * Instantiates an Option.
+         * @return An Option.
+         */
         @NonNull
         public Option build() {
             return new Option(disabled, selected, value, label);

@@ -26,6 +26,12 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
+/**
+ * {@link RadioFetcher} implementation for Enums.
+ * @author Sergio del Amo
+ * @since 4.1.0
+ * @param <T> Field type.
+ */
 @Singleton
 public class EnumRadioFetcher<T> implements RadioFetcher<T> {
     private static final Logger LOG = LoggerFactory.getLogger(EnumOptionFetcher.class);
@@ -51,7 +57,7 @@ public class EnumRadioFetcher<T> implements RadioFetcher<T> {
     }
 
     @NonNull
-    private <T extends Enum> List<Radio> generateEnumRadioButtons(@NonNull Class<? extends Enum> type,
+    private List<Radio> generateEnumRadioButtons(@NonNull Class<? extends Enum> type,
                                                                   @Nullable Enum instance) {
         return EnumSet.allOf(type).stream()
             .map(it -> {
@@ -71,8 +77,9 @@ public class EnumRadioFetcher<T> implements RadioFetcher<T> {
     }
 
     @NonNull
-    private <T> Message labelForBeanProperty(Class<T> type, String name) {
-        return Message.of(type.getSimpleName().toLowerCase() + "." + name.toLowerCase(),
-            StringUtils.capitalize(name.toLowerCase().replaceAll("(.)([A-Z])", "$1 $2")));
+    private Message labelForBeanProperty(Class<? extends Enum> type, String name) {
+        String code = type.getSimpleName().toLowerCase() + "." + name.toLowerCase();
+        String defaultMessage = StringUtils.capitalize(name.toLowerCase().replaceAll("(.)([A-Z])", "$1 $2"));
+        return Message.of(defaultMessage, code);
     }
 }

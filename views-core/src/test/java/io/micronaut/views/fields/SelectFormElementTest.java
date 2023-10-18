@@ -15,10 +15,10 @@ class SelectFormElementTest {
         String name = "cars";
         String id = "carsid";
         List<Option> options = Arrays.asList(
-                Option.builder().value("volvo").label(new SimpleMessage("car.volvo", "Volvo")).build(),
-                Option.builder().value("saab").label(new SimpleMessage("car.saab", "Saab")).build(),
-                Option.builder().value("mercedes").label(new SimpleMessage("car.mercedes", "Mercedes")).build(),
-                Option.builder().value("audi").label(new SimpleMessage("car.audi", "Audi")).build()
+                Option.builder().value("volvo").label(new SimpleMessage("Volvo", "car.volvo")).build(),
+                Option.builder().value("saab").label(new SimpleMessage("Saab", "car.saab")).build(),
+                Option.builder().value("mercedes").label(new SimpleMessage("Mercedes", "car.mercedes")).build(),
+                Option.builder().value("audi").label(new SimpleMessage("Audi", "car.audi")).build()
         );
         SelectFormElement selectFormElement = SelectFormElement.builder()
             .name(name)

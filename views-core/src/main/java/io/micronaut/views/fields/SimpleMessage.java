@@ -17,23 +17,36 @@ package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 
 import java.util.Objects;
 
+/**
+ * Simple implementation of {@link Message}.
+ * @author Sergio del Amo
+ * @since 4.1.0
+ */
 @Introspected
 public class SimpleMessage implements Message {
 
-    @NonNull
+    @Nullable
     private final String code;
 
     @NonNull
     private final String defaultMessage;
 
-    public SimpleMessage(String code, String defaultMessage) {
-        this.code = code;
+    /**
+     *
+     * @param defaultMessage The default message to use if no code is specified or no localized message found.
+     * @param code The i18n code which can be used to fetch a localized message.
+     */
+    public SimpleMessage(@NonNull String defaultMessage,
+                         @Nullable String code) {
         this.defaultMessage = defaultMessage;
+        this.code = code;
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,6 +56,7 @@ public class SimpleMessage implements Message {
         return Objects.equals(defaultMessage, that.getDefaultMessage());
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public int hashCode() {
         int result = code != null ? code.hashCode() : 0;
@@ -51,7 +65,7 @@ public class SimpleMessage implements Message {
     }
 
     @Override
-    @NonNull
+    @Nullable
     public String getCode() {
         return code;
     }
@@ -60,14 +74,5 @@ public class SimpleMessage implements Message {
     @NonNull
     public String getDefaultMessage() {
         return defaultMessage;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Message{" +
-            "code='" + code + '\'' +
-            ", defaultMessage='" + defaultMessage + '\'' +
-            '}';
     }
 }

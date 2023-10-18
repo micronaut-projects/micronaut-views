@@ -17,7 +17,7 @@ class InputDataTimeLocalFormElementTest {
 
         LocalDateTime max = LocalDateTime.of(2018, 6, 14, 0, 0);
 
-        InputDataTimeLocalFormElement formElement = InputDataTimeLocalFormElement.builder()
+        InputDateTimeLocalFormElement formElement = InputDateTimeLocalFormElement.builder()
             .name(name)
             .id(id)
             .value(value)

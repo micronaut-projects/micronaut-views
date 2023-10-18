@@ -16,26 +16,37 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 
-import java.util.Objects;
-
+/**
+ * Message representation.
+ * @author Sergio del Amo
+ * @since 4.1.0
+ */
 public interface Message {
-
     /**
      *
-     * @return The code
+     * @return The i18n code which can be used to fetch a localized message.
      */
+    @Nullable
     String getCode();
 
     /**
      *
-     * @return The default message to use if no other message is found
+     * @return The default message to use if no code is specified or no localized message found
      */
+    @NonNull
     String getDefaultMessage();
 
-
+    /**
+     *
+     * @param defaultMessage The default message to use if no code is specified or no localized message found
+     * @param code The i18n code which can be used to fetch a localized message.
+     * @return A {@link Message} instance backed by a {@link SimpleMessage}.
+     */
     @NonNull
-    static Message of(@NonNull String code, @NonNull String defaultMessage) {
-        return new SimpleMessage(code, defaultMessage);
+    static Message of(@NonNull String defaultMessage,
+                      @Nullable String code) {
+        return new SimpleMessage(defaultMessage, code);
     }
 }

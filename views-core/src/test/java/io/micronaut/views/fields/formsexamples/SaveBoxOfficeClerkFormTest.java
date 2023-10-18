@@ -48,8 +48,8 @@ public class SaveBoxOfficeClerkFormTest {
         InputHiddenFormElement eventIdExpectation = eventIdExpectation().build();
         assertTrue(assertFormElement(fieldset, eventIdExpectation));
 
-        SelectFormElement organizerExpectation = userExpectation().build();
-        assertTrue(assertFormElement(fieldset, organizerExpectation));
+        SelectFormElement expectation = userExpectation().build();
+        assertTrue(assertFormElement(fieldset, expectation));
     }
 
     private InputHiddenFormElement.Builder eventIdExpectation() {
@@ -63,10 +63,10 @@ public class SaveBoxOfficeClerkFormTest {
             .required(true)
             .id("userId")
             .name("userId")
-            .label(new SimpleMessage("saveboxofficeclerkform.userId", "User Id"))
+            .label(new SimpleMessage( "User Id", "saveboxofficeclerkform.userId"))
             .options(Arrays.asList(
-                Option.builder().label(new SimpleMessage("userId.10", "John")).value("10").selected(true).build(),
-                Option.builder().label(new SimpleMessage("userId.12", "Aegon")).value("12").build()
+                Option.builder().label(new SimpleMessage("John", null)).value("10").selected(true).build(),
+                Option.builder().label(new SimpleMessage("Aegon", null)).value("12").build()
             ));
     }
 
@@ -94,7 +94,7 @@ public class SaveBoxOfficeClerkFormTest {
         private Option option(@NonNull BoxOfficeClerk boxOfficeClerk,
                               @Nullable Long boxOfficeClerkId) {
             return new Option(false, boxOfficeClerk.id().equals(boxOfficeClerkId), boxOfficeClerk.id().toString(),
-                new SimpleMessage("userId." + boxOfficeClerk.id(), boxOfficeClerk.name()));
+                new SimpleMessage(boxOfficeClerk.name(), null));
         }
     }
 

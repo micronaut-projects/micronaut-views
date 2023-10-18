@@ -26,6 +26,12 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
+/**
+ * {@link CheckboxFetcher} implementation for Enums.
+ * @author Sergio del Amo
+ * @since 4.1.0
+ * @param <T> Field type
+ */
 @Singleton
 public class EnumCheckboxFetcher<T> implements CheckboxFetcher<T> {
     private static final Logger LOG = LoggerFactory.getLogger(EnumOptionFetcher.class);
@@ -51,8 +57,8 @@ public class EnumCheckboxFetcher<T> implements CheckboxFetcher<T> {
     }
 
     @NonNull
-    private <T extends Enum> List<Checkbox> generateEnumCheckboxButtons(@NonNull Class<? extends Enum> type,
-                                                                  @Nullable Enum instance) {
+    private List<Checkbox> generateEnumCheckboxButtons(@NonNull Class<? extends Enum> type,
+                                                       @Nullable Enum instance) {
         return EnumSet.allOf(type).stream()
             .map(it -> {
                 Checkbox.Builder builder = checkboxButtonFromEnum(type, (Enum) it);
@@ -65,14 +71,16 @@ public class EnumCheckboxFetcher<T> implements CheckboxFetcher<T> {
     }
 
     @NonNull
-    private Checkbox.Builder checkboxButtonFromEnum(@NonNull Class<? extends Enum> type, @NonNull Enum instance) {
+    private Checkbox.Builder checkboxButtonFromEnum(@NonNull Class<? extends Enum> type,
+                                                    @NonNull Enum instance) {
         String name = instance.name();
         return Checkbox.builder().id(name.toLowerCase()).value(name).label(labelForBeanProperty(type, name));
     }
 
     @NonNull
-    private <T> Message labelForBeanProperty(Class<T> type, String name) {
-        return Message.of(type.getSimpleName().toLowerCase() + "." + name.toLowerCase(),
-            StringUtils.capitalize(name.toLowerCase().replaceAll("(.)([A-Z])", "$1 $2")));
+    private Message labelForBeanProperty(Class<? extends Enum> type, String name) {
+        String code = type.getSimpleName().toLowerCase() + "." + name.toLowerCase();
+        String defaultMessage = StringUtils.capitalize(name.toLowerCase().replaceAll("(.)([A-Z])", "$1 $2"));
+        return Message.of(defaultMessage, code);
     }
 }

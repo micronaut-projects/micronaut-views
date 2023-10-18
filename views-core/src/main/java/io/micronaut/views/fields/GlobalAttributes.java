@@ -15,18 +15,26 @@
  */
 package io.micronaut.views.fields;
 
-public enum InputType {
-    EMAIL,
-    /**
-     * A control that is not displayed but whose value is submitted to the server.
-     */
-    HIDDEN,
-    NUMBER,
-    PASSWORD,
-    TEXT;
+import io.micronaut.core.annotation.Nullable;
 
-    @Override
-    public String toString() {
-        return this.name().toLowerCase();
-    }
+/**
+ * HTML Global Attributes.
+ * @author Sergio del Amo
+ * @since 4.1.0
+ */
+public interface GlobalAttributes {
+
+    /**
+     *
+     * @return It defines an identifier (ID) which must be unique in the whole document
+     */
+    @Nullable
+    String getId();
+
+
+    /**
+     *
+     * @return If true indicates that the user must specify a value for the input before the owning form can be submitted.
+     */
+    boolean isRequired();
 }

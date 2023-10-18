@@ -18,19 +18,18 @@ package io.micronaut.views.fields;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.views.Renderable;
-import io.micronaut.views.TemplatedBuilder;
-
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 /**
+ * Input Text.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text">Input Text</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputTextFormElement.Builder.class))
-public class InputTextFormElement extends FormElement {
+public class InputTextFormElement implements FormElement, GlobalAttributes, FormElementAttributes {
     @NonNull
     private final String name;
 
@@ -78,19 +77,20 @@ public class InputTextFormElement extends FormElement {
     private final Message label;
 
     @NonNull
-    private final Collection<Message> errors;
+    private final List<Message> errors;
 
     /**
      *
-     * @param name
-     * @param id
+     * @param name Name of the form control. Submitted with the form as part of a name/value pair
+     * @param id It defines an identifier (ID) which must be unique in the whole document
      * @param placeholder The placeholder attribute is a string that provides a brief hint to the user as to what kind of information is expected in the field.
-     * @param required
+     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
      * @param readOnly A Boolean attribute which, if present, means this field cannot be edited by the user.
      * @param maxLength The maximum string length that the user can enter into the text input.
      * @param minLength The minimum string length that the user can enter into the text input.
      * @param pattern The pattern attribute, when specified, is a regular expression that the input's value must match for the value to pass constraint validation.
      * @param size The size attribute is a numeric value indicating how many characters wide the input field should be.
+     * @param value input text value
      * @param label the input label
      * @param errors errors associated with this input
      */
@@ -105,7 +105,7 @@ public class InputTextFormElement extends FormElement {
                                 @Nullable Integer size,
                                 @Nullable String value,
                                 @Nullable Message label,
-                                @NonNull Collection<Message> errors) {
+                                @NonNull List<Message> errors) {
         this.name = name;
         this.id = id;
         this.placeholder = placeholder;
@@ -120,11 +120,13 @@ public class InputTextFormElement extends FormElement {
         this.errors = errors;
     }
 
+    @Override
     @NonNull
     public String getName() {
         return name;
     }
 
+    @Override
     @Nullable
     public String getId() {
         return id;
@@ -147,6 +149,7 @@ public class InputTextFormElement extends FormElement {
         return readOnly;
     }
 
+    @Override
     public boolean isRequired() {
         return required;
     }
@@ -186,21 +189,28 @@ public class InputTextFormElement extends FormElement {
         return size;
     }
 
+    /**
+     *
+     * @return Input text value
+     */
     @Nullable
     public String getValue() {
         return value;
     }
 
+    @Override
     @Nullable
     public Message getLabel() {
         return label;
     }
 
+    @Override
     @NonNull
-    public Collection<Message> getErrors() {
+    public List<Message> getErrors() {
         return errors;
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -223,6 +233,7 @@ public class InputTextFormElement extends FormElement {
         return Objects.equals(errors, that.errors);
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
@@ -240,11 +251,18 @@ public class InputTextFormElement extends FormElement {
         return result;
     }
 
+    /**
+     *
+     * @return Input Text builder
+     */
     @NonNull
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * Input Text Builder.
+     */
     public static class Builder {
 
         private String name;
@@ -271,19 +289,33 @@ public class InputTextFormElement extends FormElement {
 
         private Message label;
 
+        /**
+         *
+         * @param pattern The pattern attribute, when specified, is a regular expression that the input's value must match for the value to pass constraint validation.
+         * @return The Builder
+         */
         @NonNull
         public Builder pattern(@NonNull String pattern) {
             this.pattern = pattern;
             return this;
         }
 
+        /**
+         *
+         * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+         * @return The Builder
+         */
         @NonNull
         public Builder required(boolean required) {
             this.required = required;
             return this;
         }
 
-
+        /**
+         *
+         * @param readOnly A Boolean attribute which, if present, means this field cannot be edited by the user.
+         * @return The Builder
+         */
         @NonNull
         public Builder readOnly(boolean readOnly) {
             this.readOnly = readOnly;
@@ -312,7 +344,6 @@ public class InputTextFormElement extends FormElement {
             return this;
         }
 
-
         /**
          *
          * @param minLength The minimum string length that the user can enter into the text input.
@@ -324,12 +355,22 @@ public class InputTextFormElement extends FormElement {
             return this;
         }
 
+        /**
+         *
+         * @param name Name of the form control. Submitted with the form as part of a name/value pair
+         * @return the Builder
+         */
         @NonNull
         public Builder name(@NonNull String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         *
+         * @param id It defines an identifier (ID) which must be unique in the whole document
+         * @return The Builder
+         */
         @NonNull
         public Builder id(@NonNull String id) {
             this.id = id;
@@ -358,18 +399,32 @@ public class InputTextFormElement extends FormElement {
             return this;
         }
 
+        /**
+         *
+         * @param label represents a caption for an item in a user interface
+         * @return The Builder
+         */
         @NonNull
         public Builder label(Message label) {
             this.label = label;
             return this;
         }
 
+        /**
+         *
+         * @param errors Form element validation Errors.
+         * @return The Builder
+         */
         @NonNull
         public Builder errors(@NonNull List<Message> errors) {
             this.errors = errors;
             return this;
         }
 
+        /**
+         *
+         * @return Creates a {@link InputTextFormElement}.
+         */
         @NonNull
         public InputTextFormElement build() {
             return new InputTextFormElement(name, id, placeholder, required, readOnly, maxLength, minLength, pattern, size, value, label, errors == null ? Collections.emptyList() : errors);

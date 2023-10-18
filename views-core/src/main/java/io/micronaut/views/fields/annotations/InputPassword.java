@@ -25,6 +25,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * Annotation to specify a field is a password input.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password">Input Password</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
 @Documented
 @Retention(RUNTIME)

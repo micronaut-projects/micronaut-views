@@ -24,13 +24,21 @@ import jakarta.validation.Path;
 import java.util.Iterator;
 import java.util.Optional;
 
+/**
+ * Utility class to work with {@link ConstraintViolation}.
+ * @author Sergio del Amo
+ * @since 4.1.0
+ */
 @Internal
 public final class ConstraintViolationUtils {
-
     private ConstraintViolationUtils() {
-
     }
 
+    /**
+     * Returns the last node of a constraint violation.
+     * @param violation Constraint Violation
+     * @return Last Node of constraint violation if any
+     */
     @NonNull
     public static Optional<String> lastNode(@NonNull ConstraintViolation<?> violation) {
         Path propertyPath = violation.getPropertyPath();
@@ -50,6 +58,11 @@ public final class ConstraintViolationUtils {
             Optional.empty();
     }
 
+    /**
+     * Returns a code representing a constraint violation.
+     * @param violation Constraint violation.
+     * @return code representing a constraint violation.
+     */
     @NonNull
     public static Optional<String> constraintCode(@NonNull ConstraintViolation<?> violation) {
         String messageTemplate = violation.getMessageTemplate();

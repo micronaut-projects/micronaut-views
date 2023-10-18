@@ -23,14 +23,13 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Annotation to specify a field is an hidden input.
- * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden">Input Hidden</a>
+ * Annotation to specify a field is a text input.
+ * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text">Input Text</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
 @Documented
 @Retention(RUNTIME)
 @Target({ElementType.FIELD})
 public @interface InputText {
-    boolean disabled() default false;
-
-    boolean required() default false;
 }

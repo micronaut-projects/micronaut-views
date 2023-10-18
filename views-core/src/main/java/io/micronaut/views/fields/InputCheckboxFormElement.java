@@ -18,17 +18,17 @@ package io.micronaut.views.fields;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">Input Checkbox</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputCheckboxFormElement.Builder.class))
-public class InputCheckboxFormElement extends FormElement {
+public class InputCheckboxFormElement implements FormElement {
     @NonNull
     private final List<Checkbox> checkboxes;
 
@@ -40,11 +40,15 @@ public class InputCheckboxFormElement extends FormElement {
         this.checkboxes = checkboxes;
     }
 
+    /**
+     *
+     * @return Checkboxes
+     */
     public List<Checkbox> getCheckboxes() {
         return checkboxes;
     }
 
-
+    @SuppressWarnings("NeedBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,30 +62,37 @@ public class InputCheckboxFormElement extends FormElement {
         return checkboxes != null ? checkboxes.hashCode() : 0;
     }
 
+    /**
+     *
+     * @return Creates a {@link InputCheckboxFormElement} Builder.
+     */
     @NonNull
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * Input checkbox builder.
+     */
     public static class Builder {
         @Nullable
         private List<Checkbox> checkboxes;
 
-        @NonNull
-        public Builder checkbox(Checkbox checkbox) {
-            if (checkboxes == null) {
-                this.checkboxes = new ArrayList<>();
-            }
-            checkboxes.add(checkbox);
-            return this;
-        }
-
+        /**
+         *
+         * @param checkboxes Checkboxes
+         * @return The Builder
+         */
         @NonNull
         public Builder checkboxes(List<Checkbox> checkboxes) {
             this.checkboxes = checkboxes;
             return this;
         }
 
+        /**
+         *
+         * @return Creates a {@link InputCheckboxFormElement}
+         */
         @NonNull
         public InputCheckboxFormElement build() {
             return new InputCheckboxFormElement(checkboxes == null ? Collections.emptyList() : checkboxes);

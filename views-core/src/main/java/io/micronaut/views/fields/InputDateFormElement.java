@@ -20,16 +20,18 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 /**
+ * Input Date.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date">Input date</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputDateFormElement.Builder.class))
-public class InputDateFormElement extends FormElement {
+public class InputDateFormElement implements FormElement, GlobalAttributes, FormElementAttributes {
     @NonNull
     private final String name;
 
@@ -51,8 +53,19 @@ public class InputDateFormElement extends FormElement {
     private final Message label;
 
     @NonNull
-    private final Collection<Message> errors;
+    private final List<Message> errors;
 
+    /**
+     *
+     * @param name Name of the form control. Submitted with the form as part of a name/value pair
+     * @param id It defines an identifier (ID) which must be unique in the whole document
+     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+     * @param max The latest date to accept
+     * @param min The earliest date to accept.
+     * @param value the input date value
+     * @param label represents a caption for an item in a user interface
+     * @param errors Form element validation Errors.
+     */
     public InputDateFormElement(@NonNull String name,
                                      @NonNull String id,
                                      boolean required,
@@ -60,7 +73,7 @@ public class InputDateFormElement extends FormElement {
                                      @Nullable LocalDate min,
                                      @Nullable LocalDate value,
                                      @Nullable Message label,
-                                     @NonNull Collection<Message> errors) {
+                                     @NonNull List<Message> errors) {
         this.name = name;
         this.id = id;
         this.required = required;
@@ -71,45 +84,63 @@ public class InputDateFormElement extends FormElement {
         this.errors = errors;
     }
 
+    @Override
     @NonNull
     public String getName() {
         return name;
     }
 
+    @Override
     @Nullable
     public String getId() {
         return id;
     }
 
+    @Override
     public boolean isRequired() {
         return required;
     }
 
+    /**
+     *
+     * @return The latest date to accept
+     */
     @Nullable
     public LocalDate getMax() {
         return max;
     }
 
+    /**
+     *
+     * @return The earliest date to accept.
+     */
     @Nullable
     public LocalDate getMin() {
         return min;
     }
 
+    /**
+     *
+     * @return the input date value
+     */
     @Nullable
     public LocalDate getValue() {
         return value;
     }
 
+    @Override
     @Nullable
     public Message getLabel() {
         return label;
     }
 
+    @Override
     @NonNull
-    public Collection<Message> getErrors() {
+    public List<Message> getErrors() {
         return errors;
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -125,6 +156,7 @@ public class InputDateFormElement extends FormElement {
         return Objects.equals(errors, that.errors);
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
@@ -138,11 +170,18 @@ public class InputDateFormElement extends FormElement {
         return result;
     }
 
+    /**
+     *
+     * @return the Input Date FormElement Builder
+     */
     @NonNull
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * Input Date Builder.
+     */
     public static class Builder {
 
         private String name;
@@ -161,30 +200,55 @@ public class InputDateFormElement extends FormElement {
 
         private Message label;
 
+        /**
+         *
+         * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+         * @return The Builder
+         */
         @NonNull
         public Builder required(boolean required) {
             this.required = required;
             return this;
         }
 
+        /**
+         *
+         * @param max The latest date to accep
+         * @return The Builder
+         */
         @NonNull
         public Builder max(@NonNull LocalDate max) {
             this.max = max;
             return this;
         }
 
+        /**
+         *
+         * @param min The earliest date to accept.
+         * @return the Builder
+         */
         @NonNull
         public Builder min(@NonNull LocalDate min) {
             this.min = min;
             return this;
         }
 
+        /**
+         *
+         * @param name Name of the form control. Submitted with the form as part of a name/value pair
+         * @return The Builder
+         */
         @NonNull
         public Builder name(@NonNull String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         *
+         * @param id It defines an identifier (ID) which must be unique in the whole document
+         * @return The Builder
+         */
         @NonNull
         public Builder id(@NonNull String id) {
             this.id = id;
@@ -202,18 +266,32 @@ public class InputDateFormElement extends FormElement {
             return this;
         }
 
+        /**
+         *
+         * @param label represents a caption for an item in a user interface
+         * @return The Builder
+         */
         @NonNull
         public Builder label(Message label) {
             this.label = label;
             return this;
         }
 
+        /**
+         *
+         * @param errors Form element validation Errors.
+         * @return The Builder
+         */
         @NonNull
         public Builder errors(@NonNull List<Message> errors) {
             this.errors = errors;
             return this;
         }
 
+        /**
+         *
+         * @return Creates a {@link InputDateFormElement}.
+         */
         @NonNull
         public InputDateFormElement build() {
             return new InputDateFormElement(name,

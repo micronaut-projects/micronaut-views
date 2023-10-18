@@ -39,6 +39,11 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
+/**
+ * Default implementation of {@link FieldsetGenerator} which relies on the types being introspected.
+ * @author Sergio del Amo
+ * @since 4.1.0
+ */
 @Singleton
 public class DefaultFieldGenerator implements FieldsetGenerator {
 
@@ -54,8 +59,8 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private static final String BUILDER_METHOD_CHECKED = "checked";
     private static final String BUILDER_METHOD_OPTIONS = "options";
     private static final String MEMBER_FETCHER = "fetcher";
-    public static final String BUILDER_METHOD_BUTTONS = "buttons";
-    public static final String BULDER_METHOD_MIN = "min";
+    private static final String BUILDER_METHOD_BUTTONS = "buttons";
+    private static final String BULDER_METHOD_MIN = "min";
 
     private final EnumOptionFetcher<?> enumOptionFetcher;
 
@@ -68,7 +73,6 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
 
     private final ConcurrentHashMap<Class<? extends RadioFetcher>, RadioFetcher> radioFetcherCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Class<? extends CheckboxFetcher>, CheckboxFetcher> checkboxFetcherCache = new ConcurrentHashMap<>();
-
 
     public DefaultFieldGenerator(EnumOptionFetcher<?> enumOptionFetcher,
                                  EnumRadioFetcher<?> enumRadioFetcher,
@@ -177,7 +181,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
             return Optional.of(InputDateFormElement.class);
         }
         if (beanProperty.getType() == LocalDateTime.class) {
-            return Optional.of(InputDataTimeLocalFormElement.class);
+            return Optional.of(InputDateTimeLocalFormElement.class);
         }
 
         if (Number.class.isAssignableFrom(beanProperty.getType())) {
@@ -246,7 +250,6 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         }
         return Optional.empty();
     }
-
 
     private <T> Optional<OptionFetcher> optionFetcherForBeanProperty(BeanProperty<T, ?> beanProperty) {
         if (beanProperty.hasAnnotation(Select.class)) {
@@ -346,8 +349,9 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     }
 
     private Message labelForBeanProperty(BeanProperty<?, ?> beanProperty) {
-        return Message.of(beanProperty.getDeclaringBean().getBeanType().getSimpleName().toLowerCase() + "." + beanProperty.getName(),
-            StringUtils.capitalize(beanProperty.getName().replaceAll("(.)([A-Z])", "$1 $2")));
+        String code = beanProperty.getDeclaringBean().getBeanType().getSimpleName().toLowerCase() + "." + beanProperty.getName();
+        String defaultMessage = StringUtils.capitalize(beanProperty.getName().replaceAll("(.)([A-Z])", "$1 $2"));
+        return Message.of(defaultMessage, code);
     }
 
     private List<ConstraintViolationMessage> messagesForBeanProperty(BeanProperty<?, ?> beanProperty, @Nullable ConstraintViolationException ex) {
@@ -372,7 +376,6 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
                 .map(formElementClass -> formElementBuilderForBeanProperty(beanProperty, formElementClass, null, null, builderConsumer).build())
                         .orElse(null);
     }
-
 
     private <T> Optional<Object> valueForBeanProperty(@Nullable BeanWrapper<T> beanWrapper, BeanProperty<T, ?> beanProperty) {
         if (beanWrapper != null) {

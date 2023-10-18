@@ -22,6 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * {@link Message} implementation backed by a {@link ConstraintViolation}.
+ * @author Sergio del Amo
+ * @since XXXX
+ */
 @Introspected
 public class ConstraintViolationMessage implements Message {
     private static final String DOT = ".";
@@ -31,11 +36,16 @@ public class ConstraintViolationMessage implements Message {
     @NonNull
     private final String defaultMessage;
 
+    /**
+     *
+     * @param constraintViolation Constraint Violation.
+     */
     public ConstraintViolationMessage(ConstraintViolation<?> constraintViolation) {
         this.code = code(constraintViolation);
         this.defaultMessage = constraintViolation.getMessage();
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,6 +55,7 @@ public class ConstraintViolationMessage implements Message {
         return Objects.equals(defaultMessage, that.getDefaultMessage());
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public int hashCode() {
         int result = code != null ? code.hashCode() : 0;

@@ -15,7 +15,7 @@ class InputRadioFormElementTest {
         String name = "drone";
         String value = "value";
         String id = "id";
-        Message label = Message.of("drone.huey", "Huey");
+        Message label = Message.of( "Huey", "drone.huey");
         Radio radio = Radio.builder()
             .value(value)
             .id(id)

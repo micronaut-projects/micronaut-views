@@ -37,19 +37,19 @@ class EnumDefaultsToSelectTest {
     private SelectFormElement.Builder genreExpectation(BiConsumer<Genre, Option.Builder> builderConsumer) {
         List<Option> options = new ArrayList<>();
 
-        Option.Builder musicBuilder = Option.builder().label(new SimpleMessage("genre.music", "Music")).value("MUSIC");
+        Option.Builder musicBuilder = Option.builder().label(new SimpleMessage( "Music", "genre.music")).value("MUSIC");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.MUSIC, musicBuilder);
         }
         options.add(musicBuilder.build());
 
-        Option.Builder sportBuilder = Option.builder().label(new SimpleMessage("genre.sport", "Sport")).value("SPORT");
+        Option.Builder sportBuilder = Option.builder().label(new SimpleMessage( "Sport", "genre.sport")).value("SPORT");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.SPORT, sportBuilder);
         }
         options.add(sportBuilder.build());
 
-        Option.Builder theaterBuilder = Option.builder().label(new SimpleMessage("genre.theater", "Theater")).value("THEATER");
+        Option.Builder theaterBuilder = Option.builder().label(new SimpleMessage( "Theater", "genre.theater")).value("THEATER");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.THEATER, theaterBuilder);
         }
@@ -59,7 +59,7 @@ class EnumDefaultsToSelectTest {
             .required(true)
             .id("genre")
             .name("genre")
-            .label(new SimpleMessage("eventcreateform.genre", "Genre"))
+            .label(new SimpleMessage("Genre", "eventcreateform.genre"))
             .options(options);
     }
 }

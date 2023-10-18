@@ -17,9 +17,6 @@ package io.micronaut.views.fields.annotations;
 
 import io.micronaut.views.fields.CheckboxFetcher;
 import io.micronaut.views.fields.EnumCheckboxFetcher;
-import io.micronaut.views.fields.EnumRadioFetcher;
-import io.micronaut.views.fields.RadioFetcher;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -28,8 +25,10 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Annotation to specify a field is an checbox input.
+ * Annotation to specify a field is a checbox input.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">Input Checkbox</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
 @Documented
 @Retention(RUNTIME)

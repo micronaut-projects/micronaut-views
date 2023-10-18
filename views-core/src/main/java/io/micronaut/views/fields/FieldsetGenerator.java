@@ -22,12 +22,18 @@ import jakarta.validation.ConstraintViolationException;
 
 import java.util.function.BiConsumer;
 
+/**
+ * API to generate an HTML Fieldset representation of a give type or instance.
+ * @author Sergio del Amo
+ * @since 4.1.0
+ */
 @DefaultImplementation(DefaultFieldGenerator.class)
 public interface FieldsetGenerator {
     /**
      *
      * @param type A class which should be {@link io.micronaut.core.annotation.Introspected}.
      * @return A Fieldset
+     * @param <T> type
      */
     @NonNull
     <T> Fieldset generate(@NonNull Class<T> type);
@@ -37,6 +43,7 @@ public interface FieldsetGenerator {
      * @param type A class which should be {@link io.micronaut.core.annotation.Introspected}.
      * @param builderConsumer A biconsumer with the property name and the builder
      * @return A Fieldset
+     * @param <T> type
      */
     @NonNull
     <T> Fieldset generate(@NonNull Class<T> type, @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer);

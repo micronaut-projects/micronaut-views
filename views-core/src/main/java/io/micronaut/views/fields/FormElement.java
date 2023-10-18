@@ -15,8 +15,10 @@
  */
 package io.micronaut.views.fields;
 
-
-public abstract class FormElement {
-
-
+/**
+ * Marker interface for HTTML Form Elements.
+ * @author Sergio del Amo
+ * @since 4.1.0
+ */
+public interface FormElement {
 }

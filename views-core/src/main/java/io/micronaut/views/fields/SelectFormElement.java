@@ -23,8 +23,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * HTML Select.
+ * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">Select</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
+ */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = SelectFormElement.Builder.class))
-public class SelectFormElement extends FormElement {
+public class SelectFormElement implements FormElement, GlobalAttributes {
     private final boolean required;
     @NonNull
     private final String name;
@@ -40,8 +46,11 @@ public class SelectFormElement extends FormElement {
 
     /**
      *
-     * @param name The name attribute.
-     * @param id The id attribute.
+     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+     * @param name Name of the form control. Submitted with the form as part of a name/value pair
+     * @param id It defines an identifier (ID) which must be unique in the whole document
+     * @param options Select Options
+     * @param label represents a caption for an item in a user interface
      */
     public SelectFormElement(boolean required,
                              @NonNull String name,
@@ -55,16 +64,21 @@ public class SelectFormElement extends FormElement {
         this.label = label;
     }
 
+    @Override
     public boolean isRequired() {
         return required;
     }
 
+    /**
+     *
+     * @return represents a caption for an item in a user interface
+     */
     @NonNull
     public Message getLabel() {
         return label;
     }
 
-    /*
+    /**
      *
      * @return The name of the control.
      */
@@ -77,21 +91,22 @@ public class SelectFormElement extends FormElement {
      *
      * @return An id attribute. Often used to allow the form element to be associated with a label element for accessibility purposes.
      */
+    @Override
     @Nullable
     public String getId() {
         return this.id;
     }
 
-    @NonNull
-    public static Builder builder() {
-        return new Builder();
-    }
-
+    /**
+     *
+     * @return Select Options
+     */
     @NonNull
     public List<Option> getOptions() {
         return options;
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -104,6 +119,7 @@ public class SelectFormElement extends FormElement {
         return Objects.equals(label, that.label);
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public int hashCode() {
         int result = (required ? 1 : 0);
@@ -114,6 +130,19 @@ public class SelectFormElement extends FormElement {
         return result;
     }
 
+    /**
+     *
+     * @return A Select Builder
+     */
+    @NonNull
+    public static Builder builder() {
+        return new Builder();
+    }
+
+
+    /**
+     * Select Builder.
+     */
     public static class Builder {
 
         private boolean required;
@@ -128,36 +157,65 @@ public class SelectFormElement extends FormElement {
 
         private Message label;
 
+        /**
+         *
+         * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+         * @return The Builder
+         */
         @NonNull
         public Builder required(boolean required) {
             this.required = required;
             return this;
         }
 
+        /**
+         *
+         * @param name Name of the form control. Submitted with the form as part of a name/value pair
+         * @return The Builder
+         */
         @NonNull
         public Builder name(@NonNull String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         *
+         * @param id It defines an identifier (ID) which must be unique in the whole document
+         * @return The Builder
+         */
         @NonNull
         public Builder id(@Nullable String id) {
             this.id = id;
             return this;
         }
 
+        /**
+         *
+         * @param options select options
+         * @return the Builder
+         */
         @NonNull
         public Builder options(List<Option> options) {
             this.options = options;
             return this;
         }
 
+        /**
+         *
+         * @param label represents a caption for an item in a user interface
+         * @return The Builder
+         */
         @NonNull
         public Builder label(Message label) {
             this.label = label;
             return this;
         }
 
+        /**
+         * Creates a Select form element.
+         * @return A Select
+         */
         @NonNull
         public SelectFormElement build() {
             return new SelectFormElement(

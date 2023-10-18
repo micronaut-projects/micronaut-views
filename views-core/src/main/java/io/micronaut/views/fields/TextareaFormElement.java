@@ -19,16 +19,18 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 /**
+ * Text Area.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea">Textarea</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = TextareaFormElement.Builder.class))
-public class TextareaFormElement extends FormElement {
+public class TextareaFormElement implements FormElement, FormElementAttributes, GlobalAttributes {
     @NonNull
     private final String name;
 
@@ -58,8 +60,21 @@ public class TextareaFormElement extends FormElement {
     private final Message label;
 
     @NonNull
-    private final Collection<Message> errors;
+    private final List<Message> errors;
 
+    /**
+     *
+     * @param name Name of the form control. Submitted with the form as part of a name/value pair
+     * @param id It defines an identifier (ID) which must be unique in the whole document
+     * @param cols The visible width of the text control, in average character widths
+     * @param rows The number of visible text lines for the control.
+     * @param placeholder A hint to the user of what can be entered in the control
+     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+     * @param readOnly indicates that the user cannot modify the value of the control
+     * @param value text area content
+     * @param label represents a caption for an item in a user interface
+     * @param errors Form element validation Errors.
+     */
     public TextareaFormElement(@NonNull String name,
                                @NonNull String id,
                                @Nullable Integer cols,
@@ -69,7 +84,7 @@ public class TextareaFormElement extends FormElement {
                                boolean readOnly,
                                @Nullable String value,
                                @Nullable Message label,
-                               @NonNull Collection<Message> errors) {
+                               @NonNull List<Message> errors) {
         this.name = name;
         this.id = id;
         this.cols = cols;
@@ -82,11 +97,13 @@ public class TextareaFormElement extends FormElement {
         this.errors = errors;
     }
 
+    @Override
     @NonNull
     public String getName() {
         return name;
     }
 
+    @Override
     @Nullable
     public String getId() {
         return id;
@@ -109,35 +126,54 @@ public class TextareaFormElement extends FormElement {
         return readOnly;
     }
 
+    /**
+     *
+     * @return If true indicates that the user must specify a value for the input before the owning form can be submitted.
+     */
     public boolean isRequired() {
         return required;
     }
 
+    /**
+     *
+     * @return The visible width of the text control, in average character widths
+     */
     @Nullable
     public Integer getCols() {
         return cols;
     }
 
+    /**
+     *
+     * @return The number of visible text lines for the control.
+     */
     @Nullable
     public Integer getRows() {
         return rows;
     }
 
+    /**
+     *
+     * @return text area content
+     */
     @Nullable
     public String getValue() {
         return value;
     }
 
+    @Override
     @Nullable
     public Message getLabel() {
         return label;
     }
 
+    @Override
     @NonNull
-    public Collection<Message> getErrors() {
+    public List<Message> getErrors() {
         return errors;
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -156,6 +192,7 @@ public class TextareaFormElement extends FormElement {
         return Objects.equals(errors, that.errors);
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
@@ -171,11 +208,18 @@ public class TextareaFormElement extends FormElement {
         return result;
     }
 
+    /**
+     *
+     * @return TextArea FormElement Builder
+     */
     @NonNull
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * Textarea form builder.
+     */
     public static class Builder {
 
         private String name;
@@ -198,37 +242,66 @@ public class TextareaFormElement extends FormElement {
 
         private Message label;
 
+        /**
+         *
+         * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+         * @return The Builder
+         */
         @NonNull
         public Builder required(boolean required) {
             this.required = required;
             return this;
         }
 
-
+        /**
+         *
+         * @param readOnly indicates that the user cannot modify the value of the control
+         * @return The Builder
+         */
         @NonNull
         public Builder readOnly(boolean readOnly) {
             this.readOnly = readOnly;
             return this;
         }
 
+        /**
+         *
+         * @param rows The number of visible text lines for the control.
+         * @return The Builder
+         */
         @NonNull
         public Builder rows(@NonNull Integer rows) {
             this.rows = rows;
             return this;
         }
 
+        /**
+         *
+         * @param cols The visible width of the text control, in average character widths
+         * @return the Builder
+         */
         @NonNull
         public Builder cols(@NonNull Integer cols) {
             this.cols = cols;
             return this;
         }
 
+        /**
+         *
+         * @param name Name of the form control. Submitted with the form as part of a name/value pair
+         * @return The Builder
+         */
         @NonNull
         public Builder name(@NonNull String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         *
+         * @param id It defines an identifier (ID) which must be unique in the whole document
+         * @return The Builder
+         */
         @NonNull
         public Builder id(@NonNull String id) {
             this.id = id;
@@ -248,7 +321,7 @@ public class TextareaFormElement extends FormElement {
 
         /**
          *
-         * @param value The value attribute of the input element
+         * @param value text area content
          * @return the Builder
          */
         @NonNull
@@ -257,18 +330,32 @@ public class TextareaFormElement extends FormElement {
             return this;
         }
 
+        /**
+         *
+         * @param label represents a caption for an item in a user interface
+         * @return The Builder
+         */
         @NonNull
         public Builder label(Message label) {
             this.label = label;
             return this;
         }
 
+        /**
+         *
+         * @param errors Form element validation Errors.
+         * @return The Builder
+         */
         @NonNull
         public Builder errors(@NonNull List<Message> errors) {
             this.errors = errors;
             return this;
         }
 
+        /**
+         *
+         * @return Creates a TextAreaFormElement.
+         */
         @NonNull
         public TextareaFormElement build() {
             return new TextareaFormElement(name,

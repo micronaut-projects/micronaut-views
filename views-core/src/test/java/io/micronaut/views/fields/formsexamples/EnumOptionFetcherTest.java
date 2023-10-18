@@ -18,9 +18,9 @@ class EnumOptionFetcherTest {
         List<Option> optionList = optionFetcher.generate(Genre.class);
         assertNotNull(optionList);
         assertEquals(3, optionList.size());
-        Option music = Option.builder().value("MUSIC").label(new SimpleMessage("genre.music", "Music")).build();
-        Option sport = Option.builder().value("SPORT").label(new SimpleMessage("genre.sport", "Sport")).build();
-        Option theater = Option.builder().value("THEATER").label(new SimpleMessage("genre.theater", "Theater")).build();
+        Option music = Option.builder().value("MUSIC").label(new SimpleMessage("Music", "genre.music")).build();
+        Option sport = Option.builder().value("SPORT").label(new SimpleMessage("Sport", "genre.sport")).build();
+        Option theater = Option.builder().value("THEATER").label(new SimpleMessage("Theater", "genre.theater")).build();
         assertTrue(optionList.stream().anyMatch(option -> option.equals(music)));
         assertTrue(optionList.stream().anyMatch(option -> option.equals(sport)));
         assertTrue(optionList.stream().anyMatch(option -> option.equals(theater)));
@@ -28,7 +28,7 @@ class EnumOptionFetcherTest {
         optionList = optionFetcher.generate(Genre.MUSIC);
         assertNotNull(optionList);
         assertEquals(3, optionList.size());
-        Option selectedMusic = Option.builder().value("MUSIC").label(new SimpleMessage("genre.music", "Music")).selected(true).build();
+        Option selectedMusic = Option.builder().value("MUSIC").label(new SimpleMessage("Music", "genre.music")).selected(true).build();
         assertTrue(optionList.stream().anyMatch(option -> option.equals(selectedMusic)));
         assertTrue(optionList.stream().anyMatch(option -> option.equals(sport)));
         assertTrue(optionList.stream().anyMatch(option -> option.equals(theater)));

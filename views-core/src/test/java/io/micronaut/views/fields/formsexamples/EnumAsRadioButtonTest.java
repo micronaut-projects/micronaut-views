@@ -40,17 +40,17 @@ class EnumAsRadioButtonTest {
 
     private InputRadioFormElement.Builder genreExpectation() {
         return InputRadioFormElement.builder().required(true).name("genre").buttons(Arrays.asList(
-            Radio.builder().label(new SimpleMessage("genre.music", "Music")).value("MUSIC").id("music").build(),
-            Radio.builder().label(new SimpleMessage("genre.sport", "Sport")).value("SPORT").id("sport").build(),
-            Radio.builder().label(new SimpleMessage("genre.theater", "Theater")).value("THEATER").id("theater").build()
+            Radio.builder().label(new SimpleMessage( "Music", "genre.music")).value("MUSIC").id("music").build(),
+            Radio.builder().label(new SimpleMessage("Sport", "genre.sport")).value("SPORT").id("sport").build(),
+            Radio.builder().label(new SimpleMessage( "Theater", "genre.theater")).value("THEATER").id("theater").build()
         ));
     }
 
     private InputRadioFormElement.Builder genreExpectationSportChecked() {
         return InputRadioFormElement.builder().required(true).name("genre").buttons(Arrays.asList(
-            Radio.builder().label(new SimpleMessage("genre.music", "Music")).value("MUSIC").id("music").build(),
-            Radio.builder().label(new SimpleMessage("genre.sport", "Sport")).value("SPORT").id("sport").checked(true).build(),
-            Radio.builder().label(new SimpleMessage("genre.theater", "Theater")).value("THEATER").id("theater").build()
+            Radio.builder().label(new SimpleMessage("Music", "genre.music")).value("MUSIC").id("music").build(),
+            Radio.builder().label(new SimpleMessage("Sport", "genre.sport")).value("SPORT").id("sport").checked(true).build(),
+            Radio.builder().label(new SimpleMessage("Theater", "genre.theater")).value("THEATER").id("theater").build()
         ));
     }
 }

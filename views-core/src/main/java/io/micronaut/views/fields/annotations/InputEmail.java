@@ -25,6 +25,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * Annotation to specify a field is an email input.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email">Input Email</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
 @Documented
 @Retention(RUNTIME)

@@ -15,9 +15,7 @@
  */
 package io.micronaut.views.fields.annotations;
 
-import io.micronaut.views.fields.EnumOptionFetcher;
 import io.micronaut.views.fields.EnumRadioFetcher;
-import io.micronaut.views.fields.OptionFetcher;
 import io.micronaut.views.fields.RadioFetcher;
 
 import java.lang.annotation.Documented;
@@ -30,10 +28,16 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * Annotation to specify a field is an email input.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio">Input Radio</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
 @Documented
 @Retention(RUNTIME)
 @Target({ElementType.FIELD})
 public @interface InputRadio {
+    /**
+     *
+     * @return Class of the bean of type {@link RadioFetcher}.
+     */
     Class<? extends RadioFetcher> fetcher() default EnumRadioFetcher.class;
 }

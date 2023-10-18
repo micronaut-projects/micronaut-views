@@ -18,18 +18,19 @@ package io.micronaut.views.fields;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import jakarta.validation.constraints.Null;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password">Input Text</a>
+ * Input Password.
+ * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password">Input Password</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputPasswordFormElement.Builder.class))
-public class InputPasswordFormElement extends FormElement {
+public class InputPasswordFormElement implements FormElement, FormElementAttributes, GlobalAttributes {
     @NonNull
     private final String name;
 
@@ -45,7 +46,7 @@ public class InputPasswordFormElement extends FormElement {
     private final boolean required;
 
     /**
-     * Whether the field cannot be edited by the use
+     * Whether the field cannot be edited by the use.
      */
     private final boolean readOnly;
 
@@ -74,7 +75,7 @@ public class InputPasswordFormElement extends FormElement {
     private final String pattern;
 
     /**
-     * The value attribute of the input element
+     * The value attribute of the input element.
      */
     @Nullable
     private final String value;
@@ -83,14 +84,14 @@ public class InputPasswordFormElement extends FormElement {
     private final Message label;
 
     @NonNull
-    private final Collection<Message> errors;
+    private final List<Message> errors;
 
     /**
      *
-     * @param name
-     * @param id
+     * @param name Name of the form control. Submitted with the form as part of a name/value pair
+     * @param id It defines an identifier (ID) which must be unique in the whole document
      * @param placeholder The placeholder attribute is a string that provides a brief hint to the user as to what kind of information is expected in the field.
-     * @param required
+     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
      * @param readOnly A Boolean attribute which, if present, means this field cannot be edited by the user.
      * @param maxLength The maximum string length that the user can enter into the text input.
      * @param minLength The minimum string length that the user can enter into the text input.
@@ -111,7 +112,7 @@ public class InputPasswordFormElement extends FormElement {
                                     @Nullable Integer size,
                                     @Nullable String value,
                                     @Nullable Message label,
-                                    @NonNull Collection<Message> errors) {
+                                    @NonNull List<Message> errors) {
         this.name = name;
         this.id = id;
         this.placeholder = placeholder;
@@ -126,11 +127,13 @@ public class InputPasswordFormElement extends FormElement {
         this.errors = errors;
     }
 
+    @Override
     @NonNull
     public String getName() {
         return name;
     }
 
+    @Override
     @Nullable
     public String getId() {
         return id;
@@ -153,6 +156,7 @@ public class InputPasswordFormElement extends FormElement {
         return readOnly;
     }
 
+    @Override
     public boolean isRequired() {
         return required;
     }
@@ -192,21 +196,28 @@ public class InputPasswordFormElement extends FormElement {
         return size;
     }
 
+    /**
+     *
+     * @return Input password value.
+     */
     @Nullable
     public String getValue() {
         return value;
     }
 
+    @Override
     @Nullable
     public Message getLabel() {
         return label;
     }
 
+    @Override
     @NonNull
-    public Collection<Message> getErrors() {
+    public List<Message> getErrors() {
         return errors;
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -229,6 +240,7 @@ public class InputPasswordFormElement extends FormElement {
         return Objects.equals(errors, that.errors);
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
@@ -246,11 +258,18 @@ public class InputPasswordFormElement extends FormElement {
         return result;
     }
 
+    /**
+     *
+     * @return the Input Password FormElement Builder
+     */
     @NonNull
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * Input Password Builder.
+     */
     public static class Builder {
 
         private String name;
@@ -277,19 +296,33 @@ public class InputPasswordFormElement extends FormElement {
 
         private Message label;
 
+        /**
+         *
+         * @param pattern The pattern attribute, when specified, is a regular expression that the input's value must match for the value to pass constraint validation.
+         * @return The Builder
+         */
         @NonNull
         public Builder pattern(@NonNull String pattern) {
             this.pattern = pattern;
             return this;
         }
 
+        /**
+         *
+         * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+         * @return the Builder.
+         */
         @NonNull
         public Builder required(boolean required) {
             this.required = required;
             return this;
         }
 
-
+        /**
+         *
+         * @param readOnly Whether the field cannot be edited by the use
+         * @return The Builder
+         */
         @NonNull
         public Builder readOnly(boolean readOnly) {
             this.readOnly = readOnly;
@@ -330,12 +363,22 @@ public class InputPasswordFormElement extends FormElement {
             return this;
         }
 
+        /**
+         *
+         * @param name Name of the form control. Submitted with the form as part of a name/value pair
+         * @return The builder
+         */
         @NonNull
         public Builder name(@NonNull String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         *
+         * @param id It defines an identifier (ID) which must be unique in the whole document
+         * @return the Builder
+         */
         @NonNull
         public Builder id(@NonNull String id) {
             this.id = id;
@@ -364,18 +407,32 @@ public class InputPasswordFormElement extends FormElement {
             return this;
         }
 
+        /**
+         *
+         * @param label represents a caption for an item in a user interface
+         * @return The Builder
+         */
         @NonNull
         public Builder label(Message label) {
             this.label = label;
             return this;
         }
 
+        /**
+         *
+         * @param errors Form element validation Errors.
+         * @return The Builder
+         */
         @NonNull
         public Builder errors(@NonNull List<Message> errors) {
             this.errors = errors;
             return this;
         }
 
+        /**
+         *
+         * @return Creates a {@link InputPasswordFormElement}.
+         */
         @NonNull
         public InputPasswordFormElement build() {
             return new InputPasswordFormElement(name, id, placeholder, required, readOnly, maxLength, minLength, pattern, size, value, label, errors == null ? Collections.emptyList() : errors);

@@ -4,7 +4,6 @@ import io.micronaut.context.annotation.Property;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.*;
 import io.micronaut.views.fields.annotations.InputRadio;
@@ -94,14 +93,14 @@ public class EventCreateFormTest {
         SelectFormElement genreExpectation = genreExpectation(null).build();
         assertTrue(assertFormElement(fieldset, genreExpectation));
 
-        assertTrue(fieldset.getFields().stream().anyMatch(formElement -> formElement instanceof InputDataTimeLocalFormElement));
-        InputDataTimeLocalFormElement eventStartExpectation = eventStartExpectation().build();
+        assertTrue(fieldset.getFields().stream().anyMatch(formElement -> formElement instanceof InputDateTimeLocalFormElement));
+        InputDateTimeLocalFormElement eventStartExpectation = eventStartExpectation().build();
         assertTrue(assertFormElement(fieldset, eventStartExpectation));
 
-        InputDataTimeLocalFormElement saleClosingDateExpectation = saleClosingDateExpectation().build();
+        InputDateTimeLocalFormElement saleClosingDateExpectation = saleClosingDateExpectation().build();
         assertTrue(assertFormElement(fieldset, saleClosingDateExpectation));
 
-        InputDataTimeLocalFormElement doorsOpeningExpectation = doorsOpeningExpectation().build();
+        InputDateTimeLocalFormElement doorsOpeningExpectation = doorsOpeningExpectation().build();
         assertTrue(assertFormElement(fieldset, doorsOpeningExpectation));
 
         InputDateFormElement eventDateExpectation = eventDateExpectation().build();
@@ -162,7 +161,7 @@ public class EventCreateFormTest {
                 builder.with("min", SALE_CLOSING_DATE);
             }
         });
-        nameExpectation = nameExpectation().value("").errors(Collections.singletonList(new SimpleMessage("eventcreateform.name.notblank", "must not be blank"))).build();
+        nameExpectation = nameExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "eventcreateform.name.notblank"))).build();
         assertTrue(assertFormElement(fieldset, nameExpectation));
 
         highlightedExpectation = highlightedExpectationChecked().build();
@@ -185,71 +184,71 @@ public class EventCreateFormTest {
     }
 
     private TextareaFormElement.Builder additionalInfoExpectation() {
-        return TextareaFormElement.builder().required(false).id("additionalInfo").name("additionalInfo").label(new SimpleMessage("eventcreateform.additionalInfo", "Additional Info"));
+        return TextareaFormElement.builder().required(false).id("additionalInfo").name("additionalInfo").label(new SimpleMessage("Additional Info", "eventcreateform.additionalInfo"));
     }
 
     private InputTextFormElement.Builder nameExpectation() {
-        return InputTextFormElement.builder().required(true).id("name").name("name").label(new SimpleMessage("eventcreateform.name", "Name"));
+        return InputTextFormElement.builder().required(true).id("name").name("name").label(new SimpleMessage("Name", "eventcreateform.name"));
     }
 
     private InputCheckboxFormElement.Builder highlightedExpectation() {
-        return InputCheckboxFormElement.builder().checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("false").label(new SimpleMessage("eventcreateform.highlighted", "Highlighted")).build()));
+        return InputCheckboxFormElement.builder().checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("false").label(new SimpleMessage("Highlighted", "eventcreateform.highlighted")).build()));
     }
 
     private InputCheckboxFormElement.Builder highlightedExpectationChecked() {
-        return InputCheckboxFormElement.builder().checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("true").checked(true).label(new SimpleMessage("eventcreateform.highlighted", "Highlighted")).build()));
+        return InputCheckboxFormElement.builder().checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("true").checked(true).label(new SimpleMessage("Highlighted", "eventcreateform.highlighted")).build()));
     }
 
     private InputNumberFormElement.Builder capacityExpectation() {
-        return InputNumberFormElement.builder().required(true).min(1).id("capacity").name("capacity").label(new SimpleMessage("eventcreateform.capacity", "Capacity"));
+        return InputNumberFormElement.builder().required(true).min(1).id("capacity").name("capacity").label(new SimpleMessage("Capacity", "eventcreateform.capacity"));
     }
 
     private InputRadioFormElement.Builder statusExpectation() {
         return InputRadioFormElement.builder().required(true).name("status").buttons(Arrays.asList(
-            Radio.builder().value("DRAFT").id("draft").label(new SimpleMessage("status.draft", "Draft")).build(),
-            Radio.builder().value("CLOSED").id("closed").label(new SimpleMessage("status.closed", "Closed")).build(),
-            Radio.builder().value("OPEN").id("open").label(new SimpleMessage("status.open", "Open")).build(),
-            Radio.builder().value("CANCELED").id("canceled").label(new SimpleMessage("status.canceled", "Canceled")).build()
+            Radio.builder().value("DRAFT").id("draft").label(new SimpleMessage("Draft", "status.draft")).build(),
+            Radio.builder().value("CLOSED").id("closed").label(new SimpleMessage("Closed", "status.closed")).build(),
+            Radio.builder().value("OPEN").id("open").label(new SimpleMessage("Open", "status.open")).build(),
+            Radio.builder().value("CANCELED").id("canceled").label(new SimpleMessage( "Canceled", "status.canceled")).build()
         ));
     }
 
     private InputRadioFormElement.Builder statusExpectationWithClosedStatus() {
         return InputRadioFormElement.builder().required(true).name("status").buttons(Arrays.asList(
-            Radio.builder().value("DRAFT").id("draft").label(new SimpleMessage("status.draft", "Draft")).build(),
-            Radio.builder().value("CLOSED").id("closed").label(new SimpleMessage("status.closed", "Closed")).checked(true).build(),
-            Radio.builder().value("OPEN").id("open").label(new SimpleMessage("status.open", "Open")).build(),
-            Radio.builder().value("CANCELED").id("canceled").label(new SimpleMessage("status.canceled", "Canceled")).build()
+            Radio.builder().value("DRAFT").id("draft").label(new SimpleMessage("Draft", "status.draft")).build(),
+            Radio.builder().value("CLOSED").id("closed").label(new SimpleMessage("Closed", "status.closed")).checked(true).build(),
+            Radio.builder().value("OPEN").id("open").label(new SimpleMessage("Open", "status.open")).build(),
+            Radio.builder().value("CANCELED").id("canceled").label(new SimpleMessage( "Canceled", "status.canceled")).build()
         ));
     }
 
-    private InputDataTimeLocalFormElement.Builder eventStartExpectation() {
-        return InputDataTimeLocalFormElement.builder()
+    private InputDateTimeLocalFormElement.Builder eventStartExpectation() {
+        return InputDateTimeLocalFormElement.builder()
             .min(DOORS_OPENING)
             .required(true)
             .id("eventStart")
             .name("eventStart")
-            .label(new SimpleMessage("eventcreateform.eventStart", "Event Start"));
+            .label(new SimpleMessage( "Event Start", "eventcreateform.eventStart"));
     }
 
-    private InputDataTimeLocalFormElement.Builder doorsOpeningExpectation() {
-        return InputDataTimeLocalFormElement.builder()
+    private InputDateTimeLocalFormElement.Builder doorsOpeningExpectation() {
+        return InputDateTimeLocalFormElement.builder()
             .min(SALE_CLOSING_DATE)
             .required(true)
             .id("doorsOpening")
             .name("doorsOpening")
-            .label(new SimpleMessage("eventcreateform.doorsOpening", "Doors Opening"));
+            .label(new SimpleMessage( "Doors Opening", "eventcreateform.doorsOpening"));
     }
 
-    private InputDataTimeLocalFormElement.Builder saleClosingDateExpectation() {
-        return InputDataTimeLocalFormElement.builder().required(true).id("saleClosingDate").name("saleClosingDate").label(new SimpleMessage("eventcreateform.saleClosingDate", "Sale Closing Date"));
+    private InputDateTimeLocalFormElement.Builder saleClosingDateExpectation() {
+        return InputDateTimeLocalFormElement.builder().required(true).id("saleClosingDate").name("saleClosingDate").label(new SimpleMessage("Sale Closing Date", "eventcreateform.saleClosingDate"));
     }
 
     private InputDateFormElement.Builder eventDateExpectation() {
-        return InputDateFormElement.builder().required(true).id("eventDate").name("eventDate").label(new SimpleMessage("eventcreateform.eventDate", "Event Date"));
+        return InputDateFormElement.builder().required(true).id("eventDate").name("eventDate").label(new SimpleMessage("Event Date", "eventcreateform.eventDate"));
     }
 
     private InputUrlFormElement.Builder urlExpectation() {
-        return InputUrlFormElement.builder().required(true).id("url").name("url").label(new SimpleMessage("eventcreateform.url", "Url"));
+        return InputUrlFormElement.builder().required(true).id("url").name("url").label(new SimpleMessage("Url", "eventcreateform.url"));
     }
 
     private SelectFormElement.Builder organizerExpectation() {
@@ -257,29 +256,29 @@ public class EventCreateFormTest {
             .required(true)
             .id("organizerId")
             .name("organizerId")
-            .label(new SimpleMessage("eventcreateform.organizerId", "Organizer Id"))
+            .label(new SimpleMessage("Organizer Id", "eventcreateform.organizerId"))
             .options(Arrays.asList(
-                Option.builder().label(new SimpleMessage("organizerId.1", "Softamo SL")).value("1").build(),
-                Option.builder().label(new SimpleMessage("organizerId.2", "Producciones Malvhadas")).value("2").build()
+                Option.builder().label(new SimpleMessage("Softamo SL", null)).value("1").build(),
+                Option.builder().label(new SimpleMessage("Producciones Malvhadas", null)).value("2").build()
                 ));
     }
 
     private SelectFormElement.Builder genreExpectation(BiConsumer<Genre, Option.Builder> builderConsumer) {
         List<Option> options = new ArrayList<>();
 
-        Option.Builder musicBuilder = Option.builder().label(new SimpleMessage("genre.music", "Music")).value("MUSIC");
+        Option.Builder musicBuilder = Option.builder().label(new SimpleMessage("Music", "genre.music")).value("MUSIC");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.MUSIC, musicBuilder);
         }
         options.add(musicBuilder.build());
 
-        Option.Builder sportBuilder = Option.builder().label(new SimpleMessage("genre.sport", "Sport")).value("SPORT");
+        Option.Builder sportBuilder = Option.builder().label(new SimpleMessage("Sport", "genre.sport")).value("SPORT");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.SPORT, sportBuilder);
         }
         options.add(sportBuilder.build());
 
-        Option.Builder theaterBuilder = Option.builder().label(new SimpleMessage("genre.theater", "Theater")).value("THEATER");
+        Option.Builder theaterBuilder = Option.builder().label(new SimpleMessage( "Theater", "genre.theater")).value("THEATER");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.THEATER, theaterBuilder);
         }
@@ -289,7 +288,7 @@ public class EventCreateFormTest {
             .required(true)
             .id("genre")
             .name("genre")
-            .label(new SimpleMessage("eventcreateform.genre", "Genre"))
+            .label(new SimpleMessage("Genre", "eventcreateform.genre" ))
             .options(options);
     }
 
@@ -330,13 +329,13 @@ public class EventCreateFormTest {
         }
 
         @NonNull
-        public static Option toOption(@NonNull Organizer product, @Nullable Long organizerId) {
+        public static Option toOption(@NonNull Organizer organizer, @Nullable Long organizerId) {
             Option.Builder builder = Option.builder()
-                .value(product.id().toString())
-                .label(new SimpleMessage("organizerId." + product.id(), product.name()));
+                .value(organizer.id().toString())
+                .label(new SimpleMessage(organizer.name(), null));
 
             if (organizerId != null) {
-                if (product.id().equals(organizerId)) {
+                if (organizer.id().equals(organizerId)) {
                     builder.selected(true);
                 }
             }

@@ -54,16 +54,16 @@ class LoginFormTest {
         assertTrue(fieldset.getFields().stream().anyMatch( it -> it instanceof InputPasswordFormElement));
         usernameExpectation = usernameExpectation().value("sherlock").build();
         assertTrue(assertFormElement(fieldset, usernameExpectation));
-        inputPasswordFormElement = passwordExpectation().value("").errors(Collections.singletonList(new SimpleMessage("loginform.password.notblank", "must not be blank"))).build();
+        inputPasswordFormElement = passwordExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "loginform.password.notblank"))).build();
         assertTrue(assertFormElement(fieldset, inputPasswordFormElement));
     }
 
     private InputTextFormElement.Builder usernameExpectation() {
-        return InputTextFormElement.builder().required(true).id("username").name("username").label(new SimpleMessage("loginform.username", "Username"));
+        return InputTextFormElement.builder().required(true).id("username").name("username").label(new SimpleMessage("Username", "loginform.username"));
     }
 
     private InputPasswordFormElement.Builder passwordExpectation() {
-        return InputPasswordFormElement.builder().required(true).id("password").name("password").label(new SimpleMessage("loginform.password", "Password"));
+        return InputPasswordFormElement.builder().required(true).id("password").name("password").label(new SimpleMessage("Password", "loginform.password"));
     }
 
     @Property(name = "spec.name", value = "LoginFormTest")

@@ -21,38 +21,30 @@ import io.micronaut.core.annotation.Nullable;
 import java.util.List;
 
 /**
- * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes">Input Attributes</a>
+ * HTML Form Element Attributes.
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
-public interface InputAttributes {
-    @Nullable
-    String getId();
+public interface FormElementAttributes {
 
     /**
-     * The name of the form control. Submitted with the form as part of a name/value pair.
-     * @return the Name of the form control.
+     *
+     * @return Name of the form control. Submitted with the form as part of a name/value pair
      */
     @NonNull
     String getName();
 
+    /**
+     *
+     * @return represents a caption for an item in a user interface
+     */
     @Nullable
-    String getValue();
-
-    @NonNull
-    InputType getType();
+    Message getLabel();
 
     /**
      *
-     * @return Whether a value is required or must be checked for the form to be submittable.
+     * @return Form element validation Errors.
      */
-    boolean isRequired();
-
-
     @NonNull
     List<Message> getErrors();
-
-    boolean hasErrors();
-
-
-    @Nullable
-    Message getLabel();
 }

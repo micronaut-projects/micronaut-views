@@ -22,31 +22,47 @@ import java.util.Objects;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden">input hidden</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputHiddenFormElement.Builder.class))
-public class InputHiddenFormElement extends FormElement {
+public class InputHiddenFormElement implements FormElement {
     @NonNull
     private final String name;
 
     @NonNull
     private final String value;
 
+    /**
+     *
+     * @param name Name of the form control. Submitted with the form as part of a name/value pair
+     * @param value A string representing the value of the hidden field.
+     */
     public InputHiddenFormElement(@NonNull String name,
                                   @NonNull String value) {
         this.name = name;
         this.value = value;
     }
 
+    /**
+     *
+     * @return Name of the form control. Submitted with the form as part of a name/value pair
+     */
     @NonNull
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @return A string representing the value of the hidden field
+     */
     @NonNull
     public String getValue() {
         return value;
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,6 +72,7 @@ public class InputHiddenFormElement extends FormElement {
         return Objects.equals(value, that.value);
     }
 
+    @SuppressWarnings("NeedBraces")
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
@@ -63,11 +80,18 @@ public class InputHiddenFormElement extends FormElement {
         return result;
     }
 
+    /**
+     *
+     * @return {@link InputHiddenFormElement} builder.
+     */
     @NonNull
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * {@link InputHiddenFormElement} Builder.
+     */
     public static class Builder {
         @NonNull
         private String name;
@@ -75,18 +99,32 @@ public class InputHiddenFormElement extends FormElement {
         @NonNull
         private String value;
 
+        /**
+         *
+         * @param value Name of the form control. Submitted with the form as part of a name/value pair
+         * @return The Builder
+         */
         @NonNull
         public Builder value(@NonNull String value) {
             this.value = value;
             return this;
         }
 
+        /**
+         *
+         * @param name Name of the form control. Submitted with the form as part of a name/value pair
+         * @return The Builder
+         */
         @NonNull
         public Builder name(@NonNull String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         *
+         * @return Creates a {@link InputHiddenFormElement}.
+         */
         @NonNull
         public InputHiddenFormElement build() {
             return new InputHiddenFormElement(name, value);

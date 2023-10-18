@@ -25,9 +25,19 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * Annotation to specify a field is an HTML select element.
+ * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">Select</a>
+ * @author Sergio del Amo
+ * @since 4.1.0
+ */
 @Documented
 @Retention(RUNTIME)
 @Target({ElementType.FIELD})
 public @interface Select {
+    /**
+     *
+     * @return The class of the bean of type {@link OptionFetcher}
+     */
     Class<? extends OptionFetcher> fetcher() default EnumOptionFetcher.class;
 }

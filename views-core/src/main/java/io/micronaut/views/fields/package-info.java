@@ -13,3 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Classes related to the generation of HTML Fieldset representations for a given Java class.
+ * @author Sergio del Amo
+ * @since 4.1.0
+ */
+package io.micronaut.views.fields;
