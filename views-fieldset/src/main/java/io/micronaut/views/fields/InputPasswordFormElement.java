@@ -60,7 +60,7 @@ public class InputPasswordFormElement implements FormElement, FormElementAttribu
      * The minimum string length that the user can enter into the password input.
      */
     @Nullable
-    private Integer minLength;
+    private final Integer minLength;
 
     /**
      * The size attribute is a numeric value indicating how many characters wide the input field should be.
