@@ -213,7 +213,7 @@ public class InputDateFormElement implements FormElement, GlobalAttributes, Form
 
         /**
          *
-         * @param max The latest date to accep
+         * @param max The latest date to accept
          * @return The Builder
          */
         @NonNull
