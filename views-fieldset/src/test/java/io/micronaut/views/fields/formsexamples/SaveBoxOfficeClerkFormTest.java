@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Property(name = "spec.name", value = "SaveBoxOfficeClerkFormTest")
 @MicronautTest(startApplication = false)
-public class SaveBoxOfficeClerkFormTest {
+class SaveBoxOfficeClerkFormTest {
     @Introspected
     record SaveBoxOfficeClerkForm(@InputHidden Long eventId,
                                   @Select(fetcher = BoxOfficeClerkOptionFetcher.class) @NotNull Long userId) {

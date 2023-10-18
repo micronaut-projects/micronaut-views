@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Property(name = "spec.name", value = "EventCreateFormTest")
 @MicronautTest(startApplication = false)
-public class EventCreateFormTest {
+class EventCreateFormTest {
     private final static LocalDateTime EVENT_START = LocalDateTime.of(2023, 8, 31, 18, 0);
 
     private final static LocalDateTime DOORS_OPENING = LocalDateTime.of(2023, 8, 31, 16, 0);
