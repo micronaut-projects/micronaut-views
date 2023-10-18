@@ -62,7 +62,7 @@ public class InputEmailFormElement implements FormElement, GlobalAttributes, For
      * The size attribute is a numeric value indicating how many characters wide the input field should be.
      */
     @Nullable
-    private Integer size;
+    private final Integer size;
 
     /**
      * The pattern attribute, when specified, is a regular expression that the input's value must match for the value to pass constraint validation.
