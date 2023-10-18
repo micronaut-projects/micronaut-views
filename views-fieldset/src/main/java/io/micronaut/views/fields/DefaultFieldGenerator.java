@@ -339,7 +339,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         if (beanWrapper != null) {
             builder.with(BUILDER_METHOD_ERRORS, messagesForBeanProperty(beanProperty, ex));
         }
-        minForBeanProperty(beanProperty).ifPresent(min -> builder.with(BULDER_METHOD_MIN, min));
+        minForBeanProperty(beanProperty).ifPresent(min -> builder.with(BUILDER_METHOD_MIN, min));
         if (builderConsumer != null) {
             builderConsumer.accept(beanProperty.getName(), builder);
         }
