@@ -25,7 +25,7 @@ import java.util.Objects;
 /**
  * {@link Message} implementation backed by a {@link ConstraintViolation}.
  * @author Sergio del Amo
- * @since XXXX
+ * @since 4.1.0
  */
 @Introspected
 public class ConstraintViolationMessage implements Message {
