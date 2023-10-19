@@ -280,7 +280,11 @@ public interface FormElementRenderer<T extends FormElement> {
                                @NonNull Message message,
                                @NonNull MessageSource messageSource,
                                @NonNull Locale locale) {
-        return render(TAG_LABEL, id != null ? Collections.singletonList(new HtmlAttribute(ATTR_FOR, id)) : Collections.emptyList(), content(message, messageSource, locale));
+        return render(
+            TAG_LABEL,
+            id != null ? Collections.singletonList(new HtmlAttribute(ATTR_FOR, id)) : Collections.emptyList(),
+            content(message, messageSource, locale)
+        );
     }
 
     /**
