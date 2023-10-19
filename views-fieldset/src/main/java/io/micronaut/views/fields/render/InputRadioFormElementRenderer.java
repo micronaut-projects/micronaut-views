@@ -70,8 +70,7 @@ public class InputRadioFormElementRenderer implements FormElementRenderer<InputR
      */
     protected List<HtmlAttribute> attributes(@NonNull InputRadioFormElement el,
                                              @NonNull Radio radio) {
-        List<HtmlAttribute> attributes = new ArrayList<>();
-        attributes.add(new HtmlAttribute(ATTR_TYPE, ATTR_TYPE_RADIO));
+        List<HtmlAttribute> attributes = attributes(ATTR_TYPE_RADIO);
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.required()) {
             attributes.add(new HtmlAttribute(ATTR_REQUIRED, null));

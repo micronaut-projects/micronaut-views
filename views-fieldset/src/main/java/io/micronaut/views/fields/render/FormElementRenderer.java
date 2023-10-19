@@ -250,7 +250,7 @@ public interface FormElementRenderer<T extends FormElement> {
     @NonNull
     default String render(@NonNull String tag,
                           @NonNull List<HtmlAttribute> attributes) {
-        return "<" + tag + " " + String.join(" ", attributes.stream().map(HtmlAttribute::toString).toList()) + "/>";
+        return LOWER_THAN + tag + SPACE + String.join(SPACE, attributes.stream().map(HtmlAttribute::toString).toList()) + SLASH + GREATER_THAN;
     }
 
     /**
@@ -328,13 +328,25 @@ public interface FormElementRenderer<T extends FormElement> {
 
     /**
      *
+     * @param type input type
+     * @return HTML Attributes
+     */
+    @NonNull
+    default List<HtmlAttribute> attributes(@NonNull String type) {
+        List<HtmlAttribute> attributes = new ArrayList<>();
+        attributes.add(new HtmlAttribute(ATTR_TYPE, type));
+        return attributes;
+    }
+
+    /**
+     *
      * @param el InputStringFormElement
      * @param type input type
      * @return HTML Attributes
      */
-    default List<HtmlAttribute> attributes(InputStringFormElement el, String type) {
-        List<HtmlAttribute> attributes = new ArrayList<>();
-        attributes.add(new HtmlAttribute(ATTR_TYPE, type));
+    @NonNull
+    default List<HtmlAttribute> attributes(@NonNull InputStringFormElement el, @NonNull String type) {
+        List<HtmlAttribute> attributes = attributes(type);
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.value() != null) {
             attributes.add(new HtmlAttribute(ATTR_VALUE, el.value()));

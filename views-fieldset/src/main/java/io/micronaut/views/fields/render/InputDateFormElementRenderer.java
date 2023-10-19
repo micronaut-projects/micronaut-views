@@ -20,8 +20,6 @@ import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.InputDateFormElement;
 import jakarta.inject.Singleton;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,8 +58,7 @@ public class InputDateFormElementRenderer implements FormElementRenderer<InputDa
      */
     @NonNull
     protected List<HtmlAttribute> attributes(@NonNull InputDateFormElement el) {
-        List<HtmlAttribute> attributes = new ArrayList<>();
-        attributes.add(new HtmlAttribute(ATTR_TYPE, ATTR_TYPE_DATE));
+        List<HtmlAttribute> attributes = attributes(ATTR_TYPE_DATE);
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.value() != null) {
             attributes.add(new HtmlAttribute(ATTR_VALUE, el.value().toString()));
