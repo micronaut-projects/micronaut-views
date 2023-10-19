@@ -53,7 +53,7 @@ public record InputEmailFormElement(@NonNull String name,
                                     @Nullable Integer size,
                                     @Nullable String value,
                                     @Nullable Message label,
-                                    @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes {
+                                    @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes, InputStringFormElement {
 
     /**
      *

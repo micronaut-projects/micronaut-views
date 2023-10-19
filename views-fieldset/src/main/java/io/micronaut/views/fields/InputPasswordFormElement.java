@@ -53,7 +53,7 @@ public record InputPasswordFormElement(@NonNull String name,
                                        @Nullable Integer size,
                                        @Nullable String value,
                                        @Nullable Message label,
-                                       @NonNull List<Message> errors) implements FormElement, FormElementAttributes, GlobalAttributes {
+                                       @NonNull List<Message> errors) implements FormElement, FormElementAttributes, GlobalAttributes, InputStringFormElement {
 
     /**
      *
