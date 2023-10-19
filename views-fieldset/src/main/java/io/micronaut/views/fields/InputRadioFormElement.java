@@ -27,14 +27,15 @@ import java.util.List;
  * @param name Name of the form control. Submitted with the form as part of a name/value pair
  * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
  * @param buttons Radio Buttons
- *
+ * @param label HTML label
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputRadioFormElement.Builder.class))
 public record InputRadioFormElement(@NonNull String name,
                                     boolean required,
-                                    @NonNull List<Radio> buttons) implements FormElement {
+                                    @NonNull List<Radio> buttons,
+                                    @NonNull Message label) implements FormElement {
 
     /**
      *
@@ -53,6 +54,19 @@ public record InputRadioFormElement(@NonNull String name,
         private String name;
 
         private boolean required;
+
+        private Message label;
+
+        /**
+         *
+         * @param label represents a caption for an item in a user interface
+         * @return The Builder
+         */
+        @NonNull
+        public Builder label(Message label) {
+            this.label = label;
+            return this;
+        }
 
         /**
          *
@@ -91,7 +105,7 @@ public record InputRadioFormElement(@NonNull String name,
          * @return Instantiates a {@link InputRadioFormElement}.
          */
         public InputRadioFormElement build() {
-            return new InputRadioFormElement(name, required, buttons == null ? Collections.emptyList() : buttons);
+            return new InputRadioFormElement(name, required, buttons == null ? Collections.emptyList() : buttons, label);
         }
     }
 }

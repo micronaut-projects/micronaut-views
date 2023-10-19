@@ -36,6 +36,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
@@ -188,7 +189,9 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         if (beanProperty.getType() == LocalDateTime.class) {
             return Optional.of(InputDateTimeLocalFormElement.class);
         }
-
+        if (beanProperty.getType() == LocalTime.class) {
+            return Optional.of(InputTimeFormElement.class);
+        }
         if (Number.class.isAssignableFrom(beanProperty.getType())) {
             return Optional.of(InputNumberFormElement.class);
         }

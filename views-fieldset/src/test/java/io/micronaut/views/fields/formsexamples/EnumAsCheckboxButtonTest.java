@@ -40,7 +40,9 @@ class EnumAsCheckboxButtonTest {
     }
 
     private InputCheckboxFormElement.Builder genreExpectation() {
-        return InputCheckboxFormElement.builder().checkboxes(Arrays.asList(
+        return InputCheckboxFormElement.builder()
+            .label(Message.of("Genre", "eventcreateform.genre"))
+            .checkboxes(Arrays.asList(
             Checkbox.builder().label(new SimpleMessage( "Music", "genre.music")).value("MUSIC").id("music").build(),
             Checkbox.builder().label(new SimpleMessage("Sport", "genre.sport")).value("SPORT").id("sport").build(),
             Checkbox.builder().label(new SimpleMessage("Theater", "genre.theater")).value("THEATER").id("theater").build()
@@ -48,7 +50,9 @@ class EnumAsCheckboxButtonTest {
     }
 
     private InputCheckboxFormElement.Builder genreExpectationSportChecked() {
-        return InputCheckboxFormElement.builder().checkboxes(Arrays.asList(
+        return InputCheckboxFormElement.builder()
+            .label(Message.of("Genre", "eventcreateform.genre"))
+            .checkboxes(Arrays.asList(
             Checkbox.builder().label(new SimpleMessage( "Music", "genre.music")).value("MUSIC").id("music").build(),
             Checkbox.builder().label(new SimpleMessage("Sport", "genre.sport")).value("SPORT").id("sport").checked(true).build(),
             Checkbox.builder().label(new SimpleMessage("Theater", "genre.theater")).value("THEATER").id("theater").build()

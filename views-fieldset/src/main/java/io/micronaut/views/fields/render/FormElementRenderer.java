@@ -177,6 +177,11 @@ public interface FormElementRenderer<T extends FormElement> {
     String ATTR_TYPE_DATE = "date";
 
     /**
+     * HTML Input type time.
+     */
+    String ATTR_TYPE_TIME = "time";
+
+    /**
      * HTML Input type datetime-local.
      */
     String ATTR_TYPE_DATE_TIME_LOCAL = "datetime-local";

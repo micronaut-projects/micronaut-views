@@ -25,12 +25,13 @@ import java.util.List;
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">Input Checkbox</a>
  * @param checkboxes Checkboxes
- *
+ * @param label HTML label
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputCheckboxFormElement.Builder.class))
-public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes) implements FormElement {
+public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes,
+                                       @NonNull Message label) implements FormElement {
 
     /**
      *
@@ -48,6 +49,8 @@ public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes) imple
         @Nullable
         private List<Checkbox> checkboxes;
 
+        private Message label;
+
         /**
          *
          * @param checkboxes Checkboxes
@@ -61,11 +64,22 @@ public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes) imple
 
         /**
          *
+         * @param label represents a caption for an item in a user interface
+         * @return The Builder
+         */
+        @NonNull
+        public Builder label(Message label) {
+            this.label = label;
+            return this;
+        }
+
+        /**
+         *
          * @return Creates a {@link InputCheckboxFormElement}
          */
         @NonNull
         public InputCheckboxFormElement build() {
-            return new InputCheckboxFormElement(checkboxes == null ? Collections.emptyList() : checkboxes);
+            return new InputCheckboxFormElement(checkboxes == null ? Collections.emptyList() : checkboxes, label);
         }
     }
 }
