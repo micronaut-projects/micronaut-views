@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text">Input Text</a>
+ * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url">Input URL</a>
  * @param name Name of the form control. Submitted with the form as part of a name/value pair
  * @param id It defines an identifier (ID) which must be unique in the whole document
  * @param placeholder The placeholder attribute is a string that provides a brief hint to the user as to what kind of information is expected in the field.
@@ -49,7 +49,7 @@ public record InputUrlFormElement(@NonNull String name,
                                   @Nullable Integer size,
                                   @Nullable String value,
                                   @Nullable Message label,
-                                  @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes {
+                                  @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes, InputStringFormElement {
 
     /**
      *

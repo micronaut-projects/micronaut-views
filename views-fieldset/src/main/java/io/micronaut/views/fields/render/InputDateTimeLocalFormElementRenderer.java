@@ -1,0 +1,83 @@
+/*
+ * Copyright 2017-2023 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package io.micronaut.views.fields.render;
+
+import io.micronaut.context.MessageSource;
+import io.micronaut.context.annotation.Secondary;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.views.fields.InputDateTimeLocalFormElement;
+import jakarta.inject.Singleton;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+/**
+ * {@link FormElementRenderer} implementation of {@link InputDateTimeLocalFormElement}.
+ * @author Sergio del Amo
+ * @since 4.1.0
+ */
+@Secondary
+@Singleton
+public class InputDateTimeLocalFormElementRenderer implements FormElementRenderer<InputDateTimeLocalFormElement> {
+    private final MessageSource messageSource;
+
+    /**
+     *
+     * @param messageSource Message source.
+     */
+    public InputDateTimeLocalFormElementRenderer(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
+    @Override
+    public String render(InputDateTimeLocalFormElement el, Locale locale) {
+        StringBuilder sb = new StringBuilder();
+        if (el.label() != null) {
+            sb.append(renderLabel(el.id(), el.label(), messageSource, locale));
+        }
+        sb.append(render(TAG_INPUT, attributes(el)));
+        return sb.toString();
+    }
+
+    /**
+     *
+     * @param el input datetime-local
+     * @return HTML Attributes
+     */
+    @NonNull
+    protected List<HtmlAttribute> attributes(@NonNull InputDateTimeLocalFormElement el) {
+        List<HtmlAttribute> attributes = new ArrayList<>();
+        attributes.add(new HtmlAttribute(ATTR_TYPE, ATTR_TYPE_DATE_TIME_LOCAL));
+        attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
+        if (el.value() != null) {
+            attributes.add(new HtmlAttribute(ATTR_VALUE, el.value().toString()));
+        }
+        if (el.id() != null) {
+            attributes.add(new HtmlAttribute(ATTR_ID, el.id()));
+        }
+        if (el.min() != null) {
+            attributes.add(new HtmlAttribute(ATTR_MIN, el.min().toString()));
+        }
+        if (el.max() != null) {
+            attributes.add(new HtmlAttribute(ATTR_MAX, el.max().toString()));
+        }
+        if (el.required()) {
+            attributes.add(new HtmlAttribute(ATTR_REQUIRED, null));
+        }
+        return attributes;
+    }
+}
