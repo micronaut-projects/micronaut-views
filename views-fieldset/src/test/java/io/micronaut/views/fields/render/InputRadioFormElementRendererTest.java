@@ -34,8 +34,11 @@ class InputRadioFormElementRendererTest {
                     .build()
             ))
             .build();
-        assertEquals("<div><input type=\"radio\" name=\"drone\" value=\"huey\" id=\"huey\" checked/><label for=\"huey\">Huey</label></div>" +
-                "<div><input type=\"radio\" name=\"drone\" value=\"dewey\" id=\"dewey\"/><label for=\"dewey\">Dewey</label></div>" +
-                "<div><input type=\"radio\" name=\"drone\" value=\"louie\" id=\"louie\"/><label for=\"louie\">Louie</label></div>", inputRadioFormElementRenderer.render(inputRadioFormElement, Locale.ENGLISH));
+        assertEquals("""
+                <div><input type="radio" name="drone" value="huey" id="huey" checked/><label for="huey">Huey</label></div>\
+                <div><input type="radio" name="drone" value="dewey" id="dewey"/><label for="dewey">Dewey</label></div>\
+                <div><input type="radio" name="drone" value="louie" id="louie"/><label for="louie">Louie</label></div>""",
+            inputRadioFormElementRenderer.render(inputRadioFormElement, Locale.ENGLISH)
+        );
     }
 }

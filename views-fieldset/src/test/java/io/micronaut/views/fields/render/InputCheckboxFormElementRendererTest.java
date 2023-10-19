@@ -22,7 +22,10 @@ class InputCheckboxFormElementRendererTest {
                 Checkbox.builder().id("horns").name("horns").label(Message.of("Horns", null)).build()
             ))
             .build();
-        assertEquals("<div><input type=\"checkbox\" name=\"scales\" id=\"scales\" checked/><label for=\"scales\">Scales</label></div>" +
-            "<div><input type=\"checkbox\" name=\"horns\" id=\"horns\"/><label for=\"horns\">Horns</label></div>", renderer.render(el, Locale.ENGLISH));
+        assertEquals("""
+            <div><input type="checkbox" name="scales" id="scales" checked/><label for="scales">Scales</label></div>\
+            <div><input type="checkbox" name="horns" id="horns"/><label for="horns">Horns</label></div>""",
+            renderer.render(el, Locale.ENGLISH)
+        );
     }
 }

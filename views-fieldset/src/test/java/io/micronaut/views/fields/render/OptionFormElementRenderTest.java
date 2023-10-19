@@ -18,14 +18,19 @@ class OptionFormElementRenderTest {
             .value("dog")
             .label(new SimpleMessage("Dog", null))
             .build();
-        assertEquals("<option value=\"dog\">Dog</option>", optionFormElementRender.render(option, Locale.ENGLISH));
+        assertEquals("""
+            <option value="dog">Dog</option>""",
+            optionFormElementRender.render(option, Locale.ENGLISH)
+        );
         option = Option.builder()
             .value("dog")
             .label(new SimpleMessage("Dog", null))
             .selected(true)
             .disabled(true)
             .build();
-        assertEquals("<option value=\"dog\" selected disabled>Dog</option>", optionFormElementRender.render(option, Locale.ENGLISH));
+        assertEquals("""
+            <option value="dog" selected disabled>Dog</option>""",
+            optionFormElementRender.render(option, Locale.ENGLISH)
+        );
     }
-
 }

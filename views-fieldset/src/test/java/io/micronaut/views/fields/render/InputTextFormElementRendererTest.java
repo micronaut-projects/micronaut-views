@@ -24,6 +24,9 @@ class InputTextFormElementRendererTest {
             .required(true)
             .label(Message.of("Name (4 to 8 characters):", null))
             .build();
-        assertEquals("<label for=\"name\">Name (4 to 8 characters):</label><input type=\"text\" name=\"name\" id=\"name\" minlength=\"4\" maxlength=\"8\" size=\"10\" required/>", renderer.render(el, Locale.ENGLISH));
+        assertEquals("""
+            <label for="name">Name (4 to 8 characters):</label><input type="text" name="name" id="name" minlength="4" maxlength="8" size="10" required/>""",
+            renderer.render(el, Locale.ENGLISH)
+        );
     }
 }

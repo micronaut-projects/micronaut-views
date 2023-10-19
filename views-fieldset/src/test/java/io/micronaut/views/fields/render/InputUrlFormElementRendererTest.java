@@ -23,6 +23,9 @@ class InputUrlFormElementRendererTest {
             .required(true)
             .label(Message.of("Enter an https:// URL:", null))
             .build();
-        assertEquals("<label for=\"url\">Enter an https:// URL:</label><input type=\"url\" name=\"url\" id=\"url\" placeholder=\"https://example.com\" pattern=\"https://.*\" size=\"30\" required/>", renderer.render(el, Locale.ENGLISH));
+        assertEquals("""
+            <label for="url">Enter an https:// URL:</label><input type="url" name="url" id="url" placeholder="https://example.com" pattern="https://.*" size="30" required/>""",
+            renderer.render(el, Locale.ENGLISH)
+        );
     }
 }

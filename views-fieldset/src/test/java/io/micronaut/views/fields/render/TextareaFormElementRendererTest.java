@@ -23,6 +23,9 @@ class TextareaFormElementRendererTest {
             .value("It was a dark and stormy night...")
             .label(Message.of("Tell us your story:", null))
             .build();
-        assertEquals("<label for=\"story\">Tell us your story:</label><textarea name=\"story\" id=\"story\" cols=\"33\" rows=\"5\">It was a dark and stormy night...</textarea>", renderer.render(el, Locale.ENGLISH));
+        assertEquals("""
+           <label for="story">Tell us your story:</label><textarea name="story" id="story" cols="33" rows="5">It was a dark and stormy night...</textarea>""",
+            renderer.render(el, Locale.ENGLISH)
+        );
     }
 }

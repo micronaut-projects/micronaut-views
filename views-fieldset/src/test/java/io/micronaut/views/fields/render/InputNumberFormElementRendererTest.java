@@ -24,6 +24,9 @@ class InputNumberFormElementRendererTest {
             .min(10)
             .max(100)
             .build();
-        assertEquals("<label for=\"tentacles\">Number of tentacles (10-100):</label><input type=\"number\" name=\"tentacles\" id=\"tentacles\" min=\"10\" max=\"100\"/>", renderer.render(el, Locale.ENGLISH));
+        assertEquals("""
+            <label for="tentacles">Number of tentacles (10-100):</label><input type="number" name="tentacles" id="tentacles" min="10" max="100"/>""",
+            renderer.render(el, Locale.ENGLISH)
+        );
     }
 }

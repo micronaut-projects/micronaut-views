@@ -23,6 +23,9 @@ class InputDateFormElementRendererTest {
             .max(LocalDate.of(2018, 12, 31))
             .value(LocalDate.of(2018, 7, 22))
             .build();
-        assertEquals("<label for=\"start\">Start date:</label><input type=\"date\" name=\"trip-start\" value=\"2018-07-22\" id=\"start\" min=\"2018-01-01\" max=\"2018-12-31\"/>", renderer.render(el, Locale.ENGLISH));
+        assertEquals("""
+            <label for="start">Start date:</label><input type="date" name="trip-start" value="2018-07-22" id="start" min="2018-01-01" max="2018-12-31"/>""",
+            renderer.render(el, Locale.ENGLISH)
+        );
     }
 }

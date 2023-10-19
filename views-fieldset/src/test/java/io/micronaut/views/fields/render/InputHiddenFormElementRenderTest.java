@@ -16,6 +16,9 @@ class InputHiddenFormElementRenderTest {
             .name("postId")
             .value("34657")
             .build();
-        assertEquals("<input type=\"hidden\" name=\"postId\" value=\"34657\"/>", renderer.render(el, Locale.ENGLISH));
+        assertEquals("""
+            <input type="hidden" name="postId" value="34657"/>""",
+            renderer.render(el, Locale.ENGLISH)
+        );
     }
 }
