@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 /**
  * API to render a {@link io.micronaut.views.fields.FormElement}.
@@ -213,7 +214,7 @@ public interface FormElementRenderer<T extends FormElement> {
     /**
      * Lower than sign.
      */
-    String LOWER_THAN = "<";
+    String LESS_THAN = "<";
 
     /**
      * Greater than sign.
@@ -250,7 +251,7 @@ public interface FormElementRenderer<T extends FormElement> {
     @NonNull
     default String render(@NonNull String tag,
                           @NonNull List<HtmlAttribute> attributes) {
-        return LOWER_THAN + tag + SPACE + String.join(SPACE, attributes.stream().map(HtmlAttribute::toString).toList()) + SLASH + GREATER_THAN;
+        return LESS_THAN + tag + SPACE + attributes.stream().map(HtmlAttribute::toString).collect(Collectors.joining(SPACE)) + SLASH + GREATER_THAN;
     }
 
     /**
@@ -291,11 +292,11 @@ public interface FormElementRenderer<T extends FormElement> {
     default String renderOpenTag(@NonNull String tag,
                                  @NonNull List<HtmlAttribute> attributes) {
         StringBuilder sb = new StringBuilder();
-        sb.append(LOWER_THAN);
+        sb.append(LESS_THAN);
         sb.append(tag);
         if (CollectionUtils.isNotEmpty(attributes)) {
             sb.append(SPACE);
-            sb.append(String.join(SPACE, attributes.stream().map(HtmlAttribute::toString).toList()));
+            sb.append(attributes.stream().map(HtmlAttribute::toString).collect(Collectors.joining(SPACE)));
         }
         sb.append(GREATER_THAN);
         return sb.toString();
@@ -307,7 +308,7 @@ public interface FormElementRenderer<T extends FormElement> {
      * @return HTML
      */
     default String renderCloseTag(@NonNull String tag) {
-        return LOWER_THAN + SLASH + tag + GREATER_THAN;
+        return LESS_THAN + SLASH + tag + GREATER_THAN;
     }
 
     /**
