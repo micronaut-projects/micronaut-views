@@ -25,8 +25,6 @@ class InputTelFormElementRendererTest {
         assertEquals("""
             <label for="phone">Enter your phone number:</label><input type="tel" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>""",
             renderer.render(el, Locale.ENGLISH)
-
-
         );
         assertFalse(el.hasErrors());
     }

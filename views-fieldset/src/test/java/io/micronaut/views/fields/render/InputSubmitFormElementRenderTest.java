@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MicronautTest(startApplication = false)
 class InputSubmitFormElementRenderTest {
+
     @Test
     void renderOption(InputSubmitFormElementRenderer renderer) {
         Message value = Message.of("Send Request", null);
