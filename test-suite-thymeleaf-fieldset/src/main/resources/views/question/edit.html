@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout :: layout(~{::title},~{::script},~{::main})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{question.edit}"></title>
+    <script></script>
+</head>
+<body>
+<main>
+    <turbo-frame id="main">
+    <form th:replace="~{fieldset/_form :: form(${form})}"></form>
+    </turbo-frame>
+</main>
+</body>
+</html>

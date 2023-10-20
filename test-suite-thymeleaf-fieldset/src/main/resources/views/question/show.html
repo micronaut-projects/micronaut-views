@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout :: layout(~{::title},~{::script},~{::main})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{question.show}"></title>
+    <script></script>
+</head>
+<body>
+<main>
+    <turbo-frame id="main">
+        <div th:replace="~{question/_show :: show(${deleteForm},${question})}"></div>
+    </turbo-frame>
+</main>
+</body>
+</html>

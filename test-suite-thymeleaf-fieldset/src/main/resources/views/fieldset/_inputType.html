@@ -1,0 +1,12 @@
+<div th:fragment="field(type, field)"
+     xmlns:th="http://www.thymeleaf.org"
+     class="mb-3">
+    <label th:replace="~{fieldset/_label :: label(${field.id()}, ${field.label()})}"></label>
+    <input class="form-control"
+           th:type="${type}"
+           th:name="${field.name}"
+           th:value="${field.value}"
+           th:id="${field.id}"
+           th:required="${field.required}"
+    />
+</div>

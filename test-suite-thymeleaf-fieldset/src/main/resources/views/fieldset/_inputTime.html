@@ -1,0 +1,14 @@
+<div th:fragment="field(field)"
+     xmlns:th="http://www.thymeleaf.org"
+     class="mb-3">
+    <label th:replace="~{fieldset/_label :: label(${field.id()}, ${field.label()})}"></label>
+    <input class="form-control"
+           th:type="time"
+           th:name="${field.name()}"
+           th:id="${field.id()}"
+           th:min="${field.min()}"
+           th:max="${field.max()}"
+           th:value="${field.value()}"
+           th:required="${field.required}"
+    />
+</div>

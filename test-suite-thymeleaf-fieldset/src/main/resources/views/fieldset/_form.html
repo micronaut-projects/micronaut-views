@@ -1,0 +1,7 @@
+<form
+        th:action="${form.action()}"
+        th:method="${form.method()}"
+        th:fragment="form(form)"
+        xmlns:th="http://www.thymeleaf.org">
+    <fieldset th:replace="~{fieldset/_fieldset :: fieldset(${form.fieldset()})}"></fieldset>
+</form>

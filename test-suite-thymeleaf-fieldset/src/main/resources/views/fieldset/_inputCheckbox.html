@@ -1,0 +1,24 @@
+<th:block th:fragment="field(field)"
+     xmlns:th="http://www.thymeleaf.org">
+    <label
+            class="form-label"
+            th:text="${#strings.defaultString(#messages.msgOrNull(field.label().code()),field.label().defaultMessage())}"></label>
+    <div class="form-check"
+        th:each="checkbox : ${field.checkboxes()}">
+        <input class="form-check-input"
+               type="checkbox"
+               th:classappend="${field.hasErrors() ? 'is-invalid' : ''}"
+               th:required="${checkbox.required()}"
+               th:checked="${checkbox.checked()}"
+               th:name="${checkbox.name()}"
+               th:value="${checkbox.value()}"
+               th:id="${checkbox.id()}"/>
+        <label th:replace="~{fieldset/_label :: label(${checkbox.id()}, ${checkbox.label()})}"></label>
+        <div class="invalid-feedback" th:if="${field.hasErrors()}">
+            <span th:each="error : ${field.errors()}"
+                  th:text="${#strings.defaultString(#messages.msgOrNull(error.code()),error.defaultMessage())}">
+            </span>
+        </div>
+    </div>
+
+</th:block>

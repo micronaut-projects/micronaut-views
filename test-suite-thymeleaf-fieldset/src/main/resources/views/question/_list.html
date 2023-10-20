@@ -1,0 +1,14 @@
+<th:block
+        th:fragment="list(question)"
+        xmlns:th="http://www.thymeleaf.org">
+    <nav>
+        <ol>
+            <li><a href="/questions/create" th:text="#{question.new}"></a></li>
+        </ol>
+    </nav>
+    <ol>
+        <li th:each="question : ${questions}">
+            <h2><a th:href="@{|/questions/${question.id()}/show|}"  th:text="${question.title()}"></a></h2>
+        </li>
+    </ol>
+</th:block>

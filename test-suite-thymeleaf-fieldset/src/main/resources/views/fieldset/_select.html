@@ -1,0 +1,13 @@
+<div th:fragment="field(field)"
+     xmlns:th="http://www.thymeleaf.org"
+     class="mb-3">
+    <label th:replace="~{fieldset/_label :: label(${field.id()}, ${field.label()})}"></label>
+    <select th:name="${field.name}"
+           th:id="${field.id}">
+        <option th:each="option : ${field.options()}"
+                th:value="${option.value}"
+                th:selected="${option.selected()}"
+                th:text="${#strings.defaultString(#messages.msgOrNull(option.label().code()),option.label().defaultMessage())}"
+                />
+    </select>
+</div>
