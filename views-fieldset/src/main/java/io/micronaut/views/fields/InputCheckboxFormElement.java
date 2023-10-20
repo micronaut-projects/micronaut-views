@@ -26,6 +26,8 @@ import java.util.List;
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">Input Checkbox</a>
  * @param checkboxes Checkboxes
  * @param label HTML label
+ * @param errors errors associated with this input
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
