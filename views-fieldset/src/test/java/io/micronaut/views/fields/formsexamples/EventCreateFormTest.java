@@ -192,11 +192,15 @@ class EventCreateFormTest {
     }
 
     private InputCheckboxFormElement.Builder highlightedExpectation() {
-        return InputCheckboxFormElement.builder().checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("false").label(new SimpleMessage("Highlighted", "eventcreateform.highlighted")).build()));
+        return InputCheckboxFormElement.builder()
+            .label(Message.of("Highlighted", "eventcreateform.highlighted"))
+            .checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("false").label(new SimpleMessage("Highlighted", "eventcreateform.highlighted")).build()));
     }
 
     private InputCheckboxFormElement.Builder highlightedExpectationChecked() {
-        return InputCheckboxFormElement.builder().checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("true").checked(true).label(new SimpleMessage("Highlighted", "eventcreateform.highlighted")).build()));
+        return InputCheckboxFormElement.builder()
+            .label(Message.of("Highlighted", "eventcreateform.highlighted"))
+            .checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("true").checked(true).label(new SimpleMessage("Highlighted", "eventcreateform.highlighted")).build()));
     }
 
     private InputNumberFormElement.Builder capacityExpectation() {
@@ -204,7 +208,9 @@ class EventCreateFormTest {
     }
 
     private InputRadioFormElement.Builder statusExpectation() {
-        return InputRadioFormElement.builder().required(true).name("status").buttons(Arrays.asList(
+        return InputRadioFormElement.builder()
+            .label(Message.of("Status", "eventcreateform.status"))
+            .required(true).name("status").buttons(Arrays.asList(
             Radio.builder().value("DRAFT").id("draft").label(new SimpleMessage("Draft", "status.draft")).build(),
             Radio.builder().value("CLOSED").id("closed").label(new SimpleMessage("Closed", "status.closed")).build(),
             Radio.builder().value("OPEN").id("open").label(new SimpleMessage("Open", "status.open")).build(),
@@ -213,7 +219,9 @@ class EventCreateFormTest {
     }
 
     private InputRadioFormElement.Builder statusExpectationWithClosedStatus() {
-        return InputRadioFormElement.builder().required(true).name("status").buttons(Arrays.asList(
+        return InputRadioFormElement.builder()
+            .label(Message.of("Status", "eventcreateform.status"))
+            .required(true).name("status").buttons(Arrays.asList(
             Radio.builder().value("DRAFT").id("draft").label(new SimpleMessage("Draft", "status.draft")).build(),
             Radio.builder().value("CLOSED").id("closed").label(new SimpleMessage("Closed", "status.closed")).checked(true).build(),
             Radio.builder().value("OPEN").id("open").label(new SimpleMessage("Open", "status.open")).build(),

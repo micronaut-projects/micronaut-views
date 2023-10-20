@@ -161,7 +161,7 @@ class SignupFormTest {
             builderConsumer.accept(builder);
         }
         List<Checkbox> checkboxList = Collections.singletonList(builder.build());
-        return InputCheckboxFormElement.builder().checkboxes(checkboxList);
+        return InputCheckboxFormElement.builder().label(new SimpleMessage("Accept Terms", "signupform.acceptTerms")).checkboxes(checkboxList);
     }
 
     private InputTextFormElement.Builder firstNameExpectation() {
