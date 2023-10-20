@@ -162,6 +162,11 @@ public interface FormElementRenderer<T extends FormElement> {
     String ATTR_TYPE_RADIO = "radio";
 
     /**
+     * HTML Input type submit.
+     */
+    String ATTR_TYPE_SUBMIT = "submit";
+
+    /**
      * HTML Input type hidden.
      */
     String ATTR_TYPE_HIDDEN = "hidden";
