@@ -28,16 +28,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class SignupFormTest {
 
     @Test
-    void fieldsetGenerationForALoginForm(FieldsetGenerator fieldsetGenerator, SignupFormValidator validator) {
+    void fieldsetGenerationForALoginForm(FieldsetGenerator fieldsetGenerator) {
         Fieldset fieldset = fieldsetGenerator.generate(SignupForm.class);
+
         assertNotNull(fieldset);
         assertFalse(fieldset.hasErrors());
         assertNotNull(fieldset.errors());
         assertEquals(0, fieldset.errors().size());
-
         assertEquals(8, fieldset.fields().size());
+    }
 
-        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputCheckboxFormElement));
+    @Test
+    void blankLoginFormHasExpectedFields(FieldsetGenerator fieldsetGenerator) {
+        Fieldset fieldset = fieldsetGenerator.generate(SignupForm.class);
+
+        assertTrue(fieldset.fields().stream().anyMatch(it -> it instanceof InputCheckboxFormElement));
 
         InputTextFormElement firstNameExpectation = firstNameExpectation().build();
         assertTrue(assertFormElement(fieldset, firstNameExpectation));
@@ -62,98 +67,106 @@ class SignupFormTest {
 
         InputCheckboxFormElement acceptTermsExpectation = acceptTermsExpectation(checkboxBuilder -> checkboxBuilder.checked(false).value("false")).build();
         assertTrue(assertFormElement(fieldset, acceptTermsExpectation));
+    }
 
+    @Test
+    void loginFormValidationHappyPath(FieldsetGenerator fieldsetGenerator, SignupFormValidator validator) {
         SignupForm valid = new SignupForm("Sergio", "del Amo", null, null, "sergio.delamo@softamo.com", "elementary", "elementary", true);
         assertDoesNotThrow(() -> validator.validate(valid));
-        assertNotNull(fieldset);
-        assertFalse(fieldset.hasErrors());
-        assertNotNull(fieldset.errors());
-        assertEquals(0, fieldset.errors().size());
 
-        fieldset = fieldsetGenerator.generate(valid);
+        Fieldset fieldset = fieldsetGenerator.generate(valid);
         assertNotNull(fieldset);
-        firstNameExpectation = firstNameExpectation().value("Sergio").build();
+
+        InputTextFormElement firstNameExpectation = firstNameExpectation().value("Sergio").build();
         assertTrue(assertFormElement(fieldset, firstNameExpectation));
 
-        lastNameExpectation = lastNameExpectation().value("del Amo").build();
+        InputTextFormElement lastNameExpectation = lastNameExpectation().value("del Amo").build();
         assertTrue(assertFormElement(fieldset, lastNameExpectation));
 
-        phonexpectation = phonexpectation().build();
+        InputTelFormElement phonexpectation = phonexpectation().build();
         assertTrue(assertFormElement(fieldset, phonexpectation));
 
-        zipCodeExpectation = zipCodeExpectation().build();
+        InputTextFormElement zipCodeExpectation = zipCodeExpectation().build();
         assertTrue(assertFormElement(fieldset, zipCodeExpectation));
 
-        emailExpectation = emailExpectation().value("sergio.delamo@softamo.com").build();
+        InputEmailFormElement emailExpectation = emailExpectation().value("sergio.delamo@softamo.com").build();
         assertTrue(assertFormElement(fieldset, emailExpectation));
 
-        passwordExpectation = passwordExpectation().value("elementary").build();
+        InputPasswordFormElement passwordExpectation = passwordExpectation().value("elementary").build();
         assertTrue(assertFormElement(fieldset, passwordExpectation));
 
-        confirmPasswordExpectation = confirmPasswordExpectation().value("elementary").build();
+        InputPasswordFormElement confirmPasswordExpectation = confirmPasswordExpectation().value("elementary").build();
         assertTrue(assertFormElement(fieldset, confirmPasswordExpectation));
 
-        acceptTermsExpectation = acceptTermsExpectation(checkboxBuilder -> checkboxBuilder.checked(true).value("true")).build();
+        InputCheckboxFormElement acceptTermsExpectation = acceptTermsExpectation(checkboxBuilder -> checkboxBuilder.checked(true).value("true")).build();
         assertTrue(assertFormElement(fieldset, acceptTermsExpectation));
+    }
 
-        SignupForm dontAcceptTerms = new SignupForm("Sergio", "del Amo", null, null, "sergio.delamo@softamo.com", "elementary", "elementary", false);
+    @Test
+    void testSignupFormWithoutTerms(FieldsetGenerator fieldsetGenerator, SignupFormValidator validator) {
+        SignupForm dontAcceptTerms = new SignupForm(
+            "Sergio",
+            "del Amo",
+            null,
+            null,
+            "sergio.delamo@softamo.com",
+            "elementary",
+            "elementary",
+            false // does not accept terms
+        );
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> validator.validate(dontAcceptTerms));
-        fieldset = fieldsetGenerator.generate(dontAcceptTerms, ex);
+
+        Fieldset fieldset = fieldsetGenerator.generate(dontAcceptTerms, ex);
         assertNotNull(fieldset);
 
-        acceptTermsExpectation = acceptTermsExpectationMustBeTrue().build();
+        InputCheckboxFormElement acceptTermsExpectation = acceptTermsExpectationMustBeTrue().build();
         assertTrue(assertFormElement(fieldset, acceptTermsExpectation));
+    }
 
-        SignupForm invalid  = new SignupForm("Sergio", "del Amo", null, null, "sergio.delamo@softamo.com", "elementary", "bar", true);
-        ex = assertThrows(ConstraintViolationException.class, () -> validator.validate(invalid));
-        fieldset = fieldsetGenerator.generate(invalid, ex);
+    @Test
+    void testSignupWithPasswordMismatch(FieldsetGenerator fieldsetGenerator, SignupFormValidator validator) {
+        SignupForm invalid = new SignupForm(
+            "Sergio",
+            "del Amo",
+            null,
+            null,
+            "sergio.delamo@softamo.com",
+            "elementary",
+            "bar", // password mismatch
+            true
+        );
+
+        ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> validator.validate(invalid));
+        Fieldset fieldset = fieldsetGenerator.generate(invalid, ex);
         assertNotNull(fieldset);
-        firstNameExpectation = firstNameExpectation().value("Sergio").build();
+
+        InputTextFormElement firstNameExpectation = firstNameExpectation().value("Sergio").build();
         assertTrue(assertFormElement(fieldset, firstNameExpectation));
 
-        lastNameExpectation = lastNameExpectation().value("del Amo").build();
+        InputTextFormElement lastNameExpectation = lastNameExpectation().value("del Amo").build();
         assertTrue(assertFormElement(fieldset, lastNameExpectation));
 
-        phonexpectation = phonexpectation().build();
+        InputTelFormElement phonexpectation = phonexpectation().build();
         assertTrue(assertFormElement(fieldset, phonexpectation));
 
-        zipCodeExpectation = zipCodeExpectation().build();
+        InputTextFormElement zipCodeExpectation = zipCodeExpectation().build();
         assertTrue(assertFormElement(fieldset, zipCodeExpectation));
 
-        emailExpectation = emailExpectation().value("sergio.delamo@softamo.com").build();
+        InputEmailFormElement emailExpectation = emailExpectation().value("sergio.delamo@softamo.com").build();
         assertTrue(assertFormElement(fieldset, emailExpectation));
 
-        passwordExpectation = passwordExpectation().value("elementary").build();
+        InputPasswordFormElement passwordExpectation = passwordExpectation().value("elementary").build();
         assertTrue(assertFormElement(fieldset, passwordExpectation));
 
-        confirmPasswordExpectation = confirmPasswordExpectation().value("bar").build();
+        InputPasswordFormElement confirmPasswordExpectation = confirmPasswordExpectation().value("bar").build();
         assertTrue(assertFormElement(fieldset, confirmPasswordExpectation));
 
         assertTrue(fieldset.hasErrors());
         assertEquals(1, fieldset.errors().size());
-        assertEquals(new SimpleMessage( "Passwords do not match", "signupform.passwordmatch"), fieldset.errors().get(0));
+        assertEquals(new SimpleMessage("Passwords do not match", "signupform.passwordmatch"), fieldset.errors().get(0));
 
-        acceptTermsExpectation = acceptTermsExpectation(checkboxBuilder -> checkboxBuilder.checked(true).value("true")).build();
+        InputCheckboxFormElement acceptTermsExpectation = acceptTermsExpectation(checkboxBuilder -> checkboxBuilder.checked(true).value("true")).build();
         assertTrue(assertFormElement(fieldset, acceptTermsExpectation));
-    }
-
-    @PasswordMatch
-    @Introspected
-    record SignupForm(@NotBlank String firstName,
-                      @NotBlank String lastName,
-                      @InputTel @Nullable String phone,
-                      @Nullable String zipCode,
-                      @InputEmail @NotBlank String email,
-                      @InputPassword @NotBlank String password,
-                      @InputPassword @NotBlank String confirmPassword,
-                      @AssertTrue boolean acceptTerms) {
-    }
-
-    @Property(name = "spec.name", value = "SignupFormTest")
-    @Singleton
-    static class SignupFormValidator {
-        void validate(@Valid SignupForm signupForm) {
-        }
     }
 
     private InputCheckboxFormElement.Builder acceptTermsExpectation(Consumer<Checkbox.Builder> builderConsumer) {
@@ -164,7 +177,6 @@ class SignupFormTest {
         List<Checkbox> checkboxList = Collections.singletonList(builder.build());
         return InputCheckboxFormElement.builder().label(new SimpleMessage("Accept Terms", "signupform.acceptTerms")).checkboxes(checkboxList);
     }
-
 
     private InputCheckboxFormElement.Builder acceptTermsExpectationMustBeTrue() {
         Checkbox.Builder builder = Checkbox.builder().id("acceptTerms").name("acceptTerms")
@@ -177,7 +189,7 @@ class SignupFormTest {
     }
 
     private InputTextFormElement.Builder firstNameExpectation() {
-        return InputTextFormElement.builder().required(true).id("firstName").name("firstName").label(new SimpleMessage( "First Name", "signupform.firstName"));
+        return InputTextFormElement.builder().required(true).id("firstName").name("firstName").label(new SimpleMessage("First Name", "signupform.firstName"));
     }
 
     private InputTextFormElement.Builder lastNameExpectation() {
@@ -204,4 +216,22 @@ class SignupFormTest {
         return InputPasswordFormElement.builder().required(true).id("confirmPassword").name("confirmPassword").label(new SimpleMessage("Confirm Password", "signupform.confirmPassword"));
     }
 
+    @PasswordMatch
+    @Introspected
+    record SignupForm(@NotBlank String firstName,
+                      @NotBlank String lastName,
+                      @InputTel @Nullable String phone,
+                      @Nullable String zipCode,
+                      @InputEmail @NotBlank String email,
+                      @InputPassword @NotBlank String password,
+                      @InputPassword @NotBlank String confirmPassword,
+                      @AssertTrue boolean acceptTerms) {
+    }
+
+    @Property(name = "spec.name", value = "SignupFormTest")
+    @Singleton
+    static class SignupFormValidator {
+        void validate(@Valid SignupForm signupForm) {
+        }
+    }
 }
