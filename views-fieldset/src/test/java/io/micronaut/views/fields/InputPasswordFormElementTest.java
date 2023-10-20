@@ -3,8 +3,7 @@ package io.micronaut.views.fields;
 import io.micronaut.core.beans.BeanIntrospection;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class InputPasswordFormElementTest {
     private static final String ID = "passwordid";
@@ -42,6 +41,7 @@ class InputPasswordFormElementTest {
             .with("maxLength", MAXLENGTH)
             .build();
         assertFormElement(formElement);
+        assertFalse(formElement.hasErrors());
     }
 
     private void assertFormElement(InputPasswordFormElement formElement) {

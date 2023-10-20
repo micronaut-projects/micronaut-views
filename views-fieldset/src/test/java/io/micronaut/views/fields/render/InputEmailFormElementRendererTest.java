@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @MicronautTest(startApplication = false)
 class InputEmailFormElementRendererTest {
@@ -27,5 +28,6 @@ class InputEmailFormElementRendererTest {
             <label for="email">Enter your globex.com email:</label><input type="email" name="email" id="email" pattern=".+@globex\\.com" size="30" required/>""",
             renderer.render(el, Locale.ENGLISH)
         );
+        assertFalse(el.hasErrors());
     }
 }

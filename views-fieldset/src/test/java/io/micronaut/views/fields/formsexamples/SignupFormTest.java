@@ -3,6 +3,7 @@ package io.micronaut.views.fields.formsexamples;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.*;
 import io.micronaut.views.fields.annotations.InputEmail;
@@ -100,7 +101,7 @@ class SignupFormTest {
         fieldset = fieldsetGenerator.generate(dontAcceptTerms, ex);
         assertNotNull(fieldset);
 
-        acceptTermsExpectation = acceptTermsExpectation(checkboxBuilder -> checkboxBuilder.checked(false).value("false").errors(Collections.singletonList(new SimpleMessage("must be true", "signupform.acceptterms.asserttrue")))).build();
+        acceptTermsExpectation = acceptTermsExpectationMustBeTrue().build();
         assertTrue(assertFormElement(fieldset, acceptTermsExpectation));
 
         SignupForm invalid  = new SignupForm("Sergio", "del Amo", null, null, "sergio.delamo@softamo.com", "elementary", "bar", true);
@@ -162,6 +163,17 @@ class SignupFormTest {
         }
         List<Checkbox> checkboxList = Collections.singletonList(builder.build());
         return InputCheckboxFormElement.builder().label(new SimpleMessage("Accept Terms", "signupform.acceptTerms")).checkboxes(checkboxList);
+    }
+
+
+    private InputCheckboxFormElement.Builder acceptTermsExpectationMustBeTrue() {
+        Checkbox.Builder builder = Checkbox.builder().id("acceptTerms").name("acceptTerms")
+            .value(StringUtils.FALSE)
+            .label(new SimpleMessage("Accept Terms", "signupform.acceptTerms"));
+        List<Checkbox> checkboxList = Collections.singletonList(builder.build());
+        return InputCheckboxFormElement.builder()
+            .errors(Collections.singletonList(new SimpleMessage("must be true", "signupform.acceptterms.asserttrue")))
+            .label(new SimpleMessage("Accept Terms", "signupform.acceptTerms")).checkboxes(checkboxList);
     }
 
     private InputTextFormElement.Builder firstNameExpectation() {

@@ -45,5 +45,7 @@ class InputDateFormElementTest {
         assertEquals(value, formElement.value());
         assertEquals(min, formElement.min());
         assertEquals(max, formElement.max());
+
+        assertFalse(formElement.hasErrors());
     }
 }

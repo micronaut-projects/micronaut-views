@@ -46,7 +46,8 @@ public interface FieldsetGenerator {
      * @param <T> type
      */
     @NonNull
-    <T> Fieldset generate(@NonNull Class<T> type, @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer);
+    <T> Fieldset generate(@NonNull Class<T> type,
+                          @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer);
 
     /**
      *
@@ -63,7 +64,8 @@ public interface FieldsetGenerator {
      * @return A Fieldset
      */
     @NonNull
-    Fieldset generate(@NonNull Object instance, @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer);
+    Fieldset generate(@NonNull Object instance,
+                      @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer);
 
     /**
      *

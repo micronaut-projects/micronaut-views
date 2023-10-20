@@ -41,6 +41,8 @@ class InputTextFormElementTest {
             .with("maxLength", MAXLENGTH)
             .build();
         assertFormElement(formElement);
+
+        assertFalse(formElement.hasErrors());
     }
 
     private void assertFormElement(InputTextFormElement formElement) {

@@ -34,6 +34,8 @@ class InputTimeFormElementTest {
         assertEquals("10:00", formElement.value().toString());
         assertEquals("09:00", formElement.min().toString());
         assertEquals("18:00", formElement.max().toString());
+
+        assertFalse(formElement.hasErrors());
     }
 
 }

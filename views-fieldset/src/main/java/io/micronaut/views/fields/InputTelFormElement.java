@@ -54,7 +54,6 @@ public record InputTelFormElement(@NonNull String name,
                                   @Nullable String value,
                                   @Nullable Message label,
                                   @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes, InputStringFormElement {
-
     /**
      *
      * @return the Input FormElement Builder

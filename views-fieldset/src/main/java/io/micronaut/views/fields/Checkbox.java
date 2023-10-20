@@ -19,9 +19,6 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * A Checkbox Form Element.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">Input Checkbox</a>
@@ -31,7 +28,6 @@ import java.util.List;
  * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
  * @param id It defines an identifier (ID) which must be unique in the whole document
  * @param label represents a caption for an item in a user interface
- * @param errors Form element validation Errors.
  *
  * @author Sergio del Amo
  * @since 4.1.0
@@ -42,9 +38,7 @@ public record Checkbox(@NonNull String name,
                        boolean checked,
                        boolean required,
                        @Nullable String id,
-                       @Nullable Message label,
-                       @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes {
-
+                       @Nullable Message label) implements FormElement, GlobalAttributes {
     /**
      *
      * @return A checkbox builder.
@@ -68,8 +62,6 @@ public record Checkbox(@NonNull String name,
         private boolean required;
 
         private String value;
-
-        private List<Message> errors;
 
         private Message label;
 
@@ -119,17 +111,6 @@ public record Checkbox(@NonNull String name,
 
         /**
          *
-         * @param errors Form element validation Errors.
-         * @return The Checkbox Builder
-         */
-        @NonNull
-        public Builder errors(@NonNull List<Message> errors) {
-            this.errors = errors;
-            return this;
-        }
-
-        /**
-         *
          * @param checked A boolean attribute indicating whether this checkbox is checked by default (when the page loads).
          * @return The Checkbox Builder
          */
@@ -161,8 +142,7 @@ public record Checkbox(@NonNull String name,
                 checked,
                 required,
                 id,
-                label,
-                errors == null ? Collections.emptyList() : errors);
+                label);
         }
     }
 }

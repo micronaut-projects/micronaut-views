@@ -17,6 +17,7 @@ package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -42,11 +43,34 @@ public class DefaultFormGenerator implements FormGenerator {
     }
 
     @Override
+    public Form generate(String action, String method, Object instance, InputSubmitFormElement inputSubmitFormElement) {
+        Fieldset fieldset = fieldsetGenerator.generate(instance);
+        return generate(action, method, fieldset, inputSubmitFormElement);
+    }
+
+    @Override
+    public Form generate(@NonNull String action,
+                         @NonNull String method,
+                         @NonNull Object instance,
+                         @NonNull ConstraintViolationException ex,
+                         @NonNull InputSubmitFormElement inputSubmitFormElement) {
+        Fieldset fieldset = fieldsetGenerator.generate(instance, ex);
+        return generate(action, method, fieldset, inputSubmitFormElement);
+    }
+
+    @Override
     public <T> Form generate(@NonNull @NotBlank String action,
                              @NonNull @NotBlank String method,
                              @NonNull @NotNull Class<T> type,
                              @NonNull @NotNull InputSubmitFormElement inputSubmitFormElement) {
         Fieldset fieldset = fieldsetGenerator.generate(type);
+        return generate(action, method, fieldset, inputSubmitFormElement);
+    }
+
+    private Form generate(@NonNull @NotBlank String action,
+                             @NonNull @NotBlank String method,
+                             @NonNull @NotNull Fieldset fieldset,
+                             @NonNull @NotNull InputSubmitFormElement inputSubmitFormElement) {
         List<FormElement> fields = new ArrayList<>(fieldset.fields());
         fields.add(inputSubmitFormElement);
         return new Form(action, method, new Fieldset(fields, fieldset.errors()));

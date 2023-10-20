@@ -16,6 +16,7 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.NonNull;
+import jakarta.validation.ConstraintViolationException;
 
 /**
  * Generates a {@link Form} for a given type representing a form class.
@@ -23,6 +24,94 @@ import io.micronaut.core.annotation.NonNull;
  * @since 4.1.0
  */
 public interface FormGenerator {
+
+    /**
+     * @param action Form action attribute
+     * @param method Form method attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @return A Form
+     */
+    @NonNull
+    default Form generate(@NonNull String action,
+                          @NonNull String method,
+                          @NonNull Object instance) {
+        return generate(action, method, instance, Message.of("Submit", "default.input.submit.value"));
+    }
+
+    /**
+     * @param action Form action attribute
+     * @param method Form method attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param submitValue input submit
+     * @return A Form
+     */
+    @NonNull
+    default Form generate(@NonNull String action,
+                          @NonNull String method,
+                          @NonNull Object instance,
+                          @NonNull Message submitValue) {
+        return generate(action, method, instance, new InputSubmitFormElement(submitValue));
+    }
+
+    /**
+     * @param action Form action attribute
+     * @param method Form method attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param inputSubmitFormElement input submit
+     * @return A Form
+     */
+    @NonNull
+    Form generate(@NonNull String action,
+                  @NonNull String method,
+                  @NonNull Object instance,
+                  @NonNull InputSubmitFormElement inputSubmitFormElement);
+
+    /**
+     * @param action Form action attribute
+     * @param method Form method attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param ex A Validation exception
+     * @return A Form
+     */
+    @NonNull
+    default Form generate(@NonNull String action,
+                  @NonNull String method,
+                  @NonNull Object instance,
+                  @NonNull ConstraintViolationException ex) {
+        return generate(action, method, instance, ex, Message.of("Submit", "default.input.submit.value"));
+    }
+
+    /**
+     * @param action Form action attribute
+     * @param method Form method attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param ex A Validation exception
+     * @param submitValue input submit
+     * @return A Form
+     */
+    @NonNull
+    default Form generate(@NonNull String action,
+                  @NonNull String method,
+                  @NonNull Object instance,
+                  @NonNull ConstraintViolationException ex,
+                  @NonNull Message submitValue) {
+        return generate(action, method, instance, ex, new InputSubmitFormElement(submitValue));
+    }
+
+    /**
+     * @param action Form action attribute
+     * @param method Form method attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param ex A Validation exception
+     * @param inputSubmitFormElement input submit
+     * @return A Form
+     */
+    @NonNull
+    Form generate(@NonNull String action,
+                  @NonNull String method,
+                  @NonNull Object instance,
+                  @NonNull ConstraintViolationException ex,
+                  @NonNull InputSubmitFormElement inputSubmitFormElement);
 
     /**
      *
@@ -34,8 +123,8 @@ public interface FormGenerator {
      */
     @NonNull
     default <T> Form generate(@NonNull String action,
-                      @NonNull String method,
-                      @NonNull Class<T> type) {
+                              @NonNull String method,
+                              @NonNull Class<T> type) {
         return generate(action, method, type, Message.of("Submit", "default.input.submit.value"));
     }
 
