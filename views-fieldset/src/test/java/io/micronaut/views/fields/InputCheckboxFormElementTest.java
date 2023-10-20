@@ -30,6 +30,7 @@ class InputCheckboxFormElementTest {
             .with("checkboxes", checkboxes)
             .build();
         assertFormElement(checkboxes, formElement);
+        assertFalse(formElement.hasErrors());
     }
 
     private void assertFormElement(List<Checkbox> checkboxes,

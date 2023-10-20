@@ -47,7 +47,6 @@ public record InputDateFormElement(@NonNull String name,
                                    @Nullable LocalDate value,
                                    @Nullable Message label,
                                    @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes {
-
     /**
      *
      * @return the Input Date FormElement Builder

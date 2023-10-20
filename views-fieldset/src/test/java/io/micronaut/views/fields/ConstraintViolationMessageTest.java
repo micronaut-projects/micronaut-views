@@ -15,9 +15,9 @@ import jakarta.validation.constraints.NotBlank;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Property(name = "spec.name", value = "ConstraintViolationMessageTest")
 @MicronautTest(startApplication = false)

@@ -54,7 +54,6 @@ public record InputPasswordFormElement(@NonNull String name,
                                        @Nullable String value,
                                        @Nullable Message label,
                                        @NonNull List<Message> errors) implements FormElement, FormElementAttributes, GlobalAttributes, InputStringFormElement {
-
     /**
      *
      * @return the Input Password FormElement Builder

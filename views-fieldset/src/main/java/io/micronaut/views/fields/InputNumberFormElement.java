@@ -52,7 +52,6 @@ public record InputNumberFormElement(@NonNull String name,
                                      @Nullable String step,
                                      @NonNull Message label,
                                      @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes {
-
     /**
      *
      * @return the Input Number FormElement Builder

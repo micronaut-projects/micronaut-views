@@ -2,10 +2,11 @@ package io.micronaut.views.fields;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class InputTimeFormElementTest {
     @Test
@@ -34,6 +35,8 @@ class InputTimeFormElementTest {
         assertEquals("10:00", formElement.value().toString());
         assertEquals("09:00", formElement.min().toString());
         assertEquals("18:00", formElement.max().toString());
+
+        assertFalse(formElement.hasErrors());
     }
 
 }

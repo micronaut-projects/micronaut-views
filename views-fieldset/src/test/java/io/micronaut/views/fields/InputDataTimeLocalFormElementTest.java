@@ -32,6 +32,8 @@ class InputDataTimeLocalFormElementTest {
         assertEquals("2018-06-12T19:30", formElement.value().toString());
         assertEquals("2018-06-07T00:00", formElement.min().toString());
         assertEquals("2018-06-14T00:00", formElement.max().toString());
+
+        assertFalse(formElement.hasErrors());
     }
 
 }

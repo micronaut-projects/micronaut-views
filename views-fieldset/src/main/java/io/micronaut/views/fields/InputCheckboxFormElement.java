@@ -26,12 +26,22 @@ import java.util.List;
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">Input Checkbox</a>
  * @param checkboxes Checkboxes
  * @param label HTML label
+ * @param errors errors associated with this input
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputCheckboxFormElement.Builder.class))
 public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes,
-                                       @NonNull Message label) implements FormElement {
+                                       @NonNull Message label,
+                                       @NonNull List<Message> errors) implements FormElement {
+    /**
+     *
+     * @return Whether the form element has validation errors
+     */
+    public boolean hasErrors() {
+        return !errors().isEmpty();
+    }
 
     /**
      *
@@ -50,6 +60,8 @@ public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes,
         private List<Checkbox> checkboxes;
 
         private Message label;
+
+        private List<Message> errors;
 
         /**
          *
@@ -75,11 +87,24 @@ public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes,
 
         /**
          *
+         * @param errors Form element validation Errors.
+         * @return The Builder
+         */
+        @NonNull
+        public Builder errors(@NonNull List<Message> errors) {
+            this.errors = errors;
+            return this;
+        }
+
+        /**
+         *
          * @return Creates a {@link InputCheckboxFormElement}
          */
         @NonNull
         public InputCheckboxFormElement build() {
-            return new InputCheckboxFormElement(checkboxes == null ? Collections.emptyList() : checkboxes, label);
+            return new InputCheckboxFormElement(checkboxes == null ? Collections.emptyList() : checkboxes,
+                label,
+                errors == null ? Collections.emptyList() : errors);
         }
     }
 }

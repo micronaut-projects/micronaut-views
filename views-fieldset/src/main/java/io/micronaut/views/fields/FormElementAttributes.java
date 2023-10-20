@@ -47,4 +47,12 @@ public interface FormElementAttributes {
      */
     @NonNull
     List<Message> errors();
+
+    /**
+     *
+     * @return Whether the form element has validation errors
+     */
+    default boolean hasErrors() {
+        return !errors().isEmpty();
+    }
 }

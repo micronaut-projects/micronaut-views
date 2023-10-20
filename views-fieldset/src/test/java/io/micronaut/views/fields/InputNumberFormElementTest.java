@@ -42,6 +42,8 @@ class InputNumberFormElementTest {
             .with("step", STEP)
             .build();
         assertFormElement(formElement);
+
+        assertFalse(formElement.hasErrors());
     }
 
     private void assertFormElement(InputNumberFormElement formElement) {
