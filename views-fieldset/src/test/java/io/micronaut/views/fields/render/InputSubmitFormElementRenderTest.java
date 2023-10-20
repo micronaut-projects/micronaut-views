@@ -1,7 +1,6 @@
 package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.InputHiddenFormElement;
 import io.micronaut.views.fields.InputSubmitFormElement;
 import io.micronaut.views.fields.Message;
 import org.junit.jupiter.api.Test;

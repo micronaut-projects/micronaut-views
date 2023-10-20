@@ -2,9 +2,14 @@ package io.micronaut.views.fields.formsexamples;
 
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.*;
+import io.micronaut.views.fields.Checkbox;
+import io.micronaut.views.fields.Fieldset;
+import io.micronaut.views.fields.FieldsetGenerator;
+import io.micronaut.views.fields.InputCheckboxFormElement;
+import io.micronaut.views.fields.InputTextFormElement;
+import io.micronaut.views.fields.Message;
+import io.micronaut.views.fields.SimpleMessage;
 import io.micronaut.views.fields.annotations.InputCheckbox;
-import io.micronaut.views.fields.annotations.InputRadio;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.Test;
@@ -12,7 +17,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @MicronautTest(startApplication = false)
 class EnumAsCheckboxButtonTest {

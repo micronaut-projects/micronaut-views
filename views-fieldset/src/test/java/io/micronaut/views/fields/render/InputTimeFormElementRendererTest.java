@@ -1,12 +1,10 @@
 package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.InputDateTimeLocalFormElement;
 import io.micronaut.views.fields.InputTimeFormElement;
 import io.micronaut.views.fields.Message;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
 
