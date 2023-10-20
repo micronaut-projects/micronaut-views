@@ -8,13 +8,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @MicronautTest(startApplication = false)
 class EnumOptionFetcherTest {
 
     @Test
-    void enumToOptions(EnumOptionFetcher optionFetcher) {
+    void enumToOptions(EnumOptionFetcher<Genre> optionFetcher) {
         List<Option> optionList = optionFetcher.generate(Genre.class);
         assertNotNull(optionList);
         assertEquals(3, optionList.size());
