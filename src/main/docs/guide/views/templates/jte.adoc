@@ -1,5 +1,5 @@
-Micronaut Views Jte includes api:views.jte.JteViewsRenderer[] which uses
-the https://jte.gg[Jte] Java-based template engine.
+Micronaut Views Jte includes api:views.jte.JteViewsRenderer[] which uses https://jte.gg[jte] (**J**ava **T**emplate **E**ngine), a
+secure and lightweight template engine for Java and Kotlin.
 
 Add the `micronaut-views-jte` dependency to your classpath.
 
@@ -15,11 +15,11 @@ include::{testsviewsJte}/resources/views/home.jte[]
 
 === Compiling Templates
 
-Jte templates may be precompiled at build time. This can be done by a https://github.com/casid/jte/blob/master/DOCUMENTATION.md#gradle[Gradle plugin] or https://github.com/casid/jte/blob/master/DOCUMENTATION.md#maven[Maven plugin]. If not precompiled, the application will need a JDK so it can compile templates at runtime.
+Jte templates may be precompiled at build time. This can be done by a https://jte.gg/pre-compiling/#gradle[Gradle plugin] or https://jte.gg/pre-compiling/#maven[Maven plugin]. If not precompiled, the application will need a JDK so it can compile templates at runtime.
 
 === Dynamic Reloading
 
-When 'dynamic' is enabled (see below), JTE will load templates from the project source directory, and will reload them after changes.
+When `dynamic` is enabled (see below), jte will load templates from the project source directory, and will reload them after changes.
 
 === Configuration
 
@@ -28,7 +28,6 @@ The properties used can be customized by overriding the values of:
 include::{includedir}configurationProperties/io.micronaut.views.jte.JteViewsRendererConfigurationProperties.adoc[]
 
 == .kte (Kotlin) templates
-
 
 To use `.kte` (Kotlin) templates include the dependency:.
 
