@@ -1,6 +1,0 @@
-<input type="submit"
-       th:fragment="field(field)"
-       xmlns:th="http://www.thymeleaf.org"
-       class="btn btn-primary"
-       th:value="${#strings.defaultString(#messages.msgOrNull(field.value().code()),field.value().defaultMessage())}">
-</input>
