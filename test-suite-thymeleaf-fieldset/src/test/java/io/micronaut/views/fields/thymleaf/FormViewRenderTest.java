@@ -48,7 +48,7 @@ class FormViewRenderTest {
     }
 
     private static String render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer, Form el) throws IOException {
-        return output(viewsRenderer.render("fieldset/form.html", Map.of("el", el), null));
+        return output(viewsRenderer.render("fieldset/form.html", Map.of("form", el), null));
     }
 
     private static String output(Writable writeable) throws IOException {

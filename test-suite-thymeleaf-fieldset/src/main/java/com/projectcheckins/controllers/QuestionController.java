@@ -118,8 +118,9 @@ class QuestionController {
         QuestionRow question = questionOptional.get();
         Form deleteForm = formGenerator.generate(deletePath, new QuestionDelete(questionId), deleteSubmit);
         String saveAnswer = UriBuilder.of(CONTROLLER_PATH).path(String.valueOf(questionId)).path(ANSWERS).path(ACTION_SAVE).build().toString();
-        Form answerSaveForm = formGenerator.generate(saveAnswer, AnswerSave.class, answerSaveSubmit);
-        return HttpResponse.ok(Map.of("question", question, "deleteForm", deleteForm, "answerSaveForm", answerSaveForm));
+        Form answerSaveForm = formGenerator.generate(saveAnswer, new AnswerSave(questionId, null), answerSaveSubmit);
+        List<AnswerRow> answers = questionService.findAnswersByQuestionId(questionId);
+        return HttpResponse.ok(Map.of("question", question, "deleteForm", deleteForm, "answerSaveForm", answerSaveForm, "answers", answers));
     }
 
     @Produces(MediaType.TEXT_HTML)

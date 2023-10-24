@@ -1,16 +1,14 @@
-package com.projectcheckins.repositories;
+package com.projectcheckins.repositories.jdbc;
 
 import com.projectcheckins.services.*;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Singleton;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Singleton
 public class QuestionServiceImpl implements QuestionService {
@@ -18,16 +16,20 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final QuestionUserRepository questionUserRepository;
 
+    private final AnswerRepository answerRepository;
+
     public QuestionServiceImpl(QuestionRepository questionRepository,
-                               QuestionUserRepository questionUserRepository) {
+                               QuestionUserRepository questionUserRepository,
+                               AnswerRepository answerRepository) {
         this.questionRepository = questionRepository;
         this.questionUserRepository = questionUserRepository;
+        this.answerRepository = answerRepository;
     }
 
     @Transactional
     @Override
     public Long save(@NonNull @NotNull @Valid QuestionSave questionSave) {
-        Question question = new Question(null, questionSave.question(), questionSave.onceAWeekOn(), questionSave.timeOfDay());
+        Question question = new Question(null, questionSave.question(), questionSave.onceAWeekOn(), questionSave.timeOfDay(), null);
         question = questionRepository.save(question);
         for (Long userId : questionSave.usersId()) {
             questionUserRepository.save(new QuestionUser(new QuestionUserId(question.id(), userId)));
@@ -76,7 +78,7 @@ public class QuestionServiceImpl implements QuestionService {
         Question question = new Question(questionId,
             questionUpdate.question(),
             questionUpdate.onceAWeekOn(),
-            questionUpdate.timeOfDay());
+            questionUpdate.timeOfDay(), null);
         questionRepository.update(question);
     }
 
@@ -88,6 +90,25 @@ public class QuestionServiceImpl implements QuestionService {
                 question.onceAWeekOn(),
                 question.timeOfDay(),
                 questionUserRepository.findAllUserIdByQuestionId(questionId)));
+    }
+
+    @Override
+    public void saveAnswer(AnswerSave answerSave) {
+        questionRepository.findById(answerSave.questionId())
+                .ifPresent(question -> answerRepository.save(new Answer(null, answerSave.answer(), null, null, question)));
+    }
+
+    @Override
+    @NonNull
+    public List<AnswerRow> findAnswersByQuestionId(@NonNull @NotNull Long questionId) {
+        return questionRepository.getById(questionId)
+                .map(question -> question.answers().stream().map(QuestionServiceImpl::answerToAnswerRow).toList())
+                .orElse(Collections.emptyList());
+    }
+
+    @NonNull
+    private static AnswerRow answerToAnswerRow(Answer answer) {
+        return new AnswerRow(answer.answer());
     }
 
     @Transactional

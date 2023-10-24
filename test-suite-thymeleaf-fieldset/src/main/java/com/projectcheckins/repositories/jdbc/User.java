@@ -1,4 +1,4 @@
-package com.projectcheckins.repositories;
+package com.projectcheckins.repositories.jdbc;
 
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.data.annotation.GeneratedValue;

@@ -3,4 +3,5 @@
     <a th:href="@{|/questions/${question.id()}/edit|}"  th:text="#{question.edit}"></a>
     <h1 th:text="${question.title()}"></h1>
     <form th:replace="~{fieldset/form :: form(${answerSaveForm})}"></form>
+    <div th:each="answer : ${answer}" th:replace="~{fieldset/answer :: _show(${answer})}"></div>
 </th:block>

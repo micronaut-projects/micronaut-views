@@ -1,7 +1,7 @@
 package com.projectcheckins.services;
 
-import com.projectcheckins.repositories.User;
-import com.projectcheckins.repositories.UserRepository;
+import com.projectcheckins.repositories.jdbc.User;
+import com.projectcheckins.repositories.jdbc.UserRepository;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.views.fields.Checkbox;

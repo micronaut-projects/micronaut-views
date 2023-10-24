@@ -1,7 +1,7 @@
 package com.projectcheckins;
 
-import com.projectcheckins.repositories.User;
-import com.projectcheckins.repositories.UserRepository;
+import com.projectcheckins.repositories.jdbc.User;
+import com.projectcheckins.repositories.jdbc.UserRepository;
 import com.projectcheckins.services.QuestionSave;
 import com.projectcheckins.services.QuestionService;
 import io.micronaut.context.annotation.Requires;

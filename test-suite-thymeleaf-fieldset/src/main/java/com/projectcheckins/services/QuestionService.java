@@ -21,4 +21,9 @@ public interface QuestionService {
     void update(@NonNull @NotNull @Valid QuestionUpdate questionUpdate);
 
     @NonNull Optional<QuestionUpdate> findUpdateForm(@NonNull @NotNull Long questionId);
+
+    void saveAnswer(@NonNull @NotNull @Valid AnswerSave answerSave);
+
+    @NonNull
+    List<AnswerRow> findAnswersByQuestionId(@NonNull @NotNull Long questionId);
 }
