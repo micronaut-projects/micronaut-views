@@ -7,7 +7,7 @@
 <body>
 <main>
     <turbo-frame id="main">
-        <div th:replace="~{question/_show :: show(${deleteForm},${question})}"></div>
+        <div th:replace="~{question/_show :: show(${question}, ${deleteForm},${answerSaveForm})}"></div>
     </turbo-frame>
 </main>
 </body>

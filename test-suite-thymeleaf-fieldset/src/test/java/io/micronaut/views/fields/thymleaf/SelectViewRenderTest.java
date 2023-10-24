@@ -56,7 +56,7 @@ class SelectViewRenderTest {
                 ))
                 .build();
         assertEquals("""
-            <label for="pet-select" class="form-label">Choose a pet:</label><select name="pets" id="pet-select">\
+            <label for="pet-select" class="form-label">Choose a pet:</label><select name="pets" id="pet-select" class="form-select">\
             <option value="dog">Dog</option>\
             <option value="cat">Cat</option>\
             <option value="hamster">Hamster</option>\

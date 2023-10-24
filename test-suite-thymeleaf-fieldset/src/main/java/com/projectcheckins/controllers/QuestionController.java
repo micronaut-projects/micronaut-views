@@ -3,7 +3,6 @@ package com.projectcheckins.controllers;
 import com.projectcheckins.services.*;
 import io.micronaut.core.convert.ConversionService;
 import io.micronaut.core.type.Argument;
-import io.micronaut.http.HttpMethod;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -16,7 +15,6 @@ import io.micronaut.views.fields.FormGenerator;
 import io.micronaut.views.fields.InputSubmitFormElement;
 import io.micronaut.views.fields.Message;
 import io.micronaut.views.turbo.TurboFrameView;
-import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -38,12 +36,11 @@ class QuestionController {
     public static final String CREATE_VIEW = "question/create.html";
     public static final String ACTION_LIST = "list";
     public static final String ACTION_SAVE = "save";
-
     public static final String ACTION_DELETE = "delete";
-
     public static final String ACTION_UPDATE = "update";
     public static final String VIEW_EDIT = "question/edit.html";
     public static final String VIEW_LIST = "question/_list.html";
+    public static final String ANSWERS = "answers";
     private final ConversionService conversionService;
     private final QuestionService questionService;
     private final FormGenerator formGenerator;
@@ -60,6 +57,7 @@ class QuestionController {
     private final InputSubmitFormElement deleteSubmit;
 
     private final InputSubmitFormElement updateSubmit;
+    private final InputSubmitFormElement answerSaveSubmit;
 
     QuestionController(ConversionService conversionService,
                        QuestionService questionService,
@@ -74,6 +72,7 @@ class QuestionController {
         this.saveSubmit = new InputSubmitFormElement(Message.of("Start collecting answers", "question.new.submit"));
         this.deleteSubmit = new InputSubmitFormElement(Message.of("Delete", "question.delete.submit"));
         this.updateSubmit = new InputSubmitFormElement(Message.of("Update", "question.update.submit"));
+        this.answerSaveSubmit = new InputSubmitFormElement(Message.of("Post my answer", "answer.save.submit"));
     }
 
     @Produces(MediaType.TEXT_HTML)
@@ -97,11 +96,10 @@ class QuestionController {
 
     @Produces(MediaType.TEXT_HTML)
     @View(CREATE_VIEW)
-    @TurboFrameView("fieldset/_form.html")
+    @TurboFrameView("fieldset/form.html")
     @Get("/create")
     Map<String, Object> create() {
         Form form = formGenerator.generate(savePath,
-            HttpMethod.POST.toString(),
             QuestionSave.class,
             saveSubmit
             );
@@ -118,17 +116,15 @@ class QuestionController {
             return HttpResponse.seeOther(NotFoundController.CONTROLLER_URI);
         }
         QuestionRow question = questionOptional.get();
-        Form deleteForm = formGenerator.generate(deletePath,
-            HttpMethod.POST.toString(),
-            new QuestionDelete(questionId),
-            deleteSubmit
-        );
-        return HttpResponse.ok(Map.of("question", question, "deleteForm", deleteForm));
+        Form deleteForm = formGenerator.generate(deletePath, new QuestionDelete(questionId), deleteSubmit);
+        String saveAnswer = UriBuilder.of(CONTROLLER_PATH).path(String.valueOf(questionId)).path(ANSWERS).path(ACTION_SAVE).build().toString();
+        Form answerSaveForm = formGenerator.generate(saveAnswer, AnswerSave.class, answerSaveSubmit);
+        return HttpResponse.ok(Map.of("question", question, "deleteForm", deleteForm, "answerSaveForm", answerSaveForm));
     }
 
     @Produces(MediaType.TEXT_HTML)
     @View(VIEW_EDIT)
-    @TurboFrameView("fieldset/_form.html")
+    @TurboFrameView("fieldset/form.html")
     @Get("/{questionId}/edit")
     HttpResponse<?> edit(@PathVariable Long questionId) {
         Optional<QuestionUpdate> questionOptional = questionService.findUpdateForm(questionId);
@@ -136,7 +132,7 @@ class QuestionController {
             return HttpResponse.seeOther(NotFoundController.CONTROLLER_URI);
         }
         QuestionUpdate question = questionOptional.get();
-        Form form = formGenerator.generate(updatePath, HttpMethod.POST.toString(), question, updateSubmit);
+        Form form = formGenerator.generate(updatePath, question, updateSubmit);
         return HttpResponse.ok(Collections.singletonMap(QuestionController.MODEL_KEY_FORM, form));
     }
 
@@ -150,7 +146,6 @@ class QuestionController {
             questionService.save(questionSave);
         } catch (ConstraintViolationException constraintViolationException) {
             Form form = formGenerator.generate(savePath,
-                HttpMethod.POST.toString(),
                 questionSave,
                 constraintViolationException,
                 saveSubmit
@@ -189,7 +184,6 @@ class QuestionController {
             questionService.update(questionUpdate);
         } catch (ConstraintViolationException constraintViolationException) {
             Form form = formGenerator.generate(updatePath,
-                HttpMethod.POST.toString(),
                 questionUpdate,
                 constraintViolationException,
                 updateSubmit

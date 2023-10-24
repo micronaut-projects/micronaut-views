@@ -25,6 +25,8 @@ import jakarta.validation.ConstraintViolationException;
  */
 public interface FormGenerator {
 
+    String POST = "post";
+
     /**
      * @param action Form action attribute
      * @param method Form method attribute
@@ -36,6 +38,18 @@ public interface FormGenerator {
                           @NonNull String method,
                           @NonNull Object instance) {
         return generate(action, method, instance, Message.of("Submit", "default.input.submit.value"));
+    }
+
+    /**
+     * Generate FORM Post.
+     * @param action Form action attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @return A Form
+     */
+    @NonNull
+    default Form generate(@NonNull String action,
+                          @NonNull Object instance) {
+        return generate(action, instance, Message.of("Submit", "default.input.submit.value"));
     }
 
     /**
@@ -54,6 +68,20 @@ public interface FormGenerator {
     }
 
     /**
+     * Generate FORM Post.
+     * @param action Form action attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param submitValue input submit
+     * @return A Form
+     */
+    @NonNull
+    default Form generate(@NonNull String action,
+                          @NonNull Object instance,
+                          @NonNull Message submitValue) {
+        return generate(action, instance, new InputSubmitFormElement(submitValue));
+    }
+
+    /**
      * @param action Form action attribute
      * @param method Form method attribute
      * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
@@ -65,6 +93,20 @@ public interface FormGenerator {
                   @NonNull String method,
                   @NonNull Object instance,
                   @NonNull InputSubmitFormElement inputSubmitFormElement);
+
+    /**
+     * Generate FORM Post.
+     * @param action Form action attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param inputSubmitFormElement input submit
+     * @return A Form
+     */
+    @NonNull
+    default Form generate(@NonNull String action,
+                  @NonNull Object instance,
+                  @NonNull InputSubmitFormElement inputSubmitFormElement) {
+        return generate(action, POST, instance, inputSubmitFormElement);
+    }
 
     /**
      * @param action Form action attribute
@@ -79,6 +121,20 @@ public interface FormGenerator {
                   @NonNull Object instance,
                   @NonNull ConstraintViolationException ex) {
         return generate(action, method, instance, ex, Message.of("Submit", "default.input.submit.value"));
+    }
+
+    /**
+     * Generate POST form.
+     * @param action Form action attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param ex A Validation exception
+     * @return A Form
+     */
+    @NonNull
+    default Form generate(@NonNull String action,
+                          @NonNull Object instance,
+                          @NonNull ConstraintViolationException ex) {
+        return generate(action, instance, ex, Message.of("Submit", "default.input.submit.value"));
     }
 
     /**
@@ -99,6 +155,22 @@ public interface FormGenerator {
     }
 
     /**
+     * Generate POST form.
+     * @param action Form action attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param ex A Validation exception
+     * @param submitValue input submit
+     * @return A Form
+     */
+    @NonNull
+    default Form generate(@NonNull String action,
+                          @NonNull Object instance,
+                          @NonNull ConstraintViolationException ex,
+                          @NonNull Message submitValue) {
+        return generate(action, instance, ex, new InputSubmitFormElement(submitValue));
+    }
+
+    /**
      * @param action Form action attribute
      * @param method Form method attribute
      * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
@@ -114,6 +186,22 @@ public interface FormGenerator {
                   @NonNull InputSubmitFormElement inputSubmitFormElement);
 
     /**
+     * Generate POST form.
+     * @param action Form action attribute
+     * @param instance The Object instance which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param ex A Validation exception
+     * @param inputSubmitFormElement input submit
+     * @return A Form
+     */
+    @NonNull
+    default Form generate(@NonNull String action,
+                          @NonNull Object instance,
+                          @NonNull ConstraintViolationException ex,
+                          @NonNull InputSubmitFormElement inputSubmitFormElement) {
+        return generate(action, POST, instance, ex, inputSubmitFormElement);
+    }
+
+    /**
      *
      * @param action Form action attribute
      * @param method Form method attribute
@@ -126,6 +214,19 @@ public interface FormGenerator {
                               @NonNull String method,
                               @NonNull Class<T> type) {
         return generate(action, method, type, Message.of("Submit", "default.input.submit.value"));
+    }
+
+    /**
+     * Generate POST Form.
+     * @param action Form action attribute
+     * @param type A class which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param <T> type
+     * @return A Form
+     */
+    @NonNull
+    default <T> Form generate(@NonNull String action,
+                              @NonNull Class<T> type) {
+        return generate(action, type, Message.of("Submit", "default.input.submit.value"));
     }
 
     /**
@@ -146,6 +247,21 @@ public interface FormGenerator {
     }
 
     /**
+     * Generate a POST Form.
+     * @param action Form action attribute
+     * @param type A class which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param submitValue input submit
+     * @param <T> type
+     * @return A Form
+     */
+    @NonNull
+    default <T> Form generate(@NonNull String action,
+                              @NonNull Class<T> type,
+                              @NonNull Message submitValue) {
+        return generate(action, type, new InputSubmitFormElement(submitValue));
+    }
+
+    /**
      *
      * @param action Form action attribute
      * @param method Form method attribute
@@ -159,4 +275,19 @@ public interface FormGenerator {
                       @NonNull String method,
                       @NonNull Class<T> type,
                       @NonNull InputSubmitFormElement inputSubmitFormElement);
+
+    /**
+     * Generate a POST form.
+     * @param action Form action attribute
+     * @param type A class which should be {@link io.micronaut.core.annotation.Introspected}.
+     * @param inputSubmitFormElement input submit
+     * @param <T> type
+     * @return A Form
+     */
+    @NonNull
+    default <T> Form generate(@NonNull String action,
+                      @NonNull Class<T> type,
+                      @NonNull InputSubmitFormElement inputSubmitFormElement) {
+        return generate(action, POST, type, inputSubmitFormElement);
+    }
 }
