@@ -20,11 +20,12 @@ import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.HttpAttributes;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.filter.HttpServerFilter;
@@ -110,6 +111,10 @@ public class ViewsFilter implements HttpServerFilter {
                                                             ServerFilterChain chain) {
         return Flux.from(chain.proceed(request))
             .switchMap(response -> {
+                if(response.getStatus() == HttpStatus.MOVED_PERMANENTLY) {
+                    LOG.debug("redirect, passing through");
+                    return Flux.just(response);
+                }
                 Object body = response.body();
                 Optional<Writable> writableOptional = parseTurboStreamWritable(request, response, body);
                 if (writableOptional.isPresent()) {
