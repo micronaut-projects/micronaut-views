@@ -24,6 +24,9 @@ import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.Locale;
 
+import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
+import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_SUBMIT;
+
 /**
  * {@link FormElementRenderer} implementation for {@link io.micronaut.views.fields.InputSubmitFormElement}.
  * @author Sergio del Amo

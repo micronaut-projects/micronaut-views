@@ -1,6 +1,8 @@
 package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.micronaut.views.fields.HtmlTag;
+import io.micronaut.views.fields.InputDateFormElement;
 import io.micronaut.views.fields.InputEmailFormElement;
 import io.micronaut.views.fields.Message;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @MicronautTest(startApplication = false)
 class InputEmailFormElementRendererTest {
+    @Test
+    void testTagAndType() {
+        InputEmailFormElement formElement = InputEmailFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_EMAIL, formElement.getType());
+    }
 
     @Test
     void render(InputEmailFormElementRenderer renderer) {

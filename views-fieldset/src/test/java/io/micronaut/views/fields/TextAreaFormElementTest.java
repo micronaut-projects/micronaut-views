@@ -7,6 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TextAreaFormElementTest {
+    @Test
+    void testTag() {
+        TextareaFormElement formElement = TextareaFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_TEXTAREA, formElement.getTag());
+    }
 
     @Test
     void textareaHasABuilderApi() {

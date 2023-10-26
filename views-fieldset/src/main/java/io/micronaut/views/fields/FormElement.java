@@ -15,10 +15,20 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Nullable;
+
 /**
  * Marker interface for HTML Form Elements.
  * @author Sergio del Amo
  * @since 4.1.0
  */
 public interface FormElement {
+
+    /**
+     * @return The HTML Tag this element refers to.
+     */
+    @Nullable
+    default String getTag() {
+        return null;
+    }
 }

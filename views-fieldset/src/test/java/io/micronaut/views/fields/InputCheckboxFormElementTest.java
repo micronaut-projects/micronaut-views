@@ -1,6 +1,7 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.views.fields.render.InputType;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +23,9 @@ class InputCheckboxFormElementTest {
         InputCheckboxFormElement formElement = InputCheckboxFormElement.builder()
             .checkboxes(List.of(interest, music))
             .build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_CHECKBOX, formElement.getType());
+
         List<Checkbox> checkboxes = Arrays.asList(interest, music);
         assertFormElement(checkboxes, formElement);
         BeanIntrospection<InputCheckboxFormElement> introspection = BeanIntrospection.getIntrospection(InputCheckboxFormElement.class);

@@ -17,6 +17,7 @@ package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.views.fields.render.InputType;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +36,12 @@ import java.util.List;
 public record InputRadioFormElement(@NonNull String name,
                                     boolean required,
                                     @NonNull List<Radio> buttons,
-                                    @NonNull Message label) implements FormElement {
+                                    @NonNull Message label) implements InputFormElement {
+    @Override
+    @NonNull
+    public String getType() {
+        return InputType.ATTR_TYPE_RADIO;
+    }
 
     /**
      *

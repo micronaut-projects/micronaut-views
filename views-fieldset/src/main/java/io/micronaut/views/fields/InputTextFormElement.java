@@ -18,6 +18,7 @@ package io.micronaut.views.fields;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.views.fields.render.InputType;
 
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +54,13 @@ public record InputTextFormElement(@NonNull String name,
                                    @Nullable Integer size,
                                    @Nullable String value,
                                    @Nullable Message label,
-                                   @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes, InputStringFormElement {
+                                   @NonNull List<Message> errors) implements InputFormElement, GlobalAttributes, FormElementAttributes, InputStringFormElement {
+    @Override
+    @NonNull
+    public String getType() {
+        return InputType.ATTR_TYPE_TEXT;
+    }
+
     /**
      *
      * @return Input Text builder

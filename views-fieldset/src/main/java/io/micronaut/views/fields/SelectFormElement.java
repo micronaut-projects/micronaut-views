@@ -18,7 +18,6 @@ package io.micronaut.views.fields;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +36,11 @@ import java.util.Objects;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = SelectFormElement.Builder.class))
 public record SelectFormElement(@NonNull boolean required, @NonNull String name, @Nullable String id, @NonNull List<Option> options, @NonNull Message label) implements FormElement, GlobalAttributes {
+    @Override
+    @NonNull
+    public String getTag() {
+        return HtmlTag.TAG_SELECT;
+    }
 
     /**
      *

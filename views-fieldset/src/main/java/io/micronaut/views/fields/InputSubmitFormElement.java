@@ -17,6 +17,7 @@ package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.views.fields.render.InputType;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit">input submit</a>
@@ -26,7 +27,12 @@ import io.micronaut.core.annotation.NonNull;
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputSubmitFormElement.Builder.class))
-public record InputSubmitFormElement(@NonNull Message value) implements FormElement {
+public record InputSubmitFormElement(@NonNull Message value) implements InputFormElement {
+    @Override
+    @NonNull
+    public String getType() {
+        return InputType.ATTR_TYPE_SUBMIT;
+    }
 
     /**
      *

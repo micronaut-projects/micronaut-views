@@ -23,6 +23,11 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewsRendererLocator;
 import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Singleton;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -53,5 +58,18 @@ public class DefaultTurboStreamRenderer implements TurboStreamRenderer {
                                     .render());
                 })
                 .orElseGet(() -> builder.build().render());
+    }
+
+    @Override
+    public Optional<Writable> render(HttpRequest<?> request, TurboStream.@NonNull Builder... builders) {
+        List<Writable> writableList = new ArrayList<>();
+        for (TurboStream.Builder builder : builders) {
+            render(builder, request).ifPresent(writableList::add);
+        }
+        return Optional.of(out -> {
+            for (Writable w : writableList) {
+                w.writeTo(out);
+            }
+        });
     }
 }

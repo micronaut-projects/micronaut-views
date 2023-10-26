@@ -1,6 +1,7 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.views.fields.render.InputType;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,6 +15,13 @@ class InputNumberFormElementTest {
     private static final Integer MIN = 0;
     private static final Integer MAX = 100;
     private static final String STEP = "10";
+
+    @Test
+    void testTagAndType() {
+        InputNumberFormElement formElement = InputNumberFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_NUMBER, formElement.getType());
+    }
 
     @Test
     void builder() {

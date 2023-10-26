@@ -1,6 +1,7 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.views.fields.render.InputType;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -24,6 +25,8 @@ class InputDateFormElementTest {
             .max(max)
             .build();
         assertNotNull(formElement);
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_DATE, formElement.getType());
         assertEquals(id, formElement.id());
         assertEquals(name, formElement.name());
         assertEquals(value, formElement.value());

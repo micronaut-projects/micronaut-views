@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static io.micronaut.views.fields.HtmlTag.TAG_OPTION;
+
 /**
  * {@link FormElementRenderer} implementation of {@link Option}.
  * @author Sergio del Amo

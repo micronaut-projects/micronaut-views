@@ -1,11 +1,13 @@
 package com.projectcheckins.controllers;
 
 import com.projectcheckins.services.*;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.convert.ConversionService;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.uri.UriBuilder;
 import io.micronaut.views.ModelAndView;
@@ -15,6 +17,9 @@ import io.micronaut.views.fields.FormGenerator;
 import io.micronaut.views.fields.InputSubmitFormElement;
 import io.micronaut.views.fields.Message;
 import io.micronaut.views.turbo.TurboFrameView;
+import io.micronaut.views.turbo.TurboStream;
+import io.micronaut.views.turbo.TurboStreamRenderer;
+import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -27,20 +32,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.projectcheckins.controllers.Actions.*;
+
 @Controller(QuestionController.CONTROLLER_PATH)
 class QuestionController {
 
     public static final String CONTROLLER_PATH = "/questions";
-    private static final String MODEL_KEY_FORM = "form";
     private static final String MODEL_KEY_QUESTIONS = "questions";
     public static final String CREATE_VIEW = "question/create.html";
-    public static final String ACTION_LIST = "list";
-    public static final String ACTION_SAVE = "save";
-    public static final String ACTION_DELETE = "delete";
-    public static final String ACTION_UPDATE = "update";
     public static final String VIEW_EDIT = "question/edit.html";
     public static final String VIEW_LIST = "question/_list.html";
     public static final String ANSWERS = "answers";
+    public static final String MODEL_KEY_ANSWER = "answer";
     private final ConversionService conversionService;
     private final QuestionService questionService;
     private final FormGenerator formGenerator;
@@ -59,16 +62,20 @@ class QuestionController {
     private final InputSubmitFormElement updateSubmit;
     private final InputSubmitFormElement answerSaveSubmit;
 
+    private final TurboStreamRenderer turboStreamRenderer;
+
     QuestionController(ConversionService conversionService,
                        QuestionService questionService,
-                       FormGenerator formGenerator) {
+                       FormGenerator formGenerator,
+                       TurboStreamRenderer turboStreamRenderer) {
         this.conversionService = conversionService;
         this.questionService = questionService;
         this.formGenerator = formGenerator;
-        listPath = UriBuilder.of(CONTROLLER_PATH).path(ACTION_LIST).build();
-        savePath = UriBuilder.of(CONTROLLER_PATH).path(ACTION_SAVE).build().toString();
-        deletePath = UriBuilder.of(CONTROLLER_PATH).path(ACTION_DELETE).build().toString();
-        updatePath = UriBuilder.of(CONTROLLER_PATH).path(ACTION_UPDATE).build().toString();
+        this.turboStreamRenderer = turboStreamRenderer;
+        listPath = UriBuilder.of(CONTROLLER_PATH).path(Actions.ACTION_LIST).build();
+        savePath = UriBuilder.of(CONTROLLER_PATH).path(Actions.ACTION_SAVE).build().toString();
+        deletePath = UriBuilder.of(CONTROLLER_PATH).path(Actions.ACTION_DELETE).build().toString();
+        updatePath = UriBuilder.of(CONTROLLER_PATH).path(Actions.ACTION_UPDATE).build().toString();
         this.saveSubmit = new InputSubmitFormElement(Message.of("Start collecting answers", "question.new.submit"));
         this.deleteSubmit = new InputSubmitFormElement(Message.of("Delete", "question.delete.submit"));
         this.updateSubmit = new InputSubmitFormElement(Message.of("Update", "question.update.submit"));
@@ -108,7 +115,7 @@ class QuestionController {
 
     @Produces(MediaType.TEXT_HTML)
     @View("question/show.html")
-    @TurboFrameView("fieldset/_show.html")
+    @TurboFrameView("question/_show.html")
     @Get("/{questionId}/show")
     HttpResponse<?> show(@PathVariable Long questionId) {
         Optional<QuestionRow> questionOptional = questionService.findById(questionId);
@@ -117,7 +124,7 @@ class QuestionController {
         }
         QuestionRow question = questionOptional.get();
         Form deleteForm = formGenerator.generate(deletePath, new QuestionDelete(questionId), deleteSubmit);
-        String saveAnswer = UriBuilder.of(CONTROLLER_PATH).path(String.valueOf(questionId)).path(ANSWERS).path(ACTION_SAVE).build().toString();
+        String saveAnswer = UriBuilder.of(CONTROLLER_PATH).path(String.valueOf(questionId)).path(ANSWERS).path(Actions.ACTION_SAVE).build().toString();
         Form answerSaveForm = formGenerator.generate(saveAnswer, new AnswerSave(questionId, null), answerSaveSubmit);
         List<AnswerRow> answers = questionService.findAnswersByQuestionId(questionId);
         return HttpResponse.ok(Map.of("question", question, "deleteForm", deleteForm, "answerSaveForm", answerSaveForm, "answers", answers));
@@ -134,7 +141,7 @@ class QuestionController {
         }
         QuestionUpdate question = questionOptional.get();
         Form form = formGenerator.generate(updatePath, question, updateSubmit);
-        return HttpResponse.ok(Collections.singletonMap(QuestionController.MODEL_KEY_FORM, form));
+        return HttpResponse.ok(Collections.singletonMap(MODEL_KEY_FORM, form));
     }
 
     @Produces(MediaType.TEXT_HTML)
@@ -161,6 +168,34 @@ class QuestionController {
             () -> HttpResponse.seeOther(listPath),
             turboStream -> turboStream.replace()
                 .template(VIEW_LIST, listModel()));
+    }
+
+
+    @Produces(MediaType.TEXT_HTML)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Post("/{questionId}/answers/save")
+    HttpResponse<?> save(@PathVariable Long questionId,
+                         @NonNull @NotNull @Valid @Body AnswerSave answerSave,
+                         HttpRequest<?> request) {
+        if (!questionId.equals(answerSave.questionId())) {
+            return HttpResponse.unprocessableEntity();
+        }
+        try {
+            questionService.saveAnswer(answerSave);
+        } catch (ConstraintViolationException constraintViolationException) {
+           //TODO
+        }
+        if (TurboMediaType.acceptsTurboStream(request)) {
+            TurboStream.Builder append = TurboStream.builder().targetDomId("answers")
+                    .template("answer/_show.html", Collections.singletonMap(MODEL_KEY_ANSWER, new AnswerRow(answerSave.answer()))).append();
+            TurboStream.Builder delete = TurboStream.builder().targetDomId("answerSaveForm").remove();
+            return turboStreamRenderer.render(request, append, delete).map(writable -> HttpResponse.ok(writable).contentType(TurboMediaType.TURBO_STREAM)).orElseGet(HttpResponse::unprocessableEntity);
+        }
+        return questionShowResponse(questionId);
+    }
+
+    private static MutableHttpResponse<?> questionShowResponse(Long questionId) {
+        return HttpResponse.seeOther(UriBuilder.of(CONTROLLER_PATH).path(String.valueOf(questionId)).path(ACTION_SHOW).build());
     }
 
     @Produces(MediaType.TEXT_HTML)

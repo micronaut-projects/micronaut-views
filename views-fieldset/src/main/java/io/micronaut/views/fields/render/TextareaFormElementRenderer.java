@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static io.micronaut.views.fields.HtmlTag.TAG_TEXTAREA;
+
 /**
  * {@link FormElementRenderer} implementation of {@link TextareaFormElement}.
  * @author Sergio del Amo

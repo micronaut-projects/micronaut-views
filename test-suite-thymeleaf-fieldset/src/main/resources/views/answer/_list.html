@@ -1,0 +1,1 @@
+<div th:fragment="list(answers)" xmlns:th="http://www.thymeleaf.org" id="answers"><th:block th:each="answer : ${answers}"><div th:replace="~{answer/_show :: show(${answer})}"/></th:block></div>
