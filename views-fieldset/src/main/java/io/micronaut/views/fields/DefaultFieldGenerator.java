@@ -34,6 +34,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import java.lang.annotation.Annotation;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -60,6 +61,20 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private static final String MEMBER_FETCHER = "fetcher";
     private static final String BUILDER_METHOD_BUTTONS = "buttons";
     private static final String BUILDER_METHOD_MIN = "min";
+
+    private static final Map<Class<? extends Annotation>, Class<? extends FormElement>> ANNOTATION_MAPPING = Map.ofEntries(
+        Map.entry(InputHidden.class, InputHiddenFormElement.class),
+        Map.entry(InputRadio.class, InputRadioFormElement.class),
+        Map.entry(InputCheckbox.class, InputCheckboxFormElement.class),
+        Map.entry(InputPassword.class, InputPasswordFormElement.class),
+        Map.entry(InputEmail.class, InputEmailFormElement.class),
+        Map.entry(Email.class, InputEmailFormElement.class),
+        Map.entry(InputUrl.class, InputUrlFormElement.class),
+        Map.entry(InputTel.class, InputTelFormElement.class),
+        Map.entry(Select.class, SelectFormElement.class),
+        Map.entry(Textarea.class, TextareaFormElement.class),
+        Map.entry(TrixEditor.class, TrixEditorFormElement.class)
+    );
 
     private final EnumOptionFetcher<?> enumOptionFetcher;
 
@@ -156,35 +171,10 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         if (beanProperty.hasStereotype(AutoPopulated.class)) {
             return Optional.empty();
         }
-        if (beanProperty.hasAnnotation(InputHidden.class)) {
-            return Optional.of(InputHiddenFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputRadio.class)) {
-            return Optional.of(InputRadioFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputCheckbox.class)) {
-            return Optional.of(InputCheckboxFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputPassword.class)) {
-            return Optional.of(InputPasswordFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputEmail.class) || beanProperty.hasAnnotation(Email.class)) {
-            return Optional.of(InputEmailFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputUrl.class)) {
-            return Optional.of(InputUrlFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputTel.class)) {
-            return Optional.of(InputTelFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(Select.class)) {
-            return Optional.of(SelectFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(Textarea.class)) {
-            return Optional.of(TextareaFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(TrixEditor.class)) {
-            return Optional.of(TrixEditorFormElement.class);
+        for (var mapping: ANNOTATION_MAPPING.entrySet()) {
+            if (beanProperty.hasAnnotation(mapping.getKey())) {
+                return Optional.of(mapping.getValue());
+            }
         }
         if (beanProperty.getType() == LocalDate.class) {
             return Optional.of(InputDateFormElement.class);
@@ -198,15 +188,12 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         if (Number.class.isAssignableFrom(beanProperty.getType())) {
             return Optional.of(InputNumberFormElement.class);
         }
-
         if (beanProperty.getType() == boolean.class) {
             return Optional.of(InputCheckboxFormElement.class);
         }
-
         if (beanProperty.getType().isEnum()) {
             return Optional.of(SelectFormElement.class);
         }
-
         if (CharSequence.class.isAssignableFrom(beanProperty.getType())) {
             return Optional.of(InputTextFormElement.class);
         }
