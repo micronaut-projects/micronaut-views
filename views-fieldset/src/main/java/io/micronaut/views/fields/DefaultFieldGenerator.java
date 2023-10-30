@@ -378,14 +378,13 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     }
 
     private <T> List<? extends FormElement> formElements(Collection<BeanProperty<T, Object>> beanProperties, @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
-        return beanProperties.stream().map(beanProperty -> formElementOfBeanProperty(beanProperty, builderConsumer)).filter(Objects::nonNull).toList();
+        return beanProperties.stream().flatMap(beanProperty -> formElementOfBeanProperty(beanProperty, builderConsumer).stream()).toList();
     }
 
     @Nullable
-    private FormElement formElementOfBeanProperty(@NonNull BeanProperty<?, ?> beanProperty, @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
+    private Optional<? extends FormElement> formElementOfBeanProperty(@NonNull BeanProperty<?, ?> beanProperty, @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
         return formElementClassForBeanProperty(beanProperty)
-                .map(formElementClass -> formElementBuilderForBeanProperty(beanProperty, formElementClass, null, null, builderConsumer).build())
-                        .orElse(null);
+            .map(formElementClass -> formElementBuilderForBeanProperty(beanProperty, formElementClass, null, null, builderConsumer).build());
     }
 
     private <T> Optional<Object> valueForBeanProperty(@Nullable BeanWrapper<T> beanWrapper, BeanProperty<T, ?> beanProperty) {
