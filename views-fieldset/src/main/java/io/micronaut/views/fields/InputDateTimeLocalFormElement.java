@@ -40,7 +40,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputDateTimeLocalFormElement.Builder.class))
 public record InputDateTimeLocalFormElement(@NonNull String name,
-                                            @NonNull String id,
+                                            @Nullable String id,
                                             boolean required,
                                             @Nullable LocalDateTime max,
                                             @Nullable LocalDateTime min,

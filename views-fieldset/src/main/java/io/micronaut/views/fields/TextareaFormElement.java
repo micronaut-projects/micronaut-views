@@ -41,7 +41,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = TextareaFormElement.Builder.class))
 public record TextareaFormElement(@NonNull String name,
-                                  @NonNull String id,
+                                  @Nullable String id,
                                   @Nullable Integer cols,
                                   @Nullable Integer rows,
                                   @Nullable String placeholder,

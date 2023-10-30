@@ -44,7 +44,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputPasswordFormElement.Builder.class))
 public record InputPasswordFormElement(@NonNull String name,
-                                       @NonNull String id,
+                                       @Nullable String id,
                                        @Nullable String placeholder,
                                        boolean required,
                                        boolean readOnly,

@@ -37,7 +37,7 @@ public interface InputStringFormElement {
      *
      * @return It defines an identifier (ID) which must be unique in the whole document
      */
-    @NonNull
+    @Nullable
     String id();
 
     /**

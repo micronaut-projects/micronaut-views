@@ -17,6 +17,7 @@ package io.micronaut.views.fields.render;
 
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.views.fields.FormElement;
 import io.micronaut.views.fields.InputStringFormElement;
@@ -193,7 +194,7 @@ public interface FormElementRenderer<T extends FormElement> {
      * @param locale Locale
      * @return localized content
      */
-    default String renderLabel(@NonNull String id,
+    default String renderLabel(@Nullable String id,
                                @NonNull Message message,
                                @NonNull MessageSource messageSource,
                                @NonNull Locale locale) {

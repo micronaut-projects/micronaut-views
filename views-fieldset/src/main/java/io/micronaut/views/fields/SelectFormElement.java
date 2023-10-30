@@ -35,7 +35,12 @@ import java.util.Objects;
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = SelectFormElement.Builder.class))
-public record SelectFormElement(@NonNull boolean required, @NonNull String name, @Nullable String id, @NonNull List<Option> options, @NonNull Message label) implements FormElement, GlobalAttributes {
+public record SelectFormElement(@NonNull boolean required,
+                                @NonNull String name,
+                                @Nullable String id,
+                                @NonNull List<Option> options,
+                                @NonNull Message label) implements FormElement, GlobalAttributes {
+
     @Override
     @NonNull
     public String getTag() {

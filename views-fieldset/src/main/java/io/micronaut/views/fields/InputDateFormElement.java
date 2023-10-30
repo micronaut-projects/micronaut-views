@@ -41,7 +41,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputDateFormElement.Builder.class))
 public record InputDateFormElement(@NonNull String name,
-                                   @NonNull String id,
+                                   @Nullable String id,
                                    boolean required,
                                    @Nullable LocalDate max,
                                    @Nullable LocalDate min,

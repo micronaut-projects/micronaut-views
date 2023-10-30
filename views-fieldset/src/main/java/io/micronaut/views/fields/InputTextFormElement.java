@@ -44,7 +44,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputTextFormElement.Builder.class))
 public record InputTextFormElement(@NonNull String name,
-                                   @NonNull String id,
+                                   @Nullable String id,
                                    @Nullable String placeholder,
                                    boolean required,
                                    boolean readOnly,

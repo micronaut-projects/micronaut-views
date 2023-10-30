@@ -44,7 +44,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputEmailFormElement.Builder.class))
 public record InputEmailFormElement(@NonNull String name,
-                                    @NonNull String id,
+                                    @Nullable String id,
                                     @Nullable String placeholder,
                                     boolean required,
                                     boolean readOnly,

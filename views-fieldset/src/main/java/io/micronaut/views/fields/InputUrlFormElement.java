@@ -40,7 +40,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputUrlFormElement.Builder.class))
 public record InputUrlFormElement(@NonNull String name,
-                                  @NonNull String id,
+                                  @Nullable String id,
                                   @Nullable String placeholder,
                                   boolean required,
                                   boolean readOnly,

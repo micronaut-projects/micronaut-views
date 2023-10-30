@@ -31,7 +31,10 @@ import io.micronaut.core.annotation.Nullable;
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = Radio.Builder.class))
-public record Radio(@NonNull String value, @NonNull String id, @NonNull Message label, @NonNull boolean checked) implements FormElement {
+public record Radio(@NonNull String value,
+                    @Nullable String id,
+                    @NonNull Message label,
+                    @NonNull boolean checked) implements FormElement {
 
     /**
      *

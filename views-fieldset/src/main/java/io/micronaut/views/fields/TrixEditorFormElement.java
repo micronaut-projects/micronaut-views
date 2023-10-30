@@ -36,7 +36,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = TrixEditorFormElement.Builder.class))
 public record TrixEditorFormElement(@NonNull String name,
-                                    @NonNull String id,
+                                    @Nullable String id,
                                     @Nullable String value,
                                     @Nullable Message label,
                                     @NonNull List<Message> errors) implements FormElement, FormElementAttributes {
