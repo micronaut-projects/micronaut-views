@@ -34,6 +34,7 @@ import java.util.List;
  */
 @Singleton
 public class EnumOptionFetcher<T> implements OptionFetcher<T> {
+
     private static final Logger LOG = LoggerFactory.getLogger(EnumOptionFetcher.class);
 
     @Override

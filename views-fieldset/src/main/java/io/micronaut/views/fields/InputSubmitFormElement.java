@@ -28,6 +28,7 @@ import io.micronaut.views.fields.render.InputType;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputSubmitFormElement.Builder.class))
 public record InputSubmitFormElement(@NonNull Message value) implements InputFormElement {
+
     @Override
     @NonNull
     public String getType() {
@@ -47,6 +48,7 @@ public record InputSubmitFormElement(@NonNull Message value) implements InputFor
      * {@link InputSubmitFormElement} Builder.
      */
     public static class Builder {
+
         @NonNull
         private Message value;
 

@@ -30,6 +30,7 @@ import io.micronaut.views.fields.render.InputType;
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputHiddenFormElement.Builder.class))
 public record InputHiddenFormElement(@NonNull String name,
                                     @NonNull String value) implements InputFormElement {
+
     @Override
     @NonNull
     public String getType() {
@@ -49,9 +50,9 @@ public record InputHiddenFormElement(@NonNull String name,
      * {@link InputHiddenFormElement} Builder.
      */
     public static class Builder {
+
         @NonNull
         private String name;
-
         @NonNull
         private String value;
 

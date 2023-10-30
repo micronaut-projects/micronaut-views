@@ -29,6 +29,7 @@ import java.util.function.BiConsumer;
  */
 @DefaultImplementation(DefaultFieldGenerator.class)
 public interface FieldsetGenerator {
+
     /**
      *
      * @param type A class which should be {@link io.micronaut.core.annotation.Introspected}.

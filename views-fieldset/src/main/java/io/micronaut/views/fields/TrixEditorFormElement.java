@@ -61,13 +61,9 @@ public record TrixEditorFormElement(@NonNull String name,
     public static class Builder {
 
         private String name;
-
         private String id;
-
         private String value;
-
         private List<Message> errors;
-
         private Message label;
 
         /**

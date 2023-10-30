@@ -74,5 +74,4 @@ public final class ConstraintViolationUtils {
         }
         return Optional.empty();
     }
-
 }

@@ -26,6 +26,7 @@ import java.util.List;
  * @since 4.1.0
  */
 public interface InputStringFormElement {
+
     /**
      *
      * @return Name of the form control. Submitted with the form as part of a name/value pair

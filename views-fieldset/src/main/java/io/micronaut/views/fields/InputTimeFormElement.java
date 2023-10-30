@@ -48,6 +48,7 @@ public record InputTimeFormElement(@NonNull String name,
                                    @Nullable LocalTime value,
                                    @Nullable Message label,
                                    @NonNull List<Message> errors) implements InputFormElement, GlobalAttributes, FormElementAttributes {
+
     @Override
     @NonNull
     public String getType() {
@@ -69,19 +70,12 @@ public record InputTimeFormElement(@NonNull String name,
     public static class Builder {
 
         private String name;
-
         private String id;
-
         private boolean required;
-
         private LocalTime max;
-
         private LocalTime min;
-
         private LocalTime value;
-
         private List<Message> errors;
-
         private Message label;
 
         /**

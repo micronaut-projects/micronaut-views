@@ -53,6 +53,7 @@ public record InputNumberFormElement(@NonNull String name,
                                      @Nullable String step,
                                      @NonNull Message label,
                                      @NonNull List<Message> errors) implements InputFormElement, GlobalAttributes, FormElementAttributes {
+
     @Override
     @NonNull
     public String getType() {
@@ -75,31 +76,21 @@ public record InputNumberFormElement(@NonNull String name,
 
         @NonNull
         private String name;
-
         @Nullable
         private String id;
-
         @Nullable
         private Number value;
-
         @Nullable
         private Number max;
-
         @Nullable
         private Integer min;
-
         @Nullable
         private String placeholder;
-
         @Nullable
         private String step;
-
         private boolean required;
-
         private boolean readOnly;
-
         private Message label;
-
         private List<Message> errors;
 
         /**
@@ -231,6 +222,5 @@ public record InputNumberFormElement(@NonNull String name,
         public InputNumberFormElement build() {
             return new InputNumberFormElement(name, id, value, max, min, placeholder, required, readOnly, step, label, errors == null ? Collections.emptyList() : errors);
         }
-
     }
 }

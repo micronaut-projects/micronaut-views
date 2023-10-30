@@ -47,6 +47,7 @@ public record InputDateTimeLocalFormElement(@NonNull String name,
                                             @Nullable LocalDateTime value,
                                             @Nullable Message label,
                                             @NonNull List<Message> errors) implements InputFormElement, GlobalAttributes, FormElementAttributes {
+
     @Override
     @NonNull
     public String getType() {
@@ -68,19 +69,12 @@ public record InputDateTimeLocalFormElement(@NonNull String name,
     public static class Builder {
 
         private String name;
-
         private String id;
-
         private boolean required;
-
         private LocalDateTime max;
-
         private LocalDateTime min;
-
         private LocalDateTime value;
-
         private List<Message> errors;
-
         private Message label;
 
         /**

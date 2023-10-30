@@ -83,6 +83,7 @@ public record Radio(@NonNull String value,
      * A Radio Builder.
      */
     public static class Builder {
+
         private String value;
         private String id;
         private Message label;
@@ -140,6 +141,5 @@ public record Radio(@NonNull String value,
         public Radio build() {
             return new Radio(value, id, label, checked);
         }
-
     }
 }

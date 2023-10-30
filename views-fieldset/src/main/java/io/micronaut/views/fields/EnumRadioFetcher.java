@@ -34,6 +34,7 @@ import java.util.List;
  */
 @Singleton
 public class EnumRadioFetcher<T> implements RadioFetcher<T> {
+
     private static final Logger LOG = LoggerFactory.getLogger(EnumRadioFetcher.class);
 
     @Override

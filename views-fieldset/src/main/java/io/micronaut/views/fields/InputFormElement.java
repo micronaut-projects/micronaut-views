@@ -24,6 +24,7 @@ import io.micronaut.core.annotation.NonNull;
  */
 
 public interface InputFormElement extends FormElement {
+
     @Override
     @NonNull
     default String getTag() {

@@ -51,6 +51,7 @@ public record InputUrlFormElement(@NonNull String name,
                                   @Nullable String value,
                                   @Nullable Message label,
                                   @NonNull List<Message> errors) implements InputFormElement, GlobalAttributes, FormElementAttributes, InputStringFormElement {
+
     @Override
     @NonNull
     public String getType() {
@@ -72,27 +73,16 @@ public record InputUrlFormElement(@NonNull String name,
     public static class Builder {
 
         private String name;
-
         private String id;
-
         private String placeholder;
-
         private boolean required;
-
         private boolean readOnly;
-
         private Integer maxLength;
-
         private Integer minLength;
-
         private Integer size;
-
         private String pattern;
-
         private String value;
-
         private List<Message> errors;
-
         private Message label;
 
         /**

@@ -69,19 +69,12 @@ public record InputDateFormElement(@NonNull String name,
     public static class Builder {
 
         private String name;
-
         private String id;
-
         private boolean required;
-
         private LocalDate max;
-
         private LocalDate min;
-
         private LocalDate value;
-
         private List<Message> errors;
-
         private Message label;
 
         /**
