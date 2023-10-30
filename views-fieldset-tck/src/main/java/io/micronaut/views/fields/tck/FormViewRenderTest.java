@@ -1,31 +1,27 @@
-package io.micronaut.views.fields.thymleaf;
+package io.micronaut.views.fields.tck;
 
 import io.micronaut.core.io.Writable;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ViewsRenderer;
-import io.micronaut.views.fields.FormElement;
-import io.micronaut.views.fields.InputHiddenFormElement;
-import io.micronaut.views.fields.InputTextFormElement;
-import io.micronaut.views.fields.Message;
+import io.micronaut.views.fields.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Collections;
-import java.util.Locale;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MicronautTest(startApplication = false)
-class InputStringViewRenderTest {
-
+class FormViewRenderTest {
     @Test
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
         assertNotNull(viewsRenderer);
 
-        InputTextFormElement el = InputTextFormElement.builder()
+        InputTextFormElement textElement = InputTextFormElement.builder()
                 .name("name")
                 .id("name")
                 .minLength(4)
@@ -34,15 +30,25 @@ class InputStringViewRenderTest {
                 .required(true)
                 .label(Message.of("Name (4 to 8 characters):", null))
                 .build();
+        Message value = Message.of("Send Request", null);
+        InputSubmitFormElement el= InputSubmitFormElement.builder()
+                .value(value)
+                .build();
+        Fieldset fieldset = new Fieldset(List.of(textElement, el), Collections.emptyList());
+        Form form = new Form("/foo/bar", "post", fieldset);
         assertEquals("""
+            <form action="/foo/bar" method="post">\
+            <div class="mb-3">\
             <label for="name" class="form-label">Name (4 to 8 characters):</label>\
-            <input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>""",
-                render(viewsRenderer, "text", el)
+            <input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>\
+            </div>\
+            <input type="submit" value="Send Request" class="btn btn-primary"/></form>""",
+                render(viewsRenderer, form)
         );
     }
 
-    private static String render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer, String type, FormElement el) throws IOException {
-        return output(viewsRenderer.render("fieldset/inputstring.html", Map.of("type", type, "el", el), null));
+    private static String render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer, Form el) throws IOException {
+        return output(viewsRenderer.render("fieldset/form.html", Map.of("form", el), null));
     }
 
     private static String output(Writable writeable) throws IOException {

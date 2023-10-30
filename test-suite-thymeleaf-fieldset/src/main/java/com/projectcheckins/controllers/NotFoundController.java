@@ -5,6 +5,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.View;
+import jakarta.annotation.security.PermitAll;
 
 import java.net.URI;
 import java.util.Collections;
@@ -16,6 +17,7 @@ class NotFoundController {
 
     public static final URI CONTROLLER_URI = URI.create(CONTROLLER_PATH);
 
+    @PermitAll
     @Produces(MediaType.TEXT_HTML)
     @Get
     @View("404.html")

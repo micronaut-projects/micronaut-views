@@ -1,6 +1,7 @@
 package com.projectcheckins.controllers;
 
 import com.projectcheckins.services.*;
+import com.projectcheckins.users.services.Role;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.convert.ConversionService;
 import io.micronaut.core.type.Argument;
@@ -20,6 +21,7 @@ import io.micronaut.views.turbo.TurboFrameView;
 import io.micronaut.views.turbo.TurboStream;
 import io.micronaut.views.turbo.TurboStreamRenderer;
 import io.micronaut.views.turbo.http.TurboMediaType;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -82,12 +84,14 @@ class QuestionController {
         this.answerSaveSubmit = new InputSubmitFormElement(Message.of("Post my answer", "answer.save.submit"));
     }
 
+    @RolesAllowed(Role.ROLE_USER)
     @Produces(MediaType.TEXT_HTML)
     @Get
     HttpResponse<?> index() {
         return HttpResponse.seeOther(listPath);
     }
 
+    @RolesAllowed(Role.ROLE_USER)
     @Produces(MediaType.TEXT_HTML)
     @View("question/list.html")
     @TurboFrameView("question/_list.html")
@@ -96,11 +100,7 @@ class QuestionController {
         return listModel();
     }
 
-    private Map<String, Object> listModel() {
-        List<QuestionRow> questions = questionService.findAll();
-        return Collections.singletonMap(MODEL_KEY_QUESTIONS, questions);
-    }
-
+    @RolesAllowed(Role.ROLE_USER)
     @Produces(MediaType.TEXT_HTML)
     @View(CREATE_VIEW)
     @TurboFrameView("fieldset/form.html")
@@ -113,6 +113,7 @@ class QuestionController {
         return Collections.singletonMap(MODEL_KEY_FORM, form);
     }
 
+    @RolesAllowed(Role.ROLE_USER)
     @Produces(MediaType.TEXT_HTML)
     @View("question/show.html")
     @TurboFrameView("question/_show.html")
@@ -130,6 +131,7 @@ class QuestionController {
         return HttpResponse.ok(Map.of("question", question, "deleteForm", deleteForm, "answerSaveForm", answerSaveForm, "answers", answers));
     }
 
+    @RolesAllowed(Role.ROLE_USER)
     @Produces(MediaType.TEXT_HTML)
     @View(VIEW_EDIT)
     @TurboFrameView("fieldset/form.html")
@@ -144,6 +146,7 @@ class QuestionController {
         return HttpResponse.ok(Collections.singletonMap(MODEL_KEY_FORM, form));
     }
 
+    @RolesAllowed(Role.ROLE_USER)
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Post("/save")
@@ -170,7 +173,7 @@ class QuestionController {
                 .template(VIEW_LIST, listModel()));
     }
 
-
+    @RolesAllowed(Role.ROLE_USER)
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Post("/{questionId}/answers/save")
@@ -194,10 +197,7 @@ class QuestionController {
         return questionShowResponse(questionId);
     }
 
-    private static MutableHttpResponse<?> questionShowResponse(Long questionId) {
-        return HttpResponse.seeOther(UriBuilder.of(CONTROLLER_PATH).path(String.valueOf(questionId)).path(ACTION_SHOW).build());
-    }
-
+    @RolesAllowed(Role.ROLE_USER)
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Post("/delete")
@@ -210,6 +210,7 @@ class QuestionController {
                 .template(VIEW_LIST, listModel()));
     }
 
+    @RolesAllowed(Role.ROLE_USER)
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Post("/update")
@@ -234,6 +235,15 @@ class QuestionController {
             () -> HttpResponse.seeOther(listPath),
             turboStream -> turboStream.replace()
                 .template(VIEW_LIST, listModel()));
+    }
+
+    private static MutableHttpResponse<?> questionShowResponse(Long questionId) {
+        return HttpResponse.seeOther(UriBuilder.of(CONTROLLER_PATH).path(String.valueOf(questionId)).path(ACTION_SHOW).build());
+    }
+
+    private Map<String, Object> listModel() {
+        List<QuestionRow> questions = questionService.findAll();
+        return Collections.singletonMap(MODEL_KEY_QUESTIONS, questions);
     }
 
     // This should not be necessary

@@ -1,37 +1,41 @@
-package io.micronaut.views.fields.thymleaf;
+package io.micronaut.views.fields.tck;
 
 import io.micronaut.core.io.Writable;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ViewsRenderer;
-import io.micronaut.views.fields.FormElement;
-import io.micronaut.views.fields.InputHiddenFormElement;
-import io.micronaut.views.fields.annotations.InputHidden;
+import io.micronaut.views.fields.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MicronautTest(startApplication = false)
-class InputHiddenViewRenderTest {
+class TrixEditorViewRenderTest {
 
     @Test
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
         assertNotNull(viewsRenderer);
-        InputHiddenFormElement el = InputHiddenFormElement.builder()
-            .name("postId")
-            .value("34657")
-            .build();
+        TrixEditorFormElement el = TrixEditorFormElement.builder()
+                .name("story")
+                .id("story")
+                .value("It was a dark and stormy night...")
+                .label(Message.of("Tell us your story:", null))
+                .build();
         assertEquals("""
-        <input type="hidden" name="postId" value="34657"/>""", render(viewsRenderer, el));
+           <label for="story" class="form-label">Tell us your story:</label>\
+           <input type="hidden" name="story" value="It was a dark and stormy night..." id="story"/>\
+           <trix-editor input="story"></trix-editor>""",
+                render(viewsRenderer, el));
     }
 
     private static String render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer, FormElement el) throws IOException {
-        return output(viewsRenderer.render("fieldset/inputhidden.html", Collections.singletonMap("el", el), null));
+        return output(viewsRenderer.render("fieldset/trixeditor.html", Collections.singletonMap("el", el), null));
     }
 
     private static String output(Writable writeable) throws IOException {

@@ -1,17 +1,16 @@
-package io.micronaut.views.fields.thymleaf;
+package io.micronaut.views.fields.tck;
 
 import io.micronaut.core.io.Writable;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.FormElement;
 import io.micronaut.views.fields.InputHiddenFormElement;
-import io.micronaut.views.fields.InputTimeFormElement;
+import io.micronaut.views.fields.InputTextFormElement;
 import io.micronaut.views.fields.Message;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.time.LocalTime;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
@@ -20,26 +19,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MicronautTest(startApplication = false)
-class InputTimeViewRenderTest {
+class InputStringViewRenderTest {
 
     @Test
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
         assertNotNull(viewsRenderer);
-        InputTimeFormElement el = InputTimeFormElement.builder()
-                .label(Message.of("Choose a time for your appointment:", null))
-                .id("meeting-time")
-                .name("meeting-time")
-                .min(LocalTime.of(9, 0))
-                .max(LocalTime.of(18, 0))
-                .value(LocalTime.of(10, 0))
+
+        InputTextFormElement el = InputTextFormElement.builder()
+                .name("name")
+                .id("name")
+                .minLength(4)
+                .maxLength(8)
+                .size(10)
+                .required(true)
+                .label(Message.of("Name (4 to 8 characters):", null))
                 .build();
         assertEquals("""
-    <label for="meeting-time" class="form-label">Choose a time for your appointment:</label>\
-    <input type="time" name="meeting-time" value="10:00" id="meeting-time" min="09:00" max="18:00" class="form-control"/>""", render(viewsRenderer, el));
+            <label for="name" class="form-label">Name (4 to 8 characters):</label>\
+            <input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>""",
+                render(viewsRenderer, "text", el)
+        );
     }
 
-    private static String render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer, FormElement el) throws IOException {
-        return output(viewsRenderer.render("fieldset/inputtime.html", Collections.singletonMap("el", el), null));
+    private static String render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer, String type, FormElement el) throws IOException {
+        return output(viewsRenderer.render("fieldset/inputstring.html", Map.of("type", type, "el", el), null));
     }
 
     private static String output(Writable writeable) throws IOException {

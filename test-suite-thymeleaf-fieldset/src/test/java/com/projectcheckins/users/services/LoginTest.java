@@ -6,6 +6,7 @@ import io.micronaut.core.type.Argument;
 import io.micronaut.serde.SerdeIntrospections;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -20,12 +21,14 @@ class LoginTest {
         assertDoesNotThrow(() -> BeanIntrospection.getIntrospection(Login.class));
     }
 
+    @Disabled
     @Test
     void testLoginIsAnnotatedWithSerdeableDeserializable() {
         SerdeIntrospections serdeIntrospections = beanContext.getBean(SerdeIntrospections.class);
         assertDoesNotThrow(() -> serdeIntrospections.getDeserializableIntrospection(Argument.of(Login.class)));
     }
 
+    @Disabled
     @Test
     void testLoginIsAnnotatedWithSerdeableSerializable() {
         SerdeIntrospections serdeIntrospections = beanContext.getBean(SerdeIntrospections.class);

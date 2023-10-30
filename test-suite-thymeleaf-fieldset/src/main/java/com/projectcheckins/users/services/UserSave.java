@@ -5,11 +5,21 @@ import io.micronaut.views.fields.annotations.InputEmail;
 import io.micronaut.views.fields.annotations.InputPassword;
 import jakarta.validation.constraints.NotBlank;
 
+@PasswordMatch
 @Serdeable
 public record UserSave(
-    @InputEmail
-    @NotBlank String email,
-    @InputPassword
-    @NotBlank String password,
-    @InputPassword @NotBlank String confirmPassword) {
+        @NotBlank
+        String username,
+
+        @InputEmail
+        @NotBlank
+        String email,
+
+        @InputPassword
+        @NotBlank
+        String password,
+
+        @InputPassword
+        @NotBlank
+        String confirmPassword) {
 }

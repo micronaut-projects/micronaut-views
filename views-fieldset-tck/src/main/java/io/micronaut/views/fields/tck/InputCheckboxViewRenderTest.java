@@ -1,4 +1,4 @@
-package io.micronaut.views.fields.thymleaf;
+package io.micronaut.views.fields.tck;
 
 import io.micronaut.core.io.Writable;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -33,17 +33,7 @@ class InputCheckboxViewRenderTest {
             <label class="form-label">Attributes</label>\
             <div class="form-check"><input type="checkbox" name="scales" value="" id="scales" class="form-check-input" checked="checked"/><label for="scales" class="form-label">Scales</label></div>\
             <div class="form-check"><input type="checkbox" name="horns" value="" id="horns" class="form-check-input"/><label for="horns" class="form-label">Horns</label></div>""",
-                render(viewsRenderer, el)
+                TestUtils.render("fieldset/inputcheckbox.html", viewsRenderer, Map.of("el", el))
         );
-    }
-
-    private static String render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer, FormElement el) throws IOException {
-        return output(viewsRenderer.render("fieldset/inputcheckbox.html", Collections.singletonMap("el", el), null));
-    }
-
-    private static String output(Writable writeable) throws IOException {
-        StringWriter sw = new StringWriter();
-        writeable.writeTo(sw);
-        return sw.toString();
     }
 }

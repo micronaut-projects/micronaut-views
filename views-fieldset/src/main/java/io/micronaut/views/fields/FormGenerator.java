@@ -29,6 +29,8 @@ public interface FormGenerator {
      */
     String POST = "post";
 
+    Message SUBMIT = Message.of("Submit", "default.input.submit.value");
+
     /**
      * @param action Form action attribute
      * @param method Form method attribute
@@ -39,7 +41,7 @@ public interface FormGenerator {
     default Form generate(@NonNull String action,
                           @NonNull String method,
                           @NonNull Object instance) {
-        return generate(action, method, instance, Message.of("Submit", "default.input.submit.value"));
+        return generate(action, method, instance, SUBMIT);
     }
 
     /**
@@ -51,8 +53,65 @@ public interface FormGenerator {
     @NonNull
     default Form generate(@NonNull String action,
                           @NonNull Object instance) {
-        return generate(action, instance, Message.of("Submit", "default.input.submit.value"));
+        return generate(action, instance, SUBMIT);
     }
+
+    /**
+     * Generate FORM with fieldset.
+     * @param action Form action attribute
+     * @param method Form method attribute
+     * @param fieldset Fieldset
+     * @param inputSubmitFormElement input submit
+     * @return A Form
+     */
+    @NonNull
+    Form generateWithFieldset(@NonNull String action,
+                              @NonNull String method,
+                              @NonNull Fieldset fieldset,
+                              @NonNull InputSubmitFormElement inputSubmitFormElement);
+
+    /**
+     * Generate FORM with fieldset.
+     * @param action Form action attribute
+     * @param method Form method attribute
+     * @param fieldset Fieldset
+     * @param submitValue input submit
+     * @return A Form
+     */
+    @NonNull
+    default Form generateWithFieldset(@NonNull String action,
+                                      @NonNull String method,
+                                      @NonNull Fieldset fieldset,
+                                      @NonNull Message submitValue) {
+        return generateWithFieldset(action, method, fieldset, new InputSubmitFormElement(submitValue));
+    }
+
+    /**
+     * Generate Form with fieldset.
+     * @param action Form action attribute
+     * @param fieldset Fieldset
+     * @param submitValue input submit
+     * @return A Form
+     */
+    @NonNull
+    default Form generateWithFieldset(@NonNull String action,
+                                      @NonNull Fieldset fieldset,
+                                      @NonNull Message submitValue) {
+        return generateWithFieldset(action, POST, fieldset, submitValue);
+    }
+
+    /**
+     * Generate Form with fieldset.
+     * @param action Form action attribute
+     * @param fieldset Fieldset
+     * @return A Form
+     */
+    @NonNull
+    default Form generateWithFieldset(@NonNull String action,
+                                      @NonNull Fieldset fieldset) {
+        return generateWithFieldset(action, POST, fieldset, SUBMIT);
+    }
+
 
     /**
      * @param action Form action attribute
@@ -122,7 +181,7 @@ public interface FormGenerator {
                   @NonNull String method,
                   @NonNull Object instance,
                   @NonNull ConstraintViolationException ex) {
-        return generate(action, method, instance, ex, Message.of("Submit", "default.input.submit.value"));
+        return generate(action, method, instance, ex, SUBMIT);
     }
 
     /**
@@ -136,7 +195,7 @@ public interface FormGenerator {
     default Form generate(@NonNull String action,
                           @NonNull Object instance,
                           @NonNull ConstraintViolationException ex) {
-        return generate(action, instance, ex, Message.of("Submit", "default.input.submit.value"));
+        return generate(action, instance, ex, SUBMIT);
     }
 
     /**
@@ -215,7 +274,7 @@ public interface FormGenerator {
     default <T> Form generate(@NonNull String action,
                               @NonNull String method,
                               @NonNull Class<T> type) {
-        return generate(action, method, type, Message.of("Submit", "default.input.submit.value"));
+        return generate(action, method, type, SUBMIT);
     }
 
     /**
@@ -228,7 +287,7 @@ public interface FormGenerator {
     @NonNull
     default <T> Form generate(@NonNull String action,
                               @NonNull Class<T> type) {
-        return generate(action, type, Message.of("Submit", "default.input.submit.value"));
+        return generate(action, type, SUBMIT);
     }
 
     /**

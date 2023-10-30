@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 @Serdeable
 public record Login(
         @InputEmail
-        @NotBlank String email,
+        @NotBlank String username,
         @InputPassword
         @NotBlank String password) {
 }

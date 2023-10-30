@@ -55,6 +55,7 @@ managed-velocity-engine-core = { module = "org.apache.velocity:velocity-engine-c
 
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+junit-platform-engine = { module = "org.junit.platform:junit-platform-suite-engine" }
 pebble = { module = "io.pebbletemplates:pebble", version.ref = "pebble" }
 thymeleaf-extras-java8time = { module = "org.thymeleaf.extras:thymeleaf-extras-java8time", version.ref = "thymeleaf-extra-java8time" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }

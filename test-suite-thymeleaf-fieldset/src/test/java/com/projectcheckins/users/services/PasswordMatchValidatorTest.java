@@ -14,8 +14,8 @@ class PasswordMatchValidatorTest {
     @Test
     void testMatchingValidation() {
         PasswordMatchValidator validator = new PasswordMatchValidator();
-        UserSave valid = new UserSave("sherlock", "elementary", "elementary");
-        UserSave invalid = new UserSave("sherlock", "elementary", "bogus");
+        UserSave valid = new UserSave("sherlock", "sherlock@micronaut.io", "elementary", "elementary");
+        UserSave invalid = new UserSave("sherlock", "sherlock","elementary", "bogus");
         assertTrue(validator.isValid(valid, null));
         assertFalse(validator.isValid(invalid, null));
     }

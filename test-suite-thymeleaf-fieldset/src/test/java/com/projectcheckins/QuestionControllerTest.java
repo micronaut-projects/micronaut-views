@@ -1,5 +1,7 @@
 package com.projectcheckins;
 
+import io.micronaut.context.annotation.Property;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.client.BlockingHttpClient;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Property(name = "micronaut.security.filter.enabled", value = StringUtils.FALSE)
 @MicronautTest
 class QuestionControllerTest {
 

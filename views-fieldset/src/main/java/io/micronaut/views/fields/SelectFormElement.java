@@ -35,7 +35,12 @@ import java.util.Objects;
  * @since 4.1.0
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = SelectFormElement.Builder.class))
-public record SelectFormElement(@NonNull boolean required, @NonNull String name, @Nullable String id, @NonNull List<Option> options, @NonNull Message label) implements FormElement, GlobalAttributes {
+public record SelectFormElement(@NonNull boolean required,
+                                @NonNull String name,
+                                @Nullable String id,
+                                @NonNull List<Option> options,
+                                @NonNull Message label,
+                                @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes {
     @Override
     @NonNull
     public String getTag() {
@@ -67,6 +72,8 @@ public record SelectFormElement(@NonNull boolean required, @NonNull String name,
         private List<Option> options;
 
         private Message label;
+
+        private List<Message> errors;
 
         /**
          *
@@ -124,6 +131,17 @@ public record SelectFormElement(@NonNull boolean required, @NonNull String name,
         }
 
         /**
+         *
+         * @param errors Form element validation Errors.
+         * @return The Builder
+         */
+        @NonNull
+        public Builder errors(@NonNull List<Message> errors) {
+            this.errors = errors;
+            return this;
+        }
+
+        /**
          * Creates a Select form element.
          * @return A Select
          */
@@ -134,7 +152,8 @@ public record SelectFormElement(@NonNull boolean required, @NonNull String name,
                 Objects.requireNonNull(name),
                 id,
                 options == null ? Collections.emptyList() : options,
-                label);
+                label,
+                    errors != null ? errors : Collections.emptyList());
         }
     }
 }

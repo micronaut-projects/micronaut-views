@@ -1,4 +1,4 @@
-package io.micronaut.views.fields.thymleaf;
+package io.micronaut.views.fields.tck;
 
 import io.micronaut.core.io.Writable;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;

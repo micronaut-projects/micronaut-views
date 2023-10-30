@@ -8,8 +8,12 @@ repositories {
 }
 dependencies {
     annotationProcessor("io.micronaut:micronaut-http-validation")
-    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
-    implementation("io.micronaut.serde:micronaut-serde-jackson")
+
+    //annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    //implementation("io.micronaut.serde:micronaut-serde-jackson")
+
+    implementation("io.micronaut:micronaut-jackson-databind")
+
     compileOnly("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
     testImplementation("io.micronaut:micronaut-http-client")
@@ -24,6 +28,20 @@ dependencies {
 
     implementation(projects.micronautViewsThymeleaf)
     implementation(projects.micronautViewsFieldset)
+    implementation(projects.micronautViewsFieldsetTck)
+
+    implementation("io.micronaut.reactor:micronaut-reactor")
+
+    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut.security:micronaut-security")
+    implementation("io.micronaut.security:micronaut-security-jwt")
+    implementation("org.springframework.security:spring-security-crypto:5.7.2")
+    runtimeOnly("org.slf4j:jcl-over-slf4j")
+
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(mnTest.micronaut.test.junit5)
+    testImplementation(libs.junit.jupiter.engine)
+    testImplementation(libs.junit.platform.engine)
 }
 application {
     mainClass.set("com.projectcheckins.Application")

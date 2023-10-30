@@ -46,6 +46,8 @@ public record InputDateFormElement(@NonNull String name,
                                    @Nullable LocalDate max,
                                    @Nullable LocalDate min,
                                    @Nullable LocalDate value,
+
+                                   @Nullable String step,
                                    @Nullable Message label,
                                    @NonNull List<Message> errors) implements InputFormElement, GlobalAttributes, FormElementAttributes {
     /**
@@ -79,6 +81,8 @@ public record InputDateFormElement(@NonNull String name,
         private LocalDate min;
 
         private LocalDate value;
+
+        private String step;
 
         private List<Message> errors;
 
@@ -125,6 +129,17 @@ public record InputDateFormElement(@NonNull String name,
         @NonNull
         public Builder name(@NonNull String name) {
             this.name = name;
+            return this;
+        }
+
+        /**
+         *
+         * @param step Granularity that the value must adhere to
+         * @return The Builder
+         */
+        @NonNull
+        public Builder step(@NonNull String step) {
+            this.step = step;
             return this;
         }
 
@@ -184,6 +199,7 @@ public record InputDateFormElement(@NonNull String name,
                 max,
                 min,
                 value,
+                step,
                 label,
                 errors == null ? Collections.emptyList() : errors);
         }
