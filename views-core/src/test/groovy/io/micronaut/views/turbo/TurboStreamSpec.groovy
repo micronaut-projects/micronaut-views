@@ -411,7 +411,7 @@ class TurboStreamSpec extends Specification {
             "Hello World"
         }
 
-        @Produces(value = MediaType.TEXT_HTML)
+        @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
         @View("home")
         @TurboView(value = "fragments/message")
         @Get("/withBothAnnotations")
@@ -461,7 +461,7 @@ class TurboStreamSpec extends Specification {
             [:]
         }
 
-        @Produces(value = MediaType.TEXT_HTML)
+        @Produces([MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
         @TurboView(action = TurboStreamAction.REMOVE, targetDomId = "foo")
         @Post("/delete")
         HttpResponse<?> delete() {

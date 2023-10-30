@@ -74,7 +74,7 @@ HttpRequest<?> request = HttpRequest.GET("/turbofruit")
     static class FruitController {
 
 //tag::turboview[]
-@Produces(MediaType.TEXT_HTML)
+@Produces(value = {MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM})
 @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
 Map<String, Object> show() {

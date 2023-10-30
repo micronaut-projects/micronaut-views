@@ -67,7 +67,7 @@ val request: HttpRequest<*> = HttpRequest.GET<Any>("/turbofruit")
     @Controller
     internal class FruitController() {
 //tag::turboview[]
-@Produces(MediaType.TEXT_HTML)
+@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
 @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
 fun show(): Map<String, Any> {
