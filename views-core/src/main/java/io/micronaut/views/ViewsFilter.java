@@ -106,7 +106,7 @@ public class ViewsFilter implements HttpServerFilter {
      * @param turboFrameRenderer Turbo Frame renderer
      * @deprecated Use {@link ViewsFilter(ViewsResolver, ViewsRendererLocator, ViewsModelDecorator, TurboFrameRenderer)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "4.1.0")
     public ViewsFilter(ViewsResolver viewsResolver,
                        ViewsRendererLocator viewsRendererLocator,
                        ViewsModelDecorator viewsModelDecorator,
@@ -197,7 +197,7 @@ public class ViewsFilter implements HttpServerFilter {
      * @return The resolved content type
      * @deprecated Use {@link ViewsFilter#resolveMediaType(HttpRequest, HttpResponse, Object)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "4.1.0")
     protected MediaType resolveMediaType(@NonNull HttpResponse<?> response, @Nullable Object responseBody) {
         return resolveMediaType(null, response, responseBody);
     }
