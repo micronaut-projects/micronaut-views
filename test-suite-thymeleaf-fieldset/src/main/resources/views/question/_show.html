@@ -1,7 +1,0 @@
-<th:block th:fragment="show(question, deleteForm, answerSaveForm)" xmlns:th="http://www.thymeleaf.org">
-    <form th:replace="~{fieldset/form :: form(${deleteForm})}"></form>
-    <a th:href="@{|/questions/${question.id()}/edit|}"  th:text="#{question.edit}"></a>
-    <h1 th:text="${question.title()}"></h1>
-    <div id="answerSaveForm"><form th:replace="~{fieldset/form :: form(${answerSaveForm})}"></form></div>
-    <div th:replace="~{answer/_list :: list(${answers})}"></div>
-</th:block>

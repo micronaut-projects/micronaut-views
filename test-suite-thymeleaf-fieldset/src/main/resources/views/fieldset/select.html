@@ -1,1 +1,0 @@
-<th:block th:fragment="select(el)" xmlns:th="http://www.thymeleaf.org"><label th:replace="~{fieldset/label :: label(${el.id()}, ${el.label()})}"></label><select th:name="${el.name()}" th:id="${el.id()}" class="form-select"><th:block th:each="option : ${el.options()}"><option th:replace="~{fieldset/option :: option(${option})}"></option></th:block></select></th:block>
