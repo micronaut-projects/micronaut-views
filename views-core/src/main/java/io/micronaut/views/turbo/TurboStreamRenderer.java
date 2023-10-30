@@ -29,6 +29,7 @@ import java.util.Optional;
  * @since 3.3.0
  */
 @DefaultImplementation(DefaultTurboStreamRenderer.class)
+@FunctionalInterface
 public interface TurboStreamRenderer {
 
     /**
@@ -39,12 +40,4 @@ public interface TurboStreamRenderer {
     @NonNull
     Optional<Writable> render(@NonNull TurboStream.Builder builder,
                               @Nullable HttpRequest<?> request);
-
-    /**
-     * @param request HTTP Request
-     * @param builders Turbo Stream builders
-     * @return A Writable
-     */
-    @NonNull
-    Optional<Writable> render(@Nullable HttpRequest<?> request, @NonNull TurboStream.Builder... builders);
 }
