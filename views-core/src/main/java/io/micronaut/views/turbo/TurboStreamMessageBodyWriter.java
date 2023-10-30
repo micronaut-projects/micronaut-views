@@ -25,6 +25,7 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.body.MessageBodyWriter;
 import io.micronaut.http.codec.CodecException;
+import io.micronaut.views.exceptions.ViewRenderingException;
 import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
@@ -57,7 +58,7 @@ public class TurboStreamMessageBodyWriter implements MessageBodyWriter<TurboStre
                         if (LOG.isErrorEnabled()) {
                             LOG.error("IOException writing TurboStream Writeable to OutputStream", e);
                         }
-                        throw new RuntimeException(e);
+                        throw new ViewRenderingException("IOException writing TurboStream Writeable to OutputStream", e);
                     }
                 });
 
