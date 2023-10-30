@@ -53,6 +53,7 @@ public record Option(boolean disabled,
     /**
      * Option Builder.
      */
+    @SuppressWarnings("Duplicates") // Builders by definition have duplicated code which sonar does not like
     public static class Builder {
         private boolean disabled;
         private String value;

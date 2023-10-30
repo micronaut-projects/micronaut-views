@@ -54,6 +54,7 @@ public record InputRadioFormElement(@NonNull String name,
     /**
      * An {@link InputRadioFormElement} Builder.
      */
+    @SuppressWarnings("Duplicates") // Builders by definition have duplicated code which sonar does not like
     public static class Builder {
         private List<Radio> buttons;
 

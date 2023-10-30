@@ -82,6 +82,7 @@ public record Radio(@NonNull String value,
     /**
      * A Radio Builder.
      */
+    @SuppressWarnings("Duplicates") // Builders by definition have duplicated code which sonar does not like
     public static class Builder {
         private String value;
         private String id;

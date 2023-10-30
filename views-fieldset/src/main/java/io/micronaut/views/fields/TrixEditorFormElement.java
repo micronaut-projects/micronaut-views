@@ -58,6 +58,7 @@ public record TrixEditorFormElement(@NonNull String name,
     /**
      * Textarea form builder.
      */
+    @SuppressWarnings("Duplicates") // Builders by definition have duplicated code which sonar does not like
     public static class Builder {
 
         private String name;
