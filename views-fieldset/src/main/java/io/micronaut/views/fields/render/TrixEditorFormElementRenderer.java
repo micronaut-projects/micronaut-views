@@ -17,7 +17,6 @@ package io.micronaut.views.fields.render;
 
 import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
-import io.micronaut.views.fields.TextareaFormElement;
 import io.micronaut.views.fields.TrixEditorFormElement;
 import jakarta.inject.Singleton;
 
@@ -25,6 +24,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+
+import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
+import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_HIDDEN;
 
 /**
  * {@link FormElementRenderer} implementation of {@link io.micronaut.views.fields.TrixEditorFormElement}.
