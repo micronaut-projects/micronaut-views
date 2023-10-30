@@ -10,6 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InputDateFormElementTest {
     @Test
+    void testTagAndType() {
+        InputDateFormElement formElement = InputDateFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_DATE, formElement.getType());
+    }
+
+    @Test
     void inputDateFormElementOffersBuilderApi() {
         String id = "start";
         String name = "trip-start";

@@ -51,7 +51,11 @@ public final class HtmlTag {
      */
     public static final String TAG_LABEL = "label";
 
-    public static final String TAG_TRIX_EDITOR = "trix-editor";
+    /**
+     * Trix editor tag.
+     * @see <a href="https://trix-editor.org">Trix Editor</a>
+     */
+    public static final String TRIX_EDITOR = "trix-editor";
 
     private HtmlTag() {
 

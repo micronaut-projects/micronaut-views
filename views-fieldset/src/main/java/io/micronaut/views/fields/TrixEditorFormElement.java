@@ -43,7 +43,7 @@ public record TrixEditorFormElement(@NonNull String name,
 
     @Override
     public String getTag() {
-        return HtmlTag.TAG_TRIX_EDITOR;
+        return HtmlTag.TRIX_EDITOR;
     }
 
     /**

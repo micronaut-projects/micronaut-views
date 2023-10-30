@@ -10,7 +10,7 @@ class TrixEditorFormElementTest {
     @Test
     void testTag() {
         TrixEditorFormElement formElement = TrixEditorFormElement.builder().build();
-        assertEquals(HtmlTag.TAG_TRIX_EDITOR, formElement.getTag());
+        assertEquals(HtmlTag.TRIX_EDITOR, formElement.getTag());
     }
 
     @Test

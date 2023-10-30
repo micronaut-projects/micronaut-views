@@ -24,7 +24,9 @@ import jakarta.validation.ConstraintViolationException;
  * @since 4.1.0
  */
 public interface FormGenerator {
-
+    /**
+     * Form method `post`.
+     */
     String POST = "post";
 
     /**
