@@ -51,8 +51,6 @@ public final class HtmlTag {
      */
     public static final String TAG_LABEL = "label";
 
-    public static final String TAG_TRIX_EDITOR = "trix-editor";
-
     private HtmlTag() {
 
     }

@@ -183,9 +183,6 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         if (beanProperty.hasAnnotation(Textarea.class)) {
             return Optional.of(TextareaFormElement.class);
         }
-        if (beanProperty.hasAnnotation(TrixEditor.class)) {
-            return Optional.of(TrixEditorFormElement.class);
-        }
         if (beanProperty.getType() == LocalDate.class) {
             return Optional.of(InputDateFormElement.class);
         }
