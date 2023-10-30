@@ -65,7 +65,6 @@ public record InputDateTimeLocalFormElement(@NonNull String name,
     /**
      * Input Date Time Builder.
      */
-    @SuppressWarnings("Duplicates") // Builders by definition have duplicated code which sonar does not like
     public static class Builder {
 
         private String name;

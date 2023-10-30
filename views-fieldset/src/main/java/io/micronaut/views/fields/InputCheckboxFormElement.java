@@ -62,7 +62,6 @@ public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes,
     /**
      * Input checkbox builder.
      */
-    @SuppressWarnings("Duplicates") // Builders by definition have duplicated code which sonar does not like
     public static class Builder {
         @Nullable
         private List<Checkbox> checkboxes;

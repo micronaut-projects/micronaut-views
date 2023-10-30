@@ -48,7 +48,6 @@ public record InputHiddenFormElement(@NonNull String name,
     /**
      * {@link InputHiddenFormElement} Builder.
      */
-    @SuppressWarnings("Duplicates") // Builders by definition have duplicated code which sonar does not like
     public static class Builder {
         @NonNull
         private String name;

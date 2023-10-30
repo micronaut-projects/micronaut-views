@@ -73,7 +73,6 @@ public record InputEmailFormElement(@NonNull String name,
     /**
      * Input Email builder.
      */
-    @SuppressWarnings("Duplicates") // Builders by definition have duplicated code which sonar does not like
     public static class Builder {
 
         private String name;

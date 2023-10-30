@@ -71,7 +71,6 @@ public record InputNumberFormElement(@NonNull String name,
     /**
      * Input Number Builder.
      */
-    @SuppressWarnings("Duplicates") // Builders by definition have duplicated code which sonar does not like
     public static class Builder {
 
         @NonNull

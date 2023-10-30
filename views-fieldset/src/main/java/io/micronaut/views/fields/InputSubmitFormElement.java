@@ -46,7 +46,6 @@ public record InputSubmitFormElement(@NonNull Message value) implements InputFor
     /**
      * {@link InputSubmitFormElement} Builder.
      */
-    @SuppressWarnings("Duplicates") // Builders by definition have duplicated code which sonar does not like
     public static class Builder {
         @NonNull
         private Message value;

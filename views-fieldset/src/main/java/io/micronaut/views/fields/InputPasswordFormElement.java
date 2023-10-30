@@ -73,7 +73,6 @@ public record InputPasswordFormElement(@NonNull String name,
     /**
      * Input Password Builder.
      */
-    @SuppressWarnings("Duplicates") // Builders by definition have duplicated code which sonar does not like
     public static class Builder {
 
         private String name;
