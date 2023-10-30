@@ -9,6 +9,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InputCheckboxFormElementTest {
+    @Test
+    void testTagAndType() {
+        InputCheckboxFormElement formElement = InputCheckboxFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_CHECKBOX, formElement.getType());
+    }
 
     @Test
     void isAnnotatedWithIntrospected() {
@@ -23,8 +29,7 @@ class InputCheckboxFormElementTest {
         InputCheckboxFormElement formElement = InputCheckboxFormElement.builder()
             .checkboxes(List.of(interest, music))
             .build();
-        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_CHECKBOX, formElement.getType());
+
 
         List<Checkbox> checkboxes = Arrays.asList(interest, music);
         assertFormElement(checkboxes, formElement);
