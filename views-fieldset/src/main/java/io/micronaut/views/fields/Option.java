@@ -44,6 +44,12 @@ public record Option(boolean disabled,
         return new Builder();
     }
 
+    @Override
+    @NonNull
+    public String getTag() {
+        return HtmlTag.TAG_OPTION;
+    }
+
     /**
      * Option Builder.
      */

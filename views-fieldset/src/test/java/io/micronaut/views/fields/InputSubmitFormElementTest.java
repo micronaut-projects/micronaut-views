@@ -1,11 +1,19 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.views.fields.render.InputType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InputSubmitFormElementTest {
+    @Test
+    void testTagAndType() {
+        InputSubmitFormElement formElement = InputSubmitFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_SUBMIT, formElement.getType());
+    }
+
     @Test
     void builder() {
         Message value = Message.of("Send Request", null);

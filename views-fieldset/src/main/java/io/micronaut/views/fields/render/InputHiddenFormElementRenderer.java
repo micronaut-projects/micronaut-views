@@ -22,6 +22,9 @@ import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.Locale;
 
+import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
+import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_HIDDEN;
+
 /**
  * {@link FormElementRenderer} implementation for {@link InputHiddenFormElement}.
  * @author Sergio del Amo
@@ -30,6 +33,7 @@ import java.util.Locale;
 @Secondary
 @Singleton
 public class InputHiddenFormElementRenderer implements FormElementRenderer<InputHiddenFormElement> {
+
     @Override
     @NonNull
     public String render(@NonNull InputHiddenFormElement formElement, @NonNull Locale locale) {

@@ -15,20 +15,25 @@
  */
 package io.micronaut.views.fields;
 
-import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.annotation.NonNull;
 
 /**
- * Marker interface for HTML Form Elements.
+ * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input">Input</a>
  * @author Sergio del Amo
  * @since 4.1.0
  */
-public interface FormElement {
+
+public interface InputFormElement extends FormElement {
+    @Override
+    @NonNull
+    default String getTag() {
+        return HtmlTag.TAG_INPUT;
+    }
 
     /**
-     * @return The HTML Tag this element refers to.
+     *
+     * @return Value of the type attribute of an input tag
      */
-    @Nullable
-    default String getTag() {
-        return null;
-    }
+    @NonNull
+    String getType();
 }

@@ -1,12 +1,21 @@
 package io.micronaut.views.fields;
 
+import io.micronaut.views.fields.render.InputType;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InputDataTimeLocalFormElementTest {
+class InputDateTimeLocalFormElementTest {
+
+    @Test
+    void testTagAndType() {
+        InputDateTimeLocalFormElement formElement = InputDateTimeLocalFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_DATE_TIME_LOCAL, formElement.getType());
+    }
+
     @Test
     void builder() {
         String id = "id-meeting-time";
@@ -18,12 +27,12 @@ class InputDataTimeLocalFormElementTest {
         LocalDateTime max = LocalDateTime.of(2018, 6, 14, 0, 0);
 
         InputDateTimeLocalFormElement formElement = InputDateTimeLocalFormElement.builder()
-            .name(name)
-            .id(id)
-            .value(value)
-            .min(min)
-            .max(max)
-            .build();
+                .name(name)
+                .id(id)
+                .value(value)
+                .min(min)
+                .max(max)
+                .build();
 
         assertNotNull(formElement);
         assertEquals(id, formElement.id());
@@ -35,5 +44,4 @@ class InputDataTimeLocalFormElementTest {
 
         assertFalse(formElement.hasErrors());
     }
-
 }

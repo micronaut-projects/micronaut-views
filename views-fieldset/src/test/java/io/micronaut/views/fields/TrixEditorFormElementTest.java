@@ -7,6 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TrixEditorFormElementTest {
+    @Test
+    void testTag() {
+        TrixEditorFormElement formElement = TrixEditorFormElement.builder().build();
+        assertEquals(HtmlTag.TRIX_EDITOR, formElement.getTag());
+    }
 
     @Test
     void trixeditorHasABuilderApi() {

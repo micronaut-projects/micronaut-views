@@ -25,45 +25,54 @@ class FormGeneratorTest {
     record BookSave(@NotBlank String title) {
     }
 
+    private InputTextFormElement textFormElement() {
+        return textFormElementBuilder()
+                .build();
+    }
+
+    private InputTextFormElement.Builder textFormElementBuilder() {
+        return InputTextFormElement.builder()
+                .name("title")
+                .id("title")
+                .required(true)
+                .label(Message.of("Title", "booksave.title"));
+    }
+
+    private InputSubmitFormElement deleteSubmitFormElement() {
+        return submit("Delete", "default.delete");
+    }
+
+    private InputSubmitFormElement submitFormElement() {
+        return submit("Submit", "default.input.submit.value");
+    }
+
+    private InputSubmitFormElement submit(String defaultMessage, String code) {
+        return InputSubmitFormElement.builder()
+                .value(Message.of(defaultMessage, code))
+                .build();
+    }
+
     @Test
     void formGenerator(FormGenerator formGenerator, BookSaveValidator validator) {
         Form form = formGenerator.generate("/book/save", "post", BookSave.class);
-        Form expected = new Form("/book/save", "post", new Fieldset(List.of(
-            InputTextFormElement.builder()
-                .name("title")
-                .id("title")
-                .required(true)
-                .label(Message.of("Title", "booksave.title")).build(),
-                InputSubmitFormElement.builder()
-                    .value(Message.of("Submit", "default.input.submit.value"))
-                    .build()
-        ), Collections.emptyList()));
+        Form expected = new Form("/book/save", "post", new Fieldset(List.of(textFormElement(), submitFormElement()), Collections.emptyList()));
+        assertEquals(expected, form);
+
+        form = formGenerator.generate("/book/save",  BookSave.class);
         assertEquals(expected, form);
 
         form = formGenerator.generate("/book/save", "post", BookSave.class, Message.of("Delete", "default.delete"));
-        expected = new Form("/book/save", "post", new Fieldset(List.of(
-            InputTextFormElement.builder()
-                .name("title")
-                .id("title")
-                .required(true)
-                .label(Message.of("Title", "booksave.title")).build(),
-            InputSubmitFormElement.builder()
-                .value(Message.of("Delete", "default.delete"))
-                .build()
-        ), Collections.emptyList()));
+        expected = new Form("/book/save", "post", new Fieldset(List.of(textFormElement(), deleteSubmitFormElement()), Collections.emptyList()));
+        assertEquals(expected, form);
+
+        form = formGenerator.generate("/book/save", BookSave.class, Message.of("Delete", "default.delete"));
         assertEquals(expected, form);
 
         form = formGenerator.generate("/book/save", "post", BookSave.class, InputSubmitFormElement.builder().value(Message.of("Foo", "default.bar")).build());
-        expected = new Form("/book/save", "post", new Fieldset(List.of(
-            InputTextFormElement.builder()
-                .name("title")
-                .id("title")
-                .required(true)
-                .label(Message.of("Title", "booksave.title")).build(),
-            InputSubmitFormElement.builder()
-                .value(Message.of("Foo", "default.bar"))
-                .build()
-        ), Collections.emptyList()));
+        expected = new Form("/book/save", "post", new Fieldset(List.of(textFormElement(), submit("Foo", "default.bar")), Collections.emptyList()));
+        assertEquals(expected, form);
+
+        form = formGenerator.generate("/book/save", BookSave.class, InputSubmitFormElement.builder().value(Message.of("Foo", "default.bar")).build());
         assertEquals(expected, form);
 
         BookSave invalid = new BookSave(null);
@@ -71,87 +80,72 @@ class FormGeneratorTest {
         ConstraintViolationException thrown = assertThrows(ConstraintViolationException.class, e);
         form = formGenerator.generate("/book/save", "post", invalid, thrown);
         expected = new Form("/book/save", "post", new Fieldset(List.of(
-            InputTextFormElement.builder()
-                .name("title")
-                .id("title")
-                .required(true)
+                textFormElementBuilder()
                 .errors(Collections.singletonList(Message.of("must not be blank", "booksave.title.notblank")))
-                .label(Message.of("Title", "booksave.title")).build(),
-            InputSubmitFormElement.builder()
-                .value(Message.of("Submit", "default.input.submit.value"))
-                .build()
+                .build(),
+            submitFormElement()
         ), Collections.emptyList()));
         assertEquals(expected, form);
 
+        form = formGenerator.generate("/book/save", invalid, thrown);
+        assertEquals(expected, form);
 
         form = formGenerator.generate("/book/save", "post", invalid, thrown, Message.of("Delete", "default.delete"));
         expected = new Form("/book/save", "post", new Fieldset(List.of(
-            InputTextFormElement.builder()
-                .name("title")
-                .id("title")
-                .required(true)
+                textFormElementBuilder()
                 .errors(Collections.singletonList(Message.of("must not be blank", "booksave.title.notblank")))
-                .label(Message.of("Title", "booksave.title")).build(),
-            InputSubmitFormElement.builder()
-                .value(Message.of("Delete", "default.delete"))
-                .build()
+                .build(),
+            deleteSubmitFormElement()
         ), Collections.emptyList()));
+        assertEquals(expected, form);
+
+        form = formGenerator.generate("/book/save", invalid, thrown, Message.of("Delete", "default.delete"));
         assertEquals(expected, form);
 
         form = formGenerator.generate("/book/save", "post", invalid, thrown, InputSubmitFormElement.builder().value(Message.of("Foo", "default.bar")).build());
         expected = new Form("/book/save", "post", new Fieldset(List.of(
-            InputTextFormElement.builder()
-                .name("title")
-                .id("title")
-                .required(true)
+            textFormElementBuilder()
                 .errors(Collections.singletonList(Message.of("must not be blank", "booksave.title.notblank")))
-                .label(Message.of("Title", "booksave.title")).build(),
+                .build(),
             InputSubmitFormElement.builder()
                 .value(Message.of("Foo", "default.bar"))
                 .build()
         ), Collections.emptyList()));
         assertEquals(expected, form);
 
+        form = formGenerator.generate("/book/save", invalid, thrown, InputSubmitFormElement.builder().value(Message.of("Foo", "default.bar")).build());
+        assertEquals(expected, form);
 
         BookSave valid = new BookSave(null);
         form = formGenerator.generate("/book/save", "post", valid);
-        expected = new Form("/book/save", "post", new Fieldset(List.of(
-            InputTextFormElement.builder()
-                .name("title")
-                .id("title")
-                .required(true)
-                .label(Message.of("Title", "booksave.title")).build(),
-            InputSubmitFormElement.builder()
-                .value(Message.of("Submit", "default.input.submit.value"))
-                .build()
-        ), Collections.emptyList()));
+        expected = new Form("/book/save", "post", new Fieldset(List.of(textFormElement(), submitFormElement()), Collections.emptyList()));
         assertEquals(expected, form);
 
+        form = formGenerator.generate("/book/save", valid);
+        assertEquals(expected, form);
 
         form = formGenerator.generate("/book/save", "post", valid, Message.of("Delete", "default.delete"));
         expected = new Form("/book/save", "post", new Fieldset(List.of(
-            InputTextFormElement.builder()
-                .name("title")
-                .id("title")
-                .required(true)
-                .label(Message.of("Title", "booksave.title")).build(),
+                textFormElement(),
             InputSubmitFormElement.builder()
                 .value(Message.of("Delete", "default.delete"))
                 .build()
         ), Collections.emptyList()));
         assertEquals(expected, form);
 
+        form = formGenerator.generate("/book/save", valid, Message.of("Delete", "default.delete"));
+        assertEquals(expected, form);
+
         form = formGenerator.generate("/book/save", "post", valid, InputSubmitFormElement.builder().value(Message.of("Foo", "default.bar")).build());
         expected = new Form("/book/save", "post", new Fieldset(List.of(
-            InputTextFormElement.builder()
-                .name("title")
-                .id("title")
-                .required(true)
-                .label(Message.of("Title", "booksave.title")).build(),
+            textFormElement(),
             InputSubmitFormElement.builder()
                 .value(Message.of("Foo", "default.bar"))
                 .build()
         ), Collections.emptyList()));
+        assertEquals(expected, form);
+
+        form = formGenerator.generate("/book/save", valid, InputSubmitFormElement.builder().value(Message.of("Foo", "default.bar")).build());
         assertEquals(expected, form);
     }
 

@@ -1,6 +1,7 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.views.fields.render.InputType;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -9,6 +10,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InputRadioFormElementTest {
+    @Test
+    void testTagAndType() {
+        InputRadioFormElement formElement = InputRadioFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_RADIO, formElement.getType());
+    }
 
     @Test
     void inputRadioFormElementHasaBuilderApi() {

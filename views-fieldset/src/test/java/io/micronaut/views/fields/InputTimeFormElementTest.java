@@ -1,5 +1,6 @@
 package io.micronaut.views.fields;
 
+import io.micronaut.views.fields.render.InputType;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
@@ -9,6 +10,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class InputTimeFormElementTest {
+    @Test
+    void testTagAndType() {
+        InputTimeFormElement formElement = InputTimeFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_TIME, formElement.getType());
+    }
+
     @Test
     void builder() {
         String id = "apptid";

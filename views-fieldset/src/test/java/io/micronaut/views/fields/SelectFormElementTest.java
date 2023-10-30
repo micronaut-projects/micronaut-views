@@ -11,6 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SelectFormElementTest {
     @Test
+    void testTag() {
+        SelectFormElement formElement = SelectFormElement.builder().name("country").build();
+        assertEquals(HtmlTag.TAG_SELECT, formElement.getTag());
+    }
+
+    @Test
     void selectFormHasABuilderApi() {
         String name = "cars";
         String id = "carsid";

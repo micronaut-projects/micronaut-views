@@ -3,41 +3,41 @@ package io.micronaut.views.fields;
 import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.views.fields.render.InputType;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class InputNumberFormElementTest {
-    private  final String ID = "numid";
-    private static final String NAME = "num";
+class InputUrlFormElementTest {
+    private static final String ID = "url";
+    private static final String NAME = "url";
     private static final boolean REQUIRED = true;
     private static final boolean READONLY = true;
-    private static final Integer SIZE = 10;
-    private static final String PLACEHOLDER = "multiple of 10";
-    private static final Integer MIN = 0;
-    private static final Integer MAX = 100;
-    private static final String STEP = "10";
+    private static final Integer SIZE = 255;
+    private static final String PLACEHOLDER = "https://micronaut.io";
+    private static final Integer MINLENGTH = 4;
+    private static final Integer MAXLENGTH = 30;
 
     @Test
     void testTagAndType() {
-        InputNumberFormElement formElement = InputNumberFormElement.builder().build();
+        InputUrlFormElement formElement = InputUrlFormElement.builder().build();
         assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_NUMBER, formElement.getType());
+        assertEquals(InputType.ATTR_TYPE_URL, formElement.getType());
     }
 
     @Test
     void builder() {
-        InputNumberFormElement formElement = InputNumberFormElement.builder()
+        InputUrlFormElement formElement = InputUrlFormElement.builder()
             .name(NAME)
             .id(ID)
             .placeholder(PLACEHOLDER)
             .required(REQUIRED)
             .readOnly(READONLY)
-            .min(MIN)
-            .max(MAX)
-            .step(STEP)
+            .size(SIZE)
+            .minLength(MINLENGTH)
+            .maxLength(MAXLENGTH)
             .build();
         assertFormElement(formElement);
-        BeanIntrospection<InputNumberFormElement> introspection = BeanIntrospection.getIntrospection(InputNumberFormElement.class);
-        BeanIntrospection.Builder<InputNumberFormElement> builder = introspection.builder();
+        BeanIntrospection<InputUrlFormElement> introspection = BeanIntrospection.getIntrospection(InputUrlFormElement.class);
+        BeanIntrospection.Builder<InputUrlFormElement> builder = introspection.builder();
         formElement = builder
             .with("name", NAME)
             .with("id", ID)
@@ -45,25 +45,24 @@ class InputNumberFormElementTest {
             .with("required", REQUIRED)
             .with("readOnly", READONLY)
             .with("size", SIZE)
-            .with("min", MIN)
-            .with("max", MAX)
-            .with("step", STEP)
+            .with("minLength", MINLENGTH)
+            .with("maxLength", MAXLENGTH)
             .build();
         assertFormElement(formElement);
 
         assertFalse(formElement.hasErrors());
     }
 
-    private void assertFormElement(InputNumberFormElement formElement) {
+    private void assertFormElement(InputUrlFormElement formElement) {
         assertNotNull(formElement);
         assertEquals(ID, formElement.id());
         assertEquals(NAME, formElement.name());
         assertEquals(REQUIRED, formElement.required());
         assertEquals(READONLY, formElement.readOnly());
+        assertEquals(SIZE, formElement.size());
         assertEquals(PLACEHOLDER, formElement.placeholder());
-        assertEquals(MIN, formElement.min());
-        assertEquals(MAX, formElement.max());
-        assertEquals(STEP, formElement.step());
+        assertEquals(MINLENGTH, formElement.minLength());
+        assertEquals(MAXLENGTH, formElement.maxLength());
     }
 
 }

@@ -18,6 +18,7 @@ package io.micronaut.views.fields;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.views.fields.render.InputType;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +35,13 @@ import java.util.List;
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputCheckboxFormElement.Builder.class))
 public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes,
                                        @NonNull Message label,
-                                       @NonNull List<Message> errors) implements FormElement {
+                                       @NonNull List<Message> errors) implements InputFormElement {
+    @Override
+    @NonNull
+    public String getType() {
+        return InputType.ATTR_TYPE_CHECKBOX;
+    }
+
     /**
      *
      * @return Whether the form element has validation errors

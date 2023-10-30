@@ -27,6 +27,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import static io.micronaut.views.fields.HtmlTag.TAG_DIV;
+import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
+import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_RADIO;
+
 /**
  * Renders a {@link InputRadioFormElement} as HTML.
  * @author Sergio del Amo

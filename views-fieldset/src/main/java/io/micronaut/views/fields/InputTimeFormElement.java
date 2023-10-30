@@ -18,6 +18,7 @@ package io.micronaut.views.fields;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.views.fields.render.InputType;
 
 import java.time.LocalTime;
 import java.util.Collections;
@@ -46,7 +47,13 @@ public record InputTimeFormElement(@NonNull String name,
                                    @Nullable LocalTime min,
                                    @Nullable LocalTime value,
                                    @Nullable Message label,
-                                   @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes {
+                                   @NonNull List<Message> errors) implements InputFormElement, GlobalAttributes, FormElementAttributes {
+    @Override
+    @NonNull
+    public String getType() {
+        return InputType.ATTR_TYPE_TIME;
+    }
+
     /**
      *
      * @return the Input Date FormElement Builder

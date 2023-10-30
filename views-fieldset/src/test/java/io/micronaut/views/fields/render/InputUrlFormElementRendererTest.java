@@ -1,6 +1,8 @@
 package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.micronaut.views.fields.HtmlTag;
+import io.micronaut.views.fields.InputTimeFormElement;
 import io.micronaut.views.fields.InputUrlFormElement;
 import io.micronaut.views.fields.Message;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @MicronautTest(startApplication = false)
 class InputUrlFormElementRendererTest {
+    @Test
+    void testTagAndType() {
+        InputUrlFormElement formElement = InputUrlFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_URL, formElement.getType());
+    }
 
     @Test
     void render(InputUrlFormElementRenderer renderer) {

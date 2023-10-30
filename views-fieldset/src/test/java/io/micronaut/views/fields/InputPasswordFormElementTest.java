@@ -1,6 +1,7 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.views.fields.render.InputType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +15,13 @@ class InputPasswordFormElementTest {
     private static final String PLACEHOLDER = "Password";
     private static final Integer MINLENGTH = 4;
     private static final Integer MAXLENGTH = 8;
+
+    @Test
+    void testTagAndType() {
+        InputPasswordFormElement formElement = InputPasswordFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_PASSWORD, formElement.getType());
+    }
 
     @Test
     void builder() {

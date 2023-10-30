@@ -1,6 +1,8 @@
 package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.micronaut.views.fields.HtmlTag;
+import io.micronaut.views.fields.InputRadioFormElement;
 import io.micronaut.views.fields.InputTelFormElement;
 import io.micronaut.views.fields.Message;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @MicronautTest(startApplication = false)
 class InputTelFormElementRendererTest {
+    @Test
+    void testTagAndType() {
+        InputTelFormElement formElement = InputTelFormElement.builder().build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_TEL, formElement.getType());
+    }
 
     @Test
     void render(InputTelFormElementRenderer renderer) {

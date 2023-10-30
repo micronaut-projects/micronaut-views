@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import static io.micronaut.views.fields.HtmlTag.TAG_LABEL;
+
 /**
  * API to render a {@link io.micronaut.views.fields.FormElement}.
  * @author Sergio del Amo
@@ -36,36 +38,6 @@ import java.util.stream.Collectors;
  */
 @FunctionalInterface
 public interface FormElementRenderer<T extends FormElement> {
-    /**
-     * HTML Tag input.
-     */
-    String TAG_INPUT = "input";
-
-    /**
-     * HTML Tag select.
-     */
-    String TAG_SELECT = "select";
-
-    /**
-     * HTML Tag div.
-     */
-    String TAG_DIV = "div";
-
-    /**
-     * HTML Tag textarea.
-     */
-    String TAG_TEXTAREA = "textarea";
-
-    /**
-     * HTML Tag option.
-     */
-    String TAG_OPTION = "option";
-
-    /**
-     * HTML Tag label.
-     */
-    String TAG_LABEL = "label";
-
     /**
      * HTML Attribute for.
      */
@@ -155,71 +127,6 @@ public interface FormElementRenderer<T extends FormElement> {
      * HTML Attribute type.
      */
     String ATTR_TYPE = "type";
-
-    /**
-     * HTML Input type radio.
-     */
-    String ATTR_TYPE_RADIO = "radio";
-
-    /**
-     * HTML Input type submit.
-     */
-    String ATTR_TYPE_SUBMIT = "submit";
-
-    /**
-     * HTML Input type hidden.
-     */
-    String ATTR_TYPE_HIDDEN = "hidden";
-
-    /**
-     * HTML Input type number.
-     */
-    String ATTR_TYPE_NUMBER = "number";
-
-    /**
-     * HTML Input type date.
-     */
-    String ATTR_TYPE_DATE = "date";
-
-    /**
-     * HTML Input type time.
-     */
-    String ATTR_TYPE_TIME = "time";
-
-    /**
-     * HTML Input type datetime-local.
-     */
-    String ATTR_TYPE_DATE_TIME_LOCAL = "datetime-local";
-
-    /**
-     * HTML Input type checkbox.
-     */
-    String ATTR_TYPE_CHECKBOX = "checkbox";
-
-    /**
-     * HTML Input type email.
-     */
-    String ATTR_TYPE_EMAIL = "email";
-
-    /**
-     * HTML Input type password.
-     */
-    String ATTR_TYPE_PASSWORD = "password";
-
-    /**
-     * HTML Input type url.
-     */
-    String ATTR_TYPE_URL = "url";
-
-    /**
-     * HTML Input type text.
-     */
-    String ATTR_TYPE_TEXT = "text";
-
-    /**
-     * HTML Input type tel.
-     */
-    String ATTR_TYPE_TEL = "tel";
 
     /**
      * Lower than sign.

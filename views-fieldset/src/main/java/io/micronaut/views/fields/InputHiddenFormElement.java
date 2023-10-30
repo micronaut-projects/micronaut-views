@@ -17,6 +17,7 @@ package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.views.fields.render.InputType;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden">input hidden</a>
@@ -28,7 +29,12 @@ import io.micronaut.core.annotation.NonNull;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputHiddenFormElement.Builder.class))
 public record InputHiddenFormElement(@NonNull String name,
-                                    @NonNull String value) implements FormElement {
+                                    @NonNull String value) implements InputFormElement {
+    @Override
+    @NonNull
+    public String getType() {
+        return InputType.ATTR_TYPE_HIDDEN;
+    }
 
     /**
      *
