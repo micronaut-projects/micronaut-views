@@ -34,6 +34,7 @@ import java.util.List;
  * @param min The earliest date to accept.
  * @param value the input date value
  * @param label represents a caption for an item in a user interface
+ * @param step Granularity that the value must adhere to
  * @param errors Form element validation Errors.
  *
  * @author Sergio del Amo

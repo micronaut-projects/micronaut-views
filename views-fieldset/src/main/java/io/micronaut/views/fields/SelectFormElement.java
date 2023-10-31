@@ -30,6 +30,7 @@ import java.util.Objects;
  * @param id It defines an identifier (ID) which must be unique in the whole document
  * @param options Select Options
  * @param label represents a caption for an item in a user interface
+ * @param errors Form element validation Errors.
  *
  * @author Sergio del Amo
  * @since 4.1.0

@@ -1,6 +1,20 @@
+/*
+ * Copyright 2017-2023 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.micronaut.views.fields.tck;
 
-import io.micronaut.context.annotation.Property;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -17,9 +31,9 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Map;
 
+import static io.micronaut.views.fields.tck.TestUtils.assertEqualsIgnoreSpace;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Property(name = "spec.name", value = "InputHiddenViewRenderTest")
 @MicronautTest(startApplication = false)
 class InputHiddenViewRenderTest {
 
@@ -32,23 +46,25 @@ class InputHiddenViewRenderTest {
             .name("postId")
             .value("34657")
             .build();
-        assertEquals("""
-        <input type="hidden" name="postId" value="34657"/>""", TestUtils.render("fieldset/inputhidden.html", viewsRenderer, Map.of("el", el)));
-
-        Fieldset fieldset = fieldsetGenerator.generate(new Post(34657L));
-
-        assertEquals("""
-        <input type="hidden" name="postId" value="34657"/>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
 
         Form form = new Form("/post/save", "post", fieldsetGenerator.generate(new Post(34657L)));
-        assertEquals("""
+        assertEqualsIgnoreSpace("""
         <form action="/post/save" method="post"><input type="hidden" name="postId" value="34657"/></form>""", TestUtils.render("fieldset/form.html", viewsRenderer, Map.of("form", form)));
 
         Post invalid = new Post(null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> formValidator.validate(invalid));
         form = new Form("/post/save", "post", fieldsetGenerator.generate(invalid, ex));
-        assertEquals("""
+        assertEqualsIgnoreSpace("""
         <form action="/post/save" method="post"><input type="hidden" name="postId" value=""/></form>""", TestUtils.render("fieldset/form.html", viewsRenderer, Map.of("form", form)));
+
+        assertEqualsIgnoreSpace("""
+        <input type="hidden" name="postId" value="34657"/>""", TestUtils.render("fieldset/inputhidden.html", viewsRenderer, Map.of("el", el)));
+
+        Fieldset fieldset = fieldsetGenerator.generate(new Post(34657L));
+
+        assertEqualsIgnoreSpace("""
+        <input type="hidden" name="postId" value="34657"/>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+
     }
 
 

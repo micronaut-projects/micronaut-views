@@ -1,0 +1,10 @@
+<#macro fieldset el>
+    <#list el.fields()>
+        <#items as field>
+            <#if field.tag == "input" &&  field.type == "hidden">
+                <#import "inputhiddenmacro.html" as m>
+                <@m.inputhidden el=field/>
+            </#if>
+        </#items>
+    </#list>
+</#macro>

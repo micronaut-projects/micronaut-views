@@ -1,14 +1,13 @@
 plugins {
     id "io.micronaut.build.internal.views-module"
-    id 'nu.studer.rocker' version '3.0.4'
+    id "nu.studer.rocker" version "3.0.4"
 }
 
 rocker {
     configurations {
         test {
             templateDir = file('src/test/resources')
-            outputDir = file('build/generated/rocker')
-            optimize = true
+            outputDir = file('src/generated/rocker')
         }
     }
 }
