@@ -29,8 +29,6 @@ import static io.micronaut.views.ViewUtils.normalizeFile;
  * @since 1.3.2
  */
 public class RockerEngine {
-
-    private static final String DOT = ".";
     private final String path;
     private final String extension;
     
@@ -67,16 +65,10 @@ public class RockerEngine {
      * @return The template
      */
     public BindableRockerModel template(String viewName) {
-        String templateName = templateName(viewName);
-        return Rocker.template(templateName);
+        return Rocker.template(templateName(viewName));
     }
     
     private String templateName(final String name) {
-        String templateName = path + normalizeFile(name, extension);
-        if (templateName.endsWith(DOT + extension)) {
-            return templateName;
-        }
-        return templateName + DOT + extension;
+        return path + normalizeFile(name, extension) + "." + extension;
     }
-
 }
