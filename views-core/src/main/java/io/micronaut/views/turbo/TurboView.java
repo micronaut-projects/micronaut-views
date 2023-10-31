@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Annotation to to ease the return of {@link TurboStream} in routes.
+ * Annotation to ease the return of {@link TurboStream} in routes.
  *
  * @author Sergio del Amo
  * @since 3.3.0

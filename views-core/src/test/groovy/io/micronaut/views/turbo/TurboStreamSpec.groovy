@@ -132,6 +132,18 @@ class TurboStreamSpec extends Specification {
         "<turbo-stream action=\"update\" target=\"main-container\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == html
     }
 
+    void "list of TurboStream are rendered"() {
+        given:
+        BlockingHttpClient client = httpClient.toBlocking()
+
+        when:
+        String html = client.retrieve(HttpRequest.GET("/turbo/list").accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML))
+
+        then:
+        "<turbo-stream action=\"remove\" target=\"dom_id\"></turbo-stream>" +
+                "<turbo-stream action=\"update\" target=\"main-container\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == html
+    }
+
     void "verify TurboView annotation can specify targetDomId"() {
         given:
         BlockingHttpClient client = httpClient.toBlocking()
@@ -385,6 +397,15 @@ class TurboStreamSpec extends Specification {
         }
 
         @Produces(TurboMediaType.TURBO_STREAM)
+        @Get("/list")
+        List<TurboStream.Builder> turboList() {
+            List.of(
+                    TurboStream.builder().targetDomId("dom_id").remove(),
+                    TurboStream.builder().targetDomId("main-container").template("fragments/message", "Hello World").update()
+            )
+        }
+
+        @Produces(TurboMediaType.TURBO_STREAM)
         @TurboView("fragments/message")
         @Get("/update")
         String update() {
@@ -411,7 +432,7 @@ class TurboStreamSpec extends Specification {
             "Hello World"
         }
 
-        @Produces(value = MediaType.TEXT_HTML)
+        @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
         @View("home")
         @TurboView(value = "fragments/message")
         @Get("/withBothAnnotations")
@@ -461,7 +482,7 @@ class TurboStreamSpec extends Specification {
             [:]
         }
 
-        @Produces(value = MediaType.TEXT_HTML)
+        @Produces([MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
         @TurboView(action = TurboStreamAction.REMOVE, targetDomId = "foo")
         @Post("/delete")
         HttpResponse<?> delete() {

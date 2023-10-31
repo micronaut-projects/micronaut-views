@@ -19,7 +19,6 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.http.MediaType;
 import io.micronaut.views.TemplatedBuilder;
 import io.micronaut.views.ViewsRendererLocator;
 

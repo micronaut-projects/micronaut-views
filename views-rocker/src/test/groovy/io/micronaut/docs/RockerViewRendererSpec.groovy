@@ -16,6 +16,7 @@
 package io.micronaut.docs
 
 import io.micronaut.context.ApplicationContext
+import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
@@ -152,7 +153,7 @@ class RockerViewRendererSpec extends Specification {
 
     def "invoking /rocker/plainText renders with template but sets content type to txt/plain"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/rocker/plainText', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange(HttpRequest.GET('/rocker/plainText').accept(MediaType.TEXT_PLAIN), String)
 
         then:
         noExceptionThrown()

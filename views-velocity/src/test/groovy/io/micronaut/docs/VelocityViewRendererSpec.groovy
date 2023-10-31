@@ -16,6 +16,7 @@
 package io.micronaut.docs
 
 import io.micronaut.context.ApplicationContext
+import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
@@ -149,7 +150,7 @@ class VelocityViewRendererSpec extends Specification {
 
     def "invoking /velocity/plainText renders with template but sets content type to txt/plain"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/velocity/plainText', String)
+        HttpResponse<String> rsp = client.toBlocking().exchange(HttpRequest.GET('/velocity/plainText').accept(MediaType.TEXT_PLAIN), String)
 
         then:
         noExceptionThrown()
