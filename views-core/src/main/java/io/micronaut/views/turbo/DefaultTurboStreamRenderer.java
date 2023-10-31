@@ -57,17 +57,4 @@ public class DefaultTurboStreamRenderer implements TurboStreamRenderer {
                 })
                 .orElseGet(() -> builder.build().render());
     }
-
-    @Override
-    public Optional<Writable> render(HttpRequest<?> request, TurboStream.@NonNull Builder... builders) {
-        List<Writable> writableList = new ArrayList<>();
-        for (TurboStream.Builder builder : builders) {
-            render(builder, request).ifPresent(writableList::add);
-        }
-        return Optional.of(out -> {
-            for (Writable w : writableList) {
-                w.writeTo(out);
-            }
-        });
-    }
 }
