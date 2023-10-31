@@ -43,6 +43,14 @@ public class DefaultFormGenerator implements FormGenerator {
     }
 
     @Override
+    public Form generateWithFieldset(@NonNull String action,
+                                     @NonNull String method,
+                                     @NonNull Fieldset fieldset,
+                                     @NonNull InputSubmitFormElement inputSubmitFormElement) {
+        return generate(action, method, fieldset, inputSubmitFormElement);
+    }
+
+    @Override
     public Form generate(String action, String method, Object instance, InputSubmitFormElement inputSubmitFormElement) {
         Fieldset fieldset = fieldsetGenerator.generate(instance);
         return generate(action, method, fieldset, inputSubmitFormElement);

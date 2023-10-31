@@ -29,7 +29,6 @@ import static io.micronaut.views.ViewUtils.normalizeFile;
  * @since 1.3.2
  */
 public class RockerEngine {
-    
     private final String path;
     private final String extension;
     
@@ -72,5 +71,4 @@ public class RockerEngine {
     private String templateName(final String name) {
         return path + normalizeFile(name, extension) + "." + extension;
     }
-
 }

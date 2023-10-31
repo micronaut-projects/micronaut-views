@@ -29,6 +29,9 @@ class InputCheckboxFormElementTest {
         InputCheckboxFormElement formElement = InputCheckboxFormElement.builder()
             .checkboxes(List.of(interest, music))
             .build();
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_CHECKBOX, formElement.getType());
+
         List<Checkbox> checkboxes = Arrays.asList(interest, music);
         assertFormElement(checkboxes, formElement);
         BeanIntrospection<InputCheckboxFormElement> introspection = BeanIntrospection.getIntrospection(InputCheckboxFormElement.class);

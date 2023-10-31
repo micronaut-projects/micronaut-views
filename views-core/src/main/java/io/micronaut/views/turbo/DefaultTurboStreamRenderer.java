@@ -23,6 +23,7 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewsRendererLocator;
 import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Singleton;
+
 import java.util.Optional;
 
 /**

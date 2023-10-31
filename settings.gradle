@@ -17,6 +17,7 @@ include 'views-bom'
 include 'views-core'
 include 'views-soy'
 include 'views-fieldset'
+include 'views-fieldset-tck'
 include 'views-freemarker'
 include 'views-handlebars'
 include 'views-thymeleaf'
@@ -30,6 +31,8 @@ include "test-suite"
 include "test-suite-http"
 include "test-suite-groovy"
 include "test-suite-kotlin"
+include "test-suite-thymeleaf-fieldset"
+include "test-suite-freemarker-fieldset"
 include "test-suite-graal:test-suite-graal-common"
 include "test-suite-graal:test-suite-graal-freemarker"
 include "test-suite-graal:test-suite-graal-handlebars"

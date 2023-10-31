@@ -32,6 +32,8 @@ class InputDateFormElementTest {
             .max(max)
             .build();
         assertNotNull(formElement);
+        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(InputType.ATTR_TYPE_DATE, formElement.getType());
         assertEquals(id, formElement.id());
         assertEquals(name, formElement.name());
         assertEquals(value, formElement.value());

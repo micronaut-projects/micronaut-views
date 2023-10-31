@@ -32,6 +32,7 @@ import java.util.List;
  * @param max The latest date and time to accept
  * @param min The earliest date and time to accept
  * @param value The value of the Input Datetime Local
+ * @param step Granularity that the value must adhere to
  * @param label represents a caption for an item in a user interface
  * @param errors Form element validation Errors.
  *
@@ -45,6 +46,8 @@ public record InputDateTimeLocalFormElement(@NonNull String name,
                                             @Nullable LocalDateTime max,
                                             @Nullable LocalDateTime min,
                                             @Nullable LocalDateTime value,
+
+                                            @Nullable String step,
                                             @Nullable Message label,
                                             @NonNull List<Message> errors) implements InputFormElement, GlobalAttributes, FormElementAttributes {
 
@@ -74,6 +77,7 @@ public record InputDateTimeLocalFormElement(@NonNull String name,
         private LocalDateTime max;
         private LocalDateTime min;
         private LocalDateTime value;
+        private String step;
         private List<Message> errors;
         private Message label;
 
@@ -134,6 +138,17 @@ public record InputDateTimeLocalFormElement(@NonNull String name,
 
         /**
          *
+         * @param step Granularity that the value must adhere to
+         * @return The Builder
+         */
+        @NonNull
+        public Builder step(@NonNull String step) {
+            this.step = step;
+            return this;
+        }
+
+        /**
+         *
          * @param value The value attribute of the input element
          * @return the Builder
          */
@@ -172,13 +187,14 @@ public record InputDateTimeLocalFormElement(@NonNull String name,
         @NonNull
         public InputDateTimeLocalFormElement build() {
             return new InputDateTimeLocalFormElement(name,
-                id,
-                required,
-                max,
-                min,
-                value,
-                label,
-                errors == null ? Collections.emptyList() : errors);
+                    id,
+                    required,
+                    max,
+                    min,
+                    value,
+                    step,
+                    label,
+                    errors == null ? Collections.emptyList() : errors);
         }
     }
 }
