@@ -14,3 +14,15 @@ project(":test-suite-graal") {
         }
     }
 }
+
+if (System.getenv("SONAR_TOKEN") != null) {
+    // exclude TCK from coverage
+    def coverageExcludes = [
+            "**/tck/**",
+    ]
+    sonarqube {
+        properties {
+            property "sonar.exclusions", coverageExcludes.join(",")
+        }
+    }
+}
