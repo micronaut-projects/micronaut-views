@@ -24,8 +24,6 @@ import io.micronaut.views.ViewsRendererLocator;
 import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Singleton;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
