@@ -31,6 +31,7 @@ loadScripts(document, 'script');</script>
 <li>Package</li>
 <li>Class</li>
 <li><a href="overview-tree.html">Tree</a></li>
+<li><a href="deprecated-list.html">Deprecated</a></li>
 <li class="nav-bar-cell1-rev">Index</li>
 <li><a href="help-doc.html#index">Help</a></li>
 </ul>
@@ -407,6 +408,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/micronaut/views/csp/CspConfiguration.html#FILTER_PATH" class="member-name-link">FILTER_PATH</a> - Static variable in class io.micronaut.views.csp.<a href="io/micronaut/views/csp/CspConfiguration.html" title="class in io.micronaut.views.csp">CspConfiguration</a></dt>
 <dd>
 <div class="block">The path for endpoints settings.</div>
+</dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamFilter.html#filterResponse(io.micronaut.http.HttpRequest,io.micronaut.http.MutableHttpResponse)" class="member-name-link">filterResponse(HttpRequest&lt;?&gt;, MutableHttpResponse&lt;?&gt;)</a> - Method in class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStreamFilter.html" title="class in io.micronaut.views.turbo">TurboStreamFilter</a></dt>
+<dd>
+<div class="block">For routes annotated with <a href="io/micronaut/views/turbo/TurboView.html" title="annotation interface in io.micronaut.views.turbo"><code>TurboView</code></a> sets the response body to a <a href="io/micronaut/views/turbo/TurboStream.Builder.html" title="class in io.micronaut.views.turbo"><code>TurboStream.Builder</code></a>.</div>
 </dd>
 <dt><a href="io/micronaut/views/handlebars/HandlebarsViewsRenderer.html#folder" class="member-name-link">folder</a> - Variable in class io.micronaut.views.handlebars.<a href="io/micronaut/views/handlebars/HandlebarsViewsRenderer.html" title="class in io.micronaut.views.handlebars">HandlebarsViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
@@ -1125,6 +1130,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/ViewsFilter.html#resolveMediaType(io.micronaut.http.HttpResponse,java.lang.Object)" class="member-name-link">resolveMediaType(HttpResponse&lt;?&gt;, Object)</a> - Method in class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
 <dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
+<div class="deprecation-comment">Use <a href="io/micronaut/views/ViewsFilter.html#resolveMediaType(io.micronaut.http.HttpRequest,io.micronaut.http.HttpResponse,java.lang.Object)"><code>ViewsFilter.resolveMediaType(HttpRequest, HttpResponse, Object)</code></a> instead.</div>
+</div>
+</dd>
+<dt><a href="io/micronaut/views/ViewsFilter.html#resolveMediaType(io.micronaut.http.HttpRequest,io.micronaut.http.HttpResponse,java.lang.Object)" class="member-name-link">resolveMediaType(HttpRequest&lt;?&gt;, HttpResponse&lt;?&gt;, Object)</a> - Method in class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
+<dd>
 <div class="block">Resolves the response content type for the matched route.</div>
 </dd>
 <dt><a href="io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html#resolveMessage(org.thymeleaf.context.ITemplateContext,java.lang.Class,java.lang.String,java.lang.Object%5B%5D)" class="member-name-link">resolveMessage(ITemplateContext, Class&lt;?&gt;, String, Object[])</a> - Method in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html" title="class in io.micronaut.views.thymeleaf">MessageSourceMessageResolver</a></dt>
@@ -1640,6 +1651,24 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Turbo Seven Actions.</div>
 </dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamBuilderMessageBodyWriter.html" class="type-name-link" title="class in io.micronaut.views.turbo">TurboStreamBuilderMessageBodyWriter</a> - Class in <a href="io/micronaut/views/turbo/package-summary.html">io.micronaut.views.turbo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamBuilderMessageBodyWriter.html#%3Cinit%3E(io.micronaut.views.turbo.TurboStreamRenderer)" class="member-name-link">TurboStreamBuilderMessageBodyWriter(TurboStreamRenderer)</a> - Constructor for class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStreamBuilderMessageBodyWriter.html" title="class in io.micronaut.views.turbo">TurboStreamBuilderMessageBodyWriter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamFilter.html" class="type-name-link" title="class in io.micronaut.views.turbo">TurboStreamFilter</a> - Class in <a href="io/micronaut/views/turbo/package-summary.html">io.micronaut.views.turbo</a></dt>
+<dd>
+<div class="block">For routes annotated with <a href="io/micronaut/views/turbo/TurboView.html" title="annotation interface in io.micronaut.views.turbo"><code>TurboView</code></a> sets the response body to a <a href="io/micronaut/views/turbo/TurboStream.Builder.html" title="class in io.micronaut.views.turbo"><code>TurboStream.Builder</code></a>.</div>
+</dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamFilter.html#%3Cinit%3E()" class="member-name-link">TurboStreamFilter()</a> - Constructor for class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStreamFilter.html" title="class in io.micronaut.views.turbo">TurboStreamFilter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamListOfBuilderMessageBodyWriter.html" class="type-name-link" title="class in io.micronaut.views.turbo">TurboStreamListOfBuilderMessageBodyWriter</a> - Class in <a href="io/micronaut/views/turbo/package-summary.html">io.micronaut.views.turbo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamListOfBuilderMessageBodyWriter.html#%3Cinit%3E(io.micronaut.views.turbo.TurboStreamRenderer)" class="member-name-link">TurboStreamListOfBuilderMessageBodyWriter(TurboStreamRenderer)</a> - Constructor for class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStreamListOfBuilderMessageBodyWriter.html" title="class in io.micronaut.views.turbo">TurboStreamListOfBuilderMessageBodyWriter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamMessageBodyWriter.html" class="type-name-link" title="class in io.micronaut.views.turbo">TurboStreamMessageBodyWriter</a> - Class in <a href="io/micronaut/views/turbo/package-summary.html">io.micronaut.views.turbo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamMessageBodyWriter.html#%3Cinit%3E()" class="member-name-link">TurboStreamMessageBodyWriter()</a> - Constructor for class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStreamMessageBodyWriter.html" title="class in io.micronaut.views.turbo">TurboStreamMessageBodyWriter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/ViewsFilter.html#turboStreamRenderer" class="member-name-link">turboStreamRenderer</a> - Variable in class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
 <dd>
 <div class="block">Turbo Stream Renderer.</div>
@@ -1650,7 +1679,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="io/micronaut/views/turbo/TurboView.html" class="type-name-link" title="annotation interface in io.micronaut.views.turbo">TurboView</a> - Annotation Interface in <a href="io/micronaut/views/turbo/package-summary.html">io.micronaut.views.turbo</a></dt>
 <dd>
-<div class="block">Annotation to to ease the return of <a href="io/micronaut/views/turbo/TurboStream.html" title="class in io.micronaut.views.turbo"><code>TurboStream</code></a> in routes.</div>
+<div class="block">Annotation to ease the return of <a href="io/micronaut/views/turbo/TurboStream.html" title="class in io.micronaut.views.turbo"><code>TurboStream</code></a> in routes.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:U">U</h2>
@@ -1785,9 +1814,15 @@ the order they are declared.</div>
 <dd>
 <div class="block">Templates Filter.</div>
 </dd>
-<dt><a href="io/micronaut/views/ViewsFilter.html#%3Cinit%3E(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator,io.micronaut.views.turbo.TurboStreamRenderer,io.micronaut.views.turbo.TurboFrameRenderer)" class="member-name-link">ViewsFilter(ViewsResolver, ViewsRendererLocator, ViewsModelDecorator, TurboStreamRenderer, TurboFrameRenderer)</a> - Constructor for class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
+<dt><a href="io/micronaut/views/ViewsFilter.html#%3Cinit%3E(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator,io.micronaut.views.turbo.TurboFrameRenderer)" class="member-name-link">ViewsFilter(ViewsResolver, ViewsRendererLocator, ViewsModelDecorator, TurboFrameRenderer)</a> - Constructor for class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
 <dd>
 <div class="block">Constructor.</div>
+</dd>
+<dt><a href="io/micronaut/views/ViewsFilter.html#%3Cinit%3E(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator,io.micronaut.views.turbo.TurboStreamRenderer,io.micronaut.views.turbo.TurboFrameRenderer)" class="member-name-link">ViewsFilter(ViewsResolver, ViewsRendererLocator, ViewsModelDecorator, TurboStreamRenderer, TurboFrameRenderer)</a> - Constructor for class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
+<div class="deprecation-comment">Use <a href="io/micronaut/views/ViewsFilter.html#%3Cinit%3E(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator,io.micronaut.views.turbo.TurboFrameRenderer)"><code>ViewsFilter(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator,io.micronaut.views.turbo.TurboFrameRenderer)</code></a> instead.</div>
+</div>
 </dd>
 <dt><a href="io/micronaut/views/ViewsFilter.html#viewsModelDecorator" class="member-name-link">viewsModelDecorator</a> - Variable in class io.micronaut.views.<a href="io/micronaut/views/ViewsFilter.html" title="class in io.micronaut.views">ViewsFilter</a></dt>
 <dd>
@@ -1849,6 +1884,12 @@ the order they are declared.</div>
 <div class="block">Implementation of the <code>IEngineContext</code> interface for web processing.</div>
 </dd>
 <dt><a href="io/micronaut/views/thymeleaf/WebEngineContext.html#%3Cinit%3E(org.thymeleaf.IEngineConfiguration,org.thymeleaf.engine.TemplateData,java.util.Map,io.micronaut.http.HttpRequest,java.util.Locale,java.util.Map)" class="member-name-link">WebEngineContext(IEngineConfiguration, TemplateData, Map&lt;String, Object&gt;, HttpRequest&lt;?&gt;, Locale, Map&lt;String, Object&gt;)</a> - Constructor for class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/WebEngineContext.html" title="class in io.micronaut.views.thymeleaf">WebEngineContext</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamBuilderMessageBodyWriter.html#writeTo(io.micronaut.core.type.Argument,io.micronaut.http.MediaType,io.micronaut.views.turbo.TurboStream.Builder,io.micronaut.core.type.MutableHeaders,java.io.OutputStream)" class="member-name-link">writeTo(Argument&lt;TurboStream.Builder&gt;, MediaType, TurboStream.Builder, MutableHeaders, OutputStream)</a> - Method in class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStreamBuilderMessageBodyWriter.html" title="class in io.micronaut.views.turbo">TurboStreamBuilderMessageBodyWriter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamMessageBodyWriter.html#writeTo(io.micronaut.core.type.Argument,io.micronaut.http.MediaType,io.micronaut.views.turbo.TurboStream,io.micronaut.core.type.MutableHeaders,java.io.OutputStream)" class="member-name-link">writeTo(Argument&lt;TurboStream&gt;, MediaType, TurboStream, MutableHeaders, OutputStream)</a> - Method in class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStreamMessageBodyWriter.html" title="class in io.micronaut.views.turbo">TurboStreamMessageBodyWriter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/turbo/TurboStreamListOfBuilderMessageBodyWriter.html#writeTo(io.micronaut.core.type.Argument,io.micronaut.http.MediaType,java.util.List,io.micronaut.core.type.MutableHeaders,java.io.OutputStream)" class="member-name-link">writeTo(Argument&lt;List&lt;TurboStream.Builder&gt;&gt;, MediaType, List&lt;TurboStream.Builder&gt;, MutableHeaders, OutputStream)</a> - Method in class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStreamListOfBuilderMessageBodyWriter.html" title="class in io.micronaut.views.turbo">TurboStreamListOfBuilderMessageBodyWriter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/jstachio/JStachioMessageBodyWriter.html#writeTo(io.micronaut.core.type.Argument,io.micronaut.http.MediaType,T,io.micronaut.core.type.MutableHeaders,java.io.OutputStream)" class="member-name-link">writeTo(Argument&lt;T&gt;, MediaType, T, MutableHeaders, OutputStream)</a> - Method in class io.micronaut.views.jstachio.<a href="io/micronaut/views/jstachio/JStachioMessageBodyWriter.html" title="class in io.micronaut.views.jstachio">JStachioMessageBodyWriter</a></dt>
 <dd>&nbsp;</dd>
