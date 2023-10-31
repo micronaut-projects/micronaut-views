@@ -31,10 +31,13 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Property(name = "spec.name", value = "InputEmailViewRenderTest")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests
 class InputEmailViewRenderTest {
 
     @Test
@@ -45,14 +48,26 @@ class InputEmailViewRenderTest {
 
         Fieldset fieldset = fieldsetGenerator.generate(new Login("advocate@micronaut.io"));
         assertEquals("""
-        <div class="mb-3"><label for="email" class="form-label">Email</label><input type="email" name="email" value="advocate@micronaut.io" id="email" class="form-control" required="required"/></div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+                <div class="mb-3">\
+                <label for="email" class="form-label">Email</label>\
+                <input type="email" name="email" value="advocate@micronaut.io" id="email" class="form-control" required="required"/>\
+                </div>""",
+            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+        );
 
 
+        @SuppressWarnings("java:S2637") // We're passing null on purpose
         Login invalid = new Login(null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> formValidator.validate(invalid));
         fieldset = fieldsetGenerator.generate(invalid, ex);
         assertEquals("""
-        <div class="mb-3"><label for="email" class="form-label">Email</label><input type="email" name="email" value="" id="email" class="form-control is-invalid" aria-describedby="emailValidationServerFeedback" required="required"/><div id="emailValidationServerFeedback" class="invalid-feedback">must not be blank</div></div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+                <div class="mb-3">\
+                <label for="email" class="form-label">Email</label>\
+                <input type="email" name="email" value="" id="email" class="form-control is-invalid" aria-describedby="emailValidationServerFeedback" required="required"/>\
+                <div id="emailValidationServerFeedback" class="invalid-feedback">must not be blank</div>\
+                </div>""",
+            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+        );
     }
 
     @Introspected

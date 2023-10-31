@@ -28,9 +28,12 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @MicronautTest(startApplication = false)
+@SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests
 class InputPasswordViewRenderTest {
 
     @Test
@@ -41,14 +44,24 @@ class InputPasswordViewRenderTest {
 
         Fieldset fieldset = fieldsetGenerator.generate(new Login("foo"));
         assertEquals("""
-        <div class="mb-3"><label for="password" class="form-label">Password</label><input type="password" name="password" value="foo" id="password" class="form-control" required="required"/></div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
-
+                <div class="mb-3">\
+                <label for="password" class="form-label">Password</label>\
+                <input type="password" name="password" value="foo" id="password" class="form-control" required="required"/>\
+                </div>""",
+            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+        );
 
         Login invalid = new Login(null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> formValidator.validate(invalid));
         fieldset = fieldsetGenerator.generate(invalid, ex);
         assertEquals("""
-        <div class="mb-3"><label for="password" class="form-label">Password</label><input type="password" name="password" value="" id="password" class="form-control is-invalid" aria-describedby="passwordValidationServerFeedback" required="required"/><div id="passwordValidationServerFeedback" class="invalid-feedback">must not be blank</div></div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+                <div class="mb-3">\
+                <label for="password" class="form-label">Password</label>\
+                <input type="password" name="password" value="" id="password" class="form-control is-invalid" aria-describedby="passwordValidationServerFeedback" required="required"/>\
+                <div id="passwordValidationServerFeedback" class="invalid-feedback">must not be blank</div>\
+                </div>""",
+            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+        );
     }
 
     @Introspected

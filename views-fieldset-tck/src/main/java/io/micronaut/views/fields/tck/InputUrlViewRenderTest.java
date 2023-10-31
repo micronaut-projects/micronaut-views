@@ -29,9 +29,12 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @MicronautTest(startApplication = false)
+@SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests
 class InputUrlViewRenderTest {
 
     @Test
@@ -42,14 +45,25 @@ class InputUrlViewRenderTest {
 
         Fieldset fieldset = fieldsetGenerator.generate(new Contact("https://micronaut.io"));
         assertEquals("""
-        <div class="mb-3"><label for="web" class="form-label">Web</label><input type="url" name="web" value="https://micronaut.io" id="web" class="form-control" required="required"/></div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+                <div class="mb-3">\
+                <label for="web" class="form-label">Web</label>\
+                <input type="url" name="web" value="https://micronaut.io" id="web" class="form-control" required="required"/>\
+                </div>""",
+            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+        );
 
-
+        @SuppressWarnings("java:S2637") // We're passing null on purpose
         Contact invalid = new Contact(null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> formValidator.validate(invalid));
         fieldset = fieldsetGenerator.generate(invalid, ex);
         assertEquals("""
-        <div class="mb-3"><label for="web" class="form-label">Web</label><input type="url" name="web" value="" id="web" class="form-control is-invalid" aria-describedby="webValidationServerFeedback" required="required"/><div id="webValidationServerFeedback" class="invalid-feedback">must not be blank</div></div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+                <div class="mb-3">\
+                <label for="web" class="form-label">Web</label>\
+                <input type="url" name="web" value="" id="web" class="form-control is-invalid" aria-describedby="webValidationServerFeedback" required="required"/>\
+                <div id="webValidationServerFeedback" class="invalid-feedback">must not be blank</div>\
+                </div>""",
+            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+        );
     }
 
     @Introspected

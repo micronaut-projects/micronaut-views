@@ -11,5 +11,5 @@ import org.junit.platform.suite.api.SuiteDisplayName;
         "io.micronaut.views.fields.tck",
 })
 @SuiteDisplayName("Fieldset TCK for Freemarker")
-public class FreemarkerSuite {
+class FreemarkerSuite {
 }

@@ -15,49 +15,44 @@
  */
 package io.micronaut.views.fields.tck;
 
-import io.micronaut.core.io.Writable;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.Message;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.util.Collections;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MicronautTest(startApplication = false)
+@SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests
 class LabelViewRenderTest {
+
+    private static final String FOO_BAR = "Foo Bar";
 
     @Test
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
         assertNotNull(viewsRenderer);
-        Message message = Message.of("Foo Bar", "foo.bar");
+        Message message = Message.of(FOO_BAR, "foo.bar");
+
         String id = "identifier";
-        String expected = "<label for=\"identifier\" class=\"form-label\">Foo Bar</label>";
-        assertEquals(expected, render(viewsRenderer, id, message));
+        String expected = """
+            <label for="identifier" class="form-label">%s</label>""".formatted(FOO_BAR);
 
-        message = Message.of("Foo Bar", null);
-        assertEquals(expected, render(viewsRenderer, id, message));
+        assertEquals(expected, TestUtils.render("fieldset/label.html", viewsRenderer, Map.of("id", id, "el", message)));
 
-        expected = "<label class=\"form-label\">Foo Bar</label>";
-        message = Message.of("Foo Bar", null);
-        assertEquals(expected, render(viewsRenderer, null, message));
+        message = Message.of(FOO_BAR, null);
+        assertEquals(expected, TestUtils.render("fieldset/label.html", viewsRenderer, Map.of("id", id, "el", message)));
 
-        message = Message.of("Foo Bar", "foo.bar");
-        assertEquals(expected, render(viewsRenderer, null, message));
-    }
+        expected = """
+            <label class="form-label">%s</label>""".formatted(FOO_BAR);
 
-    private static String render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer, String id, Message el) throws IOException {
-        return output(viewsRenderer.render("fieldset/label.html", id != null ? Map.of("id", id, "el", el) : Collections.singletonMap("el", el), null));
-    }
+        message = Message.of(FOO_BAR, null);
+        assertEquals(expected, TestUtils.render("fieldset/label.html", viewsRenderer, Map.of("el", message)));
 
-    private static String output(Writable writeable) throws IOException {
-        StringWriter sw = new StringWriter();
-        writeable.writeTo(sw);
-        return sw.toString();
+        message = Message.of(FOO_BAR, "foo.bar");
+        assertEquals(expected, TestUtils.render("fieldset/label.html", viewsRenderer, Map.of("el", message)));
     }
 }

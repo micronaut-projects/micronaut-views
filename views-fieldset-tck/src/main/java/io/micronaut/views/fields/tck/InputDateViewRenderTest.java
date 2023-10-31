@@ -28,9 +28,12 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @MicronautTest(startApplication = false)
+@SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests
 class InputDateViewRenderTest {
 
     @Test
@@ -41,14 +44,26 @@ class InputDateViewRenderTest {
 
         Fieldset fieldset = fieldsetGenerator.generate(new Event(LocalDate.of(2023, 10, 28)));
         assertEquals("""
-        <div class="mb-3"><label for="meetingDate" class="form-label">Meeting Date</label><input type="date" name="meetingDate" value="2023-10-28" id="meetingDate" class="form-control" required="required"/></div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+                <div class="mb-3">\
+                <label for="meetingDate" class="form-label">Meeting Date</label>\
+                <input type="date" name="meetingDate" value="2023-10-28" id="meetingDate" class="form-control" required="required"/>\
+                </div>""",
+            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+        );
 
 
+        @SuppressWarnings("java:S2637") // We're passing null on purpose
         Event invalid = new Event(null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> formValidator.validate(invalid));
         fieldset = fieldsetGenerator.generate(invalid, ex);
         assertEquals("""
-                <div class="mb-3"><label for="meetingDate" class="form-label">Meeting Date</label><input type="date" name="meetingDate" value="" id="meetingDate" class="form-control is-invalid" aria-describedby="meetingDateValidationServerFeedback" required="required"/><div id="meetingDateValidationServerFeedback" class="invalid-feedback">must not be null</div></div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+                <div class="mb-3">\
+                <label for="meetingDate" class="form-label">Meeting Date</label>\
+                <input type="date" name="meetingDate" value="" id="meetingDate" class="form-control is-invalid" aria-describedby="meetingDateValidationServerFeedback" required="required"/>\
+                <div id="meetingDateValidationServerFeedback" class="invalid-feedback">must not be null</div>\
+                </div>""",
+            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+        );
     }
 
     @Introspected

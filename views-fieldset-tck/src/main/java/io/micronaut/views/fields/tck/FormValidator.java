@@ -18,9 +18,11 @@ package io.micronaut.views.fields.tck;
 import jakarta.inject.Singleton;
 import jakarta.validation.Valid;
 
-@SuppressWarnings("MissingJavadocType")
 @Singleton
+@SuppressWarnings("MissingJavadocType")
 public class FormValidator {
+
+    @SuppressWarnings({"EmptyMethod", "java:S1186"})
     void validate(@Valid Object el) {
     }
 }

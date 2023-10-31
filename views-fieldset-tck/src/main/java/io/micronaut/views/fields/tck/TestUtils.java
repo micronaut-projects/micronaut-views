@@ -24,7 +24,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SuppressWarnings("MissingJavadocType")
+@SuppressWarnings({"MissingJavadocType", "java:S5960"}) // Assertions are fine, these are tests
 public final class TestUtils {
     private TestUtils() {
     }

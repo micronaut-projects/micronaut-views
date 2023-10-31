@@ -29,10 +29,13 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Property(name = "spec.name", value = "InputTextViewRenderTest")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests
 class InputTextViewRenderTest {
 
     @Test
@@ -43,14 +46,25 @@ class InputTextViewRenderTest {
 
         Fieldset fieldset = fieldsetGenerator.generate(new Contact("Sergio"));
         assertEquals("""
-        <div class="mb-3"><label for="name" class="form-label">Name</label><input type="text" name="name" value="Sergio" id="name" class="form-control" required="required"/></div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+                <div class="mb-3">\
+                <label for="name" class="form-label">Name</label>\
+                <input type="text" name="name" value="Sergio" id="name" class="form-control" required="required"/>\
+                </div>""",
+            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+        );
 
-
+        @SuppressWarnings("java:S2637") // We're passing null on purpose
         Contact invalid = new Contact(null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> formValidator.validate(invalid));
         fieldset = fieldsetGenerator.generate(invalid, ex);
         assertEquals("""
-        <div class="mb-3"><label for="name" class="form-label">Name</label><input type="text" name="name" value="" id="name" class="form-control is-invalid" aria-describedby="nameValidationServerFeedback" required="required"/><div id="nameValidationServerFeedback" class="invalid-feedback">must not be blank</div></div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+                <div class="mb-3">\
+                <label for="name" class="form-label">Name</label>\
+                <input type="text" name="name" value="" id="name" class="form-control is-invalid" aria-describedby="nameValidationServerFeedback" required="required"/>\
+                <div id="nameValidationServerFeedback" class="invalid-feedback">must not be blank</div>\
+                </div>""",
+            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+        );
     }
 
     @Introspected
