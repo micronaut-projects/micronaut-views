@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @MicronautTest(startApplication = false)
 class InputUrlFormElementRendererTest {
+
     @Test
     void testTagAndType() {
         InputUrlFormElement formElement = InputUrlFormElement.builder().build();
