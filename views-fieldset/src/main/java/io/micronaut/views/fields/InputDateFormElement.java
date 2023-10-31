@@ -42,7 +42,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputDateFormElement.Builder.class))
 public record InputDateFormElement(@NonNull String name,
-                                   @NonNull String id,
+                                   @Nullable String id,
                                    boolean required,
                                    @Nullable LocalDate max,
                                    @Nullable LocalDate min,
@@ -72,21 +72,13 @@ public record InputDateFormElement(@NonNull String name,
     public static class Builder {
 
         private String name;
-
         private String id;
-
         private boolean required;
-
         private LocalDate max;
-
         private LocalDate min;
-
         private LocalDate value;
-
         private String step;
-
         private List<Message> errors;
-
         private Message label;
 
         /**

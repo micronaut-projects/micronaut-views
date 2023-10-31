@@ -54,15 +54,10 @@ public record Checkbox(@NonNull String name,
     public static class Builder {
 
         private String name;
-
         private String id;
-
         private boolean checked;
-
         private boolean required;
-
         private String value;
-
         private Message label;
 
         /**

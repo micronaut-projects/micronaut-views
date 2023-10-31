@@ -21,6 +21,7 @@ package io.micronaut.views.fields;
  * @since 4.1.0
  */
 public final class HtmlTag {
+
     /**
      * HTML Tag input.
      */
@@ -58,6 +59,5 @@ public final class HtmlTag {
     public static final String TRIX_EDITOR = "trix-editor";
 
     private HtmlTag() {
-
     }
 }

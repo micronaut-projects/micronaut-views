@@ -54,6 +54,7 @@ public record Option(boolean disabled,
      * Option Builder.
      */
     public static class Builder {
+
         private boolean disabled;
         private String value;
         private boolean selected;
@@ -112,5 +113,4 @@ public record Option(boolean disabled,
             return new Option(disabled, selected, value, label);
         }
     }
-
 }

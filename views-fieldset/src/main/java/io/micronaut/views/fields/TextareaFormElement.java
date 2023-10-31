@@ -41,7 +41,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = TextareaFormElement.Builder.class))
 public record TextareaFormElement(@NonNull String name,
-                                  @NonNull String id,
+                                  @Nullable String id,
                                   @Nullable Integer cols,
                                   @Nullable Integer rows,
                                   @Nullable String placeholder,
@@ -50,6 +50,7 @@ public record TextareaFormElement(@NonNull String name,
                                   @Nullable String value,
                                   @Nullable Message label,
                                   @NonNull List<Message> errors) implements FormElement, FormElementAttributes, GlobalAttributes {
+
     @Override
     public String getTag() {
         return HtmlTag.TAG_TEXTAREA;
@@ -70,23 +71,14 @@ public record TextareaFormElement(@NonNull String name,
     public static class Builder {
 
         private String name;
-
         private String id;
-
         private String placeholder;
-
         private boolean required;
-
         private boolean readOnly;
-
         private Integer rows;
-
         private Integer cols;
-
         private String value;
-
         private List<Message> errors;
-
         private Message label;
 
         /**

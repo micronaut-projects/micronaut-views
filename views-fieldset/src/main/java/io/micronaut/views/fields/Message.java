@@ -24,6 +24,7 @@ import io.micronaut.core.annotation.Nullable;
  * @since 4.1.0
  */
 public interface Message {
+
     /**
      *
      * @return The i18n code which can be used to fetch a localized message.

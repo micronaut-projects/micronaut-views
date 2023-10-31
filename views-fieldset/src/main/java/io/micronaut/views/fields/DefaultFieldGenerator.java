@@ -24,7 +24,16 @@ import io.micronaut.core.beans.BeanProperty;
 import io.micronaut.core.beans.BeanWrapper;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.data.annotation.AutoPopulated;
-import io.micronaut.views.fields.annotations.*;
+import io.micronaut.views.fields.annotations.InputCheckbox;
+import io.micronaut.views.fields.annotations.InputEmail;
+import io.micronaut.views.fields.annotations.InputHidden;
+import io.micronaut.views.fields.annotations.InputPassword;
+import io.micronaut.views.fields.annotations.InputRadio;
+import io.micronaut.views.fields.annotations.InputTel;
+import io.micronaut.views.fields.annotations.InputUrl;
+import io.micronaut.views.fields.annotations.Select;
+import io.micronaut.views.fields.annotations.Textarea;
+import io.micronaut.views.fields.annotations.TrixEditor;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolation;
@@ -34,15 +43,22 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import java.lang.annotation.Annotation;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
 /**
  * Default implementation of {@link FieldsetGenerator} which relies on the types being introspected.
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  */
@@ -61,6 +77,20 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private static final String BUILDER_METHOD_BUTTONS = "buttons";
     private static final String BUILDER_METHOD_MIN = "min";
 
+    private static final Map<Class<? extends Annotation>, Class<? extends FormElement>> ANNOTATION_MAPPING = Map.ofEntries(
+        Map.entry(InputHidden.class, InputHiddenFormElement.class),
+        Map.entry(InputRadio.class, InputRadioFormElement.class),
+        Map.entry(InputCheckbox.class, InputCheckboxFormElement.class),
+        Map.entry(InputPassword.class, InputPasswordFormElement.class),
+        Map.entry(InputEmail.class, InputEmailFormElement.class),
+        Map.entry(Email.class, InputEmailFormElement.class),
+        Map.entry(InputUrl.class, InputUrlFormElement.class),
+        Map.entry(InputTel.class, InputTelFormElement.class),
+        Map.entry(Select.class, SelectFormElement.class),
+        Map.entry(Textarea.class, TextareaFormElement.class),
+        Map.entry(TrixEditor.class, TrixEditorFormElement.class)
+    );
+
     private final EnumOptionFetcher<?> enumOptionFetcher;
 
     private final EnumRadioFetcher<?> enumRadioFetcher;
@@ -74,11 +104,10 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private final ConcurrentHashMap<Class<? extends CheckboxFetcher>, CheckboxFetcher> checkboxFetcherCache = new ConcurrentHashMap<>();
 
     /**
-     *
-     * @param enumOptionFetcher Enum fetcher for {@link Option}.
-     * @param enumRadioFetcher Enum fetcher for {@link Radio}.
+     * @param enumOptionFetcher   Enum fetcher for {@link Option}.
+     * @param enumRadioFetcher    Enum fetcher for {@link Radio}.
      * @param enumCheckboxFetcher Enum fetcher for {@link Checkbox}.
-     * @param beanContext Bean Context
+     * @param beanContext         Bean Context
      */
     public DefaultFieldGenerator(EnumOptionFetcher<?> enumOptionFetcher,
                                  EnumRadioFetcher<?> enumRadioFetcher,
@@ -143,7 +172,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
                                                                   @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
         List<FormElement> result = new ArrayList<>();
         for (BeanProperty<T, ?> beanProperty : beanWrapper.getBeanProperties()) {
-            formElementClassForBeanProperty(beanProperty).ifPresent(formElementClazz  -> {
+            formElementClassForBeanProperty(beanProperty).ifPresent(formElementClazz -> {
                 BeanIntrospection.Builder<? extends FormElement> builder = formElementBuilderForBeanProperty(beanProperty, formElementClazz, beanWrapper, ex, builderConsumer);
                 result.add(builder.build());
             });
@@ -156,35 +185,10 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         if (beanProperty.hasStereotype(AutoPopulated.class)) {
             return Optional.empty();
         }
-        if (beanProperty.hasAnnotation(InputHidden.class)) {
-            return Optional.of(InputHiddenFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputRadio.class)) {
-            return Optional.of(InputRadioFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputCheckbox.class)) {
-            return Optional.of(InputCheckboxFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputPassword.class)) {
-            return Optional.of(InputPasswordFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputEmail.class) || beanProperty.hasAnnotation(Email.class)) {
-            return Optional.of(InputEmailFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputUrl.class)) {
-            return Optional.of(InputUrlFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(InputTel.class)) {
-            return Optional.of(InputTelFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(Select.class)) {
-            return Optional.of(SelectFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(Textarea.class)) {
-            return Optional.of(TextareaFormElement.class);
-        }
-        if (beanProperty.hasAnnotation(TrixEditor.class)) {
-            return Optional.of(TrixEditorFormElement.class);
+        for (var mapping : ANNOTATION_MAPPING.entrySet()) {
+            if (beanProperty.hasAnnotation(mapping.getKey())) {
+                return Optional.of(mapping.getValue());
+            }
         }
         if (beanProperty.getType() == LocalDate.class) {
             return Optional.of(InputDateFormElement.class);
@@ -198,15 +202,12 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         if (Number.class.isAssignableFrom(beanProperty.getType())) {
             return Optional.of(InputNumberFormElement.class);
         }
-
         if (beanProperty.getType() == boolean.class) {
             return Optional.of(InputCheckboxFormElement.class);
         }
-
         if (beanProperty.getType().isEnum()) {
             return Optional.of(SelectFormElement.class);
         }
-
         if (CharSequence.class.isAssignableFrom(beanProperty.getType())) {
             return Optional.of(InputTextFormElement.class);
         }
@@ -285,48 +286,46 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         return Optional.empty();
     }
 
-    private <T> BeanIntrospection.Builder<? extends FormElement> formElementBuilderForBeanProperty(BeanProperty<T, ?> beanProperty,
-                                                                                                   Class<? extends FormElement> formElementClazz,
-                                                                                                   @Nullable BeanWrapper<T> beanWrapper,
-                                                                                                   @Nullable ConstraintViolationException ex,
-                                                                                                   @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
-        BeanIntrospection.Builder<? extends FormElement> builder = BeanIntrospection.getIntrospection(formElementClazz).builder();
-        if (formElementClazz == InputCheckboxFormElement.class) {
-            List checkboxes = checkboxFetcherForBeanProperty(beanProperty)
-                .map(fetcher -> {
-                    Optional<Object> valueOptional = valueForBeanProperty(beanWrapper, beanProperty);
-                    if (valueOptional.isPresent()) {
-                        return fetcher.generate(valueOptional.get());
-                    }
-                    return fetcher.generate(beanProperty.getType());
-                }).orElseGet(() -> {
-                    FormElement formElement = formElementBuilderForBeanProperty(beanProperty, Checkbox.class, beanWrapper, ex, null)
-                        .with(BUILDER_METHOD_CHECKED, valueForBeanProperty(beanWrapper, beanProperty).map(v -> Boolean.valueOf(v.toString())).orElse(false))
-                        .build();
-                    return Collections.singletonList(formElement);
-                });
-            builder.with(BUILDER_METHOD_CHECKBOXES, checkboxes);
+    private <T, E extends FormElement> BeanIntrospection.Builder<E> formElementBuilderForBeanProperty(BeanProperty<T, ?> beanProperty,
+                                                                                                      Class<E> formElementClazz,
+                                                                                                      @Nullable BeanWrapper<T> beanWrapper,
+                                                                                                      @Nullable ConstraintViolationException ex,
+                                                                                                      @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
+        BeanIntrospection.Builder<E> builder = BeanIntrospection.getIntrospection(formElementClazz).builder();
 
+        if (formElementClazz == InputCheckboxFormElement.class) {
+            builder.with(
+                BUILDER_METHOD_CHECKBOXES,
+                checkboxFetcherForBeanProperty(beanProperty)
+                    .map(fetcher ->
+                        valueForBeanProperty(beanWrapper, beanProperty)
+                            .map(fetcher::generate)
+                            .orElseGet(() -> fetcher.generate(beanProperty.getType()))
+                    ).orElseGet(() -> {
+                        Checkbox formElement = formElementBuilderForBeanProperty(beanProperty, Checkbox.class, beanWrapper, ex, null)
+                            .with(BUILDER_METHOD_CHECKED, valueForBeanProperty(beanWrapper, beanProperty).map(v -> Boolean.valueOf(v.toString())).orElse(false))
+                            .build();
+                        return Collections.singletonList(formElement);
+                    })
+            );
         } else if (formElementClazz == SelectFormElement.class) {
-            optionFetcherForBeanProperty(beanProperty)
-                    .ifPresent(optionFetcher -> {
-                        Optional<Object> valueOptional = valueForBeanProperty(beanWrapper, beanProperty);
-                        if (valueOptional.isPresent()) {
-                            builder.with(BUILDER_METHOD_OPTIONS, optionFetcher.generate(valueOptional.get()));
-                        } else {
-                            builder.with(BUILDER_METHOD_OPTIONS, optionFetcher.generate(beanProperty.getType()));
-                        }
-                    });
+            builder.with(BUILDER_METHOD_OPTIONS, optionFetcherForBeanProperty(beanProperty)
+                .map(optionFetcher ->
+                    valueForBeanProperty(beanWrapper, beanProperty)
+                        .map(optionFetcher::generate)
+                        .orElseGet(() -> optionFetcher.generate(beanProperty.getType()))
+                )
+                .orElse(Collections.emptyList())
+            );
         } else if (formElementClazz == InputRadioFormElement.class) {
-            radioFetcherForBeanProperty(beanProperty)
-                    .ifPresent(fetcher -> {
-                        Optional<Object> valueOptional = valueForBeanProperty(beanWrapper, beanProperty);
-                        if (valueOptional.isPresent()) {
-                            builder.with(BUILDER_METHOD_BUTTONS, fetcher.generate(valueOptional.get()));
-                        } else {
-                            builder.with(BUILDER_METHOD_BUTTONS, fetcher.generate(beanProperty.getType()));
-                        }
-                    });
+            builder.with(BUILDER_METHOD_BUTTONS, radioFetcherForBeanProperty(beanProperty)
+                .map(fetcher ->
+                    valueForBeanProperty(beanWrapper, beanProperty)
+                        .map(fetcher::generate)
+                        .orElseGet(() -> fetcher.generate(beanProperty.getType()))
+                )
+                .orElse(Collections.emptyList())
+            );
         }
         builder
             .with(BUILDER_METHOD_NAME, beanProperty.getName())
@@ -334,13 +333,13 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
             .with(BUILDER_METHOD_LABEL, labelForBeanProperty(beanProperty))
             .with(BUILDER_METHOD_REQUIRED, requiredForBeanProperty(beanProperty));
         valueForBeanProperty(beanWrapper, beanProperty)
-                .ifPresent(value -> {
-                    try {
-                        builder.with(BUILDER_METHOD_VALUE, value);
-                    } catch (IllegalArgumentException e) {
-                        builder.with(BUILDER_METHOD_VALUE, value.toString());
-                    }
-                });
+            .ifPresent(value -> {
+                try {
+                    builder.with(BUILDER_METHOD_VALUE, value);
+                } catch (IllegalArgumentException e) {
+                    builder.with(BUILDER_METHOD_VALUE, value.toString());
+                }
+            });
 
         if (beanWrapper != null) {
             builder.with(BUILDER_METHOD_ERRORS, messagesForBeanProperty(beanProperty, ex));
@@ -378,14 +377,13 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     }
 
     private <T> List<? extends FormElement> formElements(Collection<BeanProperty<T, Object>> beanProperties, @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
-        return beanProperties.stream().map(beanProperty -> formElementOfBeanProperty(beanProperty, builderConsumer)).filter(Objects::nonNull).toList();
+        return beanProperties.stream().flatMap(beanProperty -> formElementOfBeanProperty(beanProperty, builderConsumer).stream()).toList();
     }
 
     @Nullable
-    private FormElement formElementOfBeanProperty(@NonNull BeanProperty<?, ?> beanProperty, @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
+    private Optional<? extends FormElement> formElementOfBeanProperty(@NonNull BeanProperty<?, ?> beanProperty, @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
         return formElementClassForBeanProperty(beanProperty)
-                .map(formElementClass -> formElementBuilderForBeanProperty(beanProperty, formElementClass, null, null, builderConsumer).build())
-                        .orElse(null);
+            .map(formElementClass -> formElementBuilderForBeanProperty(beanProperty, formElementClass, null, null, builderConsumer).build());
     }
 
     private <T> Optional<Object> valueForBeanProperty(@Nullable BeanWrapper<T> beanWrapper, BeanProperty<T, ?> beanProperty) {

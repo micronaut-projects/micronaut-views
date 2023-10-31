@@ -37,6 +37,7 @@ public record InputRadioFormElement(@NonNull String name,
                                     boolean required,
                                     @NonNull List<Radio> buttons,
                                     @NonNull Message label) implements InputFormElement {
+
     @Override
     @NonNull
     public String getType() {
@@ -55,12 +56,10 @@ public record InputRadioFormElement(@NonNull String name,
      * An {@link InputRadioFormElement} Builder.
      */
     public static class Builder {
+
         private List<Radio> buttons;
-
         private String name;
-
         private boolean required;
-
         private Message label;
 
         /**

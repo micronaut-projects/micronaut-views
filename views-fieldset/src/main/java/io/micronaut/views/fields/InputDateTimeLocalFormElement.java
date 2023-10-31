@@ -41,7 +41,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputDateTimeLocalFormElement.Builder.class))
 public record InputDateTimeLocalFormElement(@NonNull String name,
-                                            @NonNull String id,
+                                            @Nullable String id,
                                             boolean required,
                                             @Nullable LocalDateTime max,
                                             @Nullable LocalDateTime min,
@@ -50,6 +50,7 @@ public record InputDateTimeLocalFormElement(@NonNull String name,
                                             @Nullable String step,
                                             @Nullable Message label,
                                             @NonNull List<Message> errors) implements InputFormElement, GlobalAttributes, FormElementAttributes {
+
     @Override
     @NonNull
     public String getType() {
@@ -71,20 +72,13 @@ public record InputDateTimeLocalFormElement(@NonNull String name,
     public static class Builder {
 
         private String name;
-
         private String id;
-
         private boolean required;
-
         private LocalDateTime max;
-
         private LocalDateTime min;
-
         private LocalDateTime value;
-
         private String step;
         private List<Message> errors;
-
         private Message label;
 
         /**

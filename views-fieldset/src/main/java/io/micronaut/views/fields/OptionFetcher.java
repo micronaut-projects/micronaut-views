@@ -26,6 +26,7 @@ import java.util.List;
  * @since 4.1.0
  */
 public interface OptionFetcher<T> {
+
     /**
      *
      * @param type The Field Type

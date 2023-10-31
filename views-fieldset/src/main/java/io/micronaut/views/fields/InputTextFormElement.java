@@ -44,7 +44,7 @@ import java.util.List;
  */
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputTextFormElement.Builder.class))
 public record InputTextFormElement(@NonNull String name,
-                                   @NonNull String id,
+                                   @Nullable String id,
                                    @Nullable String placeholder,
                                    boolean required,
                                    boolean readOnly,
@@ -55,6 +55,7 @@ public record InputTextFormElement(@NonNull String name,
                                    @Nullable String value,
                                    @Nullable Message label,
                                    @NonNull List<Message> errors) implements InputFormElement, GlobalAttributes, FormElementAttributes, InputStringFormElement {
+
     @Override
     @NonNull
     public String getType() {
@@ -76,27 +77,16 @@ public record InputTextFormElement(@NonNull String name,
     public static class Builder {
 
         private String name;
-
         private String id;
-
         private String placeholder;
-
         private boolean required;
-
         private boolean readOnly;
-
         private Integer maxLength;
-
         private Integer minLength;
-
         private Integer size;
-
         private String pattern;
-
         private String value;
-
         private List<Message> errors;
-
         private Message label;
 
         /**

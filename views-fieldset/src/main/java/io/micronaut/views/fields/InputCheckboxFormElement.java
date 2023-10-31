@@ -36,6 +36,7 @@ import java.util.List;
 public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes,
                                        @NonNull Message label,
                                        @NonNull List<Message> errors) implements InputFormElement {
+
     @Override
     @NonNull
     public String getType() {
@@ -63,11 +64,10 @@ public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes,
      * Input checkbox builder.
      */
     public static class Builder {
+
         @Nullable
         private List<Checkbox> checkboxes;
-
         private Message label;
-
         private List<Message> errors;
 
         /**

@@ -63,15 +63,11 @@ public record SelectFormElement(@NonNull boolean required,
     public static class Builder {
 
         private boolean required;
-
         @NonNull
         private String name;
-
         @Nullable
         private String id;
-
         private List<Option> options;
-
         private Message label;
 
         private List<Message> errors;
