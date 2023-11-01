@@ -2336,7 +2336,7 @@ val writable = turboStream.render()</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Produces(MediaType.TEXT_HTML)
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Produces(value = {MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM})
 @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
 Map&lt;String, Object&gt; show() {
@@ -2346,7 +2346,7 @@ Map&lt;String, Object&gt; show() {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Produces(MediaType.TEXT_HTML)
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
 @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
 Map&lt;String, Object&gt; show() {
@@ -2356,7 +2356,7 @@ Map&lt;String, Object&gt; show() {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Produces(MediaType.TEXT_HTML)
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
 @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
 fun show(): Map&lt;String, Any&gt; {
