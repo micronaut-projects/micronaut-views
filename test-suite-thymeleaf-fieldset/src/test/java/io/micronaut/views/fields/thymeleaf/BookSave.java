@@ -7,5 +7,5 @@ import jakarta.validation.constraints.NotNull;
 
 @Serdeable
 public record BookSave(@NotBlank String title,
-                   @Min(1) @NotNull Integer pages) {
+                       @Min(1) @NotNull Integer pages) {
 }

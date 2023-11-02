@@ -24,17 +24,16 @@ include::{testssuitefieldsetthymeleaf}/java/io/micronaut/views/fields/thymeleaf/
 
 NOTE: The field types and the validation annotations in the previous code sample influence the form generation.
 
-Thanks to the form generation API, you could create a controller such as:
+Then using the form generation API, create a controller such as:
 
 [source,java]
 ----
 include::{testssuitefieldsetthymeleaf}/java/io/micronaut/views/fields/thymeleaf/BookController.java[tag=clazz]
 ----
 
-https://micronaut.io/launch?features=views-thymeleaf[Micronaut Launch] or the Micronaut Command Line Interface (CLI) generate Thymeleaf fragments to render a form when you select the `views-thymeleaf` feature.
+https://micronaut.io/launch?features=views-thymeleaf[Micronaut Launch] or the Micronaut Command Line Interface (CLI) will generate Thymeleaf fragments to render a form when you select the `views-thymeleaf` feature.
 
 Thanks to those fragments, rendering the form for the `/books/create` route in the previous example is really simple:
-
 
 [source,html]
 .src/main/resources/views/books/create.html
