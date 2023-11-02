@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout :: layout(~{::title},~{::script},~{::main})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <script></script>
+</head>
+<body>
+<main>
+    <ul th:each="book : ${books}">
+       <li><span th:text="${book.title()}"></span><span th:text="${book.pages()}"></span></li>
+    </ul>
+</main>
+</body>
+</html>

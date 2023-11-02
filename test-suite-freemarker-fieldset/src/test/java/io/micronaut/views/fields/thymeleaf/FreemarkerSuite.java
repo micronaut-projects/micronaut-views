@@ -1,4 +1,4 @@
-package io.micronaut.views.fields.rocker;
+package io.micronaut.views.fields.thymeleaf;
 
 import org.junit.platform.suite.api.IncludeClassNamePatterns;
 import org.junit.platform.suite.api.SelectPackages;
