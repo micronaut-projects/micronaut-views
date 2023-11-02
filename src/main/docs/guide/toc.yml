@@ -25,6 +25,9 @@ views:
   model:
     title: Working with Models
     custom: Dynamically Enriching Models
+  fieldset:
+    title: Fieldset Generation
+    fieldsetExample: Form Generation Example
   turbo:
     title: Turbo
     turboFrameView: TurboFrameView annotation
@@ -33,7 +36,6 @@ views:
     turboView: TurboView Annotation
     turboStreamContentType: Turbo Stream Media Type
     turboStreamTemplate: Turbo Streams with Templates
-  fieldset: Fieldset Generation
   security:
     title: Security
     csp: Content Security Policy
