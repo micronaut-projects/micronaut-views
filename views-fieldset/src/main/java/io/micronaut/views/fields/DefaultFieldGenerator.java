@@ -68,6 +68,9 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private static final String MEMBER_FETCHER = "fetcher";
     private static final String BUILDER_METHOD_BUTTONS = "buttons";
     private static final String BUILDER_METHOD_MIN = "min";
+    private static final String BUILDER_METHOD_MAX = "max";
+    private static final String BUILDER_METHOD_MAX_LENGTH = "maxLength";
+    private static final String BUILDER_METHOD_MIN_LENGTH = "minLength";
 
     private static final Map<Class<? extends Annotation>, Class<? extends FormElement>> ANNOTATION_MAPPING = Map.ofEntries(
         Map.entry(InputHidden.class, InputHiddenFormElement.class),
@@ -82,6 +85,8 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         Map.entry(Textarea.class, TextareaFormElement.class),
         Map.entry(TrixEditor.class, TrixEditorFormElement.class)
     );
+    private static final String MEMBER_MIN = "min";
+    private static final String MEMBER_MAX = "max";
 
     private final EnumOptionFetcher<?> enumOptionFetcher;
 
@@ -337,24 +342,50 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
             builder.with(BUILDER_METHOD_ERRORS, messagesForBeanProperty(beanProperty, ex));
         }
         minForBeanProperty(beanProperty).ifPresent(min -> builder.with(BUILDER_METHOD_MIN, min));
+        maxForBeanProperty(beanProperty).ifPresent(max -> builder.with(BUILDER_METHOD_MAX, max));
+        minLengthForBeanProperty(beanProperty).ifPresent(min -> builder.with(BUILDER_METHOD_MIN_LENGTH, min));
+        maxLengthForBeanProperty(beanProperty).ifPresent(max -> builder.with(BUILDER_METHOD_MAX_LENGTH, max));
         if (builderConsumer != null) {
             builderConsumer.accept(beanProperty.getName(), builder);
         }
         return builder;
     }
 
+    /**
+     * Returns a max value for the bean property.
+     * For example, if the bean property is annotated with {@link Max} the value of the Max annotation is returned by this method.
+     * @param beanProperty The Bean Property
+     * @return max value if any.
+     */
+    private Optional<Object> maxForBeanProperty(BeanProperty<?, ?> beanProperty) {
+        return annotationValueForBeanProperty(beanProperty, Max.class);
+    }
+
     private Optional<Object> minForBeanProperty(BeanProperty<?, ?> beanProperty) {
         if (beanProperty.hasAnnotation(Positive.class)) {
             return Optional.of(1);
         }
-        if (beanProperty.hasAnnotation(Min.class)) {
-            AnnotationValue<Min> ann = beanProperty.getAnnotation(Min.class);
-            OptionalLong optionalLong = ann.longValue();
-            if (optionalLong.isPresent()) {
-                return Optional.of(optionalLong.getAsLong());
-            }
-        }
-        return Optional.empty();
+        return annotationValueForBeanProperty(beanProperty, Min.class);
+    }
+
+    /**
+     * Returns a  min Length value for the bean property.
+     * For example, if the bean property is annotated with {@link Size} the value of the member {@link Size#min()} is returned by this method.
+     * @param beanProperty The Bean Property
+     * @return min length value if any.
+     */
+    private Optional<Object> minLengthForBeanProperty(BeanProperty<?, ?> beanProperty) {
+        return annotationValueForBeanProperty(beanProperty, Size.class, MEMBER_MIN);
+    }
+
+    /**
+     * Returns a  max Length value for the bean property.
+     * For example, if the bean property is annotated with {@link Size} the value of the member {@link Size#max()} is returned by this method.
+     * @param beanProperty The Bean Property
+     * @return max length value if any.
+     */
+    private Optional<Object> maxLengthForBeanProperty(BeanProperty<?, ?> beanProperty) {
+        return annotationValueForBeanProperty(beanProperty, Size.class, MEMBER_MAX);
     }
 
     private Message labelForBeanProperty(BeanProperty<?, ?> beanProperty) {
@@ -410,5 +441,30 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     @NonNull
     private String idForBeanProperty(@NonNull BeanProperty<?, ?> beanProperty) {
         return beanProperty.getName();
+    }
+
+    private Optional<Object> annotationValueForBeanProperty(@NonNull BeanProperty<?, ?> beanProperty,
+                                                            @NonNull Class<? extends Annotation> annotation) {
+        if (beanProperty.hasAnnotation(annotation)) {
+            AnnotationValue<?> ann = beanProperty.getAnnotation(annotation);
+            OptionalLong optionalLong = ann.longValue();
+            if (optionalLong.isPresent()) {
+                return Optional.of(optionalLong.getAsLong());
+            }
+        }
+        return Optional.empty();
+    }
+
+    private Optional<Object> annotationValueForBeanProperty(@NonNull BeanProperty<?, ?> beanProperty,
+                                                            @NonNull Class<? extends Annotation> annotation,
+                                                            @NonNull String member) {
+        if (beanProperty.hasAnnotation(annotation)) {
+            AnnotationValue<?> ann = beanProperty.getAnnotation(annotation);
+            OptionalInt optionalInt = ann.intValue(member);
+            if (optionalInt.isPresent()) {
+                return Optional.of(optionalInt.getAsInt());
+            }
+        }
+        return Optional.empty();
     }
 }

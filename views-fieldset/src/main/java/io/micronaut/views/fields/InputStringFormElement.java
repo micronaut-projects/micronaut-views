@@ -65,14 +65,14 @@ public interface InputStringFormElement {
      * @return The maximum string length that the user can enter into the text input.
      */
     @Nullable
-    Integer maxLength();
+    Number maxLength();
 
     /**
      *
      * @return The minimum string length that the user can enter into the text input.
      */
     @Nullable
-    Integer minLength();
+    Number minLength();
 
     /**
      *

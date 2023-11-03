@@ -30,7 +30,7 @@ class BookControllerTest {
 
         html = assertDoesNotThrow(() -> client.retrieve(htmlGet("/books/create")));
         assertTrue(html.contains("""
-                <form action="/books/save" method="post"><div class="mb-3"><label for="title" class="form-label">Title</label><input type="text" name="title" value="" id="title" class="form-control" required="required"/></div><div class="mb-3"><label for="pages" class="form-label">Pages</label><input type="number" name="pages" value="" id="pages" min="1" class="form-control" required="required"/></div><input type="submit" value="Submit" class="btn btn-primary"/></form>"""));
+                <form action="/books/save" method="post"><div class="mb-3"><label for="title" class="form-label">Title</label><input type="text" name="title" value="" id="title" minlength="2" maxlength="255" class="form-control" required="required"/></div><div class="mb-3"><label for="pages" class="form-label">Pages</label><input type="number" name="pages" value="" id="pages" min="1" max="21450" class="form-control" required="required"/></div><input type="submit" value="Submit" class="btn btn-primary"/></form>"""));
         assertFalse(html.contains("<li>"));
 
         html = assertDoesNotThrow(() -> client.retrieve(formPost("/books/save", "title=Building Microservices&pages=120")));
