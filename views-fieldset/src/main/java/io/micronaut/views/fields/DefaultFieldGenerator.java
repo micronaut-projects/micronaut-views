@@ -38,21 +38,13 @@ import jakarta.annotation.Nonnull;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 
 import java.lang.annotation.Annotation;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
@@ -354,6 +346,13 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private Optional<Object> minForBeanProperty(BeanProperty<?, ?> beanProperty) {
         if (beanProperty.hasAnnotation(Positive.class)) {
             return Optional.of(1);
+        }
+        if (beanProperty.hasAnnotation(Min.class)) {
+            AnnotationValue<Min> ann = beanProperty.getAnnotation(Min.class);
+            OptionalLong optionalLong = ann.longValue();
+            if (optionalLong.isPresent()) {
+                return Optional.of(optionalLong.getAsLong());
+            }
         }
         return Optional.empty();
     }

@@ -9,7 +9,7 @@ Imagine, you want to create an application which displays a form such as:
     </div>
     <div class="mb-3">
         <label for="pages" class="form-label">Pages</label>
-        <input type="number" name="pages" value="" id="pages" class="form-control" required="required"/>
+        <input type="number" name="pages" value="" id="pages" min="1" class="form-control" required="required"/>
     </div>
     <input type="submit" value="Submit" class="btn btn-primary"/>
 </form>

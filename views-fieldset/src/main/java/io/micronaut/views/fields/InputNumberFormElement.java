@@ -83,7 +83,7 @@ public record InputNumberFormElement(@NonNull String name,
         @Nullable
         private Number max;
         @Nullable
-        private Integer min;
+        private Number min;
         @Nullable
         private String placeholder;
         @Nullable
@@ -165,7 +165,7 @@ public record InputNumberFormElement(@NonNull String name,
          * @return The Builder
          */
         @NonNull
-        public Builder min(@Nullable Integer min) {
+        public Builder min(@Nullable Number min) {
             this.min = min;
             return this;
         }
