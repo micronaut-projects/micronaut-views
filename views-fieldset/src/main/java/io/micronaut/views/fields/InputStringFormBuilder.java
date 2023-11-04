@@ -35,8 +35,8 @@ public abstract class InputStringFormBuilder<T extends InputStringFormElement, S
     protected String placeholder;
     protected boolean required;
     protected boolean readOnly;
-    protected Integer maxLength;
-    protected Integer minLength;
+    protected Number maxLength;
+    protected Number minLength;
     protected Integer size;
     protected String pattern;
     protected String value;
@@ -93,7 +93,7 @@ public abstract class InputStringFormBuilder<T extends InputStringFormElement, S
      * @return The Builder
      */
     @NonNull
-    public SELF maxLength(@NonNull Integer maxLength) {
+    public SELF maxLength(@NonNull Number maxLength) {
         this.maxLength = maxLength;
         return self();
     }
@@ -104,7 +104,7 @@ public abstract class InputStringFormBuilder<T extends InputStringFormElement, S
      * @return The Builder
      */
     @NonNull
-    public SELF minLength(@NonNull Integer minLength) {
+    public SELF minLength(@NonNull Number minLength) {
         this.minLength = minLength;
         return self();
     }

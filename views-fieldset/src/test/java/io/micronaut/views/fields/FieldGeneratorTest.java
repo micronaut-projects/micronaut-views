@@ -41,6 +41,7 @@ class FieldGeneratorTest  {
         List<? extends FormElement> fields = fieldset.fields();
         assertTrue(fields.stream().anyMatch(f -> f.equals(InputEmailFormElement.builder().name("email")
                 .id("email")
+                .maxLength(255)
                 .label(Message.of("Email", "contactrecordvalidationannotations.email"))
                 .required(true)
                 .value(email)
@@ -130,11 +131,12 @@ class FieldGeneratorTest  {
             .build().equals(f)));
 
         assertTrue(fields.stream().anyMatch(f -> InputEmailFormElement.builder()
-            .name("email")
-            .label(Message.of("Email", "contactrecordvalidationannotations.email"))
-            .id("email")
-            .required(true)
-            .build().equals(f)));
+                .name("email")
+                .label(Message.of("Email", "contactrecordvalidationannotations.email"))
+                .id("email")
+                .maxLength(255)
+                .required(true)
+                .build().equals(f)));
     }
 
     @Test
@@ -164,11 +166,12 @@ class FieldGeneratorTest  {
             .build().equals(f)));
 
         assertTrue(fields.stream().anyMatch(f -> InputEmailFormElement.builder()
-            .name("email")
-            .label(Message.of("Email", "contactrecordvalidationannotations.email"))
-            .id("email")
-            .required(true)
-            .build().equals(f)));
+                .name("email")
+                .label(Message.of("Email", "contactrecordvalidationannotations.email"))
+                .id("email")
+                .maxLength(255)
+                .required(true)
+                .build().equals(f)));
     }
 
     @Test
@@ -195,6 +198,7 @@ class FieldGeneratorTest  {
 
         FormElement expectedEmail = InputEmailFormElement.builder().name("email")
             .id("email")
+                .maxLength(255)
             .label(Message.of("Email", "contactrecordvalidationannotations.email"))
             .required(true)
             .value("notanemail")
