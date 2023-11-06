@@ -38,4 +38,11 @@ public interface FormElementRendererConfiguration {
      */
     @Nullable
     String getOption();
+
+    /**
+     *
+     * @return The view name to render a textarea html element.
+     */
+    @Nullable
+    String getTextarea();
 }

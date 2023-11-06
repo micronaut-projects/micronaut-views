@@ -32,9 +32,24 @@ public class FormElementRendererConfigurationProperties implements FormElementRe
 
     private String option;
 
+    private String textarea;
+
     @Override
     public String getOption() {
         return option;
+    }
+
+    /**
+     * The view name to render a textarea html element.
+     * @param textarea The view name to render a textarea html element.
+     */
+    public void setTextarea(String textarea) {
+        this.textarea = textarea;
+    }
+
+    @Override
+    public String getTextarea() {
+        return textarea;
     }
 
     /**
