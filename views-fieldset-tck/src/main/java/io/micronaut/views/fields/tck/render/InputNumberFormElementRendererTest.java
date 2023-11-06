@@ -31,7 +31,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.input-number", value = "fieldset/inputnumber.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class InputNumberFormElementRendererTest {
+
     @Inject
     FormElementRenderer<InputNumberFormElement> renderer;
 
@@ -46,7 +51,8 @@ class InputNumberFormElementRendererTest {
             .max(100)
             .build();
         assertEquals("""
-            <label for="tentacles" class="form-label">Number of tentacles (10-100):</label><input type="number" name="tentacles" value="" id="tentacles" min="10" max="100" class="form-control"/>""",
+            <label for="tentacles" class="form-label">Number of tentacles (10-100):</label>\
+            <input type="number" name="tentacles" value="" id="tentacles" min="10" max="100" class="form-control"/>""",
             renderer.render(el, Locale.ENGLISH)
         );
     }

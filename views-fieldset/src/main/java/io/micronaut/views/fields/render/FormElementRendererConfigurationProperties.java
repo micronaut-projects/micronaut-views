@@ -276,7 +276,6 @@ public class FormElementRendererConfigurationProperties implements FormElementRe
         this.textarea = textarea;
     }
 
-
     @Override
     @Nullable
     public String getTrixEditor() {

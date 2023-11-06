@@ -31,7 +31,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.input-email", value = "fieldset/inputemail.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class InputEmailFormElementRendererTest {
+
     @Inject
     FormElementRenderer<InputEmailFormElement> renderer;
 
@@ -47,7 +52,8 @@ class InputEmailFormElementRendererTest {
             .label(Message.of("Enter your globex.com email:", null))
             .build();
         assertEquals("""
-            <label for="email" class="form-label">Enter your globex.com email:</label><input type="email" name="email" value="" id="email" pattern=".+@globex\\.com" size="30" class="form-control" required="required"/>""",
+            <label for="email" class="form-label">Enter your globex.com email:</label>\
+            <input type="email" name="email" value="" id="email" pattern=".+@globex\\.com" size="30" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)
         );
         assertFalse(el.hasErrors());

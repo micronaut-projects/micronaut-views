@@ -31,7 +31,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Property(name = "micronaut.views.form-element-views.input-date", value = "fieldset/inputdate.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class InputDateFormElementRendererTest {
+
     @Inject
     FormElementRenderer<InputDateFormElement> renderer;
 
@@ -47,7 +52,8 @@ class InputDateFormElementRendererTest {
             .value(LocalDate.of(2018, 7, 22))
             .build();
         assertEquals("""
-            <label for="start" class="form-label">Start date:</label><input type="date" name="trip-start" value="2018-07-22" id="start" min="2018-01-01" max="2018-12-31" class="form-control"/>""",
+            <label for="start" class="form-label">Start date:</label>\
+            <input type="date" name="trip-start" value="2018-07-22" id="start" min="2018-01-01" max="2018-12-31" class="form-control"/>""",
             renderer.render(el, Locale.ENGLISH)
         );
     }

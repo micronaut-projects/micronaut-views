@@ -31,7 +31,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.input-text", value = "fieldset/inputtext.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class InputTextFormElementRendererTest {
+
     @Inject
     FormElementRenderer<InputTextFormElement> renderer;
 
@@ -48,7 +53,8 @@ class InputTextFormElementRendererTest {
             .label(Message.of("Name (4 to 8 characters):", null))
             .build();
         assertEquals("""
-            <label for="name" class="form-label">Name (4 to 8 characters):</label><input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>""",
+            <label for="name" class="form-label">Name (4 to 8 characters):</label>\
+            <input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)
         );
     }

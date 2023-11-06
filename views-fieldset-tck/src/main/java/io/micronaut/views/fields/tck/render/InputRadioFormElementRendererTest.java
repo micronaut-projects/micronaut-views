@@ -33,7 +33,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.input-radio", value = "fieldset/inputradios.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class InputRadioFormElementRendererTest {
+
     @Inject
     FormElementRenderer<InputRadioFormElement> renderer;
 

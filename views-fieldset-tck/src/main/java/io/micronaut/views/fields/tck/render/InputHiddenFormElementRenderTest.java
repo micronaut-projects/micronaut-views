@@ -30,7 +30,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.input-hidden", value = "fieldset/inputhidden.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813", // As are field injections
+    "java:S5663"  // Single line Html in block strings are much easier to read
+})
 class InputHiddenFormElementRenderTest {
+
     @Inject
     FormElementRenderer<InputHiddenFormElement> renderer;
 

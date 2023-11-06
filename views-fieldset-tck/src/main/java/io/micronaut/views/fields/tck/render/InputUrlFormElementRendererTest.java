@@ -31,7 +31,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.input-url", value = "fieldset/inputurl.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class InputUrlFormElementRendererTest {
+
     @Inject
     FormElementRenderer<InputUrlFormElement> renderer;
 
@@ -48,7 +53,8 @@ class InputUrlFormElementRendererTest {
             .label(Message.of("Enter an https:// URL:", null))
             .build();
         assertEquals("""
-            <label for="url" class="form-label">Enter an https:// URL:</label><input type="url" name="url" value="" id="url" placeholder="https://example.com" pattern="https://.*" size="30" class="form-control" required="required"/>""",
+            <label for="url" class="form-label">Enter an https:// URL:</label>\
+            <input type="url" name="url" value="" id="url" placeholder="https://example.com" pattern="https://.*" size="30" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)
         );
         assertFalse(el.hasErrors());

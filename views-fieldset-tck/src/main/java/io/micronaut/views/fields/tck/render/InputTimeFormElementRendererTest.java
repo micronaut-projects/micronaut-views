@@ -32,7 +32,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.input-time", value = "fieldset/inputtime.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class InputTimeFormElementRendererTest {
+
     @Inject
     FormElementRenderer<InputTimeFormElement> renderer;
 
@@ -47,6 +52,10 @@ class InputTimeFormElementRendererTest {
             .max(LocalTime.of(18, 0))
             .value(LocalTime.of(10, 0))
             .build();
-        assertEquals("<label for=\"meeting-time\" class=\"form-label\">Choose a time for your appointment:</label><input type=\"time\" name=\"meeting-time\" value=\"10:00\" id=\"meeting-time\" min=\"09:00\" max=\"18:00\" class=\"form-control\"/>", renderer.render(el, Locale.ENGLISH));
+        assertEquals("""
+                <label for="meeting-time" class="form-label">Choose a time for your appointment:</label>\
+                <input type="time" name="meeting-time" value="10:00" id="meeting-time" min="09:00" max="18:00" class="form-control"/>""",
+            renderer.render(el, Locale.ENGLISH)
+        );
     }
 }

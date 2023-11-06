@@ -33,7 +33,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.input-checkbox", value = "fieldset/inputcheckbox.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class InputCheckboxFormElementRendererTest {
+
     @Inject
     FormElementRenderer<InputCheckboxFormElement> renderer;
 

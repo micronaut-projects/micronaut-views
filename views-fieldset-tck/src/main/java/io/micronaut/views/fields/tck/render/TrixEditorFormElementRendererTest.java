@@ -31,7 +31,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.trix-editor", value = "fieldset/trixeditor.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class TrixEditorFormElementRendererTest {
+
     @Inject
     FormElementRenderer<TrixEditorFormElement> renderer;
 
@@ -45,7 +50,8 @@ class TrixEditorFormElementRendererTest {
             .label(Message.of("Tell us your story:", null))
             .build();
         assertEquals("""
-            <label for="x" class="form-label">Tell us your story:</label><input type="hidden" name="content" value="Editor content goes here" id="x"/><trix-editor input="x"></trix-editor>""",
+            <label for="x" class="form-label">Tell us your story:</label>\
+            <input type="hidden" name="content" value="Editor content goes here" id="x"/><trix-editor input="x"></trix-editor>""",
             renderer.render(el, Locale.ENGLISH)
         );
     }

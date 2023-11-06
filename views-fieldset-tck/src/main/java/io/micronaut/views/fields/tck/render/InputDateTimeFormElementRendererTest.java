@@ -32,7 +32,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.input-date-time-local", value = "fieldset/inputdatetimelocal.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class InputDateTimeFormElementRendererTest {
+
     @Inject
     FormElementRenderer<InputDateTimeLocalFormElement> renderer;
 
@@ -48,7 +53,8 @@ class InputDateTimeFormElementRendererTest {
             .value(LocalDateTime.of(2018, 6, 12, 19, 30))
             .build();
         assertEquals("""
-            <label for="meeting-time" class="form-label">Choose a time for your appointment:</label><input type="datetime-local" name="meeting-time" value="2018-06-12T19:30" id="meeting-time" min="2018-06-07T00:00" max="2018-06-14T00:00" class="form-control"/>""",
+            <label for="meeting-time" class="form-label">Choose a time for your appointment:</label>\
+            <input type="datetime-local" name="meeting-time" value="2018-06-12T19:30" id="meeting-time" min="2018-06-07T00:00" max="2018-06-14T00:00" class="form-control"/>""",
             renderer.render(el, Locale.ENGLISH)
         );
     }

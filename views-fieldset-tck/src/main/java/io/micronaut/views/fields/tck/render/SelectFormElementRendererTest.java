@@ -33,7 +33,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.select", value = "fieldset/select.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class SelectFormElementRendererTest {
+
     @Inject
     FormElementRenderer<SelectFormElement> renderer;
 

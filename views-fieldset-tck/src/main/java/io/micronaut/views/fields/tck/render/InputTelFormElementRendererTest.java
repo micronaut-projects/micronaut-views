@@ -31,7 +31,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.input-tel", value = "fieldset/inputtel.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class InputTelFormElementRendererTest {
+
     @Inject
     FormElementRenderer<InputTelFormElement> renderer;
 
@@ -46,7 +51,8 @@ class InputTelFormElementRendererTest {
             .label(Message.of("Enter your phone number:", null))
             .build();
         assertEquals("""
-            <label for="phone" class="form-label">Enter your phone number:</label><input type="tel" name="phone" value="" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" required="required"/>""",
+            <label for="phone" class="form-label">Enter your phone number:</label>\
+            <input type="tel" name="phone" value="" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)
         );
         assertFalse(el.hasErrors());

@@ -31,7 +31,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Property(name = "micronaut.views.form-element-views.input-password", value = "fieldset/inputpassword.html")
 @MicronautTest(startApplication = false)
+@SuppressWarnings({
+    "java:S5960", // Assertions are fine, these are tests
+    "java:S6813"  // As are field injections
+})
 class InputPasswordFormElementRendererTest {
+
     @Inject
     FormElementRenderer<InputPasswordFormElement> renderer;
 
@@ -46,7 +51,8 @@ class InputPasswordFormElementRendererTest {
             .label(Message.of("Password (8 characters minimum):", null))
             .build();
         assertEquals("""
-            <label for="pass" class="form-label">Password (8 characters minimum):</label><input type="password" name="password" value="" id="pass" minlength="8" class="form-control" required="required"/>""",
+            <label for="pass" class="form-label">Password (8 characters minimum):</label>\
+            <input type="password" name="password" value="" id="pass" minlength="8" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)
         );
     }
