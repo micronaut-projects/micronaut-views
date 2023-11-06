@@ -17,6 +17,7 @@ package io.micronaut.views.fields;
 
 import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.beans.BeanIntrospection;
@@ -54,6 +55,7 @@ import java.util.function.BiConsumer;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Internal
 @Singleton
 public class DefaultFieldGenerator implements FieldsetGenerator {
     private static final String BUILDER_METHOD_NAME = "name";

@@ -15,6 +15,8 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 
 import java.util.List;
@@ -28,6 +30,7 @@ import java.util.List;
  * @since 4.1.0
  */
 @SuppressWarnings("java:S119")
+@Experimental
 public abstract class InputStringFormBuilder<T extends InputStringFormElement, SELF extends InputStringFormBuilder<T, SELF>> {
 
     protected String name;

@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.fields.annotations;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.views.fields.CheckboxFetcher;
 import io.micronaut.views.fields.EnumCheckboxFetcher;
 import java.lang.annotation.Documented;
@@ -30,6 +31,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Experimental
 @Documented
 @Retention(RUNTIME)
 @Target({ElementType.FIELD})

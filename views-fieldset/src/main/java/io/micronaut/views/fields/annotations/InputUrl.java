@@ -15,6 +15,8 @@
  */
 package io.micronaut.views.fields.annotations;
 
+import io.micronaut.core.annotation.Experimental;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -26,6 +28,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * Annotation to specify a field is an url input.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url">Input URL</a>
  */
+@Experimental
 @Documented
 @Retention(RUNTIME)
 @Target({ElementType.FIELD})
