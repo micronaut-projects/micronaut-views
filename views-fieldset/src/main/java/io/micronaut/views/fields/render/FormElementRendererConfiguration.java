@@ -25,40 +25,13 @@ import io.micronaut.core.annotation.Nullable;
  */
 @DefaultImplementation(FormElementRendererConfigurationProperties.class)
 public interface FormElementRendererConfiguration {
-    /**
-     *
-     * @return The view name for a field of type input hidden.
-     */
-    @Nullable
-    String getInputHidden();
 
     /**
      *
-     * @return The view name for a field of type input password.
+     * @return The view name for a field of type input checkbox.
      */
     @Nullable
-    String getInputPassword();
-
-    /**
-     *
-     * @return The view name for a field of type input tel.
-     */
-    @Nullable
-    String getInputTel();
-
-    /**
-     *
-     * @return The view name for a field of type input number.
-     */
-    @Nullable
-    String getInputNumber();
-
-    /**
-     *
-     * @return The view name for a field of type input text.
-     */
-    @Nullable
-    String getInputText();
+    String getInputCheckbox();
 
     /**
      *
@@ -76,6 +49,62 @@ public interface FormElementRendererConfiguration {
 
     /**
      *
+     * @return The view name for a field of type input email.
+     */
+    @Nullable
+    String getInputEmail();
+
+    /**
+     *
+     * @return The view name for a field of type input hidden.
+     */
+    @Nullable
+    String getInputHidden();
+
+    /**
+     *
+     * @return The view name for a field of type input number.
+     */
+    @Nullable
+    String getInputNumber();
+
+    /**
+     *
+     * @return The view name for a field of type input password.
+     */
+    @Nullable
+    String getInputPassword();
+
+    /**
+     *
+     * @return The view name for a field of type input radio.
+     */
+    @Nullable
+    String getInputRadio();
+
+    /**
+     *
+     * @return The view name for a field of type input submit.
+     */
+    @Nullable
+    String getInputSubmit();
+
+    /**
+     *
+     * @return The view name for a field of type input tel.
+     */
+    @Nullable
+    String getInputTel();
+
+    /**
+     *
+     * @return The view name for a field of type input text.
+     */
+    @Nullable
+    String getInputText();
+
+    /**
+     *
      * @return The view name for a field of type input time.
      */
     @Nullable
@@ -90,17 +119,17 @@ public interface FormElementRendererConfiguration {
 
     /**
      *
-     * @return The view name for a field of type select.
-     */
-    @Nullable
-    String getSelect();
-
-    /**
-     *
      * @return The view name to render an option html element.
      */
     @Nullable
     String getOption();
+
+    /**
+     *
+     * @return The view name for a field of type select.
+     */
+    @Nullable
+    String getSelect();
 
     /**
      *
@@ -111,36 +140,8 @@ public interface FormElementRendererConfiguration {
 
     /**
      *
-     * @return The view name for a field of type input email.
-     */
-    @Nullable
-    String getInputEmail();
-
-    /**
-     *
-     * @return The view name for a field of type input submit.
-     */
-    @Nullable
-    String getInputSubmit();
-
-    /**
-     *
      * @return The view name for a field of type trix-editor.
      */
     @Nullable
     String getTrixEditor();
-
-    /**
-     *
-     * @return The view name for a field of type input radio.
-     */
-    @Nullable
-    String getInputRadio();
-
-    /**
-     *
-     * @return The view name for a field of type input checkbox.
-     */
-    @Nullable
-    String getInputCheckbox();
 }
