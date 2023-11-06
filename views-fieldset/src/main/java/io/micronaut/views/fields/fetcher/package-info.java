@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * API to fetch elemtns for option, radio buttons and checkboxes.
+ * API to fetch elements for option, radio buttons and checkboxes.
  * Used in combination with the {@link io.micronaut.views.fields.annotations.InputCheckbox}, {@link io.micronaut.views.fields.annotations.InputRadio} and {@link io.micronaut.views.fields.annotations.Select} annotations.
  * @author Sergio del Amo
  * @since 4.1.0
