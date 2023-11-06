@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.fields.render;
+package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -26,6 +27,7 @@ import io.micronaut.core.annotation.Nullable;
  * @param key HTML Attribute Key. e.g. `checked`
  * @param value HTML attribute value. for example for `name="firstName"` `name` is the key and `firstName` is the value
  */
+@Experimental
 @Introspected
 public record HtmlAttribute(@NonNull String key, @Nullable String value) {
     @Override

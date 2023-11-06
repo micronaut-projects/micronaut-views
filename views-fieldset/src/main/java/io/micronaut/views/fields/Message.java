@@ -15,15 +15,32 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 
 /**
- * Message representation.
+ * Message representation. It features an optional {@link Message#code()} to allow localization.
  * @author Sergio del Amo
  * @since 4.1.0
  */
-public interface Message {
+@Experimental
+public interface Message extends Comparable<Message> {
+
+    @Override
+    default int compareTo(Message o) {
+        int compare = defaultMessage().compareTo(o.defaultMessage());
+        if (compare != 0) {
+            return compare;
+        }
+        if (this.code() == null && o.code() != null) {
+            return -1;
+        }
+        if (this.code() != null && o.code() == null) {
+            return 1;
+        }
+        return this.code().compareTo(o.code());
+    }
 
     /**
      *

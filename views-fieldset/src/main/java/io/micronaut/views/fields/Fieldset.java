@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.CollectionUtils;
@@ -30,6 +31,7 @@ import java.util.List;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Experimental
 @Introspected
 public record Fieldset(@NonNull List<? extends FormElement> fields,
                        @NonNull List<Message> errors) {

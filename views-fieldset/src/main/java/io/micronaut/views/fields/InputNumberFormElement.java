@@ -15,10 +15,10 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.views.fields.render.InputType;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +41,7 @@ import java.util.List;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Experimental
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputNumberFormElement.Builder.class))
 public record InputNumberFormElement(@NonNull String name,
                                      @Nullable String id,

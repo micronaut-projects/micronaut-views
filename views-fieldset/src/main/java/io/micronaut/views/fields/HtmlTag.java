@@ -15,11 +15,14 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
+
 /**
  * Constants for HTML Tags.
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Experimental
 public final class HtmlTag {
 
     /**

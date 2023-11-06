@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 
@@ -29,6 +30,7 @@ import io.micronaut.core.annotation.NonNull;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Experimental
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = Option.Builder.class))
 public record Option(boolean disabled,
                      boolean selected,

@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.List;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Experimental
 public interface CheckboxFetcher<T> {
 
     /**

@@ -18,6 +18,7 @@ package io.micronaut.views.fields.render;
 import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.views.fields.Option;
 import jakarta.inject.Singleton;
 

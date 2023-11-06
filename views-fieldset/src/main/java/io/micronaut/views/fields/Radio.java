@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -30,6 +31,7 @@ import io.micronaut.core.annotation.Nullable;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Experimental
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = Radio.Builder.class))
 public record Radio(@NonNull String value,
                     @Nullable String id,

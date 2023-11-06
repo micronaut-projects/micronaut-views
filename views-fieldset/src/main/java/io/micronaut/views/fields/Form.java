@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
 
 /**
@@ -25,6 +26,7 @@ import io.micronaut.core.annotation.Introspected;
  * @param method Form Method. For example `post`
  * @param fieldset Form fields
  */
+@Experimental
 @Introspected
 public record Form(String action, String method, Fieldset fieldset) {
 }

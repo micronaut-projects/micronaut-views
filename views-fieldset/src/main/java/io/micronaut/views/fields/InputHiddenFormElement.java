@@ -15,9 +15,9 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.views.fields.render.InputType;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden">input hidden</a>
@@ -27,6 +27,7 @@ import io.micronaut.views.fields.render.InputType;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Experimental
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = InputHiddenFormElement.Builder.class))
 public record InputHiddenFormElement(@NonNull String name,
                                     @NonNull String value) implements InputFormElement {

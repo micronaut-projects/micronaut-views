@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 
 /**
@@ -22,7 +23,7 @@ import io.micronaut.core.annotation.NonNull;
  * @author Sergio del Amo
  * @since 4.1.0
  */
-
+@Experimental
 public interface InputFormElement extends FormElement {
 
     @Override

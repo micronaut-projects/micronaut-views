@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
@@ -32,6 +33,7 @@ import java.util.List;
  * @since 4.1.0
  * @param <T> Field type
  */
+@Experimental
 @Singleton
 public class EnumCheckboxFetcher<T> implements CheckboxFetcher<T> {
     private static final Logger LOG = LoggerFactory.getLogger(EnumCheckboxFetcher.class);

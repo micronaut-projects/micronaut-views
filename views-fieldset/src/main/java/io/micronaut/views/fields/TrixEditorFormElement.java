@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -34,6 +35,7 @@ import java.util.List;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Experimental
 @Introspected(builder = @Introspected.IntrospectionBuilder(builderClass = TrixEditorFormElement.Builder.class))
 public record TrixEditorFormElement(@NonNull String name,
                                     @Nullable String id,

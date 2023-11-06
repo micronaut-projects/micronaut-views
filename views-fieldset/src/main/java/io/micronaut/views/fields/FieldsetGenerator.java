@@ -16,6 +16,7 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.context.annotation.DefaultImplementation;
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.beans.BeanIntrospection;
 import jakarta.validation.ConstraintViolationException;
@@ -27,6 +28,7 @@ import java.util.function.BiConsumer;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Experimental
 @DefaultImplementation(DefaultFieldGenerator.class)
 public interface FieldsetGenerator {
 

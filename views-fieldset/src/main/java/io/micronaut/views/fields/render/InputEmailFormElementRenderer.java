@@ -24,7 +24,7 @@ import jakarta.inject.Singleton;
 import java.util.Locale;
 
 import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
-import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_EMAIL;
+import static io.micronaut.views.fields.InputType.ATTR_TYPE_EMAIL;
 
 /**
  * {@link FormElementRenderer} implementation of {@link InputEmailFormElement}.

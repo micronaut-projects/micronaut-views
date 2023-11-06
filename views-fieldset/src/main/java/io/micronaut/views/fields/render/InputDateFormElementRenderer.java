@@ -18,13 +18,14 @@ package io.micronaut.views.fields.render;
 import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.views.fields.InputDateFormElement;
 import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.Locale;
 
 import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
-import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_DATE;
+import static io.micronaut.views.fields.InputType.ATTR_TYPE_DATE;
 
 /**
  * {@link FormElementRenderer} implementation of {@link InputDateFormElement}.
