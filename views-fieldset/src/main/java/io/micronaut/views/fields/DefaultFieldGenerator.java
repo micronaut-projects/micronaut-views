@@ -160,6 +160,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
                 errors.add(new ConstraintViolationMessage(constraintViolation));
             }
         }
+        Collections.sort(errors);
         return new Fieldset(fields, errors);
     }
 
@@ -401,7 +402,8 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
                     Optional<String> lastNodeOptional = ConstraintViolationUtils.lastNode(violation);
                     return lastNodeOptional.isPresent() && lastNodeOptional.get().equals(beanProperty.getName());
                 }).map(ConstraintViolationMessage::new)
-                .toList();
+                    .sorted()
+                    .toList();
         }
         return Collections.emptyList();
     }
