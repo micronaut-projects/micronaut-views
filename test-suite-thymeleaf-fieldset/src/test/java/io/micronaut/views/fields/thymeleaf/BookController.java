@@ -1,9 +1,13 @@
 package io.micronaut.views.fields.thymeleaf;
 
-import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Consumes;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.uri.UriBuilder;
 import io.micronaut.views.View;
 import io.micronaut.views.fields.FormGenerator;

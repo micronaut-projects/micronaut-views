@@ -1,7 +1,6 @@
 package io.micronaut.views.fields.thymeleaf;
 
 import io.micronaut.context.annotation.Property;
-import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.client.BlockingHttpClient;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
@@ -11,7 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import static io.micronaut.views.fields.thymeleaf.TestUtils.formPost;
 import static io.micronaut.views.fields.thymeleaf.TestUtils.htmlGet;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Property(name = "datasources.default.password", value = "")
 @Property(name = "datasources.default.dialect", value = "H2")
