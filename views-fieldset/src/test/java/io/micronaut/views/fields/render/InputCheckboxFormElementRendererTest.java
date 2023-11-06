@@ -4,6 +4,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.Checkbox;
 import io.micronaut.views.fields.InputCheckboxFormElement;
 import io.micronaut.views.fields.Message;
+import io.micronaut.views.fields.render.secondary.InputCheckboxFormElementRenderer;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

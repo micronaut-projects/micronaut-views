@@ -5,6 +5,7 @@ import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.InputEmailFormElement;
 import io.micronaut.views.fields.InputType;
 import io.micronaut.views.fields.Message;
+import io.micronaut.views.fields.render.secondary.InputEmailFormElementRenderer;
 import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
