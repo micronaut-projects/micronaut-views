@@ -2,7 +2,13 @@ package io.micronaut.views.fields.formsexamples;
 
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.*;
+import io.micronaut.views.fields.Fieldset;
+import io.micronaut.views.fields.FieldsetGenerator;
+import io.micronaut.views.fields.InputRadioFormElement;
+import io.micronaut.views.fields.InputTextFormElement;
+import io.micronaut.views.fields.Message;
+import io.micronaut.views.fields.Radio;
+import io.micronaut.views.fields.SimpleMessage;
 import io.micronaut.views.fields.annotations.InputRadio;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,8 +16,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
 import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @MicronautTest(startApplication = false)
 class EnumAsRadioButtonTest {
@@ -26,8 +35,8 @@ class EnumAsRadioButtonTest {
         Fieldset fieldset = fieldsetGenerator.generate(EventCreateForm.class);
         assertNotNull(fieldset);
         assertEquals(2, fieldset.fields().size());
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputTextFormElement));
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputRadioFormElement));
+        assertAnyInstance(fieldset.fields(), InputTextFormElement.class);
+        assertAnyInstance(fieldset.fields(), InputRadioFormElement.class);
 
         InputRadioFormElement genreExpectation = genreExpectation().build();
         assertTrue(assertFormElement(fieldset, genreExpectation));

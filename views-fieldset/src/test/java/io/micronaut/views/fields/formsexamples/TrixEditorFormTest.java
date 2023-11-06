@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
+import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
 import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,7 +32,7 @@ class TrixEditorFormTest {
         Fieldset fieldset = fieldsetGenerator.generate(AnswerSave.class);
         assertNotNull(fieldset);
         assertEquals(1, fieldset.fields().size());
-        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof TrixEditorFormElement));
+        assertAnyInstance(fieldset.fields(), TrixEditorFormElement.class);
         TrixEditorFormElement formElement = trixEditorExpectation().build();
         assertTrue(assertFormElement(fieldset, formElement));
 
@@ -40,7 +41,7 @@ class TrixEditorFormTest {
         fieldset = fieldsetGenerator.generate(valid);
         assertNotNull(fieldset);
         assertEquals(1, fieldset.fields().size());
-        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof TrixEditorFormElement));
+        assertAnyInstance(fieldset.fields(), TrixEditorFormElement.class);
         formElement = trixEditorExpectation().value(value).build();
         assertTrue(assertFormElement(fieldset, formElement));
 
@@ -49,7 +50,7 @@ class TrixEditorFormTest {
         fieldset = fieldsetGenerator.generate(invalid, ex);
         assertNotNull(fieldset);
         assertEquals(1, fieldset.fields().size());
-        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof TrixEditorFormElement));
+        assertAnyInstance(fieldset.fields(), TrixEditorFormElement.class);
 
         formElement = trixEditorExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "answersave.content.notblank"))).build();
         assertTrue(assertFormElement(fieldset, formElement));
