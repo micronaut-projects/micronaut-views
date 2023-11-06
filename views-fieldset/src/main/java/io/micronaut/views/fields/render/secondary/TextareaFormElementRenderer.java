@@ -19,7 +19,7 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.views.fields.TextareaFormElement;
+import io.micronaut.views.fields.elements.TextareaFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
 

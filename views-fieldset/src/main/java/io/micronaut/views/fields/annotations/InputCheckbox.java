@@ -16,8 +16,8 @@
 package io.micronaut.views.fields.annotations;
 
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.views.fields.CheckboxFetcher;
-import io.micronaut.views.fields.EnumCheckboxFetcher;
+import io.micronaut.views.fields.fetcher.CheckboxFetcher;
+import io.micronaut.views.fields.fetcher.EnumCheckboxFetcher;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

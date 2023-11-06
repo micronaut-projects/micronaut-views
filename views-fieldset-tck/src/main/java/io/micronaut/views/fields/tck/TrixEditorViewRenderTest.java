@@ -17,8 +17,8 @@ package io.micronaut.views.fields.tck;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ViewsRenderer;
-import io.micronaut.views.fields.Message;
-import io.micronaut.views.fields.TrixEditorFormElement;
+import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.elements.TrixEditorFormElement;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

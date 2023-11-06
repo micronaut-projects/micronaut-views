@@ -1,5 +1,6 @@
 package io.micronaut.views.fields;
 
+import io.micronaut.views.fields.elements.InputTimeFormElement;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;

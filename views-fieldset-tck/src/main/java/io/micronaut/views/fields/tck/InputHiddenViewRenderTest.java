@@ -22,7 +22,7 @@ import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.Fieldset;
 import io.micronaut.views.fields.FieldsetGenerator;
 import io.micronaut.views.fields.Form;
-import io.micronaut.views.fields.InputHiddenFormElement;
+import io.micronaut.views.fields.elements.InputHiddenFormElement;
 import io.micronaut.views.fields.annotations.InputHidden;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.NotNull;

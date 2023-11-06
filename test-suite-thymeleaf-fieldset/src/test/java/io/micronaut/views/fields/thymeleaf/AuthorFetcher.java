@@ -1,8 +1,8 @@
 package io.micronaut.views.fields.thymeleaf;
 
-import io.micronaut.views.fields.Message;
-import io.micronaut.views.fields.Option;
-import io.micronaut.views.fields.OptionFetcher;
+import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.elements.Option;
+import io.micronaut.views.fields.fetcher.OptionFetcher;
 import jakarta.inject.Singleton;
 import java.util.List;
 

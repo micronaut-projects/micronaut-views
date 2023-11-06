@@ -1,7 +1,9 @@
 package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.*;
+import io.micronaut.views.fields.elements.Option;
+import io.micronaut.views.fields.elements.SelectFormElement;
+import io.micronaut.views.fields.message.Message;
 import io.micronaut.views.fields.render.secondary.SelectFormElementRenderer;
 import org.junit.jupiter.api.Test;
 

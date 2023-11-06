@@ -19,7 +19,7 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.views.fields.TrixEditorFormElement;
+import io.micronaut.views.fields.elements.TrixEditorFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
 
@@ -32,7 +32,7 @@ import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
 import static io.micronaut.views.fields.InputType.ATTR_TYPE_HIDDEN;
 
 /**
- * {@link FormElementRenderer} implementation of {@link io.micronaut.views.fields.TrixEditorFormElement}.
+ * {@link FormElementRenderer} implementation of {@link TrixEditorFormElement}.
  * @author Sergio del Amo
  * @since 4.1.0
  */

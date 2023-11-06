@@ -19,26 +19,29 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.FormElement;
-import io.micronaut.views.fields.InputDateTimeLocalFormElement;
-import io.micronaut.views.fields.render.FormElementRendererConfiguration;
-import io.micronaut.views.fields.render.FormElementRendererConfigurationProperties;
+import io.micronaut.views.fields.elements.InputDateTimeLocalFormElement;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
 
 /**
- * {@link ViewsFormElementRenderer} implementation for {@link io.micronaut.views.fields.InputDateTimeLocalFormElement}.
+ * {@link ViewsFormElementRenderer} implementation for {@link InputDateTimeLocalFormElement}.
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Internal
 @Requires(beans = ViewsRenderer.class)
-@Requires(property = FormElementRendererConfigurationProperties.PREFIX + ".input-date-time-local")
+@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".input-date-time-local")
 @Singleton
 public class InputDateTimeLocalViewsFormElementRenderer extends ViewsFormElementRenderer<InputDateTimeLocalFormElement> {
 
+    /**
+     *
+     * @param viewsRenderer Views Renderer
+     * @param formElementRendererConfiguration Form Element Renderer Configuration
+     */
     public InputDateTimeLocalViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
-                                                      FormElementRendererConfiguration formElementRendererConfiguration) {
+                                                      FormElementRendererViewsConfiguration formElementRendererConfiguration) {
         super(viewsRenderer, formElementRendererConfiguration.getInputDateTimeLocal());
     }
 }

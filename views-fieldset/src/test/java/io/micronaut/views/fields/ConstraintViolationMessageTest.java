@@ -6,6 +6,8 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.micronaut.views.fields.message.ConstraintViolationMessage;
+import io.micronaut.views.fields.message.Message;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;

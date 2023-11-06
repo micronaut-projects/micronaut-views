@@ -17,6 +17,8 @@ package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.views.fields.elements.InputSubmitFormElement;
+import io.micronaut.views.fields.message.Message;
 import jakarta.validation.ConstraintViolationException;
 
 /**
@@ -31,6 +33,9 @@ public interface FormGenerator {
      */
     String POST = "post";
 
+    /**
+     * Default Submit message.
+     */
     Message SUBMIT = Message.of("Submit", "default.input.submit.value");
 
     /**

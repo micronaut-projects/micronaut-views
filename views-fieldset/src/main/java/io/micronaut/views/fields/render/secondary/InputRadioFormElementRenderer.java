@@ -20,8 +20,8 @@ import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlAttribute;
-import io.micronaut.views.fields.InputRadioFormElement;
-import io.micronaut.views.fields.Radio;
+import io.micronaut.views.fields.elements.InputRadioFormElement;
+import io.micronaut.views.fields.elements.Radio;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
 

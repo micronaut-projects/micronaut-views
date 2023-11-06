@@ -19,7 +19,7 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.views.fields.InputUrlFormElement;
+import io.micronaut.views.fields.elements.InputUrlFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
 

@@ -19,26 +19,29 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.FormElement;
-import io.micronaut.views.fields.InputPasswordFormElement;
-import io.micronaut.views.fields.render.FormElementRendererConfiguration;
-import io.micronaut.views.fields.render.FormElementRendererConfigurationProperties;
+import io.micronaut.views.fields.elements.InputPasswordFormElement;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
 
 /**
- * {@link ViewsFormElementRenderer} implementation for {@link io.micronaut.views.fields.InputPasswordFormElement}.
+ * {@link ViewsFormElementRenderer} implementation for {@link InputPasswordFormElement}.
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Internal
 @Requires(beans = ViewsRenderer.class)
-@Requires(property = FormElementRendererConfigurationProperties.PREFIX + ".input-password")
+@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".input-password")
 @Singleton
 public class InputPasswordViewsFormElementRenderer extends ViewsFormElementRenderer<InputPasswordFormElement> {
 
+    /**
+     *
+     * @param viewsRenderer Views Renderer
+     * @param formElementRendererConfiguration Form Element Renderer Configuration
+     */
     public InputPasswordViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
-                                                 FormElementRendererConfiguration formElementRendererConfiguration) {
+                                                 FormElementRendererViewsConfiguration formElementRendererConfiguration) {
         super(viewsRenderer, formElementRendererConfiguration.getInputPassword());
     }
 }

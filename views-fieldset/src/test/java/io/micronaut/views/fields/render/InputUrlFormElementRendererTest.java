@@ -3,8 +3,8 @@ package io.micronaut.views.fields.render;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.InputType;
-import io.micronaut.views.fields.InputUrlFormElement;
-import io.micronaut.views.fields.Message;
+import io.micronaut.views.fields.elements.InputUrlFormElement;
+import io.micronaut.views.fields.message.Message;
 import io.micronaut.views.fields.render.secondary.InputUrlFormElementRenderer;
 import org.junit.jupiter.api.Test;
 

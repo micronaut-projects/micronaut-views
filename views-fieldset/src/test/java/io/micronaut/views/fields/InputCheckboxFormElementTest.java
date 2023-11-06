@@ -1,6 +1,9 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.views.fields.elements.Checkbox;
+import io.micronaut.views.fields.elements.InputCheckboxFormElement;
+import io.micronaut.views.fields.message.SimpleMessage;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;

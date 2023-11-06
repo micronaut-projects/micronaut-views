@@ -2,13 +2,13 @@ package io.micronaut.views.fields.formsexamples;
 
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.Checkbox;
+import io.micronaut.views.fields.elements.Checkbox;
 import io.micronaut.views.fields.Fieldset;
 import io.micronaut.views.fields.FieldsetGenerator;
-import io.micronaut.views.fields.InputCheckboxFormElement;
-import io.micronaut.views.fields.InputTextFormElement;
-import io.micronaut.views.fields.Message;
-import io.micronaut.views.fields.SimpleMessage;
+import io.micronaut.views.fields.elements.InputCheckboxFormElement;
+import io.micronaut.views.fields.elements.InputTextFormElement;
+import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.message.SimpleMessage;
 import io.micronaut.views.fields.annotations.InputCheckbox;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

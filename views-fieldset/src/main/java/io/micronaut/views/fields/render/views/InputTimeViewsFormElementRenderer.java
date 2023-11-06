@@ -19,26 +19,29 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.FormElement;
-import io.micronaut.views.fields.InputTimeFormElement;
-import io.micronaut.views.fields.render.FormElementRendererConfiguration;
-import io.micronaut.views.fields.render.FormElementRendererConfigurationProperties;
+import io.micronaut.views.fields.elements.InputTimeFormElement;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
 
 /**
- * {@link ViewsFormElementRenderer} implementation for {@link io.micronaut.views.fields.InputTimeFormElement}.
+ * {@link ViewsFormElementRenderer} implementation for {@link InputTimeFormElement}.
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Internal
 @Requires(beans = ViewsRenderer.class)
-@Requires(property = FormElementRendererConfigurationProperties.PREFIX + ".input-time")
+@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".input-time")
 @Singleton
 public class InputTimeViewsFormElementRenderer extends ViewsFormElementRenderer<InputTimeFormElement> {
 
+    /**
+     *
+     * @param viewsRenderer Views Renderer
+     * @param formElementRendererConfiguration Form Element Renderer Configuration
+     */
     public InputTimeViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
-                                             FormElementRendererConfiguration formElementRendererConfiguration) {
+                                             FormElementRendererViewsConfiguration formElementRendererConfiguration) {
         super(viewsRenderer, formElementRendererConfiguration.getInputTime());
     }
 }

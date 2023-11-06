@@ -20,7 +20,7 @@ import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlAttribute;
-import io.micronaut.views.fields.InputTimeFormElement;
+import io.micronaut.views.fields.elements.InputTimeFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
 

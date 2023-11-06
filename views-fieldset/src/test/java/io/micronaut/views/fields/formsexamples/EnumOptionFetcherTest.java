@@ -1,9 +1,9 @@
 package io.micronaut.views.fields.formsexamples;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.EnumOptionFetcher;
-import io.micronaut.views.fields.Option;
-import io.micronaut.views.fields.SimpleMessage;
+import io.micronaut.views.fields.fetcher.EnumOptionFetcher;
+import io.micronaut.views.fields.elements.Option;
+import io.micronaut.views.fields.message.SimpleMessage;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
