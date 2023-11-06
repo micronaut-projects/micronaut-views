@@ -100,7 +100,6 @@ public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes,
         @NonNull
         public Builder errors(@NonNull List<Message> errors) {
             this.errors = errors;
-            Collections.sort(this.errors);
             return this;
         }
 

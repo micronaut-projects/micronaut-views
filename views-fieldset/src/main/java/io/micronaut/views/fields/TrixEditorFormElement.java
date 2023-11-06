@@ -118,7 +118,6 @@ public record TrixEditorFormElement(@NonNull String name,
         @NonNull
         public Builder errors(@NonNull List<Message> errors) {
             this.errors = errors;
-            Collections.sort(this.errors);
             return this;
         }
 

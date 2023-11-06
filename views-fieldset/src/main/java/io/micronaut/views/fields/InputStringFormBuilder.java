@@ -17,6 +17,7 @@ package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.NonNull;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
