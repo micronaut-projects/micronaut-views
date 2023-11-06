@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
 import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,7 +43,7 @@ class SignupFormTest {
     void blankLoginFormHasExpectedFields(FieldsetGenerator fieldsetGenerator) {
         Fieldset fieldset = fieldsetGenerator.generate(SignupForm.class);
 
-        assertTrue(fieldset.fields().stream().anyMatch(it -> it instanceof InputCheckboxFormElement));
+        assertAnyInstance(fieldset.fields(), InputCheckboxFormElement.class);
 
         InputTextFormElement firstNameExpectation = firstNameExpectation().build();
         assertTrue(assertFormElement(fieldset, firstNameExpectation));

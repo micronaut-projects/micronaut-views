@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static io.micronaut.views.fields.TestUtils.assertAnyMatch;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @MicronautTest(startApplication = false)
 class EnumOptionFetcherTest {
@@ -23,16 +23,16 @@ class EnumOptionFetcherTest {
         Option music = Option.builder().value("MUSIC").label(new SimpleMessage("Music", "genre.music")).build();
         Option sport = Option.builder().value("SPORT").label(new SimpleMessage("Sport", "genre.sport")).build();
         Option theater = Option.builder().value("THEATER").label(new SimpleMessage("Theater", "genre.theater")).build();
-        assertTrue(optionList.stream().anyMatch(option -> option.equals(music)));
-        assertTrue(optionList.stream().anyMatch(option -> option.equals(sport)));
-        assertTrue(optionList.stream().anyMatch(option -> option.equals(theater)));
+        assertAnyMatch(optionList, music);
+        assertAnyMatch(optionList, sport);
+        assertAnyMatch(optionList, theater);
 
         optionList = optionFetcher.generate(Genre.MUSIC);
         assertNotNull(optionList);
         assertEquals(3, optionList.size());
         Option selectedMusic = Option.builder().value("MUSIC").label(new SimpleMessage("Music", "genre.music")).selected(true).build();
-        assertTrue(optionList.stream().anyMatch(option -> option.equals(selectedMusic)));
-        assertTrue(optionList.stream().anyMatch(option -> option.equals(sport)));
-        assertTrue(optionList.stream().anyMatch(option -> option.equals(theater)));
+        assertAnyMatch(optionList, selectedMusic);
+        assertAnyMatch(optionList, sport);
+        assertAnyMatch(optionList, theater);
     }
 }

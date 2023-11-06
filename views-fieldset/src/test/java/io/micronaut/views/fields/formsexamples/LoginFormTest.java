@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
+import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
 import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,8 +34,8 @@ class LoginFormTest {
         Fieldset fieldset = fieldsetGenerator.generate(LoginForm.class);
         assertNotNull(fieldset);
         assertEquals(2, fieldset.fields().size());
-        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputTextFormElement));
-        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputPasswordFormElement));
+        assertAnyInstance(fieldset.fields(), InputTextFormElement.class);
+        assertAnyInstance(fieldset.fields(), InputPasswordFormElement.class);
         InputTextFormElement usernameExpectation = usernameExpectation().build();
         assertTrue(assertFormElement(fieldset, usernameExpectation));
         InputPasswordFormElement inputPasswordFormElement = passwordExpectation().build();
@@ -44,8 +45,8 @@ class LoginFormTest {
         fieldset = fieldsetGenerator.generate(loginForm);
         assertNotNull(fieldset);
         assertEquals(2, fieldset.fields().size());
-        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputTextFormElement));
-        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputPasswordFormElement));
+        assertAnyInstance(fieldset.fields(), InputTextFormElement.class);
+        assertAnyInstance(fieldset.fields(), InputPasswordFormElement.class);
         usernameExpectation = usernameExpectation().value("sherlock").build();
         assertTrue(assertFormElement(fieldset, usernameExpectation));
         inputPasswordFormElement = passwordExpectation().value("elementary").build();
@@ -56,8 +57,8 @@ class LoginFormTest {
         fieldset = fieldsetGenerator.generate(invalid, ex);
         assertNotNull(fieldset);
         assertEquals(2, fieldset.fields().size());
-        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputTextFormElement));
-        assertTrue(fieldset.fields().stream().anyMatch( it -> it instanceof InputPasswordFormElement));
+        assertAnyInstance(fieldset.fields(), InputTextFormElement.class);
+        assertAnyInstance(fieldset.fields(), InputPasswordFormElement.class);
         usernameExpectation = usernameExpectation().value("sherlock").build();
         assertTrue(assertFormElement(fieldset, usernameExpectation));
         inputPasswordFormElement = passwordExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "loginform.password.notblank"))).build();
