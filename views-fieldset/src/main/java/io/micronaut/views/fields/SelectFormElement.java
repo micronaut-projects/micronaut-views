@@ -135,6 +135,7 @@ public record SelectFormElement(@NonNull boolean required,
         @NonNull
         public Builder errors(@NonNull List<Message> errors) {
             this.errors = errors;
+            Collections.sort(this.errors);
             return this;
         }
 
