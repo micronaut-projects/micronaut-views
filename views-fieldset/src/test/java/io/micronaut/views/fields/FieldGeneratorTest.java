@@ -52,8 +52,7 @@ class FieldGeneratorTest {
                 .value(email)
                 .errors(List.of(new SimpleMessage("size must be between 0 and 255", "contactrecordvalidationannotations.email.size"),
                     new SimpleMessage("must be a well-formed email address", "contactrecordvalidationannotations.email.email")))
-                .build())
-        ));
+                .build());
     }
 
     @Test
