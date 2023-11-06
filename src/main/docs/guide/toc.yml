@@ -28,6 +28,7 @@ views:
   fieldset:
     title: Fieldset Generation
     fieldsetExample: Form Generation Example
+    fieldsetAnnotations: Fieldset Annotations
     fieldsetFetcher: Radio, Checkbox and Option Fetcher
   turbo:
     title: Turbo
