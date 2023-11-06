@@ -19,7 +19,7 @@ class TrixEditorFormElementRendererTest {
             .name("content")
             .id("x")
             .value("Editor content goes here")
-            .label(Message.of("Tell us your story:", null))
+            .label(Message.of("Tell us your story:"))
             .build();
         assertEquals("""
             <label for="x">Tell us your story:</label><input type="hidden" name="content" id="x" value="Editor content goes here"/><trix-editor input="x"></trix-editor>""",

@@ -16,7 +16,7 @@ class InputSubmitFormElementTest {
 
     @Test
     void builder() {
-        Message value = Message.of("Send Request", null);
+        Message value = Message.of("Send Request");
         InputSubmitFormElement formElement = InputSubmitFormElement.builder()
             .value(value)
             .build();

@@ -30,7 +30,7 @@ class InputUrlFormElementRendererTest {
             .pattern("https://.*")
             .size(30)
             .required(true)
-            .label(Message.of("Enter an https:// URL:", null))
+            .label(Message.of("Enter an https:// URL:"))
             .build();
         assertEquals("""
             <label for="url">Enter an https:// URL:</label><input type="url" name="url" id="url" placeholder="https://example.com" pattern="https://.*" size="30" required/>""",

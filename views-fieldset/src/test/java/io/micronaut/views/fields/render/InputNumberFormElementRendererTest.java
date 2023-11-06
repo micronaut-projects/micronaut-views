@@ -15,7 +15,7 @@ class InputNumberFormElementRendererTest {
     @Test
     void render(InputNumberFormElementRenderer renderer) {
         InputNumberFormElement el = InputNumberFormElement.builder()
-            .label(Message.of("Number of tentacles (10-100):", null))
+            .label(Message.of("Number of tentacles (10-100):"))
             .id("tentacles")
             .name("tentacles")
             .min(10)

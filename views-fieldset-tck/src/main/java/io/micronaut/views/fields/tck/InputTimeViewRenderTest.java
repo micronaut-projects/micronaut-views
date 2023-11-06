@@ -43,7 +43,7 @@ class InputTimeViewRenderTest {
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
         assertNotNull(viewsRenderer);
         InputTimeFormElement el = InputTimeFormElement.builder()
-            .label(Message.of("Choose a time for your appointment:", null))
+            .label(Message.of("Choose a time for your appointment:"))
             .id("meeting-time")
             .name("meeting-time")
             .min(LocalTime.of(9, 0))

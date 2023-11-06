@@ -14,7 +14,7 @@ class InputSubmitFormElementRenderTest {
 
     @Test
     void renderOption(InputSubmitFormElementRenderer renderer) {
-        Message value = Message.of("Send Request", null);
+        Message value = Message.of("Send Request");
         InputSubmitFormElement el= InputSubmitFormElement.builder()
             .value(value)
             .build();

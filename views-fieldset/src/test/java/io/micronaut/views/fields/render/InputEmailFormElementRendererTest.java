@@ -29,7 +29,7 @@ class InputEmailFormElementRendererTest {
             .required(true)
             .pattern(".+@globex\\.com")
             .size(30)
-            .label(Message.of("Enter your globex.com email:", null))
+            .label(Message.of("Enter your globex.com email:"))
             .build();
         assertEquals("""
             <label for="email">Enter your globex.com email:</label><input type="email" name="email" id="email" pattern=".+@globex\\.com" size="30" required/>""",

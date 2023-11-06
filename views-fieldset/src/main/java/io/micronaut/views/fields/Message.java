@@ -50,4 +50,14 @@ public interface Message {
                       @Nullable String code) {
         return new SimpleMessage(defaultMessage, code);
     }
+
+    /**
+     *
+     * @param defaultMessage The default message to use if no code is specified or no localized message found
+     * @return A {@link Message} instance backed by a {@link SimpleMessage}.
+     */
+    @NonNull
+    static Message of(@NonNull String defaultMessage) {
+        return of(defaultMessage, null);
+    }
 }

@@ -15,7 +15,7 @@ class InputDateTimeFormElementRendererTest {
     @Test
     void render(InputDateTimeLocalFormElementRenderer renderer) {
         InputDateTimeLocalFormElement el = InputDateTimeLocalFormElement.builder()
-            .label(Message.of("Choose a time for your appointment:", null))
+            .label(Message.of("Choose a time for your appointment:"))
             .id("meeting-time")
             .name("meeting-time")
             .min(LocalDateTime.of(2018, 6, 7, 0, 0))

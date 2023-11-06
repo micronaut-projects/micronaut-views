@@ -42,7 +42,7 @@ class InputRadioViewRenderTest {
             .id("huey")
             .value("huey")
             .checked(true)
-            .label(Message.of("Huey", null))
+            .label(Message.of("Huey"))
             .build();
         InputRadioFormElement el = InputRadioFormElement.builder()
             .name("drone")
@@ -51,12 +51,12 @@ class InputRadioViewRenderTest {
                 Radio.builder()
                     .id("dewey")
                     .value("dewey")
-                    .label(Message.of("Dewey", null))
+                    .label(Message.of("Dewey"))
                     .build(),
                 Radio.builder()
                     .id("louie")
                     .value("louie")
-                    .label(Message.of("Louie", null))
+                    .label(Message.of("Louie"))
                     .build()
             ))
             .build();
