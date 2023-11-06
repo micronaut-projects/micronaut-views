@@ -21,7 +21,7 @@ import io.micronaut.views.fields.Message;
 import io.micronaut.views.fields.Option;
 import io.micronaut.views.fields.SelectFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.SelectFormElementRenderer;
+import io.micronaut.views.fields.render.secondary.SelectFormElementRenderer;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 

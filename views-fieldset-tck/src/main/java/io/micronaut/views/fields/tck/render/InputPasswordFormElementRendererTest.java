@@ -20,7 +20,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.InputPasswordFormElement;
 import io.micronaut.views.fields.Message;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.InputPasswordFormElementRenderer;
+import io.micronaut.views.fields.render.secondary.InputPasswordFormElementRenderer;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 

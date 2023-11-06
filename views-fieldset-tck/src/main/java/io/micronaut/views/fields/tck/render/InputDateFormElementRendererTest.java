@@ -20,7 +20,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.InputDateFormElement;
 import io.micronaut.views.fields.Message;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.InputDateFormElementRenderer;
+import io.micronaut.views.fields.render.secondary.InputDateFormElementRenderer;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 

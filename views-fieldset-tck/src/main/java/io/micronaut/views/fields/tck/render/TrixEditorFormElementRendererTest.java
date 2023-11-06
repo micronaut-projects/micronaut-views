@@ -20,7 +20,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.Message;
 import io.micronaut.views.fields.TrixEditorFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.TrixEditorFormElementRenderer;
+import io.micronaut.views.fields.render.secondary.TrixEditorFormElementRenderer;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 

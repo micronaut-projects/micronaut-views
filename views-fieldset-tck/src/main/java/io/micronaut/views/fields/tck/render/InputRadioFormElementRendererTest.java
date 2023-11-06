@@ -21,7 +21,7 @@ import io.micronaut.views.fields.InputRadioFormElement;
 import io.micronaut.views.fields.Message;
 import io.micronaut.views.fields.Radio;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.InputRadioFormElementRenderer;
+import io.micronaut.views.fields.render.secondary.InputRadioFormElementRenderer;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
