@@ -2,6 +2,7 @@ package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.*;
+import io.micronaut.views.fields.render.secondary.InputRadioFormElementRenderer;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

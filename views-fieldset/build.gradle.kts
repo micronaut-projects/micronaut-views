@@ -8,6 +8,7 @@ dependencies {
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
     testImplementation(mnValidation.micronaut.validation)
 
+    compileOnly(projects.micronautViewsCore)
     compileOnly(mnData.micronaut.data.model)
     testImplementation(mnData.micronaut.data.model)
 

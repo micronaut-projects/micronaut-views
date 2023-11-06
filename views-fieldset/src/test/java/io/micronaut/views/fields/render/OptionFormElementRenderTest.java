@@ -3,6 +3,7 @@ package io.micronaut.views.fields.render;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.Option;
 import io.micronaut.views.fields.SimpleMessage;
+import io.micronaut.views.fields.render.secondary.OptionFormElementRenderer;
 import org.junit.jupiter.api.Test;
 
 import java.util.Locale;

@@ -23,7 +23,22 @@ import io.micronaut.core.annotation.Nullable;
  * @author Sergio del Amo
  * @since 4.1.0
  */
-public interface Message {
+public interface Message extends Comparable<Message> {
+
+    @Override
+    default int compareTo(Message o) {
+        int compare = defaultMessage().compareTo(o.defaultMessage());
+        if (compare != 0) {
+            return compare;
+        }
+        if (this.code() == null && o.code() != null) {
+            return -1;
+        }
+        if (this.code() != null && o.code() == null) {
+            return 1;
+        }
+        return this.code().compareTo(o.code());
+    }
 
     /**
      *
