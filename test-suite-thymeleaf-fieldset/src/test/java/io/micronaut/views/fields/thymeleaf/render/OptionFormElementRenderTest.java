@@ -5,7 +5,6 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.Option;
 import io.micronaut.views.fields.SimpleMessage;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.InputHiddenFormElementRenderer;
 import io.micronaut.views.fields.render.OptionFormElementRenderer;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
@@ -18,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @Property(name = "micronaut.views.form-element-views.option", value = "fieldset/option.html")
 @MicronautTest(startApplication = false)
 class OptionFormElementRenderTest {
+
     @Inject
     FormElementRenderer<Option> renderer;
 

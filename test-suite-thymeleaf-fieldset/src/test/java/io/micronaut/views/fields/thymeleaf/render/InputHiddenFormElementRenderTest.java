@@ -16,8 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @Property(name = "micronaut.views.form-element-views.input-hidden", value = "fieldset/inputhidden.html")
 @MicronautTest(startApplication = false)
 class InputHiddenFormElementRenderTest {
+
     @Inject
     FormElementRenderer<InputHiddenFormElement> renderer;
+
     @Test
     void renderOption() {
         assertFalse(renderer instanceof InputHiddenFormElementRenderer);

@@ -25,6 +25,7 @@ import io.micronaut.views.ViewsConfigurationProperties;
  */
 @ConfigurationProperties(FormElementRendererConfigurationProperties.PREFIX)
 public class FormElementRendererConfigurationProperties implements FormElementRendererConfiguration {
+
     public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".form-element-views";
 
     private String inputHidden;

@@ -15,7 +15,6 @@
  */
 package io.micronaut.views.fields.render;
 
-
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
 import io.micronaut.views.ViewsRenderer;
@@ -30,11 +29,13 @@ import java.util.Map;
 
 /**
  * Implementation of {@link FormElementRenderer} which uses {@link ViewsRenderer} to render a form element with a view template.
+ *
+ * @param <T> form element
  * @author Sergio del Amo
  * @since 4.1.0
- * @param <T> form element
  */
 public class ViewsFormElementRenderer<T extends FormElement> implements FormElementRenderer<T> {
+
     protected final ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer;
     protected final String viewName;
     protected final String modelKey;
@@ -63,7 +64,7 @@ public class ViewsFormElementRenderer<T extends FormElement> implements FormElem
 
     @NonNull
     private static String toString(@NonNull Writable writable) throws IOException {
-         StringWriter stringWriter = new StringWriter();
+        StringWriter stringWriter = new StringWriter();
         writable.writeTo(stringWriter);
         return stringWriter.toString();
     }
