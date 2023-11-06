@@ -18,7 +18,6 @@ package io.micronaut.views.fields.render;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.FormElement;
-import io.micronaut.views.fields.InputHiddenFormElement;
 import io.micronaut.views.fields.TextareaFormElement;
 import jakarta.inject.Singleton;
 
