@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
 import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,8 +43,8 @@ class SaveBoxOfficeClerkFormTest {
         Fieldset fieldset = fieldsetGenerator.generate(form);
         assertNotNull(fieldset);
         assertEquals(2, fieldset.fields().size());
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputHiddenFormElement));
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof SelectFormElement));
+        assertAnyInstance(fieldset.fields(), InputHiddenFormElement.class);
+        assertAnyInstance(fieldset.fields(), SelectFormElement.class);
 
         InputHiddenFormElement eventIdExpectation = eventIdExpectation().build();
         assertTrue(assertFormElement(fieldset, eventIdExpectation));

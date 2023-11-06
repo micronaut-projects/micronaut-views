@@ -18,11 +18,14 @@ import org.junit.jupiter.api.function.Executable;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static io.micronaut.views.fields.TestUtils.assertAnyMatch;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Property(name = "spec.name", value = "FieldGeneratorTest")
 @MicronautTest(startApplication = false)
-class FieldGeneratorTest  {
+class FieldGeneratorTest {
     @Inject
     FieldsetGenerator fieldsetGenerator;
 
@@ -39,7 +42,9 @@ class FieldGeneratorTest  {
         assertNotNull(fieldset.errors());
         assertEquals(0, fieldset.errors().size());
         List<? extends FormElement> fields = fieldset.fields();
-        assertTrue(fields.stream().anyMatch(f -> f.equals(InputEmailFormElement.builder().name("email")
+        assertAnyMatch(
+            fields,
+            InputEmailFormElement.builder().name("email")
                 .id("email")
                 .maxLength(255)
                 .label(Message.of("Email", "contactrecordvalidationannotations.email"))
@@ -47,8 +52,8 @@ class FieldGeneratorTest  {
                 .value(email)
                 .errors(List.of(new SimpleMessage("size must be between 0 and 255", "contactrecordvalidationannotations.email.size"),
                     new SimpleMessage("must be a well-formed email address", "contactrecordvalidationannotations.email.email")))
-                .build()) ||
-            f.equals(InputEmailFormElement.builder()
+                .build(),
+            InputEmailFormElement.builder()
                 .name("email")
                 .id("email")
                 .label(Message.of("Email", "contactrecordvalidationannotations.email"))
@@ -57,8 +62,8 @@ class FieldGeneratorTest  {
                 .errors(List.of(
                     new SimpleMessage("must be a well-formed email address", "contactrecordvalidationannotations.email.email"),
                     new SimpleMessage("size must be between 0 and 255", "contactrecordvalidationannotations.email.size")))
-                .build())
-        ));
+                .build()
+        );
     }
 
     @Test
@@ -70,19 +75,20 @@ class FieldGeneratorTest  {
         List<? extends FormElement> fields = fieldset.fields();
         assertNotNull(fields);
         assertEquals(2, fields.size());
-        assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder()
+        assertAnyMatch(fields, InputTextFormElement.builder()
             .name("firstName")
             .label(Message.of("First Name", "contact.firstName"))
             .id("firstName")
             .required(true)
             .build()
-            .equals(f)));
-        assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder()
+        );
+        assertAnyMatch(fields, InputTextFormElement.builder()
             .name("lastName")
             .label(Message.of("Last Name", "contact.lastName"))
             .id("lastName")
             .required(false)
-            .build().equals(f)));
+            .build()
+        );
     }
 
     @Test
@@ -93,18 +99,20 @@ class FieldGeneratorTest  {
         List<? extends FormElement> fields = fieldset.fields();
         assertNotNull(fields);
         assertEquals(2, fields.size());
-        assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder()
+        assertAnyMatch(fields, InputTextFormElement.builder()
             .name("firstName")
             .label(Message.of("First Name", "contactrecord.firstName"))
             .id("firstName")
             .required(true)
-            .build().equals(f)));
-        assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder()
+            .build()
+        );
+        assertAnyMatch(fields, InputTextFormElement.builder()
             .name("lastName")
             .label(Message.of("Last Name", "contactrecord.lastName"))
             .id("lastName")
             .required(false)
-            .build().equals(f)));
+            .build()
+        );
     }
 
     @Test
@@ -117,26 +125,30 @@ class FieldGeneratorTest  {
         assertNotNull(fields);
         assertEquals(3, fields.size());
 
-        assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder()
+        assertAnyMatch(fields, InputTextFormElement.builder()
             .name("firstName")
             .label(Message.of("First Name", "contactrecordvalidationannotations.firstName"))
             .id("firstName")
             .required(true)
-            .build().equals(f)));
-        assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder()
+            .build()
+        );
+
+        assertAnyMatch(fields, InputTextFormElement.builder()
             .name("lastName")
             .label(Message.of("Last Name", "contactrecordvalidationannotations.lastName"))
             .id("lastName")
             .required(false)
-            .build().equals(f)));
+            .build()
+        );
 
-        assertTrue(fields.stream().anyMatch(f -> InputEmailFormElement.builder()
-                .name("email")
-                .label(Message.of("Email", "contactrecordvalidationannotations.email"))
-                .id("email")
-                .maxLength(255)
-                .required(true)
-                .build().equals(f)));
+        assertAnyMatch(fields, InputEmailFormElement.builder()
+            .name("email")
+            .label(Message.of("Email", "contactrecordvalidationannotations.email"))
+            .id("email")
+            .maxLength(255)
+            .required(true)
+            .build()
+        );
     }
 
     @Test
@@ -149,29 +161,31 @@ class FieldGeneratorTest  {
         assertNotNull(fields);
         assertEquals(3, fields.size());
 
-        assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder()
+        assertAnyMatch(fields, InputTextFormElement.builder()
             .name("firstName")
             .label(Message.of("First Name", "contactrecordvalidationannotations.firstName"))
             .id("firstName")
             .required(true)
             .value("Sergio")
-            .build().equals(f)));
-        assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder()
+            .build()
+        );
+        assertAnyMatch(fields, InputTextFormElement.builder()
             .name("lastName")
             .label(Message.of("Last Name", "contactrecordvalidationannotations.lastName"))
             .id("lastName")
 
             .required(false)
             .value("del Amo")
-            .build().equals(f)));
-
-        assertTrue(fields.stream().anyMatch(f -> InputEmailFormElement.builder()
-                .name("email")
-                .label(Message.of("Email", "contactrecordvalidationannotations.email"))
-                .id("email")
-                .maxLength(255)
-                .required(true)
-                .build().equals(f)));
+            .build()
+        );
+        assertAnyMatch(fields, InputEmailFormElement.builder()
+            .name("email")
+            .label(Message.of("Email", "contactrecordvalidationannotations.email"))
+            .id("email")
+            .maxLength(255)
+            .required(true)
+            .build()
+        );
     }
 
     @Test
@@ -188,23 +202,24 @@ class FieldGeneratorTest  {
         assertNotNull(fields);
         assertEquals(3, fields.size());
 
-
-        assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder().name("firstName")
-            .label(Message.of("First Name", "contactrecordvalidationannotations.firstName" ))
-            .id("firstName").required(true).value("Sergio").build().equals(f)));
-        assertTrue(fields.stream().anyMatch(f -> InputTextFormElement.builder().name("lastName")
+        assertAnyMatch(fields, InputTextFormElement.builder().name("firstName")
+            .label(Message.of("First Name", "contactrecordvalidationannotations.firstName"))
+            .id("firstName").required(true).value("Sergio").build()
+        );
+        assertAnyMatch(fields, InputTextFormElement.builder().name("lastName")
             .label(Message.of("Last Name", "contactrecordvalidationannotations.lastName"))
-            .id("lastName").required(false).value("del Amo").build().equals(f)));
+            .id("lastName").required(false).value("del Amo").build()
+        );
 
         FormElement expectedEmail = InputEmailFormElement.builder().name("email")
             .id("email")
-                .maxLength(255)
+            .maxLength(255)
             .label(Message.of("Email", "contactrecordvalidationannotations.email"))
             .required(true)
             .value("notanemail")
             .errors(Collections.singletonList(new SimpleMessage("must be a well-formed email address", "contactrecordvalidationannotations.email.email")))
             .build();
-        assertTrue(fields.stream().anyMatch(expectedEmail::equals));
+        assertAnyMatch(fields, expectedEmail);
     }
 
     @Requires(property = "spec.name", value = "FieldGeneratorTest")

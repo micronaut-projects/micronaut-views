@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
 import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -66,9 +67,9 @@ class EventCreateFormTest {
         });
         assertNotNull(fieldset);
         assertEquals(12, fieldset.fields().size());
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof TextareaFormElement));
+        assertAnyInstance(fieldset.fields(), TextareaFormElement.class);
 
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputDateFormElement));
+        assertAnyInstance(fieldset.fields(), InputDateFormElement.class);
 
         TextareaFormElement additionalInfoExpectation = additionalInfoExpectation().build();
         assertTrue(assertFormElement(fieldset, additionalInfoExpectation));
@@ -79,9 +80,9 @@ class EventCreateFormTest {
         InputCheckboxFormElement highlightedExpectation = highlightedExpectation().build();
         assertTrue(assertFormElement(fieldset, highlightedExpectation));
 
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputRadioFormElement));
+        assertAnyInstance(fieldset.fields(), InputRadioFormElement.class);
 
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputNumberFormElement));
+        assertAnyInstance(fieldset.fields(), InputNumberFormElement.class);
 
         InputRadioFormElement statusExpectation = statusExpectation().build();
         assertTrue(assertFormElement(fieldset, statusExpectation));
@@ -89,11 +90,11 @@ class EventCreateFormTest {
         InputNumberFormElement capacityExpectation = capacityExpectation().build();
         assertTrue(assertFormElement(fieldset, capacityExpectation));
 
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof SelectFormElement));
+        assertAnyInstance(fieldset.fields(), SelectFormElement.class);
         SelectFormElement genreExpectation = genreExpectation(null).build();
         assertTrue(assertFormElement(fieldset, genreExpectation));
 
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputDateTimeLocalFormElement));
+        assertAnyInstance(fieldset.fields(), InputDateTimeLocalFormElement.class);
         InputDateTimeLocalFormElement eventStartExpectation = eventStartExpectation().build();
         assertTrue(assertFormElement(fieldset, eventStartExpectation));
 

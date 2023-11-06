@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
 import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -34,8 +35,8 @@ class EnumAsCheckboxButtonTest {
         Fieldset fieldset = fieldsetGenerator.generate(EventCreateForm.class);
         assertNotNull(fieldset);
         assertEquals(2, fieldset.fields().size());
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputTextFormElement));
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputCheckboxFormElement));
+        assertAnyInstance(fieldset.fields(), InputTextFormElement.class);
+        assertAnyInstance(fieldset.fields(), InputCheckboxFormElement.class);
 
         InputCheckboxFormElement genreExpectation = genreExpectation().build();
         assertTrue(assertFormElement(fieldset, genreExpectation));

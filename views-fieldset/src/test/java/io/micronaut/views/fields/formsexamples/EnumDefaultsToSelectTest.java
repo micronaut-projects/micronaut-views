@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
 import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,8 +28,8 @@ class EnumDefaultsToSelectTest {
         Fieldset fieldset = fieldsetGenerator.generate(EventCreateForm.class);
         assertNotNull(fieldset);
         assertEquals(2, fieldset.fields().size());
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof InputTextFormElement));
-        assertTrue(fieldset.fields().stream().anyMatch(formElement -> formElement instanceof SelectFormElement));
+        assertAnyInstance(fieldset.fields(), InputTextFormElement.class);
+        assertAnyInstance(fieldset.fields(), SelectFormElement.class);
 
         SelectFormElement genreExpectation = genreExpectation(null).build();
         assertTrue(assertFormElement(fieldset, genreExpectation));

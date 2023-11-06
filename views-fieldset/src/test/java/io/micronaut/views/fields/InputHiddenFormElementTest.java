@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class InputHiddenFormElementTest {
+
     @Test
     void testTagAndType() {
         InputHiddenFormElement formElement = InputHiddenFormElement.builder().build();
