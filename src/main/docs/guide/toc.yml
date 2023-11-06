@@ -28,6 +28,7 @@ views:
   fieldset:
     title: Fieldset Generation
     fieldsetExample: Form Generation Example
+    fieldsetAnnotations: Fieldset Annotations
   turbo:
     title: Turbo
     turboFrameView: TurboFrameView annotation

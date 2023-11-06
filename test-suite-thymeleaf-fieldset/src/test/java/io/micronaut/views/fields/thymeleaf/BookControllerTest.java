@@ -1,15 +1,17 @@
 package io.micronaut.views.fields.thymeleaf;
 
 import io.micronaut.context.annotation.Property;
-import io.micronaut.http.HttpRequest;
-import io.micronaut.http.MediaType;
 import io.micronaut.http.client.BlockingHttpClient;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static io.micronaut.views.fields.thymeleaf.TestUtils.formPost;
+import static io.micronaut.views.fields.thymeleaf.TestUtils.htmlGet;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Property(name = "datasources.default.password", value = "")
 @Property(name = "datasources.default.dialect", value = "H2")
@@ -30,19 +32,21 @@ class BookControllerTest {
 
         html = assertDoesNotThrow(() -> client.retrieve(htmlGet("/books/create")));
         assertTrue(html.contains("""
-                <form action="/books/save" method="post"><div class="mb-3"><label for="title" class="form-label">Title</label><input type="text" name="title" value="" id="title" minlength="2" maxlength="255" class="form-control" required="required"/></div><div class="mb-3"><label for="pages" class="form-label">Pages</label><input type="number" name="pages" value="" id="pages" min="1" max="21450" class="form-control" required="required"/></div><input type="submit" value="Submit" class="btn btn-primary"/></form>"""));
+                <form action="/books/save" method="post">\
+                <div class="mb-3">\
+                <label for="title" class="form-label">Title</label>\
+                <input type="text" name="title" value="" id="title" minlength="2" maxlength="255" class="form-control" required="required"/>\
+                </div>\
+                <div class="mb-3">\
+                <label for="pages" class="form-label">Pages</label>\
+                <input type="number" name="pages" value="" id="pages" min="1" max="21450" class="form-control" required="required"/>\
+                </div>\
+                <input type="submit" value="Submit" class="btn btn-primary"/>\
+                </form>"""));
         assertFalse(html.contains("<li>"));
 
         html = assertDoesNotThrow(() -> client.retrieve(formPost("/books/save", "title=Building Microservices&pages=120")));
         assertTrue(html.contains("<!DOCTYPE html>"));
         assertTrue(html.contains("<li><span>Building Microservices</span><span>120</span></li>"));
-    }
-
-    private static HttpRequest<?> htmlGet(String path) {
-        return HttpRequest.GET(path).accept(MediaType.TEXT_HTML);
-    }
-
-    private static HttpRequest<?> formPost(String path, String body) {
-        return HttpRequest.POST(path, body).contentType(MediaType.APPLICATION_FORM_URLENCODED).accept(MediaType.TEXT_HTML);
     }
 }

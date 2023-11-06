@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Annotation to specify a field is an email input.
+ * Annotation to specify a field is a radio input.
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio">Input Radio</a>
  * @author Sergio del Amo
  * @since 4.1.0
