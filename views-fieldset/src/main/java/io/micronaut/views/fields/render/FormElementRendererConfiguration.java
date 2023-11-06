@@ -34,6 +34,69 @@ public interface FormElementRendererConfiguration {
 
     /**
      *
+     * @return The view name for a field of type input password.
+     */
+    @Nullable
+    String getInputPassword();
+
+    /**
+     *
+     * @return The view name for a field of type input tel.
+     */
+    @Nullable
+    String getInputTel();
+
+    /**
+     *
+     * @return The view name for a field of type input number.
+     */
+    @Nullable
+    String getInputNumber();
+
+    /**
+     *
+     * @return The view name for a field of type input text.
+     */
+    @Nullable
+    String getInputText();
+
+    /**
+     *
+     * @return The view name for a field of type input date.
+     */
+    @Nullable
+    String getInputDate();
+
+    /**
+     *
+     * @return The view name for a field of type input datetime-local.
+     */
+    @Nullable
+    String getInputDateTimeLocal();
+
+    /**
+     *
+     * @return The view name for a field of type input time.
+     */
+    @Nullable
+    String getInputTime();
+
+    /**
+     *
+     * @return The view name for a field of type input url.
+     */
+    @Nullable
+    String getInputUrl();
+
+    /**
+     *
+     * @return The view name for a field of type select.
+     */
+    @Nullable
+    String getSelect();
+
+    /**
+     *
      * @return The view name to render an option html element.
      */
     @Nullable
@@ -45,4 +108,39 @@ public interface FormElementRendererConfiguration {
      */
     @Nullable
     String getTextarea();
+
+    /**
+     *
+     * @return The view name for a field of type input email.
+     */
+    @Nullable
+    String getInputEmail();
+
+    /**
+     *
+     * @return The view name for a field of type input submit.
+     */
+    @Nullable
+    String getInputSubmit();
+
+    /**
+     *
+     * @return The view name for a field of type trix-editor.
+     */
+    @Nullable
+    String getTrixEditor();
+
+    /**
+     *
+     * @return The view name for a field of type input radio.
+     */
+    @Nullable
+    String getInputRadio();
+
+    /**
+     *
+     * @return The view name for a field of type input checkbox.
+     */
+    @Nullable
+    String getInputCheckbox();
 }
