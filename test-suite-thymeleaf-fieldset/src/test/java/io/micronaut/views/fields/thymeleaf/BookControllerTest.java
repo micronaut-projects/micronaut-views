@@ -9,6 +9,8 @@ import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 
+import static io.micronaut.views.fields.thymeleaf.TestUtils.formPost;
+import static io.micronaut.views.fields.thymeleaf.TestUtils.htmlGet;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Property(name = "datasources.default.password", value = "")
@@ -36,13 +38,5 @@ class BookControllerTest {
         html = assertDoesNotThrow(() -> client.retrieve(formPost("/books/save", "title=Building Microservices&pages=120")));
         assertTrue(html.contains("<!DOCTYPE html>"));
         assertTrue(html.contains("<li><span>Building Microservices</span><span>120</span></li>"));
-    }
-
-    private static HttpRequest<?> htmlGet(String path) {
-        return HttpRequest.GET(path).accept(MediaType.TEXT_HTML);
-    }
-
-    private static HttpRequest<?> formPost(String path, String body) {
-        return HttpRequest.POST(path, body).contentType(MediaType.APPLICATION_FORM_URLENCODED).accept(MediaType.TEXT_HTML);
     }
 }
