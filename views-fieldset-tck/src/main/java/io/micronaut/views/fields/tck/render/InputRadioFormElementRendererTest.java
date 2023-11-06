@@ -36,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 class InputRadioFormElementRendererTest {
     @Inject
     FormElementRenderer<InputRadioFormElement> renderer;
+
     @Test
     void renderOption() {
         assertFalse(renderer instanceof InputRadioFormElementRenderer);

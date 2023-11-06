@@ -35,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 class InputDateTimeFormElementRendererTest {
     @Inject
     FormElementRenderer<InputDateTimeLocalFormElement> renderer;
+
     @Test
     void render() {
         assertFalse(renderer instanceof InputDateTimeLocalFormElementRenderer);

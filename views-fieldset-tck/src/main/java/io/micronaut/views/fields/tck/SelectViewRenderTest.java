@@ -49,33 +49,33 @@ class SelectViewRenderTest {
     @Test
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
         SelectFormElement el = SelectFormElement.builder()
-            .label(Message.of("Choose a pet:", null))
+            .label(Message.of("Choose a pet:"))
             .id("pet-select")
             .name("pets")
             .options(List.of(
                 Option.builder()
                     .value("dog")
-                    .label(Message.of("Dog", null))
+                    .label(Message.of("Dog"))
                     .build(),
                 Option.builder()
                     .value("cat")
-                    .label(Message.of("Cat", null))
+                    .label(Message.of("Cat"))
                     .build(),
                 Option.builder()
                     .value("hamster")
-                    .label(Message.of("Hamster", null))
+                    .label(Message.of("Hamster"))
                     .build(),
                 Option.builder()
                     .value("parrot")
-                    .label(Message.of("Parrot", null))
+                    .label(Message.of("Parrot"))
                     .build(),
                 Option.builder()
                     .value("spider")
-                    .label(Message.of("Spider", null))
+                    .label(Message.of("Spider"))
                     .build(),
                 Option.builder()
                     .value("goldfish")
-                    .label(Message.of("Goldfish", null))
+                    .label(Message.of("Goldfish"))
                     .build()
             ))
             .build();
@@ -102,7 +102,7 @@ class SelectViewRenderTest {
         assertEquals("""
             <div class="mb-3">\
             <label for="pet" class="form-label">Pet</label>\
-            <select name="pet" id="pet" class="form-select">\
+            <select name="pet" id="pet" class="form-select" required="required">\
             <option value="dog">Dog</option>\
             <option value="cat" selected="selected">Cat</option>\
             <option value="hamster">Hamster</option>\
@@ -118,7 +118,7 @@ class SelectViewRenderTest {
         assertEquals("""
             <div class="mb-3">\
             <label for="pet" class="form-label">Pet</label>\
-            <select name="pet" id="pet" class="form-select is-invalid" aria-describedby="petValidationServerFeedback">\
+            <select name="pet" id="pet" class="form-select is-invalid" aria-describedby="petValidationServerFeedback" required="required">\
             <option value="dog">Dog</option>\
             <option value="cat">Cat</option>\
             <option value="hamster">Hamster</option>\
@@ -141,12 +141,12 @@ class SelectViewRenderTest {
 
         private List<Option.Builder> options() {
             return List.of(
-                Option.builder().value("dog").label(Message.of("Dog", null)),
-                Option.builder().value("cat").label(Message.of("Cat", null)),
-                Option.builder().value("hamster").label(Message.of("Hamster", null)),
-                Option.builder().value("parrot").label(Message.of("Parrot", null)),
-                Option.builder().value("spider").label(Message.of("Spider", null)),
-                Option.builder().value("goldfish").label(Message.of("Goldfish", null))
+                Option.builder().value("dog").label(Message.of("Dog")),
+                Option.builder().value("cat").label(Message.of("Cat")),
+                Option.builder().value("hamster").label(Message.of("Hamster")),
+                Option.builder().value("parrot").label(Message.of("Parrot")),
+                Option.builder().value("spider").label(Message.of("Spider")),
+                Option.builder().value("goldfish").label(Message.of("Goldfish"))
             );
         }
 

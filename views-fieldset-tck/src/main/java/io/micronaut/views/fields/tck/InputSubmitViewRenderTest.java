@@ -35,7 +35,7 @@ class InputSubmitViewRenderTest {
     @Test
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
         assertNotNull(viewsRenderer);
-        Message value = Message.of("Send Request", null);
+        Message value = Message.of("Send Request");
         InputSubmitFormElement el = InputSubmitFormElement.builder()
             .value(value)
             .build();

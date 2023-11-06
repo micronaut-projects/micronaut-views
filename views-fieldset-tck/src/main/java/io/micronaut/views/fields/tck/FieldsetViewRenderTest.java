@@ -46,7 +46,7 @@ class FieldsetViewRenderTest {
             .maxLength(8)
             .size(10)
             .required(true)
-            .label(Message.of("Name (4 to 8 characters):", null))
+            .label(Message.of("Name (4 to 8 characters):"))
             .build();
 
         Fieldset fieldset = new Fieldset(Collections.singletonList(textElement), Collections.emptyList());

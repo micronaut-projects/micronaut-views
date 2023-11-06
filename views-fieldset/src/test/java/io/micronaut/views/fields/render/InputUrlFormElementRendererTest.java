@@ -2,14 +2,14 @@ package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.HtmlTag;
-import io.micronaut.views.fields.InputTimeFormElement;
 import io.micronaut.views.fields.InputUrlFormElement;
 import io.micronaut.views.fields.Message;
 import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @MicronautTest(startApplication = false)
 class InputUrlFormElementRendererTest {
@@ -30,7 +30,7 @@ class InputUrlFormElementRendererTest {
             .pattern("https://.*")
             .size(30)
             .required(true)
-            .label(Message.of("Enter an https:// URL:", null))
+            .label(Message.of("Enter an https:// URL:"))
             .build();
         assertEquals("""
             <label for="url">Enter an https:// URL:</label><input type="url" name="url" id="url" placeholder="https://example.com" pattern="https://.*" size="30" required/>""",

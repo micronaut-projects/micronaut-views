@@ -15,33 +15,33 @@ class SelectFormElementRendererTest {
     @Test
     void renderOption(SelectFormElementRenderer renderer) {
         SelectFormElement el = SelectFormElement.builder()
-            .label(Message.of("Choose a pet:", null))
+            .label(Message.of("Choose a pet:"))
             .id("pet-select")
             .name("pets")
             .options(List.of(
                 Option.builder()
                     .value("dog")
-                    .label(Message.of("Dog", null))
+                    .label(Message.of("Dog"))
                     .build(),
                 Option.builder()
                     .value("cat")
-                    .label(Message.of("Cat", null))
+                    .label(Message.of("Cat"))
                     .build(),
                 Option.builder()
                     .value("hamster")
-                    .label(Message.of("Hamster", null))
+                    .label(Message.of("Hamster"))
                     .build(),
                 Option.builder()
                     .value("parrot")
-                    .label(Message.of("Parrot", null))
+                    .label(Message.of("Parrot"))
                     .build(),
                 Option.builder()
                     .value("spider")
-                    .label(Message.of("Spider", null))
+                    .label(Message.of("Spider"))
                     .build(),
                 Option.builder()
                     .value("goldfish")
-                    .label(Message.of("Goldfish", null))
+                    .label(Message.of("Goldfish"))
                     .build()
             ))
             .build();

@@ -47,9 +47,9 @@ class FormViewRenderTest {
             .maxLength(8)
             .size(10)
             .required(true)
-            .label(Message.of("Name (4 to 8 characters):", null))
+            .label(Message.of("Name (4 to 8 characters):"))
             .build();
-        Message value = Message.of("Send Request", null);
+        Message value = Message.of("Send Request");
         InputSubmitFormElement el = InputSubmitFormElement.builder()
             .value(value)
             .build();

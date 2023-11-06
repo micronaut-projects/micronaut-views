@@ -320,11 +320,7 @@ class EventCreateFormTest {
         public List<Option> generate(Class<Long> type) {
             return organizerRepository.findAll()
                 .stream()
-                .map(organizer -> {
-                    Option option = toOption(organizer, null);
-
-                    return option;
-                })
+                .map(organizer -> toOption(organizer, null))
                 .toList();
         }
 

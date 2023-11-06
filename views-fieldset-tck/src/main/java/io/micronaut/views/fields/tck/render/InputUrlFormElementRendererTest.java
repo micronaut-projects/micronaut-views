@@ -17,12 +17,9 @@ package io.micronaut.views.fields.tck.render;
 
 import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.HtmlTag;
-import io.micronaut.views.fields.InputTelFormElement;
 import io.micronaut.views.fields.InputUrlFormElement;
 import io.micronaut.views.fields.Message;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.InputType;
 import io.micronaut.views.fields.render.InputUrlFormElementRenderer;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;

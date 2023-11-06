@@ -39,7 +39,7 @@ class InputSubmitFormElementRenderTest {
     void renderOption() {
         assertFalse(renderer instanceof InputSubmitFormElementRenderer);
         Message value = Message.of("Send Request", null);
-        InputSubmitFormElement el= InputSubmitFormElement.builder()
+        InputSubmitFormElement el = InputSubmitFormElement.builder()
             .value(value)
             .build();
         assertEquals("""

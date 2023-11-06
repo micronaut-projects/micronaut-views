@@ -19,7 +19,6 @@ import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.Checkbox;
 import io.micronaut.views.fields.InputCheckboxFormElement;
-import io.micronaut.views.fields.InputHiddenFormElement;
 import io.micronaut.views.fields.Message;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import io.micronaut.views.fields.render.InputCheckboxFormElementRenderer;
@@ -37,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 class InputCheckboxFormElementRendererTest {
     @Inject
     FormElementRenderer<InputCheckboxFormElement> renderer;
+
     @Test
     void render() {
         assertFalse(renderer instanceof InputCheckboxFormElementRenderer);

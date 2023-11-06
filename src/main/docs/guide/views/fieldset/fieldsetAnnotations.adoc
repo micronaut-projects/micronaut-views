@@ -1,0 +1,65 @@
+Sometimes, more than the Java type is needed to define the input type. For example, you may want to render a login form such as:
+
+[source, html]
+----
+<form action="/login" method="post">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" name="username" value="" id="username" class="form-control" required="required"/>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" name="password" value="" id="password" class="form-control" required="required"/>
+    </div>
+    <input type="submit" value="Submit" class="btn btn-primary"/>
+</form>
+----
+
+In Java, you will create a representation for the form submission and annotate the `password` field with ann:views.fields.annotations.InputPassword[]. Something like:
+
+[source,java]
+----
+include::{testssuitefieldsetthymeleaf}/java/io/micronaut/views/fields/thymeleaf/Login.java[]
+----
+
+The following annotations are available:
+
+|===
+|Annotation | Description
+
+|ann:views.fields.annotations.InputCheckbox[]
+| Annotation to specify a field is a https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox[checkbox input].
+
+|ann:views.fields.annotations.InputEmail[]
+| Annotation to specify a field is an https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email[email input].
+
+|ann:views.fields.annotations.InputHidden[]
+| Annotation to specify a field is a https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden[hidden input].
+
+|ann:views.fields.annotations.InputNumber[]
+| Annotation to specify a field is a https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number[number input].
+
+|ann:views.fields.annotations.InputPassword[]
+| Annotation to specify a field is a https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password[password input].
+
+|ann:views.fields.annotations.InputRadio[]
+| Annotation to specify a field is a https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio[radio input].
+
+|ann:views.fields.annotations.InputTel[]
+| Annotation to specify a field is a https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel[telephone input].
+
+|ann:views.fields.annotations.InputText[]
+| Annotation to specify a field is a https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text[text input].
+
+|ann:views.fields.annotations.InputUrl[]
+| Annotation to specify a field is an https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url[url input].
+
+|ann:views.fields.annotations.Select[]
+| Annotation to specify a field is an https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select[HTML select element].
+
+|ann:views.fields.annotations.Textarea[]
+| Annotation to specify a field is a https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea[textarea].
+
+|ann:views.fields.annotations.TrixEditor[]
+| Annotation to mark a field as a https://trix-editor.org[Trix editor].
+|===

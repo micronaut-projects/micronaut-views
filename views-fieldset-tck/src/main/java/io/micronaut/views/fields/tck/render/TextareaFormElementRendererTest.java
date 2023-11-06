@@ -19,7 +19,6 @@ import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.Message;
 import io.micronaut.views.fields.TextareaFormElement;
-import io.micronaut.views.fields.annotations.Textarea;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import io.micronaut.views.fields.render.TextareaFormElementRenderer;
 import jakarta.inject.Inject;
