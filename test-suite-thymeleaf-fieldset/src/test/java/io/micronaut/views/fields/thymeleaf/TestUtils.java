@@ -4,7 +4,6 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 
 public class TestUtils {
-
     public static HttpRequest<?> htmlGet(String path) {
         return HttpRequest.GET(path).accept(MediaType.TEXT_HTML);
     }

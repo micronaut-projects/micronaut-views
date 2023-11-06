@@ -39,7 +39,7 @@ class TrixEditorViewRenderTest {
             .name("story")
             .id("story")
             .value("It was a dark and stormy night...")
-            .label(Message.of("Tell us your story:", null))
+            .label(Message.of("Tell us your story:"))
             .build();
         assertEquals("""
                 <label for="story" class="form-label">Tell us your story:</label>\

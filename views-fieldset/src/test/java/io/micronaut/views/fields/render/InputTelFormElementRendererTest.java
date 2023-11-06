@@ -2,7 +2,6 @@ package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.HtmlTag;
-import io.micronaut.views.fields.InputRadioFormElement;
 import io.micronaut.views.fields.InputTelFormElement;
 import io.micronaut.views.fields.Message;
 import org.junit.jupiter.api.Test;
@@ -28,7 +27,7 @@ class InputTelFormElementRendererTest {
             .id("phone")
             .required(true)
             .pattern("[0-9]{3}-[0-9]{3}-[0-9]{4}")
-            .label(Message.of("Enter your phone number:", null))
+            .label(Message.of("Enter your phone number:"))
             .build();
         assertEquals("""
             <label for="phone">Enter your phone number:</label><input type="tel" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>""",

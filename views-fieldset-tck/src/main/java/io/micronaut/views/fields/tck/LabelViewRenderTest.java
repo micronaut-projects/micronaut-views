@@ -43,13 +43,13 @@ class LabelViewRenderTest {
 
         assertEquals(expected, TestUtils.render("fieldset/label.html", viewsRenderer, Map.of("id", id, "el", message)));
 
-        message = Message.of(FOO_BAR, null);
+        message = Message.of(FOO_BAR);
         assertEquals(expected, TestUtils.render("fieldset/label.html", viewsRenderer, Map.of("id", id, "el", message)));
 
         expected = """
             <label class="form-label">%s</label>""".formatted(FOO_BAR);
 
-        message = Message.of(FOO_BAR, null);
+        message = Message.of(FOO_BAR);
         assertEquals(expected, TestUtils.render("fieldset/label.html", viewsRenderer, Map.of("el", message)));
 
         message = Message.of(FOO_BAR, "foo.bar");

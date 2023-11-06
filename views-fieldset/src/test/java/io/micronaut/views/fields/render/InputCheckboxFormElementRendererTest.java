@@ -18,8 +18,8 @@ class InputCheckboxFormElementRendererTest {
     void render(InputCheckboxFormElementRenderer renderer) {
         InputCheckboxFormElement el = InputCheckboxFormElement.builder()
             .checkboxes(List.of(
-                Checkbox.builder().id("scales").name("scales").label(Message.of("Scales", null)).checked(true).build(),
-                Checkbox.builder().id("horns").name("horns").label(Message.of("Horns", null)).build()
+                Checkbox.builder().id("scales").name("scales").label(Message.of("Scales")).checked(true).build(),
+                Checkbox.builder().id("horns").name("horns").label(Message.of("Horns")).build()
             ))
             .build();
         assertEquals("""

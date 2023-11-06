@@ -20,17 +20,17 @@ class InputRadioFormElementRendererTest {
                     .id("huey")
                     .value("huey")
                     .checked(true)
-                    .label(Message.of("Huey", null))
+                    .label(Message.of("Huey"))
                     .build(),
                 Radio.builder()
                     .id("dewey")
                     .value("dewey")
-                    .label(Message.of("Dewey", null))
+                    .label(Message.of("Dewey"))
                     .build(),
                 Radio.builder()
                     .id("louie")
                     .value("louie")
-                    .label(Message.of("Louie", null))
+                    .label(Message.of("Louie"))
                     .build()
             ))
             .build();

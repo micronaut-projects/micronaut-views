@@ -2,7 +2,6 @@ package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.HtmlTag;
-import io.micronaut.views.fields.InputDateFormElement;
 import io.micronaut.views.fields.InputEmailFormElement;
 import io.micronaut.views.fields.Message;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,7 @@ class InputEmailFormElementRendererTest {
             .required(true)
             .pattern(".+@globex\\.com")
             .size(30)
-            .label(Message.of("Enter your globex.com email:", null))
+            .label(Message.of("Enter your globex.com email:"))
             .build();
         assertEquals("""
             <label for="email">Enter your globex.com email:</label><input type="email" name="email" id="email" pattern=".+@globex\\.com" size="30" required/>""",

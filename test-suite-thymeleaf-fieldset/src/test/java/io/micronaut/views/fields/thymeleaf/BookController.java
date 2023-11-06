@@ -1,6 +1,5 @@
 package io.micronaut.views.fields.thymeleaf;
 
-import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
@@ -17,7 +16,6 @@ import jakarta.validation.Valid;
 import java.util.Collections;
 import java.util.Map;
 
-@Requires(property = "spec.name", value = "BookControllerTest")
 //tag::clazz[]
 @Controller("/books")
 class BookController {

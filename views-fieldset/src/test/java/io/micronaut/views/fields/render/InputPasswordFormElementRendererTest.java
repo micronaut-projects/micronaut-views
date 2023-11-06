@@ -19,7 +19,7 @@ class InputPasswordFormElementRendererTest {
             .id("pass")
             .minLength(8)
             .required(true)
-            .label(Message.of("Password (8 characters minimum):", null))
+            .label(Message.of("Password (8 characters minimum):"))
             .build();
         assertEquals("""
             <label for="pass">Password (8 characters minimum):</label><input type="password" name="password" id="pass" minlength="8" required/>""",

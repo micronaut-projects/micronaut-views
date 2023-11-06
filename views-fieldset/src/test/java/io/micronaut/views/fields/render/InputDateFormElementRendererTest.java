@@ -15,7 +15,7 @@ class InputDateFormElementRendererTest {
     @Test
     void render(InputDateFormElementRenderer renderer) {
         InputDateFormElement el = InputDateFormElement.builder()
-            .label(Message.of("Start date:", null))
+            .label(Message.of("Start date:"))
             .id("start")
             .name("trip-start")
             .min(LocalDate.of(2018, 1, 1))
