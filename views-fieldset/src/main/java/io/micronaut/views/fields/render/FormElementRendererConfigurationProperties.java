@@ -29,6 +29,20 @@ public class FormElementRendererConfigurationProperties implements FormElementRe
 
     private String inputHidden;
 
+    private String option;
+
+    @Override
+    public String getOption() {
+        return option;
+    }
+
+    /**
+     * The view name to render an option html element.
+     * @param option The view name to render an option html element
+     */
+    public void setOption(String option) {
+        this.option = option;
+    }
 
     @Override
     public String getInputHidden() {

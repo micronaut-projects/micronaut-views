@@ -25,11 +25,17 @@ import io.micronaut.core.annotation.Nullable;
  */
 @DefaultImplementation(FormElementRendererConfigurationProperties.class)
 public interface FormElementRendererConfiguration {
-
     /**
      *
      * @return The view name for a field of type input hidden.
      */
     @Nullable
     String getInputHidden();
+
+    /**
+     *
+     * @return The view name to render an option html element.
+     */
+    @Nullable
+    String getOption();
 }

@@ -18,23 +18,22 @@ package io.micronaut.views.fields.render;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.FormElement;
-import io.micronaut.views.fields.InputHiddenFormElement;
+import io.micronaut.views.fields.Option;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
 
 /**
- * {@link ViewsFormElementRenderer} implementation for input type hidden.
+ * {@link FormElementRenderer} implementation of {@link Option}.
  * @author Sergio del Amo
  * @since 4.1.0
  */
 @Requires(beans = ViewsRenderer.class)
-@Requires(property = FormElementRendererConfigurationProperties.PREFIX + ".input-hidden")
+@Requires(property = FormElementRendererConfigurationProperties.PREFIX + ".option")
 @Singleton
-public class InputHiddenViewsFormElementRenderer extends ViewsFormElementRenderer<InputHiddenFormElement> {
-
-    public InputHiddenViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
-                                               FormElementRendererConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputHidden());
+public class OptionViewsFormElementRenderer extends ViewsFormElementRenderer<Option> {
+    public OptionViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
+                                          FormElementRendererConfiguration formElementRendererConfiguration) {
+        super(viewsRenderer, formElementRendererConfiguration.getOption());
     }
 }
