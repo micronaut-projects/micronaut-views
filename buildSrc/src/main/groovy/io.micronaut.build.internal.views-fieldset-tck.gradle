@@ -4,6 +4,8 @@ plugins {
     id("io.micronaut.build.internal.views-tests")
 }
 dependencies {
+    testAnnotationProcessor(mnValidation.micronaut.validation.processor)
+    annotationProcessor(mnValidation.micronaut.validation)
     testImplementation(mnData.micronaut.data.jdbc)
     testImplementation(mn.micronaut.http.server)
     testRuntimeOnly(mnLogging.logback.classic)
