@@ -12,6 +12,11 @@ public class TestUtils {
     }
 
     @SafeVarargs
+    public static <U extends FormElement> void assertAnyMatch(Fieldset fieldset, U... expected) {
+        assertAnyMatch(fieldset.fields(), expected);
+    }
+
+    @SafeVarargs
     public static <T extends FormElement, U extends FormElement> void assertAnyMatch(List<T> list, U... expected) {
         assertTrue(
             list.stream().anyMatch(e -> {

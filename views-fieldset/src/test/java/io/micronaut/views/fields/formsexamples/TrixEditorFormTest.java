@@ -17,11 +17,10 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 
 import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
-import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
+import static io.micronaut.views.fields.TestUtils.assertAnyMatch;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Property(name = "spec.name", value = "TrixEditorFormTest")
 @MicronautTest(startApplication = false)
@@ -34,7 +33,7 @@ class TrixEditorFormTest {
         assertEquals(1, fieldset.fields().size());
         assertAnyInstance(fieldset.fields(), TrixEditorFormElement.class);
         TrixEditorFormElement formElement = trixEditorExpectation().build();
-        assertTrue(assertFormElement(fieldset, formElement));
+        assertAnyMatch(fieldset, formElement);
 
         String value = "I am doing bla bla bla";
         AnswerSave valid = new AnswerSave(value);
@@ -43,7 +42,7 @@ class TrixEditorFormTest {
         assertEquals(1, fieldset.fields().size());
         assertAnyInstance(fieldset.fields(), TrixEditorFormElement.class);
         formElement = trixEditorExpectation().value(value).build();
-        assertTrue(assertFormElement(fieldset, formElement));
+        assertAnyMatch(fieldset, formElement);
 
         AnswerSave invalid = new AnswerSave("");
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> validator.validate(invalid));
@@ -53,7 +52,7 @@ class TrixEditorFormTest {
         assertAnyInstance(fieldset.fields(), TrixEditorFormElement.class);
 
         formElement = trixEditorExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "answersave.content.notblank"))).build();
-        assertTrue(assertFormElement(fieldset, formElement));
+        assertAnyMatch(fieldset, formElement);
     }
 
     private TrixEditorFormElement.Builder trixEditorExpectation() {
