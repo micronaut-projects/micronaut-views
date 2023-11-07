@@ -5,7 +5,23 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.*;
+import io.micronaut.views.fields.Checkbox;
+import io.micronaut.views.fields.Fieldset;
+import io.micronaut.views.fields.FieldsetGenerator;
+import io.micronaut.views.fields.InputCheckboxFormElement;
+import io.micronaut.views.fields.InputDateFormElement;
+import io.micronaut.views.fields.InputDateTimeLocalFormElement;
+import io.micronaut.views.fields.InputNumberFormElement;
+import io.micronaut.views.fields.InputRadioFormElement;
+import io.micronaut.views.fields.InputTextFormElement;
+import io.micronaut.views.fields.InputUrlFormElement;
+import io.micronaut.views.fields.Message;
+import io.micronaut.views.fields.Option;
+import io.micronaut.views.fields.OptionFetcher;
+import io.micronaut.views.fields.Radio;
+import io.micronaut.views.fields.SelectFormElement;
+import io.micronaut.views.fields.SimpleMessage;
+import io.micronaut.views.fields.TextareaFormElement;
 import io.micronaut.views.fields.annotations.InputRadio;
 import io.micronaut.views.fields.annotations.InputUrl;
 import io.micronaut.views.fields.annotations.Select;
@@ -31,8 +47,10 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
-import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
-import static org.junit.jupiter.api.Assertions.*;
+import static io.micronaut.views.fields.TestUtils.assertAnyMatch;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Property(name = "spec.name", value = "EventCreateFormTest")
 @MicronautTest(startApplication = false)
@@ -76,46 +94,46 @@ class EventCreateFormTest {
         assertAnyInstance(fieldset.fields(), InputDateFormElement.class);
 
         TextareaFormElement additionalInfoExpectation = additionalInfoExpectation().build();
-        assertTrue(assertFormElement(fieldset, additionalInfoExpectation));
+        assertAnyMatch(fieldset, additionalInfoExpectation);
 
         InputTextFormElement nameExpectation = nameExpectation().build();
-        assertTrue(assertFormElement(fieldset, nameExpectation));
+        assertAnyMatch(fieldset, nameExpectation);
 
         InputCheckboxFormElement highlightedExpectation = highlightedExpectation().build();
-        assertTrue(assertFormElement(fieldset, highlightedExpectation));
+        assertAnyMatch(fieldset, highlightedExpectation);
 
         assertAnyInstance(fieldset.fields(), InputRadioFormElement.class);
 
         assertAnyInstance(fieldset.fields(), InputNumberFormElement.class);
 
         InputRadioFormElement statusExpectation = statusExpectation().build();
-        assertTrue(assertFormElement(fieldset, statusExpectation));
+        assertAnyMatch(fieldset, statusExpectation);
 
         InputNumberFormElement capacityExpectation = capacityExpectation().build();
-        assertTrue(assertFormElement(fieldset, capacityExpectation));
+        assertAnyMatch(fieldset, capacityExpectation);
 
         assertAnyInstance(fieldset.fields(), SelectFormElement.class);
         SelectFormElement genreExpectation = genreExpectation(null).build();
-        assertTrue(assertFormElement(fieldset, genreExpectation));
+        assertAnyMatch(fieldset, genreExpectation);
 
         assertAnyInstance(fieldset.fields(), InputDateTimeLocalFormElement.class);
         InputDateTimeLocalFormElement eventStartExpectation = eventStartExpectation().build();
-        assertTrue(assertFormElement(fieldset, eventStartExpectation));
+        assertAnyMatch(fieldset, eventStartExpectation);
 
         InputDateTimeLocalFormElement saleClosingDateExpectation = saleClosingDateExpectation().build();
-        assertTrue(assertFormElement(fieldset, saleClosingDateExpectation));
+        assertAnyMatch(fieldset, saleClosingDateExpectation);
 
         InputDateTimeLocalFormElement doorsOpeningExpectation = doorsOpeningExpectation().build();
-        assertTrue(assertFormElement(fieldset, doorsOpeningExpectation));
+        assertAnyMatch(fieldset, doorsOpeningExpectation);
 
         InputDateFormElement eventDateExpectation = eventDateExpectation().build();
-        assertTrue(assertFormElement(fieldset, eventDateExpectation));
+        assertAnyMatch(fieldset, eventDateExpectation);
 
         SelectFormElement organizerExpectation = organizerExpectation().build();
-        assertTrue(assertFormElement(fieldset, organizerExpectation));
+        assertAnyMatch(fieldset, organizerExpectation);
 
         InputUrlFormElement urlExpectation = urlExpectation().build();
-        assertTrue(assertFormElement(fieldset, urlExpectation));
+        assertAnyMatch(fieldset, urlExpectation);
 
         String url = "https://festivalgigante.com/";
 
@@ -129,32 +147,32 @@ class EventCreateFormTest {
             }
         });
         nameExpectation = nameExpectation().value("Festival Gigante 2023").build();
-        assertTrue(assertFormElement(fieldset, nameExpectation));
+        assertAnyMatch(fieldset, nameExpectation);
 
         genreExpectation = genreExpectation((genre, builder) -> {
             if (genre == Genre.SPORT) {
                 builder.selected(true);
             }
         }).build();
-        assertTrue(assertFormElement(fieldset, genreExpectation));
+        assertAnyMatch(fieldset, genreExpectation);
 
         capacityExpectation = capacityExpectation().value(4000).build();
-        assertTrue(assertFormElement(fieldset, capacityExpectation));
+        assertAnyMatch(fieldset, capacityExpectation);
 
         highlightedExpectation = highlightedExpectationChecked().build();
-        assertTrue(assertFormElement(fieldset, highlightedExpectation));
+        assertAnyMatch(fieldset, highlightedExpectation);
 
         urlExpectation = urlExpectation().value(url).build();
-        assertTrue(assertFormElement(fieldset, urlExpectation));
+        assertAnyMatch(fieldset, urlExpectation);
 
         statusExpectation = statusExpectationWithClosedStatus().build();
-        assertTrue(assertFormElement(fieldset, statusExpectation));
+        assertAnyMatch(fieldset, statusExpectation);
 
         additionalInfoExpectation = additionalInfoExpectation().build();
-        assertTrue(assertFormElement(fieldset, additionalInfoExpectation));
+        assertAnyMatch(fieldset, additionalInfoExpectation);
 
         eventDateExpectation = eventDateExpectation().value(EVENT_DATE).build();
-        assertTrue(assertFormElement(fieldset, eventDateExpectation));
+        assertAnyMatch(fieldset, eventDateExpectation);
 
         EventCreateForm invalid = new EventCreateForm("", Status.CLOSED, true, 4000, Genre.MUSIC, EVENT_DATE, EVENT_START, DOORS_OPENING, SALE_CLOSING_DATE, 2L, url, "It was a dark and stormy night...");
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> validator.validate(invalid));
@@ -167,25 +185,25 @@ class EventCreateFormTest {
             }
         });
         nameExpectation = nameExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "eventcreateform.name.notblank"))).build();
-        assertTrue(assertFormElement(fieldset, nameExpectation));
+        assertAnyMatch(fieldset, nameExpectation);
 
         highlightedExpectation = highlightedExpectationChecked().build();
-        assertTrue(assertFormElement(fieldset, highlightedExpectation));
+        assertAnyMatch(fieldset, highlightedExpectation);
 
         urlExpectation = urlExpectation().value(url).build();
-        assertTrue(assertFormElement(fieldset, urlExpectation));
+        assertAnyMatch(fieldset, urlExpectation);
 
         capacityExpectation = capacityExpectation().value(4000).build();
-        assertTrue(assertFormElement(fieldset, capacityExpectation));
+        assertAnyMatch(fieldset, capacityExpectation);
 
         statusExpectation = statusExpectationWithClosedStatus().build();
-        assertTrue(assertFormElement(fieldset, statusExpectation));
+        assertAnyMatch(fieldset, statusExpectation);
 
         additionalInfoExpectation = additionalInfoExpectation().value("It was a dark and stormy night...").build();
-        assertTrue(assertFormElement(fieldset, additionalInfoExpectation));
+        assertAnyMatch(fieldset, additionalInfoExpectation);
 
         eventDateExpectation = eventDateExpectation().value(EVENT_DATE).build();
-        assertTrue(assertFormElement(fieldset, eventDateExpectation));
+        assertAnyMatch(fieldset, eventDateExpectation);
     }
 
     private TextareaFormElement.Builder additionalInfoExpectation() {
@@ -370,5 +388,4 @@ class EventCreateFormTest {
         OPEN,
         CANCELED
     }
-
 }

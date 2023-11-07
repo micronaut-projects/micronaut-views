@@ -6,7 +6,13 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.*;
+import io.micronaut.views.fields.Fieldset;
+import io.micronaut.views.fields.FieldsetGenerator;
+import io.micronaut.views.fields.InputHiddenFormElement;
+import io.micronaut.views.fields.Option;
+import io.micronaut.views.fields.OptionFetcher;
+import io.micronaut.views.fields.SelectFormElement;
+import io.micronaut.views.fields.SimpleMessage;
 import io.micronaut.views.fields.annotations.InputHidden;
 import io.micronaut.views.fields.annotations.Select;
 import io.micronaut.views.fields.elements.InputHiddenFormElement;
@@ -24,8 +30,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
-import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
-import static org.junit.jupiter.api.Assertions.*;
+import static io.micronaut.views.fields.TestUtils.assertAnyMatch;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Property(name = "spec.name", value = "SaveBoxOfficeClerkFormTest")
 @MicronautTest(startApplication = false)
@@ -52,10 +59,10 @@ class SaveBoxOfficeClerkFormTest {
         assertAnyInstance(fieldset.fields(), SelectFormElement.class);
 
         InputHiddenFormElement eventIdExpectation = eventIdExpectation().build();
-        assertTrue(assertFormElement(fieldset, eventIdExpectation));
+        assertAnyMatch(fieldset, eventIdExpectation);
 
         SelectFormElement expectation = userExpectation().build();
-        assertTrue(assertFormElement(fieldset, expectation));
+        assertAnyMatch(fieldset, expectation);
     }
 
     private InputHiddenFormElement.Builder eventIdExpectation() {

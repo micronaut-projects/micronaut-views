@@ -2,11 +2,16 @@ package io.micronaut.views.fields.formsexamples;
 
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.*;
 import io.micronaut.views.fields.elements.InputTextFormElement;
 import io.micronaut.views.fields.elements.Option;
 import io.micronaut.views.fields.elements.SelectFormElement;
 import io.micronaut.views.fields.message.SimpleMessage;
+import io.micronaut.views.fields.Fieldset;
+import io.micronaut.views.fields.FieldsetGenerator;
+import io.micronaut.views.fields.InputTextFormElement;
+import io.micronaut.views.fields.Option;
+import io.micronaut.views.fields.SelectFormElement;
+import io.micronaut.views.fields.SimpleMessage;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.Test;
@@ -16,8 +21,9 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
-import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
-import static org.junit.jupiter.api.Assertions.*;
+import static io.micronaut.views.fields.TestUtils.assertAnyMatch;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MicronautTest(startApplication = false)
 class EnumDefaultsToSelectTest {
@@ -36,7 +42,7 @@ class EnumDefaultsToSelectTest {
         assertAnyInstance(fieldset.fields(), SelectFormElement.class);
 
         SelectFormElement genreExpectation = genreExpectation(null).build();
-        assertTrue(assertFormElement(fieldset, genreExpectation));
+        assertAnyMatch(fieldset, genreExpectation);
     }
 
     private SelectFormElement.Builder genreExpectation(BiConsumer<Genre, Option.Builder> builderConsumer) {

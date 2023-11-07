@@ -5,7 +5,15 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.*;
+import io.micronaut.views.fields.Checkbox;
+import io.micronaut.views.fields.Fieldset;
+import io.micronaut.views.fields.FieldsetGenerator;
+import io.micronaut.views.fields.InputCheckboxFormElement;
+import io.micronaut.views.fields.InputEmailFormElement;
+import io.micronaut.views.fields.InputPasswordFormElement;
+import io.micronaut.views.fields.InputTelFormElement;
+import io.micronaut.views.fields.InputTextFormElement;
+import io.micronaut.views.fields.SimpleMessage;
 import io.micronaut.views.fields.annotations.InputEmail;
 import io.micronaut.views.fields.annotations.InputPassword;
 import io.micronaut.views.fields.annotations.InputTel;
@@ -23,8 +31,13 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
-import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
-import static org.junit.jupiter.api.Assertions.*;
+import static io.micronaut.views.fields.TestUtils.assertAnyMatch;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Property(name = "spec.name", value = "SignupFormTest")
 @MicronautTest(startApplication = false)
@@ -48,28 +61,28 @@ class SignupFormTest {
         assertAnyInstance(fieldset.fields(), InputCheckboxFormElement.class);
 
         InputTextFormElement firstNameExpectation = firstNameExpectation().build();
-        assertTrue(assertFormElement(fieldset, firstNameExpectation));
+        assertAnyMatch(fieldset, firstNameExpectation);
 
         InputTextFormElement lastNameExpectation = lastNameExpectation().build();
-        assertTrue(assertFormElement(fieldset, lastNameExpectation));
+        assertAnyMatch(fieldset, lastNameExpectation);
 
         InputTelFormElement phonexpectation = phonexpectation().build();
-        assertTrue(assertFormElement(fieldset, phonexpectation));
+        assertAnyMatch(fieldset, phonexpectation);
 
         InputTextFormElement zipCodeExpectation = zipCodeExpectation().build();
-        assertTrue(assertFormElement(fieldset, zipCodeExpectation));
+        assertAnyMatch(fieldset, zipCodeExpectation);
 
         InputEmailFormElement emailExpectation = emailExpectation().build();
-        assertTrue(assertFormElement(fieldset, emailExpectation));
+        assertAnyMatch(fieldset, emailExpectation);
 
         InputPasswordFormElement passwordExpectation = passwordExpectation().build();
-        assertTrue(assertFormElement(fieldset, passwordExpectation));
+        assertAnyMatch(fieldset, passwordExpectation);
 
         InputPasswordFormElement confirmPasswordExpectation = confirmPasswordExpectation().build();
-        assertTrue(assertFormElement(fieldset, confirmPasswordExpectation));
+        assertAnyMatch(fieldset, confirmPasswordExpectation);
 
         InputCheckboxFormElement acceptTermsExpectation = acceptTermsExpectation(checkboxBuilder -> checkboxBuilder.checked(false).value("false")).build();
-        assertTrue(assertFormElement(fieldset, acceptTermsExpectation));
+        assertAnyMatch(fieldset, acceptTermsExpectation);
     }
 
     @Test
@@ -81,28 +94,28 @@ class SignupFormTest {
         assertNotNull(fieldset);
 
         InputTextFormElement firstNameExpectation = firstNameExpectation().value("Sergio").build();
-        assertTrue(assertFormElement(fieldset, firstNameExpectation));
+        assertAnyMatch(fieldset, firstNameExpectation);
 
         InputTextFormElement lastNameExpectation = lastNameExpectation().value("del Amo").build();
-        assertTrue(assertFormElement(fieldset, lastNameExpectation));
+        assertAnyMatch(fieldset, lastNameExpectation);
 
         InputTelFormElement phonexpectation = phonexpectation().build();
-        assertTrue(assertFormElement(fieldset, phonexpectation));
+        assertAnyMatch(fieldset, phonexpectation);
 
         InputTextFormElement zipCodeExpectation = zipCodeExpectation().build();
-        assertTrue(assertFormElement(fieldset, zipCodeExpectation));
+        assertAnyMatch(fieldset, zipCodeExpectation);
 
         InputEmailFormElement emailExpectation = emailExpectation().value("sergio.delamo@softamo.com").build();
-        assertTrue(assertFormElement(fieldset, emailExpectation));
+        assertAnyMatch(fieldset, emailExpectation);
 
         InputPasswordFormElement passwordExpectation = passwordExpectation().value("elementary").build();
-        assertTrue(assertFormElement(fieldset, passwordExpectation));
+        assertAnyMatch(fieldset, passwordExpectation);
 
         InputPasswordFormElement confirmPasswordExpectation = confirmPasswordExpectation().value("elementary").build();
-        assertTrue(assertFormElement(fieldset, confirmPasswordExpectation));
+        assertAnyMatch(fieldset, confirmPasswordExpectation);
 
         InputCheckboxFormElement acceptTermsExpectation = acceptTermsExpectation(checkboxBuilder -> checkboxBuilder.checked(true).value("true")).build();
-        assertTrue(assertFormElement(fieldset, acceptTermsExpectation));
+        assertAnyMatch(fieldset, acceptTermsExpectation);
     }
 
     @Test
@@ -123,7 +136,7 @@ class SignupFormTest {
         assertNotNull(fieldset);
 
         InputCheckboxFormElement acceptTermsExpectation = acceptTermsExpectationMustBeTrue().build();
-        assertTrue(assertFormElement(fieldset, acceptTermsExpectation));
+        assertAnyMatch(fieldset, acceptTermsExpectation);
     }
 
     @Test
@@ -144,32 +157,32 @@ class SignupFormTest {
         assertNotNull(fieldset);
 
         InputTextFormElement firstNameExpectation = firstNameExpectation().value("Sergio").build();
-        assertTrue(assertFormElement(fieldset, firstNameExpectation));
+        assertAnyMatch(fieldset, firstNameExpectation);
 
         InputTextFormElement lastNameExpectation = lastNameExpectation().value("del Amo").build();
-        assertTrue(assertFormElement(fieldset, lastNameExpectation));
+        assertAnyMatch(fieldset, lastNameExpectation);
 
         InputTelFormElement phonexpectation = phonexpectation().build();
-        assertTrue(assertFormElement(fieldset, phonexpectation));
+        assertAnyMatch(fieldset, phonexpectation);
 
         InputTextFormElement zipCodeExpectation = zipCodeExpectation().build();
-        assertTrue(assertFormElement(fieldset, zipCodeExpectation));
+        assertAnyMatch(fieldset, zipCodeExpectation);
 
         InputEmailFormElement emailExpectation = emailExpectation().value("sergio.delamo@softamo.com").build();
-        assertTrue(assertFormElement(fieldset, emailExpectation));
+        assertAnyMatch(fieldset, emailExpectation);
 
         InputPasswordFormElement passwordExpectation = passwordExpectation().value("elementary").build();
-        assertTrue(assertFormElement(fieldset, passwordExpectation));
+        assertAnyMatch(fieldset, passwordExpectation);
 
         InputPasswordFormElement confirmPasswordExpectation = confirmPasswordExpectation().value("bar").build();
-        assertTrue(assertFormElement(fieldset, confirmPasswordExpectation));
+        assertAnyMatch(fieldset, confirmPasswordExpectation);
 
         assertTrue(fieldset.hasErrors());
         assertEquals(1, fieldset.errors().size());
         assertEquals(new SimpleMessage("Passwords do not match", "signupform.passwordmatch"), fieldset.errors().get(0));
 
         InputCheckboxFormElement acceptTermsExpectation = acceptTermsExpectation(checkboxBuilder -> checkboxBuilder.checked(true).value("true")).build();
-        assertTrue(assertFormElement(fieldset, acceptTermsExpectation));
+        assertAnyMatch(fieldset, acceptTermsExpectation);
     }
 
     private InputCheckboxFormElement.Builder acceptTermsExpectation(Consumer<Checkbox.Builder> builderConsumer) {
