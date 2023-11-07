@@ -6,7 +6,7 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.elements.InputSubmitFormElement;
 import io.micronaut.views.fields.elements.InputTextFormElement;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;

@@ -8,7 +8,7 @@ import io.micronaut.views.fields.Fieldset;
 import io.micronaut.views.fields.FieldsetGenerator;
 import io.micronaut.views.fields.elements.InputPasswordFormElement;
 import io.micronaut.views.fields.elements.InputTextFormElement;
-import io.micronaut.views.fields.message.SimpleMessage;
+import io.micronaut.views.fields.messages.SimpleMessage;
 import io.micronaut.views.fields.annotations.InputPassword;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;

@@ -21,7 +21,7 @@ import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.Fieldset;
 import io.micronaut.views.fields.FieldsetGenerator;
 import io.micronaut.views.fields.elements.InputTimeFormElement;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.Test;

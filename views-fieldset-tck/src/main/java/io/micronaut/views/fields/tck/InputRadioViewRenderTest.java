@@ -18,7 +18,7 @@ package io.micronaut.views.fields.tck;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.elements.InputRadioFormElement;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.elements.Radio;
 import org.junit.jupiter.api.Test;
 

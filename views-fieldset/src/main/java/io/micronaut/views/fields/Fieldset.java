@@ -19,7 +19,7 @@ import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.CollectionUtils;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 
 import java.util.List;
 

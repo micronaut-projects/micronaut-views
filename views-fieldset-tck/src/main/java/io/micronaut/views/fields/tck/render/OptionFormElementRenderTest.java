@@ -18,7 +18,7 @@ package io.micronaut.views.fields.tck.render;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.elements.Option;
-import io.micronaut.views.fields.message.SimpleMessage;
+import io.micronaut.views.fields.messages.SimpleMessage;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import io.micronaut.views.fields.render.secondary.OptionFormElementRenderer;
 import jakarta.inject.Inject;

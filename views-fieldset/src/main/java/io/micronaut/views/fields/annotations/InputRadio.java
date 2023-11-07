@@ -16,8 +16,8 @@
 package io.micronaut.views.fields.annotations;
 
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.views.fields.fetcher.EnumRadioFetcher;
-import io.micronaut.views.fields.fetcher.RadioFetcher;
+import io.micronaut.views.fields.fetchers.EnumRadioFetcher;
+import io.micronaut.views.fields.fetchers.RadioFetcher;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

@@ -5,7 +5,7 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.Fieldset;
 import io.micronaut.views.fields.FieldsetGenerator;
-import io.micronaut.views.fields.message.SimpleMessage;
+import io.micronaut.views.fields.messages.SimpleMessage;
 import io.micronaut.views.fields.elements.TrixEditorFormElement;
 import io.micronaut.views.fields.annotations.TrixEditor;
 import jakarta.inject.Singleton;

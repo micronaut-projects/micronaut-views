@@ -13,34 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.fields.fetcher;
-
-import io.micronaut.core.annotation.Experimental;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.views.fields.elements.Radio;
-
-import java.util.List;
-
 /**
- * Defines a Radio Fetcher API.
- * @param <T> The field type. E.g. a Long or String.
+ * API to fetch elements for option, radio buttons and checkboxes.
+ * Used in combination with the {@link io.micronaut.views.fields.annotations.InputCheckbox}, {@link io.micronaut.views.fields.annotations.InputRadio} and {@link io.micronaut.views.fields.annotations.Select} annotations.
  * @author Sergio del Amo
  * @since 4.1.0
  */
-@Experimental
-public interface RadioFetcher<T> {
-
-    /**
-     *
-     * @param type The Field Type
-     * @return A list of Radio buttons
-     */
-    List<Radio> generate(@NonNull Class<T> type);
-
-    /**
-     *
-     * @param instance The Field instance
-     * @return A list of Radio buttons
-     */
-    List<Radio> generate(@NonNull T instance);
-}
+package io.micronaut.views.fields.fetchers;

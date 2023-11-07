@@ -1,7 +1,7 @@
 package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.elements.TrixEditorFormElement;
 import io.micronaut.views.fields.render.secondary.TrixEditorFormElementRenderer;
 import org.junit.jupiter.api.Test;

@@ -20,7 +20,7 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.views.fields.InputType;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 
 import java.time.LocalDate;
 import java.util.Collections;

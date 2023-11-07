@@ -19,7 +19,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.elements.Checkbox;
 import io.micronaut.views.fields.elements.InputCheckboxFormElement;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

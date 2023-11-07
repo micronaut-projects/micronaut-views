@@ -20,7 +20,7 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.FormElement;
 import io.micronaut.views.fields.HtmlTag;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 
 /**
  * HTML Option.

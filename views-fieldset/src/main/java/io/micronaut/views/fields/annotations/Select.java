@@ -16,8 +16,8 @@
 package io.micronaut.views.fields.annotations;
 
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.views.fields.fetcher.EnumOptionFetcher;
-import io.micronaut.views.fields.fetcher.OptionFetcher;
+import io.micronaut.views.fields.fetchers.EnumOptionFetcher;
+import io.micronaut.views.fields.fetchers.OptionFetcher;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

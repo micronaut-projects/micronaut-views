@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.fields.fetcher;
+package io.micronaut.views.fields.fetchers;
 
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.views.fields.message.Message;
-import io.micronaut.views.fields.elements.Checkbox;
+import io.micronaut.views.fields.messages.Message;
+import io.micronaut.views.fields.elements.Radio;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,20 +30,21 @@ import java.util.EnumSet;
 import java.util.List;
 
 /**
- * {@link CheckboxFetcher} implementation for Enums.
+ * {@link RadioFetcher} implementation for Enums.
  * @author Sergio del Amo
  * @since 4.1.0
- * @param <T> Field type
+ * @param <T> Field type.
  */
 @Experimental
 @Singleton
-public class EnumCheckboxFetcher<T> implements CheckboxFetcher<T> {
-    private static final Logger LOG = LoggerFactory.getLogger(EnumCheckboxFetcher.class);
+public class EnumRadioFetcher<T> implements RadioFetcher<T> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(EnumRadioFetcher.class);
 
     @Override
-    public List<Checkbox> generate(Class<T> type) {
+    public List<Radio> generate(Class<T> type) {
         if (type.isEnum()) {
-            return generateEnumCheckboxButtons((Class<? extends Enum>) type, null);
+            return generateEnumRadioButtons((Class<? extends Enum>) type, null);
         } else {
             LOG.warn("Type {} is not an enum", type);
         }
@@ -51,9 +52,9 @@ public class EnumCheckboxFetcher<T> implements CheckboxFetcher<T> {
     }
 
     @Override
-    public List<Checkbox> generate(T instance) {
+    public List<Radio> generate(T instance) {
         if (instance.getClass().isEnum()) {
-            return generateEnumCheckboxButtons((Class<? extends Enum>) instance.getClass(), (Enum) instance);
+            return generateEnumRadioButtons((Class<? extends Enum>) instance.getClass(), (Enum) instance);
         } else {
             LOG.warn("instance {} is not an enum", instance.getClass());
         }
@@ -61,11 +62,11 @@ public class EnumCheckboxFetcher<T> implements CheckboxFetcher<T> {
     }
 
     @NonNull
-    private List<Checkbox> generateEnumCheckboxButtons(@NonNull Class<? extends Enum> type,
-                                                       @Nullable Enum instance) {
+    private List<Radio> generateEnumRadioButtons(@NonNull Class<? extends Enum> type,
+                                                                  @Nullable Enum instance) {
         return EnumSet.allOf(type).stream()
             .map(it -> {
-                Checkbox.Builder builder = checkboxButtonFromEnum(type, (Enum) it);
+                Radio.Builder builder = radioButtonFromEnum(type, (Enum) it);
                 if (instance != null && ((Enum<?>) it).name().equals(instance.name())) {
                     builder.checked(true);
                 }
@@ -75,10 +76,9 @@ public class EnumCheckboxFetcher<T> implements CheckboxFetcher<T> {
     }
 
     @NonNull
-    private Checkbox.Builder checkboxButtonFromEnum(@NonNull Class<? extends Enum> type,
-                                                    @NonNull Enum instance) {
+    private Radio.Builder radioButtonFromEnum(@NonNull Class<? extends Enum> type, @NonNull Enum instance) {
         String name = instance.name();
-        return Checkbox.builder().id(name.toLowerCase()).value(name).label(labelForBeanProperty(type, name));
+        return Radio.builder().id(name.toLowerCase()).value(name).label(labelForBeanProperty(type, name));
     }
 
     @NonNull

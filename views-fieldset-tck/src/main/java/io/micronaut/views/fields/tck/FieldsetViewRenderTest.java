@@ -20,7 +20,7 @@ import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.Fieldset;
 import io.micronaut.views.fields.elements.InputHiddenFormElement;
 import io.micronaut.views.fields.elements.InputTextFormElement;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.fields.fetcher;
+package io.micronaut.views.fields.fetchers;
 
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.views.fields.message.Message;
-import io.micronaut.views.fields.elements.Radio;
+import io.micronaut.views.fields.messages.Message;
+import io.micronaut.views.fields.elements.Option;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,21 +30,21 @@ import java.util.EnumSet;
 import java.util.List;
 
 /**
- * {@link RadioFetcher} implementation for Enums.
+ * {@link OptionFetcher} implementation for Enums.
  * @author Sergio del Amo
  * @since 4.1.0
- * @param <T> Field type.
+ * @param <T> the field type
  */
 @Experimental
 @Singleton
-public class EnumRadioFetcher<T> implements RadioFetcher<T> {
+public class EnumOptionFetcher<T> implements OptionFetcher<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EnumRadioFetcher.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EnumOptionFetcher.class);
 
     @Override
-    public List<Radio> generate(Class<T> type) {
+    public List<Option> generate(Class<T> type) {
         if (type.isEnum()) {
-            return generateEnumRadioButtons((Class<? extends Enum>) type, null);
+            return generateEnumOptions((Class<? extends Enum>) type, null);
         } else {
             LOG.warn("Type {} is not an enum", type);
         }
@@ -52,9 +52,9 @@ public class EnumRadioFetcher<T> implements RadioFetcher<T> {
     }
 
     @Override
-    public List<Radio> generate(T instance) {
+    public List<Option> generate(T instance) {
         if (instance.getClass().isEnum()) {
-            return generateEnumRadioButtons((Class<? extends Enum>) instance.getClass(), (Enum) instance);
+            return generateEnumOptions((Class<? extends Enum>) instance.getClass(), (Enum) instance);
         } else {
             LOG.warn("instance {} is not an enum", instance.getClass());
         }
@@ -62,13 +62,13 @@ public class EnumRadioFetcher<T> implements RadioFetcher<T> {
     }
 
     @NonNull
-    private List<Radio> generateEnumRadioButtons(@NonNull Class<? extends Enum> type,
-                                                                  @Nullable Enum instance) {
+    private List<Option> generateEnumOptions(@NonNull Class<? extends Enum> type,
+                                             @Nullable Enum instance) {
         return EnumSet.allOf(type).stream()
             .map(it -> {
-                Radio.Builder builder = radioButtonFromEnum(type, (Enum) it);
+                Option.Builder builder = optionFromEnum(type, (Enum) it);
                 if (instance != null && ((Enum<?>) it).name().equals(instance.name())) {
-                    builder.checked(true);
+                    builder.selected(true);
                 }
                 return builder.build();
             })
@@ -76,9 +76,9 @@ public class EnumRadioFetcher<T> implements RadioFetcher<T> {
     }
 
     @NonNull
-    private Radio.Builder radioButtonFromEnum(@NonNull Class<? extends Enum> type, @NonNull Enum instance) {
+    private Option.Builder optionFromEnum(@NonNull Class<? extends Enum> type, @NonNull Enum instance) {
         String name = instance.name();
-        return Radio.builder().id(name.toLowerCase()).value(name).label(labelForBeanProperty(type, name));
+        return Option.builder().value(name).label(labelForBeanProperty(type, name));
     }
 
     @NonNull

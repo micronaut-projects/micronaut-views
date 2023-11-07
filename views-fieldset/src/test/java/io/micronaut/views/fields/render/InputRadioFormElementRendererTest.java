@@ -3,7 +3,7 @@ package io.micronaut.views.fields.render;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.elements.InputRadioFormElement;
 import io.micronaut.views.fields.elements.Radio;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.render.secondary.InputRadioFormElementRenderer;
 import org.junit.jupiter.api.Test;
 

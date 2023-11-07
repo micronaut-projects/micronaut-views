@@ -1,7 +1,7 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.beans.BeanIntrospection;
-import io.micronaut.views.fields.message.SimpleMessage;
+import io.micronaut.views.fields.messages.SimpleMessage;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

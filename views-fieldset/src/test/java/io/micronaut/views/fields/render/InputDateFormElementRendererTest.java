@@ -2,7 +2,7 @@ package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.elements.InputDateFormElement;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.render.secondary.InputDateFormElementRenderer;
 import org.junit.jupiter.api.Test;
 

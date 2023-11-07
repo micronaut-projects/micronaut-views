@@ -23,7 +23,7 @@ import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.views.fields.FormElement;
 import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.views.fields.elements.InputStringFormElement;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -18,7 +18,7 @@ package io.micronaut.views.fields.tck.render;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.elements.InputNumberFormElement;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import io.micronaut.views.fields.render.secondary.InputNumberFormElementRenderer;
 import jakarta.inject.Inject;

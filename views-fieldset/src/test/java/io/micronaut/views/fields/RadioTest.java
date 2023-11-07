@@ -2,7 +2,7 @@ package io.micronaut.views.fields;
 
 import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.views.fields.elements.Radio;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -18,7 +18,7 @@ package io.micronaut.views.fields;
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.elements.InputSubmitFormElement;
-import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.messages.Message;
 import jakarta.validation.ConstraintViolationException;
 
 /**

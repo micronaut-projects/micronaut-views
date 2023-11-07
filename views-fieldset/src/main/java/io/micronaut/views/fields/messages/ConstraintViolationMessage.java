@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.fields.message;
+package io.micronaut.views.fields.messages;
 
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import jakarta.validation.ConstraintViolation;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * Simple implementation of {@link Message}.
+ * {@link Message} implementation backed by a {@link ConstraintViolation}.
  * @param defaultMessage The default message to use if no code is specified or no localized message found.
  * @param code The i18n code which can be used to fetch a localized message.
  *
@@ -32,7 +34,17 @@ import java.util.Objects;
  */
 @Internal
 @Introspected
-public record SimpleMessage(@NonNull String defaultMessage, @Nullable String code) implements Message {
+public record ConstraintViolationMessage(@NonNull String code, @NonNull String defaultMessage) implements Message {
+
+    private static final String DOT = ".";
+
+    /**
+     *
+     * @param constraintViolation Constraint Violation.
+     */
+    public ConstraintViolationMessage(ConstraintViolation<?> constraintViolation) {
+        this(code(constraintViolation), constraintViolation.getMessage());
+    }
 
     @SuppressWarnings("NeedBraces")
     @Override
@@ -49,5 +61,21 @@ public record SimpleMessage(@NonNull String defaultMessage, @Nullable String cod
         int result = code != null ? code.hashCode() : 0;
         result = 31 * result + (defaultMessage != null ? defaultMessage.hashCode() : 0);
         return result;
+    }
+
+    private static String code(ConstraintViolation<?> violation) {
+        List<String> parts = new ArrayList<>();
+        parts.add(violation.getLeafBean().getClass().getSimpleName());
+        ConstraintViolationUtils.lastNode(violation).ifPresent(parts::add);
+        ConstraintViolationUtils.constraintCode(violation).ifPresent(parts::add);
+        return String.join(DOT, parts.stream().map(String::toLowerCase).toList());
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+            "code='" + code + '\'' +
+            ", defaultMessage='" + defaultMessage + '\'' +
+            '}';
     }
 }
