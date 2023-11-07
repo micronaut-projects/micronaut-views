@@ -19,19 +19,19 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.views.fields.InputSubmitFormElement;
+import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.elements.InputSubmitFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.HtmlAttribute;
 import jakarta.inject.Singleton;
 
 import java.util.List;
 import java.util.Locale;
 
 import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
-import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_SUBMIT;
+import static io.micronaut.views.fields.InputType.ATTR_TYPE_SUBMIT;
 
 /**
- * {@link FormElementRenderer} implementation for {@link io.micronaut.views.fields.InputSubmitFormElement}.
+ * {@link FormElementRenderer} implementation for {@link InputSubmitFormElement}.
  * @author Sergio del Amo
  * @since 4.1.0
  */

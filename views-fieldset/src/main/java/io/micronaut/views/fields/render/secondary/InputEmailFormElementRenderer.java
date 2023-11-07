@@ -19,14 +19,14 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.views.fields.InputEmailFormElement;
+import io.micronaut.views.fields.elements.InputEmailFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
 
 import java.util.Locale;
 
 import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
-import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_EMAIL;
+import static io.micronaut.views.fields.InputType.ATTR_TYPE_EMAIL;
 
 /**
  * {@link FormElementRenderer} implementation of {@link InputEmailFormElement}.

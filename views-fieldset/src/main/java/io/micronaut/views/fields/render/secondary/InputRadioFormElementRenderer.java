@@ -19,10 +19,10 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.views.fields.InputRadioFormElement;
-import io.micronaut.views.fields.Radio;
+import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.elements.InputRadioFormElement;
+import io.micronaut.views.fields.elements.Radio;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.HtmlAttribute;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.Locale;
 
 import static io.micronaut.views.fields.HtmlTag.TAG_DIV;
 import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
-import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_RADIO;
+import static io.micronaut.views.fields.InputType.ATTR_TYPE_RADIO;
 
 /**
  * Renders a {@link InputRadioFormElement} as HTML.

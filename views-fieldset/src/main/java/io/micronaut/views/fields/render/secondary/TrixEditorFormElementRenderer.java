@@ -17,10 +17,10 @@ package io.micronaut.views.fields.render.secondary;
 
 import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
+import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.views.fields.TrixEditorFormElement;
+import io.micronaut.views.fields.elements.TrixEditorFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.HtmlAttribute;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -29,10 +29,10 @@ import java.util.List;
 import java.util.Locale;
 
 import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
-import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_HIDDEN;
+import static io.micronaut.views.fields.InputType.ATTR_TYPE_HIDDEN;
 
 /**
- * {@link FormElementRenderer} implementation of {@link io.micronaut.views.fields.TrixEditorFormElement}.
+ * {@link FormElementRenderer} implementation of {@link TrixEditorFormElement}.
  * @author Sergio del Amo
  * @since 4.1.0
  */
@@ -41,7 +41,7 @@ import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_HIDDEN;
 @Singleton
 public class TrixEditorFormElementRenderer implements FormElementRenderer<TrixEditorFormElement> {
 
-    private static final String TRAG_TRIX_EDITOR = "trix-editor";
+    private static final String TAG_TRIX_EDITOR = "trix-editor";
     private final MessageSource messageSource;
 
     /**
@@ -59,7 +59,7 @@ public class TrixEditorFormElementRenderer implements FormElementRenderer<TrixEd
             sb.append(renderLabel(formElement.id(), formElement.label(), messageSource, locale));
         }
         sb.append(render(TAG_INPUT, inputAttributes(formElement)));
-        sb.append(render(TRAG_TRIX_EDITOR, Collections.singletonList(new HtmlAttribute(TAG_INPUT, formElement.id())), ""));
+        sb.append(render(TAG_TRIX_EDITOR, Collections.singletonList(new HtmlAttribute(TAG_INPUT, formElement.id())), ""));
         return sb.toString();
     }
 

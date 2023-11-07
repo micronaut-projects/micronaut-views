@@ -18,10 +18,10 @@ package io.micronaut.views.fields.render.secondary;
 import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.views.fields.Option;
-import io.micronaut.views.fields.SelectFormElement;
+import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.elements.Option;
+import io.micronaut.views.fields.elements.SelectFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.HtmlAttribute;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import java.util.Locale;
 import static io.micronaut.views.fields.HtmlTag.TAG_SELECT;
 
 /**
- * Renders a {@link io.micronaut.views.fields.SelectFormElement} as HTML.
+ * Renders a {@link SelectFormElement} as HTML.
  * @author Sergio del Amo
  * @since 4.1.0
  */

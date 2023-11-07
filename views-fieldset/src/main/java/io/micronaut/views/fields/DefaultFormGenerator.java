@@ -15,7 +15,9 @@
  */
 package io.micronaut.views.fields;
 
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.views.fields.elements.InputSubmitFormElement;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.NotBlank;
@@ -29,6 +31,7 @@ import java.util.List;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Internal
 @Singleton
 public class DefaultFormGenerator implements FormGenerator {
 

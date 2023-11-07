@@ -2,8 +2,9 @@ package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.HtmlTag;
-import io.micronaut.views.fields.InputTelFormElement;
-import io.micronaut.views.fields.Message;
+import io.micronaut.views.fields.elements.InputTelFormElement;
+import io.micronaut.views.fields.InputType;
+import io.micronaut.views.fields.message.Message;
 import io.micronaut.views.fields.render.secondary.InputTelFormElementRenderer;
 import org.junit.jupiter.api.Test;
 

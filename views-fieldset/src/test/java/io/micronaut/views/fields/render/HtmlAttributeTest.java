@@ -1,6 +1,7 @@
 package io.micronaut.views.fields.render;
 
 import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.views.fields.HtmlAttribute;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

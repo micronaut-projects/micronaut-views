@@ -19,9 +19,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.FormElement;
-import io.micronaut.views.fields.InputEmailFormElement;
-import io.micronaut.views.fields.render.FormElementRendererConfiguration;
-import io.micronaut.views.fields.render.FormElementRendererConfigurationProperties;
+import io.micronaut.views.fields.elements.InputEmailFormElement;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
@@ -33,12 +31,17 @@ import java.util.Map;
  */
 @Internal
 @Requires(beans = ViewsRenderer.class)
-@Requires(property = FormElementRendererConfigurationProperties.PREFIX + ".input-email")
+@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".input-email")
 @Singleton
 public class InputEmailViewsFormElementRenderer extends ViewsFormElementRenderer<InputEmailFormElement> {
 
+    /**
+     *
+     * @param viewsRenderer Views Renderer
+     * @param formElementRendererConfiguration Form Element Renderer Configuration
+     */
     public InputEmailViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
-                                              FormElementRendererConfiguration formElementRendererConfiguration) {
+                                              FormElementRendererViewsConfiguration formElementRendererConfiguration) {
         super(viewsRenderer, formElementRendererConfiguration.getInputEmail());
     }
 }

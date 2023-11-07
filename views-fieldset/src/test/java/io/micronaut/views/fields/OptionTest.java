@@ -1,6 +1,8 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.views.fields.elements.Option;
+import io.micronaut.views.fields.message.SimpleMessage;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

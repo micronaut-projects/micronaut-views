@@ -17,7 +17,7 @@ package io.micronaut.views.fields.tck.render;
 
 import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.InputHiddenFormElement;
+import io.micronaut.views.fields.elements.InputHiddenFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import io.micronaut.views.fields.render.secondary.InputHiddenFormElementRenderer;
 import jakarta.inject.Inject;
@@ -28,7 +28,7 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Property(name = "micronaut.views.form-element-views.input-hidden", value = "fieldset/inputhidden.html")
+@Property(name = "micronaut.views.form-element.render.views.input-hidden", value = "fieldset/inputhidden.html")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests

@@ -19,9 +19,9 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.views.fields.Option;
+import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.elements.Option;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.HtmlAttribute;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;

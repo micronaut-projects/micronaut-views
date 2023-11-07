@@ -1,8 +1,8 @@
 package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.Message;
-import io.micronaut.views.fields.TextareaFormElement;
+import io.micronaut.views.fields.message.Message;
+import io.micronaut.views.fields.elements.TextareaFormElement;
 import io.micronaut.views.fields.render.secondary.TextareaFormElementRenderer;
 import org.junit.jupiter.api.Test;
 

@@ -15,8 +15,9 @@
  */
 package io.micronaut.views.fields.annotations;
 
-import io.micronaut.views.fields.EnumOptionFetcher;
-import io.micronaut.views.fields.OptionFetcher;
+import io.micronaut.core.annotation.Experimental;
+import io.micronaut.views.fields.fetcher.EnumOptionFetcher;
+import io.micronaut.views.fields.fetcher.OptionFetcher;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -31,6 +32,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Experimental
 @Documented
 @Retention(RUNTIME)
 @Target({ElementType.FIELD})

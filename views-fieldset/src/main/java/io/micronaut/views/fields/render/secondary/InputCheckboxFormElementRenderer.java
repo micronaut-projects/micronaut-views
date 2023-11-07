@@ -18,10 +18,10 @@ package io.micronaut.views.fields.render.secondary;
 import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.views.fields.Checkbox;
-import io.micronaut.views.fields.InputCheckboxFormElement;
+import io.micronaut.views.fields.elements.Checkbox;
+import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.elements.InputCheckboxFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
-import io.micronaut.views.fields.render.HtmlAttribute;
 import jakarta.inject.Singleton;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.Locale;
 
 import static io.micronaut.views.fields.HtmlTag.TAG_DIV;
 import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
-import static io.micronaut.views.fields.render.InputType.ATTR_TYPE_CHECKBOX;
+import static io.micronaut.views.fields.InputType.ATTR_TYPE_CHECKBOX;
 
 /**
  * {@link FormElementRenderer} implementation for {@link InputCheckboxFormElement}.

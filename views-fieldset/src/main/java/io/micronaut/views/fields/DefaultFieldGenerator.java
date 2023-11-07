@@ -17,6 +17,7 @@ package io.micronaut.views.fields;
 
 import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.beans.BeanIntrospection;
@@ -34,6 +35,11 @@ import io.micronaut.views.fields.annotations.InputUrl;
 import io.micronaut.views.fields.annotations.Select;
 import io.micronaut.views.fields.annotations.Textarea;
 import io.micronaut.views.fields.annotations.TrixEditor;
+import io.micronaut.views.fields.elements.*;
+import io.micronaut.views.fields.fetcher.*;
+import io.micronaut.views.fields.message.ConstraintViolationMessage;
+import io.micronaut.views.fields.message.ConstraintViolationUtils;
+import io.micronaut.views.fields.message.Message;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolation;
@@ -54,6 +60,7 @@ import java.util.function.BiConsumer;
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Internal
 @Singleton
 public class DefaultFieldGenerator implements FieldsetGenerator {
     private static final String BUILDER_METHOD_NAME = "name";

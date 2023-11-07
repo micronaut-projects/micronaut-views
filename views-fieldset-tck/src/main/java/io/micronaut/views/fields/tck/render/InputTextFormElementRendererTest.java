@@ -17,8 +17,8 @@ package io.micronaut.views.fields.tck.render;
 
 import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.views.fields.InputTextFormElement;
-import io.micronaut.views.fields.Message;
+import io.micronaut.views.fields.elements.InputTextFormElement;
+import io.micronaut.views.fields.message.Message;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import io.micronaut.views.fields.render.secondary.InputTextFormElementRenderer;
 import jakarta.inject.Inject;
@@ -29,7 +29,7 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Property(name = "micronaut.views.form-element-views.input-text", value = "fieldset/inputtext.html")
+@Property(name = "micronaut.views.form-element.render.views.input-text", value = "fieldset/inputtext.html")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests

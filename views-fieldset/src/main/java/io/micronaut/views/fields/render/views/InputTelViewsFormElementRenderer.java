@@ -19,9 +19,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.FormElement;
-import io.micronaut.views.fields.InputTelFormElement;
-import io.micronaut.views.fields.render.FormElementRendererConfiguration;
-import io.micronaut.views.fields.render.FormElementRendererConfigurationProperties;
+import io.micronaut.views.fields.elements.InputTelFormElement;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
@@ -33,12 +31,17 @@ import java.util.Map;
  */
 @Internal
 @Requires(beans = ViewsRenderer.class)
-@Requires(property = FormElementRendererConfigurationProperties.PREFIX + ".input-tel")
+@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".input-tel")
 @Singleton
 public class InputTelViewsFormElementRenderer extends ViewsFormElementRenderer<InputTelFormElement> {
 
+    /**
+     *
+     * @param viewsRenderer Views Renderer
+     * @param formElementRendererConfiguration Form Element Renderer Configuration
+     */
     public InputTelViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
-                                            FormElementRendererConfiguration formElementRendererConfiguration) {
+                                            FormElementRendererViewsConfiguration formElementRendererConfiguration) {
         super(viewsRenderer, formElementRendererConfiguration.getInputTel());
     }
 }

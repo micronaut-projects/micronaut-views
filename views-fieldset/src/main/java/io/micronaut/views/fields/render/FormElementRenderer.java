@@ -16,12 +16,14 @@
 package io.micronaut.views.fields.render;
 
 import io.micronaut.context.MessageSource;
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.views.fields.FormElement;
-import io.micronaut.views.fields.InputStringFormElement;
-import io.micronaut.views.fields.Message;
+import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.elements.InputStringFormElement;
+import io.micronaut.views.fields.message.Message;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,6 +39,7 @@ import static io.micronaut.views.fields.HtmlTag.TAG_LABEL;
  * @since 4.1.0
  * @param <T> Form element
  */
+@Experimental
 @FunctionalInterface
 public interface FormElementRenderer<T extends FormElement> {
     /**

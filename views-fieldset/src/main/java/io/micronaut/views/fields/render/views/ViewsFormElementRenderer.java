@@ -39,9 +39,9 @@ import java.util.Map;
 @Internal
 public class ViewsFormElementRenderer<T extends FormElement> implements FormElementRenderer<T> {
 
-    protected final ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer;
-    protected final String viewName;
-    protected final String modelKey;
+    private final ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer;
+    private final String viewName;
+    private final String modelKey;
 
     public ViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                     String viewName,
