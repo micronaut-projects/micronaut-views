@@ -41,7 +41,7 @@ import static io.micronaut.views.fields.InputType.ATTR_TYPE_HIDDEN;
 @Singleton
 public class TrixEditorFormElementRenderer implements FormElementRenderer<TrixEditorFormElement> {
 
-    private static final String TRAG_TRIX_EDITOR = "trix-editor";
+    private static final String TAG_TRIX_EDITOR = "trix-editor";
     private final MessageSource messageSource;
 
     /**
@@ -59,7 +59,7 @@ public class TrixEditorFormElementRenderer implements FormElementRenderer<TrixEd
             sb.append(renderLabel(formElement.id(), formElement.label(), messageSource, locale));
         }
         sb.append(render(TAG_INPUT, inputAttributes(formElement)));
-        sb.append(render(TRAG_TRIX_EDITOR, Collections.singletonList(new HtmlAttribute(TAG_INPUT, formElement.id())), ""));
+        sb.append(render(TAG_TRIX_EDITOR, Collections.singletonList(new HtmlAttribute(TAG_INPUT, formElement.id())), ""));
         return sb.toString();
     }
 
