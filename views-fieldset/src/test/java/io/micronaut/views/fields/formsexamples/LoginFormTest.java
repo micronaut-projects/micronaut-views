@@ -19,11 +19,10 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 
 import static io.micronaut.views.fields.TestUtils.assertAnyInstance;
-import static io.micronaut.views.fields.formsexamples.FormElementFixture.assertFormElement;
+import static io.micronaut.views.fields.TestUtils.assertAnyMatch;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Property(name = "spec.name", value = "LoginFormTest")
 @MicronautTest(startApplication = false)
@@ -37,9 +36,9 @@ class LoginFormTest {
         assertAnyInstance(fieldset.fields(), InputTextFormElement.class);
         assertAnyInstance(fieldset.fields(), InputPasswordFormElement.class);
         InputTextFormElement usernameExpectation = usernameExpectation().build();
-        assertTrue(assertFormElement(fieldset, usernameExpectation));
+        assertAnyMatch(fieldset, usernameExpectation);
         InputPasswordFormElement inputPasswordFormElement = passwordExpectation().build();
-        assertTrue(assertFormElement(fieldset, inputPasswordFormElement));
+        assertAnyMatch(fieldset, inputPasswordFormElement);
 
         LoginForm loginForm = new LoginForm("sherlock", "elementary");
         fieldset = fieldsetGenerator.generate(loginForm);
@@ -48,9 +47,9 @@ class LoginFormTest {
         assertAnyInstance(fieldset.fields(), InputTextFormElement.class);
         assertAnyInstance(fieldset.fields(), InputPasswordFormElement.class);
         usernameExpectation = usernameExpectation().value("sherlock").build();
-        assertTrue(assertFormElement(fieldset, usernameExpectation));
+        assertAnyMatch(fieldset, usernameExpectation);
         inputPasswordFormElement = passwordExpectation().value("elementary").build();
-        assertTrue(assertFormElement(fieldset, inputPasswordFormElement));
+        assertAnyMatch(fieldset, inputPasswordFormElement);
 
         LoginForm invalid = new LoginForm("sherlock", "");
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> validator.validate(invalid));
@@ -60,9 +59,9 @@ class LoginFormTest {
         assertAnyInstance(fieldset.fields(), InputTextFormElement.class);
         assertAnyInstance(fieldset.fields(), InputPasswordFormElement.class);
         usernameExpectation = usernameExpectation().value("sherlock").build();
-        assertTrue(assertFormElement(fieldset, usernameExpectation));
+        assertAnyMatch(fieldset, usernameExpectation);
         inputPasswordFormElement = passwordExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "loginform.password.notblank"))).build();
-        assertTrue(assertFormElement(fieldset, inputPasswordFormElement));
+        assertAnyMatch(fieldset, inputPasswordFormElement);
     }
 
     private InputTextFormElement.Builder usernameExpectation() {
