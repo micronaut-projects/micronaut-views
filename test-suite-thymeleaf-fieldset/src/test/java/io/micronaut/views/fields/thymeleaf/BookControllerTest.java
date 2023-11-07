@@ -2,6 +2,7 @@ package io.micronaut.views.fields.thymeleaf;
 
 import io.micronaut.context.annotation.Property;
 import io.micronaut.core.type.Argument;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.BlockingHttpClient;
 import io.micronaut.http.client.HttpClient;
@@ -14,7 +15,11 @@ import java.util.Optional;
 
 import static io.micronaut.views.fields.thymeleaf.TestUtils.formPost;
 import static io.micronaut.views.fields.thymeleaf.TestUtils.htmlGet;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Property(name = "datasources.default.password", value = "")
 @Property(name = "datasources.default.dialect", value = "H2")
@@ -56,9 +61,11 @@ class BookControllerTest {
     @Test
     void formIsValidated(@Client("/") HttpClient httpClient) {
         BlockingHttpClient client = httpClient.toBlocking();
-        Argument okResponse = Argument.of(String.class);
-        Argument failureResponse = Argument.of(String.class);
-        HttpClientResponseException e = assertThrows(HttpClientResponseException.class, () -> client.retrieve(formPost("/books/save", "title=Building Microservices&pages=0"), okResponse, failureResponse));
+        Argument<String> okResponse = Argument.of(String.class);
+        Argument<String> failureResponse = Argument.of(String.class);
+        HttpRequest<?> request = formPost("/books/save", "title=Building Microservices&pages=0");
+
+        HttpClientResponseException e = assertThrows(HttpClientResponseException.class, () -> client.retrieve(request, okResponse, failureResponse));
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, e.getStatus());
         Optional<String> htmlOptional = e.getResponse().getBody(String.class);
         assertTrue(htmlOptional.isPresent());
