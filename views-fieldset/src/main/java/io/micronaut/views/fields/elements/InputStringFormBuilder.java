@@ -41,7 +41,7 @@ public abstract class InputStringFormBuilder<T extends InputStringFormElement, S
 
     /**
      *
-     * It defines an identifier (ID) which must be unique in the whole document
+     * It defines an identifier (ID) which must be unique in the whole document.
      */
     protected String id;
 
