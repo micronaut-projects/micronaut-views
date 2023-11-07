@@ -11,7 +11,18 @@ import io.micronaut.views.fields.annotations.InputRadio;
 import io.micronaut.views.fields.annotations.InputUrl;
 import io.micronaut.views.fields.annotations.Select;
 import io.micronaut.views.fields.annotations.Textarea;
-import io.micronaut.views.fields.elements.*;
+import io.micronaut.views.fields.elements.Checkbox;
+import io.micronaut.views.fields.elements.InputCheckboxFormElement;
+import io.micronaut.views.fields.elements.InputDateFormElement;
+import io.micronaut.views.fields.elements.InputDateTimeLocalFormElement;
+import io.micronaut.views.fields.elements.InputNumberFormElement;
+import io.micronaut.views.fields.elements.InputRadioFormElement;
+import io.micronaut.views.fields.elements.InputTextFormElement;
+import io.micronaut.views.fields.elements.InputUrlFormElement;
+import io.micronaut.views.fields.elements.Option;
+import io.micronaut.views.fields.elements.Radio;
+import io.micronaut.views.fields.elements.SelectFormElement;
+import io.micronaut.views.fields.elements.TextareaFormElement;
 import io.micronaut.views.fields.fetchers.OptionFetcher;
 import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.messages.SimpleMessage;
@@ -63,7 +74,7 @@ class EventCreateFormTest {
     }
 
     @Test
-    void fieldsetGenerationForALoginForm(FieldsetGenerator fieldsetGenerator, EventCreateFormValidator validator) {
+    void fieldsetGenerationForAnEventCreationForm(FieldsetGenerator fieldsetGenerator) {
         Fieldset fieldset = fieldsetGenerator.generate(EventCreateForm.class, (propertyName, builder) -> {
             if ("eventStart".equals(propertyName)) {
                 builder.with("min", DOORS_OPENING);
@@ -75,7 +86,6 @@ class EventCreateFormTest {
         assertNotNull(fieldset);
         assertEquals(12, fieldset.fields().size());
         assertAnyInstance(fieldset.fields(), TextareaFormElement.class);
-
         assertAnyInstance(fieldset.fields(), InputDateFormElement.class);
 
         TextareaFormElement additionalInfoExpectation = additionalInfoExpectation().build();
@@ -119,11 +129,13 @@ class EventCreateFormTest {
 
         InputUrlFormElement urlExpectation = urlExpectation().build();
         assertAnyMatch(fieldset, urlExpectation);
+    }
 
+    @Test
+    void fieldsetGenerationForAnEventCreationFormWithAUrl(FieldsetGenerator fieldsetGenerator) {
         String url = "https://festivalgigante.com/";
-
         EventCreateForm valid = new EventCreateForm("Festival Gigante 2023", Status.CLOSED, true, 4000, Genre.SPORT, EVENT_DATE, EVENT_START, DOORS_OPENING, SALE_CLOSING_DATE, 2L, url, null);
-        fieldset = fieldsetGenerator.generate(valid, (propertyName, builder) -> {
+        Fieldset fieldset = fieldsetGenerator.generate(valid, (propertyName, builder) -> {
             if ("eventStart".equals(propertyName)) {
                 builder.with("min", DOORS_OPENING);
             }
@@ -131,37 +143,41 @@ class EventCreateFormTest {
                 builder.with("min", SALE_CLOSING_DATE);
             }
         });
-        nameExpectation = nameExpectation().value("Festival Gigante 2023").build();
+        InputTextFormElement nameExpectation = nameExpectation().value("Festival Gigante 2023").build();
         assertAnyMatch(fieldset, nameExpectation);
 
-        genreExpectation = genreExpectation((genre, builder) -> {
+        SelectFormElement genreExpectation = genreExpectation((genre, builder) -> {
             if (genre == Genre.SPORT) {
                 builder.selected(true);
             }
         }).build();
         assertAnyMatch(fieldset, genreExpectation);
 
-        capacityExpectation = capacityExpectation().value(4000).build();
+        InputNumberFormElement capacityExpectation = capacityExpectation().value(4000).build();
         assertAnyMatch(fieldset, capacityExpectation);
 
-        highlightedExpectation = highlightedExpectationChecked().build();
+        InputCheckboxFormElement highlightedExpectation = highlightedExpectationChecked().build();
         assertAnyMatch(fieldset, highlightedExpectation);
 
-        urlExpectation = urlExpectation().value(url).build();
+        InputUrlFormElement urlExpectation = urlExpectation().value(url).build();
         assertAnyMatch(fieldset, urlExpectation);
 
-        statusExpectation = statusExpectationWithClosedStatus().build();
+        InputRadioFormElement statusExpectation = statusExpectationWithClosedStatus().build();
         assertAnyMatch(fieldset, statusExpectation);
 
-        additionalInfoExpectation = additionalInfoExpectation().build();
+        TextareaFormElement additionalInfoExpectation = additionalInfoExpectation().build();
         assertAnyMatch(fieldset, additionalInfoExpectation);
 
-        eventDateExpectation = eventDateExpectation().value(EVENT_DATE).build();
+        InputDateFormElement eventDateExpectation = eventDateExpectation().value(EVENT_DATE).build();
         assertAnyMatch(fieldset, eventDateExpectation);
+    }
 
+    @Test
+    void fieldsetGenerationForAnInvalidEventCreationForm(FieldsetGenerator fieldsetGenerator, EventCreateFormValidator validator) {
+        String url = "https://festivalgigante.com/";
         EventCreateForm invalid = new EventCreateForm("", Status.CLOSED, true, 4000, Genre.MUSIC, EVENT_DATE, EVENT_START, DOORS_OPENING, SALE_CLOSING_DATE, 2L, url, "It was a dark and stormy night...");
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> validator.validate(invalid));
-        fieldset = fieldsetGenerator.generate(invalid, ex, (propertyName, builder) -> {
+        Fieldset fieldset = fieldsetGenerator.generate(invalid, ex, (propertyName, builder) -> {
             if ("eventStart".equals(propertyName)) {
                 builder.with("min", DOORS_OPENING);
             }
@@ -169,25 +185,25 @@ class EventCreateFormTest {
                 builder.with("min", SALE_CLOSING_DATE);
             }
         });
-        nameExpectation = nameExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "eventcreateform.name.notblank"))).build();
+        InputTextFormElement nameExpectation = nameExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "eventcreateform.name.notblank"))).build();
         assertAnyMatch(fieldset, nameExpectation);
 
-        highlightedExpectation = highlightedExpectationChecked().build();
+        InputCheckboxFormElement highlightedExpectation = highlightedExpectationChecked().build();
         assertAnyMatch(fieldset, highlightedExpectation);
 
-        urlExpectation = urlExpectation().value(url).build();
+        InputUrlFormElement urlExpectation = urlExpectation().value(url).build();
         assertAnyMatch(fieldset, urlExpectation);
 
-        capacityExpectation = capacityExpectation().value(4000).build();
+        InputNumberFormElement capacityExpectation = capacityExpectation().value(4000).build();
         assertAnyMatch(fieldset, capacityExpectation);
 
-        statusExpectation = statusExpectationWithClosedStatus().build();
+        InputRadioFormElement statusExpectation = statusExpectationWithClosedStatus().build();
         assertAnyMatch(fieldset, statusExpectation);
 
-        additionalInfoExpectation = additionalInfoExpectation().value("It was a dark and stormy night...").build();
+        TextareaFormElement additionalInfoExpectation = additionalInfoExpectation().value("It was a dark and stormy night...").build();
         assertAnyMatch(fieldset, additionalInfoExpectation);
 
-        eventDateExpectation = eventDateExpectation().value(EVENT_DATE).build();
+        InputDateFormElement eventDateExpectation = eventDateExpectation().value(EVENT_DATE).build();
         assertAnyMatch(fieldset, eventDateExpectation);
     }
 
