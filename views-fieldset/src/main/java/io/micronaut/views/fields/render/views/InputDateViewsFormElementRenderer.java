@@ -41,6 +41,6 @@ public class InputDateViewsFormElementRenderer extends ViewsFormElementRenderer<
      */
     public InputDateViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                              FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputDate());
+        super(viewsRenderer, formElementRendererConfiguration.inputDate());
     }
 }

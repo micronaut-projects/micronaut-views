@@ -41,6 +41,6 @@ public class InputDateTimeLocalViewsFormElementRenderer extends ViewsFormElement
      */
     public InputDateTimeLocalViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                                       FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputDateTimeLocal());
+        super(viewsRenderer, formElementRendererConfiguration.inputDateTimeLocal());
     }
 }

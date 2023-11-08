@@ -41,6 +41,6 @@ public class InputTimeViewsFormElementRenderer extends ViewsFormElementRenderer<
      */
     public InputTimeViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                              FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputTime());
+        super(viewsRenderer, formElementRendererConfiguration.inputTime());
     }
 }

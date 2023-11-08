@@ -41,6 +41,6 @@ public class InputCheckboxViewsFormElementRenderer extends ViewsFormElementRende
      */
     public InputCheckboxViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                                  FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputCheckbox());
+        super(viewsRenderer, formElementRendererConfiguration.inputCheckbox());
     }
 }

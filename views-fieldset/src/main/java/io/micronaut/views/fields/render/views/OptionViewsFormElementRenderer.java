@@ -42,6 +42,6 @@ public class OptionViewsFormElementRenderer extends ViewsFormElementRenderer<Opt
      */
     public OptionViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                           FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getOption());
+        super(viewsRenderer, formElementRendererConfiguration.option());
     }
 }

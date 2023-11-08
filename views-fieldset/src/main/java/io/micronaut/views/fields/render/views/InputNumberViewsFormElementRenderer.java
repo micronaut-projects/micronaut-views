@@ -41,6 +41,6 @@ public class InputNumberViewsFormElementRenderer extends ViewsFormElementRendere
      */
     public InputNumberViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                                FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputNumber());
+        super(viewsRenderer, formElementRendererConfiguration.inputNumber());
     }
 }

@@ -41,6 +41,6 @@ public class InputSubmitViewsFormElementRenderer extends ViewsFormElementRendere
      */
     public InputSubmitViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                                FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputSubmit());
+        super(viewsRenderer, formElementRendererConfiguration.inputSubmit());
     }
 }

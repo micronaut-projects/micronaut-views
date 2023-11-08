@@ -24,130 +24,44 @@ import io.micronaut.views.fields.render.FormElementRendererConfigurationProperti
  * Configuration for {@link FormElementRenderer} based on views.
  * @author Sergio del Amo
  * @since 4.1.0
+ * @param inputCheckbox The view name for a field of type input checkbox.
+ * @param inputDate The view name for a field of type input date.
+ * @param inputDateTimeLocal The view name for a field of type input datetime-local.
+ * @param inputEmail The view name for a field of type input email.
+ * @param inputHidden The view name for a field of type input hidden.
+ * @param inputNumber The view name for a field of type input number.
+ * @param inputPassword The view name for a field of type input password.
+ * @param inputRadio The view name for a field of type input radio.
+ * @param inputSubmit The view name for a field of type input submit.
+ * @param inputTel The view name for a field of type input tel.
+ * @param inputText The view name for a field of type input text.
+ * @param inputTime The view name for a field of type input time.
+ * @param inputUrl The view name for a field of type input url.
+ * @param option The view name to render an option html element.
+ * @param select The view name for a field of type select.
+ * @param textarea The view name to render a textarea html element.
+ * @param trixEditor The view name for a field of type trix-editor.
  */
 @ConfigurationProperties(FormElementRendererViewsConfiguration.PREFIX)
-public interface FormElementRendererViewsConfiguration {
+public record FormElementRendererViewsConfiguration(@Nullable String inputCheckbox,
+                                                    @Nullable String inputDate,
+                                                    @Nullable String inputDateTimeLocal,
+                                                    @Nullable String inputEmail,
+                                                    @Nullable String inputHidden,
+                                                    @Nullable String inputNumber,
+                                                    @Nullable String inputPassword,
+                                                    @Nullable String inputRadio,
+                                                    @Nullable String inputSubmit,
+                                                    @Nullable String inputTel,
+                                                    @Nullable String inputText,
+                                                    @Nullable String inputTime,
+                                                    @Nullable String inputUrl,
+                                                    @Nullable String option,
+                                                    @Nullable String select,
+                                                    @Nullable String textarea,
+                                                    @Nullable String trixEditor) {
     /**
      * Configuration Prefix.
      */
-    String PREFIX = FormElementRendererConfigurationProperties.PREFIX + ".views";
-
-    /**
-     *
-     * @return The view name for a field of type input checkbox.
-     */
-    @Nullable
-    String getInputCheckbox();
-
-    /**
-     *
-     * @return The view name for a field of type input date.
-     */
-    @Nullable
-    String getInputDate();
-
-    /**
-     *
-     * @return The view name for a field of type input datetime-local.
-     */
-    @Nullable
-    String getInputDateTimeLocal();
-
-    /**
-     *
-     * @return The view name for a field of type input email.
-     */
-    @Nullable
-    String getInputEmail();
-
-    /**
-     *
-     * @return The view name for a field of type input hidden.
-     */
-    @Nullable
-    String getInputHidden();
-
-    /**
-     *
-     * @return The view name for a field of type input number.
-     */
-    @Nullable
-    String getInputNumber();
-
-    /**
-     *
-     * @return The view name for a field of type input password.
-     */
-    @Nullable
-    String getInputPassword();
-
-    /**
-     *
-     * @return The view name for a field of type input radio.
-     */
-    @Nullable
-    String getInputRadio();
-
-    /**
-     *
-     * @return The view name for a field of type input submit.
-     */
-    @Nullable
-    String getInputSubmit();
-
-    /**
-     *
-     * @return The view name for a field of type input tel.
-     */
-    @Nullable
-    String getInputTel();
-
-    /**
-     *
-     * @return The view name for a field of type input text.
-     */
-    @Nullable
-    String getInputText();
-
-    /**
-     *
-     * @return The view name for a field of type input time.
-     */
-    @Nullable
-    String getInputTime();
-
-    /**
-     *
-     * @return The view name for a field of type input url.
-     */
-    @Nullable
-    String getInputUrl();
-
-    /**
-     *
-     * @return The view name to render an option html element.
-     */
-    @Nullable
-    String getOption();
-
-    /**
-     *
-     * @return The view name for a field of type select.
-     */
-    @Nullable
-    String getSelect();
-
-    /**
-     *
-     * @return The view name to render a textarea html element.
-     */
-    @Nullable
-    String getTextarea();
-
-    /**
-     *
-     * @return The view name for a field of type trix-editor.
-     */
-    @Nullable
-    String getTrixEditor();
+    public static final String PREFIX = FormElementRendererConfigurationProperties.PREFIX + ".views";
 }

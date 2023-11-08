@@ -41,6 +41,6 @@ public class InputTelViewsFormElementRenderer extends ViewsFormElementRenderer<I
      */
     public InputTelViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                             FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputTel());
+        super(viewsRenderer, formElementRendererConfiguration.inputTel());
     }
 }

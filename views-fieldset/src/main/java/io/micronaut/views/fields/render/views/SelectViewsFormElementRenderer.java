@@ -41,6 +41,6 @@ public class SelectViewsFormElementRenderer extends ViewsFormElementRenderer<Sel
      */
     public SelectViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                           FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getSelect());
+        super(viewsRenderer, formElementRendererConfiguration.select());
     }
 }

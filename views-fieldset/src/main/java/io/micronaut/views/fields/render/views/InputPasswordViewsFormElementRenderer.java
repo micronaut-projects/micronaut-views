@@ -41,6 +41,6 @@ public class InputPasswordViewsFormElementRenderer extends ViewsFormElementRende
      */
     public InputPasswordViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                                  FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputPassword());
+        super(viewsRenderer, formElementRendererConfiguration.inputPassword());
     }
 }

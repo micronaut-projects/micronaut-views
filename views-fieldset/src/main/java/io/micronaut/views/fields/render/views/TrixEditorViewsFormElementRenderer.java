@@ -41,6 +41,6 @@ public class TrixEditorViewsFormElementRenderer extends ViewsFormElementRenderer
      */
     public TrixEditorViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                               FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getTrixEditor());
+        super(viewsRenderer, formElementRendererConfiguration.trixEditor());
     }
 }

@@ -41,6 +41,6 @@ public class InputTextViewsFormElementRenderer extends ViewsFormElementRenderer<
      */
     public InputTextViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                              FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputText());
+        super(viewsRenderer, formElementRendererConfiguration.inputText());
     }
 }

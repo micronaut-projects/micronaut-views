@@ -41,6 +41,6 @@ public class InputUrlViewsFormElementRenderer extends ViewsFormElementRenderer<I
      */
     public InputUrlViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                             FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputUrl());
+        super(viewsRenderer, formElementRendererConfiguration.inputUrl());
     }
 }

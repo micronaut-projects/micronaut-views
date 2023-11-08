@@ -41,6 +41,6 @@ public class TextareaViewsFormElementRenderer extends ViewsFormElementRenderer<T
      */
     public TextareaViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                             FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getTextarea());
+        super(viewsRenderer, formElementRendererConfiguration.textarea());
     }
 }

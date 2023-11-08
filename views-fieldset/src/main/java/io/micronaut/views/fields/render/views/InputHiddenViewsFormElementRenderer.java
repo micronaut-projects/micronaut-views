@@ -41,6 +41,6 @@ public class InputHiddenViewsFormElementRenderer extends ViewsFormElementRendere
      */
     public InputHiddenViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                                FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputHidden());
+        super(viewsRenderer, formElementRendererConfiguration.inputHidden());
     }
 }

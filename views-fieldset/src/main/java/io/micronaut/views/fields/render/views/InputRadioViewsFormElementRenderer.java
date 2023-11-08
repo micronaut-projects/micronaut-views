@@ -41,6 +41,6 @@ public class InputRadioViewsFormElementRenderer extends ViewsFormElementRenderer
      */
     public InputRadioViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                               FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputRadio());
+        super(viewsRenderer, formElementRendererConfiguration.inputRadio());
     }
 }

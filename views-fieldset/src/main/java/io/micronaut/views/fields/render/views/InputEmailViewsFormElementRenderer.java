@@ -41,6 +41,6 @@ public class InputEmailViewsFormElementRenderer extends ViewsFormElementRenderer
      */
     public InputEmailViewsFormElementRenderer(ViewsRenderer<Map<String, FormElement>, ?> viewsRenderer,
                                               FormElementRendererViewsConfiguration formElementRendererConfiguration) {
-        super(viewsRenderer, formElementRendererConfiguration.getInputEmail());
+        super(viewsRenderer, formElementRendererConfiguration.inputEmail());
     }
 }
