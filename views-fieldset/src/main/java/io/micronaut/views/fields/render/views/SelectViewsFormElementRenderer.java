@@ -30,7 +30,6 @@ import java.util.Map;
  * @since 4.1.0
  */
 @Internal
-@Requires(beans = ViewsRenderer.class)
 @Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".select")
 @Singleton
 public class SelectViewsFormElementRenderer extends ViewsFormElementRenderer<SelectFormElement> {

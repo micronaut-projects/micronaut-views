@@ -18,4 +18,10 @@
  * @author Sergio del Amo
  * @since 4.1.0
  */
+@Requires(beans = ViewsRenderer.class)
+@Configuration
 package io.micronaut.views.fields.render.views;
+
+import io.micronaut.context.annotation.Configuration;
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.views.ViewsRenderer;

@@ -30,7 +30,6 @@ import java.util.Map;
  * @since 4.1.0
  */
 @Internal
-@Requires(beans = ViewsRenderer.class)
 @Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".input-text")
 @Singleton
 public class InputTextViewsFormElementRenderer extends ViewsFormElementRenderer<InputTextFormElement> {
