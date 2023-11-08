@@ -53,6 +53,16 @@ public interface FormElementRenderer<T extends FormElement> {
     String ATTR_VALUE = "value";
 
     /**
+     * HTML Attribute selected.
+     */
+    String ATTR_SELECTED = "selected";
+
+    /**
+     * HTML Attribute disabled.
+     */
+    String ATTR_DISABLED = "disabled";
+
+    /**
      * HTML Attribute id.
      */
     String ATTR_ID = "id";

@@ -66,10 +66,10 @@ public class OptionFormElementRenderer implements FormElementRenderer<Option> {
         List<HtmlAttribute> attributes = new ArrayList<>();
         attributes.add(new HtmlAttribute(ATTR_VALUE, el.value()));
         if (el.selected()) {
-            attributes.add(new HtmlAttribute("selected", null));
+            attributes.add(new HtmlAttribute(ATTR_SELECTED, null));
         }
         if (el.disabled()) {
-            attributes.add(new HtmlAttribute("disabled", null));
+            attributes.add(new HtmlAttribute(ATTR_DISABLED, null));
         }
         return attributes;
     }
