@@ -73,7 +73,7 @@ public record InputUrlFormElement(@NonNull String name,
     /**
      * Input URL Builder.
      */
-    public static class Builder extends InputStringFormBuilder<InputUrlFormElement, Builder> {
+    public static final class Builder extends InputStringFormBuilder<InputUrlFormElement, Builder> {
 
         /**
          *

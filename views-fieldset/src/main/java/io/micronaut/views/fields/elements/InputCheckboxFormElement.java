@@ -66,7 +66,7 @@ public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes,
     /**
      * Input checkbox builder.
      */
-    public static class Builder {
+    public static final class Builder {
 
         @Nullable
         private List<Checkbox> checkboxes;

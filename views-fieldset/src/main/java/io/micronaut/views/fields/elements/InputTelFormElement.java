@@ -77,7 +77,7 @@ public record InputTelFormElement(@NonNull String name,
     /**
      * Input Tel Builder.
      */
-    public static class Builder extends InputStringFormBuilder<InputTelFormElement, Builder> {
+    public static final class Builder extends InputStringFormBuilder<InputTelFormElement, Builder> {
 
         /**
          * @return Creates a {@link InputTelFormElement}.

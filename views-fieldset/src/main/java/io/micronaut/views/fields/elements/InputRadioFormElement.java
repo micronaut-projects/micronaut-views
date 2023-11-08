@@ -58,7 +58,7 @@ public record InputRadioFormElement(@NonNull String name,
     /**
      * An {@link InputRadioFormElement} Builder.
      */
-    public static class Builder {
+    public static final class Builder {
 
         private List<Radio> buttons;
         private String name;

@@ -86,7 +86,7 @@ public record Radio(@NonNull String value,
     /**
      * A Radio Builder.
      */
-    public static class Builder {
+    public static final class Builder {
 
         private String value;
         private String id;

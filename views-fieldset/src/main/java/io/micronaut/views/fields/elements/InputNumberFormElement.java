@@ -75,7 +75,7 @@ public record InputNumberFormElement(@NonNull String name,
     /**
      * Input Number Builder.
      */
-    public static class Builder {
+    public static final class Builder {
 
         @NonNull
         private String name;

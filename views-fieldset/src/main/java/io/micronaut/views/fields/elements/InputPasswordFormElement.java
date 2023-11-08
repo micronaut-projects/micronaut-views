@@ -77,7 +77,7 @@ public record InputPasswordFormElement(@NonNull String name,
     /**
      * Input Password Builder.
      */
-    public static class Builder extends InputStringFormBuilder<InputPasswordFormElement, Builder> {
+    public static final class Builder extends InputStringFormBuilder<InputPasswordFormElement, Builder> {
 
         /**
          *

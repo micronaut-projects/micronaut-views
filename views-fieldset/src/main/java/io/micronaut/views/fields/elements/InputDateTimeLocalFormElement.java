@@ -72,7 +72,7 @@ public record InputDateTimeLocalFormElement(@NonNull String name,
     /**
      * Input Date Time Builder.
      */
-    public static class Builder {
+    public static final class Builder {
 
         private String name;
         private String id;

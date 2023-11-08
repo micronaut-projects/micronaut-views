@@ -50,7 +50,7 @@ public record InputSubmitFormElement(@NonNull Message value) implements InputFor
     /**
      * {@link InputSubmitFormElement} Builder.
      */
-    public static class Builder {
+    public static final class Builder {
 
         @NonNull
         private Message value;

@@ -65,7 +65,7 @@ public record SelectFormElement(@NonNull boolean required,
     /**
      * Select Builder.
      */
-    public static class Builder {
+    public static final class Builder {
 
         private boolean required;
         @NonNull

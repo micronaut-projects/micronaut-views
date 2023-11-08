@@ -77,7 +77,7 @@ public record InputEmailFormElement(@NonNull String name,
     /**
      * Input Email builder.
      */
-    public static class Builder extends InputStringFormBuilder<InputEmailFormElement, Builder> {
+    public static final class Builder extends InputStringFormBuilder<InputEmailFormElement, Builder> {
 
         /**
          *
