@@ -1,0 +1,3406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>Micronaut Views</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+    <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
+    <link rel="stylesheet" href="../css/highlight/agate.css">
+    <script src="../js/highlight.pack.js"></script>
+    <script src="../js/guide.js"></script>
+    <script src="../js/multi-language-sample.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="../css/multi-language-sample.css"/>
+    <script src="../js/docs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+    <script type="text/javascript">
+        function addJsClass(el) {
+            var classes = document.body.className.split(" ");
+            classes.push("js");
+            document.body.className = classes.join(" ");
+        }
+    </script>
+
+</head>
+
+<body class="body" id="docs" onload="addJsClass();" onhashchange="highlightMenu()">
+
+<div id="table-of-content-nav-link" class="desktop">
+    <a id="theme-switcher" title="Switch to dark theme" href="javascript:switchTheme(true)"><i class="fa fa-moon-o"></i></a>
+    <a title="Collapse/Open Table of contents" title="Hide Table of Contents" href="javascript:hideTableOfContents();" class="button">[ + ]</a>
+</div>
+
+<div id="main">
+    <div id="navigation" class="no-print">
+        <div class="navTitle">
+            <span id="logo"><a href="http://micronaut.io" title="Go to Micronaut Website"><img src="../img/micronaut-logo-white.svg" alt="Micronaut"/></a></span>
+        </div>
+        <div class="navLinks">
+            <ul>
+                    <li><div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)" class="desktop">
+                            <a href="../guide/index.html" class="button">Table of contents</a>
+                            <div id="nav-summary-childs" style="display:none;">
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>2</strong><span>Release History</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#views"><strong>3</strong><span>Server Side View Rendering</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#breaks"><strong>4</strong><span>Breaking Changes</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
+                                
+                            </div>
+                        </div>
+                    </li>
+
+                <li id="table-of-content-nav-link-mobile" class="mobile">
+                    <a title="Scroll to Table of contents" href="javascript:scrollToTop();" class="button">Toc</a>
+                </li>
+                <li class="desktop">
+                    <a title="Go to API documentation" href="../api/index.html" class="button">API Reference</a>
+                </li>
+                <li class="mobile">
+                    <a title="Go to API documentation" href="../api/index.html" class="button">API</a>
+                </li>
+                <li class="desktop">
+                    <a title="Go to Configuration Reference documentation" href="../guide/configurationreference.html" class="button">Configuration Reference</a>
+                </li>
+                <li class="mobile">
+                    <a title="Go to Configuration Reference documentation" href="../guide/configurationreference.html" class="button">Conf</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    
+    <div id="table-of-content">
+        <div class="toc-content">
+
+        <h2>Table of Contents</h2>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-introduction"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>2</strong><span>Release History</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-views"><a href="#views"><strong>3</strong><span>Server Side View Rendering</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-templates"><a href="#templates"><strong>3.1</strong><span>Template Engines</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-thymeleaf"><a href="#thymeleaf"><strong>3.1.1</strong><span>Thymeleaf</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-handlebars"><a href="#handlebars"><strong>3.1.2</strong><span>Handlebars.java</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-velocity"><a href="#velocity"><strong>3.1.3</strong><span>Apache Velocity</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-freemarker"><a href="#freemarker"><strong>3.1.4</strong><span>Apache Freemarker</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-rocker"><a href="#rocker"><strong>3.1.5</strong><span>Rocker</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-soy"><a href="#soy"><strong>3.1.6</strong><span>Soy/Closure Support</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-soyconfiguration"><a href="#soyconfiguration"><strong>3.1.6.1</strong><span>Soy Configuration</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-soyusage"><a href="#soyusage"><strong>3.1.6.2</strong><span>Soy Usage</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-soyfeaturestemplatesecurity"><a href="#soyfeaturestemplatesecurity"><strong>3.1.6.3</strong><span>Soy Features - Template Security</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-soyfeaturesrenaming"><a href="#soyfeaturesrenaming"><strong>3.1.6.4</strong><span>Soy Features - Renaming</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-buildingsoy"><a href="#buildingsoy"><strong>3.1.6.5</strong><span>Building Soy</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-pebble"><a href="#pebble"><strong>3.1.7</strong><span>Pebble</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-jte"><a href="#jte"><strong>3.1.8</strong><span>JTE</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-jstachio"><a href="#jstachio"><strong>3.1.9</strong><span>JStachio</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-jstachioInstallation"><a href="#jstachioInstallation"><strong>3.1.9.1</strong><span>JStachio Installation</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-jstachioExample"><a href="#jstachioExample"><strong>3.1.9.2</strong><span>JStachio Example</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-model"><a href="#model"><strong>3.2</strong><span>Working with Models</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-custom"><a href="#custom"><strong>3.2.1</strong><span>Dynamically Enriching Models</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-fieldset"><a href="#fieldset"><strong>3.3</strong><span>Fieldset Generation</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-fieldsetExample"><a href="#fieldsetExample"><strong>3.3.1</strong><span>Form Generation Example</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-fieldsetAnnotations"><a href="#fieldsetAnnotations"><strong>3.3.2</strong><span>Fieldset Annotations</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-fieldsetFetcher"><a href="#fieldsetFetcher"><strong>3.3.3</strong><span>Radio, Checkbox and Option Fetcher</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-turbo"><a href="#turbo"><strong>3.4</strong><span>Turbo</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboFrameView"><a href="#turboFrameView"><strong>3.4.1</strong><span>TurboFrameView annotation</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboFrameBuilder"><a href="#turboFrameBuilder"><strong>3.4.2</strong><span>TurboFrame Builder</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamFluidApi"><a href="#turboStreamFluidApi"><strong>3.4.3</strong><span>Turbo Stream Fluid API</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboView"><a href="#turboView"><strong>3.4.4</strong><span>TurboView Annotation</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamContentType"><a href="#turboStreamContentType"><strong>3.4.5</strong><span>Turbo Stream Media Type</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamTemplate"><a href="#turboStreamTemplate"><strong>3.4.6</strong><span>Turbo Streams with Templates</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-security"><a href="#security"><strong>3.5</strong><span>Security</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-csp"><a href="#csp"><strong>3.5.1</strong><span>Content Security Policy</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-security-model-enhancement"><a href="#security-model-enhancement"><strong>3.5.2</strong><span>Integration with Micronaut Security</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>3.6</strong><span>GraalVM Support</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-breaks"><a href="#breaks"><strong>4</strong><span>Breaking Changes</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
+        
+        </div>
+    </div>
+    
+    <div class="docs-content">
+    <div class="project">
+        <h1>Micronaut Views</h1>
+        <p></p>
+        <p>Provides integration between Micronaut and server-side views technologies</p>
+        <p><strong>Version:</strong> <select style='max-width: 200px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-views/snapshot/guide/index.html'>SNAPSHOT</option><option value='https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html'>LATEST</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-views/4.1.0/guide/index.html'>4.1.0</option><option value='https://micronaut-projects.github.io/micronaut-views/4.0.1/guide/index.html'>4.0.1</option><option value='https://micronaut-projects.github.io/micronaut-views/4.0.0/guide/index.html'>4.0.0</option><option value='https://micronaut-projects.github.io/micronaut-views/4.0.0-M7/guide/index.html'>4.0.0-M7</option><option value='https://micronaut-projects.github.io/micronaut-views/4.0.0-M6/guide/index.html'>4.0.0-M6</option><option value='https://micronaut-projects.github.io/micronaut-views/4.0.0-M5/guide/index.html'>4.0.0-M5</option><option value='https://micronaut-projects.github.io/micronaut-views/4.0.0-M4/guide/index.html'>4.0.0-M4</option><option value='https://micronaut-projects.github.io/micronaut-views/4.0.0-M3/guide/index.html'>4.0.0-M3</option><option value='https://micronaut-projects.github.io/micronaut-views/4.0.0-M2/guide/index.html'>4.0.0-M2</option><option value='https://micronaut-projects.github.io/micronaut-views/4.0.0-M1/guide/index.html'>4.0.0-M1</option><option value='https://micronaut-projects.github.io/micronaut-views/3.8.2/guide/index.html'>3.8.2</option><option value='https://micronaut-projects.github.io/micronaut-views/3.8.1/guide/index.html'>3.8.1</option><option value='https://micronaut-projects.github.io/micronaut-views/3.8.0/guide/index.html'>3.8.0</option><option value='https://micronaut-projects.github.io/micronaut-views/3.7.2/guide/index.html'>3.7.2</option><option value='https://micronaut-projects.github.io/micronaut-views/3.7.1/guide/index.html'>3.7.1</option><option value='https://micronaut-projects.github.io/micronaut-views/3.7.0/guide/index.html'>3.7.0</option><option value='https://micronaut-projects.github.io/micronaut-views/3.6.0/guide/index.html'>3.6.0</option><option value='https://micronaut-projects.github.io/micronaut-views/3.5.0/guide/index.html'>3.5.0</option><option value='https://micronaut-projects.github.io/micronaut-views/3.4.1/guide/index.html'>3.4.1</option><option value='https://micronaut-projects.github.io/micronaut-views/3.4.0/guide/index.html'>3.4.0</option><option value='https://micronaut-projects.github.io/micronaut-views/3.3.0/guide/index.html'>3.3.0</option><option value='https://micronaut-projects.github.io/micronaut-views/3.2.0/guide/index.html'>3.2.0</option><option value='https://micronaut-projects.github.io/micronaut-views/3.1.3/guide/index.html'>3.1.3</option><option value='https://micronaut-projects.github.io/micronaut-views/3.1.2/guide/index.html'>3.1.2</option><option value='https://micronaut-projects.github.io/micronaut-views/3.1.1/guide/index.html'>3.1.1</option><option value='https://micronaut-projects.github.io/micronaut-views/3.1.0/guide/index.html'>3.1.0</option><option value='https://micronaut-projects.github.io/micronaut-views/3.0.4/guide/index.html'>3.0.4</option><option value='https://micronaut-projects.github.io/micronaut-views/3.0.3/guide/index.html'>3.0.3</option><option value='https://micronaut-projects.github.io/micronaut-views/3.0.2/guide/index.html'>3.0.2</option><option value='https://micronaut-projects.github.io/micronaut-views/3.0.1/guide/index.html'>3.0.1</option></select> </p>
+    </div>
+    
+<h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/introduction.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>This project integrates the Micronaut framework and Server Side View Rendering.</p>
+</div>
+
+<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>2 Release History</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/releaseHistory.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>For this project, you can find a list of releases (with release notes) here:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/micronaut-projects/micronaut-views/releases">https://github.com/micronaut-projects/micronaut-views/releases</a></p>
+</div>
+
+<h1 id="views"><a class="anchor" href="#views"></a>3 Server Side View Rendering</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Although the Micronaut framework is primarily designed around message encoding / decoding there are occasions where it is convenient to render a view on the server side.</p>
+</div>
+<div class="paragraph">
+<p>The <code>views</code> module provides support for view rendering on the server side and does so by rendering views on the I/O thread pool in order to avoid blocking the Netty event loop.</p>
+</div>
+<div class="paragraph">
+<p>To use the view rendering features described in this section, add a dependency based on the view rendering engine you prefer (see the following sections).</p>
+</div>
+<div class="paragraph">
+<p>For file-based view schemes, views and templates can be placed in the <code>src/main/resources/views</code> directory of your
+project. If you use this feature and wish to use a different folder, set the property <code>micronaut.views.folder</code>.</p>
+</div>
+<div class="paragraph">
+<p>Your controller&#8217;s method can render the response with a template by using the <a href="../api/io/micronaut/views/View.html">View</a> annotation.</p>
+</div>
+<div class="paragraph">
+<p>The following is an example of a controller which renders a template by passing a model as a <code>java.util.Map</code> via the returned response object.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/myapp/ViewsController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/views")
+class ViewsController {
+
+    @View("home")
+    @Get("/")
+    public HttpResponse&lt;?&gt; index() {
+        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"))
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Use <code>@View</code> annotation to indicate the view name which should be used to render a view for the route.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In addition, you can return any POJO object and the properties of the POJO will be exposed to the view for rendering:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/myapp/ViewsController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/views")
+class ViewsController {
+
+    @View("home")
+    @Get("/pojo")
+    public HttpResponse&lt;Person&gt; pojo() {
+        return HttpResponse.ok(new Person("sdelamo", true))
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Use <code>@View</code> annotation to indicate the view name which should be used to render the POJO responded by the controller.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Use the <a href="https://micronaut-projects.github.io/micronaut-core/latest/api/io/micronaut/core/annotation/Introspected.html">@Introspected</a> annotation on your POJO object to  generate <code>BeanIntrospection</code> metadata at compilation time.</p>
+</div>
+<div class="paragraph">
+<p>You can also return a <a href="../api/io/micronaut/views/ModelAndView.html">ModelAndView</a> and skip specifying the <a href="../api/io/micronaut/views/View.html">View</a> annotation.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/myapp/ViewsController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/views")
+class ViewsController {
+
+    @Get("/modelAndView")
+    ModelAndView modelAndView() {
+        return new ModelAndView("home",
+                new Person("sdelamo", true))
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Moreover, the Controller&#8217;s method can return a POJO annotated with <code>@Introspected</code> to the view:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @View("fruits")
+    @Get
+    public Fruit index() {
+        return new Fruit("apple", "red");
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following sections show different template engines integrations.</p>
+</div>
+<div class="paragraph">
+<p>To create your own implementation create a class which implements <a href="../api/io/micronaut/views/ViewsRenderer.html">ViewsRenderer</a> and annotate it with <a href="https://micronaut-projects.github.io/micronaut-core/latest/api/io/micronaut/http/annotation/Produces.html">@Produces</a> to the media types the view rendering supports producing.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you want to render a template directly on your code (for example, to generate the body of an email) you can inject the ViewsRenderer bean and use its method "render".
+</td>
+</tr>
+</table>
+</div>
+
+<h2 id="templates"><a class="anchor" href="#templates"></a>3.1 Template Engines</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views provides out-of-the-box support for multiple template languages.</p>
+</div>
+
+<h2 id="thymeleaf"><a class="anchor" href="#thymeleaf"></a>3.1.1 Thymeleaf</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/thymeleaf.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views Thymeleaf includes <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html">ThymeleafViewsRenderer</a> which uses
+the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
+</div>
+<div class="paragraph">
+<p>Add the <code>micronaut-views-thymeleaf</code> dependency to your classpath.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-thymeleaf")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-thymeleaf&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Thymeleaf integration instantiates a <code>ClassLoaderTemplateResolver</code>.</p>
+</div>
+<div class="paragraph">
+<p>The properties used can be customized by overriding the values of:</p>
+</div>
+<a id="io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties" href="#io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html">ThymeleafViewsRendererConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.character-encoding</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.template-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.thymeleaf.templatemode.TemplateMode</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.suffix</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.force-suffix</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.force-template-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cache-ttlms</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.check-existence</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cacheable</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enabled getter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cache-ttl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the cache TTL as a duration.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Thymeleaf template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en" th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;section&gt;
+    &lt;h1 th:if="${loggedIn}"&gt;username: &lt;span th:text="${username}"&gt;&lt;/span&gt;&lt;/h1&gt;
+    &lt;h1 th:unless="${loggedIn}"&gt;You are not logged in&lt;/h1&gt;
+&lt;/section&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and layout:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/layoutFile.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;title th:replace="${title}"&gt;Layout Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Layout H1&lt;/h1&gt;
+&lt;div th:replace="${content}"&gt;
+    &lt;p&gt;Layout content&lt;/p&gt;
+&lt;/div&gt;
+&lt;footer&gt;
+    Layout footer
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Use Thymeleaf templates with Micronaut i18n messages. Internationalization messages will be resolved from Micronaut&#8217;s
+MessageSource automatically. For more information on the MessageSource, see the core documentation.</p>
+</div>
+
+<h2 id="handlebars"><a class="anchor" href="#handlebars"></a>3.1.2 Handlebars.java</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/handlebars.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views Handlebars includes <a href="../api/io/micronaut/views/handlebars/HandlebarsViewsRenderer.html">HandlebarsViewsRenderer</a> which uses
+the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> project.</p>
+</div>
+<div class="paragraph">
+<p>Add the following dependency on your classpath. For example, in <code>build.gradle</code></p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-handlebars")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-handlebars&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Handlebars template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.hbs</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    {{#if loggedIn}}
+    &lt;h1&gt;username: &lt;span&gt;{{username}}&lt;/span&gt;&lt;/h1&gt;
+    {{else}}
+    &lt;h1&gt;You are not logged in&lt;/h1&gt;
+    {{/if}}
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+
+<h2 id="velocity"><a class="anchor" href="#velocity"></a>3.1.3 Apache Velocity</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/velocity.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views Velocity includes <a href="../api/io/micronaut/views/velocity/VelocityViewsRenderer.html">VelocityViewsRenderer</a> which uses
+the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template engine.</p>
+</div>
+<div class="paragraph">
+<p>Add the <code>micronaut-views-velocity</code> dependency to your classpath.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-velocity")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-velocity&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Velocity template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.vm</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    #if( $loggedIn )
+    &lt;h1&gt;username: &lt;span&gt;$username&lt;/span&gt;&lt;/h1&gt;
+    #else
+    &lt;h1&gt;You are not logged in&lt;/h1&gt;
+    #end
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+
+<h2 id="freemarker"><a class="anchor" href="#freemarker"></a>3.1.4 Apache Freemarker</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/freemarker.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views Freemarker includes <a href="../api/io/micronaut/views/freemarker/FreemarkerViewsRenderer.html">FreemarkerViewsRenderer</a> which uses
+the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based template engine.</p>
+</div>
+<div class="paragraph">
+<p>Add the following dependency on your classpath.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-freemarker")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-freemarker&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Freemarker template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.ftl</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;#if loggedIn??&gt;
+    &lt;h1&gt;username: &lt;span&gt;${username}&lt;/span&gt;&lt;/h1&gt;
+    &lt;#else&gt;
+    &lt;h1&gt;You are not logged in&lt;/h1&gt;
+    &lt;/#if&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Freemarker integration instantiates a freemarker <a href="https://freemarker.apache.org/docs/api/freemarker/template/Configuration.html"><code>Configuration</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>All configurable properties are extracted from <a href="https://freemarker.apache.org/docs/api/freemarker/template/Configuration.html"><code>Configuration</code></a> and
+<a href="https://freemarker.apache.org/docs/api/freemarker/core/Configurable.html"><code>Configurable</code></a>, and properties names are reused in the Micronaut configuration.</p>
+</div>
+<div class="paragraph">
+<p>If a value is not declared and is null, the default configuration from Freemarker is used. The expected format of each value is the same from Freemarker, and no conversion or validation is done by the Micronaut framework. You can find in <a href="https://freemarker.apache.org/docs/pgui_config.html">Freemarker documentation</a> how to configure each one.</p>
+</div>
+
+<h2 id="rocker"><a class="anchor" href="#rocker"></a>3.1.5 Rocker</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/rocker.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views Rocker includes <a href="../api/io/micronaut/views/rocker/RockerEngine.html">RockerEngine</a> which uses
+the <a href="https://github.com/fizzed/rocker">Rocker</a> Java-based template engine.</p>
+</div>
+<div class="paragraph">
+<p>Add the <code>micronaut-views-rocker</code> dependency to your classpath.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-rocker")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-rocker&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Rocker template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.rocker.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">@args (Boolean loggedIn, String username)
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    @if (loggedIn != null &amp;&amp; loggedIn) {
+    &lt;h1&gt;username: &lt;span&gt;@username&lt;/span&gt;&lt;/h1&gt;
+    } else {
+    &lt;h1&gt;You are not logged in&lt;/h1&gt;
+    }
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compiling_templates">Compiling Templates</h3>
+<div class="paragraph">
+<p>Rocker templates must be precompiled at build time. This can be done either by a Gradle or Maven plugin.</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">plugins {
+    id "com.fizzed.rocker" version "1.2.3"
+}
+
+sourceSets {
+    main {
+        rocker {
+            srcDir('src/main/resources')
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;com.fizzed&lt;/groupId&gt;
+            &lt;artifactId&gt;rocker-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;1.2.3&lt;/version&gt;
+            &lt;executions&gt;
+                &lt;execution&gt;
+                    &lt;id&gt;generate-rocker-templates&lt;/id&gt;
+                    &lt;phase&gt;generate-sources&lt;/phase&gt;
+                    &lt;goals&gt;
+                        &lt;goal&gt;generate&lt;/goal&gt;
+                    &lt;/goals&gt;
+                    &lt;configuration&gt;
+                        &lt;templateDirectory&gt;src/main/resources&lt;/templateDirectory&gt;
+                    &lt;/configuration&gt;
+                &lt;/execution&gt;
+            &lt;/executions&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compile_time_type_checking">Compile Time Type Checking</h3>
+<div class="paragraph">
+<p>Rocker templates are compiled at build time giving the ability to statically type check template arguments.
+Using the standard <code>@View</code> annotation will invoke the template dynamically without these checks.
+Instead the compiled template should be invoked within the controller and a <code>RockerWritable</code> returned.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.views.rocker.RockerWritable;
+import views.home;
+...
+
+    @Get("/")
+    @Produces(TEXT_HTML)
+    public HttpResponse&lt;?&gt; staticTemplate() {
+        return HttpResponse.ok(new RockerWritable(home.template(true, "sdelamo")));
+    }
+
+...</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration">Configuration</h3>
+<div class="paragraph">
+<p>The properties used can be customized by overriding the values of:</p>
+</div>
+<a id="io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties" href="#io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html">RockerViewsRendererConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enabled getter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.default-extension</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.hot-reloading</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hot reloading getter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.relaxed</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Relaxed binding getter.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="soy"><a class="anchor" href="#soy"></a>3.1.6 Soy/Closure Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/soy.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views Soy includes <a href="../api/io/micronaut/views/soy/SoySauceViewsRenderer.html">SoySauceViewsRenderer</a> which uses
+<a href="https://github.com/google/closure-templates">Soy, also known as Closure Templates</a>, a template
+compiler from Google. Soy is usable standalone, or together with the rest of the
+<a href="https://developers.google.com/closure">Closure Tools ecosystem</a>, and targets both server-side and
+client-side, with the ability to compile templates into Java, Python, or JavaScript.</p>
+</div>
+<div class="paragraph">
+<p>Add the <code>micronaut-views-soy</code> dependency to your classpath.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-soy")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-soy&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+
+<h2 id="soyconfiguration"><a class="anchor" href="#soyconfiguration"></a>3.1.6.1 Soy Configuration</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/soy/soyconfiguration.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The entire set of supported Soy configuration properties are documented below:</p>
+</div>
+<a id="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties" href="#io.micronaut.views.soy.SoyViewsRendererConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html">SoyViewsRendererConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Soy-backed views are enabled. Default value <code>true</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.renaming-enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether renaming is enabled. Defaults to <code>true</code>.</p></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="soyusage"><a class="anchor" href="#soyusage"></a>3.1.6.2 Soy Usage</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/soy/soyusage.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To use Soy integration you have to provide a bean of type <a href="../api/io/micronaut/views/soy/SoyFileSetProvider.html">SoyFileSetProvider</a>. Such a bean is responsible for loading the Soy templates, either in compiled or source form.</p>
+</div>
+<div class="paragraph">
+<p>Given the following Soy template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.soy</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-soy hljs" data-lang="soy">{namespace sample}
+
+
+// Sample template.
+{template home}
+  {@param loggedIn: bool}  // Whether the user is logged in.
+  {@param? username: string}  // The user's username, if they are logged in.
+
+  &lt;!DOCTYPE html&gt;
+  &lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+    &lt;script type="text/javascript"&gt;alert("Hello, CSP!");&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  {if $loggedIn}
+      &lt;h1&gt;username: &lt;span&gt;{$username}&lt;/span&gt;&lt;/h1&gt;
+  {else}
+      &lt;h1&gt;You are not logged in&lt;/h1&gt;
+  {/if}
+  &lt;/body&gt;
+  &lt;/html&gt;
+{/template}
+{template tim}
+  {@param? username: string}
+  username: &lt;span&gt;{$username}&lt;/span&gt;
+{/template}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A naive implementation of <a href="../api/io/micronaut/views/soy/SoyFileSetProvider.html">SoyFileSetProvider</a> could look like:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
+public class CustomSoyFileSetProvider implements SoyFileSetProvider {
+    private static final Logger LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider.class);
+    private static final String[] VIEWS = {
+            "home.soy"
+    };
+    private final String folder;
+    private final ResourceLoader resourceLoader;
+
+    public CustomSoyFileSetProvider(ViewsConfiguration viewsConfiguration, ResourceLoader resourceLoader) {
+        this.folder = viewsConfiguration.getFolder();
+        this.resourceLoader = resourceLoader;
+    }
+    @Override
+    public SoyFileSet provideSoyFileSet() {
+        final SoyFileSet.Builder builder = SoyFileSet.builder();
+        for (final String template : VIEWS) {
+            resourceLoader.getResource(folder + "/" + template).ifPresent(url -&gt; {
+                try {
+                    builder.add(new File(url.toURI()));
+                } catch (URISyntaxException e) {
+                    if (LOG.isWarnEnabled()) {
+                        LOG.warn("URISyntaxException raised while generating the SoyFileSet for folder {}",
+                                folder, e);
+                    }
+                }
+            });
+        }
+        return builder.build();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Singleton
+class CustomSoyFileSetProvider implements SoyFileSetProvider {
+    private static final Logger LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider.class)
+
+    private static final List&lt;String&gt; VIEWS = [
+            "home.soy"
+    ]
+
+    private final String folder
+    private final ResourceLoader resourceLoader
+
+    CustomSoyFileSetProvider(ViewsConfiguration viewsConfiguration, ResourceLoader resourceLoader) {
+        this.folder = viewsConfiguration.getFolder()
+        this.resourceLoader = resourceLoader
+    }
+
+    @Override
+    SoyFileSet provideSoyFileSet() {
+        final SoyFileSet.Builder builder = SoyFileSet.builder()
+        for (String template : VIEWS) {
+            String path = "${folder}${template}"
+            resourceLoader.getResource(path).ifPresent(url -&gt; {
+                try {
+                    builder.add(new File(url.toURI()))
+                } catch (URISyntaxException e) {
+                    if (LOG.isWarnEnabled()) {
+                        LOG.warn("URISyntaxException raised while generating SoyFileSet for folder {}", folder, e)
+                    }
+                }
+            })
+        }
+        builder.build()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Singleton
+class CustomSoyFileSetProvider(val resourceLoader: ResourceLoader, viewsConfiguration: ViewsConfiguration) :
+    SoyFileSetProvider {
+    private val folder: String
+    override fun provideSoyFileSet(): SoyFileSet {
+        val builder = SoyFileSet.builder()
+        for (template in VIEWS) {
+            resourceLoader.getResource("$folder/$template").ifPresent { url: URL -&gt;
+                try {
+                    builder.add(File(url.toURI()))
+                } catch (e: URISyntaxException) {
+                    if (LOG.isWarnEnabled) {
+                        LOG.warn(
+                            "URISyntaxException raised while generating the SoyFileSet for folder {}",
+                            folder, e
+                        )
+                    }
+                }
+            }
+        }
+        return builder.build()
+    }
+
+    companion object {
+        private val LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider::class.java)
+        private val VIEWS = arrayOf(
+            "home.soy"
+        )
+    }
+
+    init {
+        folder = viewsConfiguration.folder
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Soy allows users to write custom functions that templates can call, as described by their docs for <a href="https://github.com/google/closure-templates/blob/master/documentation/dev/plugins.md">Creating a Plugin</a>. If you have one or more implementations of <a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/plugin/restricted/SoySourceFunction.java">SoySourceFunction</a>, you can register them in the <code>SoyFileSetProvider.provideSoyFileSet()</code> method using SoyFileSet builder&#8217;s <code>addSourceFunction(SoySourceFunction)</code> or <code>addSourceFunction(Iterable&lt;? extends SoySourceFunction&gt;)</code> methods.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The return value of the following Controller is converted to Soy template context parameters, and passed to the <code>@View</code>-annotation-bound template.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/soy")
+public class SoyController {
+    @View("sample.home")
+    @Get
+    public HttpResponse&lt;?&gt; home() {
+        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sgammon"));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Controller("/soy")
+class SoyController {
+    @View("sample.home")
+    @Get
+    HttpResponse&lt;?&gt; home() {
+        HttpResponse.ok([loggedIn: true, username: "sgammon"])
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Controller("/soy")
+class SoyController {
+    @View("sample.home")
+    @Get
+    fun home(): HttpResponse&lt;*&gt; {
+        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sgammon"))
+    }
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <a href="../api/io/micronaut/views/View.html">View</a> annotation value is set to namespace and template name.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Both server-side Soy rendering layers are supported in Micronaut Views Soy:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SoySauceViewsRenderer</code>: This renderer uses templates pre-compiled to Java bytecode, generally AOT, with
+<code>SoyToJbcSrcCompiler</code>. If compiled templates can&#8217;t be located by the <code>SoyFileSetProvider</code>, templates are pre-compiled
+into bytecode at server startup. This can be impactful on startup-time, so, if that&#8217;s an important metric for your
+app, pre-compile your templates using the AOT bytecode compiler.</p>
+</li>
+</ul>
+</div>
+
+<h2 id="soyfeaturestemplatesecurity"><a class="anchor" href="#soyfeaturestemplatesecurity"></a>3.1.6.3 Soy Features - Template Security</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/soy/soyfeaturestemplatesecurity.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Soy/Closure Templates has seen significant work from Google where security is concerned, both in the browser and on the
+backend. Soy is extremely strict and strongly typed, with validation being performed by Soy and then subsequently either
+by <code>javac</code> or Closure Compiler, and additionally in some cases at render-time. What follows is a brief guide of these
+security features. These are outlined in more detail over in the
+<a href="https://github.com/google/closure-templates/blob/master/documentation/reference/security.md">Closure Templates docs</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_front_end_security">Front-end Security</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Trusted URIs:</em> Soy is smart enough to know that <code>scriptUrl</code> might be influenced by user input, and, therefore,
+introduces an <a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)">XSS vulnerability</a> when used as a script
+<code>src</code>. To inject resources, use <code>uri</code>:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-soy hljs" data-lang="soy">/* I won't compile because I introduce a vulnerability */
+{template .foo}
+  {@param scriptUrl: string}
+  &lt;script src={$scriptUrl}&gt;&lt;/script&gt;
+{/template}</code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>/* I will compile because I accept a URI type, which is trusted in this context */
+{template .foo}
+  {@param scriptUrl: uri}
+  &lt;script src={$scriptUrl}&gt;&lt;/script&gt;
+{/template}</pre>
+</div>
+</div>
+</li>
+<li>
+<p><em>Markup:</em> Passing in HTML for <code>content</code> won&#8217;t work if it&#8217;s a <code>string</code>. Soy will comply and inject your content, but it
+will be escaped. To inject markup, use the strict markup types (<code>js</code>, <code>css</code>, <code>html</code>).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-soy hljs" data-lang="soy">/* I will compile, but I may escape the injected content if it contains markup. */
+{template .foo}
+  {@param content: string}
+  &lt;b&gt;{$content}&lt;/b&gt;
+{/template}</code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>/* I allow markup because the appropriate types are used */
+{template .foo}
+  {@param content: html}
+  &lt;b&gt;{$content}&lt;/b&gt;
+{/template}</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_back_end_security">Back-end Security</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><em>CSP Nonce Support</em>: Soy has support for <em>Content Security Policy</em> (<a href="https://www.w3.org/TR/CSP3/">Level 3</a>),
+specifically, embedding server-generated <code>nonce</code> attributes in <code>&lt;script&gt;</code> tags. This is accomplished by providing an
+<a href="https://github.com/google/closure-templates/blob/b0b39f9af2fed78333ddb7963266e9d2db3df094/documentation/dev/security.md#content-security-policy-csp-content_security_policy">"injected value"</a>
+with the key <code>"csp_nonce"</code>. The nonce, which
+<a href="https://csp.withgoogle.com/docs/faq.html#generating-nonces">should change on each page load</a>, is available in the
+template like so:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-soy hljs" data-lang="soy">/* Soy will inject the nonce for you, but if you need it anyway, this is how you access it. */
+{template .foo}
+  {@param injectedScript: uri}
+  {@inject csp_nonce: string}
+  &lt;script src={$injectedScript} nonce={$csp_nonce} type="text/javascript"&gt;&lt;/script&gt;
+{/template}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+<h2 id="soyfeaturesrenaming"><a class="anchor" href="#soyfeaturesrenaming"></a>3.1.6.4 Soy Features - Renaming</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/soy/soyfeaturesrenaming.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Soy has powerful built-in renaming features, that both obfuscate and optimize your code as it is rendered. Renaming is
+opt-in and requires a few things:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A compatible CSS compiler (<a href="https://github.com/google/closure-stylesheets">GSS / Closure Stylesheets</a> is a good one)</p>
+</li>
+<li>
+<p>Special calls in your templates that map CSS classes and IDs</p>
+</li>
+<li>
+<p>JSON renaming map provided at compile time for JS templates, and runtime for Java rendering</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Renaming is similar to other frameworks' corresponding uglify features, but it&#8217;s significantly more powerful, allowing
+you to rewrite CSS classes and IDs as you would JavaScript symbols. Here&#8217;s how you can use renaming server-side with
+Micronaut Views Soy:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Configure Micronaut Views Soy to enable renaming:</p>
+</li>
+</ol>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">micronaut.views.soy.enabled=true
+micronaut.views.soy.renaming=true</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  views:
+    soy:
+      enabled: true
+      renaming: true</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[micronaut]
+  [micronaut.views]
+    [micronaut.views.soy]
+      enabled=true
+      renaming=true</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">micronaut {
+  views {
+    soy {
+      enabled = true
+      renaming = true
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  micronaut {
+    views {
+      soy {
+        enabled = true
+        renaming = true
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "micronaut": {
+    "views": {
+      "soy": {
+        "enabled": true,
+        "renaming": true
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When building your styles with GSS, or a similar tool, generate a rewrite map:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; java -jar closure-stylesheets.jar \
+    --output-renaming-map-format JSON \
+    --output-renaming-map src/main/resources/renaming-map.json \
+    --rename CLOSURE \
+    [...inputs...] &gt; src/main/resources/styles/app-styles.min.css</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In your template sources, annotate CSS classes with <code>{css('name')}</code> calls. Note that the value passed into each call
+must be a string literal (variables cannot be used):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-soy hljs" data-lang="soy">{template .foo}
+  &lt;div class="{css('my-cool-class')} {css('my-cool-class-active')}"&gt;
+    ... content, and stuff...
+  &lt;/div&gt;
+{/template}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>In your CSS, use the names you mentioned in your template:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-css hljs" data-lang="css">.my-cool-class {
+  color: blue;
+}
+.my-cool-class-active {
+  background: yellow;
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Compile your templates (see: <em>Building Soy</em>).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; java -jar SoyToJbcSrcCompiler.jar \
+    --output templates.jar \
+    --srcs [...templates...];</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The last step is to provide the renaming map to Micronaut Views Soy:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
+public class RewriteMapProvider implements SoyNamingMapProvider {
+  /** Filename for the JSON class renaming map. */
+  private static final String RENAMING_MAP_NAME = "renaming-map.json";
+
+  /** Naming map to use for classes. */
+  private static SoyCssRenamingMap CSS_RENAMING_MAP = null;
+
+  /**
+   * Load JSON embedded in a JAR resource into a naming map for Soy rendering.
+   *
+   * @param mapPath URL to the JAR resource we should load.
+   */
+  @Nullable
+  private static Map&lt;String, String&gt; loadMapFromJSON(URL mapPath) {
+    try {
+      return new ObjectMapper().readValue(mapPath, new TypeReference&lt;Map&lt;String, String&gt;&gt;() { });
+    } catch (Throwable thr) {
+      //handle `JsonMappingException` and `IOException`, if, for instance, you're using Jackson
+      throw new RuntimeException(thr);
+    }
+  }
+
+  static {
+    final URL mapPath =
+        SoyRenderConfigProvider.class.getClassLoader().getResource(RENAMING_MAP_NAME);
+    if (mapPath != null) {
+      // load the renaming map
+      final Map&lt;String, String&gt; cssRenamingMap = loadMapFromJSON(mapPath);
+      if (renamingMapRaw != null) {
+        CSS_RENAMING_MAP = new SoyCssRenamingMap() {
+          @Nullable @Override
+          public String get(@NotNull String className) {
+            // (or whatever logic you need to rewrite the class)
+            return cssRenamingMap.get(className);
+          }
+        };
+      }
+    }
+  }
+
+  /**
+   * Provide a CSS renaming map to Soy/Micronaut.
+   *
+   * @return Inflated Soy CSS renaming map.
+   */
+  @Nullable @Override public SoyCssRenamingMap cssRenamingMap() {
+    return CSS_RENAMING_MAP;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, your output will be renamed. Referencing the Soy template sample above, output would look something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;div class="a-b-c a-b-c-d"&gt;... content, and stuff...&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With your CSS rewritten and minified to match:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-css hljs" data-lang="css">.a-b-c{color:blue;}.a-b-c-d{background:yellow;}</code></pre>
+</div>
+</div>
+
+<h2 id="buildingsoy"><a class="anchor" href="#buildingsoy"></a>3.1.6.5 Building Soy</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/soy/buildingsoy.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Soy has tooling support from <a href="https://github.com/Medium/soynode">Node</a> (<a href="https://www.npmjs.com/package/gulp-soynode">Gulp</a>,
+<a href="https://www.npmjs.com/package/grunt-closure-soy">Grunt</a>),
+<a href="http://mvnrepository.com/artifact/com.google.template/soy">Maven</a>,
+<a href="https://plugins.gradle.org/plugin/com.liferay.soy">Gradle</a>, and
+<a href="https://github.com/bazelbuild/rules_closure/#closure_js_template_library">Bazel</a>. You can also invoke each
+Soy compiler directly via the runner classes for each one:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyHeaderCompiler.java">SoyHeaderCompiler</a>:
+Compile templates into light "headers," that can be used downstream as dependencies for other templates.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyMsgExtractor.java">SoyMsgExtractor</a>:
+Enables easy i18n by extracting <code>{msg desc=""}{/msg}</code> declarations for processing or translation.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyParseInfoGenerator.java">SoyParseInfoGenerator</a>:
+Generates template parser metadata information as Java sources.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyPluginValidator.java">SoyPluginValidator</a>:
+Validates <code>SoySourceFunction</code> definitions found in a set of JARs.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToIncrementalDomSrcCompiler.java">SoyToIncrementalDomSrcCompiler</a>:
+Generate client-side templates that render with <a href="http://google.github.io/incremental-dom">IncrementalDOM</a> (AKA <code>idom</code>).
+This compiler uses direct calls into the DOM to incrementally render content, as opposed to the traditional client-side
+approach, which renders strings into <code>element.innerHTML</code>. This support is currently experimental and involves a number
+of external dependencies.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToJbcSrcCompiler.java">SoyToJbcSrcCompiler</a>:
+Compiles Soy templates directly to Java bytecode, packaged up in a JAR. These templates can be used together with
+<a href="https://search.maven.org/search?q=g:com.google.template%20AND%20a:soy&amp;core=gav">Soy Java</a> for highly performant
+server-side rendering.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToJsSrcCompiler.java">SoyToJsSrcCompiler</a>:
+Traditional JS client-side compiler, which assembles strings of rendered template content. Like <code>idom</code>, these compiled
+templates work well with Closure Compiler, and Closure Library via
+<a href="https://github.com/google/closure-library/tree/master/closure/goog/soy"><code>goog.soy</code></a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/closure-templates/blob/master/java/src/com/google/template/soy/SoyToPySrcCompiler.java">SoyToPySrcCompiler</a>:
+Compiles templates into Python sources for use server-side.</p>
+</li>
+</ul>
+</div>
+
+<h2 id="pebble"><a class="anchor" href="#pebble"></a>3.1.7 Pebble</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/pebble.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views Pebble includes <a href="../api/io/micronaut/views/pebble/PebbleViewsRenderer.html">PebbleViewsRenderer</a> which uses
+the <a href="https://pebbletemplates.io/">Pebble</a> project.</p>
+</div>
+<div class="paragraph">
+<p>Add the following dependency on your classpath. For example, in <code>build.gradle</code></p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-pebble")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-pebble&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Pebble template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    {% if loggedIn %}
+    &lt;h1&gt;username: &lt;span&gt;{{ username }}&lt;/span&gt;&lt;/h1&gt;
+    {% else %}
+    &lt;h1&gt;You are not logged in&lt;/h1&gt;
+    {% endif %}
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The properties used can be customized by overriding the values of:</p>
+</div>
+<a id="io.micronaut.views.pebble.PebbleConfigurationProperties" href="#io.micronaut.views.pebble.PebbleConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/pebble/PebbleConfigurationProperties.html">PebbleConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether the component is enabled. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.default-extension</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The default extension. Default value ("html").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.cache-active</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable all caches, i.e. cache used by the engine to store compiled PebbleTemplate
+ instances and tags cache. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.new-line-trimming</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Changes the newLineTrimming setting of the PebbleEngine. By default, Pebble
+ will trim a new line that immediately follows a Pebble tag. If set to false, then the
+ first newline following a Pebble tag won&#8217;t be trimmed.  All newlines will be preserved.
+ Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.auto-escaping</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether or not escaping should be performed automatically.
+ Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.default-escaping-strategy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the default escaping strategy of the built-in escaper extension.
+ Default value (EscapeFilter.HTML_ESCAPE_STRATEGY).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.strict-variables</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Changes the strictVariables setting of the PebbleEngine.
+ Default value (false).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.greedy-match-method</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable greedy matching mode for finding java method. Default is disabled. If enabled,
+ when can not find perfect method (method name, parameter length and parameter type are all
+ satisfied), reduce the limit of the parameter type, try to find other method which has
+ compatible parameter types.
+ Default value (false).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.allow-override-core-operators</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether or not core operators overrides should be allowed.
+ Default value (false).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.literal-decimals-as-integers</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable treat literal decimal as Integer.
+ Default value (false), treated as Long.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.pebble.literal-numbers-as-big-decimals</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable/disable treat literal numbers as BigDecimals.
+ Default value (false), treated as Long/Double.</p></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="jte"><a class="anchor" href="#jte"></a>3.1.8 JTE</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/jte.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views Jte includes <a href="../api/io/micronaut/views/jte/JteViewsRenderer.html">JteViewsRenderer</a> which uses
+the <a href="https://jte.gg">Jte</a> Java-based template engine.</p>
+</div>
+<div class="paragraph">
+<p>Add the <code>micronaut-views-jte</code> dependency to your classpath.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-jte")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-jte&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>The example shown in the <a href="#views">Views</a> section, could be rendered with the following Jte template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.jte</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">@param Boolean loggedIn
+@param String username
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Home&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        @if (loggedIn != null &amp;&amp; loggedIn)
+            &lt;h1&gt;username: &lt;span&gt;${username}&lt;/span&gt;&lt;/h1&gt;
+        @else
+            &lt;h1&gt;You are not logged in&lt;/h1&gt;
+        @endif
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compiling_templates">Compiling Templates</h3>
+<div class="paragraph">
+<p>Jte templates may be precompiled at build time. This can be done by a <a href="https://github.com/casid/jte/blob/master/DOCUMENTATION.md#gradle">Gradle plugin</a> or <a href="https://github.com/casid/jte/blob/master/DOCUMENTATION.md#maven">Maven plugin</a>. If not precompiled, the application will need a JDK so it can compile templates at runtime.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dynamic_reloading">Dynamic Reloading</h3>
+<div class="paragraph">
+<p>When 'dynamic' is enabled (see below), JTE will load templates from the project source directory, and will reload them after changes.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration">Configuration</h3>
+<div class="paragraph">
+<p>The properties used can be customized by overriding the values of:</p>
+</div>
+<a id="io.micronaut.views.jte.JteViewsRendererConfigurationProperties" href="#io.micronaut.views.jte.JteViewsRendererConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html">JteViewsRendererConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to enable dynamic reloading of templates. Default value (false).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Root directory under which to write generated source and class files. . Default value ("build/jte-classes").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.dynamic-source-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When using dynamic templates, the root source directory to search. If not specified, jte will
+ search src/&lt;sourceset&gt;/jte and src/&lt;sourceset&gt;/resources/&lt;folder&gt; where
+ 'folder' is ViewsConfiguration.getFolder(). In cases where the source directory cannot be found,
+ jte will use classpath loading instead, and will not dynamically reload templates.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jte.binary-static-content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable building binary content for templates. Default value (false).
+ (Only has an effect when 'dynamic' is true. To use with precompiled templates, enable it in the build plugin)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect1">
+<h2 id="_kte_kotlin_templates">.kte (Kotlin) templates</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To use <code>.kte</code> (Kotlin) templates include the dependency:.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"gg.jte:jte-kotlin")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;gg.jte&lt;/groupId&gt;
+    &lt;artifactId&gt;jte-kotlin&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+</div>
+</div>
+
+<h2 id="jstachio"><a class="anchor" href="#jstachio"></a>3.1.9 JStachio</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/jstachio.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views JStachio includes <a href="../api/io/micronaut/views/jstachio/JStachioMessageBodyWriter.html">JStachioMessageBodyWriter</a>, which uses <a href="https://github.com/jstachio/jstachio">JStachio</a>, a type-safe compiled Mustache-based template engine, to render templates.</p>
+</div>
+
+<h2 id="jstachioInstallation"><a class="anchor" href="#jstachioInstallation"></a>3.1.9.1 JStachio Installation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/jstachio/jstachioInstallation.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To use Micronaut Jstachio, add the <code>micronaut-views-jstachio</code> dependency to your classpath.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-jstachio")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-jstachio&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Additionally, you need to add JStachio&#8217;s Java annotation processor.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">annotationProcessor(<span class="hljs-string">"io.jstach:jstachio-apt")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;annotationProcessorPaths&gt;
+    &lt;path&gt;
+        &lt;groupId&gt;io.jstach&lt;/groupId&gt;
+        &lt;artifactId&gt;jstachio-apt&lt;/artifactId&gt;
+    &lt;/path&gt;
+&lt;/annotationProcessorPaths&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>Read the <a href="https://jstach.io/doc/jstachio/1.2.1/apidocs/#installation">Jstachio&#8217;s user guide</a> to learn more.</p>
+</div>
+
+<h2 id="jstachioExample"><a class="anchor" href="#jstachioExample"></a>3.1.9.2 JStachio Example</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/templates/jstachio/jstachioExample.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+With Micronaut JStachio, you cannot use the <a href="../api/io/micronaut/views/View.html">View</a> annotation,
+respond in your controller a <a href="../api/io/micronaut/views/ModelAndView.html">ModelAndView</a> or use
+<a href="https://micronaut-projects.github.io/micronaut-views/latest/guide/configurationreference.html#io.micronaut.views.ViewsConfigurationProperties">Micronaut Views Configuration</a>
+to configure the views directory since it does not use the <a href="../api/io/micronaut/views/ViewsFilter.html">ViewsFilter</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Instead, a controller returns a model annotated with <code>@JStache</code> referencing the <code>view</code> name.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/io/micronaut/views/jstachio/pkginfo/HomeController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/views")
+public class HomeController {
+    @Produces(MediaType.TEXT_HTML)
+    @Get
+    HomeModel index() {
+        return new HomeModel("sdelamo", true);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/io/micronaut/views/jstachio/pkginfo/HomeModel.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.jstachio.pkginfo;
+
+import io.jstach.jstache.JStache;
+import io.micronaut.core.annotation.Nullable;
+
+@JStache(path = "home")
+public record HomeModel(@Nullable String username, boolean loggedIn) {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can provide a <code>suffix</code> and <code>prefix</code> for every model with the <code>@JStacheConfig</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p>Add a <code>package-info.java</code> in the same package of your model classes.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/io/micronaut/views/jstachio/pkginfo/package-info.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@JStacheConfig(
+    pathing = @JStachePath(prefix = "views/", suffix = ".mustache")
+)
+package io.micronaut.views.jstachio.pkginfo;
+import io.jstach.jstache.JStacheConfig;
+import io.jstach.jstache.JStachePath;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous example renders the following template:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.mustache</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Home&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    {{#loggedIn}}
+    &lt;h1&gt;username: &lt;span&gt;{{username}}&lt;/span&gt;&lt;/h1&gt;
+    {{/loggedIn}}
+    {{^loggedIn}}
+    &lt;h1&gt;You are not logged in&lt;/h1&gt;
+    {{/loggedIn}}
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+
+<h2 id="model"><a class="anchor" href="#model"></a>3.2 Working with Models</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/model.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The Micronaut framework provides a simple way to modify and enhance a model prior to being sent to a template engine for rendering.</p>
+</div>
+
+<h2 id="custom"><a class="anchor" href="#custom"></a>3.2.1 Dynamically Enriching Models</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/model/custom.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Provide custom processors by registering beans of type <a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a>.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows a bean of type <a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a> which includes a fictitious configuration object in the rendering context:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/myapp/model/ConfigViewModelProcessor.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton <i class="conum" data-value="1"></i><b>(1)</b>
+public class ConfigViewModelProcessor implements ViewModelProcessor&lt;Map&lt;String, Object&gt;&gt; {
+    private final ApplicationConfiguration config;
+
+    ConfigViewModelProcessor(ApplicationConfiguration environment) {
+        this.config = environment;
+    }
+
+    @Override
+    public void process(@NonNull HttpRequest&lt;?&gt; request,
+                        @NonNull ModelAndView&lt;Map&lt;String, Object&gt;&gt; modelAndView) {
+        modelAndView.getModel()
+                .ifPresent(model -&gt; {
+                    if (config.getName().isPresent()) {
+                        model.put("applicationName", config.getName().get());
+                    }
+                });
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Use <code>javax.inject.Singleton</code> to designate this class as a singleton in the Micronaut Bean Context.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you use Micronaut Security, Micronaut Views registers a <a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a> to enrich models with security related information.</p>
+</div>
+
+<h2 id="fieldset"><a class="anchor" href="#fieldset"></a>3.3 Fieldset Generation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/fieldset.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Fieldset API is experimental and subject to change.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/views/fields/FieldsetGenerator.html">FieldsetGenerator</a> API simplifies the generation of an HTML Fieldset representation for a given type or instance. It leverages the <a href="https://docs.micronaut.io/latest/guide/#introspectionBuilders">introspection builder support</a>.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/views/fields/FormGenerator.html">FormGenerator</a> API wraps the previous API and simplifies the generation of an HTML form.</p>
+</div>
+<div class="paragraph">
+<p>To use these APIs, you need the dependency the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-fieldset")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-fieldset&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+
+<h2 id="fieldsetExample"><a class="anchor" href="#fieldsetExample"></a>3.3.1 Form Generation Example</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/fieldset/fieldsetExample.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Imagine, you want to create an application which displays a form such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;form action="/books/save" method="post"&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label for="title" class="form-label"&gt;Title&lt;/label&gt;
+        &lt;input type="text" name="title" value="" id="title" minlength="2" maxlength="255" class="form-control" required="required"/&gt;
+    &lt;/div&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label for="pages" class="form-label"&gt;Pages&lt;/label&gt;
+        &lt;input type="number" name="pages" value="" id="pages" min="1" max="21450" class="form-control" required="required"/&gt;
+    &lt;/div&gt;
+    &lt;input type="submit" value="Submit" class="btn btn-primary"/&gt;
+&lt;/form&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Java, you will create a representation for the form submission. Something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
+
+import io.micronaut.serde.annotation.Serdeable;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+@Serdeable
+public record BookSave(@Size(min = 2, max = 255) @NotBlank String title,
+                       @Min(1) @Max(21450) @NotNull Integer pages) {
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The field types and the validation annotations in the previous code sample influence the form generation.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Then using the form generation API, create a controller such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/books")
+class BookController {
+    public static final String CONTROLLER_PATH = "/books";
+    public static final String SAVE_PATH = "/save";
+    public static final String FORM = "form";
+
+    private final FormGenerator formGenerator;
+    private final BookRepository bookRepository;
+
+    BookController(FormGenerator formGenerator,
+                   BookRepository bookRepository) {
+        this.formGenerator = formGenerator;
+        this.bookRepository = bookRepository;
+    }
+
+    @Produces(MediaType.TEXT_HTML)
+    @View("/books/create.html")
+    @Get("/create")
+    Map&lt;String, Object&gt; create() {
+        return Collections.singletonMap(FORM,
+                formGenerator.generate(CONTROLLER_PATH + SAVE_PATH, BookSave.class));
+    }
+
+    @Produces(MediaType.TEXT_HTML)
+    @View("/books/list.html")
+    @Get("/list")
+    Map&lt;String, Object&gt; list() {
+        return Collections.singletonMap("books", bookRepository.findAll());
+    }
+
+    @Produces(MediaType.TEXT_HTML)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Post(SAVE_PATH)
+    HttpResponse&lt;?&gt; save(@Valid @Body BookSave bookSave) {
+        bookRepository.save(new Book(null, bookSave.title(), bookSave.pages()));
+        return HttpResponse.seeOther(UriBuilder.of("/books").path("list").build());
+    }
+
+    @Error(exception = ConstraintViolationException.class)
+    public HttpResponse&lt;?&gt; onConstraintViolationException(HttpRequest&lt;?&gt; request, ConstraintViolationException ex) {
+        if (request.getPath().equals(CONTROLLER_PATH + SAVE_PATH)) {
+            Optional&lt;BookSave&gt; bookSaveOptional = request.getBody(BookSave.class);
+            if (bookSaveOptional.isPresent()) {
+                Form form = formGenerator.generate(CONTROLLER_PATH + SAVE_PATH, bookSaveOptional.get(), ex);
+                ModelAndView&lt;Map&lt;String, Object&gt;&gt; body = new ModelAndView&lt;&gt;("/books/create.html",
+                        Collections.singletonMap(FORM, form));
+                return HttpResponse.unprocessableEntity().body(body);
+            }
+        }
+        return HttpResponse.serverError();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://micronaut.io/launch?features=views-thymeleaf">Micronaut Launch</a> or the Micronaut Command Line Interface (CLI) will generate Thymeleaf fragments to render a form when you select the <code>views-thymeleaf</code> feature.</p>
+</div>
+<div class="paragraph">
+<p>Thanks to those fragments, rendering the form for the <code>/books/create</code> route in the previous example is really simple:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/books/create.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en" th:replace="~{layout :: layout(~{::title},~{::script},~{::main})}" xmlns:th="http://www.thymeleaf.org"&gt;
+    &lt;head&gt;
+        &lt;title&gt;&lt;/title&gt;
+        &lt;script&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;main&gt;
+        &lt;form th:replace="~{fieldset/form :: form(${form})}"&gt;&lt;/form&gt;
+    &lt;/main&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+
+<h2 id="fieldsetAnnotations"><a class="anchor" href="#fieldsetAnnotations"></a>3.3.2 Fieldset Annotations</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/fieldset/fieldsetAnnotations.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Sometimes, more than the Java type is needed to define the input type. For example, you may want to render a login form such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;form action="/login" method="post"&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label for="username" class="form-label"&gt;Username&lt;/label&gt;
+        &lt;input type="text" name="username" value="" id="username" class="form-control" required="required"/&gt;
+    &lt;/div&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label for="password" class="form-label"&gt;Password&lt;/label&gt;
+        &lt;input type="password" name="password" value="" id="password" class="form-control" required="required"/&gt;
+    &lt;/div&gt;
+    &lt;input type="submit" value="Submit" class="btn btn-primary"/&gt;
+&lt;/form&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Java, you will create a representation for the form submission and annotate the <code>password</code> field with <a href="../api/io/micronaut/views/fields/annotations/InputPassword.html">@InputPassword</a>. Something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
+
+import io.micronaut.core.annotation.Introspected;
+import io.micronaut.views.fields.annotations.InputPassword;
+import jakarta.validation.constraints.NotBlank;
+
+@Introspected
+public record Login(@NotBlank String username,
+                    @InputPassword @NotBlank String password) {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following annotations are available:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Annotation</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputCheckbox.html">@InputCheckbox</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">checkbox input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputEmail.html">@InputEmail</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email">email input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputHidden.html">@InputHidden</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden">hidden input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputNumber.html">@InputNumber</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number">number input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputPassword.html">@InputPassword</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password">password input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputRadio.html">@InputRadio</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio">radio input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputTel.html">@InputTel</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel">telephone input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputText.html">@InputText</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text">text input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputUrl.html">@InputUrl</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url">url input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/Select.html">@Select</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">HTML select element</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/Textarea.html">@Textarea</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea">textarea</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/TrixEditor.html">@TrixEditor</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to mark a field as a <a href="https://trix-editor.org">Trix editor</a>.</p></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="fieldsetFetcher"><a class="anchor" href="#fieldsetFetcher"></a>3.3.3 Radio, Checkbox and Option Fetcher</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/fieldset/fieldsetFetcher.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/views/fields/annotations/InputCheckbox.html">@InputCheckbox</a>, <a href="../api/io/micronaut/views/fields/annotations/InputRadio.html">@InputRadio</a>, and <a href="../api/io/micronaut/views/fields/annotations/Select.html">@Select</a> annotations allow you to specify a fetcher class to load data necessary for the form.</p>
+</div>
+<div class="paragraph">
+<p>Imagine you want a form to associate an author with a book form, such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;form action="/books/authors/save" method="post"&gt;
+    &lt;input type="hidden" name="bookId" value="1"/&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label for="authorId" class="form-label"&gt;Author Id&lt;/label&gt;
+        &lt;select name="authorId" id="authorId" class="form-select" required="required"&gt;
+            &lt;option value="1"&gt;Kishori Sharan&lt;/option&gt;
+            &lt;option value="2"&gt;Peter Späth&lt;/option&gt;
+            &lt;option value="3"&gt;Sam Newman&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;input type="submit" value="Submit" class="btn btn-primary"/&gt;
+&lt;/form&gt;"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Java, you will create a representation for the form submission. Something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
+
+import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.views.fields.annotations.InputHidden;
+import io.micronaut.views.fields.annotations.Select;
+import jakarta.validation.constraints.NotNull;
+
+@Serdeable
+public record BookAuthorSave(@NotNull @InputHidden Long bookId,
+                             @NotNull @Select(fetcher = AuthorFetcher.class) Long authorId) {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>fetcher</code> member of the <code>Select</code> annotation allows you to specify a class. <code>AuthorFetcher</code> is a <code>Singleton</code> of type <code>OptionFetcher</code>, and you could write it, for example, like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
+
+import io.micronaut.views.fields.messages.Message;
+import io.micronaut.views.fields.elements.Option;
+import io.micronaut.views.fields.fetchers.OptionFetcher;
+import jakarta.inject.Singleton;
+import java.util.List;
+
+@Singleton
+public class AuthorFetcher implements OptionFetcher&lt;Long&gt; {
+    private final AuthorRepository authorRepository;
+
+    public AuthorFetcher(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
+
+    @Override
+    public List&lt;Option&gt; generate(Class&lt;Long&gt; type) {
+        return authorRepository.findAll()
+                .stream()
+                .map(author -&gt; Option.builder()
+                        .value(String.valueOf(author.id()))
+                        .label(Message.of(author.title()))
+                        .build()
+                ).toList();
+    }
+
+    @Override
+    public List&lt;Option&gt; generate(Long instance) {
+        return authorRepository.findAll()
+                .stream()
+                .map(author -&gt; Option.builder()
+                        .selected(author.id().equals(instance))
+                        .value(String.valueOf(author.id()))
+                        .label(Message.of(author.title()))
+                        .build())
+                .toList();
+    }
+}</code></pre>
+</div>
+</div>
+
+<h2 id="turbo"><a class="anchor" href="#turbo"></a>3.4 Turbo</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/turbo.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views simplifies working with <a href="https://turbo.hotwired.dev">Turbo</a>, the heart of <a href="https://hotwired.dev">Hotwire</a> (HTML over the wire):</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>A set of complementary techniques for speeding up page changes and form submissions, dividing complex pages into components, and stream partial page updates over WebSocket. All without writing any JavaScript at all. And designed from the start to integrate perfectly with native hybrid applications for iOS and Android.</p>
+</div>
+</blockquote>
+</div>
+
+<h2 id="turboFrameView"><a class="anchor" href="#turboFrameView"></a>3.4.1 TurboFrameView annotation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/turbo/turboFrameView.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Turbo fetch request includes an HTTP Header <code>Turbo-Frame</code> when you click a link within a Turbo Frame.</p>
+</div>
+<div class="paragraph">
+<p>For example, for a frame id <code>message_1</code> and a response such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Edit&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Editing message&lt;/h1&gt;
+&lt;turbo-frame id="message_1"&gt;
+&lt;form action="/messages/1"&gt;
+    &lt;input name="name" type="text" value="My message title"&gt;
+    &lt;textarea name="content"&gt;My message content&lt;/textarea&gt;
+    &lt;input type="submit"&gt;
+&lt;/form&gt;
+&lt;/turbo-frame&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Turbo extracts <code>&lt;turbo-frame id="message_1"&gt;</code> and it replaces the frame content from where the click originated.  When Turbo updates the frame, it uses only content inside a matching <code>&lt;turbo-frame&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>You can render a <a href="https://turbo.hotwired.dev/reference/frames">Turbo Frame</a> easily by annotating a controller route with
+<a href="../api/io/micronaut/views/turbo/TurboFrameView.html">TurboFrameView</a> and returning only the HTML used by Turbo.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;turbo-frame id="message_1"&gt;
+&lt;form action="/messages/1"&gt;
+    &lt;input name="name" type="text" value="My message title"&gt;
+    &lt;textarea name="content"&gt;My message content&lt;/textarea&gt;
+    &lt;input type="submit"&gt;
+&lt;/form&gt;
+&lt;/turbo-frame&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example illustrates this behaviour with two Velocity templates and a controller.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/edit.vm</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Edit&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Editing message&lt;/h1&gt;
+&lt;turbo-frame id="message_$message.getId()"&gt;
+#parse("views/form.vm")
+&lt;/turbo-frame&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/form.vm</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;form action="/messages/$message.getId()"&gt;
+    &lt;input name="name" type="text" value="$message.getName()"&gt;
+    &lt;textarea name="content"&gt;$message.getContent()&lt;/textarea&gt;
+    &lt;input type="submit"&gt;
+&lt;/form&gt;</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Produces(MediaType.TEXT_HTML)
+@TurboFrameView("form")
+@View("edit")
+@Get
+Map&lt;String, Object&gt; index() {
+    return Collections.singletonMap("message",
+    new Message(1L, "My message title", "My message content"));
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Produces(MediaType.TEXT_HTML)
+@TurboFrameView("form")
+@View("edit")
+@Get
+Map&lt;String, Object&gt; index() {
+    ["message": new Message(id: 1L, name: "My message title", content: "My message content")]
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">        @Produces(MediaType.TEXT_HTML)
+        @TurboFrameView("form")
+        @View("edit")
+        @Get
+        fun index(): Map&lt;String, Any&gt; {
+            return mapOf("message" to Message(1L, "My message title", "My message content"))
+        }</code></pre>
+</div>
+</div>
+
+<h2 id="turboFrameBuilder"><a class="anchor" href="#turboFrameBuilder"></a>3.4.2 TurboFrame Builder</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/turbo/turboFrameBuilder.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can render Turbo Frames also by returning <code>TurboFrame.Builder</code> from a controller.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Produces(MediaType.TEXT_HTML)
+@Get("/builder")
+HttpResponse&lt;?&gt; index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) String turboFrame) {
+    Long messageId = 1L;
+    Map&lt;String, Object&gt; model = Collections.singletonMap("message",
+            new Message(messageId, "My message title", "My message content"));
+    return HttpResponse.ok(turboFrame == null ?
+                    new ModelAndView("edit", model) :
+                    TurboFrame.builder()
+                            .id("message_"  + messageId)
+                            .templateModel(model)
+                            .templateView("form"))
+            .contentType(MediaType.TEXT_HTML);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Produces(MediaType.TEXT_HTML)
+@Get("/builder")
+HttpResponse&lt;?&gt; index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) String turboFrame) {
+    Long messageId = 1L
+    Map&lt;String, Object&gt; model = [
+            "message": new Message(id: messageId, name: "My message title", content: "My message content")
+    ]
+    HttpResponse.ok(turboFrame == null ? new ModelAndView("edit", model) :
+            TurboFrame.builder()
+                    .id("message_"  + messageId)
+                    .templateModel(model)
+                    .templateView("form")
+    ).contentType(MediaType.TEXT_HTML)
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Produces(MediaType.TEXT_HTML)
+@Get("/builder")
+fun index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) turboFrame: String?): HttpResponse&lt;*&gt; {
+    val messageId = 1L
+    val model = mapOf("message" to Message(messageId,
+"My message title",
+"My message content"))
+    return HttpResponse.ok(
+        if (turboFrame == null)
+            ModelAndView&lt;Any?&gt;("edit", model)
+        else
+            TurboFrame.builder()
+                .id("message_$messageId")
+                .templateModel(model)
+                .templateView("form")
+    ).contentType(MediaType.TEXT_HTML)
+}</code></pre>
+</div>
+</div>
+
+<h2 id="turboStreamFluidApi"><a class="anchor" href="#turboStreamFluidApi"></a>3.4.3 Turbo Stream Fluid API</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/turbo/turboStreamFluidApi.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can render <a href="https://turbo.hotwired.dev/reference/streams">Turbo Stream</a>s by returning a <code>TurboStream.Builder</code> from a controller.</p>
+</div>
+<div class="paragraph">
+<p><code>TurboStream</code> features a fluid API:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">TurboStream turboStream = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template("Content to append to container designated with the dom_id.")
+    .build();
+Optional&lt;Writable&gt; writable = turboStream.render();</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">TurboStream turboStream = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template("Content to append to container designated with the dom_id.")
+    .build()
+Optional&lt;Writable&gt; writable = turboStream.render();</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">val turboStream = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template("Content to append to container designated with the dom_id.")
+    .build()
+val writable = turboStream.render()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous example generates:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
+    "&lt;template&gt;" +
+        "Content to append to container designated with the dom_id." +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
+    "&lt;template&gt;" +
+        "Content to append to container designated with the dom_id." +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;" +
+    "&lt;template&gt;" +
+        "Content to append to container designated with the dom_id." +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+
+<h2 id="turboView"><a class="anchor" href="#turboView"></a>3.4.4 TurboView Annotation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/turbo/turboView.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can render <a href="https://turbo.hotwired.dev/reference/streams">Turbo Streams</a> easily by annotating a controller route with
+<a href="../api/io/micronaut/views/turbo/TurboView.html">TurboView</a></p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Produces(value = {MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM})
+@TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+@Get("/turbofruit")
+Map&lt;String, Object&gt; show() {
+ return Collections.singletonMap("fruit", new TurboStreamTemplateTest.Fruit("Banana", "Yellow"));
+ }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
+@TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+@Get("/turbofruit")
+Map&lt;String, Object&gt; show() {
+ return Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
+ }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
+@TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+@Get("/turbofruit")
+fun show(): Map&lt;String, Any&gt; {
+    return Collections.singletonMap("fruit", Fruit("Banana", "Yellow"))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Given the HTTP Request:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">HttpRequest&lt;?&gt; request = HttpRequest.GET("/turbofruit")
+        .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
+        .header(TurboHttpHeaders.TURBO_FRAME, "dom_id");</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">HttpRequest&lt;?&gt; request = HttpRequest.GET("/turbofruit")
+        .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
+        .header(TurboHttpHeaders.TURBO_FRAME, "dom_id");</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">val request: HttpRequest&lt;*&gt; = HttpRequest.GET&lt;Any&gt;("/turbofruit")
+    .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
+    .header(TurboHttpHeaders.TURBO_FRAME, "dom_id")</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The previous controller returns:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
+    "&lt;template&gt;" +
+        "&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n" +
+        "&lt;h2&gt;color: Yellow&lt;/h2&gt;" +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
+    "&lt;template&gt;" +
+        "&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n" +
+        "&lt;h2&gt;color: Yellow&lt;/h2&gt;" +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;" +
+    "&lt;template&gt;" +
+        "&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n" +
+        "&lt;h2&gt;color: Yellow&lt;/h2&gt;" +
+    "&lt;/template&gt;" +
+"&lt;/turbo-stream&gt;"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with content type <code>text/vnd.turbo-stream.html</code>.</p>
+</div>
+
+<h2 id="turboStreamContentType"><a class="anchor" href="#turboStreamContentType"></a>3.4.5 Turbo Stream Media Type</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/turbo/turboStreamContentType.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can use <a href="../api/io/micronaut/views/turbo/http/TurboMediaType.html">TurboMediaType</a> to evaluate whether a <a href="https://turbo.hotwired.dev/handbook/streams#streaming-from-http-responses">request accepts Turbo Streams</a>.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>When submitting a &lt;form&gt; element whose method attribute is set to POST, PUT, PATCH, or DELETE, Turbo injects text/vnd.turbo-stream.html into the set of response formats in the request’s Accept header.</p>
+</div>
+</blockquote>
+</div>
+
+<h2 id="turboStreamTemplate"><a class="anchor" href="#turboStreamTemplate"></a>3.4.6 Turbo Streams with Templates</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/turbo/turboStreamTemplate.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can use <a href="../api/io/micronaut/views/turbo/TurboStreamRenderer.html">TurboStreamRenderer</a> to render <a href="https://turbo.hotwired.dev/reference/streams">Turbo Streams</a>
+with server side templates.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String view = "fruit";
+Map&lt;String, Object&gt; model = Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
+TurboStream.Builder builder = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template(view, model);
+Optional&lt;Writable&gt; writable = turboStreamRenderer.render(builder, null);</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">String view = "fruit"
+Map&lt;String, Object&gt; model = Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"))
+TurboStream.Builder builder = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template(view, model)
+Optional&lt;Writable&gt; writable = turboStreamRenderer.render(builder, null)</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">val view = "fruit"
+val model = Collections.singletonMap&lt;String, Any&gt;("fruit", Fruit("Banana", "Yellow"))
+val builder = TurboStream.builder()
+    .action(TurboStreamAction.APPEND)
+    .targetDomId("dom_id")
+    .template(view, model)
+val writable = turboStreamRenderer.render(builder, null)</code></pre>
+</div>
+</div>
+
+<h2 id="security"><a class="anchor" href="#security"></a>3.5 Security</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/security.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+
+
+<h2 id="csp"><a class="anchor" href="#csp"></a>3.5.1 Content Security Policy</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/security/csp.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views supports CSP (<em><a href="https://www.w3.org/TR/CSP3/">Content Security Policy, Level 3</a></em>) out of the box.
+By default, CSP is disabled. To enable CSP, modify your configuration. For example:</p>
+</div>
+<div class="openblock">
+<div class="title">application configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">micronaut.views.csp.enabled=true</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  views:
+    csp:
+      enabled: true</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[micronaut]
+  [micronaut.views]
+    [micronaut.views.csp]
+      enabled=true</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">micronaut {
+  views {
+    csp {
+      enabled = true
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  micronaut {
+    views {
+      csp {
+        enabled = true
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "micronaut": {
+    "views": {
+      "csp": {
+        "enabled": true
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>See the following table for all configuration options:</p>
+</div>
+<a id="io.micronaut.views.csp.CspConfiguration" href="#io.micronaut.views.csp.CspConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/csp/CspConfiguration.html">CspConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.policy-directives</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.report-only</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.random-engine</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Random</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.generate-nonce</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, the CSP header will contain a generated nonce that is made available
+ to view renderers. The nonce should change for each request/response cycle and
+ can be used by views to authorize inlined script blocks.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.force-secure-random</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether <code>SecureRandom</code> is forced for use in generated nonce values.
+ Defaults to <code>false</code>. Enabling this requires
+ careful consideration, because <code>SecureRandom</code> will block infinitely without
+ enough entropy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.filter-path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_nonce_support">Nonce Support</h3>
+<div class="paragraph">
+<p>At the developer&#8217;s option, Micronaut Views can generate a nonce with each render cycle. This nonce value can be used in
+<code>script-src</code> and <code>style-src</code> directives in a CSP response header (note that <code>nonce</code> values generally do not have any
+effect when <em>Content Security Policy</em> is set via a <code>&lt;meta http-equiv&gt;</code> tag).</p>
+</div>
+<div class="paragraph">
+<p>To opt-in to this behavior, configure Micronaut Views with <code>generateNonce</code> set to <code>true</code>. Additionally, provide a spot for the
+nonce value in your CSP directives, with the token <code>{#nonceValue}</code>. It must be preceded by <code>nonce-</code> and wrapped in
+single quotes, <a href="https://www.w3.org/TR/CSP3/#framework-directive-source-list">as per the CSP3 spec</a>:</p>
+</div>
+<div class="openblock">
+<div class="title">application configuration</div>
+<div class="content">
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">micronaut.views.csp.enabled=true
+micronaut.views.csp.generateNonce=true
+micronaut.views.csp.policyDirectives=default-src https: self:; script-src 'nonce-{#nonceValue}';</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
+  views:
+    csp:
+      enabled: true
+      generateNonce: true
+      policyDirectives: "default-src https: self:; script-src 'nonce-{#nonceValue}';"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[micronaut]
+  [micronaut.views]
+    [micronaut.views.csp]
+      enabled=true
+      generateNonce=true
+      policyDirectives="default-src https: self:; script-src \'nonce-{#nonceValue}\';"</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">micronaut {
+  views {
+    csp {
+      enabled = true
+      generateNonce = true
+      policyDirectives = "default-src https: self:; script-src 'nonce-{#nonceValue}';"
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
+  micronaut {
+    views {
+      csp {
+        enabled = true
+        generateNonce = true
+        policyDirectives = "default-src https: self:; script-src 'nonce-{#nonceValue}';"
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
+  "micronaut": {
+    "views": {
+      "csp": {
+        "enabled": true,
+        "generateNonce": true,
+        "policyDirectives": "default-src https: self:; script-src 'nonce-{#nonceValue}';"
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>That&#8217;s it! After applying the above configuration, HTTP responses might include a header that look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt hljs" data-lang="txt">Content-Security-Policy: default-src https: self:; script-src 'nonce-4ze2IRazk4Yu/j5K6SEzjA';</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Inline scripts which aren&#8217;t otherwise whitelisted will be declined for execution, unless CSP is operating in report-only
+mode. Inline scripts can be whitelisted with the syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;script type="text/javascript" nonce="4ze2IRazk4Yu/j5K6SEzjA"&gt;
+  // some javascript code here
+&lt;/script&gt;</code></pre>
+</div>
+</div>
+</div>
+
+<h2 id="security-model-enhancement"><a class="anchor" href="#security-model-enhancement"></a>3.5.2 Integration with Micronaut Security</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/security/security-model-enhancement.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The views project has integration with the Micronaut security project.</p>
+</div>
+<div class="paragraph">
+<p><a href="../api/io/micronaut/views/model/security/SecurityViewModelProcessor.html">SecurityViewModelProcessor</a> is enabled by default and injects the current username in the view.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>SecurityViewModelProcessor</code> is typed to <code>Map&lt;String, Object&gt;</code>. If are models are POJOs you will need to implement your own security <a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following properties allow you to customize the injection:</p>
+</div>
+<a id="io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties" href="#io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html">SecurityViewModelProcessorConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable {@link SecurityViewModelProcessor}. Default value (true).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.security-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.principal-name-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.attributes-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>In a controller, you can return a model without specifying in the model the authenticated user:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/java/myapp/BooksController.java</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/")
+public class BooksController {
+
+    @Secured(SecurityRule.IS_AUTHENTICATED)
+    @View("securitydecorator")
+    @Get
+    public Map&lt;String, Object&gt; index() {
+        Map&lt;String, Object&gt; model = new HashMap&lt;&gt;();
+        model.put("books", Arrays.asList("Developing Microservices"));
+        return model;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and still access the authenticated user in the view (for example a velocity template):</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/books.vm</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;User Books&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    #if( $security )
+      &lt;h1&gt;User: ${security['name']} email: ${security['attributes']['email']}&lt;/h1&gt;
+    #end
+
+    #foreach($book in $books)
+      $book
+    #end
+
+    #if( $securitycustom )
+    &lt;h1&gt;Custom: ${securitycustom['name']}&lt;/span&gt;&lt;/h1&gt;
+    #end
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can access information about the current user with the <code>security</code> map.</p>
+</div>
+
+<h2 id="graal"><a class="anchor" href="#graal"></a>3.6 GraalVM Support</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/views/graal.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The Micronaut framework supports GraalVM and starting in <code>1.2.0</code> special configuration files have been added to make easier the native image creation.</p>
+</div>
+<div class="paragraph">
+<p>For Micronaut framework 2.0 the support for GraalVM has been improved and now it&#8217;s not necessary to declare any view.
+This also applies if you <a href="https://docs.micronaut.io/latest/guide/index.html#staticResources">serve static resources</a> like
+html, css and javascript files. Everything in the <code>public</code> directory will also be added to the GraalVM resource configuration
+automatically.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graal">Micronaut framework&#8217;s GraalVM support</a>.
+</td>
+</tr>
+</table>
+</div>
+
+<h1 id="breaks"><a class="anchor" href="#breaks"></a>4 Breaking Changes</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/breaks.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>This section outlines the breaking changes done in major versions of Micronaut Views.</p>
+</div>
+<div class="sect2">
+<h3 id="_4_0_0">4.0.0</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The Soy dependency has been upgraded to version <em>2022-10-26</em>, which includes breaking changes. Among others, <code>.</code> is no longer allowed before template names. To know the full changes, we suggest <a href="https://github.com/google/closure-templates/compare/release-2022-03-02%E2%80%A6release-2022-03-07">looking at the commits</a> since there exist no release notes.</p>
+</li>
+<li>
+<p>To reduce the size of applications where Http requests are not required, the core library has been detached from the micronaut http library and no longer declares it as an api dependency.
+This change has added another Generic type to ViewRenderer, and breaks binary compatibility.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_0_0">3.0.0</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a> no longer assumes a <code>Map&lt;String,Object&gt;</code> model and must be typed to the exact type of the model you would like to process.</p>
+</li>
+<li>
+<p><a href="../api/io/micronaut/views/ViewsRenderer.html">ViewsRenderer</a> are now typed. Moreover, provided <code>ViewsRenderer</code> don&#8217;t specify <code>@Produces(MediaType.TEXT_HTML)</code> and responses content type respect the content type defined for the route.</p>
+</li>
+<li>
+<p>Method <code>ViewsRenderer::render(String, T)</code> was removed. Use <code>ViewsRenderer::render(String, T, HttpRequest)</code> instead.</p>
+</li>
+<li>
+<p>Decoration of view model is now handled by <a href="../api/io/micronaut/views/ViewsModelDecorator.html">ViewsModelDecorator</a> and its default implementation <a href="../api/io/micronaut/views/DefaultViewsModelDecorator.html">DefaultViewsModelDecorator</a></p>
+</li>
+<li>
+<p>Resolution of view name is now handled by <a href="../api/io/micronaut/views/ViewsResolver.html">ViewsResolver</a> and its default implementation <a href="../api/io/micronaut/views/DefaultViewsResolver.html">DefaultViewsResolver</a></p>
+</li>
+<li>
+<p>Resolution of <a href="../api/io/micronaut/views/ViewsRenderer.html">ViewsRenderer</a> used to render a view is now handled by <a href="../api/io/micronaut/views/ViewsRendererLocator.html">ViewsRendererLocator</a> and its default implementation <a href="../api/io/micronaut/views/DefaultViewsRendererLocator.html">DefaultViewsRendererLocator</a></p>
+</li>
+<li>
+<p><code>ViewsRenderer::modelOf</code> method has been moved to <code>ViewUtils::modelOf</code></p>
+</li>
+<li>
+<p>Constant <code>EXTENSION_SEPARATOR</code> has been moved from <code>ViewsRenderer</code> to <code>ViewUtils</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_0_0">2.0.0</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>micronaut-views</code> dependency is no longer published. Replace the dependency with the one specific to the view implementation being used.</p>
+</li>
+<li>
+<p>Deprecated classes, constructors, etc have been removed.</p>
+</li>
+<li>
+<p>ViewsFilterOrderProvider has been removed. The view filter now always runs on <code>ServerFilterPhase.RENDERING</code>.</p>
+</li>
+<li>
+<p>Maven Group ID changed to <code>io.micronaut.views</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<h1 id="repository"><a class="anchor" href="#repository"></a>5 Repository</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/4.1.x/src/main/docs/guide/repository.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You can find the source code of this project in this repository:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/micronaut-projects/micronaut-views">https://github.com/micronaut-projects/micronaut-views</a></p>
+</div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
