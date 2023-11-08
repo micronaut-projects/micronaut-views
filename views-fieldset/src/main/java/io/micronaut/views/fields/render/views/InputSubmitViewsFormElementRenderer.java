@@ -30,7 +30,7 @@ import java.util.Map;
  * @since 4.1.0
  */
 @Internal
-@Requires(property = FormElementRendererViewsConfiguration.PREFIX + "input-submit")
+@Requires(property = FormElementRendererViewsConfiguration.PREFIX + ".input-submit")
 @Singleton
 public class InputSubmitViewsFormElementRenderer extends ViewsFormElementRenderer<InputSubmitFormElement> {
 

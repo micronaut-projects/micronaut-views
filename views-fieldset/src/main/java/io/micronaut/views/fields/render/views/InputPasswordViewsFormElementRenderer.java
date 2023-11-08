@@ -30,7 +30,7 @@ import java.util.Map;
  * @since 4.1.0
  */
 @Internal
-@Requires(property = FormElementRendererViewsConfiguration.PREFIX + "input-password")
+@Requires(property = FormElementRendererViewsConfiguration.PREFIX + ".input-password")
 @Singleton
 public class InputPasswordViewsFormElementRenderer extends ViewsFormElementRenderer<InputPasswordFormElement> {
 
