@@ -262,6 +262,11 @@ public interface FormElementRenderer<T extends FormElement> {
         return message.defaultMessage();
     }
 
+    /**
+     *
+     * @param type Input type
+     * @return An HTML attribute with key type and value the parameter
+     */
     default HtmlAttribute typeHtmlAttribute(@NonNull InputType type) {
         return new HtmlAttribute(ATTR_TYPE, type.toString());
     }
