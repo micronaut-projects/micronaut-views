@@ -82,7 +82,7 @@ public record Message(@NonNull String defaultMessage, @Nullable String code) imp
      *
      * @param type Field Type
      * @param name Field name
-     * @return A {@link Message} instance backed by a {@link SimpleMessage}.
+     * @return A {@link Message} instance.
      */
     @NonNull
     public static Message of(Class<?> type, String name) {
