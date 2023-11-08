@@ -1692,8 +1692,8 @@ the <a href="https://pebbletemplates.io/">Pebble</a> project.</p>
 
 
 <div class="paragraph">
-<p>Micronaut Views Jte includes <a href="../api/io/micronaut/views/jte/JteViewsRenderer.html">JteViewsRenderer</a> which uses
-the <a href="https://jte.gg">Jte</a> Java-based template engine.</p>
+<p>Micronaut Views Jte includes <a href="../api/io/micronaut/views/jte/JteViewsRenderer.html">JteViewsRenderer</a> which uses <a href="https://jte.gg">jte</a> (<strong>J</strong>ava <strong>T</strong>emplate <strong>E</strong>ngine), a
+secure and lightweight template engine for Java and Kotlin.</p>
 </div>
 <div class="paragraph">
 <p>Add the <code>micronaut-views-jte</code> dependency to your classpath.</p>
@@ -1739,13 +1739,13 @@ the <a href="https://jte.gg">Jte</a> Java-based template engine.</p>
 <div class="sect2">
 <h3 id="_compiling_templates">Compiling Templates</h3>
 <div class="paragraph">
-<p>Jte templates may be precompiled at build time. This can be done by a <a href="https://github.com/casid/jte/blob/master/DOCUMENTATION.md#gradle">Gradle plugin</a> or <a href="https://github.com/casid/jte/blob/master/DOCUMENTATION.md#maven">Maven plugin</a>. If not precompiled, the application will need a JDK so it can compile templates at runtime.</p>
+<p>Jte templates may be precompiled at build time. This can be done by a <a href="https://jte.gg/pre-compiling/#gradle">Gradle plugin</a> or <a href="https://jte.gg/pre-compiling/#maven">Maven plugin</a>. If not precompiled, the application will need a JDK so it can compile templates at runtime.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_dynamic_reloading">Dynamic Reloading</h3>
 <div class="paragraph">
-<p>When 'dynamic' is enabled (see below), JTE will load templates from the project source directory, and will reload them after changes.</p>
+<p>When <code>dynamic</code> is enabled (see below), jte will load templates from the project source directory, and will reload them after changes.</p>
 </div>
 </div>
 <div class="sect2">
