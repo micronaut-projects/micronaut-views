@@ -25,7 +25,6 @@ import io.micronaut.views.fields.elements.SelectFormElement;
 import io.micronaut.views.fields.elements.TextareaFormElement;
 import io.micronaut.views.fields.fetchers.OptionFetcher;
 import io.micronaut.views.fields.messages.Message;
-import io.micronaut.views.fields.messages.SimpleMessage;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
@@ -185,7 +184,7 @@ class EventCreateFormTest {
                 builder.with("min", SALE_CLOSING_DATE);
             }
         });
-        InputTextFormElement nameExpectation = nameExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "eventcreateform.name.notblank"))).build();
+        InputTextFormElement nameExpectation = nameExpectation().value("").errors(Collections.singletonList(Message.of("must not be blank", "eventcreateform.name.notblank"))).build();
         assertAnyMatch(fieldset, nameExpectation);
 
         InputCheckboxFormElement highlightedExpectation = highlightedExpectationChecked().build();
@@ -208,37 +207,37 @@ class EventCreateFormTest {
     }
 
     private TextareaFormElement.Builder additionalInfoExpectation() {
-        return TextareaFormElement.builder().required(false).id("additionalInfo").name("additionalInfo").label(new SimpleMessage("Additional Info", "eventcreateform.additionalInfo"));
+        return TextareaFormElement.builder().required(false).id("additionalInfo").name("additionalInfo").label(Message.of("Additional Info", "eventcreateform.additionalInfo"));
     }
 
     private InputTextFormElement.Builder nameExpectation() {
-        return InputTextFormElement.builder().required(true).id("name").name("name").label(new SimpleMessage("Name", "eventcreateform.name"));
+        return InputTextFormElement.builder().required(true).id("name").name("name").label(Message.of("Name", "eventcreateform.name"));
     }
 
     private InputCheckboxFormElement.Builder highlightedExpectation() {
         return InputCheckboxFormElement.builder()
             .label(Message.of("Highlighted", "eventcreateform.highlighted"))
-            .checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("false").label(new SimpleMessage("Highlighted", "eventcreateform.highlighted")).build()));
+            .checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("false").label(Message.of("Highlighted", "eventcreateform.highlighted")).build()));
     }
 
     private InputCheckboxFormElement.Builder highlightedExpectationChecked() {
         return InputCheckboxFormElement.builder()
             .label(Message.of("Highlighted", "eventcreateform.highlighted"))
-            .checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("true").checked(true).label(new SimpleMessage("Highlighted", "eventcreateform.highlighted")).build()));
+            .checkboxes(Collections.singletonList(Checkbox.builder().id("highlighted").name("highlighted").value("true").checked(true).label(Message.of("Highlighted", "eventcreateform.highlighted")).build()));
     }
 
     private InputNumberFormElement.Builder capacityExpectation() {
-        return InputNumberFormElement.builder().required(true).min(1).id("capacity").name("capacity").label(new SimpleMessage("Capacity", "eventcreateform.capacity"));
+        return InputNumberFormElement.builder().required(true).min(1).id("capacity").name("capacity").label(Message.of("Capacity", "eventcreateform.capacity"));
     }
 
     private InputRadioFormElement.Builder statusExpectation() {
         return InputRadioFormElement.builder()
             .label(Message.of("Status", "eventcreateform.status"))
             .required(true).name("status").buttons(Arrays.asList(
-            Radio.builder().value("DRAFT").id("draft").label(new SimpleMessage("Draft", "status.draft")).build(),
-            Radio.builder().value("CLOSED").id("closed").label(new SimpleMessage("Closed", "status.closed")).build(),
-            Radio.builder().value("OPEN").id("open").label(new SimpleMessage("Open", "status.open")).build(),
-            Radio.builder().value("CANCELED").id("canceled").label(new SimpleMessage( "Canceled", "status.canceled")).build()
+            Radio.builder().value("DRAFT").id("draft").label(Message.of("Draft", "status.draft")).build(),
+            Radio.builder().value("CLOSED").id("closed").label(Message.of("Closed", "status.closed")).build(),
+            Radio.builder().value("OPEN").id("open").label(Message.of("Open", "status.open")).build(),
+            Radio.builder().value("CANCELED").id("canceled").label(Message.of( "Canceled", "status.canceled")).build()
         ));
     }
 
@@ -246,10 +245,10 @@ class EventCreateFormTest {
         return InputRadioFormElement.builder()
             .label(Message.of("Status", "eventcreateform.status"))
             .required(true).name("status").buttons(Arrays.asList(
-            Radio.builder().value("DRAFT").id("draft").label(new SimpleMessage("Draft", "status.draft")).build(),
-            Radio.builder().value("CLOSED").id("closed").label(new SimpleMessage("Closed", "status.closed")).checked(true).build(),
-            Radio.builder().value("OPEN").id("open").label(new SimpleMessage("Open", "status.open")).build(),
-            Radio.builder().value("CANCELED").id("canceled").label(new SimpleMessage( "Canceled", "status.canceled")).build()
+            Radio.builder().value("DRAFT").id("draft").label(Message.of("Draft", "status.draft")).build(),
+            Radio.builder().value("CLOSED").id("closed").label(Message.of("Closed", "status.closed")).checked(true).build(),
+            Radio.builder().value("OPEN").id("open").label(Message.of("Open", "status.open")).build(),
+            Radio.builder().value("CANCELED").id("canceled").label(Message.of( "Canceled", "status.canceled")).build()
         ));
     }
 
@@ -259,7 +258,7 @@ class EventCreateFormTest {
             .required(true)
             .id("eventStart")
             .name("eventStart")
-            .label(new SimpleMessage( "Event Start", "eventcreateform.eventStart"));
+            .label(Message.of( "Event Start", "eventcreateform.eventStart"));
     }
 
     private InputDateTimeLocalFormElement.Builder doorsOpeningExpectation() {
@@ -268,19 +267,19 @@ class EventCreateFormTest {
             .required(true)
             .id("doorsOpening")
             .name("doorsOpening")
-            .label(new SimpleMessage( "Doors Opening", "eventcreateform.doorsOpening"));
+            .label(Message.of( "Doors Opening", "eventcreateform.doorsOpening"));
     }
 
     private InputDateTimeLocalFormElement.Builder saleClosingDateExpectation() {
-        return InputDateTimeLocalFormElement.builder().required(true).id("saleClosingDate").name("saleClosingDate").label(new SimpleMessage("Sale Closing Date", "eventcreateform.saleClosingDate"));
+        return InputDateTimeLocalFormElement.builder().required(true).id("saleClosingDate").name("saleClosingDate").label(Message.of("Sale Closing Date", "eventcreateform.saleClosingDate"));
     }
 
     private InputDateFormElement.Builder eventDateExpectation() {
-        return InputDateFormElement.builder().required(true).id("eventDate").name("eventDate").label(new SimpleMessage("Event Date", "eventcreateform.eventDate"));
+        return InputDateFormElement.builder().required(true).id("eventDate").name("eventDate").label(Message.of("Event Date", "eventcreateform.eventDate"));
     }
 
     private InputUrlFormElement.Builder urlExpectation() {
-        return InputUrlFormElement.builder().required(true).id("url").name("url").label(new SimpleMessage("Url", "eventcreateform.url"));
+        return InputUrlFormElement.builder().required(true).id("url").name("url").label(Message.of("Url", "eventcreateform.url"));
     }
 
     private SelectFormElement.Builder organizerExpectation() {
@@ -288,29 +287,29 @@ class EventCreateFormTest {
             .required(true)
             .id("organizerId")
             .name("organizerId")
-            .label(new SimpleMessage("Organizer Id", "eventcreateform.organizerId"))
+            .label(Message.of("Organizer Id", "eventcreateform.organizerId"))
             .options(Arrays.asList(
-                Option.builder().label(new SimpleMessage("Softamo SL", null)).value("1").build(),
-                Option.builder().label(new SimpleMessage("Producciones Malvhadas", null)).value("2").build()
+                Option.builder().label(Message.of("Softamo SL", null)).value("1").build(),
+                Option.builder().label(Message.of("Producciones Malvhadas", null)).value("2").build()
                 ));
     }
 
     private SelectFormElement.Builder genreExpectation(BiConsumer<Genre, Option.Builder> builderConsumer) {
         List<Option> options = new ArrayList<>();
 
-        Option.Builder musicBuilder = Option.builder().label(new SimpleMessage("Music", "genre.music")).value("MUSIC");
+        Option.Builder musicBuilder = Option.builder().label(Message.of("Music", "genre.music")).value("MUSIC");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.MUSIC, musicBuilder);
         }
         options.add(musicBuilder.build());
 
-        Option.Builder sportBuilder = Option.builder().label(new SimpleMessage("Sport", "genre.sport")).value("SPORT");
+        Option.Builder sportBuilder = Option.builder().label(Message.of("Sport", "genre.sport")).value("SPORT");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.SPORT, sportBuilder);
         }
         options.add(sportBuilder.build());
 
-        Option.Builder theaterBuilder = Option.builder().label(new SimpleMessage( "Theater", "genre.theater")).value("THEATER");
+        Option.Builder theaterBuilder = Option.builder().label(Message.of( "Theater", "genre.theater")).value("THEATER");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.THEATER, theaterBuilder);
         }
@@ -320,7 +319,7 @@ class EventCreateFormTest {
             .required(true)
             .id("genre")
             .name("genre")
-            .label(new SimpleMessage("Genre", "eventcreateform.genre" ))
+            .label(Message.of("Genre", "eventcreateform.genre" ))
             .options(options);
     }
 
@@ -360,7 +359,7 @@ class EventCreateFormTest {
         public static Option toOption(@NonNull Organizer organizer, @Nullable Long organizerId) {
             Option.Builder builder = Option.builder()
                 .value(organizer.id().toString())
-                .label(new SimpleMessage(organizer.name(), null));
+                .label(Message.of(organizer.name()));
 
             if (organizerId != null) {
                 if (organizer.id().equals(organizerId)) {

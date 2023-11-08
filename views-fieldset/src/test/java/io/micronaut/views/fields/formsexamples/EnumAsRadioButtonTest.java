@@ -8,7 +8,6 @@ import io.micronaut.views.fields.elements.InputRadioFormElement;
 import io.micronaut.views.fields.elements.InputTextFormElement;
 import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.elements.Radio;
-import io.micronaut.views.fields.messages.SimpleMessage;
 import io.micronaut.views.fields.annotations.InputRadio;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -48,17 +47,17 @@ class EnumAsRadioButtonTest {
 
     private InputRadioFormElement.Builder genreExpectation() {
         return InputRadioFormElement.builder().required(true).name("genre").label(Message.of("Genre", "eventcreateform.genre")).buttons(Arrays.asList(
-            Radio.builder().label(new SimpleMessage( "Music", "genre.music")).value("MUSIC").id("music").build(),
-            Radio.builder().label(new SimpleMessage("Sport", "genre.sport")).value("SPORT").id("sport").build(),
-            Radio.builder().label(new SimpleMessage( "Theater", "genre.theater")).value("THEATER").id("theater").build()
+            Radio.builder().label(Message.of( "Music", "genre.music")).value("MUSIC").id("music").build(),
+            Radio.builder().label(Message.of("Sport", "genre.sport")).value("SPORT").id("sport").build(),
+            Radio.builder().label(Message.of( "Theater", "genre.theater")).value("THEATER").id("theater").build()
         ));
     }
 
     private InputRadioFormElement.Builder genreExpectationSportChecked() {
         return InputRadioFormElement.builder().required(true).name("genre").label(Message.of("Genre", "eventcreateform.genre")).buttons(Arrays.asList(
-            Radio.builder().label(new SimpleMessage("Music", "genre.music")).value("MUSIC").id("music").build(),
-            Radio.builder().label(new SimpleMessage("Sport", "genre.sport")).value("SPORT").id("sport").checked(true).build(),
-            Radio.builder().label(new SimpleMessage("Theater", "genre.theater")).value("THEATER").id("theater").build()
+            Radio.builder().label(Message.of("Music", "genre.music")).value("MUSIC").id("music").build(),
+            Radio.builder().label(Message.of("Sport", "genre.sport")).value("SPORT").id("sport").checked(true).build(),
+            Radio.builder().label(Message.of("Theater", "genre.theater")).value("THEATER").id("theater").build()
         ));
     }
 }

@@ -5,9 +5,9 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.elements.InputTextFormElement;
 import io.micronaut.views.fields.elements.Option;
 import io.micronaut.views.fields.elements.SelectFormElement;
-import io.micronaut.views.fields.messages.SimpleMessage;
 import io.micronaut.views.fields.Fieldset;
 import io.micronaut.views.fields.FieldsetGenerator;
+import io.micronaut.views.fields.messages.Message;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.Test;
@@ -44,19 +44,19 @@ class EnumDefaultsToSelectTest {
     private SelectFormElement.Builder genreExpectation(BiConsumer<Genre, Option.Builder> builderConsumer) {
         List<Option> options = new ArrayList<>();
 
-        Option.Builder musicBuilder = Option.builder().label(new SimpleMessage( "Music", "genre.music")).value("MUSIC");
+        Option.Builder musicBuilder = Option.builder().label(Message.of( "Music", "genre.music")).value("MUSIC");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.MUSIC, musicBuilder);
         }
         options.add(musicBuilder.build());
 
-        Option.Builder sportBuilder = Option.builder().label(new SimpleMessage( "Sport", "genre.sport")).value("SPORT");
+        Option.Builder sportBuilder = Option.builder().label(Message.of( "Sport", "genre.sport")).value("SPORT");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.SPORT, sportBuilder);
         }
         options.add(sportBuilder.build());
 
-        Option.Builder theaterBuilder = Option.builder().label(new SimpleMessage( "Theater", "genre.theater")).value("THEATER");
+        Option.Builder theaterBuilder = Option.builder().label(Message.of( "Theater", "genre.theater")).value("THEATER");
         if (builderConsumer != null) {
             builderConsumer.accept(Genre.THEATER, theaterBuilder);
         }
@@ -66,7 +66,7 @@ class EnumDefaultsToSelectTest {
             .required(true)
             .id("genre")
             .name("genre")
-            .label(new SimpleMessage("Genre", "eventcreateform.genre"))
+            .label(Message.of("Genre", "eventcreateform.genre"))
             .options(options);
     }
 }

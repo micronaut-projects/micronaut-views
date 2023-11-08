@@ -2,7 +2,7 @@ package io.micronaut.views.fields;
 
 import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.views.fields.elements.Option;
-import io.micronaut.views.fields.messages.SimpleMessage;
+import io.micronaut.views.fields.messages.Message;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +17,7 @@ class OptionTest {
 
     @Test
     void builder() {
-        Option option = Option.builder().value("MUSIC").label(new SimpleMessage( "Music", "genre.music")).build();
+        Option option = Option.builder().value("MUSIC").label(Message.of( "Music", "genre.music")).build();
 
         assertNotNull(option);
         assertEquals("MUSIC", option.value());
@@ -28,7 +28,7 @@ class OptionTest {
         BeanIntrospection.Builder<Option> builder = introspection.builder();
         option = builder
             .with("value", "MUSIC")
-            .with("label", new SimpleMessage( "Music", "genre.music"))
+            .with("label", Message.of( "Music", "genre.music"))
             .build();
 
         assertEquals("MUSIC", option.value());

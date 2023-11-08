@@ -14,7 +14,7 @@ import io.micronaut.views.fields.elements.InputHiddenFormElement;
 import io.micronaut.views.fields.elements.Option;
 import io.micronaut.views.fields.elements.SelectFormElement;
 import io.micronaut.views.fields.fetchers.OptionFetcher;
-import io.micronaut.views.fields.messages.SimpleMessage;
+import io.micronaut.views.fields.messages.Message;
 import jakarta.inject.Singleton;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -71,10 +71,10 @@ class SaveBoxOfficeClerkFormTest {
             .required(true)
             .id("userId")
             .name("userId")
-            .label(new SimpleMessage( "User Id", "saveboxofficeclerkform.userId"))
+            .label(Message.of( "User Id", "saveboxofficeclerkform.userId"))
             .options(Arrays.asList(
-                Option.builder().label(new SimpleMessage("John", null)).value("10").selected(true).build(),
-                Option.builder().label(new SimpleMessage("Aegon", null)).value("12").build()
+                Option.builder().label(Message.of("John")).value("10").selected(true).build(),
+                Option.builder().label(Message.of("Aegon")).value("12").build()
             ));
     }
 
@@ -102,7 +102,7 @@ class SaveBoxOfficeClerkFormTest {
         private Option option(@NonNull BoxOfficeClerk boxOfficeClerk,
                               @Nullable Long boxOfficeClerkId) {
             return new Option(false, boxOfficeClerk.id().equals(boxOfficeClerkId), boxOfficeClerk.id().toString(),
-                new SimpleMessage(boxOfficeClerk.name(), null));
+                Message.of(boxOfficeClerk.name()));
         }
     }
 

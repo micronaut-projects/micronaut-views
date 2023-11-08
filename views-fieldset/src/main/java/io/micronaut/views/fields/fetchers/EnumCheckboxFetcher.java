@@ -18,7 +18,6 @@ package io.micronaut.views.fields.fetchers;
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.elements.Checkbox;
 import jakarta.inject.Singleton;
@@ -78,13 +77,6 @@ public class EnumCheckboxFetcher<T> implements CheckboxFetcher<T> {
     private Checkbox.Builder checkboxButtonFromEnum(@NonNull Class<? extends Enum> type,
                                                     @NonNull Enum instance) {
         String name = instance.name();
-        return Checkbox.builder().id(name.toLowerCase()).value(name).label(labelForBeanProperty(type, name));
-    }
-
-    @NonNull
-    private Message labelForBeanProperty(Class<? extends Enum> type, String name) {
-        String code = type.getSimpleName().toLowerCase() + "." + name.toLowerCase();
-        String defaultMessage = StringUtils.capitalize(name.toLowerCase().replaceAll("(.)([A-Z])", "$1 $2"));
-        return Message.of(defaultMessage, code);
+        return Checkbox.builder().id(name.toLowerCase()).value(name).label(Message.of(type, name));
     }
 }

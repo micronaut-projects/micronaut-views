@@ -11,7 +11,7 @@ import io.micronaut.views.fields.annotations.InputEmail;
 import io.micronaut.views.fields.annotations.InputPassword;
 import io.micronaut.views.fields.annotations.InputTel;
 import io.micronaut.views.fields.elements.*;
-import io.micronaut.views.fields.messages.SimpleMessage;
+import io.micronaut.views.fields.messages.Message;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
@@ -172,57 +172,57 @@ class SignupFormTest {
 
         assertTrue(fieldset.hasErrors());
         assertEquals(1, fieldset.errors().size());
-        assertEquals(new SimpleMessage("Passwords do not match", "signupform.passwordmatch"), fieldset.errors().get(0));
+        assertEquals(Message.of("Passwords do not match", "signupform.passwordmatch"), fieldset.errors().get(0));
 
         InputCheckboxFormElement acceptTermsExpectation = acceptTermsExpectation(checkboxBuilder -> checkboxBuilder.checked(true).value("true")).build();
         assertAnyMatch(fieldset, acceptTermsExpectation);
     }
 
     private InputCheckboxFormElement.Builder acceptTermsExpectation(Consumer<Checkbox.Builder> builderConsumer) {
-        Checkbox.Builder builder = Checkbox.builder().id("acceptTerms").name("acceptTerms").label(new SimpleMessage("Accept Terms", "signupform.acceptTerms"));
+        Checkbox.Builder builder = Checkbox.builder().id("acceptTerms").name("acceptTerms").label(Message.of("Accept Terms", "signupform.acceptTerms"));
         if (builderConsumer != null) {
             builderConsumer.accept(builder);
         }
         List<Checkbox> checkboxList = Collections.singletonList(builder.build());
-        return InputCheckboxFormElement.builder().label(new SimpleMessage("Accept Terms", "signupform.acceptTerms")).checkboxes(checkboxList);
+        return InputCheckboxFormElement.builder().label(Message.of("Accept Terms", "signupform.acceptTerms")).checkboxes(checkboxList);
     }
 
     private InputCheckboxFormElement.Builder acceptTermsExpectationMustBeTrue() {
         Checkbox.Builder builder = Checkbox.builder().id("acceptTerms").name("acceptTerms")
             .value(StringUtils.FALSE)
-            .label(new SimpleMessage("Accept Terms", "signupform.acceptTerms"));
+            .label(Message.of("Accept Terms", "signupform.acceptTerms"));
         List<Checkbox> checkboxList = Collections.singletonList(builder.build());
         return InputCheckboxFormElement.builder()
-            .errors(Collections.singletonList(new SimpleMessage("must be true", "signupform.acceptterms.asserttrue")))
-            .label(new SimpleMessage("Accept Terms", "signupform.acceptTerms")).checkboxes(checkboxList);
+            .errors(Collections.singletonList(Message.of("must be true", "signupform.acceptterms.asserttrue")))
+            .label(Message.of("Accept Terms", "signupform.acceptTerms")).checkboxes(checkboxList);
     }
 
     private InputTextFormElement.Builder firstNameExpectation() {
-        return InputTextFormElement.builder().required(true).id("firstName").name("firstName").label(new SimpleMessage("First Name", "signupform.firstName"));
+        return InputTextFormElement.builder().required(true).id("firstName").name("firstName").label(Message.of("First Name", "signupform.firstName"));
     }
 
     private InputTextFormElement.Builder lastNameExpectation() {
-        return InputTextFormElement.builder().required(true).id("lastName").name("lastName").label(new SimpleMessage("Last Name", "signupform.lastName"));
+        return InputTextFormElement.builder().required(true).id("lastName").name("lastName").label(Message.of("Last Name", "signupform.lastName"));
     }
 
     private InputTelFormElement.Builder phonexpectation() {
-        return InputTelFormElement.builder().required(false).id("phone").name("phone").label(new SimpleMessage("Phone", "signupform.phone"));
+        return InputTelFormElement.builder().required(false).id("phone").name("phone").label(Message.of("Phone", "signupform.phone"));
     }
 
     private InputTextFormElement.Builder zipCodeExpectation() {
-        return InputTextFormElement.builder().required(false).id("zipCode").name("zipCode").label(new SimpleMessage("Zip Code", "signupform.zipCode"));
+        return InputTextFormElement.builder().required(false).id("zipCode").name("zipCode").label(Message.of("Zip Code", "signupform.zipCode"));
     }
 
     private InputEmailFormElement.Builder emailExpectation() {
-        return InputEmailFormElement.builder().required(true).id("email").name("email").label(new SimpleMessage("Email", "signupform.email"));
+        return InputEmailFormElement.builder().required(true).id("email").name("email").label(Message.of("Email", "signupform.email"));
     }
 
     private InputPasswordFormElement.Builder passwordExpectation() {
-        return InputPasswordFormElement.builder().required(true).id("password").name("password").label(new SimpleMessage("Password", "signupform.password"));
+        return InputPasswordFormElement.builder().required(true).id("password").name("password").label(Message.of("Password", "signupform.password"));
     }
 
     private InputPasswordFormElement.Builder confirmPasswordExpectation() {
-        return InputPasswordFormElement.builder().required(true).id("confirmPassword").name("confirmPassword").label(new SimpleMessage("Confirm Password", "signupform.confirmPassword"));
+        return InputPasswordFormElement.builder().required(true).id("confirmPassword").name("confirmPassword").label(Message.of("Confirm Password", "signupform.confirmPassword"));
     }
 
     @PasswordMatch

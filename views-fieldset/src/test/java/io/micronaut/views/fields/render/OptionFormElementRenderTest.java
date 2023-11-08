@@ -2,7 +2,7 @@ package io.micronaut.views.fields.render;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.elements.Option;
-import io.micronaut.views.fields.messages.SimpleMessage;
+import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.render.secondary.OptionFormElementRenderer;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ class OptionFormElementRenderTest {
     void renderOption(OptionFormElementRenderer optionFormElementRender) {
         Option option = Option.builder()
             .value("dog")
-            .label(new SimpleMessage("Dog", null))
+            .label(Message.of("Dog", null))
             .build();
         assertEquals("""
             <option value="dog">Dog</option>""",
@@ -25,7 +25,7 @@ class OptionFormElementRenderTest {
         );
         option = Option.builder()
             .value("dog")
-            .label(new SimpleMessage("Dog", null))
+            .label(Message.of("Dog", null))
             .selected(true)
             .disabled(true)
             .build();

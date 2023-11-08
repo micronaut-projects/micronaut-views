@@ -8,8 +8,8 @@ import io.micronaut.views.fields.Fieldset;
 import io.micronaut.views.fields.FieldsetGenerator;
 import io.micronaut.views.fields.elements.InputPasswordFormElement;
 import io.micronaut.views.fields.elements.InputTextFormElement;
-import io.micronaut.views.fields.messages.SimpleMessage;
 import io.micronaut.views.fields.annotations.InputPassword;
+import io.micronaut.views.fields.messages.Message;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
@@ -60,16 +60,16 @@ class LoginFormTest {
         assertAnyInstance(fieldset.fields(), InputPasswordFormElement.class);
         usernameExpectation = usernameExpectation().value("sherlock").build();
         assertAnyMatch(fieldset, usernameExpectation);
-        inputPasswordFormElement = passwordExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "loginform.password.notblank"))).build();
+        inputPasswordFormElement = passwordExpectation().value("").errors(Collections.singletonList(Message.of("must not be blank", "loginform.password.notblank"))).build();
         assertAnyMatch(fieldset, inputPasswordFormElement);
     }
 
     private InputTextFormElement.Builder usernameExpectation() {
-        return InputTextFormElement.builder().required(true).id("username").name("username").label(new SimpleMessage("Username", "loginform.username"));
+        return InputTextFormElement.builder().required(true).id("username").name("username").label(Message.of("Username", "loginform.username"));
     }
 
     private InputPasswordFormElement.Builder passwordExpectation() {
-        return InputPasswordFormElement.builder().required(true).id("password").name("password").label(new SimpleMessage("Password", "loginform.password"));
+        return InputPasswordFormElement.builder().required(true).id("password").name("password").label(Message.of("Password", "loginform.password"));
     }
 
     @Property(name = "spec.name", value = "LoginFormTest")

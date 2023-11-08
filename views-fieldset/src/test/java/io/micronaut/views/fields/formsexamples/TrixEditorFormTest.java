@@ -5,9 +5,9 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.Fieldset;
 import io.micronaut.views.fields.FieldsetGenerator;
-import io.micronaut.views.fields.messages.SimpleMessage;
 import io.micronaut.views.fields.elements.TrixEditorFormElement;
 import io.micronaut.views.fields.annotations.TrixEditor;
+import io.micronaut.views.fields.messages.Message;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
@@ -51,12 +51,12 @@ class TrixEditorFormTest {
         assertEquals(1, fieldset.fields().size());
         assertAnyInstance(fieldset.fields(), TrixEditorFormElement.class);
 
-        formElement = trixEditorExpectation().value("").errors(Collections.singletonList(new SimpleMessage("must not be blank", "answersave.content.notblank"))).build();
+        formElement = trixEditorExpectation().value("").errors(Collections.singletonList(Message.of("must not be blank", "answersave.content.notblank"))).build();
         assertAnyMatch(fieldset, formElement);
     }
 
     private TrixEditorFormElement.Builder trixEditorExpectation() {
-        return TrixEditorFormElement.builder().name("content").id("content").label(new SimpleMessage("Content", "answersave.content"));
+        return TrixEditorFormElement.builder().name("content").id("content").label(Message.of("Content", "answersave.content"));
     }
 
     @Property(name = "spec.name", value = "TrixEditorFormTest")

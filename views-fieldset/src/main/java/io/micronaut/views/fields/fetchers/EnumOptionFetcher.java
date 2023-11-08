@@ -18,7 +18,6 @@ package io.micronaut.views.fields.fetchers;
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.elements.Option;
 import jakarta.inject.Singleton;
@@ -78,13 +77,7 @@ public class EnumOptionFetcher<T> implements OptionFetcher<T> {
     @NonNull
     private Option.Builder optionFromEnum(@NonNull Class<? extends Enum> type, @NonNull Enum instance) {
         String name = instance.name();
-        return Option.builder().value(name).label(labelForBeanProperty(type, name));
+        return Option.builder().value(name).label(Message.of(type, name));
     }
 
-    @NonNull
-    private Message labelForBeanProperty(Class<? extends Enum> type, String name) {
-        String code = type.getSimpleName().toLowerCase() + "." + name.toLowerCase();
-        String defaultMessage = StringUtils.capitalize(name.toLowerCase().replaceAll("(.)([A-Z])", "$1 $2"));
-        return Message.of(defaultMessage, code);
-    }
 }

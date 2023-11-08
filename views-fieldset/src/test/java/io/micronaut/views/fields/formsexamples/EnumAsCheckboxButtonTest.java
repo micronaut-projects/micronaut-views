@@ -8,7 +8,6 @@ import io.micronaut.views.fields.FieldsetGenerator;
 import io.micronaut.views.fields.elements.InputCheckboxFormElement;
 import io.micronaut.views.fields.elements.InputTextFormElement;
 import io.micronaut.views.fields.messages.Message;
-import io.micronaut.views.fields.messages.SimpleMessage;
 import io.micronaut.views.fields.annotations.InputCheckbox;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -50,9 +49,9 @@ class EnumAsCheckboxButtonTest {
         return InputCheckboxFormElement.builder()
             .label(Message.of("Genre", "eventcreateform.genre"))
             .checkboxes(Arrays.asList(
-            Checkbox.builder().label(new SimpleMessage( "Music", "genre.music")).value("MUSIC").id("music").build(),
-            Checkbox.builder().label(new SimpleMessage("Sport", "genre.sport")).value("SPORT").id("sport").build(),
-            Checkbox.builder().label(new SimpleMessage("Theater", "genre.theater")).value("THEATER").id("theater").build()
+            Checkbox.builder().label(Message.of( "Music", "genre.music")).value("MUSIC").id("music").build(),
+            Checkbox.builder().label(Message.of("Sport", "genre.sport")).value("SPORT").id("sport").build(),
+            Checkbox.builder().label(Message.of("Theater", "genre.theater")).value("THEATER").id("theater").build()
         ));
     }
 
@@ -60,9 +59,9 @@ class EnumAsCheckboxButtonTest {
         return InputCheckboxFormElement.builder()
             .label(Message.of("Genre", "eventcreateform.genre"))
             .checkboxes(Arrays.asList(
-            Checkbox.builder().label(new SimpleMessage( "Music", "genre.music")).value("MUSIC").id("music").build(),
-            Checkbox.builder().label(new SimpleMessage("Sport", "genre.sport")).value("SPORT").id("sport").checked(true).build(),
-            Checkbox.builder().label(new SimpleMessage("Theater", "genre.theater")).value("THEATER").id("theater").build()
+            Checkbox.builder().label(Message.of( "Music", "genre.music")).value("MUSIC").id("music").build(),
+            Checkbox.builder().label(Message.of("Sport", "genre.sport")).value("SPORT").id("sport").checked(true).build(),
+            Checkbox.builder().label(Message.of("Theater", "genre.theater")).value("THEATER").id("theater").build()
         ));
     }
 }

@@ -18,7 +18,7 @@ package io.micronaut.views.fields.tck;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.elements.Option;
-import io.micronaut.views.fields.messages.SimpleMessage;
+import io.micronaut.views.fields.messages.Message;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -35,14 +35,14 @@ class OptionViewRenderTest {
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
         Option option = Option.builder()
             .value("dog")
-            .label(new SimpleMessage("Dog", null))
+            .label(Message.of("Dog"))
             .build();
         String expected = "<option value=\"dog\">Dog</option>";
         assertEquals(expected, TestUtils.render("fieldset/option.html", viewsRenderer, Collections.singletonMap("el", option)));
 
         option = Option.builder()
             .value("dog")
-            .label(new SimpleMessage("Dog", "foobar"))
+            .label(Message.of("Dog", "foobar"))
             .build();
         assertEquals(expected, TestUtils.render("fieldset/option.html", viewsRenderer, Collections.singletonMap("el", option)));
     }

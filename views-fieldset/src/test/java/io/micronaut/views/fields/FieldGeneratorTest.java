@@ -8,7 +8,6 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.elements.InputEmailFormElement;
 import io.micronaut.views.fields.elements.InputTextFormElement;
 import io.micronaut.views.fields.messages.Message;
-import io.micronaut.views.fields.messages.SimpleMessage;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
@@ -56,8 +55,8 @@ class FieldGeneratorTest {
                 .required(true)
                 .value(email)
                 .errors(List.of(
-                    new SimpleMessage("must be a well-formed email address", "contactrecordvalidationannotations.email.email"),
-                    new SimpleMessage("size must be between 0 and 255", "contactrecordvalidationannotations.email.size")
+                    Message.of("must be a well-formed email address", "contactrecordvalidationannotations.email.email"),
+                    Message.of("size must be between 0 and 255", "contactrecordvalidationannotations.email.size")
                 ))
                 .build());
     }
@@ -213,7 +212,7 @@ class FieldGeneratorTest {
             .label(Message.of("Email", "contactrecordvalidationannotations.email"))
             .required(true)
             .value("notanemail")
-            .errors(Collections.singletonList(new SimpleMessage("must be a well-formed email address", "contactrecordvalidationannotations.email.email")))
+            .errors(Collections.singletonList(Message.of("must be a well-formed email address", "contactrecordvalidationannotations.email.email")))
             .build();
         assertAnyMatch(fields, expectedEmail);
     }

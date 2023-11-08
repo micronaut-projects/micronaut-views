@@ -37,7 +37,6 @@ import io.micronaut.views.fields.annotations.Textarea;
 import io.micronaut.views.fields.annotations.TrixEditor;
 import io.micronaut.views.fields.elements.*;
 import io.micronaut.views.fields.fetchers.*;
-import io.micronaut.views.fields.messages.ConstraintViolationMessage;
 import io.micronaut.views.fields.messages.ConstraintViolationUtils;
 import io.micronaut.views.fields.messages.Message;
 import jakarta.annotation.Nonnull;
@@ -163,8 +162,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         return new Fieldset(fields, ex.getConstraintViolations()
                 .stream()
                 .filter(constraintViolationEx -> ConstraintViolationUtils.lastNode(constraintViolationEx).isEmpty())
-                .map(ConstraintViolationMessage::new)
-                .map(Message.class::cast)
+                .map(Message::of)
                 .sorted()
                 .toList());
     }
@@ -333,7 +331,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         builder
             .with(BUILDER_METHOD_NAME, beanProperty.getName())
             .with(BUILDER_METHOD_ID, idForBeanProperty(beanProperty))
-            .with(BUILDER_METHOD_LABEL, labelForBeanProperty(beanProperty))
+            .with(BUILDER_METHOD_LABEL, Message.of(beanProperty))
             .with(BUILDER_METHOD_REQUIRED, requiredForBeanProperty(beanProperty));
         valueForBeanProperty(beanWrapper, beanProperty)
             .ifPresent(value -> {
@@ -394,23 +392,15 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         return annotationValueForBeanProperty(beanProperty, Size.class, MEMBER_MAX);
     }
 
-    private Message labelForBeanProperty(BeanProperty<?, ?> beanProperty) {
-        String code = beanProperty.getDeclaringBean().getBeanType().getSimpleName().toLowerCase() + "." + beanProperty.getName();
-        String defaultMessage = StringUtils.capitalize(beanProperty.getName().replaceAll("(.)([A-Z])", "$1 $2"));
-        return Message.of(defaultMessage, code);
-    }
-
-    private List<ConstraintViolationMessage> messagesForBeanProperty(BeanProperty<?, ?> beanProperty, @Nullable ConstraintViolationException ex) {
-        if (ex != null) {
-            return ex.getConstraintViolations().stream()
-                .filter(violation -> {
-                    Optional<String> lastNodeOptional = ConstraintViolationUtils.lastNode(violation);
-                    return lastNodeOptional.isPresent() && lastNodeOptional.get().equals(beanProperty.getName());
-                }).map(ConstraintViolationMessage::new)
-                    .sorted()
-                    .toList();
-        }
-        return Collections.emptyList();
+    private List<Message> messagesForBeanProperty(BeanProperty<?, ?> beanProperty, @Nullable ConstraintViolationException ex) {
+        return ex == null ? Collections.emptyList() :
+                ex.getConstraintViolations().stream()
+                        .filter(violation -> {
+                            Optional<String> lastNodeOptional = ConstraintViolationUtils.lastNode(violation);
+                            return lastNodeOptional.isPresent() && lastNodeOptional.get().equals(beanProperty.getName());
+                        }).map(Message::of)
+                        .sorted()
+                        .toList();
     }
 
     private <T> List<? extends FormElement> formElements(Collection<BeanProperty<T, Object>> beanProperties, @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {

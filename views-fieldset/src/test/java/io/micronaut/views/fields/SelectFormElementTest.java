@@ -3,7 +3,7 @@ package io.micronaut.views.fields;
 import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.views.fields.elements.Option;
 import io.micronaut.views.fields.elements.SelectFormElement;
-import io.micronaut.views.fields.messages.SimpleMessage;
+import io.micronaut.views.fields.messages.Message;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -24,10 +24,10 @@ class SelectFormElementTest {
         String name = "cars";
         String id = "carsid";
         List<Option> options = Arrays.asList(
-                Option.builder().value("volvo").label(new SimpleMessage("Volvo", "car.volvo")).build(),
-                Option.builder().value("saab").label(new SimpleMessage("Saab", "car.saab")).build(),
-                Option.builder().value("mercedes").label(new SimpleMessage("Mercedes", "car.mercedes")).build(),
-                Option.builder().value("audi").label(new SimpleMessage("Audi", "car.audi")).build()
+                Option.builder().value("volvo").label(Message.of("Volvo", "car.volvo")).build(),
+                Option.builder().value("saab").label(Message.of("Saab", "car.saab")).build(),
+                Option.builder().value("mercedes").label(Message.of("Mercedes", "car.mercedes")).build(),
+                Option.builder().value("audi").label(Message.of("Audi", "car.audi")).build()
         );
         SelectFormElement selectFormElement = SelectFormElement.builder()
             .name(name)
