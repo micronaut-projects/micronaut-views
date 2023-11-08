@@ -55,7 +55,7 @@ public class InputCheckboxFormElementRenderer implements FormElementRenderer<Inp
     }
 
     @Override
-    public String render(InputCheckboxFormElement formElement, Locale locale) {
+    public String render(@NonNull InputCheckboxFormElement formElement, @NonNull Locale locale) {
         StringBuilder sb = new StringBuilder();
         for (Checkbox checkbox : formElement.checkboxes()) {
             sb.append(renderOpenTag(TAG_DIV, Collections.emptyList()));
@@ -71,7 +71,7 @@ public class InputCheckboxFormElementRenderer implements FormElementRenderer<Inp
      * @param el Checkbox
      * @return HTML Attributes
      */
-    protected List<HtmlAttribute> attributes(Checkbox el) {
+    protected List<HtmlAttribute> attributes(@NonNull Checkbox el) {
         List<HtmlAttribute> attributes = new ArrayList<>(6);
         attributes.add(typeHtmlAttribute(ATTR_TYPE_CHECKBOX));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
