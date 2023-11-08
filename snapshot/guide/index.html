@@ -127,27 +127,35 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-custom"><a href="#custom"><strong>3.2.1</strong><span>Dynamically Enriching Models</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-turbo"><a href="#turbo"><strong>3.3</strong><span>Turbo</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-fieldset"><a href="#fieldset"><strong>3.3</strong><span>Fieldset Generation</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-turboFrameView"><a href="#turboFrameView"><strong>3.3.1</strong><span>TurboFrameView annotation</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-fieldsetExample"><a href="#fieldsetExample"><strong>3.3.1</strong><span>Form Generation Example</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-turboFrameBuilder"><a href="#turboFrameBuilder"><strong>3.3.2</strong><span>TurboFrame Builder</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-fieldsetAnnotations"><a href="#fieldsetAnnotations"><strong>3.3.2</strong><span>Fieldset Annotations</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamFluidApi"><a href="#turboStreamFluidApi"><strong>3.3.3</strong><span>Turbo Stream Fluid API</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-fieldsetFetcher"><a href="#fieldsetFetcher"><strong>3.3.3</strong><span>Radio, Checkbox and Option Fetcher</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-turboView"><a href="#turboView"><strong>3.3.4</strong><span>TurboView Annotation</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-turbo"><a href="#turbo"><strong>3.4</strong><span>Turbo</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamContentType"><a href="#turboStreamContentType"><strong>3.3.5</strong><span>Turbo Stream Media Type</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboFrameView"><a href="#turboFrameView"><strong>3.4.1</strong><span>TurboFrameView annotation</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamTemplate"><a href="#turboStreamTemplate"><strong>3.3.6</strong><span>Turbo Streams with Templates</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboFrameBuilder"><a href="#turboFrameBuilder"><strong>3.4.2</strong><span>TurboFrame Builder</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-security"><a href="#security"><strong>3.4</strong><span>Security</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamFluidApi"><a href="#turboStreamFluidApi"><strong>3.4.3</strong><span>Turbo Stream Fluid API</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-csp"><a href="#csp"><strong>3.4.1</strong><span>Content Security Policy</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboView"><a href="#turboView"><strong>3.4.4</strong><span>TurboView Annotation</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-security-model-enhancement"><a href="#security-model-enhancement"><strong>3.4.2</strong><span>Integration with Micronaut Security</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamContentType"><a href="#turboStreamContentType"><strong>3.4.5</strong><span>Turbo Stream Media Type</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>3.5</strong><span>GraalVM Support</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-turboStreamTemplate"><a href="#turboStreamTemplate"><strong>3.4.6</strong><span>Turbo Streams with Templates</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-security"><a href="#security"><strong>3.5</strong><span>Security</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-csp"><a href="#csp"><strong>3.5.1</strong><span>Content Security Policy</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-security-model-enhancement"><a href="#security-model-enhancement"><strong>3.5.2</strong><span>Integration with Micronaut Security</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-graal"><a href="#graal"><strong>3.6</strong><span>GraalVM Support</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-breaks"><a href="#breaks"><strong>4</strong><span>Breaking Changes</span></a></div>
         
@@ -2037,7 +2045,402 @@ public class ConfigViewModelProcessor implements ViewModelProcessor&lt;Map&lt;St
 <p>If you use Micronaut Security, Micronaut Views registers a <a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a> to enrich models with security related information.</p>
 </div>
 
-<h2 id="turbo"><a class="anchor" href="#turbo"></a>3.3 Turbo</h2>
+<h2 id="fieldset"><a class="anchor" href="#fieldset"></a>3.3 Fieldset Generation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/fieldset.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Fieldset API is experimental and subject to change.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/views/fields/FieldsetGenerator.html">FieldsetGenerator</a> API simplifies the generation of an HTML Fieldset representation for a given type or instance. It leverages the <a href="https://docs.micronaut.io/latest/guide/#introspectionBuilders">introspection builder support</a>.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/views/fields/FormGenerator.html">FormGenerator</a> API wraps the previous API and simplifies the generation of an HTML form.</p>
+</div>
+<div class="paragraph">
+<p>To use these APIs, you need the dependency the following dependency:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-fieldset")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-fieldset&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+
+<h2 id="fieldsetExample"><a class="anchor" href="#fieldsetExample"></a>3.3.1 Form Generation Example</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/fieldset/fieldsetExample.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Imagine, you want to create an application which displays a form such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;form action="/books/save" method="post"&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label for="title" class="form-label"&gt;Title&lt;/label&gt;
+        &lt;input type="text" name="title" value="" id="title" minlength="2" maxlength="255" class="form-control" required="required"/&gt;
+    &lt;/div&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label for="pages" class="form-label"&gt;Pages&lt;/label&gt;
+        &lt;input type="number" name="pages" value="" id="pages" min="1" max="21450" class="form-control" required="required"/&gt;
+    &lt;/div&gt;
+    &lt;input type="submit" value="Submit" class="btn btn-primary"/&gt;
+&lt;/form&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Java, you will create a representation for the form submission. Something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
+
+import io.micronaut.serde.annotation.Serdeable;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+@Serdeable
+public record BookSave(@Size(min = 2, max = 255) @NotBlank String title,
+                       @Min(1) @Max(21450) @NotNull Integer pages) {
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The field types and the validation annotations in the previous code sample influence the form generation.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Then using the form generation API, create a controller such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/books")
+class BookController {
+    public static final String CONTROLLER_PATH = "/books";
+    public static final String SAVE_PATH = "/save";
+    public static final String FORM = "form";
+
+    private final FormGenerator formGenerator;
+    private final BookRepository bookRepository;
+
+    BookController(FormGenerator formGenerator,
+                   BookRepository bookRepository) {
+        this.formGenerator = formGenerator;
+        this.bookRepository = bookRepository;
+    }
+
+    @Produces(MediaType.TEXT_HTML)
+    @View("/books/create.html")
+    @Get("/create")
+    Map&lt;String, Object&gt; create() {
+        return Collections.singletonMap(FORM,
+                formGenerator.generate(CONTROLLER_PATH + SAVE_PATH, BookSave.class));
+    }
+
+    @Produces(MediaType.TEXT_HTML)
+    @View("/books/list.html")
+    @Get("/list")
+    Map&lt;String, Object&gt; list() {
+        return Collections.singletonMap("books", bookRepository.findAll());
+    }
+
+    @Produces(MediaType.TEXT_HTML)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Post(SAVE_PATH)
+    HttpResponse&lt;?&gt; save(@Valid @Body BookSave bookSave) {
+        bookRepository.save(new Book(null, bookSave.title(), bookSave.pages()));
+        return HttpResponse.seeOther(UriBuilder.of("/books").path("list").build());
+    }
+
+    @Error(exception = ConstraintViolationException.class)
+    public HttpResponse&lt;?&gt; onConstraintViolationException(HttpRequest&lt;?&gt; request, ConstraintViolationException ex) {
+        if (request.getPath().equals(CONTROLLER_PATH + SAVE_PATH)) {
+            Optional&lt;BookSave&gt; bookSaveOptional = request.getBody(BookSave.class);
+            if (bookSaveOptional.isPresent()) {
+                Form form = formGenerator.generate(CONTROLLER_PATH + SAVE_PATH, bookSaveOptional.get(), ex);
+                ModelAndView&lt;Map&lt;String, Object&gt;&gt; body = new ModelAndView&lt;&gt;("/books/create.html",
+                        Collections.singletonMap(FORM, form));
+                return HttpResponse.unprocessableEntity().body(body);
+            }
+        }
+        return HttpResponse.serverError();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://micronaut.io/launch?features=views-thymeleaf">Micronaut Launch</a> or the Micronaut Command Line Interface (CLI) will generate Thymeleaf fragments to render a form when you select the <code>views-thymeleaf</code> feature.</p>
+</div>
+<div class="paragraph">
+<p>Thanks to those fragments, rendering the form for the <code>/books/create</code> route in the previous example is really simple:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/books/create.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en" th:replace="~{layout :: layout(~{::title},~{::script},~{::main})}" xmlns:th="http://www.thymeleaf.org"&gt;
+    &lt;head&gt;
+        &lt;title&gt;&lt;/title&gt;
+        &lt;script&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;main&gt;
+        &lt;form th:replace="~{fieldset/form :: form(${form})}"&gt;&lt;/form&gt;
+    &lt;/main&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+
+<h2 id="fieldsetAnnotations"><a class="anchor" href="#fieldsetAnnotations"></a>3.3.2 Fieldset Annotations</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/fieldset/fieldsetAnnotations.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Sometimes, more than the Java type is needed to define the input type. For example, you may want to render a login form such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;form action="/login" method="post"&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label for="username" class="form-label"&gt;Username&lt;/label&gt;
+        &lt;input type="text" name="username" value="" id="username" class="form-control" required="required"/&gt;
+    &lt;/div&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label for="password" class="form-label"&gt;Password&lt;/label&gt;
+        &lt;input type="password" name="password" value="" id="password" class="form-control" required="required"/&gt;
+    &lt;/div&gt;
+    &lt;input type="submit" value="Submit" class="btn btn-primary"/&gt;
+&lt;/form&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Java, you will create a representation for the form submission and annotate the <code>password</code> field with <a href="../api/io/micronaut/views/fields/annotations/InputPassword.html">@InputPassword</a>. Something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
+
+import io.micronaut.core.annotation.Introspected;
+import io.micronaut.views.fields.annotations.InputPassword;
+import jakarta.validation.constraints.NotBlank;
+
+@Introspected
+public record Login(@NotBlank String username,
+                    @InputPassword @NotBlank String password) {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following annotations are available:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Annotation</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputCheckbox.html">@InputCheckbox</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">checkbox input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputEmail.html">@InputEmail</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email">email input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputHidden.html">@InputHidden</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden">hidden input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputNumber.html">@InputNumber</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number">number input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputPassword.html">@InputPassword</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password">password input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputRadio.html">@InputRadio</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio">radio input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputTel.html">@InputTel</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel">telephone input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputText.html">@InputText</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text">text input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/InputUrl.html">@InputUrl</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url">url input</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/Select.html">@Select</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">HTML select element</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/Textarea.html">@Textarea</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to specify a field is a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea">textarea</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../api/io/micronaut/views/fields/annotations/TrixEditor.html">@TrixEditor</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Annotation to mark a field as a <a href="https://trix-editor.org">Trix editor</a>.</p></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="fieldsetFetcher"><a class="anchor" href="#fieldsetFetcher"></a>3.3.3 Radio, Checkbox and Option Fetcher</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/fieldset/fieldsetFetcher.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The <a href="../api/io/micronaut/views/fields/annotations/InputCheckbox.html">@InputCheckbox</a>, <a href="../api/io/micronaut/views/fields/annotations/InputRadio.html">@InputRadio</a>, and <a href="../api/io/micronaut/views/fields/annotations/Select.html">@Select</a> annotations allow you to specify a fetcher class to load data necessary for the form.</p>
+</div>
+<div class="paragraph">
+<p>Imagine you want a form to associate an author with a book form, such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;form action="/books/authors/save" method="post"&gt;
+    &lt;input type="hidden" name="bookId" value="1"/&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label for="authorId" class="form-label"&gt;Author Id&lt;/label&gt;
+        &lt;select name="authorId" id="authorId" class="form-select" required="required"&gt;
+            &lt;option value="1"&gt;Kishori Sharan&lt;/option&gt;
+            &lt;option value="2"&gt;Peter Späth&lt;/option&gt;
+            &lt;option value="3"&gt;Sam Newman&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;input type="submit" value="Submit" class="btn btn-primary"/&gt;
+&lt;/form&gt;"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Java, you will create a representation for the form submission. Something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
+
+import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.views.fields.annotations.InputHidden;
+import io.micronaut.views.fields.annotations.Select;
+import jakarta.validation.constraints.NotNull;
+
+@Serdeable
+public record BookAuthorSave(@NotNull @InputHidden Long bookId,
+                             @NotNull @Select(fetcher = AuthorFetcher.class) Long authorId) {
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>fetcher</code> member of the <code>Select</code> annotation allows you to specify a class. <code>AuthorFetcher</code> is a <code>Singleton</code> of type <code>OptionFetcher</code>, and you could write it, for example, like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
+
+import io.micronaut.views.fields.messages.Message;
+import io.micronaut.views.fields.elements.Option;
+import io.micronaut.views.fields.fetchers.OptionFetcher;
+import jakarta.inject.Singleton;
+import java.util.List;
+
+@Singleton
+public class AuthorFetcher implements OptionFetcher&lt;Long&gt; {
+    private final AuthorRepository authorRepository;
+
+    public AuthorFetcher(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
+
+    @Override
+    public List&lt;Option&gt; generate(Class&lt;Long&gt; type) {
+        return authorRepository.findAll()
+                .stream()
+                .map(author -&gt; Option.builder()
+                        .value(String.valueOf(author.id()))
+                        .label(Message.of(author.title()))
+                        .build()
+                ).toList();
+    }
+
+    @Override
+    public List&lt;Option&gt; generate(Long instance) {
+        return authorRepository.findAll()
+                .stream()
+                .map(author -&gt; Option.builder()
+                        .selected(author.id().equals(instance))
+                        .value(String.valueOf(author.id()))
+                        .label(Message.of(author.title()))
+                        .build())
+                .toList();
+    }
+}</code></pre>
+</div>
+</div>
+
+<h2 id="turbo"><a class="anchor" href="#turbo"></a>3.4 Turbo</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo.adoc"'>
@@ -2057,7 +2460,7 @@ public class ConfigViewModelProcessor implements ViewModelProcessor&lt;Map&lt;St
 </blockquote>
 </div>
 
-<h2 id="turboFrameView"><a class="anchor" href="#turboFrameView"></a>3.3.1 TurboFrameView annotation</h2>
+<h2 id="turboFrameView"><a class="anchor" href="#turboFrameView"></a>3.4.1 TurboFrameView annotation</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo/turboFrameView.adoc"'>
@@ -2175,7 +2578,7 @@ Map&lt;String, Object&gt; index() {
 </div>
 </div>
 
-<h2 id="turboFrameBuilder"><a class="anchor" href="#turboFrameBuilder"></a>3.3.2 TurboFrame Builder</h2>
+<h2 id="turboFrameBuilder"><a class="anchor" href="#turboFrameBuilder"></a>3.4.2 TurboFrame Builder</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo/turboFrameBuilder.adoc"'>
@@ -2245,7 +2648,7 @@ fun index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) turboFrame: String?): 
 </div>
 </div>
 
-<h2 id="turboStreamFluidApi"><a class="anchor" href="#turboStreamFluidApi"></a>3.3.3 Turbo Stream Fluid API</h2>
+<h2 id="turboStreamFluidApi"><a class="anchor" href="#turboStreamFluidApi"></a>3.4.3 Turbo Stream Fluid API</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo/turboStreamFluidApi.adoc"'>
@@ -2321,7 +2724,7 @@ val writable = turboStream.render()</code></pre>
 </div>
 </div>
 
-<h2 id="turboView"><a class="anchor" href="#turboView"></a>3.3.4 TurboView Annotation</h2>
+<h2 id="turboView"><a class="anchor" href="#turboView"></a>3.4.4 TurboView Annotation</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo/turboView.adoc"'>
@@ -2424,7 +2827,7 @@ fun show(): Map&lt;String, Any&gt; {
 <p>with content type <code>text/vnd.turbo-stream.html</code>.</p>
 </div>
 
-<h2 id="turboStreamContentType"><a class="anchor" href="#turboStreamContentType"></a>3.3.5 Turbo Stream Media Type</h2>
+<h2 id="turboStreamContentType"><a class="anchor" href="#turboStreamContentType"></a>3.4.5 Turbo Stream Media Type</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo/turboStreamContentType.adoc"'>
@@ -2444,7 +2847,7 @@ fun show(): Map&lt;String, Any&gt; {
 </blockquote>
 </div>
 
-<h2 id="turboStreamTemplate"><a class="anchor" href="#turboStreamTemplate"></a>3.3.6 Turbo Streams with Templates</h2>
+<h2 id="turboStreamTemplate"><a class="anchor" href="#turboStreamTemplate"></a>3.4.6 Turbo Streams with Templates</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/turbo/turboStreamTemplate.adoc"'>
@@ -2491,7 +2894,7 @@ val writable = turboStreamRenderer.render(builder, null)</code></pre>
 </div>
 </div>
 
-<h2 id="security"><a class="anchor" href="#security"></a>3.4 Security</h2>
+<h2 id="security"><a class="anchor" href="#security"></a>3.5 Security</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/security.adoc"'>
@@ -2502,7 +2905,7 @@ val writable = turboStreamRenderer.render(builder, null)</code></pre>
 
 
 
-<h2 id="csp"><a class="anchor" href="#csp"></a>3.4.1 Content Security Policy</h2>
+<h2 id="csp"><a class="anchor" href="#csp"></a>3.5.1 Content Security Policy</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/security/csp.adoc"'>
@@ -2747,7 +3150,7 @@ mode. Inline scripts can be whitelisted with the syntax:</p>
 </div>
 </div>
 
-<h2 id="security-model-enhancement"><a class="anchor" href="#security-model-enhancement"></a>3.4.2 Integration with Micronaut Security</h2>
+<h2 id="security-model-enhancement"><a class="anchor" href="#security-model-enhancement"></a>3.5.2 Integration with Micronaut Security</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/security/security-model-enhancement.adoc"'>
@@ -2867,7 +3270,7 @@ public class BooksController {
 <p>You can access information about the current user with the <code>security</code> map.</p>
 </div>
 
-<h2 id="graal"><a class="anchor" href="#graal"></a>3.5 GraalVM Support</h2>
+<h2 id="graal"><a class="anchor" href="#graal"></a>3.6 GraalVM Support</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/graal.adoc"'>

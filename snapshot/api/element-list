@@ -2,6 +2,15 @@ gg.jte.generated.precompiled
 io.micronaut.views
 io.micronaut.views.csp
 io.micronaut.views.exceptions
+io.micronaut.views.fields
+io.micronaut.views.fields.annotations
+io.micronaut.views.fields.elements
+io.micronaut.views.fields.fetchers
+io.micronaut.views.fields.messages
+io.micronaut.views.fields.render
+io.micronaut.views.fields.render.secondary
+io.micronaut.views.fields.render.views
+io.micronaut.views.fields.tck
 io.micronaut.views.freemarker
 io.micronaut.views.handlebars
 io.micronaut.views.jstachio
