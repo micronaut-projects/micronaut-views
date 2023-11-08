@@ -24,6 +24,7 @@ import io.micronaut.views.fields.elements.InputSubmitFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -63,7 +64,8 @@ public class InputSubmitFormElementRenderer implements FormElementRenderer<Input
      * @return a List of HTML attributes
      */
     protected List<HtmlAttribute> attributes(@NonNull InputSubmitFormElement el, @NonNull Locale locale) {
-        List<HtmlAttribute> attributes = attributes(ATTR_TYPE_SUBMIT);
+        List<HtmlAttribute> attributes = new ArrayList<>(2);
+        attributes.add(typeHtmlAttribute(ATTR_TYPE_SUBMIT));
         attributes.add(new HtmlAttribute(ATTR_VALUE, content(el.value(), messageSource, locale)));
         return attributes;
     }

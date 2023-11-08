@@ -22,6 +22,8 @@ import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.views.fields.elements.InputHiddenFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,7 +52,8 @@ public class InputHiddenFormElementRenderer implements FormElementRenderer<Input
      * @return a List of HTML attributes
      */
     protected List<HtmlAttribute> attributes(@NonNull InputHiddenFormElement el) {
-        List<HtmlAttribute> attributes = attributes(ATTR_TYPE_HIDDEN);
+        List<HtmlAttribute> attributes = new ArrayList<>(3);
+        attributes.add(typeHtmlAttribute(ATTR_TYPE_HIDDEN));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         attributes.add(new HtmlAttribute(ATTR_VALUE, el.value()));
         return attributes;

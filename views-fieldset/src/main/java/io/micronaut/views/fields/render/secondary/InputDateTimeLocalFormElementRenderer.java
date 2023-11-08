@@ -23,6 +23,8 @@ import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.views.fields.elements.InputDateTimeLocalFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,7 +67,8 @@ public class InputDateTimeLocalFormElementRenderer implements FormElementRendere
      */
     @NonNull
     protected List<HtmlAttribute> attributes(@NonNull InputDateTimeLocalFormElement el) {
-        List<HtmlAttribute> attributes = attributes(ATTR_TYPE_DATE_TIME_LOCAL);
+        List<HtmlAttribute> attributes = new ArrayList<>(7);
+        attributes.add(typeHtmlAttribute(ATTR_TYPE_DATE_TIME_LOCAL));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.value() != null) {
             attributes.add(new HtmlAttribute(ATTR_VALUE, el.value().toString()));

@@ -42,7 +42,6 @@ import io.micronaut.views.fields.messages.ConstraintViolationUtils;
 import io.micronaut.views.fields.messages.Message;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Singleton;
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.*;
 
@@ -174,7 +173,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private <T> List<? extends FormElement> generateOfBeanWrapper(@NonNull BeanWrapper<T> beanWrapper,
                                                                   @Nullable ConstraintViolationException ex,
                                                                   @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
-        List<FormElement> result = new ArrayList<>();
+        List<FormElement> result = new ArrayList<>(beanWrapper.getBeanProperties().size());
         for (BeanProperty<T, ?> beanProperty : beanWrapper.getBeanProperties()) {
             formElementClassForBeanProperty(beanProperty).ifPresent(formElementClazz -> {
                 BeanIntrospection.Builder<? extends FormElement> builder = formElementBuilderForBeanProperty(beanProperty, formElementClazz, beanWrapper, ex, builderConsumer);

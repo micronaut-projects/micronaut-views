@@ -75,7 +75,7 @@ public class SelectFormElementRenderer implements FormElementRenderer<SelectForm
      * @return a List of HTML attributes
      */
     protected List<HtmlAttribute> attributes(@NonNull SelectFormElement el) {
-        List<HtmlAttribute> attributes = new ArrayList<>();
+        List<HtmlAttribute> attributes = new ArrayList<>(3);
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.required()) {
             attributes.add(new HtmlAttribute(ATTR_REQUIRED, null));

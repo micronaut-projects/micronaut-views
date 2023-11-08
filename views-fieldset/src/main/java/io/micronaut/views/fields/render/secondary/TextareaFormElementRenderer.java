@@ -65,7 +65,7 @@ public class TextareaFormElementRenderer implements FormElementRenderer<Textarea
      * @return HTML attributes
      */
     protected List<HtmlAttribute> attributes(TextareaFormElement el) {
-        List<HtmlAttribute> attributes = new ArrayList<>();
+        List<HtmlAttribute> attributes = new ArrayList<>(7);
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.id() != null) {
             attributes.add(new HtmlAttribute(ATTR_ID, el.id()));

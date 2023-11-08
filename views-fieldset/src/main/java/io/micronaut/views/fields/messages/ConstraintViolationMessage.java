@@ -64,7 +64,7 @@ public record ConstraintViolationMessage(@NonNull String code, @NonNull String d
     }
 
     private static String code(ConstraintViolation<?> violation) {
-        List<String> parts = new ArrayList<>();
+        List<String> parts = new ArrayList<>(3);
         parts.add(violation.getLeafBean().getClass().getSimpleName());
         ConstraintViolationUtils.lastNode(violation).ifPresent(parts::add);
         ConstraintViolationUtils.constraintCode(violation).ifPresent(parts::add);

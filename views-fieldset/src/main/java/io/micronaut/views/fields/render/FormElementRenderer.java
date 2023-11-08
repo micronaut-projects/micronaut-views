@@ -262,16 +262,8 @@ public interface FormElementRenderer<T extends FormElement> {
         return message.defaultMessage();
     }
 
-    /**
-     *
-     * @param type input type
-     * @return HTML Attributes
-     */
-    @NonNull
-    default List<HtmlAttribute> attributes(@NonNull String type) {
-        List<HtmlAttribute> attributes = new ArrayList<>();
-        attributes.add(new HtmlAttribute(ATTR_TYPE, type));
-        return attributes;
+    default HtmlAttribute typeHtmlAttribute(@NonNull String type) {
+        return new HtmlAttribute(ATTR_TYPE, type);
     }
 
     /**
@@ -282,7 +274,8 @@ public interface FormElementRenderer<T extends FormElement> {
      */
     @NonNull
     default List<HtmlAttribute> attributes(@NonNull InputStringFormElement el, @NonNull String type) {
-        List<HtmlAttribute> attributes = attributes(type);
+        List<HtmlAttribute> attributes = new ArrayList<>(11);
+        attributes.add(typeHtmlAttribute(type));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.value() != null) {
             attributes.add(new HtmlAttribute(ATTR_VALUE, el.value()));

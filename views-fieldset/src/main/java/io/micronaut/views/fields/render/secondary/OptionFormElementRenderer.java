@@ -63,7 +63,7 @@ public class OptionFormElementRenderer implements FormElementRenderer<Option> {
      * @return a List of HTML attributes
      */
     protected List<HtmlAttribute> attributes(@NonNull Option el) {
-        List<HtmlAttribute> attributes = new ArrayList<>();
+        List<HtmlAttribute> attributes = new ArrayList<>(3);
         attributes.add(new HtmlAttribute(ATTR_VALUE, el.value()));
         if (el.selected()) {
             attributes.add(new HtmlAttribute(ATTR_SELECTED, null));
@@ -73,5 +73,4 @@ public class OptionFormElementRenderer implements FormElementRenderer<Option> {
         }
         return attributes;
     }
-
 }

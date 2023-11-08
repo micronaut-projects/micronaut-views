@@ -78,7 +78,8 @@ public class InputRadioFormElementRenderer implements FormElementRenderer<InputR
      */
     protected List<HtmlAttribute> attributes(@NonNull InputRadioFormElement el,
                                              @NonNull Radio radio) {
-        List<HtmlAttribute> attributes = attributes(ATTR_TYPE_RADIO);
+        List<HtmlAttribute> attributes = new ArrayList<>(6);
+        attributes.add(typeHtmlAttribute(ATTR_TYPE_RADIO));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.required()) {
             attributes.add(new HtmlAttribute(ATTR_REQUIRED, null));
@@ -93,7 +94,7 @@ public class InputRadioFormElementRenderer implements FormElementRenderer<InputR
      * @return a List of HTML attributes
      */
     protected List<HtmlAttribute> attributes(@NonNull Radio radio) {
-        List<HtmlAttribute> attributes = new ArrayList<>();
+        List<HtmlAttribute> attributes = new ArrayList<>(3);
         attributes.add(new HtmlAttribute(ATTR_VALUE, radio.value()));
         if (radio.id() != null) {
             attributes.add(new HtmlAttribute(ATTR_ID, radio.id()));
@@ -102,7 +103,5 @@ public class InputRadioFormElementRenderer implements FormElementRenderer<InputR
             attributes.add(new HtmlAttribute(ATTR_CHECKED, null));
         }
         return attributes;
-
     }
-
 }

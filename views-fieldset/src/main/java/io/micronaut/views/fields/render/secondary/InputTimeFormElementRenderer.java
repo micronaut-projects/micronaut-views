@@ -24,6 +24,7 @@ import io.micronaut.views.fields.elements.InputTimeFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -66,7 +67,8 @@ public class InputTimeFormElementRenderer implements FormElementRenderer<InputTi
      */
     @NonNull
     protected List<HtmlAttribute> attributes(@NonNull InputTimeFormElement el) {
-        List<HtmlAttribute> attributes = attributes(ATTR_TYPE_TIME);
+        List<HtmlAttribute> attributes = new ArrayList<>(7);
+        attributes.add(typeHtmlAttribute(ATTR_TYPE_TIME));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.value() != null) {
             attributes.add(new HtmlAttribute(ATTR_VALUE, el.value().toString()));

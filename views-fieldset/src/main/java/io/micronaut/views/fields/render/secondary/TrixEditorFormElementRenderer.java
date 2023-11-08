@@ -69,8 +69,8 @@ public class TrixEditorFormElementRenderer implements FormElementRenderer<TrixEd
      * @return HTML attributes
      */
     protected List<HtmlAttribute> inputAttributes(TrixEditorFormElement el) {
-        List<HtmlAttribute> attributes = new ArrayList<>();
-        attributes.add(new HtmlAttribute(ATTR_TYPE, ATTR_TYPE_HIDDEN));
+        List<HtmlAttribute> attributes = new ArrayList<>(4);
+        attributes.add(typeHtmlAttribute(ATTR_TYPE_HIDDEN));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.id() != null) {
             attributes.add(new HtmlAttribute(ATTR_ID, el.id()));
