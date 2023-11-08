@@ -30,7 +30,7 @@ import java.util.Map;
  * @since 4.1.0
  */
 @Internal
-@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".textarea")
+@Requires(property = FormElementRendererViewsConfiguration.PREFIX + "textarea")
 @Singleton
 public class TextareaViewsFormElementRenderer extends ViewsFormElementRenderer<TextareaFormElement> {
 

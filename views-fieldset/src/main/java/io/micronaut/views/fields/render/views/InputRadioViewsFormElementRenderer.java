@@ -30,7 +30,7 @@ import java.util.Map;
  * @since 4.1.0
  */
 @Internal
-@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".input-radio")
+@Requires(property = FormElementRendererViewsConfiguration.PREFIX + "input-radio")
 @Singleton
 public class InputRadioViewsFormElementRenderer extends ViewsFormElementRenderer<InputRadioFormElement> {
 

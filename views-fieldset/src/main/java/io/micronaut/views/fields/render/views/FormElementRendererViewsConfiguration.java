@@ -15,19 +15,22 @@
  */
 package io.micronaut.views.fields.render.views;
 
-import io.micronaut.context.annotation.DefaultImplementation;
-import io.micronaut.core.annotation.Experimental;
+import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.views.fields.render.FormElementRenderer;
+import io.micronaut.views.fields.render.FormElementRendererConfigurationProperties;
 
 /**
  * Configuration for {@link FormElementRenderer} based on views.
  * @author Sergio del Amo
  * @since 4.1.0
  */
-@Experimental
-@DefaultImplementation(FormElementRendererViewsConfigurationProperties.class)
+@ConfigurationProperties(FormElementRendererViewsConfiguration.PREFIX)
 public interface FormElementRendererViewsConfiguration {
+    /**
+     * Configuration Prefix.
+     */
+    String PREFIX = FormElementRendererConfigurationProperties.PREFIX + ".views";
 
     /**
      *

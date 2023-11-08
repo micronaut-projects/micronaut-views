@@ -30,7 +30,7 @@ import java.util.Map;
  * @since 4.1.0
  */
 @Internal
-@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".input-number")
+@Requires(property = FormElementRendererViewsConfiguration.PREFIX + "input-number")
 @Singleton
 public class InputNumberViewsFormElementRenderer extends ViewsFormElementRenderer<InputNumberFormElement> {
 

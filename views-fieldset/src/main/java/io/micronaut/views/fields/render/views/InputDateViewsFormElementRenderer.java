@@ -30,7 +30,7 @@ import java.util.Map;
  * @since 4.1.0
  */
 @Internal
-@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".input-date")
+@Requires(property = FormElementRendererViewsConfiguration.PREFIX + "input-date")
 @Singleton
 public class InputDateViewsFormElementRenderer extends ViewsFormElementRenderer<InputDateFormElement> {
 
