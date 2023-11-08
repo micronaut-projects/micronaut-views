@@ -19,7 +19,7 @@ class InputEmailFormElementTest {
     @Test
     void testTagAndType() {
         InputEmailFormElement formElement = InputEmailFormElement.builder().build();
-        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(HtmlTag.INPUT, formElement.getTag());
         assertEquals(InputType.ATTR_TYPE_EMAIL, formElement.getType());
     }
 

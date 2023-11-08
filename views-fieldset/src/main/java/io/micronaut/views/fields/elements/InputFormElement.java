@@ -30,8 +30,8 @@ public interface InputFormElement extends FormElement {
 
     @Override
     @NonNull
-    default String getTag() {
-        return HtmlTag.TAG_INPUT;
+    default HtmlTag getTag() {
+        return HtmlTag.INPUT;
     }
 
     /**

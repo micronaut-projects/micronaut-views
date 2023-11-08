@@ -13,7 +13,7 @@ class InputTimeFormElementTest {
     @Test
     void testTagAndType() {
         InputTimeFormElement formElement = InputTimeFormElement.builder().build();
-        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(HtmlTag.INPUT, formElement.getTag());
         assertEquals(InputType.ATTR_TYPE_TIME, formElement.getType());
     }
 

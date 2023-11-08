@@ -30,7 +30,7 @@ public interface FormElement {
      * @return The HTML Tag this element refers to.
      */
     @Nullable
-    default String getTag() {
+    default HtmlTag getTag() {
         return null;
     }
 }

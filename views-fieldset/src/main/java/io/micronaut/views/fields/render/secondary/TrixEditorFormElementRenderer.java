@@ -19,6 +19,7 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.elements.TrixEditorFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
@@ -28,7 +29,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
 import static io.micronaut.views.fields.InputType.ATTR_TYPE_HIDDEN;
 
 /**
@@ -58,8 +58,8 @@ public class TrixEditorFormElementRenderer implements FormElementRenderer<TrixEd
         if (formElement.label() != null) {
             sb.append(renderLabel(formElement.id(), formElement.label(), messageSource, locale));
         }
-        sb.append(render(TAG_INPUT, inputAttributes(formElement)));
-        sb.append(render(TAG_TRIX_EDITOR, Collections.singletonList(new HtmlAttribute(TAG_INPUT, formElement.id())), ""));
+        sb.append(render(HtmlTag.INPUT, inputAttributes(formElement)));
+        sb.append(render(HtmlTag.TRIX_EDITOR, Collections.singletonList(new HtmlAttribute(HtmlTag.INPUT.toString(), formElement.id())), ""));
         return sb.toString();
     }
 

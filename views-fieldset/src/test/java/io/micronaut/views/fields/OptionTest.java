@@ -12,7 +12,7 @@ class OptionTest {
     @Test
     void testTag() {
         Option formElement = Option.builder().build();
-        assertEquals(HtmlTag.TAG_OPTION, formElement.getTag());
+        assertEquals(HtmlTag.OPTION, formElement.getTag());
     }
 
     @Test

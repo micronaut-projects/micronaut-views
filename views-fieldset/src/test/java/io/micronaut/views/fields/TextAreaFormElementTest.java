@@ -11,7 +11,7 @@ class TextAreaFormElementTest {
     @Test
     void testTag() {
         TextareaFormElement formElement = TextareaFormElement.builder().build();
-        assertEquals(HtmlTag.TAG_TEXTAREA, formElement.getTag());
+        assertEquals(HtmlTag.TEXTAREA, formElement.getTag());
     }
 
     @Test

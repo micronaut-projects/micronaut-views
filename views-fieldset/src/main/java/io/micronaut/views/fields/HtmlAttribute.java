@@ -30,6 +30,7 @@ import io.micronaut.core.annotation.Nullable;
 @Experimental
 @Introspected
 public record HtmlAttribute(@NonNull String key, @Nullable String value) {
+
     @Override
     public String toString() {
         if (value != null) {

@@ -19,13 +19,13 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.elements.InputEmailFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
 
 import java.util.Locale;
 
-import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
 import static io.micronaut.views.fields.InputType.ATTR_TYPE_EMAIL;
 
 /**
@@ -55,7 +55,7 @@ public class InputEmailFormElementRenderer implements FormElementRenderer<InputE
         if (el.label() != null) {
             sb.append(renderLabel(el.id(), el.label(), messageSource, locale));
         }
-        sb.append(render(TAG_INPUT, attributes(el, ATTR_TYPE_EMAIL)));
+        sb.append(render(HtmlTag.INPUT, attributes(el, ATTR_TYPE_EMAIL)));
         return sb.toString();
     }
 }

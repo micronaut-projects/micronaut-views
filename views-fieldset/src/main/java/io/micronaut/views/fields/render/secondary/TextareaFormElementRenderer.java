@@ -19,6 +19,7 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.elements.TextareaFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
@@ -26,8 +27,6 @@ import jakarta.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static io.micronaut.views.fields.HtmlTag.TAG_TEXTAREA;
 
 /**
  * {@link FormElementRenderer} implementation of {@link TextareaFormElement}.
@@ -55,7 +54,7 @@ public class TextareaFormElementRenderer implements FormElementRenderer<Textarea
         if (formElement.label() != null) {
             sb.append(renderLabel(formElement.id(), formElement.label(), messageSource, locale));
         }
-        sb.append(render(TAG_TEXTAREA, attributes(formElement), formElement.value()));
+        sb.append(render(HtmlTag.TEXTAREA, attributes(formElement), formElement.value()));
         return sb.toString();
     }
 

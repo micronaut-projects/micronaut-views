@@ -51,8 +51,8 @@ public record Option(boolean disabled,
 
     @Override
     @NonNull
-    public String getTag() {
-        return HtmlTag.TAG_OPTION;
+    public HtmlTag getTag() {
+        return HtmlTag.OPTION;
     }
 
     /**

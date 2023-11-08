@@ -20,6 +20,7 @@ import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.elements.InputRadioFormElement;
 import io.micronaut.views.fields.elements.Radio;
 import io.micronaut.views.fields.render.FormElementRenderer;
@@ -30,8 +31,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import static io.micronaut.views.fields.HtmlTag.TAG_DIV;
-import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
 import static io.micronaut.views.fields.InputType.ATTR_TYPE_RADIO;
 
 /**
@@ -60,12 +59,12 @@ public class InputRadioFormElementRenderer implements FormElementRenderer<InputR
                          @NonNull Locale locale) {
         StringBuilder html = new StringBuilder();
         for (Radio radio : el.buttons()) {
-            html.append(renderOpenTag(TAG_DIV, Collections.emptyList()));
-            html.append(render(TAG_INPUT, attributes(el, radio)));
+            html.append(renderOpenTag(HtmlTag.DIV, Collections.emptyList()));
+            html.append(render(HtmlTag.INPUT, attributes(el, radio)));
             if (radio.label() != null) {
                 html.append(renderLabel(radio.id(), radio.label(), messageSource, locale));
             }
-            html.append(renderCloseTag(TAG_DIV));
+            html.append(renderCloseTag(HtmlTag.DIV));
         }
         return html.toString();
     }

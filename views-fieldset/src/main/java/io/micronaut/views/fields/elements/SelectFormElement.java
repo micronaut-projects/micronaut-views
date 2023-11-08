@@ -49,8 +49,8 @@ public record SelectFormElement(@NonNull boolean required,
                                 @NonNull List<Message> errors) implements FormElement, GlobalAttributes, FormElementAttributes {
     @Override
     @NonNull
-    public String getTag() {
-        return HtmlTag.TAG_SELECT;
+    public HtmlTag getTag() {
+        return HtmlTag.SELECT;
     }
 
     /**

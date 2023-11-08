@@ -20,6 +20,7 @@ import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.elements.InputTimeFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
@@ -27,8 +28,6 @@ import jakarta.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
 import static io.micronaut.views.fields.InputType.ATTR_TYPE_TIME;
 
 /**
@@ -56,7 +55,7 @@ public class InputTimeFormElementRenderer implements FormElementRenderer<InputTi
         if (el.label() != null) {
             sb.append(renderLabel(el.id(), el.label(), messageSource, locale));
         }
-        sb.append(render(TAG_INPUT, attributes(el)));
+        sb.append(render(HtmlTag.INPUT, attributes(el)));
         return sb.toString();
     }
 

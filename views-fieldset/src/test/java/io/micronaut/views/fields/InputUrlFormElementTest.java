@@ -19,7 +19,7 @@ class InputUrlFormElementTest {
     @Test
     void testTagAndType() {
         InputUrlFormElement formElement = InputUrlFormElement.builder().build();
-        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(HtmlTag.INPUT, formElement.getTag());
         assertEquals(InputType.ATTR_TYPE_URL, formElement.getType());
     }
 

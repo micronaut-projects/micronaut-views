@@ -47,7 +47,7 @@ public record TrixEditorFormElement(@NonNull String name,
                                     @NonNull List<Message> errors) implements FormElement, FormElementAttributes {
 
     @Override
-    public String getTag() {
+    public HtmlTag getTag() {
         return HtmlTag.TRIX_EDITOR;
     }
 

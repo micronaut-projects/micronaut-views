@@ -20,6 +20,7 @@ import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.elements.Option;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
@@ -27,8 +28,6 @@ import jakarta.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static io.micronaut.views.fields.HtmlTag.TAG_OPTION;
 
 /**
  * {@link FormElementRenderer} implementation of {@link Option}.
@@ -54,7 +53,7 @@ public class OptionFormElementRenderer implements FormElementRenderer<Option> {
     @NonNull
     public String render(@NonNull Option el,
                          @NonNull Locale locale) {
-        return render(TAG_OPTION, attributes(el), content(el.label(), messageSource, locale));
+        return render(HtmlTag.OPTION, attributes(el), content(el.label(), messageSource, locale));
     }
 
     /**

@@ -11,7 +11,7 @@ class InputSubmitFormElementTest {
     @Test
     void testTagAndType() {
         InputSubmitFormElement formElement = InputSubmitFormElement.builder().build();
-        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(HtmlTag.INPUT, formElement.getTag());
         assertEquals(InputType.ATTR_TYPE_SUBMIT, formElement.getType());
     }
 

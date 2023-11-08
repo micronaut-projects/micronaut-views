@@ -12,7 +12,7 @@ class InputDateFormElementTest {
     @Test
     void testTagAndType() {
         InputDateFormElement formElement = InputDateFormElement.builder().build();
-        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(HtmlTag.INPUT, formElement.getTag());
         assertEquals(InputType.ATTR_TYPE_DATE, formElement.getType());
     }
 
@@ -32,7 +32,7 @@ class InputDateFormElementTest {
             .max(max)
             .build();
         assertNotNull(formElement);
-        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(HtmlTag.INPUT, formElement.getTag());
         assertEquals(InputType.ATTR_TYPE_DATE, formElement.getType());
         assertEquals(id, formElement.id());
         assertEquals(name, formElement.name());

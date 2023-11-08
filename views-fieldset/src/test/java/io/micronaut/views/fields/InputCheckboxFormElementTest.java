@@ -14,7 +14,7 @@ class InputCheckboxFormElementTest {
     @Test
     void testTagAndType() {
         InputCheckboxFormElement formElement = InputCheckboxFormElement.builder().build();
-        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(HtmlTag.INPUT, formElement.getTag());
         assertEquals(InputType.ATTR_TYPE_CHECKBOX, formElement.getType());
     }
 
@@ -31,7 +31,7 @@ class InputCheckboxFormElementTest {
         InputCheckboxFormElement formElement = InputCheckboxFormElement.builder()
             .checkboxes(List.of(interest, music))
             .build();
-        assertEquals(HtmlTag.TAG_INPUT, formElement.getTag());
+        assertEquals(HtmlTag.INPUT, formElement.getTag());
         assertEquals(InputType.ATTR_TYPE_CHECKBOX, formElement.getType());
 
         List<Checkbox> checkboxes = Arrays.asList(interest, music);

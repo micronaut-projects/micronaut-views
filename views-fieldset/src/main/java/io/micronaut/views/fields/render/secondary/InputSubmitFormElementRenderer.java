@@ -20,6 +20,7 @@ import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.elements.InputSubmitFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
@@ -28,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
 import static io.micronaut.views.fields.InputType.ATTR_TYPE_SUBMIT;
 
 /**
@@ -54,7 +54,7 @@ public class InputSubmitFormElementRenderer implements FormElementRenderer<Input
     @Override
     @NonNull
     public String render(@NonNull InputSubmitFormElement formElement, @NonNull Locale locale) {
-        return render(TAG_INPUT, attributes(formElement, locale));
+        return render(HtmlTag.INPUT, attributes(formElement, locale));
     }
 
     /**

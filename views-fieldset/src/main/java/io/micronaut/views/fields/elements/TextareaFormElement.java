@@ -57,8 +57,8 @@ public record TextareaFormElement(@NonNull String name,
                                   @NonNull List<Message> errors) implements FormElement, FormElementAttributes, GlobalAttributes {
 
     @Override
-    public String getTag() {
-        return HtmlTag.TAG_TEXTAREA;
+    public HtmlTag getTag() {
+        return HtmlTag.TEXTAREA;
     }
 
     /**

@@ -22,6 +22,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.views.fields.FormElement;
 import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.elements.InputStringFormElement;
 import io.micronaut.views.fields.messages.Message;
 
@@ -30,8 +31,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
-
-import static io.micronaut.views.fields.HtmlTag.TAG_LABEL;
 
 /**
  * API to render a {@link io.micronaut.views.fields.FormElement}.
@@ -180,7 +179,7 @@ public interface FormElementRenderer<T extends FormElement> {
      * @return HTML
      */
     @NonNull
-    default String render(@NonNull String tag,
+    default String render(@NonNull HtmlTag tag,
                           @NonNull List<HtmlAttribute> attributes) {
         return LESS_THAN + tag + SPACE + attributes.stream().map(HtmlAttribute::toString).collect(Collectors.joining(SPACE)) + SLASH + GREATER_THAN;
     }
@@ -193,7 +192,7 @@ public interface FormElementRenderer<T extends FormElement> {
      * @return HTML
      */
     @NonNull
-    default String render(@NonNull String tag,
+    default String render(@NonNull HtmlTag tag,
                           @NonNull List<HtmlAttribute> attributes,
                           @NonNull String content) {
         return renderOpenTag(tag, attributes) + content + renderCloseTag(tag);
@@ -212,7 +211,7 @@ public interface FormElementRenderer<T extends FormElement> {
                                @NonNull MessageSource messageSource,
                                @NonNull Locale locale) {
         return render(
-            TAG_LABEL,
+                HtmlTag.LABEL,
             id != null ? Collections.singletonList(new HtmlAttribute(ATTR_FOR, id)) : Collections.emptyList(),
             content(message, messageSource, locale)
         );
@@ -224,7 +223,7 @@ public interface FormElementRenderer<T extends FormElement> {
      * @param attributes HTML Attributes
      * @return HTML
      */
-    default String renderOpenTag(@NonNull String tag,
+    default String renderOpenTag(@NonNull HtmlTag tag,
                                  @NonNull List<HtmlAttribute> attributes) {
         StringBuilder sb = new StringBuilder();
         sb.append(LESS_THAN);
@@ -242,7 +241,7 @@ public interface FormElementRenderer<T extends FormElement> {
      * @param tag an HTML Tag
      * @return HTML
      */
-    default String renderCloseTag(@NonNull String tag) {
+    default String renderCloseTag(@NonNull HtmlTag tag) {
         return LESS_THAN + SLASH + tag + GREATER_THAN;
     }
 

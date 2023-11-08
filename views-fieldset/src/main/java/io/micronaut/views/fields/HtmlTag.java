@@ -23,44 +23,56 @@ import io.micronaut.core.annotation.Experimental;
  * @since 4.1.0
  */
 @Experimental
-public final class HtmlTag {
+public enum HtmlTag {
 
     /**
      * HTML Tag input.
      */
-    public static final String TAG_INPUT = "input";
+    INPUT("input"),
 
     /**
      * HTML Tag select.
      */
-    public static final String TAG_SELECT = "select";
+    SELECT("select"),
 
     /**
      * HTML Tag div.
      */
-    public static final String TAG_DIV = "div";
+    DIV("div"),
 
     /**
      * HTML Tag textarea.
      */
-    public static final String TAG_TEXTAREA = "textarea";
+    TEXTAREA("textarea"),
 
     /**
      * HTML Tag option.
      */
-    public static final String TAG_OPTION = "option";
+    OPTION("option"),
 
     /**
      * HTML Tag label.
      */
-    public static final String TAG_LABEL = "label";
+    LABEL("label"),
 
     /**
      * Trix editor tag.
      * @see <a href="https://trix-editor.org">Trix Editor</a>
      */
-    public static final String TRIX_EDITOR = "trix-editor";
+    TRIX_EDITOR("trix-editor");
 
-    private HtmlTag() {
+    private final String tag;
+
+    /**
+     *
+     * @param tag HTML Tag
+     */
+    HtmlTag(String tag) {
+        this.tag = tag;
+    }
+
+    @Override
+    public String toString() {
+        return tag;
     }
 }

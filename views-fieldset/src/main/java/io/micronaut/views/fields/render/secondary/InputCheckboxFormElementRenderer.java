@@ -19,6 +19,7 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.elements.Checkbox;
 import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.views.fields.elements.InputCheckboxFormElement;
@@ -30,8 +31,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import static io.micronaut.views.fields.HtmlTag.TAG_DIV;
-import static io.micronaut.views.fields.HtmlTag.TAG_INPUT;
 import static io.micronaut.views.fields.InputType.ATTR_TYPE_CHECKBOX;
 
 /**
@@ -58,10 +57,10 @@ public class InputCheckboxFormElementRenderer implements FormElementRenderer<Inp
     public String render(@NonNull InputCheckboxFormElement formElement, @NonNull Locale locale) {
         StringBuilder sb = new StringBuilder();
         for (Checkbox checkbox : formElement.checkboxes()) {
-            sb.append(renderOpenTag(TAG_DIV, Collections.emptyList()));
-            sb.append(render(TAG_INPUT, attributes(checkbox)));
+            sb.append(renderOpenTag(HtmlTag.DIV, Collections.emptyList()));
+            sb.append(render(HtmlTag.INPUT, attributes(checkbox)));
             sb.append(renderLabel(checkbox.id(), checkbox.label(), messageSource, locale));
-            sb.append(renderCloseTag(TAG_DIV));
+            sb.append(renderCloseTag(HtmlTag.DIV));
         }
         return sb.toString();
     }

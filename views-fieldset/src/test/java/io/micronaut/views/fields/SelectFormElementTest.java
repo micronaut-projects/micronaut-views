@@ -16,7 +16,7 @@ class SelectFormElementTest {
     @Test
     void testTag() {
         SelectFormElement formElement = SelectFormElement.builder().name("country").build();
-        assertEquals(HtmlTag.TAG_SELECT, formElement.getTag());
+        assertEquals(HtmlTag.SELECT, formElement.getTag());
     }
 
     @Test

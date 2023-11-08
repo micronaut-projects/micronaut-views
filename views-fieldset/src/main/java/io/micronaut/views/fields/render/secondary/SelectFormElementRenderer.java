@@ -19,6 +19,7 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlAttribute;
+import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.elements.Option;
 import io.micronaut.views.fields.elements.SelectFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
@@ -27,8 +28,6 @@ import jakarta.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static io.micronaut.views.fields.HtmlTag.TAG_SELECT;
 
 /**
  * Renders a {@link SelectFormElement} as HTML.
@@ -61,11 +60,11 @@ public class SelectFormElementRenderer implements FormElementRenderer<SelectForm
         if (el.label() != null) {
             html.append(renderLabel(el.id(), el.label(), messageSource, locale));
         }
-        html.append(renderOpenTag(TAG_SELECT, attributes(el)));
+        html.append(renderOpenTag(HtmlTag.SELECT, attributes(el)));
         for (Option option : el.options()) {
             html.append(optionFormElementRenderer.render(option, locale));
         }
-        html.append(renderCloseTag(TAG_SELECT));
+        html.append(renderCloseTag(HtmlTag.SELECT));
         return html.toString();
     }
 
