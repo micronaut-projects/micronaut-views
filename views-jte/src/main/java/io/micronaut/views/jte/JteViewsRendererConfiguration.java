@@ -42,7 +42,8 @@ public interface JteViewsRendererConfiguration {
     String getDynamicSourcePath();
 
     /**
-     * When using dynamic templates, build them with binary content (see https://github.com/casid/jte/blob/master/DOCUMENTATION.md#binary-rendering-for-max-throughput).
+     * When using dynamic templates, build them with binary content
+     * (see <a href="https://jte.gg/binary-rendering/">jte Binary Rendering docs</a>).
      * (When using precompiled templates, this setting is determined by the build configuration.)
      * @return true to enable building binary content
      */
