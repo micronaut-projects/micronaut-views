@@ -1,5 +1,5 @@
 plugins {
-    id "io.micronaut.build.internal.views-module"
+    id("io.micronaut.build.internal.views-module")
 }
 
 dependencies {

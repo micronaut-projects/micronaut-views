@@ -13,6 +13,7 @@ dependencies {
     testRuntimeOnly(mnLogging.logback.classic)
 
     testImplementation(projects.micronautViewsCore)
+    testImplementation(projects.micronautViewsFieldset)
     testImplementation(projects.micronautViewsFreemarker)
 //    testImplementation(projects.micronautViewsHandlebars)
     testImplementation(projects.micronautViewsJte)

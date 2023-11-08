@@ -3,12 +3,13 @@ micronaut = "4.1.11"
 micronaut-platform = "4.0.4"
 micronaut-docs = '2.0.0'
 micronaut-test = "4.0.1"
-
+micronaut-data = "4.0.4"
+micronaut-sql = "5.0.1"
 micronaut-security = "4.1.0"
 micronaut-serde = "2.3.0"
 micronaut-validation = "4.0.3"
 micronaut-gradle-plugin = "4.1.2"
-
+testcontainers = "1.19.0"
 groovy = "4.0.14"
 spock = "2.3-groovy-4.0"
 
@@ -31,9 +32,11 @@ micronaut-logging = "1.1.2"
 [libraries]
 # Core
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut' }
-
+testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
+micronaut-sql = { module = "io.micronaut.sql:micronaut-sql-bom", version.ref = "micronaut-sql" }
 micronaut-logging = { module = "io.micronaut.logging:micronaut-logging-bom", version.ref = "micronaut-logging" }
 micronaut-security = { module = "io.micronaut.security:micronaut-security-bom", version.ref = "micronaut-security" }
+micronaut-data = { module = "io.micronaut.data:micronaut-data-bom", version.ref = "micronaut-data" }
 micronaut-serde = { module = "io.micronaut.serde:micronaut-serde-bom", version.ref = "micronaut-serde" }
 micronaut-validation = { module = "io.micronaut.validation:micronaut-validation-bom", version.ref = "micronaut-validation" }
 micronaut-graal = {group = "io.micronaut", name = "micronaut-graal", version.ref = "micronaut" }
@@ -52,6 +55,7 @@ managed-velocity-engine-core = { module = "org.apache.velocity:velocity-engine-c
 
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+junit-platform-engine = { module = "org.junit.platform:junit-platform-suite-engine" }
 pebble = { module = "io.pebbletemplates:pebble", version.ref = "pebble" }
 thymeleaf-extras-java8time = { module = "org.thymeleaf.extras:thymeleaf-extras-java8time", version.ref = "thymeleaf-extra-java8time" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
