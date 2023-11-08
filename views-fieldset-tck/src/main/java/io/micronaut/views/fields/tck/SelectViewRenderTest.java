@@ -152,14 +152,14 @@ class SelectViewRenderTest {
 
         @Override
         public List<Option> generate(String instance) {
-            List<Option> result = new ArrayList<>();
-            for (Option.Builder builder : options()) {
-                if (instance.equals(builder.build().value())) {
-                    builder.selected(true);
-                }
-                result.add(builder.build());
-            }
-            return result;
+            return options().stream()
+                    .peek(builder -> {
+                        if (instance.equals(builder.build().value())) {
+                            builder.selected(true);
+                        }
+                    })
+                    .map(Option.Builder::build)
+                    .toList();
         }
     }
 

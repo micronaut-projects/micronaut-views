@@ -161,14 +161,13 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
 
     @NonNull
     private Fieldset generate(@NonNull List<? extends FormElement> fields, @NonNull ConstraintViolationException ex) {
-        List<Message> errors = new ArrayList<>();
-        for (ConstraintViolation<?> constraintViolation : ex.getConstraintViolations()) {
-            if (ConstraintViolationUtils.lastNode(constraintViolation).isEmpty()) {
-                errors.add(new ConstraintViolationMessage(constraintViolation));
-            }
-        }
-        Collections.sort(errors);
-        return new Fieldset(fields, errors);
+        return new Fieldset(fields, ex.getConstraintViolations()
+                .stream()
+                .filter(constraintViolationEx -> ConstraintViolationUtils.lastNode(constraintViolationEx).isEmpty())
+                .map(ConstraintViolationMessage::new)
+                .map(Message.class::cast)
+                .sorted()
+                .toList());
     }
 
     @NonNull
