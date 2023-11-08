@@ -34,8 +34,8 @@ public record InputSubmitFormElement(@NonNull Message value) implements InputFor
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_SUBMIT;
+    public InputType getType() {
+        return InputType.SUBMIT;
     }
 
     /**

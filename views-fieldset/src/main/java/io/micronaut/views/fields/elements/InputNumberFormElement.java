@@ -59,8 +59,8 @@ public record InputNumberFormElement(@NonNull String name,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_NUMBER;
+    public InputType getType() {
+        return InputType.NUMBER;
     }
 
     /**

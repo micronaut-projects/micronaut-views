@@ -13,7 +13,7 @@ class InputDateTimeLocalFormElementTest {
     void testTagAndType() {
         InputDateTimeLocalFormElement formElement = InputDateTimeLocalFormElement.builder().build();
         assertEquals(HtmlTag.INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_DATE_TIME_LOCAL, formElement.getType());
+        assertEquals(InputType.DATE_TIME_LOCAL, formElement.getType());
     }
 
     @Test

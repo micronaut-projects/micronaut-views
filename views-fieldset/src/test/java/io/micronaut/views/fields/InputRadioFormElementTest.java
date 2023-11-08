@@ -16,7 +16,7 @@ class InputRadioFormElementTest {
     void testTagAndType() {
         InputRadioFormElement formElement = InputRadioFormElement.builder().build();
         assertEquals(HtmlTag.INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_RADIO, formElement.getType());
+        assertEquals(InputType.RADIO, formElement.getType());
     }
 
     @Test

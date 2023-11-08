@@ -20,6 +20,7 @@ import io.micronaut.context.annotation.Secondary;
 import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.views.fields.HtmlTag;
+import io.micronaut.views.fields.InputType;
 import io.micronaut.views.fields.elements.TrixEditorFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
@@ -28,8 +29,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
-import static io.micronaut.views.fields.InputType.ATTR_TYPE_HIDDEN;
 
 /**
  * {@link FormElementRenderer} implementation of {@link TrixEditorFormElement}.
@@ -70,7 +69,7 @@ public class TrixEditorFormElementRenderer implements FormElementRenderer<TrixEd
      */
     protected List<HtmlAttribute> inputAttributes(TrixEditorFormElement el) {
         List<HtmlAttribute> attributes = new ArrayList<>(4);
-        attributes.add(typeHtmlAttribute(ATTR_TYPE_HIDDEN));
+        attributes.add(typeHtmlAttribute(InputType.HIDDEN));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.id() != null) {
             attributes.add(new HtmlAttribute(ATTR_ID, el.id()));

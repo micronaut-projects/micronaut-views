@@ -20,7 +20,7 @@ class InputTextFormElementTest {
     void testTagAndType() {
         InputTextFormElement formElement = InputTextFormElement.builder().build();
         assertEquals(HtmlTag.INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_TEXT, formElement.getType());
+        assertEquals(InputType.TEXT, formElement.getType());
     }
 
     @Test

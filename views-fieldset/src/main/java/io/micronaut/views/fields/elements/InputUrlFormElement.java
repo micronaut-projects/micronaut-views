@@ -57,8 +57,8 @@ public record InputUrlFormElement(@NonNull String name,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_URL;
+    public InputType getType() {
+        return InputType.URL;
     }
 
     /**

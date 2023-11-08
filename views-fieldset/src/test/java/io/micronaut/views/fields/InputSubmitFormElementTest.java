@@ -12,7 +12,7 @@ class InputSubmitFormElementTest {
     void testTagAndType() {
         InputSubmitFormElement formElement = InputSubmitFormElement.builder().build();
         assertEquals(HtmlTag.INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_SUBMIT, formElement.getType());
+        assertEquals(InputType.SUBMIT, formElement.getType());
     }
 
     @Test

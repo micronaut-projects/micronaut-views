@@ -20,13 +20,12 @@ import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlTag;
+import io.micronaut.views.fields.InputType;
 import io.micronaut.views.fields.elements.InputTextFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
 
 import java.util.Locale;
-
-import static io.micronaut.views.fields.InputType.ATTR_TYPE_TEXT;
 
 /**
  * {@link FormElementRenderer} implementation of {@link InputTextFormElement}.
@@ -56,7 +55,7 @@ public class InputTextFormElementRenderer implements FormElementRenderer<InputTe
         if (el.label() != null) {
             sb.append(renderLabel(el.id(), el.label(), messageSource, locale));
         }
-        sb.append(render(HtmlTag.INPUT, attributes(el, ATTR_TYPE_TEXT)));
+        sb.append(render(HtmlTag.INPUT, attributes(el, InputType.TEXT)));
         return sb.toString();
     }
 }

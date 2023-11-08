@@ -61,8 +61,8 @@ public record InputTelFormElement(@NonNull String name,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_TEL;
+    public InputType getType() {
+        return InputType.TEL;
     }
 
     /**

@@ -13,7 +13,7 @@ class InputDateFormElementTest {
     void testTagAndType() {
         InputDateFormElement formElement = InputDateFormElement.builder().build();
         assertEquals(HtmlTag.INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_DATE, formElement.getType());
+        assertEquals(InputType.DATE, formElement.getType());
     }
 
     @Test
@@ -33,7 +33,7 @@ class InputDateFormElementTest {
             .build();
         assertNotNull(formElement);
         assertEquals(HtmlTag.INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_DATE, formElement.getType());
+        assertEquals(InputType.DATE, formElement.getType());
         assertEquals(id, formElement.id());
         assertEquals(name, formElement.name());
         assertEquals(value, formElement.value());

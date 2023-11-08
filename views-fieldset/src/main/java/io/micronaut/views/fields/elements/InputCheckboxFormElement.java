@@ -42,8 +42,8 @@ public record InputCheckboxFormElement(@NonNull List<Checkbox> checkboxes,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_CHECKBOX;
+    public InputType getType() {
+        return InputType.CHECKBOX;
     }
 
     /**

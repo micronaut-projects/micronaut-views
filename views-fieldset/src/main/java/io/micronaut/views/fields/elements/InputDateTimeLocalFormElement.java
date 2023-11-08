@@ -56,8 +56,8 @@ public record InputDateTimeLocalFormElement(@NonNull String name,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_DATE_TIME_LOCAL;
+    public InputType getType() {
+        return InputType.DATE_TIME_LOCAL;
     }
 
     /**

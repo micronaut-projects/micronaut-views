@@ -61,8 +61,8 @@ public record InputTextFormElement(@NonNull String name,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_TEXT;
+    public InputType getType() {
+        return InputType.TEXT;
     }
 
     /**

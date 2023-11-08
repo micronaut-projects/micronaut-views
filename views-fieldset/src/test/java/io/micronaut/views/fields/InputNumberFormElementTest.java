@@ -20,7 +20,7 @@ class InputNumberFormElementTest {
     void testTagAndType() {
         InputNumberFormElement formElement = InputNumberFormElement.builder().build();
         assertEquals(HtmlTag.INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_NUMBER, formElement.getType());
+        assertEquals(InputType.NUMBER, formElement.getType());
     }
 
     @Test

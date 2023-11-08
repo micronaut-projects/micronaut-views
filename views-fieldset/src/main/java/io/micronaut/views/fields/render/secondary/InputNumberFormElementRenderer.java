@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.views.fields.HtmlTag;
+import io.micronaut.views.fields.InputType;
 import io.micronaut.views.fields.elements.InputNumberFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
@@ -28,8 +29,6 @@ import jakarta.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static io.micronaut.views.fields.InputType.ATTR_TYPE_NUMBER;
 
 /**
  * {@link FormElementRenderer} implementation of {@link InputNumberFormElement}.
@@ -68,7 +67,7 @@ public class InputNumberFormElementRenderer implements FormElementRenderer<Input
     @NonNull
     protected List<HtmlAttribute> attributes(@NonNull InputNumberFormElement el) {
         List<HtmlAttribute> attributes = new ArrayList<>(10);
-        attributes.add(typeHtmlAttribute(ATTR_TYPE_NUMBER));
+        attributes.add(typeHtmlAttribute(InputType.NUMBER));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.value() != null) {
             attributes.add(new HtmlAttribute(ATTR_VALUE, String.valueOf(el.value())));

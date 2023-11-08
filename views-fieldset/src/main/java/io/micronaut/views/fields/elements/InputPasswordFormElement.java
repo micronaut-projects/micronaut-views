@@ -61,8 +61,8 @@ public record InputPasswordFormElement(@NonNull String name,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_PASSWORD;
+    public InputType getType() {
+        return InputType.PASSWORD;
     }
 
     /**

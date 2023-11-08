@@ -54,8 +54,8 @@ public record InputTimeFormElement(@NonNull String name,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_TIME;
+    public InputType getType() {
+        return InputType.TIME;
     }
 
     /**

@@ -23,6 +23,7 @@ import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.views.fields.FormElement;
 import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.views.fields.HtmlTag;
+import io.micronaut.views.fields.InputType;
 import io.micronaut.views.fields.elements.InputStringFormElement;
 import io.micronaut.views.fields.messages.Message;
 
@@ -261,8 +262,8 @@ public interface FormElementRenderer<T extends FormElement> {
         return message.defaultMessage();
     }
 
-    default HtmlAttribute typeHtmlAttribute(@NonNull String type) {
-        return new HtmlAttribute(ATTR_TYPE, type);
+    default HtmlAttribute typeHtmlAttribute(@NonNull InputType type) {
+        return new HtmlAttribute(ATTR_TYPE, type.toString());
     }
 
     /**
@@ -272,7 +273,7 @@ public interface FormElementRenderer<T extends FormElement> {
      * @return HTML Attributes
      */
     @NonNull
-    default List<HtmlAttribute> attributes(@NonNull InputStringFormElement el, @NonNull String type) {
+    default List<HtmlAttribute> attributes(@NonNull InputStringFormElement el, @NonNull InputType type) {
         List<HtmlAttribute> attributes = new ArrayList<>(11);
         attributes.add(typeHtmlAttribute(type));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));

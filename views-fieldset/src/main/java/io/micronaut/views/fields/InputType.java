@@ -23,72 +23,84 @@ import io.micronaut.core.annotation.Experimental;
  * @since 4.1.0
  */
 @Experimental
-public final class InputType {
+public enum InputType {
     /**
      * HTML Input type radio.
      */
-    public static final String ATTR_TYPE_RADIO = "radio";
+    RADIO("radio"),
 
     /**
      * HTML Input type submit.
      */
-    public static final String ATTR_TYPE_SUBMIT = "submit";
+    SUBMIT("submit"),
 
     /**
      * HTML Input type hidden.
      */
-    public static final String ATTR_TYPE_HIDDEN = "hidden";
+    HIDDEN("hidden"),
 
     /**
      * HTML Input type number.
      */
-    public static final String ATTR_TYPE_NUMBER = "number";
+    NUMBER("number"),
 
     /**
      * HTML Input type date.
      */
-    public static final String ATTR_TYPE_DATE = "date";
+    DATE("date"),
 
     /**
      * HTML Input type time.
      */
-    public static final String ATTR_TYPE_TIME = "time";
+    TIME("time"),
 
     /**
      * HTML Input type datetime-local.
      */
-    public static final String ATTR_TYPE_DATE_TIME_LOCAL = "datetime-local";
+    DATE_TIME_LOCAL("datetime-local"),
 
     /**
      * HTML Input type checkbox.
      */
-    public static final String ATTR_TYPE_CHECKBOX = "checkbox";
+    CHECKBOX("checkbox"),
 
     /**
      * HTML Input type email.
      */
-    public static final String ATTR_TYPE_EMAIL = "email";
+    EMAIL("email"),
 
     /**
      * HTML Input type password.
      */
-    public static final String ATTR_TYPE_PASSWORD = "password";
+    PASSWORD("password"),
 
     /**
      * HTML Input type url.
      */
-    public static final String ATTR_TYPE_URL = "url";
+    URL("url"),
 
     /**
      * HTML Input type text.
      */
-    public static final String ATTR_TYPE_TEXT = "text";
+    TEXT("text"),
 
     /**
      * HTML Input type tel.
      */
-    public static final String ATTR_TYPE_TEL = "tel";
+    TEL("tel");
 
-    private InputType() {
+    private final String type;
+
+    /**
+     *
+     * @param type HTML input type
+     */
+    InputType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return type;
     }
 }

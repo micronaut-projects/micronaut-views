@@ -13,7 +13,7 @@ class InputHiddenFormElementTest {
     void testTagAndType() {
         InputHiddenFormElement formElement = InputHiddenFormElement.builder().build();
         assertEquals(HtmlTag.INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_HIDDEN, formElement.getType());
+        assertEquals(InputType.HIDDEN, formElement.getType());
     }
 
     @Test

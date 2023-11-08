@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.FormElement;
 import io.micronaut.views.fields.HtmlTag;
+import io.micronaut.views.fields.InputType;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input">Input</a>
@@ -39,5 +40,5 @@ public interface InputFormElement extends FormElement {
      * @return Value of the type attribute of an input tag
      */
     @NonNull
-    String getType();
+    InputType getType();
 }

@@ -20,6 +20,7 @@ import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlTag;
+import io.micronaut.views.fields.InputType;
 import io.micronaut.views.fields.elements.Checkbox;
 import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.views.fields.elements.InputCheckboxFormElement;
@@ -30,8 +31,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
-import static io.micronaut.views.fields.InputType.ATTR_TYPE_CHECKBOX;
 
 /**
  * {@link FormElementRenderer} implementation for {@link InputCheckboxFormElement}.
@@ -72,7 +71,7 @@ public class InputCheckboxFormElementRenderer implements FormElementRenderer<Inp
      */
     protected List<HtmlAttribute> attributes(@NonNull Checkbox el) {
         List<HtmlAttribute> attributes = new ArrayList<>(6);
-        attributes.add(typeHtmlAttribute(ATTR_TYPE_CHECKBOX));
+        attributes.add(typeHtmlAttribute(InputType.CHECKBOX));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.value() != null) {
             attributes.add(new HtmlAttribute(ATTR_VALUE, el.value()));

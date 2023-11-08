@@ -35,8 +35,8 @@ public record InputHiddenFormElement(@NonNull String name,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_HIDDEN;
+    public InputType getType() {
+        return InputType.HIDDEN;
     }
 
     /**

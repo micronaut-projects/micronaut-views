@@ -1,7 +1,7 @@
 <#macro fieldset el>
     <#list el.fields()>
         <#items as field>
-            <#if field.tag.toString() == "input" &&  field.type == "hidden">
+            <#if field.tag.toString() == "input" &&  field.type.toString() == "hidden">
                 <#import "inputhiddenmacro.html" as m>
                 <@m.inputhidden el=field/>
             </#if>

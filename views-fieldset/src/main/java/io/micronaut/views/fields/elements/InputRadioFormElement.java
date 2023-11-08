@@ -43,8 +43,8 @@ public record InputRadioFormElement(@NonNull String name,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_RADIO;
+    public InputType getType() {
+        return InputType.RADIO;
     }
 
     /**

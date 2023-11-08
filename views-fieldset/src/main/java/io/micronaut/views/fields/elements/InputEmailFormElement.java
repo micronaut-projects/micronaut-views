@@ -70,8 +70,8 @@ public record InputEmailFormElement(@NonNull String name,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_EMAIL;
+    public InputType getType() {
+        return InputType.EMAIL;
     }
 
     /**

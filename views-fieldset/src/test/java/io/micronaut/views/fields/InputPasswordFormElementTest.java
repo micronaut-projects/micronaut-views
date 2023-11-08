@@ -20,7 +20,7 @@ class InputPasswordFormElementTest {
     void testTagAndType() {
         InputPasswordFormElement formElement = InputPasswordFormElement.builder().build();
         assertEquals(HtmlTag.INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_PASSWORD, formElement.getType());
+        assertEquals(InputType.PASSWORD, formElement.getType());
     }
 
     @Test

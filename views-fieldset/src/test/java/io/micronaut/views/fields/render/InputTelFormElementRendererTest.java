@@ -19,7 +19,7 @@ class InputTelFormElementRendererTest {
     void testTagAndType() {
         InputTelFormElement formElement = InputTelFormElement.builder().build();
         assertEquals(HtmlTag.INPUT, formElement.getTag());
-        assertEquals(InputType.ATTR_TYPE_TEL, formElement.getType());
+        assertEquals(InputType.TEL, formElement.getType());
     }
 
     @Test

@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.views.fields.HtmlTag;
+import io.micronaut.views.fields.InputType;
 import io.micronaut.views.fields.elements.InputRadioFormElement;
 import io.micronaut.views.fields.elements.Radio;
 import io.micronaut.views.fields.render.FormElementRenderer;
@@ -30,8 +31,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
-import static io.micronaut.views.fields.InputType.ATTR_TYPE_RADIO;
 
 /**
  * Renders a {@link InputRadioFormElement} as HTML.
@@ -78,7 +77,7 @@ public class InputRadioFormElementRenderer implements FormElementRenderer<InputR
     protected List<HtmlAttribute> attributes(@NonNull InputRadioFormElement el,
                                              @NonNull Radio radio) {
         List<HtmlAttribute> attributes = new ArrayList<>(6);
-        attributes.add(typeHtmlAttribute(ATTR_TYPE_RADIO));
+        attributes.add(typeHtmlAttribute(InputType.RADIO));
         attributes.add(new HtmlAttribute(ATTR_NAME, el.name()));
         if (el.required()) {
             attributes.add(new HtmlAttribute(ATTR_REQUIRED, null));

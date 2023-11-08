@@ -65,8 +65,8 @@ public record InputDateFormElement(@NonNull String name,
 
     @Override
     @NonNull
-    public String getType() {
-        return InputType.ATTR_TYPE_DATE;
+    public InputType getType() {
+        return InputType.DATE;
     }
 
     /**
