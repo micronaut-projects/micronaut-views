@@ -30,7 +30,7 @@ import java.util.Map;
  * @since 4.1.0
  */
 @Internal
-@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".trix-editor")
+@Requires(property = FormElementRendererViewsConfiguration.PREFIX + ".trix-editor")
 @Singleton
 public class TrixEditorViewsFormElementRenderer extends ViewsFormElementRenderer<TrixEditorFormElement> {
 

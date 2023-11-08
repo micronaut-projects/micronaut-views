@@ -30,7 +30,7 @@ import java.util.Map;
  * @since 4.1.0
  */
 @Internal
-@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".input-date-time-local")
+@Requires(property = FormElementRendererViewsConfiguration.PREFIX + ".input-date-time-local")
 @Singleton
 public class InputDateTimeLocalViewsFormElementRenderer extends ViewsFormElementRenderer<InputDateTimeLocalFormElement> {
 

@@ -31,7 +31,7 @@ import java.util.Map;
  * @since 4.1.0
  */
 @Internal
-@Requires(property = FormElementRendererViewsConfigurationProperties.PREFIX + ".option")
+@Requires(property = FormElementRendererViewsConfiguration.PREFIX + ".option")
 @Singleton
 public class OptionViewsFormElementRenderer extends ViewsFormElementRenderer<Option> {
 
