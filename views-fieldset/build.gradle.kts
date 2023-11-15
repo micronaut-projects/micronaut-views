@@ -9,7 +9,7 @@ dependencies {
     testImplementation(mnValidation.micronaut.validation)
 
     compileOnly(projects.micronautViewsCore)
-    compileOnly(mnData.micronaut.data.model)
+
     testImplementation(mnData.micronaut.data.model)
 
     testAnnotationProcessor(mn.micronaut.inject.java)
