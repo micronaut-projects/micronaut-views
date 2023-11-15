@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Property(name = "spec.name", value = "AutomaticallyPopulatedTest")
 @MicronautTest(startApplication = false)
 class AutomaticallyPopulatedTest {
+
+    // @DateCreated and @DateUpdated are @AutoPopulated annotations
     @Introspected
     record Book(@NotBlank String title,
                 @DateCreated @Nullable LocalDate dateCreated,
