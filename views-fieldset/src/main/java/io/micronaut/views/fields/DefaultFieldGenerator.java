@@ -24,7 +24,6 @@ import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.core.beans.BeanProperty;
 import io.micronaut.core.beans.BeanWrapper;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.data.annotation.AutoPopulated;
 import io.micronaut.views.fields.annotations.InputCheckbox;
 import io.micronaut.views.fields.annotations.InputEmail;
 import io.micronaut.views.fields.annotations.InputHidden;
@@ -92,6 +91,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     );
     private static final String MEMBER_MIN = "min";
     private static final String MEMBER_MAX = "max";
+    private static final String CLASS_IO_MICRONAUT_DATA_ANNOTATION_AUTO_POPULATED = "io.micronaut.data.annotation.AutoPopulated";
 
     private final EnumOptionFetcher<?> enumOptionFetcher;
 
@@ -183,7 +183,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
 
     @NonNull
     private <T> Optional<Class<? extends FormElement>> formElementClassForBeanProperty(@NonNull BeanProperty<T, ?> beanProperty) {
-        if (beanProperty.hasStereotype(AutoPopulated.class)) {
+        if (beanProperty.hasStereotype(CLASS_IO_MICRONAUT_DATA_ANNOTATION_AUTO_POPULATED)) {
             return Optional.empty();
         }
         for (var mapping : ANNOTATION_MAPPING.entrySet()) {
