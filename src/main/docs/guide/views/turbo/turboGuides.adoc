@@ -1,0 +1,4 @@
+See the following guides to learn more about working with Turbo views in Micronaut Framework.
+
+- https://guides.micronaut.io/latest/hotwire-turbo-micronaut-chat.html[Hotwire Turbo Chat with Micronaut Views]
+- https://guides.micronaut.io/latest/micronaut-turbo-native.html[Turbo Native Demo with iOS/Android and a Micronaut Backend]
