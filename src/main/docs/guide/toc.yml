@@ -38,10 +38,12 @@ views:
     turboView: TurboView Annotation
     turboStreamContentType: Turbo Stream Media Type
     turboStreamTemplate: Turbo Streams with Templates
+    turboGuides: Guides
   security:
     title: Security
     csp: Content Security Policy
     security-model-enhancement: Integration with Micronaut Security
   graal: GraalVM Support
+viewsGuides: Guides
 breaks: Breaking Changes
 repository: Repository

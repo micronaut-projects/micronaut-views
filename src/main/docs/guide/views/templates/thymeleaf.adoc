@@ -29,3 +29,5 @@ include::{testsviewsThymeleaf}/resources/views/layoutFile.html[]
 
 Use Thymeleaf templates with Micronaut i18n messages. Internationalization messages will be resolved from Micronaut's
 MessageSource automatically. For more information on the MessageSource, see the core documentation.
+
+TIP: See the guide for https://guides.micronaut.io/latest/micronaut-views-thymeleaf.html[Server-side HTML with Thymeleaf] to learn more.
