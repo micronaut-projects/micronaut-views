@@ -16,6 +16,7 @@
 package io.micronaut.views.fields.messages;
 
 import io.micronaut.core.annotation.Experimental;
+import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.beans.BeanProperty;
@@ -34,6 +35,7 @@ import java.util.List;
  * @param code The i18n code which can be used to fetch a localized message.
  */
 @Experimental
+@Introspected
 public record Message(@NonNull @NotBlank String defaultMessage,
                       @Nullable String code) implements Comparable<Message> {
     private static final String REGEX = "(.)([A-Z])";
