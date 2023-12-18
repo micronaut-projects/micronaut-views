@@ -50,14 +50,14 @@ public record Form(@NonNull String action,
 
     public Form(@NonNull String action,
                 @NonNull Fieldset fieldset,
-                @Nullable @Pattern(regexp = "application/x-www-form-urlencoded|multipart/form-data|text/plain") String enctype) {
+                @Nullable String enctype) {
         this(action, POST, fieldset, enctype);
     }
 
     public Form(@NonNull String action,
                 @NonNull String method,
                 @NonNull Fieldset fieldset,
-                @Nullable @Pattern(regexp = "application/x-www-form-urlencoded|multipart/form-data|text/plain") String enctype) {
+                @Nullable String enctype) {
         if (enctype != null && !method.equals(POST)) {
             throw new IllegalArgumentException("enctype attribute can be used only if method equals post");
         }
