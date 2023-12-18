@@ -69,37 +69,37 @@ public record InputFileFormElement(@NonNull String name,
          *
          * Name of the form control. Submitted with the form as part of a name/value pair.
          */
-        protected String name;
+        private String name;
 
         /**
          *
          * It defines an identifier (ID) which must be unique in the whole document.
          */
-        protected String id;
+        private String id;
 
         /**
          *
          * The accept attribute defines the file types the file input should accept.
          */
-        protected String accept;
+        private String accept;
 
         /**
          *
          * If true indicates that the user must specify a value for the input before the owning form can be submitted.
          */
-        protected boolean required;
+        private boolean required;
 
         /**
          *
          * Input Errors.
          */
-        protected List<Message> errors;
+        private List<Message> errors;
 
         /**
          *
          * message for an HTML Label element.
          */
-        protected Message label;
+        private Message label;
 
         /**
          *

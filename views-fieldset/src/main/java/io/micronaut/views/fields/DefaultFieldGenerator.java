@@ -25,17 +25,11 @@ import io.micronaut.core.beans.BeanProperty;
 import io.micronaut.core.beans.BeanWrapper;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.fields.annotations.InputCheckbox;
-import io.micronaut.views.fields.annotations.InputEmail;
-import io.micronaut.views.fields.annotations.InputHidden;
-import io.micronaut.views.fields.annotations.InputPassword;
 import io.micronaut.views.fields.annotations.InputRadio;
-import io.micronaut.views.fields.annotations.InputTel;
-import io.micronaut.views.fields.annotations.InputUrl;
 import io.micronaut.views.fields.annotations.Select;
-import io.micronaut.views.fields.annotations.Textarea;
-import io.micronaut.views.fields.annotations.TrixEditor;
 import io.micronaut.views.fields.elements.*;
 import io.micronaut.views.fields.fetchers.*;
+import io.micronaut.views.fields.formelementresolvers.FormElementResolver;
 import io.micronaut.views.fields.messages.ConstraintViolationUtils;
 import io.micronaut.views.fields.messages.Message;
 import jakarta.annotation.Nonnull;
@@ -44,9 +38,6 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.*;
 
 import java.lang.annotation.Annotation;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
@@ -75,23 +66,8 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private static final String BUILDER_METHOD_MAX = "max";
     private static final String BUILDER_METHOD_MAX_LENGTH = "maxLength";
     private static final String BUILDER_METHOD_MIN_LENGTH = "minLength";
-
-    private static final Map<Class<? extends Annotation>, Class<? extends FormElement>> ANNOTATION_MAPPING = Map.ofEntries(
-        Map.entry(InputHidden.class, InputHiddenFormElement.class),
-        Map.entry(InputRadio.class, InputRadioFormElement.class),
-        Map.entry(InputCheckbox.class, InputCheckboxFormElement.class),
-        Map.entry(InputPassword.class, InputPasswordFormElement.class),
-        Map.entry(InputEmail.class, InputEmailFormElement.class),
-        Map.entry(Email.class, InputEmailFormElement.class),
-        Map.entry(InputUrl.class, InputUrlFormElement.class),
-        Map.entry(InputTel.class, InputTelFormElement.class),
-        Map.entry(Select.class, SelectFormElement.class),
-        Map.entry(Textarea.class, TextareaFormElement.class),
-        Map.entry(TrixEditor.class, TrixEditorFormElement.class)
-    );
     private static final String MEMBER_MIN = "min";
     private static final String MEMBER_MAX = "max";
-    private static final String CLASS_IO_MICRONAUT_DATA_ANNOTATION_AUTO_POPULATED = "io.micronaut.data.annotation.AutoPopulated";
 
     private final EnumOptionFetcher<?> enumOptionFetcher;
 
@@ -99,6 +75,8 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
 
     private final EnumCheckboxFetcher<?> enumCheckboxFetcher;
     private final BeanContext beanContext;
+
+    private final FormElementResolver formElementResolver;
 
     private final ConcurrentHashMap<Class<? extends OptionFetcher>, OptionFetcher> optionFetcherCache = new ConcurrentHashMap<>();
 
@@ -110,15 +88,18 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
      * @param enumRadioFetcher    Enum fetcher for {@link Radio}.
      * @param enumCheckboxFetcher Enum fetcher for {@link Checkbox}.
      * @param beanContext         Bean Context
+     * @param formElementResolver
      */
     public DefaultFieldGenerator(EnumOptionFetcher<?> enumOptionFetcher,
                                  EnumRadioFetcher<?> enumRadioFetcher,
                                  EnumCheckboxFetcher<?> enumCheckboxFetcher,
-                                 BeanContext beanContext) {
+                                 BeanContext beanContext,
+                                 FormElementResolver formElementResolver) {
         this.enumOptionFetcher = enumOptionFetcher;
         this.enumRadioFetcher = enumRadioFetcher;
         this.enumCheckboxFetcher = enumCheckboxFetcher;
         this.beanContext = beanContext;
+        this.formElementResolver = formElementResolver;
     }
 
     @Override
@@ -173,47 +154,12 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
                                                                   @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
         List<FormElement> result = new ArrayList<>(beanWrapper.getBeanProperties().size());
         for (BeanProperty<T, ?> beanProperty : beanWrapper.getBeanProperties()) {
-            formElementClassForBeanProperty(beanProperty).ifPresent(formElementClazz -> {
+            formElementResolver.resolve(beanProperty).ifPresent(formElementClazz -> {
                 BeanIntrospection.Builder<? extends FormElement> builder = formElementBuilderForBeanProperty(beanProperty, formElementClazz, beanWrapper, ex, builderConsumer);
                 result.add(builder.build());
             });
         }
         return result;
-    }
-
-    @NonNull
-    private <T> Optional<Class<? extends FormElement>> formElementClassForBeanProperty(@NonNull BeanProperty<T, ?> beanProperty) {
-        if (beanProperty.hasStereotype(CLASS_IO_MICRONAUT_DATA_ANNOTATION_AUTO_POPULATED)) {
-            return Optional.empty();
-        }
-        for (var mapping : ANNOTATION_MAPPING.entrySet()) {
-            if (beanProperty.hasAnnotation(mapping.getKey())) {
-                return Optional.of(mapping.getValue());
-            }
-        }
-        if (beanProperty.getType() == LocalDate.class) {
-            return Optional.of(InputDateFormElement.class);
-        }
-        if (beanProperty.getType() == LocalDateTime.class) {
-            return Optional.of(InputDateTimeLocalFormElement.class);
-        }
-        if (beanProperty.getType() == LocalTime.class) {
-            return Optional.of(InputTimeFormElement.class);
-        }
-        if (Number.class.isAssignableFrom(beanProperty.getType())) {
-            return Optional.of(InputNumberFormElement.class);
-        }
-        if (beanProperty.getType() == boolean.class) {
-            return Optional.of(InputCheckboxFormElement.class);
-        }
-        if (beanProperty.getType().isEnum()) {
-            return Optional.of(SelectFormElement.class);
-        }
-        if (CharSequence.class.isAssignableFrom(beanProperty.getType())) {
-            return Optional.of(InputTextFormElement.class);
-        }
-
-        return Optional.empty();
     }
 
     @NonNull
@@ -409,7 +355,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
 
     @Nullable
     private Optional<? extends FormElement> formElementOfBeanProperty(@NonNull BeanProperty<?, ?> beanProperty, @Nullable BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
-        return formElementClassForBeanProperty(beanProperty)
+        return formElementResolver.resolve(beanProperty)
             .map(formElementClass -> formElementBuilderForBeanProperty(beanProperty, formElementClass, null, null, builderConsumer).build());
     }
 
