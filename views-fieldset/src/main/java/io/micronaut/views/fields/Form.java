@@ -15,11 +15,11 @@
  */
 package io.micronaut.views.fields;
 
-import io.micronaut.core.annotation.Experimental;
-import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
-import io.micronaut.views.exceptions.ViewRenderingException;
+import io.micronaut.core.annotation.*;
+import io.micronaut.views.fields.constraints.EnctypePostRequired;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 /**
@@ -27,43 +27,51 @@ import jakarta.validation.constraints.Pattern;
  * @author Sergio del Amo
  * @since 4.1.0
  * @param action Form Action
- * @param method Form Method. For example `post`
+ * @param method Form Method. either `get` or `post`
  * @param fieldset Form fields
  * @param enctype how the form-data should be encoded when submitting it to the server
  */
 @Experimental
+@EnctypePostRequired
 @Introspected
-public record Form(@NonNull String action,
-                   @Nullable @Pattern(regexp = "get|post") String method,
-                   @NonNull Fieldset fieldset,
+public record Form(@NonNull @NotBlank String action,
+                   @NonNull @NotBlank @Pattern(regexp = "get|post") String method,
+                   @NonNull @NotNull @Valid Fieldset fieldset,
                    @Nullable @Pattern(regexp = "application/x-www-form-urlencoded|multipart/form-data|text/plain") String enctype) {
 
     private static final String POST = "post";
 
-    public Form(@NonNull String action, @NonNull String method, @NonNull Fieldset fieldset) {
+    /**
+     *
+     * @param action Form Action
+     * @param method Form Method. either `get` or `post`
+     * @param fieldset Form fields
+     */
+    public Form(@NonNull String action,
+                @NonNull String method,
+                @NonNull Fieldset fieldset) {
         this(action, method, fieldset, null);
     }
 
-    public Form(@NonNull String action, @NonNull Fieldset fieldset) {
+    /**
+     *
+     * @param action Form Action
+     * @param fieldset Form fields
+     */
+    public Form(@NonNull String action,
+                @NonNull Fieldset fieldset) {
         this(action, POST, fieldset, null);
     }
 
+    /**
+     *
+     * @param action Form Action
+     * @param fieldset Form fields
+     * @param enctype how the form-data should be encoded when submitting it to the server
+     */
     public Form(@NonNull String action,
                 @NonNull Fieldset fieldset,
                 @Nullable String enctype) {
         this(action, POST, fieldset, enctype);
-    }
-
-    public Form(@NonNull String action,
-                @NonNull String method,
-                @NonNull Fieldset fieldset,
-                @Nullable String enctype) {
-        if (enctype != null && !method.equals(POST)) {
-            throw new IllegalArgumentException("enctype attribute can be used only if method equals post");
-        }
-        this.action = action;
-        this.method = method;
-        this.fieldset = fieldset;
-        this.enctype = enctype;
     }
 }
