@@ -26,6 +26,7 @@ import io.micronaut.views.fields.Form;
 import io.micronaut.views.fields.FormElement;
 import io.micronaut.views.fields.FormGenerator;
 import io.micronaut.views.fields.annotations.InputHidden;
+import io.micronaut.views.fields.elements.InputSubmitFormElement;
 import io.micronaut.views.fields.messages.Message;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
@@ -50,6 +51,7 @@ class FormCompletedFileUploadRenderTest {
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer,
                 FormGenerator formGenerator,
                 EventImageSaveValidator validator) throws IOException {
+        String viewName = "fieldset/form.html";
         BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer = (propertyName, builder) -> {
             if (propertyName.equals("file")) {
                 builder.with("accept", "image/png, image/jpeg");
@@ -58,20 +60,34 @@ class FormCompletedFileUploadRenderTest {
                 builder.with("label", Message.of("Alternative description of the image"));
             }
         };
-        Form form = formGenerator.generate("/foo/bar", "post", EventImageSave.class, builderConsumer);
-        assertEquals("""
+        String expectedClass = """
                         <form action="/foo/bar" method="post" enctype="multipart/form-data">\
                         <input type="hidden" name="id" value=""/>\
                         <div class="mb-3"><label for="alt" class="form-label">Alternative description of the image</label><input type="text" name="alt" value="" id="alt" class="form-control" required="required"/></div>\
                         <label for="file" class="form-label">File</label><input type="file" name="file" id="file" accept="image/png, image/jpeg" class="form-control" required="required"/>\
                         <input type="submit" value="Submit" class="btn btn-primary"/>\
-                        </form>""",
-                TestUtils.render("fieldset/form.html", viewsRenderer, Map.of("form", form)));
+                        </form>""";
+        Form form = formGenerator.generate("/foo/bar", "post", EventImageSave.class, builderConsumer);
+        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar", "post", EventImageSave.class, FormGenerator.SUBMIT, builderConsumer);
+        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar", "post", EventImageSave.class, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
+        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar", EventImageSave.class, builderConsumer);
+        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar", EventImageSave.class, FormGenerator.SUBMIT, builderConsumer);
+        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar", EventImageSave.class, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
+        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
         EventImageSave invalid = new EventImageSave("xxx", "", null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> validator.validate(invalid));
-        form = formGenerator.generate("/foo/bar", "post", invalid, ex, builderConsumer);
-
-        assertEquals("""
+        String expectedInvalid = """
                         <form action="/foo/bar" method="post" enctype="multipart/form-data">\
                         <input type="hidden" name="id" value="xxx"/>\
                         <div class="mb-3"><label for="alt" class="form-label">Alternative description of the image</label>\
@@ -82,19 +98,51 @@ class FormCompletedFileUploadRenderTest {
                         <input type="file" name="file" id="file" accept="image/png, image/jpeg" class="form-control is-invalid" aria-describedby="fileValidationServerFeedback" required="required"/>\
                         <div id="fileValidationServerFeedback" class="invalid-feedback">must not be null</div>\
                         <input type="submit" value="Submit" class="btn btn-primary"/>\
-                        </form>""",
-                TestUtils.render("fieldset/form.html", viewsRenderer, Map.of("form", form)));
+                        </form>""";
+        form = formGenerator.generate("/foo/bar", "post", invalid, ex, builderConsumer);
+        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar", "post", invalid, ex, FormGenerator.SUBMIT, builderConsumer);
+        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar", "post", invalid, ex, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
+        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar",  invalid, ex, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
+        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar",  invalid, ex, builderConsumer);
+        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar",  invalid, ex, FormGenerator.SUBMIT, builderConsumer);
+        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar",  invalid, ex, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
+        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         EventImageSave valid = new EventImageSave("xxx", "Micronaut Logo", null);
-        form = formGenerator.generate("/foo/bar", "post", valid, builderConsumer);
-        assertEquals("""
+        String expectedValid = """
                         <form action="/foo/bar" method="post" enctype="multipart/form-data">\
                         <input type="hidden" name="id" value="xxx"/>\
                         <div class="mb-3"><label for="alt" class="form-label">Alternative description of the image</label><input type="text" name="alt" value="Micronaut Logo" id="alt" class="form-control" required="required"/></div>\
                         <label for="file" class="form-label">File</label><input type="file" name="file" id="file" accept="image/png, image/jpeg" class="form-control" required="required"/>\
                         <input type="submit" value="Submit" class="btn btn-primary"/>\
-                        </form>""",
-                TestUtils.render("fieldset/form.html", viewsRenderer, Map.of("form", form)));
+                        </form>""";
+        form = formGenerator.generate("/foo/bar", "post", valid, builderConsumer);
+        assertEquals(expectedValid,
+                TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar", valid, builderConsumer);
+        assertEquals(expectedValid,
+            TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar", valid, FormGenerator.SUBMIT, builderConsumer);
+        assertEquals(expectedValid,
+            TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+
+        form = formGenerator.generate("/foo/bar", valid, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
+        assertEquals(expectedValid,
+            TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
     }
 
     @Introspected
