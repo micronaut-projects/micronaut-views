@@ -28,9 +28,10 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@MicronautTest(startApplication = false)
+
 @SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests
-public class FormEncTypeRenderTest {
+@MicronautTest(startApplication = false)
+class FormEncTypeRenderTest {
 
     @Test
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
