@@ -20,6 +20,8 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.views.fields.messages.Message;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
@@ -34,8 +36,8 @@ import java.util.List;
  */
 @Experimental
 @Introspected
-public record Fieldset(@NonNull List<? extends FormElement> fields,
-                       @NonNull List<Message> errors) {
+public record Fieldset(@NonNull @NotEmpty List<@Valid ? extends FormElement> fields,
+                       @NonNull List<@Valid Message> errors) {
 
     /**
      *
