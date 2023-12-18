@@ -706,6 +706,20 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html#ENABLED" class="member-name-link">ENABLED</a> - Static variable in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html" title="class in io.micronaut.views.pebble">PebbleConfigurationProperties</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/Form.html#enctype()" class="member-name-link">enctype()</a> - Method in record class io.micronaut.views.fields.<a href="io/micronaut/views/fields/Form.html" title="class in io.micronaut.views.fields">Form</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./io/micronaut/views/fields/Form.html#param-enctype"><code>enctype</code></a> record component.</div>
+</dd>
+<dt><a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html" class="type-name-link" title="annotation interface in io.micronaut.views.fields.constraints">EnctypePostRequired</a> - Annotation Interface in <a href="io/micronaut/views/fields/constraints/package-summary.html">io.micronaut.views.fields.constraints</a></dt>
+<dd>
+<div class="block">The annotated <a href="io/micronaut/views/fields/Form.html" title="class in io.micronaut.views.fields"><code>Form</code></a> must not have an encytpe declared if the method is not post.</div>
+</dd>
+<dt><a href="io/micronaut/views/fields/constraints/EnctypePostRequiredValidator.html" class="type-name-link" title="class in io.micronaut.views.fields.constraints">EnctypePostRequiredValidator</a> - Class in <a href="io/micronaut/views/fields/constraints/package-summary.html">io.micronaut.views.fields.constraints</a></dt>
+<dd>
+<div class="block">Validator for the constraint <a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html" title="annotation interface in io.micronaut.views.fields.constraints"><code>EnctypePostRequired</code></a> being applied to a <a href="io/micronaut/views/fields/Form.html" title="class in io.micronaut.views.fields"><code>Form</code></a>.</div>
+</dd>
+<dt><a href="io/micronaut/views/fields/constraints/EnctypePostRequiredValidator.html#%3Cinit%3E()" class="member-name-link">EnctypePostRequiredValidator()</a> - Constructor for class io.micronaut.views.fields.constraints.<a href="io/micronaut/views/fields/constraints/EnctypePostRequiredValidator.html" title="class in io.micronaut.views.fields.constraints">EnctypePostRequiredValidator</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html#engine" class="member-name-link">engine</a> - Variable in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html" title="class in io.micronaut.views.thymeleaf">ThymeleafViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/thymeleaf/EngineContextFactory.html" class="type-name-link" title="class in io.micronaut.views.thymeleaf">EngineContextFactory</a> - Class in <a href="io/micronaut/views/thymeleaf/package-summary.html">io.micronaut.views.thymeleaf</a></dt>
@@ -987,10 +1001,16 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Representation of an HTML form.</div>
 </dd>
-<dt><a href="io/micronaut/views/fields/Form.html#%3Cinit%3E(java.lang.String,java.lang.String,io.micronaut.views.fields.Fieldset)" class="member-name-link">Form(String, String, Fieldset)</a> - Constructor for record class io.micronaut.views.fields.<a href="io/micronaut/views/fields/Form.html" title="class in io.micronaut.views.fields">Form</a></dt>
+<dt><a href="io/micronaut/views/fields/Form.html#%3Cinit%3E(java.lang.String,java.lang.String,io.micronaut.views.fields.Fieldset,java.lang.String)" class="member-name-link">Form(String, String, Fieldset, String)</a> - Constructor for record class io.micronaut.views.fields.<a href="io/micronaut/views/fields/Form.html" title="class in io.micronaut.views.fields">Form</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>Form</code> record class.</div>
 </dd>
+<dt><a href="io/micronaut/views/fields/Form.html#%3Cinit%3E(java.lang.String,io.micronaut.views.fields.Fieldset)" class="member-name-link">Form(String, Fieldset)</a> - Constructor for record class io.micronaut.views.fields.<a href="io/micronaut/views/fields/Form.html" title="class in io.micronaut.views.fields">Form</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/Form.html#%3Cinit%3E(java.lang.String,io.micronaut.views.fields.Fieldset,java.lang.String)" class="member-name-link">Form(String, Fieldset, String)</a> - Constructor for record class io.micronaut.views.fields.<a href="io/micronaut/views/fields/Form.html" title="class in io.micronaut.views.fields">Form</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/Form.html#%3Cinit%3E(java.lang.String,java.lang.String,io.micronaut.views.fields.Fieldset)" class="member-name-link">Form(String, String, Fieldset)</a> - Constructor for record class io.micronaut.views.fields.<a href="io/micronaut/views/fields/Form.html" title="class in io.micronaut.views.fields">Form</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/FormElement.html" class="type-name-link" title="interface in io.micronaut.views.fields">FormElement</a> - Interface in <a href="io/micronaut/views/fields/package-summary.html">io.micronaut.views.fields</a></dt>
 <dd>
 <div class="block">Marker interface for HTML Form Elements.</div>
@@ -1399,6 +1419,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Greater than sign.</div>
 </dd>
+<dt><a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html#groups()" class="member-name-link">groups()</a> - Element in annotation interface io.micronaut.views.fields.constraints.<a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html" title="annotation interface in io.micronaut.views.fields.constraints">EnctypePostRequired</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:H">H</h2>
 <dl class="index">
@@ -2083,6 +2105,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Annotations for HTML Form Elements.</div>
 </dd>
+<dt><a href="io/micronaut/views/fields/constraints/package-summary.html">io.micronaut.views.fields.constraints</a> - package io.micronaut.views.fields.constraints</dt>
+<dd>
+<div class="block">Custom Constraints for validating HTML Forms.</div>
+</dd>
 <dt><a href="io/micronaut/views/fields/elements/package-summary.html">io.micronaut.views.fields.elements</a> - package io.micronaut.views.fields.elements</dt>
 <dd>
 <div class="block">These classes are implementations of <a href="io/micronaut/views/fields/FormElement.html" title="interface in io.micronaut.views.fields"><code>FormElement</code></a>.</div>
@@ -2263,6 +2289,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/micronaut/views/pebble/PebbleConfiguration.html#isStrictVariables()" class="member-name-link">isStrictVariables()</a> - Method in interface io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfiguration.html" title="interface in io.micronaut.views.pebble">PebbleConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html#isStrictVariables()" class="member-name-link">isStrictVariables()</a> - Method in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html" title="class in io.micronaut.views.pebble">PebbleConfigurationProperties</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/constraints/EnctypePostRequiredValidator.html#isValid(io.micronaut.views.fields.Form,io.micronaut.core.annotation.AnnotationValue,io.micronaut.validation.validator.constraints.ConstraintValidatorContext)" class="member-name-link">isValid(Form, AnnotationValue&lt;EnctypePostRequired&gt;, ConstraintValidatorContext)</a> - Method in class io.micronaut.views.fields.constraints.<a href="io/micronaut/views/fields/constraints/EnctypePostRequiredValidator.html" title="class in io.micronaut.views.fields.constraints">EnctypePostRequiredValidator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/jstachio/JStachioMessageBodyWriter.html#isWriteable(io.micronaut.core.type.Argument,io.micronaut.http.MediaType)" class="member-name-link">isWriteable(Argument&lt;T&gt;, MediaType)</a> - Method in class io.micronaut.views.jstachio.<a href="io/micronaut/views/jstachio/JStachioMessageBodyWriter.html" title="class in io.micronaut.views.jstachio">JStachioMessageBodyWriter</a></dt>
 <dd>&nbsp;</dd>
@@ -2519,6 +2547,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="io/micronaut/views/fields/elements/InputStringFormBuilder.html#maxLength(java.lang.Number)" class="member-name-link">maxLength(Number)</a> - Method in class io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/InputStringFormBuilder.html" title="class in io.micronaut.views.fields.elements">InputStringFormBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html#message()" class="member-name-link">message()</a> - Element in annotation interface io.micronaut.views.fields.constraints.<a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html" title="annotation interface in io.micronaut.views.fields.constraints">EnctypePostRequired</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/messages/Message.html" class="type-name-link" title="class in io.micronaut.views.fields.messages">Message</a> - Record Class in <a href="io/micronaut/views/fields/messages/package-summary.html">io.micronaut.views.fields.messages</a></dt>
 <dd>
 <div class="block">Message representation.</div>
@@ -2527,6 +2557,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates an instance of a <code>Message</code> record class.</div>
 </dd>
+<dt><a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html#MESSAGE" class="member-name-link">MESSAGE</a> - Static variable in annotation interface io.micronaut.views.fields.constraints.<a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html" title="annotation interface in io.micronaut.views.fields.constraints">EnctypePostRequired</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html" class="type-name-link" title="class in io.micronaut.views.thymeleaf">MessageSourceMessageResolver</a> - Class in <a href="io/micronaut/views/thymeleaf/package-summary.html">io.micronaut.views.thymeleaf</a></dt>
 <dd>
 <div class="block">Resolves messages with the Micronaut MessageSource.</div>
@@ -2828,6 +2860,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the value of the <a href="./io/micronaut/views/fields/elements/InputUrlFormElement.html#param-pattern"><code>pattern</code></a> record component.</div>
 </dd>
 <dt><a href="io/micronaut/views/fields/elements/InputStringFormBuilder.html#pattern(java.lang.String)" class="member-name-link">pattern(String)</a> - Method in class io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/InputStringFormBuilder.html" title="class in io.micronaut.views.fields.elements">InputStringFormBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html#payload()" class="member-name-link">payload()</a> - Element in annotation interface io.micronaut.views.fields.constraints.<a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html" title="annotation interface in io.micronaut.views.fields.constraints">EnctypePostRequired</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/pebble/PebbleConfiguration.html" class="type-name-link" title="interface in io.micronaut.views.pebble">PebbleConfiguration</a> - Interface in <a href="io/micronaut/views/pebble/package-summary.html">io.micronaut.views.pebble</a></dt>
 <dd>

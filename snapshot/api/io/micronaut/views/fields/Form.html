@@ -80,12 +80,13 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Record Components:</dt>
 <dd><code><span id="param-action">action</span></code> - Form Action</dd>
-<dd><code><span id="param-method">method</span></code> - Form Method. For example `post`</dd>
+<dd><code><span id="param-method">method</span></code> - Form Method. either `get` or `post`</dd>
 <dd><code><span id="param-fieldset">fieldset</span></code> - Form fields</dd>
+<dd><code><span id="param-enctype">enctype</span></code> - how the form-data should be encoded when submitting it to the server</dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="annotations">@Introspected
-</span><span class="modifiers">public record </span><span class="element-name type-name-label">Form</span>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method, <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset)
+</span><span class="modifiers">public record </span><span class="element-name type-name-label">Form</span>(@NonNull @NotBlank <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action, @NonNull @NotBlank @Pattern(regexp="get|post") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method, @NonNull @NotNull @Valid <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset, @Nullable @Pattern(regexp="application/x-www-form-urlencoded|multipart/form-data|text/plain") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;enctype)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 <div class="block">Representation of an HTML form.</div>
 <dl class="notes">
@@ -105,12 +106,24 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,io.micronaut.views.fields.Fieldset)" class="member-name-link">Form</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
- <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,io.micronaut.views.fields.Fieldset,java.lang.String)" class="member-name-link">Form</a><wbr>(@NonNull @NotBlank <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull @NotBlank @Pattern(regexp="get|post") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull @NotNull @Valid <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset,
+ @Nullable @Pattern(regexp="application/x-www-form-urlencoded|multipart/form-data|text/plain") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;enctype)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>Form</code> record class.</div>
 </div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,io.micronaut.views.fields.Fieldset)" class="member-name-link">Form</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,io.micronaut.views.fields.Fieldset,java.lang.String)" class="member-name-link">Form</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;enctype)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,io.micronaut.views.fields.Fieldset)" class="member-name-link">Form</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -125,34 +138,39 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull @NotBlank <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#action()" class="member-name-link">action</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-action"><code>action</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable @Pattern(regexp="application/x-www-form-urlencoded|multipart/form-data|text/plain") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enctype()" class="member-name-link">enctype</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-enctype"><code>enctype</code></a> record component.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fieldset()" class="member-name-link">fieldset</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull @NotNull @Valid <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fieldset()" class="member-name-link">fieldset</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-fieldset"><code>fieldset</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a hash code value for this object.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#method()" class="member-name-link">method</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull @NotBlank @Pattern(regexp="get|post") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#method()" class="member-name-link">method</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-method"><code>method</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a string representation of this record class.</div>
 </div>
 </div>
@@ -175,15 +193,69 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,io.micronaut.views.fields.Fieldset)">
 <h3>Form</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Form</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
- <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Form</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull
+ @NonNull <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form Action</dd>
+<dd><code>method</code> - Form Method. either `get` or `post`</dd>
+<dd><code>fieldset</code> - Form fields</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(java.lang.String,io.micronaut.views.fields.Fieldset)">
+<h3>Form</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Form</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form Action</dd>
+<dd><code>fieldset</code> - Form fields</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(java.lang.String,io.micronaut.views.fields.Fieldset,java.lang.String)">
+<h3>Form</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Form</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset,
+ @Nullable
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;enctype)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form Action</dd>
+<dd><code>fieldset</code> - Form fields</dd>
+<dd><code>enctype</code> - how the form-data should be encoded when submitting it to the server</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,io.micronaut.views.fields.Fieldset,java.lang.String)">
+<h3>Form</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Form</span><wbr><span class="parameters">(@NonNull @NotBlank
+ @NonNull @NotBlank <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull @NotBlank @Pattern(regexp="get|post")
+ @NonNull @NotBlank @Pattern(regexp="get|post") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull @NotNull @Valid
+ @NonNull @NotNull @Valid <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a>&nbsp;fieldset,
+ @Nullable @Pattern(regexp="application/x-www-form-urlencoded|multipart/form-data|text/plain")
+ @Nullable @Pattern(regexp="application/x-www-form-urlencoded|multipart/form-data|text/plain") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;enctype)</span></div>
 <div class="block">Creates an instance of a <code>Form</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>action</code> - the value for the <a href="#param-action"><code>action</code></a> record component</dd>
 <dd><code>method</code> - the value for the <a href="#param-method"><code>method</code></a> record component</dd>
 <dd><code>fieldset</code> - the value for the <a href="#param-fieldset"><code>fieldset</code></a> record component</dd>
+<dd><code>enctype</code> - the value for the <a href="#param-enctype"><code>enctype</code></a> record component</dd>
 </dl>
 </section>
 </li>
@@ -239,7 +311,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="action()">
 <h3>action</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">action</span>()</div>
+<div class="member-signature"><span class="annotations">@NonNull
+@NotBlank
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull @NotBlank <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">action</span>()</div>
 <div class="block">Returns the value of the <a href="#param-action"><code>action</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -250,7 +324,10 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="method()">
 <h3>method</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">method</span>()</div>
+<div class="member-signature"><span class="annotations">@NonNull
+@NotBlank
+@Pattern(regexp="get|post")
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull @NotBlank @Pattern(regexp="get|post") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">method</span>()</div>
 <div class="block">Returns the value of the <a href="#param-method"><code>method</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -261,11 +338,27 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="fieldset()">
 <h3>fieldset</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a></span>&nbsp;<span class="element-name">fieldset</span>()</div>
+<div class="member-signature"><span class="annotations">@NonNull
+@NotNull
+@Valid
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull @NotNull @Valid <a href="Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a></span>&nbsp;<span class="element-name">fieldset</span>()</div>
 <div class="block">Returns the value of the <a href="#param-fieldset"><code>fieldset</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the value of the <a href="#param-fieldset"><code>fieldset</code></a> record component</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="enctype()">
+<h3>enctype</h3>
+<div class="member-signature"><span class="annotations">@Nullable
+@Pattern(regexp="application/x-www-form-urlencoded|multipart/form-data|text/plain")
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@Nullable @Pattern(regexp="application/x-www-form-urlencoded|multipart/form-data|text/plain") <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">enctype</span>()</div>
+<div class="block">Returns the value of the <a href="#param-enctype"><code>enctype</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-enctype"><code>enctype</code></a> record component</dd>
 </dl>
 </section>
 </li>

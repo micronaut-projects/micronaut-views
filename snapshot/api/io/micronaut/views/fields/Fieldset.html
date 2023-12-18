@@ -84,7 +84,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="annotations">@Introspected
-</span><span class="modifiers">public record </span><span class="element-name type-name-label">Fieldset</span>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&nbsp;fields, @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&gt;&nbsp;errors)
+</span><span class="modifiers">public record </span><span class="element-name type-name-label">Fieldset</span>(@NonNull @NotEmpty <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;@Valid ? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&nbsp;fields, @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;@Valid <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&gt;&nbsp;errors)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 <div class="block">Represents an HTML fieldset.
  <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset">The Fieldset element</a></div>
@@ -105,8 +105,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.List,java.util.List)" class="member-name-link">Fieldset</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&nbsp;fields,
- @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&gt;&nbsp;errors)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.List,java.util.List)" class="member-name-link">Fieldset</a><wbr>(@NonNull @NotEmpty <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;@Valid ? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&nbsp;fields,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;@Valid <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&gt;&nbsp;errors)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>Fieldset</code> record class.</div>
 </div>
@@ -129,12 +129,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;@Valid <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#errors()" class="member-name-link">errors</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-errors"><code>errors</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull @NotEmpty <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;@Valid ? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fields()" class="member-name-link">fields</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-fields"><code>fields</code></a> record component.</div>
@@ -172,10 +172,10 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(java.util.List,java.util.List)">
 <h3>Fieldset</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Fieldset</span><wbr><span class="parameters">(@NonNull
- @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&nbsp;fields,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Fieldset</span><wbr><span class="parameters">(@NonNull @NotEmpty
+ @NonNull @NotEmpty <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;@Valid ? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&nbsp;fields,
  @NonNull
- @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&gt;&nbsp;errors)</span></div>
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;@Valid <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&gt;&nbsp;errors)</span></div>
 <div class="block">Creates an instance of a <code>Fieldset</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -247,7 +247,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="fields()">
 <h3>fields</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;</span>&nbsp;<span class="element-name">fields</span>()</div>
+@NotEmpty
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull @NotEmpty <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;@Valid ? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;</span>&nbsp;<span class="element-name">fields</span>()</div>
 <div class="block">Returns the value of the <a href="#param-fields"><code>fields</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -259,7 +260,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="errors()">
 <h3>errors</h3>
 <div class="member-signature"><span class="annotations">@NonNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&gt;</span>&nbsp;<span class="element-name">errors</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;@Valid <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&gt;</span>&nbsp;<span class="element-name">errors</span>()</div>
 <div class="block">Returns the value of the <a href="#param-errors"><code>errors</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>

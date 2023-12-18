@@ -4,6 +4,7 @@ io.micronaut.views.csp
 io.micronaut.views.exceptions
 io.micronaut.views.fields
 io.micronaut.views.fields.annotations
+io.micronaut.views.fields.constraints
 io.micronaut.views.fields.elements
 io.micronaut.views.fields.fetchers
 io.micronaut.views.fields.messages
