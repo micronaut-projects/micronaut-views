@@ -37,6 +37,9 @@ public class EnctypePostRequiredValidator implements ConstraintValidator<Enctype
     public boolean isValid(@Nullable Form form,
                            @NonNull AnnotationValue<EnctypePostRequired> annotationMetadata,
                            @NonNull ConstraintValidatorContext context) {
+        if (form == null) {
+            return true;
+        }
         return form.enctype() == null || form.method().equals(METHOD_POST);
     }
 }
