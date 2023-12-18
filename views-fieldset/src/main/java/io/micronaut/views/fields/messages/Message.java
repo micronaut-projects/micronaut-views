@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.beans.BeanProperty;
 import io.micronaut.core.util.StringUtils;
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,8 @@ import java.util.List;
  * @param code The i18n code which can be used to fetch a localized message.
  */
 @Experimental
-public record Message(@NonNull String defaultMessage, @Nullable String code) implements Comparable<Message> {
+public record Message(@NonNull @NotBlank String defaultMessage,
+                      @Nullable String code) implements Comparable<Message> {
     private static final String REGEX = "(.)([A-Z])";
     private static final String REPLACEMENT = "$1 $2";
     private static final String DOT = ".";
