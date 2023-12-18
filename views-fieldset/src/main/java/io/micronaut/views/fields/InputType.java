@@ -70,6 +70,11 @@ public enum InputType {
     EMAIL("email"),
 
     /**
+     * HTML Input type file.
+     */
+    FILE("file"),
+
+    /**
      * HTML Input type password.
      */
     PASSWORD("password"),
