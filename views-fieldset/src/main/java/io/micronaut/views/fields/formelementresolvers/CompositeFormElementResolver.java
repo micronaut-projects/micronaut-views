@@ -50,16 +50,10 @@ public class CompositeFormElementResolver implements FormElementResolver {
 
     @Override
     public <B, T> Optional<Class<? extends FormElement>> resolve(BeanProperty<B, T> beanProperty) {
-        Optional<? extends Class<? extends FormElement>> optional = formElementResolvers.stream()
-                .map(resolver -> resolver.resolve(beanProperty))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .findFirst();
-        if (optional.isPresent()) {
-            Class<? extends FormElement> result = optional.get();
-            return Optional.of(result);
-        }
-        return Optional.empty();
+        return formElementResolvers.stream()
+            .map(resolver -> resolver.resolve(beanProperty))
+            .flatMap(Optional::stream)
+            .findFirst();
     }
 
     @Override
