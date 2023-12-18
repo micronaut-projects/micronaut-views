@@ -129,7 +129,7 @@ public class DefaultFormGenerator implements FormGenerator {
 
     @NonNull
     private Optional<String> enctype(@NonNull Fieldset fieldset) {
-        return fieldset.fields().stream().anyMatch(fe -> fe instanceof InputFileFormElement)
+        return fieldset.fields().stream().anyMatch(InputFileFormElement.class::isInstance)
                 ? Optional.of("multipart/form-data")
                 : Optional.empty();
     }
