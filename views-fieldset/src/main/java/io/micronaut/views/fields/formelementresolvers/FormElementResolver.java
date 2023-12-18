@@ -24,6 +24,7 @@ import io.micronaut.views.fields.FormElement;
 import java.util.Optional;
 
 /**
+ * Resolves given a bean property the {@link FormElement} class which should be used to be build the element.
  * @author Sergio del Amo
  * @since 5.1.0
  */
@@ -31,6 +32,7 @@ import java.util.Optional;
 @Indexed(FormElementResolver.class)
 public interface FormElementResolver extends Ordered {
     /**
+     * Resolves given a bean property the {@link FormElement} class which should be used to be build the element.
      *
      * @param beanProperty Bean Property
      * @return The best Form Element for the bean property.
