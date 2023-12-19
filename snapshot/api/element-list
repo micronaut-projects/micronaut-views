@@ -7,6 +7,7 @@ io.micronaut.views.fields.annotations
 io.micronaut.views.fields.constraints
 io.micronaut.views.fields.elements
 io.micronaut.views.fields.fetchers
+io.micronaut.views.fields.formelementresolvers
 io.micronaut.views.fields.messages
 io.micronaut.views.fields.render
 io.micronaut.views.fields.render.secondary

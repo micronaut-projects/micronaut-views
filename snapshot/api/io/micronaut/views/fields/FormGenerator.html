@@ -135,22 +135,53 @@ loadScripts(document, 'script');</script>
 <div class="block">Generate a POST form.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Class,io.micronaut.views.fields.messages.Message)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Class,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Generate a POST form.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Class,io.micronaut.views.fields.messages.Message)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
  @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Generate a POST Form.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Class,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Generate a POST Form.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Class,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Generate POST Form.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Generate FORM Post.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,io.micronaut.views.fields.elements.InputSubmitFormElement)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Generate FORM Post.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,io.micronaut.views.fields.elements.InputSubmitFormElement)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
- @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement)</code></div>
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Generate FORM Post.</div>
 </div>
@@ -162,17 +193,34 @@ loadScripts(document, 'script');</script>
 <div class="block">Generate FORM Post.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Generate FORM Post.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
  @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Generate POST form.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.elements.InputSubmitFormElement)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Generate POST form.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.elements.InputSubmitFormElement)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
  @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
- @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement)</code></div>
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Generate POST form.</div>
 </div>
@@ -184,22 +232,66 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Generate POST form.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Class)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Generate POST form.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Generate POST form.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.Object,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Generate FORM Post.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Class)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Class,io.micronaut.views.fields.elements.InputSubmitFormElement)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Class,io.micronaut.views.fields.elements.InputSubmitFormElement)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
  @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Class,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Class,io.micronaut.views.fields.messages.Message)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
  @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Class,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;T&gt;&nbsp;@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Class,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
@@ -212,11 +304,25 @@ loadScripts(document, 'script');</script>
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
  @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object,io.micronaut.views.fields.messages.Message)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object,io.micronaut.views.fields.messages.Message)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
  @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
@@ -231,12 +337,41 @@ loadScripts(document, 'script');</script>
  @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
  @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.messages.Message)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.messages.Message)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
  @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
  @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generate(java.lang.String,java.lang.String,java.lang.Object,java.util.function.BiConsumer)" class="member-name-link">generate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default @NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#generateWithFieldset(java.lang.String,io.micronaut.views.fields.Fieldset)" class="member-name-link">generateWithFieldset</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
@@ -803,6 +938,504 @@ loadScripts(document, 'script');</script>
 <dd><code>inputSubmitFormElement</code> - input submit</dd>
 <dt>Returns:</dt>
 <dd>A Form</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.String,java.lang.Object,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>method</code> - Form method attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.Object,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<div class="block">Generate FORM Post.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.String,java.lang.Object,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>method</code> - Form method attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>submitValue</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.Object,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<div class="block">Generate FORM Post.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>submitValue</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.String,java.lang.Object,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>method</code> - Form method attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>inputSubmitFormElement</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.Object,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<div class="block">Generate FORM Post.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>inputSubmitFormElement</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>method</code> - Form method attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>ex</code> - A Validation exception</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<div class="block">Generate POST form.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>ex</code> - A Validation exception</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>method</code> - Form method attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>ex</code> - A Validation exception</dd>
+<dd><code>submitValue</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<div class="block">Generate POST form.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>ex</code> - A Validation exception</dd>
+<dd><code>submitValue</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>method</code> - Form method attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>ex</code> - A Validation exception</dd>
+<dd><code>inputSubmitFormElement</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.Object,jakarta.validation.ConstraintViolationException,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;instance,
+ @NonNull
+ @NonNull jakarta.validation.ConstraintViolationException&nbsp;ex,
+ @NonNull
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<div class="block">Generate POST form.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>instance</code> - The Object instance which should be <code>Introspected</code>.</dd>
+<dd><code>ex</code> - A Validation exception</dd>
+<dd><code>inputSubmitFormElement</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.String,java.lang.Class,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - type</dd>
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>method</code> - Form method attribute</dd>
+<dd><code>type</code> - A class which should be <code>Introspected</code>.</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.Class,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<div class="block">Generate POST Form.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - type</dd>
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>type</code> - A class which should be <code>Introspected</code>.</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.String,java.lang.Class,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - type</dd>
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>method</code> - Form method attribute</dd>
+<dd><code>type</code> - A class which should be <code>Introspected</code>.</dd>
+<dd><code>submitValue</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.Class,io.micronaut.views.fields.messages.Message,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull
+ @NonNull <a href="messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;submitValue,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<div class="block">Generate a POST Form.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - type</dd>
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>type</code> - A class which should be <code>Introspected</code>.</dd>
+<dd><code>submitValue</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.String,java.lang.Class,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;method,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - type</dd>
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>method</code> - Form method attribute</dd>
+<dd><code>type</code> - A class which should be <code>Introspected</code>.</dd>
+<dd><code>inputSubmitFormElement</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generate(java.lang.String,java.lang.Class,io.micronaut.views.fields.elements.InputSubmitFormElement,java.util.function.BiConsumer)">
+<h3>generate</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">default</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">@NonNull <a href="Form.html" title="class in io.micronaut.views.fields">Form</a></span>&nbsp;<span class="element-name">generate</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;action,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
+ @NonNull
+ @NonNull <a href="elements/InputSubmitFormElement.html" title="class in io.micronaut.views.fields.elements">InputSubmitFormElement</a>&nbsp;inputSubmitFormElement,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>io.micronaut.core.beans.BeanIntrospection.Builder&lt;? extends <a href="FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>&gt;&gt;&nbsp;builderConsumer)</span></div>
+<div class="block">Generate a POST form.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - type</dd>
+<dt>Parameters:</dt>
+<dd><code>action</code> - Form action attribute</dd>
+<dd><code>type</code> - A class which should be <code>Introspected</code>.</dd>
+<dd><code>inputSubmitFormElement</code> - input submit</dd>
+<dd><code>builderConsumer</code> - A BiConsumer with the property name and the builder. It allows to consume a form element builder while the form fieldset is being generated.</dd>
+<dt>Returns:</dt>
+<dd>A Form</dd>
+<dt>Since:</dt>
+<dd>5.1.0</dd>
 </dl>
 </section>
 </li>

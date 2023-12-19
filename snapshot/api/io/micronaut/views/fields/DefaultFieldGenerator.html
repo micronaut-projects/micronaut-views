@@ -103,10 +103,11 @@ implements <a href="FieldsetGenerator.html" title="interface in io.micronaut.vie
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext)" class="member-name-link">DefaultFieldGenerator</a><wbr>(<a href="fetchers/EnumOptionFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumOptionFetcher</a>&lt;?&gt;&nbsp;enumOptionFetcher,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver)" class="member-name-link">DefaultFieldGenerator</a><wbr>(<a href="fetchers/EnumOptionFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumOptionFetcher</a>&lt;?&gt;&nbsp;enumOptionFetcher,
  <a href="fetchers/EnumRadioFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumRadioFetcher</a>&lt;?&gt;&nbsp;enumRadioFetcher,
  <a href="fetchers/EnumCheckboxFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumCheckboxFetcher</a>&lt;?&gt;&nbsp;enumCheckboxFetcher,
- io.micronaut.context.BeanContext&nbsp;beanContext)</code></div>
+ io.micronaut.context.BeanContext&nbsp;beanContext,
+ <a href="formelementresolvers/FormElementResolver.html" title="interface in io.micronaut.views.fields.formelementresolvers">FormElementResolver</a>&nbsp;formElementResolver)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -163,18 +164,20 @@ implements <a href="FieldsetGenerator.html" title="interface in io.micronaut.vie
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext)">
+<section class="detail" id="&lt;init&gt;(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver)">
 <h3>DefaultFieldGenerator</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DefaultFieldGenerator</span><wbr><span class="parameters">(<a href="fetchers/EnumOptionFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumOptionFetcher</a>&lt;?&gt;&nbsp;enumOptionFetcher,
  <a href="fetchers/EnumRadioFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumRadioFetcher</a>&lt;?&gt;&nbsp;enumRadioFetcher,
  <a href="fetchers/EnumCheckboxFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumCheckboxFetcher</a>&lt;?&gt;&nbsp;enumCheckboxFetcher,
- io.micronaut.context.BeanContext&nbsp;beanContext)</span></div>
+ io.micronaut.context.BeanContext&nbsp;beanContext,
+ <a href="formelementresolvers/FormElementResolver.html" title="interface in io.micronaut.views.fields.formelementresolvers">FormElementResolver</a>&nbsp;formElementResolver)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>enumOptionFetcher</code> - Enum fetcher for <a href="elements/Option.html" title="class in io.micronaut.views.fields.elements"><code>Option</code></a>.</dd>
 <dd><code>enumRadioFetcher</code> - Enum fetcher for <a href="elements/Radio.html" title="class in io.micronaut.views.fields.elements"><code>Radio</code></a>.</dd>
 <dd><code>enumCheckboxFetcher</code> - Enum fetcher for <a href="elements/Checkbox.html" title="class in io.micronaut.views.fields.elements"><code>Checkbox</code></a>.</dd>
 <dd><code>beanContext</code> - Bean Context</dd>
+<dd><code>formElementResolver</code> - Primary Form Element Resolver. <a href="formelementresolvers/CompositeFormElementResolver.html" title="class in io.micronaut.views.fields.formelementresolvers"><code>CompositeFormElementResolver</code></a>.</dd>
 </dl>
 </section>
 </li>

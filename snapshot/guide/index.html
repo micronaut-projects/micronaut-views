@@ -137,6 +137,8 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-fieldsetFetcher"><a href="#fieldsetFetcher"><strong>3.3.3</strong><span>Radio, Checkbox and Option Fetcher</span></a></div>
         
+        <div class="toc-item" style="margin-left:20px" id="toc-item-customFormElement"><a href="#customFormElement"><strong>3.3.4</strong><span>Custom Form Elements</span></a></div>
+        
         <div class="toc-item" style="margin-left:10px" id="toc-item-turbo"><a href="#turbo"><strong>3.4</strong><span>Turbo</span></a></div>
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-turboFrameView"><a href="#turboFrameView"><strong>3.4.1</strong><span>TurboFrameView annotation</span></a></div>
@@ -2456,6 +2458,22 @@ public class AuthorFetcher implements OptionFetcher&lt;Long&gt; {
     }
 }</code></pre>
 </div>
+</div>
+
+<h2 id="customFormElement"><a class="anchor" href="#customFormElement"></a>3.3.4 Custom Form Elements</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/master/src/main/docs/guide/views/fieldset/customFormElement.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>You many need a custom implementation of <a href="../api/io/micronaut/views/fields/FormElement.html">FormElement</a>. If you do,  create a bean of type <a href="../api/io/micronaut/views/fields/formelementresolvers/FormElementResolver.html">FormElementResolver</a> to resolve your custom <code>FormElement</code> class for a certain bean property&#8217;s type.</p>
+</div>
+<div class="paragraph">
+<p>Providing a bean of type <a href="../api/io/micronaut/views/fields/formelementresolvers/FormElementResolver.html">FormElementResolver</a> allows the custom form element to be part of the <a href="../api/io/micronaut/views/fields/FieldsetGenerator.html">FieldsetGenerator</a> API.</p>
 </div>
 
 <h2 id="turbo"><a class="anchor" href="#turbo"></a>3.4 Turbo</h2>
