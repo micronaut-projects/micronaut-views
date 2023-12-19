@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 /**
- * Custom Constraints for validating HTML Forms.
+ * Defines an API to resolve a Form Element class given a bean property.
  * @author Sergio del Amo
  * @since 5.1.0
  */
-package io.micronaut.views.fields.constraints;
+package io.micronaut.views.fields.formelementresolvers;

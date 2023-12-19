@@ -17,6 +17,8 @@ package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.views.fields.elements.InputFileFormElement;
 import io.micronaut.views.fields.elements.InputSubmitFormElement;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
@@ -25,6 +27,8 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.BiConsumer;
 
 /**
  * {@link io.micronaut.context.annotation.DefaultImplementation} of {@link FormGenerator}.
@@ -54,8 +58,21 @@ public class DefaultFormGenerator implements FormGenerator {
     }
 
     @Override
-    public Form generate(String action, String method, Object instance, InputSubmitFormElement inputSubmitFormElement) {
+    public Form generate(@NonNull @NotBlank String action,
+                         @NonNull @NotBlank String method,
+                         @NonNull Object instance,
+                         @NonNull @NotNull InputSubmitFormElement inputSubmitFormElement) {
         Fieldset fieldset = fieldsetGenerator.generate(instance);
+        return generate(action, method, fieldset, inputSubmitFormElement);
+    }
+
+    @Override
+    public Form generate(@NonNull @NotBlank String action,
+                         @NonNull @NotBlank String method,
+                         @NonNull Object instance,
+                         @NonNull @NotNull InputSubmitFormElement inputSubmitFormElement,
+                         @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
+        Fieldset fieldset = fieldsetGenerator.generate(instance, builderConsumer);
         return generate(action, method, fieldset, inputSubmitFormElement);
     }
 
@@ -70,6 +87,17 @@ public class DefaultFormGenerator implements FormGenerator {
     }
 
     @Override
+    public Form generate(@NonNull @NotBlank String action,
+                         @NonNull @NotBlank String method,
+                         @NonNull Object instance,
+                         @NonNull ConstraintViolationException ex,
+                         @NonNull @NotNull InputSubmitFormElement inputSubmitFormElement,
+                         @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
+        Fieldset fieldset = fieldsetGenerator.generate(instance, ex, builderConsumer);
+        return generate(action, method, fieldset, inputSubmitFormElement);
+    }
+
+    @Override
     public <T> Form generate(@NonNull @NotBlank String action,
                              @NonNull @NotBlank String method,
                              @NonNull @NotNull Class<T> type,
@@ -78,12 +106,31 @@ public class DefaultFormGenerator implements FormGenerator {
         return generate(action, method, fieldset, inputSubmitFormElement);
     }
 
-    private Form generate(@NonNull @NotBlank String action,
+    @Override
+    public <T> Form generate(@NonNull @NotBlank String action,
                              @NonNull @NotBlank String method,
-                             @NonNull @NotNull Fieldset fieldset,
-                             @NonNull @NotNull InputSubmitFormElement inputSubmitFormElement) {
+                             @NonNull @NotNull Class<T> type,
+                             @NonNull @NotNull InputSubmitFormElement inputSubmitFormElement,
+                             @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
+        Fieldset fieldset = fieldsetGenerator.generate(type, builderConsumer);
+        return generate(action, method, fieldset, inputSubmitFormElement);
+    }
+
+    private Form generate(@NonNull @NotBlank String action,
+                          @NonNull @NotBlank String method,
+                          @NonNull @NotNull Fieldset fieldset,
+                          @NonNull @NotNull InputSubmitFormElement inputSubmitFormElement) {
         List<FormElement> fields = new ArrayList<>(fieldset.fields());
         fields.add(inputSubmitFormElement);
-        return new Form(action, method, new Fieldset(fields, fieldset.errors()));
+        return enctype(fieldset)
+                .map(enctype -> new Form(action, method, new Fieldset(fields, fieldset.errors()), enctype))
+                .orElseGet(() -> new Form(action, method, new Fieldset(fields, fieldset.errors())));
+    }
+
+    @NonNull
+    private Optional<String> enctype(@NonNull Fieldset fieldset) {
+        return fieldset.fields().stream().anyMatch(InputFileFormElement.class::isInstance)
+                ? Optional.of("multipart/form-data")
+                : Optional.empty();
     }
 }
