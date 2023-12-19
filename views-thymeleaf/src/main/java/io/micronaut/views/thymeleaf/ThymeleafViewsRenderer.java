@@ -30,13 +30,18 @@ import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import jakarta.inject.Singleton;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.ExpressionContext;
 import org.thymeleaf.context.IContext;
 import org.thymeleaf.exceptions.TemplateEngineException;
+import org.thymeleaf.exceptions.TemplateProcessingException;
+import org.thymeleaf.standard.expression.FragmentExpression;
+import org.thymeleaf.standard.expression.StandardExpressions;
 import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.io.Writer;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Renders templates Thymeleaf Java template engine.
@@ -81,9 +86,43 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
         ArgumentUtils.requireNonNull("viewName", viewName);
         return (writer) -> {
             IContext context = new WebContext(request, request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault(),
-                    ViewUtils.modelOf(data));
-            render(viewName, context, writer);
+                ViewUtils.modelOf(data));
+
+            if (!viewName.contains("::")) {
+                render(viewName, context, writer);
+                return;
+            }
+
+            var expressionContext = new ExpressionContext(engine.getConfiguration());
+            var parser = StandardExpressions.getExpressionParser(engine.getConfiguration());
+            FragmentExpression fragmentExpression;
+            try {
+                fragmentExpression = (FragmentExpression) parser.parseExpression(expressionContext, "~{" + viewName + "}");
+            } catch (TemplateProcessingException e) {
+                throw new IllegalArgumentException("Invalid template name specification: '" + viewName + "'");
+            }
+            var fragment = FragmentExpression.createExecutedFragmentExpression(expressionContext, fragmentExpression);
+            var templateName = FragmentExpression.resolveTemplateName(fragment);
+            var fragmentSelectors = FragmentExpression.resolveFragments(fragment);
+
+            render(templateName, fragmentSelectors, context, writer);
         };
+    }
+
+    /**
+     * Passes the arguments as is to {@link TemplateEngine#process(String, IContext, Writer)}.
+     *
+     * @param viewName          The view name
+     * @param fragmentSelectors Fragment selectors
+     * @param context           The context
+     * @param writer            The writer
+     */
+    public void render(String viewName, Set<String> fragmentSelectors, IContext context, Writer writer) {
+        try {
+            engine.process(viewName, fragmentSelectors, context, writer);
+        } catch (TemplateEngineException e) {
+            throw new ViewRenderingException("Error rendering Thymeleaf view [" + viewName + "]: " + e.getMessage(), e);
+        }
     }
 
     /**
