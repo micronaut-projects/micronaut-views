@@ -88,24 +88,9 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
             IContext context = new WebContext(request, request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault(),
                 ViewUtils.modelOf(data));
 
-            if (!viewName.contains("::")) {
-                render(viewName, context, writer);
-                return;
-            }
+            var templateAndFragment = resolveTemplate(viewName);
 
-            var expressionContext = new ExpressionContext(engine.getConfiguration());
-            var parser = StandardExpressions.getExpressionParser(engine.getConfiguration());
-            FragmentExpression fragmentExpression;
-            try {
-                fragmentExpression = (FragmentExpression) parser.parseExpression(expressionContext, "~{" + viewName + "}");
-            } catch (TemplateProcessingException e) {
-                throw new IllegalArgumentException("Invalid template name specification: '" + viewName + "'");
-            }
-            var fragment = FragmentExpression.createExecutedFragmentExpression(expressionContext, fragmentExpression);
-            var templateName = FragmentExpression.resolveTemplateName(fragment);
-            var fragmentSelectors = FragmentExpression.resolveFragments(fragment);
-
-            render(templateName, fragmentSelectors, context, writer);
+            render(templateAndFragment.templateName, templateAndFragment.fragmentSelectors, context, writer);
         };
     }
 
@@ -142,7 +127,8 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        String location = viewLocation(viewName);
+        var templateAndFragment = resolveTemplate(viewName);
+        String location = viewLocation(templateAndFragment.templateName);
         return resourceLoader.getResourceAsStream(location).isPresent();
     }
 
@@ -170,8 +156,30 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
 
     private String viewLocation(final String name) {
         return templateResolver.getPrefix() +
-                ViewUtils.normalizeFile(name, templateResolver.getSuffix()) +
-                templateResolver.getSuffix();
+            ViewUtils.normalizeFile(name, templateResolver.getSuffix()) +
+            templateResolver.getSuffix();
     }
 
+    private record TemplateAndFragment(String templateName, Set<String> fragmentSelectors) {
+    }
+
+    private TemplateAndFragment resolveTemplate(String viewName) {
+        if (!viewName.contains("::")) {
+            return new TemplateAndFragment(viewName, null);
+        }
+
+        var expressionContext = new ExpressionContext(engine.getConfiguration());
+        var parser = StandardExpressions.getExpressionParser(engine.getConfiguration());
+        FragmentExpression fragmentExpression;
+        try {
+            fragmentExpression = (FragmentExpression) parser.parseExpression(expressionContext, "~{" + viewName + "}");
+        } catch (TemplateProcessingException e) {
+            throw new IllegalArgumentException("Invalid template name specification: '" + viewName + "'");
+        }
+        var fragment = FragmentExpression.createExecutedFragmentExpression(expressionContext, fragmentExpression);
+        var templateName = FragmentExpression.resolveTemplateName(fragment);
+        var fragmentSelectors = FragmentExpression.resolveFragments(fragment);
+
+        return new TemplateAndFragment(templateName, fragmentSelectors);
+    }
 }
