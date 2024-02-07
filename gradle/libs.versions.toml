@@ -9,7 +9,6 @@ micronaut-security = "4.4.0"
 micronaut-serde = "2.7.0"
 micronaut-validation = "4.2.0"
 micronaut-gradle-plugin = "4.2.0"
-testcontainers = "1.19.3"
 groovy = "4.0.14"
 spock = "2.3-groovy-4.0"
 
@@ -32,7 +31,6 @@ micronaut-logging = "1.2.1"
 [libraries]
 # Core
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut' }
-testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
 micronaut-sql = { module = "io.micronaut.sql:micronaut-sql-bom", version.ref = "micronaut-sql" }
 micronaut-logging = { module = "io.micronaut.logging:micronaut-logging-bom", version.ref = "micronaut-logging" }
 micronaut-security = { module = "io.micronaut.security:micronaut-security-bom", version.ref = "micronaut-security" }
