@@ -8,7 +8,7 @@ micronaut-sql = "5.4.0"
 micronaut-security = "4.4.0"
 micronaut-serde = "2.7.0"
 micronaut-validation = "4.2.0"
-micronaut-gradle-plugin = "4.2.0"
+micronaut-gradle-plugin = "4.3.2"
 groovy = "4.0.14"
 spock = "2.3-groovy-4.0"
 
