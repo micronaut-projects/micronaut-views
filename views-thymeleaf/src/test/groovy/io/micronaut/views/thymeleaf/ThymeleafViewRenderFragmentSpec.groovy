@@ -1,35 +1,28 @@
 package io.micronaut.views.thymeleaf
 
-import io.micronaut.core.io.Writable
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import spock.lang.Specification
 
+import static io.micronaut.views.thymeleaf.WriteableUtils.*
+
 @MicronautTest(startApplication = false)
-class ThymeleafViewRenderFragment extends Specification {
+class ThymeleafViewRenderFragmentSpec extends Specification {
 
     @Inject
     ThymeleafViewsRenderer<?> viewRenderer
 
     void "can render fragment"() {
-        when:
-        Writable writeable = viewRenderer.render("fragment :: thefragment", ["some": "data"], null)
-        String result = new StringWriter().with {
-            writeable.writeTo(it)
-            it.toString()
-        }
+        expect:
+        "<div>FRAGMENT</div>" == writableToString(viewRenderer.render("fragment :: thefragment", ["some": "data"], null))
 
-        then:
-        result == "<div>FRAGMENT</div>"
+        and:
+        "<div>FRAGMENT 2</div>" == writableToString(viewRenderer.render("fragment :: thefragment2", ["some": "data"], null))
     }
 
     void "can render main body"() {
         when:
-        Writable writeable = viewRenderer.render("fragment", ["some": "data"], null)
-        String result = new StringWriter().with {
-            writeable.writeTo(it)
-            it.toString()
-        }
+        String result = writableToString(viewRenderer.render("fragment", ["some": "data"], null))
 
         then:
         result.contains("MAIN") && result.contains("FRAGMENT")
