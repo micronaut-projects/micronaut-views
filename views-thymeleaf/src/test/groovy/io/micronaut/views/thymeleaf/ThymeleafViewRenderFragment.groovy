@@ -36,18 +36,12 @@ class ThymeleafViewRenderFragment extends Specification {
     }
 
     void "exists is successful when using fragments"() {
-        when:
-        var result = viewRenderer.exists("fragment :: thefragment")
-
-        then:
-        result
+        expect:
+        viewRenderer.exists("fragment :: thefragment")
     }
 
     void "exists is successful when using regular view name"() {
-        when:
-        var result = viewRenderer.exists("fragment")
-
-        then:
-        result
+        expect:
+        viewRenderer.exists("fragment")
     }
 }
