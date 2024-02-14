@@ -13,11 +13,7 @@ class ThymeleafViewRenderNullableRequestSpec extends Specification {
 
     void "views can be render with no request"() {
         when:
-        Writable writeable = viewRenderer.render("tim", ["username": "Tim"], null)
-        String result = new StringWriter().with {
-            writeable.writeTo(it)
-            it.toString()
-        }
+        String result = WriteableUtils.writableToString(viewRenderer.render("tim", ["username": "Tim"], null))
 
         then:
         result.contains("username: <span>Tim</span>")

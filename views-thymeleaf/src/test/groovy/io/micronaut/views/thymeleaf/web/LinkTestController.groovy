@@ -12,7 +12,7 @@ import io.micronaut.views.View
 class LinkTestController {
     @Get
     @View("contextRelativeUrl")
-    public HttpResponse contextRelativeUrl() {
+    HttpResponse contextRelativeUrl() {
         return HttpResponse.ok()
     }
 
