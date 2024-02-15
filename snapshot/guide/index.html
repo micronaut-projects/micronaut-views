@@ -2586,8 +2586,7 @@ public class AuthorFetcher implements OptionFetcher&lt;Long&gt; {
 @View("edit")
 @Get
 Map&lt;String, Object&gt; index() {
-    return Collections.singletonMap("message",
-    new Message(1L, "My message title", "My message content"));
+    return Map.of("message", new Message(1L, "My message title", "My message content"));
 }</code></pre>
 </div>
 </div>
@@ -2604,13 +2603,12 @@ Map&lt;String, Object&gt; index() {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">        @Produces(MediaType.TEXT_HTML)
-        @TurboFrameView("form")
-        @View("edit")
-        @Get
-        fun index(): Map&lt;String, Any&gt; {
-            return mapOf("message" to Message(1L, "My message title", "My message content"))
-        }</code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Produces(MediaType.TEXT_HTML)
+@TurboFrameView("form")
+@View("edit")
+@Get
+fun index() =
+    mapOf("message" to Message(1L, "My message title", "My message content"))</code></pre>
 </div>
 </div>
 
@@ -2632,10 +2630,11 @@ Map&lt;String, Object&gt; index() {
 @Get("/builder")
 HttpResponse&lt;?&gt; index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) String turboFrame) {
     Long messageId = 1L;
-    Map&lt;String, Object&gt; model = Collections.singletonMap("message",
-            new Message(messageId, "My message title", "My message content"));
+    Map&lt;String, Object&gt; model = Map.of(
+        "message", new Message(messageId, "My message title", "My message content")
+    );
     return HttpResponse.ok(turboFrame == null ?
-                    new ModelAndView("edit", model) :
+                    new ModelAndView&lt;&gt;("edit", model) :
                     TurboFrame.builder()
                             .id("message_"  + messageId)
                             .templateModel(model)
@@ -2668,9 +2667,7 @@ HttpResponse&lt;?&gt; index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) Stri
 @Get("/builder")
 fun index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) turboFrame: String?): HttpResponse&lt;*&gt; {
     val messageId = 1L
-    val model = mapOf("message" to Message(messageId,
-"My message title",
-"My message content"))
+    val model = mapOf("message" to Message(messageId, "My message title", "My message content"))
     return HttpResponse.ok(
         if (turboFrame == null)
             ModelAndView&lt;Any?&gt;("edit", model)
@@ -2734,7 +2731,7 @@ val writable = turboStream.render()</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;" +
     "&lt;template&gt;" +
         "Content to append to container designated with the dom_id." +
     "&lt;/template&gt;" +
@@ -2743,11 +2740,11 @@ val writable = turboStream.render()</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
-    "&lt;template&gt;" +
-        "Content to append to container designated with the dom_id." +
-    "&lt;/template&gt;" +
-"&lt;/turbo-stream&gt;"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">'&lt;turbo-stream action="append" target="dom_id"&gt;' +
+    '&lt;template&gt;' +
+        'Content to append to container designated with the dom_id.' +
+    '&lt;/template&gt;' +
+'&lt;/turbo-stream&gt;'</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2779,8 +2776,8 @@ val writable = turboStream.render()</code></pre>
 @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
 Map&lt;String, Object&gt; show() {
- return Collections.singletonMap("fruit", new TurboStreamTemplateTest.Fruit("Banana", "Yellow"));
- }</code></pre>
+    return Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
+}</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2789,8 +2786,8 @@ Map&lt;String, Object&gt; show() {
 @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
 Map&lt;String, Object&gt; show() {
- return Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
- }</code></pre>
+  return Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
+}</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2798,8 +2795,7 @@ Map&lt;String, Object&gt; show() {
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
 @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
-fun show(): Map&lt;String, Any&gt; {
-    return Collections.singletonMap("fruit", Fruit("Banana", "Yellow"))</code></pre>
+fun show() = mapOf("fruit" to Fruit("Banana", "Yellow"))</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2808,8 +2804,8 @@ fun show(): Map&lt;String, Any&gt; {
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">HttpRequest&lt;?&gt; request = HttpRequest.GET("/turbofruit")
-        .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
-        .header(TurboHttpHeaders.TURBO_FRAME, "dom_id");</code></pre>
+    .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
+    .header(TurboHttpHeaders.TURBO_FRAME, "dom_id");</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2834,19 +2830,19 @@ fun show(): Map&lt;String, Any&gt; {
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
     "&lt;template&gt;" +
         "&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n" +
-        "&lt;h2&gt;color: Yellow&lt;/h2&gt;" +
+        "&lt;h2&gt;color: Yellow&lt;/h2&gt;\n" +
     "&lt;/template&gt;" +
 "&lt;/turbo-stream&gt;"</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"+
-    "&lt;template&gt;" +
-        "&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n" +
-        "&lt;h2&gt;color: Yellow&lt;/h2&gt;" +
-    "&lt;/template&gt;" +
-"&lt;/turbo-stream&gt;"</code></pre>
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">'&lt;turbo-stream action="append" target="dom_id"&gt;' +
+    '&lt;template&gt;' +
+        '&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n' +
+        '&lt;h2&gt;color: Yellow&lt;/h2&gt;\n' +
+    '&lt;/template&gt;' +
+'&lt;/turbo-stream&gt;'</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2854,7 +2850,7 @@ fun show(): Map&lt;String, Any&gt; {
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;" +
     "&lt;template&gt;" +
         "&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n" +
-        "&lt;h2&gt;color: Yellow&lt;/h2&gt;" +
+        "&lt;h2&gt;color: Yellow&lt;/h2&gt;\n" +
     "&lt;/template&gt;" +
 "&lt;/turbo-stream&gt;"</code></pre>
 </div>
@@ -2881,6 +2877,45 @@ fun show(): Map&lt;String, Any&gt; {
 <p>When submitting a &lt;form&gt; element whose method attribute is set to POST, PUT, PATCH, or DELETE, Turbo injects text/vnd.turbo-stream.html into the set of response formats in the request’s Accept header.</p>
 </div>
 </blockquote>
+</div>
+<div class="paragraph">
+<p>An example of handling a multipart form POST with Turbo and the Micronaut Framework would be:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Consumes(MediaType.MULTIPART_FORM_DATA)
+@TurboView("view")
+@Produces(value = {MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM})
+@Post("/messages/{id}")
+Map&lt;String, Object&gt; processEdit(@Part int id, @Part String title, @Part String body) {
+    // Process the posted data, and return the updated message
+    return Map.of("message", new Message((long) id, title, body));
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Consumes(MediaType.MULTIPART_FORM_DATA)
+@TurboView("view")
+@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
+@Post("/messages/{id}")
+Map&lt;String, Object&gt; processEdit(@Part int id, @Part String title, @Part String body) {
+    // Process the posted data, and return the updated message
+    [message: new Message((long) id, title, body)]
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Consumes(MediaType.MULTIPART_FORM_DATA)
+@TurboView("view")
+@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
+@Post("/messages/{id}")
+fun processEdit(@Part id: Int, @Part title: String, @Part body: String): Map&lt;String, Any&gt; {
+    // Process the posted data, and return the updated message
+    return mapOf("message" to Message(id.toLong(), title, body))
+}</code></pre>
+</div>
 </div>
 
 <h2 id="turboStreamTemplate"><a class="anchor" href="#turboStreamTemplate"></a>3.4.6 Turbo Streams with Templates</h2>
@@ -2921,7 +2956,7 @@ Optional&lt;Writable&gt; writable = turboStreamRenderer.render(builder, null)</c
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">val view = "fruit"
-val model = Collections.singletonMap&lt;String, Any&gt;("fruit", Fruit("Banana", "Yellow"))
+val model = mapOf("fruit" to Fruit("Banana", "Yellow"))
 val builder = TurboStream.builder()
     .action(TurboStreamAction.APPEND)
     .targetDomId("dom_id")
