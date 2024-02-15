@@ -2,7 +2,6 @@ package io.micronaut.views.docs.turbo
 
 import io.micronaut.context.annotation.Property
 import io.micronaut.context.annotation.Requires
-import io.micronaut.core.annotation.Introspected
 import io.micronaut.core.util.StringUtils
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpStatus
@@ -19,10 +18,10 @@ import io.micronaut.views.turbo.TurboView
 import io.micronaut.views.turbo.http.TurboHttpHeaders
 import io.micronaut.views.turbo.http.TurboMediaType
 import jakarta.inject.Inject
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.io.IOException
-import java.util.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 
 @Property(name = "micronaut.views.soy.enabled", value = StringUtils.FALSE)
 @Property(name = "spec.name", value = "TurboViewTest")
@@ -41,40 +40,39 @@ class TurboViewTest {
     @Throws(IOException::class)
     fun turboView() {
         val client = httpClient.toBlocking()
-//tag::turboviewrequest[]
-val request: HttpRequest<*> = HttpRequest.GET<Any>("/turbofruit")
-    .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
-    .header(TurboHttpHeaders.TURBO_FRAME, "dom_id")
-//end::turboviewrequest[]
+
+        //tag::turboviewrequest[]
+        val request: HttpRequest<*> = HttpRequest.GET<Any>("/turbofruit")
+            .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
+            .header(TurboHttpHeaders.TURBO_FRAME, "dom_id")
+        //end::turboviewrequest[]
+
         val response = client.exchange(request, String::class.java)
-        Assertions.assertEquals(HttpStatus.OK, response.status())
-        Assertions.assertTrue(response.contentType.isPresent)
-        Assertions.assertEquals(TurboMediaType.TURBO_STREAM, response.contentType.get().toString())
-        Assertions.assertEquals(
-//tag::turboviewresponse[]
-"<turbo-stream action=\"append\" target=\"dom_id\">" +
-    "<template>" +
-        "<h1>fruit: Banana</h1>\n" +
-        "<h2>color: Yellow</h2>" +
-    "</template>" +
-"</turbo-stream>"
-//end::turboviewresponse[]
+        assertEquals(HttpStatus.OK, response.status())
+        assertTrue(response.contentType.isPresent)
+        assertEquals(TurboMediaType.TURBO_STREAM, response.contentType.get().toString())
+        assertEquals(
+            //tag::turboviewresponse[]
+            "<turbo-stream action=\"append\" target=\"dom_id\">" +
+                "<template>" +
+                    "<h1>fruit: Banana</h1>\n" +
+                    "<h2>color: Yellow</h2>\n" +
+                "</template>" +
+            "</turbo-stream>"
+            //end::turboviewresponse[]
             , response.body()
         )
     }
 
     @Requires(property = "spec.name", value = "TurboViewTest")
     @Controller
-    internal class FruitController() {
-//tag::turboview[]
-@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
-@TurboView(value = "fruit", action = TurboStreamAction.APPEND)
-@Get("/turbofruit")
-fun show(): Map<String, Any> {
-    return Collections.singletonMap("fruit", Fruit("Banana", "Yellow"))
-} //end::turboview[]
-    }
+    class FruitController() {
 
-    @Introspected
-    class Fruit(val name: String, val color: String)
+        //tag::turboview[]
+        @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
+        @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+        @Get("/turbofruit")
+        fun show() = mapOf("fruit" to Fruit("Banana", "Yellow"))
+        //end::turboview[]
+    }
 }

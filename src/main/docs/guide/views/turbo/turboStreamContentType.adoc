@@ -3,3 +3,7 @@ You can use api:views.turbo.http.TurboMediaType[TurboMediaType::acceptsTurboStre
 ____
 When submitting a <form> element whose method attribute is set to POST, PUT, PATCH, or DELETE, Turbo injects text/vnd.turbo-stream.html into the set of response formats in the request’s Accept header.
 ____
+
+An example of handling a multipart form POST with Turbo and the Micronaut Framework would be:
+
+snippet::io.micronaut.views.docs.turbo.TurboFrameTest[tags="turboFramePost",indent=0]
