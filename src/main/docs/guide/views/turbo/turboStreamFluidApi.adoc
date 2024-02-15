@@ -2,8 +2,8 @@ You can render https://turbo.hotwired.dev/reference/streams[Turbo Stream]s by re
 
 `TurboStream` features a fluid API:
 
-snippet::io.micronaut.views.docs.turbo.TurboStreamTest[tags="turbofluidapi"]
+snippet::io.micronaut.views.docs.turbo.TurboStreamTest[tags="turbofluidapi",indent=0]
 
 The previous example generates:
 
-snippet::io.micronaut.views.docs.turbo.TurboStreamTest[tags="turbofluidapiresult"]
+snippet::io.micronaut.views.docs.turbo.TurboStreamTest[tags="turbofluidapiresult",indent=0]

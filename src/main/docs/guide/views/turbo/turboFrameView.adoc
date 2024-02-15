@@ -52,4 +52,4 @@ include::{testsSuite}/resources/views/edit.vm[]
 include::{testsSuite}/resources/views/form.vm[]
 ----
 
-snippet::io.micronaut.views.docs.turbo.TurboFrameTest[tags="turboFrameView"]
+snippet::io.micronaut.views.docs.turbo.TurboFrameTest[tags="turboFrameView",indent=0]

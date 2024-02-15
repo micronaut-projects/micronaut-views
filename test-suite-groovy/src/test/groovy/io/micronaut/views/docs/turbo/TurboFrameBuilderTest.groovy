@@ -26,6 +26,7 @@ import spock.lang.Specification
 @Property(name = "spec.name", value = "TurboFrameTest")
 @MicronautTest
 class TurboFrameBuilderTest extends Specification {
+
     @Inject
     @Client("/")
     HttpClient httpClient
@@ -40,7 +41,7 @@ class TurboFrameBuilderTest extends Specification {
         then:
         html.contains("<h1>Editing message</h1>")
         html.contains('<turbo-frame id="message_1">')
-        html.contains("<form action=\"/messages/1\">")
+        html.contains('<form action="/messages/1">')
 
         when:
         html = client.retrieve(HttpRequest.GET("/frame/builder")
@@ -48,34 +49,29 @@ class TurboFrameBuilderTest extends Specification {
                 .header(TurboHttpHeaders.TURBO_FRAME, "message_1"), String);
         then:
         !html.contains("<h1>Editing message</h1>")
-        html.contains("<turbo-frame id=\"message_1\">")
-        html.contains("<form action=\"/messages/1\">")
+        html.contains('<turbo-frame id="message_1">')
+        html.contains('<form action="/messages/1">')
     }
 
     @Requires(property = "spec.name", value = "TurboFrameTest")
     @Controller("/frame")
     static class TurboFrameController {
-//tag::turboFrameBuilder[]
-@Produces(MediaType.TEXT_HTML)
-@Get("/builder")
-HttpResponse<?> index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) String turboFrame) {
-    Long messageId = 1L
-    Map<String, Object> model = [
-            "message": new Message(id: messageId, name: "My message title", content: "My message content")
-    ]
-    HttpResponse.ok(turboFrame == null ? new ModelAndView("edit", model) :
-            TurboFrame.builder()
-                    .id("message_"  + messageId)
-                    .templateModel(model)
-                    .templateView("form")
-    ).contentType(MediaType.TEXT_HTML)
-}
-//end::turboFrameBuilder[]
-    }
 
-    static class Message {
-        Long id
-        String name
-        String content
+        //tag::turboFrameBuilder[]
+        @Produces(MediaType.TEXT_HTML)
+        @Get("/builder")
+        HttpResponse<?> index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) String turboFrame) {
+            Long messageId = 1L
+            Map<String, Object> model = [
+                    "message": new Message(id: messageId, name: "My message title", content: "My message content")
+            ]
+            HttpResponse.ok(turboFrame == null ? new ModelAndView("edit", model) :
+                    TurboFrame.builder()
+                            .id("message_"  + messageId)
+                            .templateModel(model)
+                            .templateView("form")
+            ).contentType(MediaType.TEXT_HTML)
+        }
+        //end::turboFrameBuilder[]
     }
 }

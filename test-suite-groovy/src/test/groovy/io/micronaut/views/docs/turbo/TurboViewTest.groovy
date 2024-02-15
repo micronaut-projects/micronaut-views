@@ -33,26 +33,27 @@ class TurboViewTest extends Specification {
         BlockingHttpClient client = httpClient.toBlocking();
 
         when:
-//tag::turboviewrequest[]
-HttpRequest<?> request = HttpRequest.GET("/turbofruit")
-        .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
-        .header(TurboHttpHeaders.TURBO_FRAME, "dom_id");
-//end::turboviewrequest[]
+        //tag::turboviewrequest[]
+        HttpRequest<?> request = HttpRequest.GET("/turbofruit")
+                .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
+                .header(TurboHttpHeaders.TURBO_FRAME, "dom_id");
+        //end::turboviewrequest[]
         HttpResponse<String> response = client.exchange(request, String.class);
 
         then:
         HttpStatus.OK == response.status()
         response.getContentType().isPresent()
         TurboMediaType.TURBO_STREAM == response.getContentType().get().toString()
-//tag::turboviewresponse[]
-"<turbo-stream action=\"append\" target=\"dom_id\">"+
-    "<template>" +
-        "<h1>fruit: Banana</h1>\n" +
-        "<h2>color: Yellow</h2>" +
-    "</template>" +
-"</turbo-stream>"
-//end::turboviewresponse[]
-                == response.body()
+        response.body() ==
+        //tag::turboviewresponse[]
+        '<turbo-stream action="append" target="dom_id">' +
+            '<template>' +
+                '<h1>fruit: Banana</h1>\n' +
+                '<h2>color: Yellow</h2>\n' +
+            '</template>' +
+        '</turbo-stream>'
+        //end::turboviewresponse[]
+
         cleanup:
         httpClient.close()
         embeddedServer.close()
@@ -62,32 +63,13 @@ HttpRequest<?> request = HttpRequest.GET("/turbofruit")
     @Controller
     static class FruitController {
 
-//tag::turboview[]
-@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
-@TurboView(value = "fruit", action = TurboStreamAction.APPEND)
-@Get("/turbofruit")
-Map<String, Object> show() {
- return Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
- }
-//end::turboview[]
-    }
-
-    @Introspected
-    static class Fruit {
-        private final String name;
-        private final String color;
-
-        Fruit(String name, String color) {
-            this.name = name;
-            this.color = color;
+        //tag::turboview[]
+        @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
+        @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+        @Get("/turbofruit")
+        Map<String, Object> show() {
+          return Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
         }
-
-        String getName() {
-            return name;
-        }
-
-        String getColor() {
-            return color;
-        }
+        //end::turboview[]
     }
 }
