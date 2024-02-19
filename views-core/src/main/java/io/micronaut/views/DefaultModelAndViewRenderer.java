@@ -15,7 +15,6 @@
  */
 package io.micronaut.views;
 
-import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
@@ -34,7 +33,6 @@ import java.util.Optional;
  * @since 6.0.0
  */
 @Singleton
-//@Requires(classes = HttpRequest.class)
 @Internal
 public class DefaultModelAndViewRenderer implements ModelAndViewRenderer {
 

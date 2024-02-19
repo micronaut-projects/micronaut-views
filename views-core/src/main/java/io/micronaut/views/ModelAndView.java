@@ -57,7 +57,7 @@ public class ModelAndView<T> {
     }
 
     /**
-     * Build a ModelAndView from the matched route (if any)
+     * Build a ModelAndView from the matched route (if any).
      *
      * @param request  The request
      * @param response The response

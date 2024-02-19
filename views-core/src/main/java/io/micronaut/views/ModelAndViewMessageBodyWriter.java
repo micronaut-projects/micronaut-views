@@ -21,6 +21,7 @@ import io.micronaut.core.type.MutableHeaders;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.body.MessageBodyWriter;
 import io.micronaut.http.codec.CodecException;
+import io.micronaut.http.context.ServerRequestContext;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +53,7 @@ public abstract class ModelAndViewMessageBodyWriter implements MessageBodyWriter
         @NonNull MutableHeaders outgoingHeaders,
         @NonNull OutputStream outputStream
     ) throws CodecException {
-        modelAndViewRenderer.render(object, null)
+        modelAndViewRenderer.render(object, ServerRequestContext.currentRequest().orElse(null))
             .ifPresent(writable -> {
                 try {
                     writable.writeTo(outputStream);
