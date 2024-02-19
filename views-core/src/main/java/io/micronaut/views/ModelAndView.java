@@ -22,8 +22,11 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.turbo.TurboFrame;
+import io.micronaut.views.turbo.TurboView;
 
 import java.util.Optional;
+
+import static io.micronaut.views.turbo.http.TurboMediaType.TURBO_STREAM_TYPE;
 
 /**
  * Holder for both Model and View.
@@ -67,10 +70,14 @@ public class ModelAndView<T> {
         return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
             .map(routeMatch -> {
                 Object body = response.body();
+                // Not a view response
+                if (isNotAViewRoute(routeMatch, body)) {
+                    return null;
+                }
                 if (body instanceof TurboFrame.Builder) {
                     return null;
                 }
-                if (!(body instanceof ModelAndView) && !routeMatch.hasAnnotation(View.class)) {
+                if (isATurboRequest(request, routeMatch)) {
                     return null;
                 }
                 ModelAndView modelAndView = new ModelAndView();
@@ -87,6 +94,14 @@ public class ModelAndView<T> {
 
                 return modelAndView;
             });
+    }
+
+    private static boolean isATurboRequest(HttpRequest<?> request, AnnotationMetadata routeMatch) {
+        return routeMatch.hasAnnotation(TurboView.class) && request.accept().contains(TURBO_STREAM_TYPE);
+    }
+
+    private static boolean isNotAViewRoute(AnnotationMetadata routeMatch, Object body) {
+        return !(body instanceof ModelAndView) && !routeMatch.hasAnnotation(View.class);
     }
 
     /**
