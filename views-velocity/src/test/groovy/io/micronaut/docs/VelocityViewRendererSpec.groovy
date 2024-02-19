@@ -25,7 +25,6 @@ import io.micronaut.http.client.exceptions.HttpClientException
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.exceptions.ReadTimeoutException
 import io.micronaut.runtime.server.EmbeddedServer
-import io.micronaut.views.ViewsFilter
 import io.micronaut.views.velocity.VelocityViewsRenderer
 import spock.lang.AutoCleanup
 import spock.lang.Issue
@@ -50,7 +49,6 @@ class VelocityViewRendererSpec extends Specification {
     def "bean is loaded"() {
         when:
         embeddedServer.applicationContext.getBean(VelocityViewsRenderer)
-        embeddedServer.applicationContext.getBean(ViewsFilter)
 
         then:
         noExceptionThrown()

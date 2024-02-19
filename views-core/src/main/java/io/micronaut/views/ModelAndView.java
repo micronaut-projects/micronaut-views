@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,23 @@
  */
 package io.micronaut.views;
 
+import io.micronaut.core.annotation.AnnotationMetadata;
+import io.micronaut.http.HttpAttributes;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.MutableHttpResponse;
+import io.micronaut.http.annotation.Produces;
+import io.micronaut.views.turbo.TurboFrame;
+
 import java.util.Optional;
 
 /**
  * Holder for both Model and View.
  *
+ * @param <T> The model type
  * @author Sergio del Amo
  * @author graemerocher
  * @since 1.0
- * @param <T> The model type
  */
 public class ModelAndView<T> {
 
@@ -46,6 +54,39 @@ public class ModelAndView<T> {
     public ModelAndView(String view, T model) {
         this.view = view;
         this.model = model;
+    }
+
+    /**
+     * Build a ModelAndView from the matched route (if any)
+     *
+     * @param request  The request
+     * @param response The response
+     * @return The model and view
+     */
+    public static Optional<ModelAndView> of(HttpRequest<?> request, MutableHttpResponse<?> response) {
+        return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
+            .map(routeMatch -> {
+                Object body = response.body();
+                if (body instanceof TurboFrame.Builder) {
+                    return null;
+                }
+                if (!(body instanceof ModelAndView) && !routeMatch.hasAnnotation(View.class)) {
+                    return null;
+                }
+                ModelAndView modelAndView = new ModelAndView();
+                routeMatch.stringValue(View.class).ifPresent(modelAndView::setView);
+
+                response.contentType(routeMatch.stringValue(Produces.class).orElse(MediaType.TEXT_HTML));
+
+                if (body instanceof ModelAndView<?> mav) {
+                    mav.getView().ifPresent(modelAndView::setView);
+                    mav.getModel().ifPresent(modelAndView::setModel);
+                } else {
+                    modelAndView.setModel(body);
+                }
+
+                return modelAndView;
+            });
     }
 
     /**
