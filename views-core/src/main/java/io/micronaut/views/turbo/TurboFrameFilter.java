@@ -20,6 +20,7 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.ResponseFilter;
 import io.micronaut.http.annotation.ServerFilter;
+import io.micronaut.views.MediaTypeResolution;
 
 /**
  * For routes annotated with {@link TurboView} sets the response body to a {@link TurboStream.Builder}.
@@ -42,6 +43,7 @@ public class TurboFrameFilter {
         TurboFrame.Builder.of(request, response)
             .ifPresent(builder -> {
                 final Object body = response.body();
+                MediaTypeResolution.resolveMediaType(request, response).ifPresent(response::contentType);
                 builder.templateModel(body);
                 response.body(builder);
             });

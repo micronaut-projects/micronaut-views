@@ -50,6 +50,7 @@ public class ModelAndViewFilter {
                 } else {
                     builder.setModel(body);
                 }
+                MediaTypeResolution.resolveMediaType(request, response).ifPresent(response::contentType);
                 response.body(builder);
             });
     }

@@ -1,97 +1,97 @@
 [
   {
-    "type": "io.micronaut.views.turbo.AbstractTurboRenderer",
-    "member": "Constructor io.micronaut.views.turbo.AbstractTurboRenderer(io.micronaut.views.ViewsRendererLocator,io.micronaut.http.MediaType)",
-    "reason": "make api HTTP free"
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Field $ANNOTATION_METADATA",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Constructor io.micronaut.views.$ViewsFilter$Definition$Reference()",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationSource",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanContextConditional",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataProvider",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.beans.BeanInfo",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataDelegate",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadata",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.QualifiedBeanType",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.type.ArgumentCoercible",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanType",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.$ViewsFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanDefinitionReference",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
   },
   {
     "type": "io.micronaut.views.ViewsFilter",
-    "member": "Constructor io.micronaut.views.ViewsFilter(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator,io.micronaut.views.turbo.TurboStreamRenderer)",
-    "reason": "Removed deprecated constructor for Micronaut 4"
+    "member": "Field turboFrameRenderer",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
   },
   {
     "type": "io.micronaut.views.ViewsFilter",
-    "member": "Constructor io.micronaut.views.ViewsFilter(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator)",
-    "reason": "Removed deprecated constructor for Micronaut 4"
-  },
-  {
-    "type": "io.micronaut.views.pebble.PebbleViewsRenderer",
-    "member": "Constructor io.micronaut.views.pebble.PebbleViewsRenderer(com.mitchellbosecke.pebble.PebbleEngine)",
-    "reason": "Removed deprecated constructor for Micronaut 4"
-  },
-  {
-    "type": "io.micronaut.views.pebble.PebbleViewsRenderer",
-    "member": "Constructor io.micronaut.views.pebble.PebbleViewsRenderer(io.micronaut.views.pebble.PebbleConfiguration,com.mitchellbosecke.pebble.PebbleEngine)",
-    "reason": "Removed deprecated constructor for Micronaut 4"
-  },
-  {
-    "type": "io.micronaut.views.thymeleaf.LinkBuilder",
-    "member": "Constructor io.micronaut.views.thymeleaf.LinkBuilder()",
-    "reason": "Removed deprecated constructor for Micronaut 4"
-  },
-  {
-    "type": "io.micronaut.views.thymeleaf.ThymeleafViewsRenderer",
-    "member": "Constructor io.micronaut.views.thymeleaf.ThymeleafViewsRenderer(org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver,org.thymeleaf.TemplateEngine,io.micronaut.core.io.scan.ClassPathResourceLoader)",
-    "reason": "Removed deprecated constructor for Micronaut 4"
-  },
-  {
-    "type": "io.micronaut.views.thymeleaf.WebContext",
-    "member": "Constructor io.micronaut.views.thymeleaf.WebContext(io.micronaut.http.HttpRequest)",
-    "reason": "Removed deprecated constructor for Micronaut 4"
-  },
-  {
-    "type": "io.micronaut.views.thymeleaf.WebContext",
-    "member": "Constructor io.micronaut.views.thymeleaf.WebContext(io.micronaut.http.HttpRequest,java.util.Locale)",
-    "reason": "Removed deprecated constructor for Micronaut 4"
-  },
-  {
-    "type": "io.micronaut.views.jte.JteViewsRenderer",
-    "member": "Field DEFAULT_EXTENSION",
-    "reason": "Removed deprecated field for Micronaut 4"
-  },
-  {
-    "type": "io.micronaut.views.pebble.PebbleLoader",
-    "member": "Implemented interface com.mitchellbosecke.pebble.loader.Loader",
-    "reason": "Pebble library upgrade changed package name to io.pebbletemplates.pebble"
-  },
-  {
-    "type": "io.micronaut.views.pebble.PebbleViewsRenderer",
-    "member": "Constructor io.micronaut.views.pebble.PebbleViewsRenderer(com.mitchellbosecke.pebble.PebbleEngine,io.micronaut.core.util.LocaleResolver)",
-    "reason": "Pebble library upgrade changed package name to io.pebbletemplates.pebble"
-  },
-  {
-    "type": "io.micronaut.views.csp.CspFilter",
-    "member": "Implemented interface io.micronaut.http.filter.HttpServerFilter",
-    "reason": "Removed http from api of views-core"
-  },
-  {
-    "type": "io.micronaut.views.csp.CspFilter",
-    "member": "Implemented interface io.micronaut.core.order.Ordered",
-    "reason": "Removed http from api of views-core"
-  },
-  {
-    "type": "io.micronaut.views.csp.CspFilter",
-    "member": "Implemented interface io.micronaut.http.filter.HttpFilter",
-    "reason": "Removed http from api of views-core"
-  },
-  {
-    "type": "io.micronaut.views.exceptions.ViewNotFoundException",
-    "member": "Implemented interface java.io.Serializable",
-    "reason": "Removed http from api of views-core"
+    "member": "Field viewsResolver",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
   },
   {
     "type": "io.micronaut.views.ViewsFilter",
-    "member": "Implemented interface io.micronaut.http.filter.HttpServerFilter",
-    "reason": "Removed http from api of views-core"
+    "member": "Field viewsRendererLocator",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
   },
   {
     "type": "io.micronaut.views.ViewsFilter",
-    "member": "Implemented interface io.micronaut.core.order.Ordered",
-    "reason": "Removed http from api of views-core"
+    "member": "Field viewsModelDecorator",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
   },
   {
     "type": "io.micronaut.views.ViewsFilter",
-    "member": "Implemented interface io.micronaut.http.filter.HttpFilter",
-    "reason": "Removed http from api of views-core"
+    "member": "Field turboStreamRenderer",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.ViewsFilter",
+    "member": "Constructor io.micronaut.views.ViewsFilter(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator,io.micronaut.views.turbo.TurboStreamRenderer,io.micronaut.views.turbo.TurboFrameRenderer)",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.ViewsFilter",
+    "member": "Constructor io.micronaut.views.ViewsFilter(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator,io.micronaut.views.turbo.TurboFrameRenderer)",
+    "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
   }
 ]
