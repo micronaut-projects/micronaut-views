@@ -42,6 +42,8 @@ public class ModelAndView<T> {
 
     private T model;
 
+    private String contentType = MediaType.TEXT_HTML;
+
     /**
      * Empty constructor.
      */
@@ -83,7 +85,7 @@ public class ModelAndView<T> {
                 ModelAndView modelAndView = new ModelAndView();
                 routeMatch.stringValue(View.class).ifPresent(modelAndView::setView);
 
-                response.contentType(routeMatch.stringValue(Produces.class).orElse(MediaType.TEXT_HTML));
+                modelAndView.setContentType(routeMatch.stringValue(Produces.class).orElse(MediaType.TEXT_HTML));
 
                 if (body instanceof ModelAndView<?> mav) {
                     mav.getView().ifPresent(modelAndView::setView);
@@ -134,5 +136,21 @@ public class ModelAndView<T> {
      */
     public void setModel(T model) {
         this.model = model;
+    }
+
+    /**
+     * @return The content type to render
+     */
+    public String getContentType() {
+        return contentType;
+    }
+
+    /**
+     * Sets the content type to render.
+     *
+     * @param contentType The content type
+     */
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

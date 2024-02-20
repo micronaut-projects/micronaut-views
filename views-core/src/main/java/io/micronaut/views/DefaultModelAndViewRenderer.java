@@ -15,11 +15,11 @@
  */
 package io.micronaut.views;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.http.MediaType;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -33,6 +33,7 @@ import java.util.Optional;
  * @since 6.0.0
  */
 @Singleton
+@Requires(classes = HttpRequest.class)
 @Internal
 public class DefaultModelAndViewRenderer implements ModelAndViewRenderer {
 
@@ -54,7 +55,7 @@ public class DefaultModelAndViewRenderer implements ModelAndViewRenderer {
             .flatMap(viewName -> {
                 viewsModelDecorator.decorate(request, modelAndView);
                 Object model = modelAndView.getModel().orElse(null);
-                return viewsRendererLocator.resolveViewsRenderer(viewName, MediaType.TEXT_HTML, model)
+                return viewsRendererLocator.resolveViewsRenderer(viewName, modelAndView.getContentType(), model)
                     .map(renderer -> renderer.render(viewName, model, request));
             });
     }
