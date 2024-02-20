@@ -44,10 +44,9 @@ public class ModelAndViewFilter {
         ModelAndView.of(request, response)
             .ifPresent(builder -> {
                 final Object body = response.body();
-
-                if (body instanceof ModelAndView<?> modelAndView1) {
-                    modelAndView1.getView().ifPresent(builder::setView);
-                    modelAndView1.getModel().ifPresent(builder::setModel);
+                if (body instanceof ModelAndView<?> modelAndView) {
+                    modelAndView.getView().ifPresent(builder::setView);
+                    modelAndView.getModel().ifPresent(builder::setModel);
                 } else {
                     builder.setModel(body);
                 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import io.micronaut.views.Renderable;
 import io.micronaut.views.TemplatedBuilder;
 import io.micronaut.views.View;
 import io.micronaut.views.turbo.http.TurboHttpHeaders;
+
 import java.util.Optional;
 
 /**
@@ -165,7 +166,7 @@ public final class TurboFrame implements Renderable {
     }
 
     /**
-     * 
+     *
      * @return Turbo Frame Builder.
      */
     @NonNull
@@ -339,7 +340,7 @@ public final class TurboFrame implements Renderable {
             this.loading = loading;
             return this;
         }
-        
+
         /**
          *
          * @param busy Busy attribute
@@ -350,7 +351,7 @@ public final class TurboFrame implements Renderable {
             this.busy = busy;
             return this;
         }
-        
+
         /**
          *
          * @param disabled Disabled Attribute
@@ -422,7 +423,7 @@ public final class TurboFrame implements Renderable {
             }
 
             Optional<String> turboFrameOptional = request.getHeaders().get(TurboHttpHeaders.TURBO_FRAME, String.class);
-            if (!turboFrameOptional.isPresent() && route.hasAnnotation(View.class)) {
+            if (turboFrameOptional.isEmpty() && route.hasAnnotation(View.class)) {
                 return Optional.empty();
             }
 
@@ -435,7 +436,7 @@ public final class TurboFrame implements Renderable {
             route.stringValue(TurboFrameView.class, MEMBER_TARGET).ifPresent(builder::target);
             Optional<String> idOptional = route.stringValue(TurboFrameView.class, MEMBER_ID);
             idOptional.ifPresent(builder::id);
-            if (!idOptional.isPresent()) {
+            if (idOptional.isEmpty()) {
                 turboFrameOptional.ifPresent(builder::id);
             }
             route.stringValue(TurboFrameView.class, MEMBER_SRC).ifPresent(builder::src);

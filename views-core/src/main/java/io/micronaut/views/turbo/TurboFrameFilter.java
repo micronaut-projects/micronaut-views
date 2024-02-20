@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,9 @@ import io.micronaut.http.annotation.ServerFilter;
 
 /**
  * For routes annotated with {@link TurboView} sets the response body to a {@link TurboStream.Builder}.
- * @author Sergio del Amo
- * @since 4.1.0
+ *
+ * @author Tim Yates
+ * @since 6.0.0
  */
 @Requires(classes = HttpRequest.class)
 @ServerFilter(ServerFilter.MATCH_ALL_PATTERN)
@@ -32,16 +33,17 @@ public class TurboFrameFilter {
 
     /**
      * For routes annotated with {@link TurboFrameView} sets the response body to a {@link TurboFrame.Builder}.
-     * @param request HttpRequest
+     *
+     * @param request  HttpRequest
      * @param response Mutable HTTP Responses
      */
     @ResponseFilter
     public void filterResponse(HttpRequest<?> request, MutableHttpResponse<?> response) {
         TurboFrame.Builder.of(request, response)
-                .ifPresent(builder -> {
-                    final Object body = response.body();
-                    builder.templateModel(body);
-                    response.body(builder);
-                });
+            .ifPresent(builder -> {
+                final Object body = response.body();
+                builder.templateModel(body);
+                response.body(builder);
+            });
     }
 }

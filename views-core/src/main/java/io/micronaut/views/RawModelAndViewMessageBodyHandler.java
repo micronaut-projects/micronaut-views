@@ -15,6 +15,7 @@
  */
 package io.micronaut.views;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.buffer.ByteBuffer;
@@ -22,9 +23,11 @@ import io.micronaut.core.type.Argument;
 import io.micronaut.core.type.Headers;
 import io.micronaut.core.type.MutableHeaders;
 import io.micronaut.http.HttpHeaders;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.body.RawMessageBodyHandler;
 import io.micronaut.http.codec.CodecException;
+import io.micronaut.http.context.ServerRequestContext;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import jakarta.inject.Singleton;
 import org.reactivestreams.Publisher;
@@ -44,6 +47,7 @@ import java.util.Collections;
  * @since 6.0.0
  */
 @Singleton
+@Requires(classes = HttpRequest.class)
 public class RawModelAndViewMessageBodyHandler implements RawMessageBodyHandler<ModelAndView> {
 
     private static final Logger LOG = LoggerFactory.getLogger(RawModelAndViewMessageBodyHandler.class);
@@ -71,7 +75,9 @@ public class RawModelAndViewMessageBodyHandler implements RawMessageBodyHandler<
 
     @Override
     public void writeTo(@NonNull Argument<ModelAndView> type, @NonNull MediaType mediaType, ModelAndView object, @NonNull MutableHeaders outgoingHeaders, @NonNull OutputStream outputStream) throws CodecException {
-        modelAndViewRenderer.render(object, null)
+        // TODO: The request is required at the moment for the Soy and Pebble renderers
+        // Soy needs to get an Attribute from it, and Pebble needs it to resolve the locale
+        modelAndViewRenderer.render(object, ServerRequestContext.currentRequest().orElse(null))
             .ifPresent(writable -> {
                 try {
                     outgoingHeaders.set(HttpHeaders.CONTENT_TYPE, object.getContentType());

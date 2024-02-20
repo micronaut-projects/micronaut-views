@@ -16,13 +16,16 @@
 package io.micronaut.views;
 
 import io.micronaut.core.annotation.AnnotationMetadata;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpAttributes;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Produces;
-import io.micronaut.views.turbo.TurboFrame;
+import io.micronaut.views.turbo.TurboFrameView;
 import io.micronaut.views.turbo.TurboView;
+import io.micronaut.views.turbo.http.TurboHttpHeaders;
+import io.micronaut.views.turbo.http.TurboMediaType;
 
 import java.util.Optional;
 
@@ -70,32 +73,30 @@ public class ModelAndView<T> {
      */
     public static Optional<ModelAndView> of(HttpRequest<?> request, MutableHttpResponse<?> response) {
         return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
-            .map(routeMatch -> {
-                Object body = response.body();
-                // Not a view response
-                if (isNotAViewRoute(routeMatch, body)) {
-                    return null;
-                }
-                if (body instanceof TurboFrame.Builder) {
-                    return null;
-                }
-                if (isATurboRequest(request, routeMatch)) {
-                    return null;
-                }
-                ModelAndView modelAndView = new ModelAndView();
-                routeMatch.stringValue(View.class).ifPresent(modelAndView::setView);
+            .flatMap(routeMatch -> of(request, routeMatch));
+    }
 
-                modelAndView.setContentType(routeMatch.stringValue(Produces.class).orElse(MediaType.TEXT_HTML));
+    private static Optional<ModelAndView> of(@NonNull HttpRequest<?> request, @NonNull AnnotationMetadata route) {
+        // Not a view
+        if (!route.hasAnnotation(View.class)) {
+            return Optional.empty();
+        }
 
-                if (body instanceof ModelAndView<?> mav) {
-                    mav.getView().ifPresent(modelAndView::setView);
-                    mav.getModel().ifPresent(modelAndView::setModel);
-                } else {
-                    modelAndView.setModel(body);
-                }
+        // Handled by TurboStream#of
+        if (TurboMediaType.acceptsTurboStream(request) && route.hasAnnotation(TurboView.class)) {
+            return Optional.empty();
+        }
 
-                return modelAndView;
-            });
+        // Handled by TurboFrame#of
+        Optional<String> turboFrameOptional = request.getHeaders().get(TurboHttpHeaders.TURBO_FRAME, String.class);
+        if (turboFrameOptional.isPresent() && route.hasAnnotation(TurboFrameView.class)) {
+            return Optional.empty();
+        }
+
+        ModelAndView modelAndView = new ModelAndView();
+        route.stringValue(View.class).ifPresent(modelAndView::setView);
+        modelAndView.setContentType(route.stringValue(Produces.class).orElse(MediaType.TEXT_HTML));
+        return Optional.of(modelAndView);
     }
 
     private static boolean isATurboRequest(HttpRequest<?> request, AnnotationMetadata routeMatch) {
