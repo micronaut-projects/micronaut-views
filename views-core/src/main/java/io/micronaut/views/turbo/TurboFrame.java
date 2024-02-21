@@ -290,7 +290,7 @@ public final class TurboFrame implements Renderable {
     /**
      * Turbo Frame Builder.
      */
-    public static class Builder extends TemplatedBuilder<TurboFrame> {
+    public static class Builder extends TemplatedBuilder<TurboFrame, Builder> {
 
         @Nullable
         private String id;

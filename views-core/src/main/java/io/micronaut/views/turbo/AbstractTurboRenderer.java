@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,8 @@ import java.util.Optional;
  * @since 3.4.0
  * @param <T> The class to be built
  */
-public abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?>> {
+public abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
+
     private final ViewsRendererLocator viewsRendererLocator;
     private final String mediaType;
 

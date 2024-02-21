@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,9 @@ import java.util.Optional;
  * @since 3.4.0
  * @param <T> The class to be built
  */
-public abstract class TemplatedBuilder<T extends Renderable> {
+@SuppressWarnings("java:S119") // SELF is a better name here
+public abstract class TemplatedBuilder<T extends Renderable, SELF extends TemplatedBuilder<T, SELF>> {
+
     @Nullable
     private Object template;
 
@@ -77,10 +79,11 @@ public abstract class TemplatedBuilder<T extends Renderable> {
      * @return The Builder
      */
     @NonNull
-    public TemplatedBuilder<T> template(@NonNull String view, Object model) {
+    @SuppressWarnings("unchecked")
+    public SELF template(@NonNull String view, Object model) {
         this.templateView = view;
         this.templateModel = model;
-        return this;
+        return (SELF) this;
     }
 
     /**
@@ -89,9 +92,10 @@ public abstract class TemplatedBuilder<T extends Renderable> {
      * @return The Builder
      */
     @NonNull
-    public TemplatedBuilder<T> template(@NonNull CharSequence html) {
+    @SuppressWarnings("unchecked")
+    public SELF template(@NonNull CharSequence html) {
         this.template = html;
-        return this;
+        return (SELF) this;
     }
 
     /**
@@ -100,9 +104,10 @@ public abstract class TemplatedBuilder<T extends Renderable> {
      * @return The Builder
      */
     @NonNull
-    public TemplatedBuilder<T> template(@NonNull Writable writable) {
+    @SuppressWarnings("unchecked")
+    public SELF template(@NonNull Writable writable) {
         this.template = writable;
-        return this;
+        return (SELF) this;
     }
 
     /**
@@ -111,9 +116,10 @@ public abstract class TemplatedBuilder<T extends Renderable> {
      * @return The Builder
      */
     @NonNull
-    public TemplatedBuilder<T> templateView(@NonNull String templateView) {
+    @SuppressWarnings("unchecked")
+    public SELF templateView(@NonNull String templateView) {
         this.templateView = templateView;
-        return this;
+        return (SELF) this;
     }
 
     /**
@@ -122,8 +128,9 @@ public abstract class TemplatedBuilder<T extends Renderable> {
      * @return The Builder
      */
     @NonNull
-    public TemplatedBuilder<T> templateModel(@NonNull Object templateModel) {
+    @SuppressWarnings("unchecked")
+    public SELF templateModel(@NonNull Object templateModel) {
         this.templateModel = templateModel;
-        return this;
+        return (SELF) this;
     }
 }
