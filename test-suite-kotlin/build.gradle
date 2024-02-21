@@ -21,6 +21,7 @@ dependencies {
     testImplementation projects.micronautViewsSoy
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation projects.micronautViewsVelocity
+    testRuntimeOnly(mnLogging.logback.classic)
 }
 
 tasks.named('test') {
