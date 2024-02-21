@@ -23,7 +23,7 @@ import io.micronaut.http.annotation.ServerFilter;
 import io.micronaut.views.MediaTypeResolution;
 
 /**
- * For routes annotated with {@link TurboView} sets the response body to a {@link TurboStream.Builder}.
+ * For routes annotated with {@link TurboFrameView} sets the response body to a {@link TurboFrame.Builder}.
  *
  * @author Tim Yates
  * @since 6.0.0
