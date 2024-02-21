@@ -24,7 +24,7 @@ managed-velocity = "2.3"
 pebble = "3.2.2"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.9.22"
-kotlinx-coroutines = "1.7.3"
+kotlinx-coroutines = "1.8.0"
 
 micronaut-logging = "1.2.3"
 
