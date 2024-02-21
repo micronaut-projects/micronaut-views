@@ -76,7 +76,7 @@ public class RawModelAndViewMessageBodyHandler<T> implements RawMessageBodyHandl
 
     @Override
     public void writeTo(@NonNull Argument<ModelAndView<T>> type, @NonNull MediaType mediaType, ModelAndView<T> object, @NonNull MutableHeaders outgoingHeaders, @NonNull OutputStream outputStream) throws CodecException {
-        // TODO: The request is required at the moment for the Soy and Pebble renderers
+        // The request is required at the moment for the Soy and Pebble renderers;
         // Soy needs to get an Attribute from it, and Pebble needs it to resolve the locale
         modelAndViewRenderer.render(object, ServerRequestContext.currentRequest().orElse(null))
             .ifPresent(writable -> {
