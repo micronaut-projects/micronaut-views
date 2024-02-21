@@ -43,18 +43,19 @@ import java.util.Collections;
 /**
  * A message body handler for {@link ModelAndView}.
  *
+ * @param <T> The model type
  * @author Tim Yates
  * @since 6.0.0
  */
 @Singleton
 @Requires(classes = HttpRequest.class)
-public class RawModelAndViewMessageBodyHandler implements RawMessageBodyHandler<ModelAndView> {
+public class RawModelAndViewMessageBodyHandler<T> implements RawMessageBodyHandler<ModelAndView<T>> {
 
     private static final Logger LOG = LoggerFactory.getLogger(RawModelAndViewMessageBodyHandler.class);
 
-    private final ModelAndViewRenderer modelAndViewRenderer;
+    private final ModelAndViewRenderer<T, HttpRequest<?>> modelAndViewRenderer;
 
-    public RawModelAndViewMessageBodyHandler(ModelAndViewRenderer modelAndViewRenderer) {
+    public RawModelAndViewMessageBodyHandler(ModelAndViewRenderer<T, HttpRequest<?>> modelAndViewRenderer) {
         this.modelAndViewRenderer = modelAndViewRenderer;
     }
 
@@ -64,17 +65,17 @@ public class RawModelAndViewMessageBodyHandler implements RawMessageBodyHandler<
     }
 
     @Override
-    public @NonNull Publisher<ModelAndView> readChunked(@NonNull Argument<ModelAndView> type, @Nullable MediaType mediaType, @NonNull Headers httpHeaders, @NonNull Publisher<ByteBuffer<?>> input) {
+    public @NonNull Publisher<ModelAndView<T>> readChunked(@NonNull Argument<ModelAndView<T>> type, @Nullable MediaType mediaType, @NonNull Headers httpHeaders, @NonNull Publisher<ByteBuffer<?>> input) {
         throw new UnsupportedOperationException("Not supported");
     }
 
     @Override
-    public @Nullable ModelAndView read(@NonNull Argument<ModelAndView> type, @Nullable MediaType mediaType, @NonNull Headers httpHeaders, @NonNull InputStream inputStream) throws CodecException {
+    public @Nullable ModelAndView<T> read(@NonNull Argument<ModelAndView<T>> type, @Nullable MediaType mediaType, @NonNull Headers httpHeaders, @NonNull InputStream inputStream) throws CodecException {
         throw new UnsupportedOperationException("Not supported");
     }
 
     @Override
-    public void writeTo(@NonNull Argument<ModelAndView> type, @NonNull MediaType mediaType, ModelAndView object, @NonNull MutableHeaders outgoingHeaders, @NonNull OutputStream outputStream) throws CodecException {
+    public void writeTo(@NonNull Argument<ModelAndView<T>> type, @NonNull MediaType mediaType, ModelAndView<T> object, @NonNull MutableHeaders outgoingHeaders, @NonNull OutputStream outputStream) throws CodecException {
         // TODO: The request is required at the moment for the Soy and Pebble renderers
         // Soy needs to get an Attribute from it, and Pebble needs it to resolve the locale
         modelAndViewRenderer.render(object, ServerRequestContext.currentRequest().orElse(null))
