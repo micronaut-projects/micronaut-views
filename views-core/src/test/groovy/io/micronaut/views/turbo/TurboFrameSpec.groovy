@@ -102,21 +102,21 @@ class TurboFrameSpec extends Specification {
 
         where:
         path                          | expected
-//        '/frame'                      | '<turbo-frame id="main"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/eager'                | '<turbo-frame id="main" loading="eager"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/eager/withbuilder'    | '<turbo-frame id="main" loading="eager"><div class="message">Hello world</div></turbo-frame>'
+        '/frame'                      | '<turbo-frame id="main"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/eager'                | '<turbo-frame id="main" loading="eager"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/eager/withbuilder'    | '<turbo-frame id="main" loading="eager"><div class="message">Hello world</div></turbo-frame>'
         '/frame/eager/withoutbuilder' | '<turbo-frame id="main" loading="eager"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/lazy'                 | '<turbo-frame id="main" loading="lazy"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/src'                  | '<turbo-frame id="main" src="/foo"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/target'               | '<turbo-frame id="main" target="_target"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/busy'                 | '<turbo-frame id="main" busy="true"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/busyFalse'            | '<turbo-frame id="main" busy="false"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/disabled'             | '<turbo-frame id="main" disabled="true"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/autoscroll'           | '<turbo-frame id="main" autoscroll="true"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/id'                   | '<turbo-frame id="foo"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/restore'              | '<turbo-frame id="main" data-turbo-action="restore"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/advance'              | '<turbo-frame id="main" data-turbo-action="advance"><div class="message">Hello world</div></turbo-frame>'
-//        '/frame/replace'              | '<turbo-frame id="main" data-turbo-action="replace"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/lazy'                 | '<turbo-frame id="main" loading="lazy"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/src'                  | '<turbo-frame id="main" src="/foo"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/target'               | '<turbo-frame id="main" target="_target"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/busy'                 | '<turbo-frame id="main" busy="true"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/busyFalse'            | '<turbo-frame id="main" busy="false"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/disabled'             | '<turbo-frame id="main" disabled="true"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/autoscroll'           | '<turbo-frame id="main" autoscroll="true"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/id'                   | '<turbo-frame id="foo"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/restore'              | '<turbo-frame id="main" data-turbo-action="restore"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/advance'              | '<turbo-frame id="main" data-turbo-action="advance"><div class="message">Hello world</div></turbo-frame>'
+        '/frame/replace'              | '<turbo-frame id="main" data-turbo-action="replace"><div class="message">Hello world</div></turbo-frame>'
     }
 
     @NonNull
