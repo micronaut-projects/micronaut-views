@@ -23,9 +23,11 @@ import java.util.Optional;
 
 /**
  * Abstract class to be used by builders which support templates.
+ *
+ * @param <T> The class to be built
+ * @param <SELF> The builder itself (so that it can be chained)
  * @author Sergio del Amo
  * @since 3.4.0
- * @param <T> The class to be built
  */
 @SuppressWarnings("java:S119") // SELF is a better name here
 public abstract class TemplatedBuilder<T extends Renderable, SELF extends TemplatedBuilder<T, SELF>> {
@@ -40,13 +42,11 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
     private Object templateModel;
 
     /**
-     *
      * @return Build instance
      */
     public abstract T build();
 
     /**
-     *
      * @return The TurboStream template view name.
      */
     @NonNull
@@ -55,7 +55,6 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
     }
 
     /**
-     *
      * @return The TurboStream template model.
      */
     @NonNull
@@ -64,7 +63,6 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
     }
 
     /**
-     *
      * @return The Template
      */
     @Nullable
@@ -74,7 +72,8 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
 
     /**
      * Sets the template with a View and Model.
-     * @param view The View name
+     *
+     * @param view  The View name
      * @param model The Model
      * @return The Builder
      */
@@ -88,6 +87,7 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
 
     /**
      * Sets the Turbo Frame  with a String. E.g. HTML.
+     *
      * @param html The turbo frame content
      * @return The Builder
      */
@@ -100,6 +100,7 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
 
     /**
      * Sets the Turbo frame content with a {@link Writable}.
+     *
      * @param writable The template as a {@link Writable}.
      * @return The Builder
      */
@@ -112,6 +113,7 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
 
     /**
      * Sets the template's view name.
+     *
      * @param templateView The View name
      * @return The Builder
      */
@@ -124,6 +126,7 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
 
     /**
      * Sets the template's model.
+     *
      * @param templateModel template model.
      * @return The Builder
      */
