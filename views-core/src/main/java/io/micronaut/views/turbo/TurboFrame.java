@@ -174,6 +174,24 @@ public final class TurboFrame implements Renderable {
         return new Builder();
     }
 
+    public Builder toBuilder() {
+        var builder = new Builder()
+            .id(id)
+            .src(src)
+            .loading(loading)
+            .busy(busy)
+            .disabled(disabled)
+            .target(target)
+            .autoscroll(autoscroll)
+            .visitAction(visitAction);
+        if (template instanceof String stringTemplate) {
+            builder.template(stringTemplate);
+        } else if (template instanceof Writable writableTemplate) {
+            builder.template(writableTemplate);
+        }
+        return builder;
+    }
+
     /**
      *
      * @return Renders a TurboStream as a {@link Writable}
@@ -191,10 +209,10 @@ public final class TurboFrame implements Renderable {
         if (template instanceof CharSequence) {
             return Optional.of(out -> out.write(renderTurboFrameOpeningTag() + template + TURBO_FRAME_CLOSING_TAG));
         }
-        if (template instanceof Writable) {
+        if (template instanceof Writable writableTemplate) {
             return Optional.of(out -> {
                 out.write(renderTurboFrameOpeningTag());
-                ((Writable) template).writeTo(out);
+                writableTemplate.writeTo(out);
                 out.write(TURBO_FRAME_CLOSING_TAG);
             });
         }
@@ -412,13 +430,29 @@ public final class TurboFrame implements Renderable {
         public static Optional<TurboFrame.Builder> of(@NonNull HttpRequest<?> request,
                                                        @NonNull HttpResponse<?> response) {
             return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
-                .flatMap(routeMatch -> of(request, routeMatch));
+                .flatMap(routeMatch -> of(request, routeMatch, response));
+        }
+
+        private static boolean bodyIsTurboFrame(@Nullable Object body) {
+            return body instanceof TurboFrame.Builder || body instanceof TurboFrame;
+        }
+
+        private static TurboFrame.Builder getBuilder(Object body) {
+            if (body instanceof TurboFrame frame) {
+                return frame.toBuilder();
+            } else if (body instanceof TurboFrame.Builder builder) {
+                return builder;
+            } else {
+                return TurboFrame.builder();
+            }
         }
 
         @NonNull
         private static Optional<TurboFrame.Builder> of(@NonNull HttpRequest<?> request,
-                                                       @NonNull AnnotationMetadata route) {
-            if (!route.hasAnnotation(TurboFrameView.class)) {
+                                                       @NonNull AnnotationMetadata route,
+                                                       @NonNull HttpResponse<?> response) {
+            Object body = response.body();
+            if (!route.hasAnnotation(TurboFrameView.class) && !bodyIsTurboFrame(body)) {
                 return Optional.empty();
             }
 
@@ -427,7 +461,7 @@ public final class TurboFrame implements Renderable {
                 return Optional.empty();
             }
 
-            TurboFrame.Builder builder = TurboFrame.builder();
+            TurboFrame.Builder builder = getBuilder(body);
             route.stringValue(TurboFrameView.class).ifPresent(builder::templateView);
 
             route.stringValue(TurboFrameView.class, MEMBER_ACTION)

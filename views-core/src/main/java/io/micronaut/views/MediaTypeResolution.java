@@ -16,6 +16,7 @@
 package io.micronaut.views;
 
 import io.micronaut.core.annotation.AnnotationMetadata;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.type.Argument;
@@ -35,7 +36,8 @@ import java.util.Optional;
  * @author Tim Yates
  * @since 6.0.0
  */
-public class MediaTypeResolution {
+@Internal
+public final class MediaTypeResolution {
 
     private MediaTypeResolution() {
     }

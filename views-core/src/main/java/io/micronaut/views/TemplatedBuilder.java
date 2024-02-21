@@ -89,7 +89,7 @@ public abstract class TemplatedBuilder<T extends Renderable> {
      * @return The Builder
      */
     @NonNull
-    public TemplatedBuilder<T> template(@NonNull String html) {
+    public TemplatedBuilder<T> template(@NonNull CharSequence html) {
         this.template = html;
         return this;
     }

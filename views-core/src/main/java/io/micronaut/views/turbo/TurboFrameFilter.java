@@ -43,8 +43,11 @@ public class TurboFrameFilter {
         TurboFrame.Builder.of(request, response)
             .ifPresent(builder -> {
                 final Object body = response.body();
+
+                if (!(body instanceof TurboFrame.Builder)) {
+                    builder.templateModel(body);
+                }
                 MediaTypeResolution.resolveMediaType(request, response).ifPresent(response::contentType);
-                builder.templateModel(body);
                 response.body(builder);
             });
     }
