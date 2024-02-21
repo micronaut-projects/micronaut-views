@@ -174,6 +174,7 @@ public final class TurboFrame implements Renderable {
         return new Builder();
     }
 
+    @NonNull
     public Builder toBuilder() {
         var builder = new Builder()
             .id(id)
