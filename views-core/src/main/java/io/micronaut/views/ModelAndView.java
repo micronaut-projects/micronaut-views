@@ -29,8 +29,6 @@ import io.micronaut.views.turbo.http.TurboMediaType;
 
 import java.util.Optional;
 
-import static io.micronaut.views.turbo.http.TurboMediaType.TURBO_STREAM_TYPE;
-
 /**
  * Holder for both Model and View.
  *
@@ -99,14 +97,6 @@ public class ModelAndView<T> {
         route.stringValue(View.class).ifPresent(modelAndView::setView);
         modelAndView.setContentType(route.stringValue(Produces.class).orElse(MediaType.TEXT_HTML));
         return Optional.of(modelAndView);
-    }
-
-    private static boolean isATurboRequest(@NonNull HttpRequest<?> request, @NonNull AnnotationMetadata routeMatch) {
-        return routeMatch.hasAnnotation(TurboView.class) && request.accept().contains(TURBO_STREAM_TYPE);
-    }
-
-    private static boolean isNotAViewRoute(@NonNull AnnotationMetadata routeMatch, Object body) {
-        return !(body instanceof ModelAndView) && !routeMatch.hasAnnotation(View.class);
     }
 
     /**
