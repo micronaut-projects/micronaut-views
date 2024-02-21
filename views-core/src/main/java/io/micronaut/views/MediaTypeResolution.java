@@ -42,7 +42,7 @@ public final class MediaTypeResolution {
     private MediaTypeResolution() {
     }
 
-    private static boolean accept(HttpRequest<?> request, MediaType mediaType) {
+    private static boolean accept(@NonNull HttpRequest<?> request, @NonNull MediaType mediaType) {
         String acceptHeader = request.getHeaders().get(HttpHeaders.ACCEPT);
         return acceptHeader != null && acceptHeader.equalsIgnoreCase(mediaType.toString());
     }

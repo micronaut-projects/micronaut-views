@@ -19,21 +19,20 @@ import io.micronaut.context.annotation.DefaultImplementation;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
-import io.micronaut.http.HttpRequest;
-
 import java.util.Optional;
 
 /**
  * Renders a {@link ModelAndView}.
- *
+ * @param <T> The model type
+ * @param <R> The request type
  * @since 6.0.0
  * @author Tim Yates
  */
 @FunctionalInterface
 @DefaultImplementation(DefaultModelAndViewRenderer.class)
-public interface ModelAndViewRenderer {
+public interface ModelAndViewRenderer<T, R> {
 
     @NonNull
-    Optional<Writable> render(@NonNull ModelAndView<?> modelAndView,
-                              @Nullable HttpRequest<?> request);
+    Optional<Writable> render(@NonNull ModelAndView<T> modelAndView,
+                              @Nullable R request);
 }

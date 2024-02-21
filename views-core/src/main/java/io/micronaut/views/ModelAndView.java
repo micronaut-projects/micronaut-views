@@ -71,11 +71,13 @@ public class ModelAndView<T> {
      * @param response The response
      * @return The model and view
      */
-    public static Optional<ModelAndView> of(HttpRequest<?> request, MutableHttpResponse<?> response) {
+    @NonNull
+    public static Optional<ModelAndView> of(@NonNull HttpRequest<?> request, @NonNull MutableHttpResponse<?> response) {
         return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
             .flatMap(routeMatch -> of(request, routeMatch));
     }
 
+    @NonNull
     private static Optional<ModelAndView> of(@NonNull HttpRequest<?> request, @NonNull AnnotationMetadata route) {
         // Not a view
         if (!route.hasAnnotation(View.class)) {
@@ -99,17 +101,18 @@ public class ModelAndView<T> {
         return Optional.of(modelAndView);
     }
 
-    private static boolean isATurboRequest(HttpRequest<?> request, AnnotationMetadata routeMatch) {
+    private static boolean isATurboRequest(@NonNull HttpRequest<?> request, @NonNull AnnotationMetadata routeMatch) {
         return routeMatch.hasAnnotation(TurboView.class) && request.accept().contains(TURBO_STREAM_TYPE);
     }
 
-    private static boolean isNotAViewRoute(AnnotationMetadata routeMatch, Object body) {
+    private static boolean isNotAViewRoute(@NonNull AnnotationMetadata routeMatch, Object body) {
         return !(body instanceof ModelAndView) && !routeMatch.hasAnnotation(View.class);
     }
 
     /**
      * @return view name to be rendered
      */
+    @NonNull
     public Optional<String> getView() {
         return Optional.ofNullable(view);
     }

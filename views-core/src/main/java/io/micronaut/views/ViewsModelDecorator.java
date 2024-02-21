@@ -17,20 +17,22 @@ package io.micronaut.views;
 
 import io.micronaut.context.annotation.DefaultImplementation;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.http.HttpRequest;
 
 /**
  * Decorates a Views Model.
+ * @param <T> The model type
+ * @param <R> The request type
  * @author Sergio del Amo
  * @since 3.0.0
  */
 @DefaultImplementation(DefaultViewsModelDecorator.class)
-public interface ViewsModelDecorator {
+@FunctionalInterface
+public interface ViewsModelDecorator<T, R> {
     /**
      * decorates a model.
      *
-     * @param request      The http request this model relates to.
+     * @param request      The request this model relates to.
      * @param modelAndView The ModelAndView to be enhanced.
      */
-     void decorate(HttpRequest<?> request, @NonNull ModelAndView<?> modelAndView);
+     void decorate(R request, @NonNull ModelAndView<T> modelAndView);
 }
