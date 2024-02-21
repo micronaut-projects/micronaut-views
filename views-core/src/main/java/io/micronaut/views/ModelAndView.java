@@ -65,18 +65,19 @@ public class ModelAndView<T> {
     /**
      * Build a ModelAndView from the matched route (if any).
      *
+     * @param <T>      The model type
      * @param request  The request
      * @param response The response
      * @return The model and view
      */
     @NonNull
-    public static Optional<ModelAndView> of(@NonNull HttpRequest<?> request, @NonNull MutableHttpResponse<?> response) {
+    public static <T> Optional<ModelAndView<T>> of(@NonNull HttpRequest<?> request, @NonNull MutableHttpResponse<?> response) {
         return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
             .flatMap(routeMatch -> of(request, routeMatch));
     }
 
     @NonNull
-    private static Optional<ModelAndView> of(@NonNull HttpRequest<?> request, @NonNull AnnotationMetadata route) {
+    private static <T> Optional<ModelAndView<T>> of(@NonNull HttpRequest<?> request, @NonNull AnnotationMetadata route) {
         // Not a view
         if (!route.hasAnnotation(View.class)) {
             return Optional.empty();
@@ -93,7 +94,7 @@ public class ModelAndView<T> {
             return Optional.empty();
         }
 
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView<T> modelAndView = new ModelAndView<>();
         route.stringValue(View.class).ifPresent(modelAndView::setView);
         modelAndView.setContentType(route.stringValue(Produces.class).orElse(MediaType.TEXT_HTML));
         return Optional.of(modelAndView);
