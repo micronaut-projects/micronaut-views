@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test
 
 @Property(name = "spec.name", value = "AsyncSpec")
 @Property(name = "micronaut.views.soy.enabled", value = StringUtils.FALSE)
+@Property(name = "micronaut.security.enabled", value = StringUtils.FALSE)
 @MicronautTest
 class AsyncTest  {
     @Inject
