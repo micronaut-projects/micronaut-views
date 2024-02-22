@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
  * @since 3.3.0
  */
 public final class TurboStream implements Renderable {
+
     private static final String TURBO_TEMPLATE_TAG = "template";
     private static final String TURBO_STREAM_TAG = "turbo-stream";
     private static final String TURBO_STREAM_CLOSING_TAG = "</turbo-stream>";
@@ -131,14 +132,14 @@ public final class TurboStream implements Renderable {
     }
 
     private Optional<Writable> writableOfTemplate(Object template) {
-        if (template instanceof CharSequence) {
-            return Optional.of(out -> out.write(renderTurboStreamOpeningTag() + htmlTag(TURBO_TEMPLATE_TAG, (CharSequence) template) + renderTurboStreamClosingTag()));
+        if (template instanceof CharSequence charSequence) {
+            return Optional.of(out -> out.write(renderTurboStreamOpeningTag() + htmlTag(TURBO_TEMPLATE_TAG, charSequence) + renderTurboStreamClosingTag()));
         }
-        if (template instanceof Writable) {
+        if (template instanceof Writable writable) {
             return Optional.of(out -> {
                 out.write(renderTurboStreamOpeningTag());
                 out.write(openHtmlTag(TURBO_TEMPLATE_TAG));
-                ((Writable) template).writeTo(out);
+                writable.writeTo(out);
                 out.write(closeHtmlTag(TURBO_TEMPLATE_TAG));
                 out.write(renderTurboStreamClosingTag());
             });
