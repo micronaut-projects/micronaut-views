@@ -13,31 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views;
+package io.micronaut.views.http;
 
-import io.micronaut.context.annotation.DefaultImplementation;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.core.io.Writable;
+import io.micronaut.core.order.Ordered;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
+
 import java.util.Optional;
 
 /**
- * Renders a {@link ModelAndView}.
- * @param <T> The model type
- * @param <R> The request type
+ * A functional interface to swap the response's body with a new one.
+ * @param <B> The response body
+ * @author Sergio del Amo
  * @since 6.0.0
- * @author Tim Yates
  */
 @FunctionalInterface
-@DefaultImplementation(DefaultModelAndViewRenderer.class)
-public interface ModelAndViewRenderer<T, R> {
+public interface ResponseBodySwapper<B> extends Ordered {
     /**
-     * Renders a {@link ModelAndView} into a {@link Writable}.
-     * @param modelAndView Model And View
-     * @param request Request
-     * @param mediaType Media Type
-     * @return a {@link ModelAndView} into a {@link Writable}
+     * Returns a new response body to swap the Response body with or an empty optional.
+     * @param request The request
+     * @param response The response
+     * @return A new response body or an empty optional
      */
     @NonNull
-    Optional<Writable> render(@NonNull ModelAndView<T> modelAndView, @Nullable R request, @NonNull String mediaType);
+    Optional<ResponseBodySwap<B>> swap(@NonNull HttpRequest<?> request, @Nullable HttpResponse<?> response);
 }

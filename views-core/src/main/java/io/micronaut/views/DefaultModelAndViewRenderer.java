@@ -15,9 +15,11 @@
  */
 package io.micronaut.views;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
+import io.micronaut.http.HttpRequest;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -27,20 +29,20 @@ import java.util.Optional;
  * <p>
  * Given a {@link ModelAndView} it will find the view by name, and render it with the model.
  * @param <T> The model type
- * @param <R> The request type
  * @author Tim Yates
  * @since 6.0.0
  */
+@Requires(classes = HttpRequest.class)
 @Singleton
 @Internal
-public class DefaultModelAndViewRenderer<T, R> implements ModelAndViewRenderer<T, R> {
+public class DefaultModelAndViewRenderer<T> implements ModelAndViewRenderer<T, HttpRequest<?>> {
 
     protected final ViewsRendererLocator viewsRendererLocator;
-    private final ViewsModelDecorator<T, R> viewsModelDecorator;
+    private final ViewsModelDecorator<T, HttpRequest<?>> viewsModelDecorator;
 
     public DefaultModelAndViewRenderer(
         ViewsRendererLocator viewsRendererLocator,
-        ViewsModelDecorator<T, R> viewsModelDecorator
+        ViewsModelDecorator<T, HttpRequest<?>> viewsModelDecorator
     ) {
         this.viewsRendererLocator = viewsRendererLocator;
         this.viewsModelDecorator = viewsModelDecorator;
@@ -48,12 +50,12 @@ public class DefaultModelAndViewRenderer<T, R> implements ModelAndViewRenderer<T
 
     @Override
     @NonNull
-    public Optional<Writable> render(ModelAndView<T> modelAndView, R request) {
+    public Optional<Writable> render(ModelAndView<T> modelAndView, HttpRequest<?> request, String mediaType) {
         return modelAndView.getView()
             .flatMap(viewName -> {
                 viewsModelDecorator.decorate(request, modelAndView);
                 Object model = modelAndView.getModel().orElse(null);
-                return viewsRendererLocator.resolveViewsRenderer(viewName, modelAndView.getContentType(), model)
+                return viewsRendererLocator.resolveViewsRenderer(viewName, mediaType, model)
                     .map(renderer -> renderer.render(viewName, model, request));
             });
     }
