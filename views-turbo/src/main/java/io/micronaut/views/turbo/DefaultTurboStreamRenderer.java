@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.turbo;
 
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
@@ -26,14 +27,16 @@ import java.util.Optional;
 
 /**
  * {@link io.micronaut.context.annotation.DefaultImplementation} of {@link TurboStreamRenderer}.
+ *
  * @param <R> The request type
  * @author Sergio del Amo
  * @since 3.3.0
  */
 @Singleton
-public class DefaultTurboStreamRenderer<R> implements TurboStreamRenderer<R> {
+@Internal
+final class DefaultTurboStreamRenderer<R> implements TurboStreamRenderer<R> {
 
-    protected final ViewsRendererLocator viewsRendererLocator;
+    private final ViewsRendererLocator viewsRendererLocator;
 
     public DefaultTurboStreamRenderer(ViewsRendererLocator viewsRendererLocator) {
         this.viewsRendererLocator = viewsRendererLocator;
@@ -44,13 +47,13 @@ public class DefaultTurboStreamRenderer<R> implements TurboStreamRenderer<R> {
     public Optional<Writable> render(@NonNull TurboStream.Builder builder,
                                      @Nullable R request) {
         return builder.getTemplateView()
-                .map(viewName ->  {
-                    Object model =  builder.getTemplateModel().orElse(null);
-                    return viewsRendererLocator.resolveViewsRenderer(viewName, TurboMediaType.TURBO_STREAM, model)
-                            .flatMap(renderer -> builder.template(renderer.render(viewName, model, request))
-                                    .build()
-                                    .render());
-                })
-                .orElseGet(() -> builder.build().render());
+            .map(viewName -> {
+                Object model = builder.getTemplateModel().orElse(null);
+                return viewsRendererLocator.resolveViewsRenderer(viewName, TurboMediaType.TURBO_STREAM, model)
+                    .flatMap(renderer -> builder.template(renderer.render(viewName, model, request))
+                        .build()
+                        .render());
+            })
+            .orElseGet(() -> builder.build().render());
     }
 }
