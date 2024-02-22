@@ -25,6 +25,7 @@ dependencies {
     testImplementation projects.micronautViewsSoy
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation projects.micronautViewsVelocity
+    testImplementation projects.micronautViewsHandlebars
 
     testRuntimeOnly(libs.junit.jupiter.engine)
     testRuntimeOnly(mnLogging.logback.classic)
