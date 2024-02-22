@@ -194,8 +194,8 @@ public final class TurboStream implements Renderable {
      * Turbo Stream Builder.
      */
     public static class Builder {
-        private static final Pattern DEFAULT_DOM_ID_PATTERN = Pattern.compile("^[A-Za-z]+[\\w\\-\\:\\.]*$");
-        private static final Pattern TARGET_CSS_QUERY_SELECTOR_PATTERN = Pattern.compile("^[\\w\\-\\:\\.]*$");
+        private static final Pattern DEFAULT_DOM_ID_PATTERN = Pattern.compile("^[A-Za-z]+[\\w\\-:.]*$");
+        private static final Pattern TARGET_CSS_QUERY_SELECTOR_PATTERN = Pattern.compile("^[\\w\\-:.]*$");
         private TurboStreamAction action;
         private String targetDomId;
         private String targetCssQuerySelector;
