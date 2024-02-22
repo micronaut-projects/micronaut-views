@@ -46,7 +46,7 @@ public class VelocityViewsRendererConfigurationProperties implements VelocityVie
     private String defaultExtension = DEFAULT_EXTENSION;
 
     /**
-     * enabled getter.
+     * Whether velocity views are enabled. Default value ({@value #DEFAULT_ENABLED}).
      *
      * @return boolean flag indicating whether {@link VelocityViewsRenderer} is enabled.
      */
@@ -56,6 +56,8 @@ public class VelocityViewsRendererConfigurationProperties implements VelocityVie
     }
 
     /**
+     * The default extension to use for velocity templates. Default value ({@value #DEFAULT_EXTENSION}).
+     *
      * @return Default extension for templates. By default {@value #DEFAULT_EXTENSION}.
      */
     @Override
@@ -64,7 +66,7 @@ public class VelocityViewsRendererConfigurationProperties implements VelocityVie
     }
 
     /**
-     * Whether velocity views are enabled. Default value ({@value #DEFAULT_ENABLED}).
+     * Whether velocity views are enabled.
      *
      * @param enabled True if they are
      */
@@ -73,7 +75,7 @@ public class VelocityViewsRendererConfigurationProperties implements VelocityVie
     }
 
     /**
-     * Sets the defautlt extension to use for velocity templates. Default value ({@value #DEFAULT_EXTENSION}).
+     * Sets the default extension to use for velocity templates.
      *
      * @param defaultExtension The default extension
      */

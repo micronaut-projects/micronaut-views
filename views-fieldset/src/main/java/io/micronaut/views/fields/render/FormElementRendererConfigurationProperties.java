@@ -27,10 +27,12 @@ import io.micronaut.views.ViewsConfigurationProperties;
 @Internal
 @ConfigurationProperties(FormElementRendererConfigurationProperties.PREFIX)
 public class FormElementRendererConfigurationProperties implements FormElementRendererConfiguration {
+
     /**
      * The prefix for form element rendering.
      */
     public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".form-element.render";
+
     /**
      * The default enable value.
      */
@@ -40,7 +42,7 @@ public class FormElementRendererConfigurationProperties implements FormElementRe
     private boolean enabled = DEFAULT_ENABLED;
 
     /**
-     * Enabled getter.
+     * Whether form element rendering is enabled. Default value ({@value #DEFAULT_ENABLED}).
      *
      * @return boolean flag indicating whether {@link FormElementRenderer} is enabled.
      */

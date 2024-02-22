@@ -29,10 +29,7 @@ class CustomSoyFileSetProvider(
                     builder.add(File(url.toURI()))
                 } catch (e: URISyntaxException) {
                     if (LOG.isWarnEnabled) {
-                        LOG.warn(
-                            "URISyntaxException raised while generating the SoyFileSet for folder {}",
-                            folder, e
-                        )
+                        LOG.warn("URISyntaxException raised while generating the SoyFileSet for folder {}", folder, e)
                     }
                 }
             }
@@ -42,8 +39,7 @@ class CustomSoyFileSetProvider(
 
     companion object {
         private val LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider::class.java)
-        private val VIEWS = arrayOf(
-            "home.soy"
-        )
+        private val VIEWS = arrayOf("home.soy")
     }
 }
+//end::clazz[]

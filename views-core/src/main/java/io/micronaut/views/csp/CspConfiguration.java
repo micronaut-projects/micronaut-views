@@ -90,15 +90,14 @@ public class CspConfiguration implements Toggleable {
         return randomEngine;
     }
 
-    /**
-     * @return Whether csp headers will be sent
-     */
     @Override
     public boolean isEnabled() {
         return enabled;
     }
 
     /**
+     * Sets the policy directives.
+     *
      * @return The policy directives
      */
     public Optional<String> getPolicyDirectives() {
@@ -106,6 +105,8 @@ public class CspConfiguration implements Toggleable {
     }
 
     /**
+     * If true, the Content-Security-Policy-Report-Only header will be sent instead of Content-Security-Policy. Default value ({@value #DEFAULT_REPORT_ONLY}).
+     *
      * @return Whether the report only header should be set
      */
     public boolean isReportOnly() {
@@ -127,6 +128,8 @@ public class CspConfiguration implements Toggleable {
     }
 
     /**
+     * The `Random` data engine used to generate nonce values. Ignored if `forceSecureRandom` is set to `true`.
+     *
      * @return Random data engine currently in use to generate nonce values.
      */
     public Random getRandomEngine() {
@@ -134,7 +137,7 @@ public class CspConfiguration implements Toggleable {
     }
 
     /**
-     * Sets whether CSP is enabled. Default {@value #DEFAULT_ENABLED}.
+     * Sets whether CSP is enabled. Default value ({@value #DEFAULT_ENABLED}).
      *
      * @param enabled True if CSP is enabled
      */
@@ -144,6 +147,7 @@ public class CspConfiguration implements Toggleable {
 
     /**
      * Sets the policy directives.
+     *
      * @param policyDirectives CSP policy directives
      */
     public void setPolicyDirectives(@Nullable String policyDirectives) {
@@ -152,7 +156,7 @@ public class CspConfiguration implements Toggleable {
 
     /**
      * If true, the Content-Security-Policy-Report-Only header will be sent instead
-     * of Content-Security-Policy. Default {@value #DEFAULT_REPORT_ONLY}.
+     * of Content-Security-Policy. Default value ({@value #DEFAULT_REPORT_ONLY}).
      *
      * @param reportOnly set to true for reporting purpose only
      */
@@ -173,7 +177,7 @@ public class CspConfiguration implements Toggleable {
 
     /**
      * Sets whether `SecureRandom` is forced for use in generated nonce values.
-     * Defaults to `{@value #DEFAULT_FORCE_SECURE_RANDOM}`. Enabling this requires
+     * Defaults to ({@value #DEFAULT_FORCE_SECURE_RANDOM}). Enabling this requires
      * careful consideration, because `SecureRandom` will block infinitely without
      * enough entropy.
      *
@@ -184,8 +188,7 @@ public class CspConfiguration implements Toggleable {
     }
 
     /**
-     * Sets the `Random` data engine used to generate nonce values. Ignored if
-     * `forceSecureRandom` is set to `true`.
+     * Sets the `Random` data engine used to generate nonce values. Ignored if `forceSecureRandom` is set to `true`.
      *
      * @param randomEngine Random data engine to use.
      */
@@ -194,6 +197,8 @@ public class CspConfiguration implements Toggleable {
     }
 
     /**
+     * The path the CSP filter should apply to. Default value ({@value #DEFAULT_FILTER_PATH}).
+     *
      * @return The path the CSP filter should apply to
      */
     public String getFilterPath() {
@@ -201,7 +206,7 @@ public class CspConfiguration implements Toggleable {
     }
 
     /**
-     * Sets the path the CSP filter should apply to. Default value {@value #DEFAULT_FILTER_PATH}.
+     * Sets the path the CSP filter should apply to. Default value ({@value #DEFAULT_FILTER_PATH}).
      *
      * @param filterPath The filter path
      */
@@ -210,11 +215,9 @@ public class CspConfiguration implements Toggleable {
     }
 
     /**
-     * Generate a nonce value for use in a Content-Security-Policy header, which
-     * is usable for one request/response cycle.
-     *
-     * A good guide for generating nonce values:
-     * https://csp.withgoogle.com/docs/faq.html#generating-nonces
+     * Generate a nonce value for use in a Content-Security-Policy header, which is usable for one request/response cycle.
+     * <p>
+     * <a href="https://csp.withgoogle.com/docs/faq.html#generating-nonces">A good guide for generating nonce values</a>
      *
      * @return Base64-encoded random nonce value.
      */

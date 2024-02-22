@@ -31,17 +31,17 @@ import java.util.Properties;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link FreemarkerViewsRendererConfiguration}.
- * 
+ *
  * All configured properties are extracted from {@link freemarker.template.Configuration} and
  * {@link freemarker.core.Configurable}. All Freemarker properties names are reused in the micronaut
  * configuration.
- * 
+ *
  * If a value is not declared and is null, the default configuration from Freemarker is used. The expected
  * format of each value is the same from Freemarker, and no conversion or validation is done by Micronaut.
- * 
+ *
  * All Freemarker configuration documentation is published in their
  * <a href="https://freemarker.apache.org/docs/pgui_config.html">site</a>.
- * 
+ *
  * @author Jerónimo López
  * @since 1.1
  */
@@ -85,6 +85,11 @@ public class FreemarkerViewsRendererConfigurationProperties extends Configuratio
         }
     }
 
+    /**
+     * Whether freemarker views are enabled. Default value ({@value #DEFAULT_ENABLED}).
+     *
+     * @return boolean flag indicating whether {@link FreemarkerViewsRenderer} is enabled.
+     */
     @Override
     public boolean isEnabled() {
         return enabled;
@@ -100,6 +105,8 @@ public class FreemarkerViewsRendererConfigurationProperties extends Configuratio
     }
 
     /**
+     * The default extension to use for freemarker templates. Default value ({@value #DEFAULT_EXTENSION}).
+     *
      * @return The default extension to use
      */
     public @NonNull String getDefaultExtension() {
@@ -117,6 +124,11 @@ public class FreemarkerViewsRendererConfigurationProperties extends Configuratio
     }
 
     /**
+     * The FreeMarker version number where the not 100% backward compatible bug fixes and
+     * improvements that you want to enable were already implemented.
+     * <p>
+     * Defaults to {@link Configuration#DEFAULT_INCOMPATIBLE_IMPROVEMENTS}.
+     *
      * @return An optional version number
      */
     public Version getIncompatibleImprovements() {
