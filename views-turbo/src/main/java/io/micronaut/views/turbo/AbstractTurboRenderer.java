@@ -31,8 +31,7 @@ import java.util.Optional;
  * @param <T> The class to be built
  */
 @Internal
-public abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
-
+abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
     private final ViewsRendererLocator viewsRendererLocator;
     private final String mediaType;
 
