@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Turbo related classes.
- * <a href="https://turbo.hotwired.dev">Turbo</a>
- * @author Sergio del Amo
- * @since 3.3.0
- */
-@Requires(beans = TurboConfiguration.class)
-@Configuration
 package io.micronaut.views.turbo;
 
-import io.micronaut.context.annotation.Configuration;
-import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.util.Toggleable;
+
+/**
+ * Defines Turbo integration configuration.
+ *
+ * @author Sergio del Amo
+ * @since 6.0.0
+ */
+public interface TurboConfiguration extends Toggleable {
+}
