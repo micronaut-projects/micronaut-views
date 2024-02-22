@@ -85,7 +85,7 @@ class TurboFrameResponseBodySwapper implements ResponseBodySwapper<TurboFrame.Bu
 
     @NonNull
     private static TurboFrame.Builder turboFrameBuilderOf(@NonNull AnnotationValue<TurboFrameView> ann,
-                                                   String id,
+                                                          String id,
                                                           @Nullable Object body) {
         TurboFrame.Builder builder = instantiateTurboFrameBuilder(body);
         builder.id(id);
