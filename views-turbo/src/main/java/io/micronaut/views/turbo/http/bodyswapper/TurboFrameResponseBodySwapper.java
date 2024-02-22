@@ -66,6 +66,7 @@ class TurboFrameResponseBodySwapper implements ResponseBodySwapper<TurboFrame.Bu
                 .map(b -> new ResponseBodySwap<>(b, TURBO_FRAME_MEDIA_TYPE));
     }
 
+    @NonNull
     private static Optional<TurboFrame.Builder> turboFrameBuilderInResponse(@Nullable Object body) {
         if (body instanceof TurboFrame.Builder) {
             return  Optional.of((TurboFrame.Builder) body);
@@ -75,6 +76,7 @@ class TurboFrameResponseBodySwapper implements ResponseBodySwapper<TurboFrame.Bu
         return Optional.empty();
     }
 
+    @NonNull
     private static TurboFrame.Builder instantiateTurboFrameBuilder(@Nullable Object body) {
         return turboFrameBuilderInResponse(body).orElseGet(TurboFrame::builder);
     }
