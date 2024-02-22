@@ -48,7 +48,7 @@ public class ModelAndViewResponseBodySwapper implements ResponseBodySwapper<Mode
             return Optional.empty();
         }
         Object body = response.body();
-        if (body instanceof ModelAndView modelAndView) {
+        if (body instanceof ModelAndView<?> modelAndView) {
             return Optional.of(new ResponseBodySwap<>(modelAndView, MediaType.TEXT_HTML));
         }
         return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
@@ -57,8 +57,8 @@ public class ModelAndViewResponseBodySwapper implements ResponseBodySwapper<Mode
                 .map(m -> new ResponseBodySwap<>(m, MediaType.TEXT_HTML));
     }
 
-    private ModelAndView modelAndViewOf(@NonNull AnnotationValue<View> an, @Nullable Object body) {
-        ModelAndView modelAndView = new ModelAndView<>();
+    private <T> ModelAndView<T> modelAndViewOf(@NonNull AnnotationValue<View> an, @Nullable T body) {
+        ModelAndView<T> modelAndView = new ModelAndView<>();
         an.stringValue().ifPresent(modelAndView::setView);
         if (body != null) {
             modelAndView.setModel(body);
