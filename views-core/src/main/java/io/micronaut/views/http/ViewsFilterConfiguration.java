@@ -16,6 +16,7 @@
 package io.micronaut.views.http;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.core.util.Toggleable;
 import io.micronaut.views.ViewsConfigurationProperties;
 
@@ -27,7 +28,7 @@ public class ViewsFilterConfiguration implements Toggleable {
 
     public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".filter";
     public static final boolean DEFAULT_ENABLED = true;
-    public static final String DEFAULT_ENABLED_AS_STRING = DEFAULT_ENABLED ? "true" : "false";
+    public static final String DEFAULT_ENABLED_AS_STRING = DEFAULT_ENABLED ? StringUtils.TRUE : StringUtils.FALSE;
     private boolean enabled = DEFAULT_ENABLED;
 
     /**
