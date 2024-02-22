@@ -4,13 +4,11 @@ import io.micronaut.context.BeanContext
 import io.micronaut.context.annotation.Property
 import io.micronaut.core.util.StringUtils
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
-import io.micronaut.views.turbo.TurboFrameBuilderHtmlMessageBodyWriter
-import io.micronaut.views.turbo.TurboFrameFilter
+import io.micronaut.views.turbo.http.bodywriter.TurboFrameBuilderHtmlMessageBodyWriter
 import io.micronaut.views.turbo.TurboFrameRenderer
-import io.micronaut.views.turbo.TurboStreamBuilderMessageBodyWriter
-import io.micronaut.views.turbo.TurboStreamFilter
-import io.micronaut.views.turbo.TurboStreamListOfBuilderMessageBodyWriter
-import io.micronaut.views.turbo.TurboStreamMessageBodyWriter
+import io.micronaut.views.turbo.http.bodywriter.TurboStreamBuilderMessageBodyWriter
+import io.micronaut.views.turbo.http.bodywriter.TurboStreamListOfBuilderMessageBodyWriter
+import io.micronaut.views.turbo.http.bodywriter.TurboStreamMessageBodyWriter
 import io.micronaut.views.turbo.TurboStreamRenderer
 import jakarta.inject.Inject
 import spock.lang.Specification
@@ -45,16 +43,6 @@ class TurboDisableSpec extends Specification {
     void "with turbo disabled no bean of type TurboStreamListOfBuilderMessageBodyWriter exists"() {
         expect:
         !beanContext.containsBean(TurboStreamListOfBuilderMessageBodyWriter)
-    }
-
-    void "with turbo disabled no bean of type TurboFrameFilter exists"() {
-        expect:
-        !beanContext.containsBean(TurboFrameFilter)
-    }
-
-    void "with turbo disabled no bean of type TurboStreamFilter exists"() {
-        expect:
-        !beanContext.containsBean(TurboStreamFilter)
     }
 
     void "with turbo disabled no bean of type TurboFrameRenderer exists"() {

@@ -1,7 +1,8 @@
-package io.micronaut.views.turbo
+package io.micronaut.views.turbo.http.bodywriter
 
 import io.micronaut.context.BeanContext
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import io.micronaut.views.turbo.http.bodywriter.TurboStreamBuilderMessageBodyWriter
 import jakarta.inject.Inject
 import spock.lang.Specification
 
