@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test
 @Property(name = "micronaut.views.soy.enabled", value = StringUtils.FALSE)
 @Property(name = "micronaut.security.enabled", value = StringUtils.FALSE)
 @MicronautTest
-class NonHTMLViewRendererTest() {
+class NonHTMLViewRendererTest {
 
     @Inject
     @field:Client("/")
@@ -100,7 +100,7 @@ class NonHTMLViewRendererTest() {
     @Produces(MediaType.TEXT_XML)
     @Requires(property = "spec.name", value = "CsvViewRendererSpec")
     @Singleton
-    class XmlViewRenderer() : ViewsRenderer<Library, HttpRequest<*>> {
+    class XmlViewRenderer : ViewsRenderer<Library, HttpRequest<*>> {
 
         override fun render(
             viewName: String,
@@ -122,7 +122,7 @@ class NonHTMLViewRendererTest() {
     @Produces(MediaType.TEXT_CSV)
     @Requires(property = "spec.name", value = "CsvViewRendererSpec")
     @Singleton
-    class SingleBookViewRenderer() : ViewsRenderer<Book, HttpRequest<*>> {
+    class SingleBookViewRenderer : ViewsRenderer<Book, HttpRequest<*>> {
 
         // this renderer should not be used because it specifies a different type
         override fun render(viewName: @NonNull String, data: @Nullable Book, request: @Nullable HttpRequest<*>) =
@@ -140,7 +140,7 @@ class NonHTMLViewRendererTest() {
     @Produces(MediaType.TEXT_CSV)
     @Requires(property = "spec.name", value = "CsvViewRendererSpec")
     @Singleton
-    class CsvViewRenderer() : ViewsRenderer<Library, HttpRequest<*>> {
+    class CsvViewRenderer : ViewsRenderer<Library, HttpRequest<*>> {
 
         override fun render(viewName: String?, data: Library, request: HttpRequest<*>) = Writable { out ->
             out.write(data.books.joinToString("\n") { "${it.isbn},${it.name}" })
@@ -157,9 +157,9 @@ class NonHTMLViewRendererTest() {
 
     @Requires(property = "spec.name", value = "CsvViewRendererSpec")
     @Controller("/books")
-    class BooksController() {
+    class BooksController {
 
-        val books: Library = Library(
+        private val books: Library = Library(
             listOf(
                 Book("1491950358", "Building Microservices"),
                 Book("1680502395", "Release It!"),

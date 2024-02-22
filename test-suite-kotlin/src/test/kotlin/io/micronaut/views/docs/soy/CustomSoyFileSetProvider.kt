@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory
 //tag::clazz[]
 @Singleton
 class CustomSoyFileSetProvider(
-    val resourceLoader: ResourceLoader,
+    private val resourceLoader: ResourceLoader,
     viewsConfiguration: ViewsConfiguration
 ) : SoyFileSetProvider {
 

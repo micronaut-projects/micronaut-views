@@ -90,7 +90,7 @@ class SecurityViewModelProcessorTest {
         ).use { embeddedServer ->
             HttpClient.create(embeddedServer.url).use { httpClient ->
                 //expect:
-                assertTrue(embeddedServer.applicationContext.containsBean(io.micronaut.views.model.security.BooksController::class.java))
+                assertTrue(embeddedServer.applicationContext.containsBean(BooksController::class.java))
 
                 //and:
                 assertTrue(embeddedServer.applicationContext.containsBean(MockAuthenticationProvider::class.java))

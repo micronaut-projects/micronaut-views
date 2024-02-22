@@ -66,7 +66,7 @@ class TurboViewTest {
 
     @Requires(property = "spec.name", value = "TurboViewTest")
     @Controller
-    class FruitController() {
+    class FruitController {
 
         //tag::turboview[]
         @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
