@@ -70,8 +70,8 @@ class TurboFrameResponseBodySwapper implements ResponseBodySwapper<TurboFrame.Bu
 
     @NonNull
     private static Optional<TurboFrame.Builder> turboFrameBuilderInResponse(@Nullable Object body) {
-        if (body instanceof TurboFrame.Builder) {
-            return  Optional.of((TurboFrame.Builder) body);
+        if (body instanceof TurboFrame.Builder turboBody) {
+            return  Optional.of(turboBody);
         } else if (body instanceof TurboFrame turboFrame) {
             return  Optional.of(turboFrame.toBuilder());
         }
