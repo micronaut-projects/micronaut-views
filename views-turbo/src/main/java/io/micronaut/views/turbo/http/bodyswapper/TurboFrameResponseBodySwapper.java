@@ -37,7 +37,7 @@ import java.util.Optional;
 @Internal
 @Singleton
 class TurboFrameResponseBodySwapper implements ResponseBodySwapper<TurboFrame.Builder> {
-    private static final String MEMBER_VALUE = "value";
+
     private static final String MEMBER_ACTION = "action";
     private static final String MEMBER_TARGET = "target";
     private static final String MEMBER_ID = "id";
@@ -85,7 +85,7 @@ class TurboFrameResponseBodySwapper implements ResponseBodySwapper<TurboFrame.Bu
                                                           @Nullable Object body) {
         TurboFrame.Builder builder = instantiateTurboFrameBuilder(body);
         builder.id(id);
-        ann.stringValue(MEMBER_VALUE).ifPresent(builder::templateView);
+        ann.stringValue().ifPresent(builder::templateView);
         ann.stringValue(MEMBER_ACTION)
                 .flatMap(VisitAction::of)
                 .ifPresent(builder::visitAction);

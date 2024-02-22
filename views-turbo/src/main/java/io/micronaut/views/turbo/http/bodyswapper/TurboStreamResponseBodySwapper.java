@@ -38,7 +38,6 @@ import java.util.Optional;
 @Internal
 @Singleton
 class TurboStreamResponseBodySwapper implements ResponseBodySwapper<TurboStream.Builder> {
-    private static final String MEMBER_VALUE = "value";
     private static final String MEMBER_ACTION = "action";
     private static final String MEMBER_TARGET_DOM_ID = "targetDomId";
     private static final String MEMBER_TARGET_CSS_QUERY_SELECTOR = "targetCssQuerySelector";
@@ -71,7 +70,7 @@ class TurboStreamResponseBodySwapper implements ResponseBodySwapper<TurboStream.
     @NonNull
     private static TurboStream.Builder of(@NonNull AnnotationValue<TurboView> turboViewAnnotation, @NonNull HttpHeaders httpHeaders, @Nullable Object body) {
         TurboStream.Builder builder = TurboStream.builder();
-        turboViewAnnotation.stringValue(MEMBER_VALUE).ifPresent(builder::templateView);
+        turboViewAnnotation.stringValue().ifPresent(builder::templateView);
         builder.action(turboViewAnnotation.enumValue(MEMBER_ACTION, TurboStreamAction.class).orElse(TurboStreamAction.UPDATE));
         turboViewAnnotation.stringValue(MEMBER_TARGET_DOM_ID).ifPresent(builder::targetDomId);
         turboViewAnnotation.stringValue(MEMBER_TARGET_CSS_QUERY_SELECTOR).ifPresent(builder::targetCssQuerySelector);
