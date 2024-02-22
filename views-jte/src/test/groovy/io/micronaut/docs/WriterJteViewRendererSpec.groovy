@@ -12,20 +12,4 @@ class WriterJteViewRendererSpec extends JteViewRendererSpec {
                 'micronaut.views.jte.dynamic': true
         ] as Map<String, Object>
     }
-
-    def "foo /jte/modelAndView renders jte template from a controller returning a ModelAndView instance"() {
-        when:
-        HttpResponse<String> rsp = client.toBlocking().exchange('/jte/modelAndView', String)
-
-        then:
-        noExceptionThrown()
-        rsp.status() == HttpStatus.OK
-
-        when:
-        String body = rsp.body()
-
-        then:
-        body
-        rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
-    }
 }
