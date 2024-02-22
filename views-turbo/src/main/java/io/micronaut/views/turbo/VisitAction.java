@@ -68,6 +68,7 @@ public enum VisitAction {
     }
 
     @NonNull
+    @SuppressWarnings("java:S2259") // StringUtils.isEmpty performs a null check
     public static Optional<VisitAction> of(@Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return Optional.empty();

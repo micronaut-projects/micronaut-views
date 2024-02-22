@@ -70,6 +70,7 @@ public enum Loading {
     }
 
     @NonNull
+    @SuppressWarnings("java:S2259") // StringUtils.isEmpty performs a null check
     public static Optional<Loading> of(@Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return Optional.empty();
