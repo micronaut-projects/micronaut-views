@@ -56,20 +56,16 @@ public class ResponseBodySwapperFilter {
         responsebodySwapper.swap(request, response)
                 .ifPresent(responseBodySwap -> {
                     response.body(responseBodySwap.body());
-                    populateResponseContentType(request, response, responseBodySwap);
+                    if (ArrayUtils.isEmpty(produces(response)) && responseBodySwap.mediaType() != null) {
+                        response.contentType(responseBodySwap.mediaType());
+                    }
                 });
-    }
-
-    private void populateResponseContentType(HttpRequest<?> request, MutableHttpResponse<?> response, ResponseBodySwap responseBodySwap) {
-        if (ArrayUtils.isEmpty(produces(response)) && responseBodySwap.mediaType() != null) {
-            response.contentType(responseBodySwap.mediaType());
-        }
     }
 
     @Nullable
     private String[] produces(@NonNull HttpResponse<?> response) {
         return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
-                .flatMap(route -> route.findAnnotation(Produces .class))
+                .flatMap(route -> route.findAnnotation(Produces.class))
                     .map(AnnotationValueResolver::stringValues)
                 .orElse(null);
     }
