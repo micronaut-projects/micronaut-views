@@ -83,35 +83,24 @@ public class SecurityViewModelProcessorConfigurationProperties implements Securi
 
     /**
      * Model key name. Default value ({@value #DEFAULT_SECURITYKEY}).
+     *
      * @param securityKey the key name which will be used in the model map.
      */
     public void setSecurityKey(String securityKey) {
         this.securityKey = securityKey;
     }
 
-    /**
-     *
-     * @return the key name which will be used in the model map.
-     */
     @Override
     public String getSecurityKey() {
         return this.securityKey;
     }
 
-    /**
-     *
-     * @return the key for the principal name property which is used in the nested security map.
-     */
     @NonNull
     @Override
     public String getPrincipalNameKey() {
         return this.principalNameKey;
     }
 
-    /**
-     *
-     * @return the key for the attributes property which is used in the nested security map.
-     */
     @NonNull
     @Override
     public String getAttributesKey() {
@@ -120,6 +109,7 @@ public class SecurityViewModelProcessorConfigurationProperties implements Securi
 
     /**
      * Nested security map key for the user's name property. Default value ({@value #DEFAULT_PRINCIPALNAME}).
+     *
      * @param principalNameKey the key which will be used in the nested security map.
      */
     public void setPrincipalNameKey(@NonNull String principalNameKey) {
@@ -128,6 +118,7 @@ public class SecurityViewModelProcessorConfigurationProperties implements Securi
 
     /**
      * Nested security map key for the user's attributes property. Default value ({@value #DEFAULT_ATTRIBUTESKEY}).
+     *
      * @param attributesKey the key which will be used in the nested security map.
      */
     public void setAttributesKey(@NonNull String attributesKey) {

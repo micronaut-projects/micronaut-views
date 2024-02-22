@@ -49,7 +49,7 @@ public class ViewsConfigurationProperties implements ViewsConfiguration {
     private String folder = DEFAULT_FOLDER;
 
     /**
-     * enabled getter.
+     * Whether view rendering is enabled. Default value ({@value #DEFAULT_ENABLED}).
      *
      * @return boolean flag indicating whether the security features are enabled.
      */
@@ -59,7 +59,9 @@ public class ViewsConfigurationProperties implements ViewsConfiguration {
     }
 
     /**
-     * @return The resources' folder where views should be searched for. By default {@value #DEFAULT_FOLDER}
+     * The resources' folder where views should be searched for. Default value ({@value #DEFAULT_FOLDER}).
+     *
+     * @return The folder
      */
     @Override
     public String getFolder() {
@@ -76,7 +78,7 @@ public class ViewsConfigurationProperties implements ViewsConfiguration {
     }
 
     /**
-     * The folder to look for views.
+     * The resources' folder where views should be searched for. Default value ({@value #DEFAULT_FOLDER}).
      *
      * @param folder The folder
      */

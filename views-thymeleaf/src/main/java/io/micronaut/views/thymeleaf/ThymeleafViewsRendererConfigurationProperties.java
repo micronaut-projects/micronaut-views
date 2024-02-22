@@ -79,6 +79,8 @@ public class ThymeleafViewsRendererConfigurationProperties implements ThymeleafV
     private boolean checkExistence = AbstractConfigurableTemplateResolver.DEFAULT_EXISTENCE_CHECK;
 
     /**
+     * The character encoding to use. Default value ({@value #DEFAULT_CHARACTER_ENCODING}).
+     *
      * @return the character encoding.
      *
      * @see AbstractConfigurableTemplateResolver#getCharacterEncoding()
@@ -89,6 +91,8 @@ public class ThymeleafViewsRendererConfigurationProperties implements ThymeleafV
     }
 
     /**
+     * The template mode to be used.
+     *
      * @return the template mode to be used.
      * @see AbstractConfigurableTemplateResolver#getTemplateMode()
      */
@@ -98,6 +102,8 @@ public class ThymeleafViewsRendererConfigurationProperties implements ThymeleafV
     }
 
     /**
+     * The suffix to use. Default value ({@value #DEFAULT_SUFFIX}).
+     *
      * @return the suffix. Default value {@value #DEFAULT_SUFFIX}
      * @see AbstractConfigurableTemplateResolver#getSuffix()
      */
@@ -107,6 +113,8 @@ public class ThymeleafViewsRendererConfigurationProperties implements ThymeleafV
     }
 
     /**
+     * Sets whether to force the suffix. Default value ({@value #DEFAULT_FORCESUFFIX}).
+     *
      * @return whether the suffix will be forced or not.
      * @see AbstractConfigurableTemplateResolver#getForceSuffix()
      */
@@ -116,6 +124,8 @@ public class ThymeleafViewsRendererConfigurationProperties implements ThymeleafV
     }
 
     /**
+     * Whether to force template mode. Default value ({@value #DEFAULT_FORCETEMPLATEMODE}).
+     *
      * @return whether the suffix will be forced or not.
      * @see AbstractConfigurableTemplateResolver#getForceTemplateMode()
      */
@@ -125,6 +135,8 @@ public class ThymeleafViewsRendererConfigurationProperties implements ThymeleafV
     }
 
     /**
+     * The cache TTL in millis.
+     *
      * @return the cache TTL for resolved templates.
      * @see AbstractConfigurableTemplateResolver#getCacheTTLMs()
      */
@@ -134,6 +146,8 @@ public class ThymeleafViewsRendererConfigurationProperties implements ThymeleafV
     }
 
     /**
+     * Whether templates should be checked for existence.
+     *
      * @return {@literal true} if resource existence will be checked, {@literal false} if not
      * @see AbstractConfigurableTemplateResolver#getCheckExistence()
      */
@@ -143,6 +157,8 @@ public class ThymeleafViewsRendererConfigurationProperties implements ThymeleafV
     }
 
     /**
+     * Whether templates are cacheable.
+     *
      * @return whether templates resolved are cacheable or not.
      * @see AbstractConfigurableTemplateResolver#isCacheable()
      */
@@ -152,7 +168,7 @@ public class ThymeleafViewsRendererConfigurationProperties implements ThymeleafV
     }
 
     /**
-     * enabled getter.
+     * Whether thymeleaf rendering is enabled. Default value ({@value #DEFAULT_ENABLED}).
      *
      * @return boolean flag indicating whether {@link ThymeleafViewsRenderer} is enabled.
      */
