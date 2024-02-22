@@ -1,8 +1,5 @@
 package io.micronaut.docs
 
-import io.micronaut.http.HttpResponse
-import io.micronaut.http.HttpStatus
-
 class WriterJteViewRendererSpec extends JteViewRendererSpec {
     @Override
     Map<String, Object> getTestProperties() {
