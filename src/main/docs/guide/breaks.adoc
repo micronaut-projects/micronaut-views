@@ -2,11 +2,16 @@ This section outlines the breaking changes done in major versions of Micronaut V
 
 === 6.0.0
 
-Turbo integration has been moved to its own dependency. To use the Turbo integration, add the following dependency:
-
+- Turbo integration has been moved to its own dependency. To use the Turbo integration, add the following
+   dependency:
++
 dependency:micronaut-views-turbo[groupId="io.micronaut.views"]
-
++
 The annotation `@TurboView` has been renamed to ann:views.turbo.TurboStreamView[].
+
+- The `ViewsModelDecorator` and `TurboStreamRenderer` now have generic types for their data and Request type, which breaks binary compatibility.
+
+- The global `ViewsFilter` has been removed and replaced with individual `ResponseFilters`.
 
 === 4.0.0
 
