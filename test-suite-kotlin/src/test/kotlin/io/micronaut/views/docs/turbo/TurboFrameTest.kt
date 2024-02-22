@@ -21,7 +21,6 @@ import io.micronaut.views.turbo.TurboView
 import io.micronaut.views.turbo.http.TurboHttpHeaders
 import io.micronaut.views.turbo.http.TurboMediaType
 import jakarta.inject.Inject
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue

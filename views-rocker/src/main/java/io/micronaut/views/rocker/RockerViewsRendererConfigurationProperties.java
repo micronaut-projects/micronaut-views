@@ -59,7 +59,7 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
     private boolean relaxed = DEFAULT_RELAXED;
 
     /**
-     * Enabled getter.
+     * Whether Rocker views are enabled. Default value ({@value #DEFAULT_ENABLED}).
      *
      * @return boolean flag indicating whether {@link RockerViewsRenderer} is enabled.
      */
@@ -69,6 +69,8 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
     }
 
     /**
+     * The default extension to use for Rocker templates. Default value ({@value #DEFAULT_EXTENSION}).
+     *
      * @return Default extension for templates. By default {@value #DEFAULT_EXTENSION}.
      */
     @Override
@@ -77,7 +79,7 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
     }
 
     /**
-     * Hot reloading getter.
+     * Whether hot reloading is enabled. Default value ({@value #DEFAULT_HOT_RELOADING}).
      *
      * @return boolean flag indicating whether hot reloading is enabled.
      */
@@ -87,7 +89,7 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
     }
 
     /**
-     * Relaxed binding getter.
+     * Whether relaxed binding is enabled for dynamic templates. Default value ({@value #DEFAULT_RELAXED}).
      *
      * @return boolean flag indicating whether relaxed binding is enabled for dynamic templates.
      */
@@ -95,7 +97,7 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
     public boolean isRelaxed() {
         return relaxed;
     }
-    
+
     /**
      * Whether Rocker views are enabled. Default value ({@value #DEFAULT_ENABLED}).
      *

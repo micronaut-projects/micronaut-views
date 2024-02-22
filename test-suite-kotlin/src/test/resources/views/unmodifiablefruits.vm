@@ -1,0 +1,20 @@
+#* @vtlvariable name="fruit" type="io.micronaut.views.model.FruitsController.Fruit" *#
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Fruits</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Fruits</title>
+</head>
+<body>
+#if( $security )
+    <blink>Security was added</blink>
+#end
+<h1>fruit: $fruit.getName()</h1>
+<h1>color: $fruit.getColor()</h1>
+</body>
+</html>

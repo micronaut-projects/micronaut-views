@@ -50,7 +50,7 @@ public class HandlebarsViewsRendererConfigurationProperties implements Handlebar
     private String defaultExtension = DEFAULT_EXTENSION;
 
     /**
-     * enabled getter.
+     * Whether handlebars view rendering is enabled. Default value ({@value #DEFAULT_ENABLED}).
      *
      * @return boolean flag indicating whether {@link HandlebarsViewsRenderer} is enabled.
      */
@@ -60,6 +60,8 @@ public class HandlebarsViewsRendererConfigurationProperties implements Handlebar
     }
 
     /**
+     * The default file extension for templates. Default value ({@value #DEFAULT_EXTENSION}).
+     *
      * @return Default extension for templates. By default {@value #DEFAULT_EXTENSION}.
      */
     @Override
