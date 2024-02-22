@@ -48,12 +48,12 @@ public class DefaultModelAndViewRenderer<T, R> implements ModelAndViewRenderer<T
 
     @Override
     @NonNull
-    public Optional<Writable> render(ModelAndView<T> modelAndView, R request) {
+    public Optional<Writable> render(ModelAndView<T> modelAndView, R request, String mediaType) {
         return modelAndView.getView()
             .flatMap(viewName -> {
                 viewsModelDecorator.decorate(request, modelAndView);
                 Object model = modelAndView.getModel().orElse(null);
-                return viewsRendererLocator.resolveViewsRenderer(viewName, modelAndView.getContentType(), model)
+                return viewsRendererLocator.resolveViewsRenderer(viewName, mediaType, model)
                     .map(renderer -> renderer.render(viewName, model, request));
             });
     }

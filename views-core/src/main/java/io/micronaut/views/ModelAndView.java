@@ -15,17 +15,7 @@
  */
 package io.micronaut.views;
 
-import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.http.HttpAttributes;
-import io.micronaut.http.HttpRequest;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.MutableHttpResponse;
-import io.micronaut.http.annotation.Produces;
-import io.micronaut.views.turbo.TurboFrameView;
-import io.micronaut.views.turbo.TurboView;
-import io.micronaut.views.turbo.http.TurboHttpHeaders;
-import io.micronaut.views.turbo.http.TurboMediaType;
 
 import java.util.Optional;
 
@@ -43,8 +33,6 @@ public class ModelAndView<T> {
 
     private T model;
 
-    private String contentType = MediaType.TEXT_HTML;
-
     /**
      * Empty constructor.
      */
@@ -60,44 +48,6 @@ public class ModelAndView<T> {
     public ModelAndView(String view, T model) {
         this.view = view;
         this.model = model;
-    }
-
-    /**
-     * Build a ModelAndView from the matched route (if any).
-     *
-     * @param <T>      The model type
-     * @param request  The request
-     * @param response The response
-     * @return The model and view
-     */
-    @NonNull
-    public static <T> Optional<ModelAndView<T>> of(@NonNull HttpRequest<?> request, @NonNull MutableHttpResponse<?> response) {
-        return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
-            .flatMap(routeMatch -> of(request, routeMatch));
-    }
-
-    @NonNull
-    private static <T> Optional<ModelAndView<T>> of(@NonNull HttpRequest<?> request, @NonNull AnnotationMetadata route) {
-        // Not a view
-        if (!route.hasAnnotation(View.class)) {
-            return Optional.empty();
-        }
-
-        // Handled by TurboStream#of
-        if (TurboMediaType.acceptsTurboStream(request) && route.hasAnnotation(TurboView.class)) {
-            return Optional.empty();
-        }
-
-        // Handled by TurboFrame#of
-        Optional<String> turboFrameOptional = request.getHeaders().get(TurboHttpHeaders.TURBO_FRAME, String.class);
-        if (turboFrameOptional.isPresent() && route.hasAnnotation(TurboFrameView.class)) {
-            return Optional.empty();
-        }
-
-        ModelAndView<T> modelAndView = new ModelAndView<>();
-        route.stringValue(View.class).ifPresent(modelAndView::setView);
-        modelAndView.setContentType(route.stringValue(Produces.class).orElse(MediaType.TEXT_HTML));
-        return Optional.of(modelAndView);
     }
 
     /**
@@ -131,21 +81,5 @@ public class ModelAndView<T> {
      */
     public void setModel(T model) {
         this.model = model;
-    }
-
-    /**
-     * @return The content type to render
-     */
-    public String getContentType() {
-        return contentType;
-    }
-
-    /**
-     * Sets the content type to render.
-     *
-     * @param contentType The content type
-     */
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 }

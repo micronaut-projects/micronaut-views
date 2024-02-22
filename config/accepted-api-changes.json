@@ -93,5 +93,565 @@
     "type": "io.micronaut.views.ViewsFilter",
     "member": "Constructor io.micronaut.views.ViewsFilter(io.micronaut.views.ViewsResolver,io.micronaut.views.ViewsRendererLocator,io.micronaut.views.ViewsModelDecorator,io.micronaut.views.turbo.TurboFrameRenderer)",
     "reason": "Removal of the central ViewsFilter for Micronaut 5 (Views 6.0.0)"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Field $ANNOTATION_METADATA",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Constructor io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference()",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationSource",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanContextConditional",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataProvider",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.beans.BeanInfo",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataDelegate",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadata",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.QualifiedBeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.type.ArgumentCoercible",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboFrameRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanDefinitionReference",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Field $ANNOTATION_METADATA",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Constructor io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference()",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationSource",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanContextConditional",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataProvider",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.beans.BeanInfo",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataDelegate",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadata",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.QualifiedBeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.type.ArgumentCoercible",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$DefaultTurboStreamRenderer$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanDefinitionReference",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Field $ANNOTATION_METADATA",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Constructor io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference()",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationSource",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanContextConditional",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataProvider",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.beans.BeanInfo",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataDelegate",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadata",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.QualifiedBeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.type.ArgumentCoercible",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanDefinitionReference",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Field $ANNOTATION_METADATA",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Constructor io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference()",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationSource",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanContextConditional",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataProvider",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.beans.BeanInfo",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataDelegate",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadata",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.QualifiedBeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.type.ArgumentCoercible",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamFilter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanDefinitionReference",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Field $ANNOTATION_METADATA",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Constructor io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference()",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationSource",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanContextConditional",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataProvider",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.beans.BeanInfo",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataDelegate",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadata",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.QualifiedBeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.type.ArgumentCoercible",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamListOfBuilderMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanDefinitionReference",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Field $ANNOTATION_METADATA",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Constructor io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference()",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationSource",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanContextConditional",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataProvider",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.beans.BeanInfo",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadataDelegate",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.annotation.AnnotationMetadata",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.QualifiedBeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.core.type.ArgumentCoercible",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanType",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.$TurboStreamMessageBodyWriter$Definition$Reference",
+    "member": "Implemented interface io.micronaut.inject.BeanDefinitionReference",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.AbstractTurboRenderer",
+    "member": "Constructor io.micronaut.views.turbo.AbstractTurboRenderer(io.micronaut.views.ViewsRendererLocator,java.lang.String)",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.DefaultTurboFrameRenderer",
+    "member": "Constructor io.micronaut.views.turbo.DefaultTurboFrameRenderer(io.micronaut.views.ViewsRendererLocator)",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.DefaultTurboFrameRenderer",
+    "member": "Implemented interface io.micronaut.views.turbo.TurboFrameRenderer",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.DefaultTurboStreamRenderer",
+    "member": "Field viewsRendererLocator",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.DefaultTurboStreamRenderer",
+    "member": "Constructor io.micronaut.views.turbo.DefaultTurboStreamRenderer(io.micronaut.views.ViewsRendererLocator)",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.DefaultTurboStreamRenderer",
+    "member": "Implemented interface io.micronaut.views.turbo.TurboStreamRenderer",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.http.TurboHttpHeaders",
+    "member": "Field TURBO_FRAME",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.http.TurboMediaType",
+    "member": "Field TURBO_STREAM",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.http.TurboMediaType",
+    "member": "Field TURBO_STREAM_TYPE",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.Loading",
+    "member": "Field EAGER",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.Loading",
+    "member": "Field LAZY",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.Loading",
+    "member": "Implemented interface java.lang.constant.Constable",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.Loading",
+    "member": "Implemented interface java.lang.Comparable",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.Loading",
+    "member": "Implemented interface java.io.Serializable",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboFrame",
+    "member": "Implemented interface io.micronaut.views.Renderable",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboFrame$Builder",
+    "member": "Constructor io.micronaut.views.turbo.TurboFrame$Builder()",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboFrameView",
+    "member": "Implemented interface java.lang.annotation.Annotation",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStream",
+    "member": "Implemented interface io.micronaut.views.Renderable",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStream$Builder",
+    "member": "Constructor io.micronaut.views.turbo.TurboStream$Builder()",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamAction",
+    "member": "Field BEFORE",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamAction",
+    "member": "Field REMOVE",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamAction",
+    "member": "Field AFTER",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamAction",
+    "member": "Field UPDATE",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamAction",
+    "member": "Field REPLACE",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamAction",
+    "member": "Field APPEND",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamAction",
+    "member": "Field PREPEND",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamAction",
+    "member": "Implemented interface java.lang.constant.Constable",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamAction",
+    "member": "Implemented interface java.lang.Comparable",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamAction",
+    "member": "Implemented interface java.io.Serializable",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamBuilderMessageBodyWriter",
+    "member": "Constructor io.micronaut.views.turbo.TurboStreamBuilderMessageBodyWriter(io.micronaut.views.turbo.TurboStreamRenderer)",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamFilter",
+    "member": "Constructor io.micronaut.views.turbo.TurboStreamFilter()",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamListOfBuilderMessageBodyWriter",
+    "member": "Constructor io.micronaut.views.turbo.TurboStreamListOfBuilderMessageBodyWriter(io.micronaut.views.turbo.TurboStreamRenderer)",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboStreamMessageBodyWriter",
+    "member": "Constructor io.micronaut.views.turbo.TurboStreamMessageBodyWriter()",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.TurboView",
+    "member": "Implemented interface java.lang.annotation.Annotation",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.VisitAction",
+    "member": "Field RESTORE",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.VisitAction",
+    "member": "Field ADVANCE",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.VisitAction",
+    "member": "Field REPLACE",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.VisitAction",
+    "member": "Implemented interface java.lang.constant.Constable",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.VisitAction",
+    "member": "Implemented interface java.lang.Comparable",
+    "reason": "Extracted turbo support to its own module"
+  },
+  {
+    "type": "io.micronaut.views.turbo.VisitAction",
+    "member": "Implemented interface java.io.Serializable",
+    "reason": "Extracted turbo support to its own module"
   }
 ]

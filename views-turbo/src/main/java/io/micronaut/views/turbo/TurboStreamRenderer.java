@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2024 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views;
+package io.micronaut.views.turbo;
 
 import io.micronaut.context.annotation.DefaultImplementation;
 import io.micronaut.core.annotation.NonNull;
@@ -22,22 +22,21 @@ import io.micronaut.core.io.Writable;
 import java.util.Optional;
 
 /**
- * Renders a {@link ModelAndView}.
- * @param <T> The model type
+ * Renders a {@link TurboStream} into a {@link Writable}.
  * @param <R> The request type
- * @since 6.0.0
- * @author Tim Yates
+ * @author Sergio del Amo
+ * @since 3.3.0
  */
+@DefaultImplementation(DefaultTurboStreamRenderer.class)
 @FunctionalInterface
-@DefaultImplementation(DefaultModelAndViewRenderer.class)
-public interface ModelAndViewRenderer<T, R> {
+public interface TurboStreamRenderer<R> {
+
     /**
-     * Renders a {@link ModelAndView} into a {@link Writable}.
-     * @param modelAndView Model And View
-     * @param request Request
-     * @param mediaType Media Type
-     * @return a {@link ModelAndView} into a {@link Writable}
+     * @param builder Turbo Stream builder
+     * @param request HTTP Request
+     * @return A Writable
      */
     @NonNull
-    Optional<Writable> render(@NonNull ModelAndView<T> modelAndView, @Nullable R request, @NonNull String mediaType);
+    Optional<Writable> render(@NonNull TurboStream.Builder builder,
+                              @Nullable R request);
 }

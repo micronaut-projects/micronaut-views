@@ -2,15 +2,12 @@ package io.micronaut.views.docs.turbo
 
 import io.micronaut.context.annotation.Property
 import io.micronaut.context.annotation.Requires
-import io.micronaut.core.annotation.Nullable
 import io.micronaut.core.util.StringUtils
 import io.micronaut.http.HttpRequest
-import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Consumes
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Header
 import io.micronaut.http.annotation.Part
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Produces
@@ -19,11 +16,9 @@ import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
-import io.micronaut.views.ModelAndView
 import io.micronaut.views.View
-import io.micronaut.views.turbo.TurboFrame
 import io.micronaut.views.turbo.TurboFrameView
-import io.micronaut.views.turbo.TurboView
+import io.micronaut.views.turbo.TurboStreamView
 import io.micronaut.views.turbo.http.TurboHttpHeaders
 import io.micronaut.views.turbo.http.TurboMediaType
 import jakarta.inject.Inject
@@ -94,7 +89,7 @@ class TurboFrameTest extends Specification {
 
         //tag::turboFramePost[]
         @Consumes(MediaType.MULTIPART_FORM_DATA)
-        @TurboView("view")
+        @TurboStreamView("view")
         @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
         @Post("/messages/{id}")
         Map<String, Object> processEdit(@Part int id, @Part String title, @Part String body) {
