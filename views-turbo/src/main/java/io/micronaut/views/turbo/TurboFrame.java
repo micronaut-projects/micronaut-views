@@ -90,6 +90,7 @@ public final class TurboFrame implements Renderable {
     @Nullable
     private final Object template;
 
+    @SuppressWarnings("java:S107") // It has 9 things to set, and 9 is greater than 7. Also, it's an internal constructor.
     TurboFrame(@Nullable String id,
                @Nullable String src,
                @Nullable Loading loading,
