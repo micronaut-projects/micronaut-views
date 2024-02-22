@@ -10,7 +10,7 @@ import javax.inject.Singleton
 //tag::class[]
 @Singleton // <1>
 class ConfigViewModelProcessor internal constructor(private val config: ApplicationConfiguration) :
-    ViewModelProcessor<MutableMap<String, Any>> {
+    ViewModelProcessor<MutableMap<String, Any>, HttpRequest<*>> {
 
     override fun process(request: HttpRequest<*>, modelAndView: ModelAndView<MutableMap<String, Any>>) {
         modelAndView.model

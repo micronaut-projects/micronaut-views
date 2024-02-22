@@ -25,8 +25,6 @@ import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.annotation.ResponseFilter;
 import io.micronaut.http.annotation.ServerFilter;
-import io.micronaut.views.ModelAndView;
-import io.micronaut.views.View;
 
 /**
  * Changes the response body if any {@link ResponseBodySwapper} resolves a different body.

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * View rendering HTTP Related classes
+ * View rendering HTTP Related classes.
  * @author Sergio del Amo
  * @since 6.0.0
  */
