@@ -16,6 +16,7 @@
 package io.micronaut.views;
 
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.views.model.ViewModelProcessor;
@@ -35,7 +36,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 3.0.0
  */
 @Singleton
-public class DefaultViewsModelDecorator<T, R> implements ViewsModelDecorator<T, R> {
+@Internal
+final class DefaultViewsModelDecorator<T, R> implements ViewsModelDecorator<T, R> {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultViewsModelDecorator.class);
 
     private final ApplicationContext applicationContext;

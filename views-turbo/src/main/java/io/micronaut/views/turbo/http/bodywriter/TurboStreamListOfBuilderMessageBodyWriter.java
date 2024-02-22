@@ -47,7 +47,8 @@ import java.util.List;
 @Requires(classes = HttpRequest.class)
 @Singleton
 @Internal
-class TurboStreamListOfBuilderMessageBodyWriter implements MessageBodyWriter<List<TurboStream.Builder>> {
+final class TurboStreamListOfBuilderMessageBodyWriter implements MessageBodyWriter<List<TurboStream.Builder>> {
+
     private static final Logger LOG = LoggerFactory.getLogger(TurboStreamListOfBuilderMessageBodyWriter.class);
 
     private final TurboStreamRenderer<HttpRequest<?>> turboStreamRenderer;

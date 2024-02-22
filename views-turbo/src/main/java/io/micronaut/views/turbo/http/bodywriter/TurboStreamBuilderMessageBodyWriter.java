@@ -44,7 +44,8 @@ import java.io.OutputStream;
 @Produces(TurboMediaType.TURBO_STREAM)
 @Singleton
 @Internal
-class TurboStreamBuilderMessageBodyWriter implements MessageBodyWriter<TurboStream.Builder> {
+final class TurboStreamBuilderMessageBodyWriter implements MessageBodyWriter<TurboStream.Builder> {
+
     private static final Logger LOG = LoggerFactory.getLogger(TurboStreamBuilderMessageBodyWriter.class);
 
     private final TurboStreamRenderer<HttpRequest<?>> turboStreamRenderer;

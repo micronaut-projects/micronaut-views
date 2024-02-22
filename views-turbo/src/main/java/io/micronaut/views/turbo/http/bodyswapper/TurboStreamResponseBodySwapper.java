@@ -37,7 +37,7 @@ import java.util.Optional;
  */
 @Internal
 @Singleton
-class TurboStreamResponseBodySwapper implements ResponseBodySwapper<TurboStream.Builder> {
+final class TurboStreamResponseBodySwapper implements ResponseBodySwapper<TurboStream.Builder> {
     private static final String MEMBER_ACTION = "action";
     private static final String MEMBER_TARGET_DOM_ID = "targetDomId";
     private static final String MEMBER_TARGET_CSS_QUERY_SELECTOR = "targetCssQuerySelector";

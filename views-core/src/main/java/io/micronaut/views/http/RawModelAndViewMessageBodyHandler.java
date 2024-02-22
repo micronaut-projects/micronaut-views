@@ -15,7 +15,6 @@
  */
 package io.micronaut.views.http;
 
-import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.buffer.ByteBuffer;
@@ -50,7 +49,6 @@ import java.util.Collections;
  * @since 6.0.0
  */
 @Singleton
-@Requires(classes = HttpRequest.class)
 public class RawModelAndViewMessageBodyHandler<T> implements RawMessageBodyHandler<ModelAndView<T>> {
 
     private static final Logger LOG = LoggerFactory.getLogger(RawModelAndViewMessageBodyHandler.class);

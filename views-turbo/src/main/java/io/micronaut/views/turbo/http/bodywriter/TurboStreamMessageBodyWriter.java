@@ -39,9 +39,10 @@ import java.io.OutputStream;
  */
 @Produces(TurboMediaType.TURBO_STREAM)
 @Singleton
-class TurboStreamMessageBodyWriter implements MessageBodyWriter<TurboStream> {
+final class TurboStreamMessageBodyWriter implements MessageBodyWriter<TurboStream> {
+
     private static final Logger LOG = LoggerFactory.getLogger(TurboStreamMessageBodyWriter.class);
-    
+
     @Override
     public void writeTo(@NonNull Argument<TurboStream> type,
                         @NonNull MediaType mediaType,

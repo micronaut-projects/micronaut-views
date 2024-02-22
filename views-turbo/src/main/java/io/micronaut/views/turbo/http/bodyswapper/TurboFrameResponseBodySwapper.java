@@ -36,7 +36,7 @@ import java.util.Optional;
  */
 @Internal
 @Singleton
-class TurboFrameResponseBodySwapper implements ResponseBodySwapper<TurboFrame.Builder> {
+final class TurboFrameResponseBodySwapper implements ResponseBodySwapper<TurboFrame.Builder> {
 
     private static final String MEMBER_ACTION = "action";
     private static final String MEMBER_TARGET = "target";

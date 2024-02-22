@@ -41,7 +41,7 @@ import java.io.OutputStream;
 @Produces(MediaType.TEXT_HTML)
 @Singleton
 @Internal
-class TurboFrameBuilderHtmlMessageBodyWriter implements MessageBodyWriter<TurboFrame.Builder> {
+final class TurboFrameBuilderHtmlMessageBodyWriter implements MessageBodyWriter<TurboFrame.Builder> {
 
     private static final Logger LOG = LoggerFactory.getLogger(TurboFrameBuilderHtmlMessageBodyWriter.class);
 

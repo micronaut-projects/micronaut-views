@@ -16,8 +16,13 @@
 package io.micronaut.views.http;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.*;
+import io.micronaut.core.annotation.AnnotationMetadata;
+import io.micronaut.core.annotation.AnnotationValueResolver;
+import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.ArrayUtils;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpAttributes;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -26,16 +31,18 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.annotation.ResponseFilter;
 import io.micronaut.http.annotation.ServerFilter;
 
+import static io.micronaut.views.http.ViewsFilterConfiguration.DEFAULT_ENABLED_AS_STRING;
+
 /**
  * Changes the response body if any {@link ResponseBodySwapper} resolves a different body.
  *
  * @author Sergio del Amo
  * @since 6.0.0
  */
-@Requires(classes = HttpRequest.class)
-@ServerFilter(ServerFilter.MATCH_ALL_PATTERN)
 @Internal
-public class ResponseBodySwapperFilter {
+@ServerFilter(ServerFilter.MATCH_ALL_PATTERN)
+@Requires(property = ViewsFilterConfiguration.PREFIX + ".enabled", defaultValue = DEFAULT_ENABLED_AS_STRING, notEquals = StringUtils.FALSE)
+final class ResponseBodySwapperFilter {
 
     private final ResponseBodySwapper<?> responsebodySwapper;
 

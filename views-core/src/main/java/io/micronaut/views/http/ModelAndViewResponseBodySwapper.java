@@ -15,9 +15,9 @@
  */
 package io.micronaut.views.http;
 
-import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpAttributes;
@@ -35,9 +35,9 @@ import java.util.Optional;
  * @author Sergio del Amo
  * @since 6.0.0
  */
-@Requires(classes = HttpRequest.class)
 @Singleton
-public class ModelAndViewResponseBodySwapper implements ResponseBodySwapper<ModelAndView<?>> {
+@Internal
+final class ModelAndViewResponseBodySwapper implements ResponseBodySwapper<ModelAndView<?>> {
 
     private static final int ORDER = 30;
 

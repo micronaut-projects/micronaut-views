@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.turbo;
 
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
@@ -29,6 +30,7 @@ import java.util.Optional;
  * @since 3.4.0
  * @param <T> The class to be built
  */
+@Internal
 public abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
 
     private final ViewsRendererLocator viewsRendererLocator;

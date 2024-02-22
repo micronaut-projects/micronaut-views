@@ -20,13 +20,12 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 
 /**
- *
- * @param body Response body
+ * @param body      Response body
  * @param mediaType Media Type
- * @param <B> Response body type
+ * @param <B>       Response body type
  * @author Sergio del Amo
  * @since 6.0.0
  */
 @Introspected
-public record ResponseBodySwap<B>(@NonNull B body, @Nullable  String mediaType) {
+public record ResponseBodySwap<B>(@NonNull B body, @Nullable String mediaType) {
 }
