@@ -11,9 +11,12 @@ import io.micronaut.views.View
 //tag::clazz[]
 @Controller("/soy")
 class SoyController {
+
     @View("sample.home")
     @Get
-    fun home(): HttpResponse<*> {
-        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sgammon"))
-    }
+    fun home() = HttpResponse.ok(mutableMapOf(
+        "loggedIn" to true,
+        "username" to "sgammon"
+    ))
 }
+//end::clazz[]

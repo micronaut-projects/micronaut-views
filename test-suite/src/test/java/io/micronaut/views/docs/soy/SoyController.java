@@ -11,6 +11,7 @@ import io.micronaut.views.View;
 //tag::clazz[]
 @Controller("/soy")
 public class SoyController {
+
     @View("sample.home")
     @Get
     public HttpResponse<?> home() {

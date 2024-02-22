@@ -54,12 +54,12 @@ class TurboFrameBuilderTest {
 
     @Requires(property = "spec.name", value = "TurboFrameBuilderTest")
     @Controller("/frame")
-    internal class TurboFrameController {
+    class TurboFrameController {
 
         //tag::turboFrameBuilder[]
         @Produces(MediaType.TEXT_HTML)
         @Get("/builder")
-        fun index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) turboFrame: String?): HttpResponse<*> {
+        fun index(@Header(TurboHttpHeaders.TURBO_FRAME) turboFrame: String?): HttpResponse<*> {
             val messageId = 1L
             val model = mapOf("message" to Message(messageId, "My message title", "My message content"))
             return HttpResponse.ok(
