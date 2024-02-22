@@ -317,6 +317,22 @@ class ViewsController {
     }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">    @View("fruits")
+    @Get
+    Fruit index() {
+        return new Fruit("apple", "red")
+    }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">    @View("fruits")
+    @Get
+    fun index() = Fruit("apple", "red")</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The following sections show different template engines integrations.</p>
 </div>
@@ -406,47 +422,47 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.character-encoding</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The character encoding to use. Default value ("UTF-8").</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.template-mode</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">org.thymeleaf.templatemode.TemplateMode</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The template mode to be used.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.suffix</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The suffix to use. Default value (".html").</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.force-suffix</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether to force the suffix. Default value (false).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.force-template-mode</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to force template mode. Default value (false).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cache-ttlms</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cache TTL in millis.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.check-existence</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether templates should be checked for existence.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cacheable</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether templates are cacheable.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enabled getter.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether thymeleaf rendering is enabled. Default value (true).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.thymeleaf.cache-ttl</code></p></td>
@@ -835,22 +851,22 @@ import views.home;
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enabled getter.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Rocker views are enabled. Default value (true).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.default-extension</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The default extension to use for Rocker templates. Default value ("rocker.html").</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.hot-reloading</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hot reloading getter.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether hot reloading is enabled. Default value (false).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.rocker.relaxed</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Relaxed binding getter.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether relaxed binding is enabled for dynamic templates. Default value (false).</p></td>
 </tr>
 </tbody>
 </table>
@@ -923,12 +939,12 @@ client-side, with the ability to compile templates into Java, Python, or JavaScr
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Soy-backed views are enabled. Default value <code>true</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Soy-backed views are enabled. Default value (true).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.renaming-enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether renaming is enabled. Defaults to <code>true</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies whether renaming is enabled. Defaults value (true).</p></td>
 </tr>
 </tbody>
 </table>
@@ -998,6 +1014,7 @@ public class CustomSoyFileSetProvider implements SoyFileSetProvider {
         this.folder = viewsConfiguration.getFolder();
         this.resourceLoader = resourceLoader;
     }
+
     @Override
     public SoyFileSet provideSoyFileSet() {
         final SoyFileSet.Builder builder = SoyFileSet.builder();
@@ -1059,9 +1076,13 @@ class CustomSoyFileSetProvider implements SoyFileSetProvider {
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Singleton
-class CustomSoyFileSetProvider(val resourceLoader: ResourceLoader, viewsConfiguration: ViewsConfiguration) :
-    SoyFileSetProvider {
-    private val folder: String
+class CustomSoyFileSetProvider(
+    private val resourceLoader: ResourceLoader,
+    viewsConfiguration: ViewsConfiguration
+) : SoyFileSetProvider {
+
+    private val folder: String = viewsConfiguration.folder
+
     override fun provideSoyFileSet(): SoyFileSet {
         val builder = SoyFileSet.builder()
         for (template in VIEWS) {
@@ -1070,10 +1091,7 @@ class CustomSoyFileSetProvider(val resourceLoader: ResourceLoader, viewsConfigur
                     builder.add(File(url.toURI()))
                 } catch (e: URISyntaxException) {
                     if (LOG.isWarnEnabled) {
-                        LOG.warn(
-                            "URISyntaxException raised while generating the SoyFileSet for folder {}",
-                            folder, e
-                        )
+                        LOG.warn("URISyntaxException raised while generating the SoyFileSet for folder {}", folder, e)
                     }
                 }
             }
@@ -1083,13 +1101,7 @@ class CustomSoyFileSetProvider(val resourceLoader: ResourceLoader, viewsConfigur
 
     companion object {
         private val LOG = LoggerFactory.getLogger(CustomSoyFileSetProvider::class.java)
-        private val VIEWS = arrayOf(
-            "home.soy"
-        )
-    }
-
-    init {
-        folder = viewsConfiguration.folder
+        private val VIEWS = arrayOf("home.soy")
     }
 }</code></pre>
 </div>
@@ -1113,6 +1125,7 @@ Soy allows users to write custom functions that templates can call, as described
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/soy")
 public class SoyController {
+
     @View("sample.home")
     @Get
     public HttpResponse&lt;?&gt; home() {
@@ -1125,6 +1138,7 @@ public class SoyController {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Controller("/soy")
 class SoyController {
+
     @View("sample.home")
     @Get
     HttpResponse&lt;?&gt; home() {
@@ -1137,11 +1151,13 @@ class SoyController {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Controller("/soy")
 class SoyController {
+
     @View("sample.home")
     @Get
-    fun home(): HttpResponse&lt;*&gt; {
-        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sgammon"))
-    }
+    fun home() = HttpResponse.ok(mutableMapOf(
+        "loggedIn" to true,
+        "username" to "sgammon"
+    ))
 }</code></pre>
 </div>
 </div>
@@ -2665,7 +2681,7 @@ HttpResponse&lt;?&gt; index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) Stri
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Produces(MediaType.TEXT_HTML)
 @Get("/builder")
-fun index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) turboFrame: String?): HttpResponse&lt;*&gt; {
+fun index(@Header(TurboHttpHeaders.TURBO_FRAME) turboFrame: String?): HttpResponse&lt;*&gt; {
     val messageId = 1L
     val model = mapOf("message" to Message(messageId, "My message title", "My message content"))
     return HttpResponse.ok(
@@ -3097,22 +3113,22 @@ By default, CSP is disabled. To enable CSP, modify your configuration. For examp
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether CSP is enabled. Default value (false).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.policy-directives</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets the policy directives.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.report-only</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, the Content-Security-Policy-Report-Only header will be sent instead of Content-Security-Policy. Default value (false).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.random-engine</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Random</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>Random</code> data engine used to generate nonce values. Ignored if <code>forceSecureRandom</code> is set to <code>true</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.generate-nonce</code></p></td>
@@ -3125,14 +3141,14 @@ By default, CSP is disabled. To enable CSP, modify your configuration. For examp
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.force-secure-random</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets whether <code>SecureRandom</code> is forced for use in generated nonce values.
- Defaults to <code>false</code>. Enabling this requires
+ Defaults to (false). Enabling this requires
  careful consideration, because <code>SecureRandom</code> will block infinitely without
  enough entropy.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.csp.filter-path</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The path the CSP filter should apply to. Default value ("/**").</p></td>
 </tr>
 </tbody>
 </table>
@@ -3298,17 +3314,17 @@ mode. Inline scripts can be whitelisted with the syntax:</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.security-key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Model key name. Default value ("security").</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.principal-name-key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nested security map key for the user&#8217;s name property. Default value ("name").</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.views-model-decorator.attributes-key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nested security map key for the user&#8217;s attributes property. Default value ("attributes").</p></td>
 </tr>
 </tbody>
 </table>
