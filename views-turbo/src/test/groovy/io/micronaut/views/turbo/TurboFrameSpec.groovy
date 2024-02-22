@@ -153,7 +153,7 @@ class TurboFrameSpec extends Specification {
             (TurboFrame.Builder) TurboFrame.builder()
                     .loading(Loading.EAGER)
                     .id(frame)
-                    .template("fragments/_messages", "Hello world");
+                    .template("fragments/_messages", "Hello world")
         }
 
         @Get("/eager/withbuilder/withannot")
@@ -162,7 +162,7 @@ class TurboFrameSpec extends Specification {
             (TurboFrame.Builder) TurboFrame.builder()
                     .loading(Loading.EAGER)
                     .id(frame)
-                    .template("home", "Hello world"); // The view will be overridden by the annotation
+                    .template("home", "Hello world") // The view will be overridden by the annotation
         }
 
         @Get("/eager/withoutbuilder")

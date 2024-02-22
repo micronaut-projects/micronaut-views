@@ -409,7 +409,7 @@ class TurboStreamSpec extends Specification {
         @TurboStreamView("fragments/message")
         @Get("/update")
         String update() {
-            "Hello World";
+            "Hello World"
         }
 
         @Produces(TurboMediaType.TURBO_STREAM)
