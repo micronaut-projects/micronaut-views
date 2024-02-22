@@ -44,6 +44,9 @@ public class ModelAndViewResponseBodySwapper implements ResponseBodySwapper<Mode
     @Override
     @NonNull
     public Optional<ResponseBodySwap<ModelAndView<?>>> swap(@NonNull HttpRequest<?> request, @Nullable HttpResponse<?> response) {
+        if (response == null) {
+            return Optional.empty();
+        }
         Object body = response.body();
         if (body instanceof ModelAndView modelAndView) {
             return Optional.of(new ResponseBodySwap<>(modelAndView, MediaType.TEXT_HTML));

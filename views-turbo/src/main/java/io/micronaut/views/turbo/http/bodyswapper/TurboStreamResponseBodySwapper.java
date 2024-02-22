@@ -54,6 +54,9 @@ class TurboStreamResponseBodySwapper implements ResponseBodySwapper<TurboStream.
         if (!TurboMediaType.acceptsTurboStream(request)) {
             return Optional.empty();
         }
+        if (response == null) {
+            return Optional.empty();
+        }
         Object body = response.body();
         if (body instanceof TurboStream.Builder) {
             return Optional.empty();

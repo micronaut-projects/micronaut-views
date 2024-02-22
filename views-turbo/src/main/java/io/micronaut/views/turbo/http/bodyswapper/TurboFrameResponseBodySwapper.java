@@ -52,7 +52,9 @@ class TurboFrameResponseBodySwapper implements ResponseBodySwapper<TurboFrame.Bu
     @Override
     @NonNull
     public Optional<ResponseBodySwap<TurboFrame.Builder>> swap(@NonNull HttpRequest<?> request, @Nullable HttpResponse<?> response) {
-
+        if (response == null) {
+            return Optional.empty();
+        }
         Object body = response.body();
         Optional<ResponseBodySwap<TurboFrame.Builder>> responseBodySwapOptional = response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
                 .flatMap(route -> route.findAnnotation(TurboFrameView.class))
