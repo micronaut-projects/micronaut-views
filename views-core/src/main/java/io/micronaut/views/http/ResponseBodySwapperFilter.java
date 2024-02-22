@@ -29,9 +29,9 @@ import io.micronaut.views.ModelAndView;
 import io.micronaut.views.View;
 
 /**
- * For routes annotated with {@link View} sets the response body to a {@link ModelAndView}.
+ * Changes the response body if any {@link ResponseBodySwapper} resolves a different body.
  *
- * @author Tim Yates
+ * @author Sergio del Amo
  * @since 6.0.0
  */
 @Requires(classes = HttpRequest.class)
