@@ -62,13 +62,11 @@ class MultipleViewRendererSpec extends Specification {
 
     @Requires(property = "spec.name", value = "MultipleViewRendererSpec")
     @Produces(MediaType.TEXT_HTML)
-    @Requires(property = REQUIRES, notEquals = StringUtils.FALSE)
+    @Requires(property = HandlebarsViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
     @Requires(classes = Handlebars)
     @Replaces(HandlebarsViewsRenderer)
     @Singleton
     static class CustomHandlebarsViewsRenderer extends HandlebarsViewsRenderer {
-
-        private static final String REQUIRES = HandlebarsViewsRendererConfigurationProperties.PREFIX + ".enabled"
 
         CustomHandlebarsViewsRenderer(ViewsConfiguration viewsConfiguration,
                                       ClassPathResourceLoader resourceLoader,

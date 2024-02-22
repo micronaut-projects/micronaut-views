@@ -2,7 +2,6 @@ package io.micronaut.views.model
 
 import io.micronaut.context.annotation.Requires
 import io.micronaut.core.annotation.Introspected
-import io.micronaut.core.util.CollectionUtils
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.security.annotation.Secured
@@ -17,13 +16,13 @@ class UnmodifiableFruitsController {
     @View("unmodifiablefruits")
     @Get("/unmodifiable")
     Map<String, Object> unmodifiableModel() {
-        return Collections.singletonMap("fruit", new Fruit("plum", "plum"));
+        [fruit: new Fruit("plum", "plum")].asUnmodifiable()
     }
 
     @View("unmodifiablefruits")
     @Get("/modifiable")
     Map<String, Object> modifiableModel() {
-        return CollectionUtils.mapOf("fruit", new Fruit("plum", "plum"))
+        [fruit: new Fruit("plum", "plum")]
     }
 
     @Introspected
