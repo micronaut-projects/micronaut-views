@@ -14,7 +14,7 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import io.micronaut.views.turbo.TurboStreamAction
-import io.micronaut.views.turbo.TurboView
+import io.micronaut.views.turbo.TurboStreamView
 import io.micronaut.views.turbo.http.TurboHttpHeaders
 import io.micronaut.views.turbo.http.TurboMediaType
 import jakarta.inject.Inject
@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 @Property(name = "spec.name", value = "TurboViewTest")
 @Property(name = "micronaut.security.enabled", value = StringUtils.FALSE)
 @MicronautTest
-class TurboViewTest {
+class TurboStreamViewTest {
 
     @Inject
     lateinit var server: EmbeddedServer
@@ -70,7 +70,7 @@ class TurboViewTest {
 
         //tag::turboview[]
         @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
-        @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+        @TurboStreamView(value = "fruit", action = TurboStreamAction.APPEND)
         @Get("/turbofruit")
         fun show() = mapOf("fruit" to Fruit("Banana", "Yellow"))
         //end::turboview[]

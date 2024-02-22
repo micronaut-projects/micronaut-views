@@ -2,7 +2,6 @@ package io.micronaut.views.docs.turbo
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.annotation.Requires
-import io.micronaut.core.annotation.Introspected
 import io.micronaut.core.util.CollectionUtils
 import io.micronaut.core.util.StringUtils
 import io.micronaut.http.HttpRequest
@@ -16,12 +15,12 @@ import io.micronaut.http.client.BlockingHttpClient
 import io.micronaut.http.client.HttpClient
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.turbo.TurboStreamAction
-import io.micronaut.views.turbo.TurboView
+import io.micronaut.views.turbo.TurboStreamView
 import io.micronaut.views.turbo.http.TurboHttpHeaders
 import io.micronaut.views.turbo.http.TurboMediaType
 import spock.lang.Specification
 
-class TurboViewTest extends Specification {
+class TurboStreamViewTest extends Specification {
 
     void "you can use TurboView annotation"()  throws IOException {
         given:
@@ -65,7 +64,7 @@ class TurboViewTest extends Specification {
 
         //tag::turboview[]
         @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
-        @TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+        @TurboStreamView(value = "fruit", action = TurboStreamAction.APPEND)
         @Get("/turbofruit")
         Map<String, Object> show() {
           return Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));

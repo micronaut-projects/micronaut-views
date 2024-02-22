@@ -406,27 +406,27 @@ class TurboStreamSpec extends Specification {
         }
 
         @Produces(TurboMediaType.TURBO_STREAM)
-        @TurboView("fragments/message")
+        @TurboStreamView("fragments/message")
         @Get("/update")
         String update() {
             "Hello World";
         }
 
         @Produces(TurboMediaType.TURBO_STREAM)
-        @TurboView(value = "fragments/message", targetDomId = "main-container")
+        @TurboStreamView(value = "fragments/message", targetDomId = "main-container")
         @Get("/targetDomId")
         String targetDomId() {
             "Hello World"
         }
 
         @Produces(TurboMediaType.TURBO_STREAM)
-        @TurboView(action = TurboStreamAction.REMOVE)
+        @TurboStreamView(action = TurboStreamAction.REMOVE)
         @Get("/del")
         void del() {
         }
 
         @Produces(TurboMediaType.TURBO_STREAM)
-        @TurboView(value = "fragments/message", targetCssQuerySelector = ".elementsWithClass", action = TurboStreamAction.AFTER)
+        @TurboStreamView(value = "fragments/message", targetCssQuerySelector = ".elementsWithClass", action = TurboStreamAction.AFTER)
         @Get("/targetCssQuerySelector")
         String targetCssQuerySelector() {
             "Hello World"
@@ -434,7 +434,7 @@ class TurboStreamSpec extends Specification {
 
         @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
         @View("home")
-        @TurboView(value = "fragments/message")
+        @TurboStreamView(value = "fragments/message")
         @Get("/withBothAnnotations")
         String withBothAnnotations() {
             "Hello World"
@@ -483,7 +483,7 @@ class TurboStreamSpec extends Specification {
         }
 
         @Produces([MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
-        @TurboView(action = TurboStreamAction.REMOVE, targetDomId = "foo")
+        @TurboStreamView(action = TurboStreamAction.REMOVE, targetDomId = "foo")
         @Post("/delete")
         HttpResponse<?> delete() {
             return HttpResponse.seeOther(URI.create("/customers"))

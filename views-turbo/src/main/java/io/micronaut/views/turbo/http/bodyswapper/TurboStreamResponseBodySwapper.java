@@ -24,7 +24,7 @@ import io.micronaut.views.http.ResponseBodySwap;
 import io.micronaut.views.http.ResponseBodySwapper;
 import io.micronaut.views.turbo.TurboStream;
 import io.micronaut.views.turbo.TurboStreamAction;
-import io.micronaut.views.turbo.TurboView;
+import io.micronaut.views.turbo.TurboStreamView;
 import io.micronaut.views.turbo.http.TurboHttpHeaders;
 import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Singleton;
@@ -44,7 +44,7 @@ class TurboStreamResponseBodySwapper implements ResponseBodySwapper<TurboStream.
     private static final int ORDER = 10;
 
     /**
-     * Creates a Turbo Stream builder if annotation {@link TurboView} is found in the route and the request accepts turbo stream content type.
+     * Creates a Turbo Stream builder if annotation {@link TurboStreamView} is found in the route and the request accepts turbo stream content type.
      * @param request HTTP Request
      * @return A Turbo Stream builder
      */
@@ -62,13 +62,13 @@ class TurboStreamResponseBodySwapper implements ResponseBodySwapper<TurboStream.
             return Optional.empty();
         }
         return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
-                .flatMap(route -> route.findAnnotation(TurboView.class))
+                .flatMap(route -> route.findAnnotation(TurboStreamView.class))
                 .map(annotationValue -> of(annotationValue, request.getHeaders(), body))
                 .map(b -> new ResponseBodySwap<>(b, TurboMediaType.TURBO_STREAM));
     }
 
     @NonNull
-    private static TurboStream.Builder of(@NonNull AnnotationValue<TurboView> turboViewAnnotation, @NonNull HttpHeaders httpHeaders, @Nullable Object body) {
+    private static TurboStream.Builder of(@NonNull AnnotationValue<TurboStreamView> turboViewAnnotation, @NonNull HttpHeaders httpHeaders, @Nullable Object body) {
         TurboStream.Builder builder = TurboStream.builder();
         turboViewAnnotation.stringValue().ifPresent(builder::templateView);
         builder.action(turboViewAnnotation.enumValue(MEMBER_ACTION, TurboStreamAction.class).orElse(TurboStreamAction.UPDATE));

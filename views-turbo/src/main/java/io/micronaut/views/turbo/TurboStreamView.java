@@ -30,7 +30,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Retention(RUNTIME)
 @Target({ElementType.METHOD})
-public @interface TurboView {
+public @interface TurboStreamView {
 
     /**
      * @return The View Name for the route.
