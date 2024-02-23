@@ -46,7 +46,7 @@ final class ResponseBodySwapperFilter {
 
     private final ResponseBodySwapper<?> responsebodySwapper;
 
-    public ResponseBodySwapperFilter(ResponseBodySwapper<?> responsebodySwapper) {
+    ResponseBodySwapperFilter(ResponseBodySwapper<?> responsebodySwapper) {
         this.responsebodySwapper = responsebodySwapper;
     }
 
