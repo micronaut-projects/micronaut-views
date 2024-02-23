@@ -47,8 +47,7 @@ public class CompositeResponseBodySwapper<B> implements ResponseBodySwapper<B> {
     public Optional<ResponseBodySwap<B>> swap(@NonNull HttpRequest<?> request, @Nullable HttpResponse<?> response) {
         return responseBodySwapperList.stream()
                 .map(resolver -> resolver.swap(request, response))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+                .flatMap(Optional::stream)
                 .findFirst();
     }
 }
