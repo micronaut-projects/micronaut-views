@@ -21,6 +21,7 @@ dependencies {
 
     testImplementation('org.apache.groovy:groovy-json')
     testImplementation projects.micronautViewsSoy
+    testImplementation(projects.micronautViewsTurbo)
     testImplementation projects.micronautViewsVelocity
     testImplementation projects.micronautViewsHandlebars
     testRuntimeOnly(mnLogging.logback.classic)

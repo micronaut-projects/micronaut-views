@@ -25,7 +25,6 @@ import io.micronaut.http.client.exceptions.HttpClientException
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.exceptions.ReadTimeoutException
 import io.micronaut.runtime.server.EmbeddedServer
-import io.micronaut.views.ViewsFilter
 import io.micronaut.views.jte.JteViewsRenderer
 import spock.lang.AutoCleanup
 import spock.lang.Issue
@@ -49,7 +48,6 @@ abstract class JteViewRendererSpec extends Specification {
     def "bean is loaded"() {
         when:
         List<JteViewsRenderer> jteBeans = embeddedServer.applicationContext.getBeansOfType(JteViewsRenderer)
-        embeddedServer.applicationContext.getBean(ViewsFilter)
 
         then:
         noExceptionThrown()

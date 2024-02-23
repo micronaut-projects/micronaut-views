@@ -16,14 +16,13 @@
 package io.micronaut.views.model.security;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.http.HttpRequest;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.filters.SecurityFilter;
 import io.micronaut.security.utils.SecurityService;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.model.ViewModelProcessor;
-import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,15 +33,14 @@ import java.util.Optional;
 
 /**
  * Returns information about the current user so that it can be appended to the model being rendered.
- *
+ * @param <R> The request type
  * @author Sergio del Amo
  * @since 1.1.0
  */
 @Requires(property = SecurityViewModelProcessorConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 @Requires(beans = {SecurityFilter.class, SecurityService.class, SecurityViewModelProcessorConfiguration.class})
-@Requires(classes = HttpRequest.class)
 @Singleton
-public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String, Object>> {
+public class SecurityViewModelProcessor<R> implements ViewModelProcessor<Map<String, Object>, R> {
 
     private static final Logger LOG = LoggerFactory.getLogger(SecurityViewModelProcessor.class);
 
@@ -61,7 +59,7 @@ public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String
     }
 
     @Override
-    public void process(@NonNull HttpRequest<?> request, @NonNull ModelAndView<Map<String, Object>> modelAndView) {
+    public void process(@NonNull R request, @NonNull ModelAndView<Map<String, Object>> modelAndView) {
         Optional<Authentication> authentication = securityService.getAuthentication();
         if (authentication.isPresent()) {
             Map<String, Object> securityModel = new HashMap<>();

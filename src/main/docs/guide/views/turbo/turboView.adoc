@@ -1,15 +1,15 @@
 You can render https://turbo.hotwired.dev/reference/streams[Turbo Streams] easily by annotating a controller route with
 api:views.turbo.TurboView[]
 
-snippet::io.micronaut.views.docs.turbo.TurboViewTest[tags="turboview",indent=0]
+snippet::io.micronaut.views.docs.turbo.TurboStreamViewTest[tags="turboview",indent=0]
 
 Given the HTTP Request:
 
-snippet::io.micronaut.views.docs.turbo.TurboViewTest[tags="turboviewrequest",indent=0]
+snippet::io.micronaut.views.docs.turbo.TurboStreamViewTest[tags="turboviewrequest",indent=0]
 
 The previous controller returns:
 
-snippet::io.micronaut.views.docs.turbo.TurboViewTest[tags="turboviewresponse",indent=0]
+snippet::io.micronaut.views.docs.turbo.TurboStreamViewTest[tags="turboviewresponse",indent=0]
 
 with content type `text/vnd.turbo-stream.html`.
 

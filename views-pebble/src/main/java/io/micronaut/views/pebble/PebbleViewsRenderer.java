@@ -33,11 +33,11 @@ import java.util.Locale;
 /**
  * Renders Views with Pebble.
  *
+ * @param <T> The model type
+ * @param <R> The request type
  * @author Ecmel Ercan
  * @see <a href="https://pebbletemplates.io/">https://pebbletemplates.io/</a>
  * @since 2.2.0
- * @param <T> The model type
- * @param <R> The request type
  */
 @Singleton
 @Requires(property = PebbleConfigurationProperties.ENABLED, notEquals = StringUtils.FALSE)
@@ -48,7 +48,7 @@ public class PebbleViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     private final LocaleResolver<R> httpLocaleResolver;
 
     /**
-     * @param engine Pebble Engine
+     * @param engine             Pebble Engine
      * @param httpLocaleResolver The locale resolver
      */
     public PebbleViewsRenderer(PebbleEngine engine,
@@ -69,8 +69,11 @@ public class PebbleViewsRenderer<T, R> implements ViewsRenderer<T, R> {
         } catch (Exception e) {
             throw new ViewRenderingException("Error rendering Pebble view [" + name + "]: " + e.getMessage(), e);
         }
-        return writer -> template.evaluate(writer, ViewUtils.modelOf(data),
-                    request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault());
+        return writer -> template.evaluate(
+            writer,
+            ViewUtils.modelOf(data),
+            request != null ? httpLocaleResolver.resolveOrDefault(request) : Locale.getDefault()
+        );
     }
 
     @Override

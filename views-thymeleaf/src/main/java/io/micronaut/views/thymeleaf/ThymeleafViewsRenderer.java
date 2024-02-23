@@ -162,9 +162,6 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
             templateResolver.getSuffix();
     }
 
-    private record TemplateAndFragment(String templateName, Set<String> fragmentSelectors) {
-    }
-
     private TemplateAndFragment resolveTemplate(String viewName) {
         if (!viewName.contains("::")) {
             return new TemplateAndFragment(viewName, null);
@@ -183,5 +180,8 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
         var fragmentSelectors = FragmentExpression.resolveFragments(fragment);
 
         return new TemplateAndFragment(templateName, fragmentSelectors);
+    }
+
+    private record TemplateAndFragment(String templateName, Set<String> fragmentSelectors) {
     }
 }

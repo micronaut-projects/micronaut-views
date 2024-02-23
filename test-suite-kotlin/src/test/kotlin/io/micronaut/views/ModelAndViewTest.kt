@@ -190,7 +190,7 @@ class ModelAndViewTest {
     @Singleton
     @Requires(property = "spec.name", value = "ModelAndViewSpec")
     class CustomViewModelProcessor(private val config: ApplicationConfiguration) :
-        ViewModelProcessor<AbstractView> {
+        ViewModelProcessor<AbstractView, HttpRequest<*>> {
 
         override fun process(request: HttpRequest<*>, modelAndView: ModelAndView<AbstractView>) {
             modelAndView.model.ifPresent { model: AbstractView ->
