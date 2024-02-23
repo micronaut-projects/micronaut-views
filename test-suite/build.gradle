@@ -22,7 +22,6 @@ dependencies {
     testImplementation(mnSecurity.micronaut.security)
     testImplementation(mnSerde.micronaut.serde.api)
     testImplementation(mnSerde.micronaut.serde.jackson)
-    testImplementation(mn.reactor)
 
     testImplementation projects.micronautViewsVelocity
     testImplementation projects.micronautViewsCore
