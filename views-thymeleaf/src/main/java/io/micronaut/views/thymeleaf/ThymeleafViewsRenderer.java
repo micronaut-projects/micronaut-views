@@ -110,23 +110,6 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
         }
     }
 
-    /**
-     * Passes the arguments as is to {@link TemplateEngine#process(String, IContext, Writer)}.
-     *
-     * @param viewName The view name
-     * @param context The context
-     * @param writer The writer
-     * @deprecated Use {@link #render(String, Set, IContext, Writer)} instead.
-     */
-    @Deprecated(forRemoval = true, since = "5.2.0")
-    public void render(String viewName, IContext context, Writer writer) {
-        try {
-            engine.process(viewName, context, writer);
-        } catch (TemplateEngineException e) {
-            throw new ViewRenderingException("Error rendering Thymeleaf view [" + viewName + "]: " + e.getMessage(), e);
-        }
-    }
-
     @Override
     public boolean exists(@NonNull String viewName) {
         var templateAndFragment = resolveTemplate(viewName);
