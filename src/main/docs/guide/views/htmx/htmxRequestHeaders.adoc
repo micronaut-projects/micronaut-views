@@ -1,0 +1,6 @@
+You can bind api:views.htmx.http.HtmxRequestHeaders[] in a controller method.
+
+In the following example, the parameter is bound if the request is an HTMX request. If it is not an HTMX request,
+the parameter is bound as null.
+
+snippet::io.micronaut.views.docs.htmx.HtmxTest[tags="htmxRequestHeaders",indent=0]

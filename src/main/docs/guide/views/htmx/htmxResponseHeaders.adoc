@@ -1,0 +1,3 @@
+The class api:views.htmx.http.HtmxResponseHeaders[] defines constants for the https://htmx.org/reference/#response_headers[HTMX Response headers].
+
+snippet::io.micronaut.views.docs.htmx.HtmxTest[tags="htmxResponseHeaders",indent=0]
