@@ -25,6 +25,9 @@ import io.micronaut.http.HttpRequest;
  * @since 6.0.0
  */
 public final class HtmxRequestUtils {
+    private HtmxRequestUtils() {
+    }
+
     /**
      *
      * @param request HTTP Request
