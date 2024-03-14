@@ -19,7 +19,7 @@ dependencies {
     testImplementation(mnSerde.micronaut.serde.api)
     testImplementation(mnSerde.micronaut.serde.jackson)
 
-    testImplementation('org.apache.groovy:groovy-json')
+    testImplementation(libs.groovy.json)
     testImplementation projects.micronautViewsSoy
     testImplementation(projects.micronautViewsTurbo)
     testImplementation projects.micronautViewsVelocity
