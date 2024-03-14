@@ -24,16 +24,4 @@ class HtmxConfigurationTest {
             assertFalse(ctx.containsBean(HtmxConfiguration.class));
         }
     }
-    @Test
-    void canBeDisabledViaProperties() {
-        try (ApplicationContext ctx = ApplicationContext.run(Map.of("micronaut.views.htmx.enabled", "false"))) {
-            assertFalse(ctx.containsBean(HtmxConfiguration.class));
-        }
-    }
-    @Test
-    void canBeDisabledViaProperties() {
-        try (ApplicationContext ctx = ApplicationContext.run(Map.of("micronaut.views.htmx.enabled", "false"))) {
-            assertFalse(ctx.containsBean(HtmxConfiguration.class));
-        }
-    }
 }
