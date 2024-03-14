@@ -34,15 +34,6 @@ public final class HtmxRequestUtils {
      * @return Whether the HTTP Request is an HTMX Request. That it is to say it contains the HX-Request HTTP header.
      */
     public static boolean isHtmxRequest(@NonNull HttpRequest<?> request) {
-        return isHtmxRequest(request.getHeaders());
-    }
-
-    /**
-     *
-     * @param headers HTTP Headers
-     * @return Whether the HTTP Headers contain the HX-Request HTTP header.
-     */
-    private static boolean isHtmxRequest(@NonNull HttpHeaders headers) {
-        return headers.get(HtmxRequestHeaders.HX_REQUEST) != null;
+        return request.getHeaders().get(HtmxRequestHeaders.HX_REQUEST) != null;
     }
 }
