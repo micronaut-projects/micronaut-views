@@ -1,7 +1,7 @@
 package io.micronaut.views.htmx.http;
 
 import io.micronaut.context.annotation.Mapper;
-import io.micronaut.context.annotation.Property;
+import io.micronaut.context.annotation.Requires;
 import jakarta.inject.Singleton;
 
 @Requires(property = "spec.name", value = "HtmxRequestHeadersTypedRequestArgumentBinderTest")
