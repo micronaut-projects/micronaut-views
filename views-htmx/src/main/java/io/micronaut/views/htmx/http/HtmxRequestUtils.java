@@ -16,7 +16,6 @@
 package io.micronaut.views.htmx.http;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpRequest;
 
 /**
