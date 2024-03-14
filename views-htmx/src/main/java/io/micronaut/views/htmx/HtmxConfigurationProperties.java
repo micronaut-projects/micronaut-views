@@ -44,7 +44,7 @@ public class HtmxConfigurationProperties implements HtmxConfiguration {
     /**
      * Whether the htmx integration is enabled. Default value ({@value #DEFAULT_ENABLED}).
      *
-     * @return boolean flag indicating whether the turbo integration is enabled.
+     * @return boolean flag indicating whether the htmx integration is enabled.
      */
     @Override
     public boolean isEnabled() {
