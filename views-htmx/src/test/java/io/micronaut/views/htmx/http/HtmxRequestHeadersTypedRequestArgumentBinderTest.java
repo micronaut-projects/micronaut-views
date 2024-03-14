@@ -69,7 +69,7 @@ class HtmxRequestHeadersTypedRequestArgumentBinderTest {
         assertEquals("itemAdded", response.getHeaders().get("HX-Trigger"));
     }
 
-    //@Requires(property = "spec.name", value = "HtmxRequestHeadersTypedRequestArgumentBinderTest")
+    @Requires(property = "spec.name", value = "HtmxRequestHeadersTypedRequestArgumentBinderTest")
     @Controller("/todo")
     static class TodoItemController {
         private static final String MODEL_ITEM = "item";
