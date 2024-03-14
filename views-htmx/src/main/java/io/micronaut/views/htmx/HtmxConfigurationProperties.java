@@ -52,7 +52,7 @@ public class HtmxConfigurationProperties implements HtmxConfiguration {
     }
 
     /**
-     * Whether the turbo integration is enabled. Default value ({@value #DEFAULT_ENABLED}).
+     * Whether the htmx integration is enabled. Default value ({@value #DEFAULT_ENABLED}).
      *
      * @param enabled True if is enabled
      */
