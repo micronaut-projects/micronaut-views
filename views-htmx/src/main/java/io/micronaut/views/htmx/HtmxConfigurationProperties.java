@@ -35,7 +35,7 @@ public class HtmxConfigurationProperties implements HtmxConfiguration {
     public static final boolean DEFAULT_ENABLED = true;
 
     /**
-     * The prefix for turbo configuration.
+     * The prefix for htmx configuration.
      */
     public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".htmx";
 
