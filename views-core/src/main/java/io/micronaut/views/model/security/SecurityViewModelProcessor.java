@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,13 @@ import io.micronaut.security.utils.SecurityService;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.model.ViewModelProcessor;
 import io.micronaut.core.annotation.NonNull;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Returns information about the current user so that it can be appended to the model being rendered.
@@ -39,34 +39,42 @@ import java.util.Optional;
  * @since 1.1.0
  */
 @Requires(property = SecurityViewModelProcessorConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
-@Requires(beans = {SecurityFilter.class, SecurityService.class, SecurityViewModelProcessorConfiguration.class})
+@Requires(beans = {SecurityFilter.class, SecurityViewModelProcessorConfiguration.class})
 @Requires(classes = HttpRequest.class)
 @Singleton
 public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String, Object>> {
 
     private static final Logger LOG = LoggerFactory.getLogger(SecurityViewModelProcessor.class);
 
-    private final SecurityService securityService;
     private final SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration;
 
     /**
-     *
      * @param securityViewModelProcessorConfiguration The Security Views Model Decorator configuration
-     * @param securityService Utility to access Security information
      */
-    public SecurityViewModelProcessor(SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration,
-                                      SecurityService securityService) {
+    @Inject
+    public SecurityViewModelProcessor(SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration) {
         this.securityViewModelProcessorConfiguration = securityViewModelProcessorConfiguration;
-        this.securityService = securityService;
+    }
+
+    /**
+     * @param securityViewModelProcessorConfiguration The Security Views Model Decorator configuration
+     * @param securityService                         Utility to access Security information
+     * @deprecated Use {@link #SecurityViewModelProcessor(SecurityViewModelProcessorConfiguration)} instead
+     */
+    @Deprecated(forRemoval = true, since = "5.2.0")
+    public SecurityViewModelProcessor(
+        SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration,
+        SecurityService securityService
+    ) {
+        this(securityViewModelProcessorConfiguration);
     }
 
     @Override
     public void process(@NonNull HttpRequest<?> request, @NonNull ModelAndView<Map<String, Object>> modelAndView) {
-        Optional<Authentication> authentication = securityService.getAuthentication();
-        if (authentication.isPresent()) {
+        request.getAttribute(SecurityFilter.AUTHENTICATION, Authentication.class).ifPresent(authentication -> {
             Map<String, Object> securityModel = new HashMap<>();
-            securityModel.put(securityViewModelProcessorConfiguration.getPrincipalNameKey(), authentication.get().getName());
-            securityModel.put(securityViewModelProcessorConfiguration.getAttributesKey(), authentication.get().getAttributes());
+            securityModel.put(securityViewModelProcessorConfiguration.getPrincipalNameKey(), authentication.getName());
+            securityModel.put(securityViewModelProcessorConfiguration.getAttributesKey(), authentication.getAttributes());
 
             Map<String, Object> viewModel = modelAndView.getModel().orElseGet(() -> {
                 final HashMap<String, Object> newModel = new HashMap<>(1);
@@ -80,6 +88,6 @@ public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String
                 modifiableModel.putIfAbsent(securityViewModelProcessorConfiguration.getSecurityKey(), securityModel);
                 modelAndView.setModel(modifiableModel);
             }
-        }
+        });
     }
 }
