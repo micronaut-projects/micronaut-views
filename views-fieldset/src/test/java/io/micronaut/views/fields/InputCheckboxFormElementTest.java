@@ -11,6 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InputCheckboxFormElementTest {
+
     @Test
     void testTagAndType() {
         InputCheckboxFormElement formElement = InputCheckboxFormElement.builder().build();
@@ -25,16 +26,17 @@ class InputCheckboxFormElementTest {
 
     @Test
     void builder() {
-        Checkbox interest = Checkbox.builder().name("interest").value("coding").checked(false).id("coding").label(Message.of("Coding", "interest.coding")).build();
-        Checkbox music = Checkbox.builder().name("interest").value("music").checked(false).id("music").label(Message.of("Coding", "interest.music")).build();
+        Checkbox coding = Checkbox.builder().name("interest").value("coding").checked(false).id("coding").label(Message.of("Coding", "interest.coding")).build();
+        Checkbox music = Checkbox.builder().name("interest").value("music").checked(false).id("music").label(Message.of("Music", "interest.music")).build();
+        Checkbox cookery = Checkbox.builder().name("interest").value("cookery").disabled(true).checked(false).id("cookery").label(Message.of("Cookery", "interest.cookery")).build();
 
         InputCheckboxFormElement formElement = InputCheckboxFormElement.builder()
-            .checkboxes(List.of(interest, music))
+            .checkboxes(List.of(coding, music, cookery))
             .build();
         assertEquals(HtmlTag.INPUT, formElement.getTag());
         assertEquals(InputType.CHECKBOX, formElement.getType());
 
-        List<Checkbox> checkboxes = Arrays.asList(interest, music);
+        List<Checkbox> checkboxes = Arrays.asList(coding, music, cookery);
         assertFormElement(checkboxes, formElement);
         BeanIntrospection<InputCheckboxFormElement> introspection = BeanIntrospection.getIntrospection(InputCheckboxFormElement.class);
         BeanIntrospection.Builder<InputCheckboxFormElement> builder = introspection.builder();

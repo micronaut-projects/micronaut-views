@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,15 +24,17 @@ import io.micronaut.views.fields.messages.Message;
 
 /**
  * A Checkbox Form Element.
- * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">Input Checkbox</a>
- * @param name Name of the form control. Submitted with the form as part of a name/value pair
- * @param value A string representing the value of the checkbox.
- * @param checked A boolean attribute indicating whether this checkbox is checked by default (when the page loads).
+ *
+ * @param name     Name of the form control. Submitted with the form as part of a name/value pair
+ * @param value    A string representing the value of the checkbox.
+ * @param checked  A boolean attribute indicating whether this checkbox is checked by default (when the page loads).
+ * @param disabled A boolean attribute indicating whether this checkbox is disabled by default (when the page loads).
  * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
- * @param id It defines an identifier (ID) which must be unique in the whole document
- * @param label represents a caption for an item in a user interface
+ * @param id       It defines an identifier (ID) which must be unique in the whole document
+ * @param label    represents a caption for an item in a user interface
  *
  * @author Sergio del Amo
+ * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox">Input Checkbox</a>
  * @since 4.1.0
  */
 @Experimental
@@ -40,11 +42,35 @@ import io.micronaut.views.fields.messages.Message;
 public record Checkbox(@NonNull String name,
                        @NonNull String value,
                        boolean checked,
+                       boolean disabled,
                        boolean required,
                        @Nullable String id,
                        @Nullable Message label) implements FormElement, GlobalAttributes {
+
     /**
+     * Instantiates a Checkbox.
      *
+     * @param name     Name of the form control. Submitted with the form as part of a name/value pair
+     * @param value    A string representing the value of the checkbox.
+     * @param checked  A boolean attribute indicating whether this checkbox is checked by default (when the page loads).
+     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
+     * @param id       It defines an identifier (ID) which must be unique in the whole document
+     * @param label    represents a caption for an item in a user interface
+     * @deprecated Use {@link Checkbox(String, String, boolean, boolean, boolean, String, Message)} instead which includes disabled attribute.
+     */
+    @Deprecated(forRemoval = true, since = "5.2.0")
+    public Checkbox(
+        @NonNull String name,
+        @NonNull String value,
+        boolean checked,
+        boolean required,
+        @Nullable String id,
+        @Nullable Message label
+    ) {
+        this(name, value, checked, false, required, id, label);
+    }
+
+    /**
      * @return A checkbox builder.
      */
     @NonNull
@@ -60,12 +86,12 @@ public record Checkbox(@NonNull String name,
         private String name;
         private String id;
         private boolean checked;
+        private boolean disabled;
         private boolean required;
         private String value;
         private Message label;
 
         /**
-         *
          * @param name Name of the form control. Submitted with the form as part of a name/value pair
          * @return The Checkbox Builder
          */
@@ -76,7 +102,6 @@ public record Checkbox(@NonNull String name,
         }
 
         /**
-         *
          * @param id It defines an identifier (ID) which must be unique in the whole document
          * @return The Checkbox Builder
          */
@@ -87,7 +112,6 @@ public record Checkbox(@NonNull String name,
         }
 
         /**
-         *
          * @param value A string representing the value of the checkbox.
          * @return the Builder
          */
@@ -98,7 +122,6 @@ public record Checkbox(@NonNull String name,
         }
 
         /**
-         *
          * @param label represents a caption for an item in a user interface
          * @return The Checkbox Builder
          */
@@ -109,7 +132,6 @@ public record Checkbox(@NonNull String name,
         }
 
         /**
-         *
          * @param checked A boolean attribute indicating whether this checkbox is checked by default (when the page loads).
          * @return The Checkbox Builder
          */
@@ -120,7 +142,16 @@ public record Checkbox(@NonNull String name,
         }
 
         /**
-         *
+         * @param disabled A boolean attribute indicating whether this checkbox is disabled by default (when the page loads).
+         * @return The Checkbox Builder
+         */
+        @NonNull
+        public Builder disabled(boolean disabled) {
+            this.disabled = disabled;
+            return this;
+        }
+
+        /**
          * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
          * @return The Checkbox Builder
          */
@@ -132,6 +163,7 @@ public record Checkbox(@NonNull String name,
 
         /**
          * Instantiates a Checkbox.
+         *
          * @return A Checkbox
          */
         @NonNull
@@ -139,6 +171,7 @@ public record Checkbox(@NonNull String name,
             return new Checkbox(name,
                 value,
                 checked,
+                disabled,
                 required,
                 id,
                 label);

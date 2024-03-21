@@ -56,11 +56,12 @@ class InputRadioViewRenderTest {
                 Radio.builder()
                     .id("louie")
                     .value("louie")
+                    .disabled(true)
                     .label(Message.of("Louie"))
                     .build()
             ))
             .build();
-        String html = TestUtils.render("fieldset/inputradio.html", viewsRenderer, Map.of("el", el, "radio", huey));
+        String html = TestUtils.render("fieldset/inputradio.html", viewsRenderer, Map.of("el", el, "radio", huey)).trim();
 
         assertTrue(
             "<input type=\"radio\" name=\"drone\" value=\"huey\" id=\"huey\" class=\"form-check-input\" checked/>".equals(html)
@@ -69,9 +70,18 @@ class InputRadioViewRenderTest {
 
         html = TestUtils.render("fieldset/inputradios.html", viewsRenderer, Map.of("el", el));
         assertEquals("""
-                <div class="form-check"><input type="radio" name="drone" value="huey" id="huey" class="form-check-input" checked="checked"/><label for="huey" class="form-label">Huey</label></div>\
-                <div class="form-check"><input type="radio" name="drone" value="dewey" id="dewey" class="form-check-input"/><label for="dewey" class="form-label">Dewey</label></div>\
-                <div class="form-check"><input type="radio" name="drone" value="louie" id="louie" class="form-check-input"/><label for="louie" class="form-label">Louie</label></div>""",
+                <div class="form-check">\
+                <input type="radio" name="drone" value="huey" id="huey" class="form-check-input" checked="checked"/>\
+                <label for="huey" class="form-label">Huey</label>\
+                </div>\
+                <div class="form-check">\
+                <input type="radio" name="drone" value="dewey" id="dewey" class="form-check-input"/>\
+                <label for="dewey" class="form-label">Dewey</label>\
+                </div>\
+                <div class="form-check">\
+                <input type="radio" name="drone" value="louie" id="louie" class="form-check-input" disabled="disabled"/>\
+                <label for="louie" class="form-label">Louie</label>\
+                </div>""",
             html
         );
     }
