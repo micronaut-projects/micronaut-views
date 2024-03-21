@@ -18,8 +18,8 @@ dependencies {
     testImplementation(mnSecurity.micronaut.security)
     testImplementation(mnSerde.micronaut.serde.api)
     testImplementation(mnSerde.micronaut.serde.jackson)
-
-    testImplementation("org.apache.groovy:groovy-json")
+    
+    testImplementation(libs.groovy.json)
     testImplementation(projects.micronautViewsHtmx)
     testImplementation(projects.micronautViewsSoy)
     testImplementation(projects.micronautViewsTurbo)

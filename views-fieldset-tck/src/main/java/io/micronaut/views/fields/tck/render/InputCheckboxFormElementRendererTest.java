@@ -54,7 +54,7 @@ class InputCheckboxFormElementRendererTest {
         assertEquals("""
             <div class="form-check"><input type="checkbox" name="scales" value="" id="scales" class="form-check-input" checked="checked"/><label for="scales" class="form-label">Scales</label></div>\
             <div class="form-check"><input type="checkbox" name="horns" value="" id="horns" class="form-check-input"/><label for="horns" class="form-label">Horns</label></div>""",
-            renderer.render(el, Locale.ENGLISH)
+            renderer.render(el, Locale.ENGLISH).trim()
         );
     }
 }

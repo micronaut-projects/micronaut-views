@@ -29,6 +29,7 @@ class InputRadioFormElementTest {
             .value(value)
             .id(id)
             .label(label)
+            .disabled(true)
             .build();
         List<Radio> buttons = Collections.singletonList(radio);
         InputRadioFormElement input = InputRadioFormElement.builder().name(name).buttons(buttons).build();
@@ -36,6 +37,7 @@ class InputRadioFormElementTest {
         assertEquals(id, input.buttons().get(0).getId());
         assertEquals(label, input.buttons().get(0).getLabel());
         assertEquals(value, input.buttons().get(0).getValue());
+        assertTrue(input.buttons().get(0).disabled());
 
         BeanIntrospection<InputRadioFormElement> introspection = BeanIntrospection.getIntrospection(InputRadioFormElement.class);
         BeanIntrospection.Builder<InputRadioFormElement> builder = introspection.builder();
