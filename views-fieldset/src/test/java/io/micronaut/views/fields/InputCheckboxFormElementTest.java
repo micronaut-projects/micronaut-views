@@ -27,8 +27,16 @@ class InputCheckboxFormElementTest {
     @Test
     void builder() {
         Checkbox coding = Checkbox.builder().name("interest").value("coding").checked(false).id("coding").label(Message.of("Coding", "interest.coding")).build();
-        Checkbox music = Checkbox.builder().name("interest").value("music").checked(false).id("music").label(Message.of("Music", "interest.music")).build();
+        Checkbox music = Checkbox.builder().name("interest").value("music").checked(true).id("music").label(Message.of("Music", "interest.music")).build();
         Checkbox cookery = Checkbox.builder().name("interest").value("cookery").disabled(true).checked(false).id("cookery").label(Message.of("Cookery", "interest.cookery")).build();
+
+        assertFalse(coding.checked(), "Coding checkbox should not be checked");
+        assertTrue(music.checked(), "Music checkbox should be checked");
+        assertFalse(cookery.checked(), "Cookery checkbox should not be checked");
+
+        assertFalse(coding.disabled(), "Coding checkbox should not be disabled");
+        assertFalse(music.disabled(), "Music checkbox should not be disabled");
+        assertTrue(cookery.disabled(), "Cookery checkbox should be disabled");
 
         InputCheckboxFormElement formElement = InputCheckboxFormElement.builder()
             .checkboxes(List.of(coding, music, cookery))
