@@ -15,6 +15,7 @@ io.micronaut.views.fields.render.views
 io.micronaut.views.fields.tck
 io.micronaut.views.freemarker
 io.micronaut.views.handlebars
+io.micronaut.views.http
 io.micronaut.views.jstachio
 io.micronaut.views.jte
 io.micronaut.views.model
