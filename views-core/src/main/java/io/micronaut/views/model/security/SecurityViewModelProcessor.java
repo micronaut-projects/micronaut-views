@@ -21,14 +21,9 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.filters.SecurityFilter;
-import io.micronaut.security.utils.SecurityService;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.model.ViewModelProcessor;
-import io.micronaut.core.annotation.NonNull;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,30 +39,13 @@ import java.util.Map;
 @Requires(classes = HttpRequest.class)
 @Singleton
 public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String, Object>, HttpRequest<?>> {
-
-    private static final Logger LOG = LoggerFactory.getLogger(SecurityViewModelProcessor.class);
-
     private final SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration;
 
     /**
      * @param securityViewModelProcessorConfiguration The Security Views Model Decorator configuration
      */
-    @Inject
     public SecurityViewModelProcessor(SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration) {
         this.securityViewModelProcessorConfiguration = securityViewModelProcessorConfiguration;
-    }
-
-    /**
-     * @param securityViewModelProcessorConfiguration The Security Views Model Decorator configuration
-     * @param securityService                         Utility to access Security information
-     * @deprecated Use {@link #SecurityViewModelProcessor(SecurityViewModelProcessorConfiguration)} instead
-     */
-    @Deprecated(forRemoval = true, since = "5.2.0")
-    public SecurityViewModelProcessor(
-        SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration,
-        SecurityService securityService
-    ) {
-        this(securityViewModelProcessorConfiguration);
     }
 
     @Override

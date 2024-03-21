@@ -38,7 +38,27 @@ import io.micronaut.views.fields.messages.Message;
 public record Radio(@NonNull String value,
                     @Nullable String id,
                     @NonNull Message label,
-                    @NonNull boolean checked) implements FormElement {
+                    @NonNull boolean checked,
+                    boolean disabled
+) implements FormElement {
+
+    /**
+     * Instantiates a Radio.
+     * @param value the value of the input radio element
+     * @param id It defines an identifier (ID) which must be unique in the whole document
+     * @param label represents a caption for an item in a user interface
+     * @param checked whether the radio button is checked
+     * @deprecated Use {@link Radio(String, String, Message, boolean, boolean)} instead which includes disabled attribute.
+     */
+    @Deprecated(since = "5.2.0", forRemoval = true)
+    public Radio(
+        @NonNull String value,
+        @Nullable String id,
+        @NonNull Message label,
+        @NonNull boolean checked
+    ) {
+        this(value, id, label, checked, false);
+    }
 
     /**
      *
@@ -93,6 +113,7 @@ public record Radio(@NonNull String value,
         private Message label;
 
         private boolean checked;
+        private boolean disabled;
 
         /**
          *
@@ -139,11 +160,22 @@ public record Radio(@NonNull String value,
 
         /**
          *
+         * @param disabled whether the radio button is disabled
+         * @return The Builder
+         */
+        @NonNull
+        public Builder disabled(boolean disabled) {
+            this.disabled = disabled;
+            return this;
+        }
+
+        /**
+         *
          * @return creates the radio button
          */
         @NonNull
         public Radio build() {
-            return new Radio(value, id, label, checked);
+            return new Radio(value, id, label, checked, disabled);
         }
     }
 }

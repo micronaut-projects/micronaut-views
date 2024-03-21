@@ -40,14 +40,25 @@ class InputCheckboxViewRenderTest {
             .label(Message.of("Attributes", "foobar"))
             .checkboxes(List.of(
                 Checkbox.builder().id("scales").name("scales").label(Message.of("Scales")).checked(true).build(),
-                Checkbox.builder().id("horns").name("horns").label(Message.of("Horns")).build()
+                Checkbox.builder().id("horns").name("horns").label(Message.of("Horns")).build(),
+                Checkbox.builder().id("devils").name("devils").disabled(true).label(Message.of("Devils")).build()
             ))
             .build();
         assertEquals("""
                 <label class="form-label">Attributes</label>\
-                <div class="form-check"><input type="checkbox" name="scales" value="" id="scales" class="form-check-input" checked="checked"/><label for="scales" class="form-label">Scales</label></div>\
-                <div class="form-check"><input type="checkbox" name="horns" value="" id="horns" class="form-check-input"/><label for="horns" class="form-label">Horns</label></div>""",
-            TestUtils.render("fieldset/inputcheckbox.html", viewsRenderer, Map.of("el", el))
+                <div class="form-check">\
+                <input type="checkbox" name="scales" value="" id="scales" class="form-check-input" checked="checked"/>\
+                <label for="scales" class="form-label">Scales</label>\
+                </div>\
+                <div class="form-check">\
+                <input type="checkbox" name="horns" value="" id="horns" class="form-check-input"/>\
+                <label for="horns" class="form-label">Horns</label>\
+                </div>\
+                <div class="form-check">\
+                <input type="checkbox" name="devils" value="" id="devils" class="form-check-input" disabled="disabled"/>\
+                <label for="devils" class="form-label">Devils</label>\
+                </div>""",
+            TestUtils.render("fieldset/inputcheckbox.html", viewsRenderer, Map.of("el", el)).trim()
         );
     }
 }
