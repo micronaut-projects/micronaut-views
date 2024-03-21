@@ -82,6 +82,7 @@ loadScripts(document, 'script');</script>
 <dd><code><span id="param-name">name</span></code> - Name of the form control. Submitted with the form as part of a name/value pair</dd>
 <dd><code><span id="param-value">value</span></code> - A string representing the value of the checkbox.</dd>
 <dd><code><span id="param-checked">checked</span></code> - A boolean attribute indicating whether this checkbox is checked by default (when the page loads).</dd>
+<dd><code><span id="param-disabled">disabled</span></code> - A boolean attribute indicating whether this checkbox is disabled by default (when the page loads).</dd>
 <dd><code><span id="param-required">required</span></code> - If true indicates that the user must specify a value for the input before the owning form can be submitted.</dd>
 <dd><code><span id="param-id">id</span></code> - It defines an identifier (ID) which must be unique in the whole document</dd>
 <dd><code><span id="param-label">label</span></code> - represents a caption for an item in a user interface</dd>
@@ -92,7 +93,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="annotations">@Introspected(builder=@IntrospectionBuilder(builderClass=<a href="Checkbox.Builder.html" title="class in io.micronaut.views.fields.elements">Builder.class</a>))
-</span><span class="modifiers">public record </span><span class="element-name type-name-label">Checkbox</span>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name, @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value, boolean&nbsp;checked, boolean&nbsp;required, @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id, @Nullable <a href="../messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;label)
+</span><span class="modifiers">public record </span><span class="element-name type-name-label">Checkbox</span>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name, @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value, boolean&nbsp;checked, boolean&nbsp;disabled, boolean&nbsp;required, @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id, @Nullable <a href="../messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;label)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a>
 implements <a href="../FormElement.html" title="interface in io.micronaut.views.fields">FormElement</a>, <a href="GlobalAttributes.html" title="interface in io.micronaut.views.fields.elements">GlobalAttributes</a></span></div>
 <div class="block">A Checkbox Form Element.</div>
@@ -136,14 +137,26 @@ implements <a href="../FormElement.html" title="interface in io.micronaut.views.
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,boolean,boolean,java.lang.String,io.micronaut.views.fields.messages.Message)" class="member-name-link">Checkbox</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,boolean,boolean,boolean,java.lang.String,io.micronaut.views.fields.messages.Message)" class="member-name-link">Checkbox</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
  boolean&nbsp;checked,
+ boolean&nbsp;disabled,
  boolean&nbsp;required,
  @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  @Nullable <a href="../messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;label)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>Checkbox</code> record class.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,boolean,boolean,java.lang.String,io.micronaut.views.fields.messages.Message)" class="member-name-link">Checkbox</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
+ boolean&nbsp;checked,
+ boolean&nbsp;required,
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ @Nullable <a href="../messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;label)</code></div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
+<div class="deprecation-comment">Use <a href="#%3Cinit%3E(java.lang.String,java.lang.String,boolean,boolean,boolean,java.lang.String,io.micronaut.views.fields.messages.Message)"><code>Checkbox(@io.micronaut.core.annotation.NonNull java.lang.String,@io.micronaut.core.annotation.NonNull java.lang.String,boolean,boolean,boolean,@io.micronaut.core.annotation.Nullable java.lang.String,@io.micronaut.core.annotation.Nullable io.micronaut.views.fields.messages.Message)</code></a> instead which includes disabled attribute.</div>
+</div>
 </div>
 </div>
 </section>
@@ -167,44 +180,49 @@ implements <a href="../FormElement.html" title="interface in io.micronaut.views.
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-checked"><code>checked</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#disabled()" class="member-name-link">disabled</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-disabled"><code>disabled</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a hash code value for this object.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#id()" class="member-name-link">id</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#id()" class="member-name-link">id</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-id"><code>id</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable <a href="../messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#label()" class="member-name-link">label</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable <a href="../messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#label()" class="member-name-link">label</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-label"><code>label</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#name()" class="member-name-link">name</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#name()" class="member-name-link">name</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-name"><code>name</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#required()" class="member-name-link">required</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#required()" class="member-name-link">required</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-required"><code>required</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a string representation of this record class.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#value()" class="member-name-link">value</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#value()" class="member-name-link">value</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-value"><code>value</code></a> record component.</div>
 </div>
 </div>
@@ -230,11 +248,42 @@ implements <a href="../FormElement.html" title="interface in io.micronaut.views.
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,boolean,boolean,java.lang.String,io.micronaut.views.fields.messages.Message)">
 <h3>Checkbox</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
+            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="5.2.0")
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name">Checkbox</span><wbr><span class="parameters">(@NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ @NonNull
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
+ boolean&nbsp;checked,
+ boolean&nbsp;required,
+ @Nullable
+ @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ @Nullable
+ @Nullable <a href="../messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a>&nbsp;label)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
+<div class="deprecation-comment">Use <a href="#%3Cinit%3E(java.lang.String,java.lang.String,boolean,boolean,boolean,java.lang.String,io.micronaut.views.fields.messages.Message)"><code>Checkbox(@io.micronaut.core.annotation.NonNull java.lang.String,@io.micronaut.core.annotation.NonNull java.lang.String,boolean,boolean,boolean,@io.micronaut.core.annotation.Nullable java.lang.String,@io.micronaut.core.annotation.Nullable io.micronaut.views.fields.messages.Message)</code></a> instead which includes disabled attribute.</div>
+</div>
+<div class="block">Instantiates a Checkbox.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - Name of the form control. Submitted with the form as part of a name/value pair</dd>
+<dd><code>value</code> - A string representing the value of the checkbox.</dd>
+<dd><code>checked</code> - A boolean attribute indicating whether this checkbox is checked by default (when the page loads).</dd>
+<dd><code>required</code> - If true indicates that the user must specify a value for the input before the owning form can be submitted.</dd>
+<dd><code>id</code> - It defines an identifier (ID) which must be unique in the whole document</dd>
+<dd><code>label</code> - represents a caption for an item in a user interface</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,boolean,boolean,boolean,java.lang.String,io.micronaut.views.fields.messages.Message)">
+<h3>Checkbox</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Checkbox</span><wbr><span class="parameters">(@NonNull
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  @NonNull
  @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
  boolean&nbsp;checked,
+ boolean&nbsp;disabled,
  boolean&nbsp;required,
  @Nullable
  @Nullable <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
@@ -246,6 +295,7 @@ implements <a href="../FormElement.html" title="interface in io.micronaut.views.
 <dd><code>name</code> - the value for the <a href="#param-name"><code>name</code></a> record component</dd>
 <dd><code>value</code> - the value for the <a href="#param-value"><code>value</code></a> record component</dd>
 <dd><code>checked</code> - the value for the <a href="#param-checked"><code>checked</code></a> record component</dd>
+<dd><code>disabled</code> - the value for the <a href="#param-disabled"><code>disabled</code></a> record component</dd>
 <dd><code>required</code> - the value for the <a href="#param-required"><code>required</code></a> record component</dd>
 <dd><code>id</code> - the value for the <a href="#param-id"><code>id</code></a> record component</dd>
 <dd><code>label</code> - the value for the <a href="#param-label"><code>label</code></a> record component</dd>
@@ -344,6 +394,17 @@ implements <a href="../FormElement.html" title="interface in io.micronaut.views.
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the value of the <a href="#param-checked"><code>checked</code></a> record component</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="disabled()">
+<h3>disabled</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">disabled</span>()</div>
+<div class="block">Returns the value of the <a href="#param-disabled"><code>disabled</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-disabled"><code>disabled</code></a> record component</dd>
 </dl>
 </section>
 </li>
