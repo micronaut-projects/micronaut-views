@@ -31,6 +31,11 @@ views:
     fieldsetAnnotations: Fieldset Annotations
     fieldsetFetcher: Radio, Checkbox and Option Fetcher
     customFormElement: Custom Form Elements
+  htmx:
+    title: HTMX
+    htmxRequestHeaders: HTMX Request Headers
+    outOfBandSwaps: Out of Band Swaps
+    htmxResponseHeaders: HTMX Response Headers
   turbo:
     title: Turbo
     turboFrameView: TurboFrameView annotation

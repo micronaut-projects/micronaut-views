@@ -1,6 +1,6 @@
 plugins {
-    id 'java-library'
-    id "io.micronaut.build.internal.views-tests"
+    `java-library`
+    id("io.micronaut.build.internal.views-tests")
 }
 
 dependencies {
@@ -22,13 +22,13 @@ dependencies {
     testImplementation(mnSecurity.micronaut.security)
     testImplementation(mnSerde.micronaut.serde.api)
     testImplementation(mnSerde.micronaut.serde.jackson)
-
-    testImplementation projects.micronautViewsVelocity
-    testImplementation projects.micronautViewsCore
-    testImplementation projects.micronautViewsSoy
-    testImplementation projects.micronautViewsHandlebars
+    testImplementation(projects.micronautViewsHtmx)
+    testImplementation(projects.micronautViewsVelocity)
+    testImplementation(projects.micronautViewsCore)
+    testImplementation(projects.micronautViewsSoy)
+    testImplementation(projects.micronautViewsHandlebars)
 }
 
-tasks.named('test') {
+tasks.withType<Test> {
     useJUnitPlatform()
 }
