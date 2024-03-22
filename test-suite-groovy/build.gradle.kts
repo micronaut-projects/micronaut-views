@@ -1,6 +1,6 @@
 plugins {
-    id 'groovy'
-    id "io.micronaut.build.internal.views-tests"
+    groovy
+    id("io.micronaut.build.internal.views-tests")
 }
 
 dependencies {
@@ -18,15 +18,16 @@ dependencies {
     testImplementation(mnSecurity.micronaut.security)
     testImplementation(mnSerde.micronaut.serde.api)
     testImplementation(mnSerde.micronaut.serde.jackson)
-
+    
     testImplementation(libs.groovy.json)
-    testImplementation projects.micronautViewsSoy
+    testImplementation(projects.micronautViewsHtmx)
+    testImplementation(projects.micronautViewsSoy)
     testImplementation(projects.micronautViewsTurbo)
-    testImplementation projects.micronautViewsVelocity
-    testImplementation projects.micronautViewsHandlebars
+    testImplementation(projects.micronautViewsVelocity)
+    testImplementation(projects.micronautViewsHandlebars)
     testRuntimeOnly(mnLogging.logback.classic)
 }
 
-tasks.named('test') {
+tasks.withType<Test> {
     useJUnitPlatform()
 }
