@@ -168,18 +168,23 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#generateNonce()" class="member-name-link">generateNonce</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Generate a nonce value for use in a Content-Security-Policy header, which
- is usable for one request/response cycle.</div>
+<div class="block">Generate a nonce value for use in a Content-Security-Policy header, which is usable for one request/response cycle.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFilterPath()" class="member-name-link">getFilterPath</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The path the CSP filter should apply to.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPolicyDirectives()" class="member-name-link">getPolicyDirectives</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the policy directives.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRandomEngine()" class="member-name-link">getRandomEngine</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The `Random` data engine used to generate nonce values.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEnabled()" class="member-name-link">isEnabled</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -191,7 +196,9 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isReportOnly()" class="member-name-link">isReportOnly</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">If true, the Content-Security-Policy-Report-Only header will be sent instead of Content-Security-Policy.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEnabled(boolean)" class="member-name-link">setEnabled</a><wbr>(boolean&nbsp;enabled)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -397,8 +404,6 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>isEnabled</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.util.Toggleable</code></dd>
-<dt>Returns:</dt>
-<dd>Whether csp headers will be sent</dd>
 </dl>
 </section>
 </li>
@@ -406,6 +411,7 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <section class="detail" id="getPolicyDirectives()">
 <h3>getPolicyDirectives</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getPolicyDirectives</span>()</div>
+<div class="block">Sets the policy directives.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>The policy directives</dd>
@@ -416,6 +422,7 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <section class="detail" id="isReportOnly()">
 <h3>isReportOnly</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isReportOnly</span>()</div>
+<div class="block">If true, the Content-Security-Policy-Report-Only header will be sent instead of Content-Security-Policy. Default value (<a href="#DEFAULT_REPORT_ONLY">false</a>).</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>Whether the report only header should be set</dd>
@@ -446,6 +453,7 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <section class="detail" id="getRandomEngine()">
 <h3>getRandomEngine</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a></span>&nbsp;<span class="element-name">getRandomEngine</span>()</div>
+<div class="block">The `Random` data engine used to generate nonce values. Ignored if `forceSecureRandom` is set to `true`.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>Random data engine currently in use to generate nonce values.</dd>
@@ -456,7 +464,7 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <section class="detail" id="setEnabled(boolean)">
 <h3>setEnabled</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setEnabled</span><wbr><span class="parameters">(boolean&nbsp;enabled)</span></div>
-<div class="block">Sets whether CSP is enabled. Default <a href="#DEFAULT_ENABLED">false</a>.</div>
+<div class="block">Sets whether CSP is enabled. Default value (<a href="#DEFAULT_ENABLED">false</a>).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>enabled</code> - True if CSP is enabled</dd>
@@ -480,7 +488,7 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <h3>setReportOnly</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setReportOnly</span><wbr><span class="parameters">(boolean&nbsp;reportOnly)</span></div>
 <div class="block">If true, the Content-Security-Policy-Report-Only header will be sent instead
- of Content-Security-Policy. Default <a href="#DEFAULT_REPORT_ONLY">false</a>.</div>
+ of Content-Security-Policy. Default value (<a href="#DEFAULT_REPORT_ONLY">false</a>).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>reportOnly</code> - set to true for reporting purpose only</dd>
@@ -505,7 +513,7 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <h3>setForceSecureRandom</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setForceSecureRandom</span><wbr><span class="parameters">(boolean&nbsp;forceSecureRandom)</span></div>
 <div class="block">Sets whether `SecureRandom` is forced for use in generated nonce values.
- Defaults to `<a href="#DEFAULT_FORCE_SECURE_RANDOM">false</a>`. Enabling this requires
+ Defaults to (<a href="#DEFAULT_FORCE_SECURE_RANDOM">false</a>). Enabling this requires
  careful consideration, because `SecureRandom` will block infinitely without
  enough entropy.</div>
 <dl class="notes">
@@ -518,8 +526,7 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <section class="detail" id="setRandomEngine(java.util.Random)">
 <h3>setRandomEngine</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRandomEngine</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;randomEngine)</span></div>
-<div class="block">Sets the `Random` data engine used to generate nonce values. Ignored if
- `forceSecureRandom` is set to `true`.</div>
+<div class="block">Sets the `Random` data engine used to generate nonce values. Ignored if `forceSecureRandom` is set to `true`.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>randomEngine</code> - Random data engine to use.</dd>
@@ -530,6 +537,7 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <section class="detail" id="getFilterPath()">
 <h3>getFilterPath</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFilterPath</span>()</div>
+<div class="block">The path the CSP filter should apply to. Default value (<a href="#DEFAULT_FILTER_PATH">"/**"</a>).</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>The path the CSP filter should apply to</dd>
@@ -540,7 +548,7 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <section class="detail" id="setFilterPath(java.lang.String)">
 <h3>setFilterPath</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setFilterPath</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filterPath)</span></div>
-<div class="block">Sets the path the CSP filter should apply to. Default value <a href="#DEFAULT_FILTER_PATH">"/**"</a>.</div>
+<div class="block">Sets the path the CSP filter should apply to. Default value (<a href="#DEFAULT_FILTER_PATH">"/**"</a>).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>filterPath</code> - The filter path</dd>
@@ -551,11 +559,9 @@ implements io.micronaut.core.util.Toggleable</span></div>
 <section class="detail" id="generateNonce()">
 <h3>generateNonce</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">generateNonce</span>()</div>
-<div class="block">Generate a nonce value for use in a Content-Security-Policy header, which
- is usable for one request/response cycle.
-
- A good guide for generating nonce values:
- https://csp.withgoogle.com/docs/faq.html#generating-nonces</div>
+<div class="block">Generate a nonce value for use in a Content-Security-Policy header, which is usable for one request/response cycle.
+ <p>
+ <a href="https://csp.withgoogle.com/docs/faq.html#generating-nonces">A good guide for generating nonce values</a></div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>Base64-encoded random nonce value.</dd>

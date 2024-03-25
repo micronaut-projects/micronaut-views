@@ -147,11 +147,13 @@ implements <a href="ViewsConfiguration.html" title="interface in io.micronaut.vi
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFolder()" class="member-name-link">getFolder</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The resources' folder where views should be searched for.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEnabled()" class="member-name-link">isEnabled</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">enabled getter.</div>
+<div class="block">Whether view rendering is enabled.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDir(java.lang.String)" class="member-name-link">setDir</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;folder)</code></div>
@@ -166,7 +168,7 @@ implements <a href="ViewsConfiguration.html" title="interface in io.micronaut.vi
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFolder(java.lang.String)" class="member-name-link">setFolder</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;folder)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">The folder to look for views.</div>
+<div class="block">The resources' folder where views should be searched for.</div>
 </div>
 </div>
 </div>
@@ -256,7 +258,7 @@ implements <a href="ViewsConfiguration.html" title="interface in io.micronaut.vi
 <section class="detail" id="isEnabled()">
 <h3>isEnabled</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isEnabled</span>()</div>
-<div class="block">enabled getter.</div>
+<div class="block">Whether view rendering is enabled. Default value (<a href="#DEFAULT_ENABLED">true</a>).</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>isEnabled</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.util.Toggleable</code></dd>
@@ -269,11 +271,12 @@ implements <a href="ViewsConfiguration.html" title="interface in io.micronaut.vi
 <section class="detail" id="getFolder()">
 <h3>getFolder</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFolder</span>()</div>
+<div class="block">The resources' folder where views should be searched for. Default value (<a href="#DEFAULT_FOLDER">"views"</a>).</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ViewsConfiguration.html#getFolder()">getFolder</a></code>&nbsp;in interface&nbsp;<code><a href="ViewsConfiguration.html" title="interface in io.micronaut.views">ViewsConfiguration</a></code></dd>
 <dt>Returns:</dt>
-<dd>The resources' folder where views should be searched for. By default <a href="#DEFAULT_FOLDER">"views"</a></dd>
+<dd>The folder</dd>
 </dl>
 </section>
 </li>
@@ -292,7 +295,7 @@ implements <a href="ViewsConfiguration.html" title="interface in io.micronaut.vi
 <section class="detail" id="setFolder(java.lang.String)">
 <h3>setFolder</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setFolder</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;folder)</span></div>
-<div class="block">The folder to look for views.</div>
+<div class="block">The resources' folder where views should be searched for. Default value (<a href="#DEFAULT_FOLDER">"views"</a>).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>folder</code> - The folder</dd>
