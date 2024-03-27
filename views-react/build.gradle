@@ -1,0 +1,50 @@
+plugins {
+    id "io.micronaut.build.internal.views-module"
+}
+
+def graaljs = libs.graal.js
+
+dependencies {
+    annotationProcessor(mnValidation.micronaut.validation.processor)
+
+    api projects.micronautViewsCore
+    api libs.jetbrains.annotations
+    api libs.graal.polyglot
+    implementation platform(graaljs)
+    api mn.micronaut.http.client
+
+    compileOnly(mn.micronaut.management)
+    compileOnly(mnValidation.micronaut.validation)
+    compileOnly(mn.micronaut.http)
+
+    testCompileOnly(mn.micronaut.inject.groovy)
+    testAnnotationProcessor(mnValidation.micronaut.validation.processor)
+    testAnnotationProcessor(mn.micronaut.inject.java)
+
+    testImplementation(mnSerde.micronaut.serde.jackson)
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.management)
+    testImplementation(mnValidation.micronaut.validation)
+    testImplementation(mn.snakeyaml)
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            // This hack is required because otherwise there is some sort of Maven/Gradle incompatibility.
+            // Maven would not see or include the JS engine on the classpath when depending on this library.
+            // It is something to do with the use of BOMs. So we add the dependency back in manually.
+            pom.withXml {
+                def root = asNode()
+                def dependenciesNode = root.get("dependencies")[0]
+                def dependencyNode = dependenciesNode.appendNode('dependency')
+                dependencyNode.appendNode('groupId', 'org.graalvm.polyglot')
+                dependencyNode.appendNode('artifactId', 'js')
+                dependencyNode.appendNode('version', graaljs.get().version)
+                dependencyNode.appendNode('type', 'pom')
+                dependencyNode.appendNode('scope', 'import')
+            }
+        }
+    }
+}
