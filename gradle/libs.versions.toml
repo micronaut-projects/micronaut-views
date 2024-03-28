@@ -19,6 +19,7 @@ managed-thymeleaf = "3.1.2.RELEASE"
 managed-velocity = "2.3"
 
 graal = "24.0.0"
+
 pebble = "3.2.2"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.9.23"

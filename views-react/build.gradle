@@ -10,7 +10,7 @@ dependencies {
     api projects.micronautViewsCore
     api libs.jetbrains.annotations
     api libs.graal.polyglot
-    implementation platform(graaljs)
+    api platform(graaljs)
     api mn.micronaut.http.client
 
     compileOnly(mn.micronaut.management)

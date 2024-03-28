@@ -49,7 +49,6 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
      * TO DO
      *
      * - Find a way to use `renderToPipeableStream`?
-     * - Split out to a separate module / patch to micronaut-views.
      * - Allow the fetch API to use the Micronaut http client API?
      * - Get rid of the JSON serialization across the border in favour of nested proxy object mappings.
      * - Work out how to make <Suspense> work.
@@ -72,7 +71,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     private Value renderJSFun;
 
     @Client
-    private HttpClient httpClient;
+    private final HttpClient httpClient;
 
     @Language("js")
     private static final String RENDER_SRC = """
@@ -87,6 +86,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
             // Data to be passed to the browser after the main HTML has finished loading.
             const boot = {
                 rootProps: props,
+                rootComponent: component.name,
                 prefetch: prefetchedData
             };
 
@@ -119,10 +119,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
     private static final Handler LOG_HANDLER = new JSLogHandler();
 
-    private static final List<String> REQUIRED_EXPORTED_SYMBOLS = List.of("React", "ReactDOMServer", "SWRConfig");
-
-    private Value global;
-    private Value promiseConstructor;
+    private static final List<String> REQUIRED_EXPORTED_SYMBOLS = List.of("React", "ReactDOMServer");
 
     /**
      * Construct this renderer. Don't call it yourself, as Micronaut Views will set it up for you.
@@ -158,8 +155,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
             .err(new OutputStreamToSLF4J(jsLogger, Level.ERROR))
             .build();
 
-        global = js.getBindings("js");
-        promiseConstructor = global.getMember("Promise");
+        Value global = js.getBindings("js");
 
         try (var reader = Files.newBufferedReader(bundlePath)) {
             Source source = Source.newBuilder("js", reader, MJS_FILENAME)
@@ -240,7 +236,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         }
 
         @HostAccess.Export
-        public ProxyObject getPrefetchedData() throws URISyntaxException {
+        public ProxyObject getPrefetchedData() {
             // This is called at the start of each render cycle. We'll drain the queue and return the cache built up
             // so far, which will be serialized to JSON and returned to the client. If the next render completes
             // without any new URLs being queued, the result will be returned as-is, otherwise we'll be called again

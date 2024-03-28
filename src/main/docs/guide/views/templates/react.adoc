@@ -1,0 +1,22 @@
+React server-side rendering (SSR) allows you to pre-render React components to HTML before the page is sent to the user.
+This improves performance by ensuring the page appears before any Javascript has loaded (albeit in a non-responsive
+state), makes it easier for search engines to index your pages, and can eliminate server round trips by pre-fetching
+REST API calls that would otherwise be made by the browser.
+
+Micronaut's support for React SSR has the following useful features:
+
+* Javascript runs using https://www.graalvm.org/[GraalJS], a high performance Javascript engine native to the JVM.
+  Make sure to run your app on GraalVM or by compiling it to a native image to get full Javascript performance.
+* You can pass Java objects to use as _props_ for your page component. This is convenient for passing in things like the user profile info.
+* If your React components use the https://swr.vercel.app/[SWR fetcher library] then Micronaut Views React can
+  pre-fetch the request content server-side and pre-populate the SWR cache, so when the `useSWR` hook is used on the
+  client the data is loaded immediately without round-trips. This reduces latency and improves page load robustness.
+* Logging from Javascript is sent to the Micronaut logs. `console.log` and related will go to the `INFO` level of the logger named `js`, `console.error` and Javascript exceptions will go to the `ERROR` level of the same.
+
+To use React SSR, add the `micronaut-views-react` dependency to your classpath.
+
+dependency:micronaut-views-react[groupId="io.micronaut.views"]
+
+You will need React components that return the entire page, including the `<html>` tag. You'll also need to prepare your Javascript (see below). Then just name your required page component in the `@View` annotation on a controller, for example `@View("App")` will render the `<App/>` component with whatever object is provided as props.
+
+
