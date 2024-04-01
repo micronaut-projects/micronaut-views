@@ -46,7 +46,7 @@
         <div class="docs-content">
             <div class="project">
                 <h1>Configuration Reference</h1>
-                <p><strong>Version:</strong>5.2.0-SNAPSHOT</p>
+                <p><strong>Version:</strong>6.0.0-SNAPSHOT</p>
                 <p></p>
             </div>
 <div class="sect2">
@@ -110,9 +110,33 @@
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
+<a id="io.micronaut.views.http.ViewsFilterConfiguration" href="#io.micronaut.views.http.ViewsFilterConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/views/http/ViewsFilterConfiguration.html">ViewsFilterConfiguration</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.filter.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether the views filter is enabled. Default value (true).</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
 <a id="io.micronaut.views.ViewsConfigurationProperties" href="#io.micronaut.views.ViewsConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/views/ViewsConfigurationProperties.html">ViewsConfigurationProperties</a></caption>
+<caption class="title">Table 3. Configuration Properties for <a href="../api/io/micronaut/views/ViewsConfigurationProperties.html">ViewsConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -146,7 +170,7 @@
 <div style="page-break-after: always;"></div>
 <a id="io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties" href="#io.micronaut.views.model.security.SecurityViewModelProcessorConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Configuration Properties for <a href="../api/io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html">SecurityViewModelProcessorConfigurationProperties</a></caption>
+<caption class="title">Table 4. Configuration Properties for <a href="../api/io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html">SecurityViewModelProcessorConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -186,30 +210,6 @@
 </div>
 <div class="sect2">
 <h3 id="_micronaut_views_fieldset_config_properties">Micronaut Views Fieldset Config Properties</h3>
-<a id="io.micronaut.views.fields.render.FormElementRendererConfigurationProperties" href="#io.micronaut.views.fields.render.FormElementRendererConfigurationProperties">&#128279;</a>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Configuration Properties for <a href="../api/io/micronaut/views/fields/render/FormElementRendererConfigurationProperties.html">FormElementRendererConfigurationProperties</a></caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Property</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.form-element.render.enabled</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether form element rendering is enabled. Default value (true).</p></td>
-</tr>
-</tbody>
-</table>
-<div style="page-break-after: always;"></div>
 <a id="io.micronaut.views.fields.render.views.FormElementRendererViewsConfiguration" href="#io.micronaut.views.fields.render.views.FormElementRendererViewsConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 5. Configuration Properties for <a href="../api/io/micronaut/views/fields/render/views/FormElementRendererViewsConfiguration.html">FormElementRendererViewsConfiguration</a></caption>
@@ -314,12 +314,36 @@
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
+<a id="io.micronaut.views.fields.render.FormElementRendererConfigurationProperties" href="#io.micronaut.views.fields.render.FormElementRendererConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. Configuration Properties for <a href="../api/io/micronaut/views/fields/render/FormElementRendererConfigurationProperties.html">FormElementRendererConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.form-element.render.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether form element rendering is enabled. Default value (true).</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
 <h3 id="_micronaut_views_freemarker_config_properties">Micronaut Views Freemarker Config Properties</h3>
 <a id="io.micronaut.views.freemarker.FreemarkerViewsRendererConfigurationProperties" href="#io.micronaut.views.freemarker.FreemarkerViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Configuration Properties for <a href="../api/io/micronaut/views/freemarker/FreemarkerViewsRendererConfigurationProperties.html">FreemarkerViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 7. Configuration Properties for <a href="../api/io/micronaut/views/freemarker/FreemarkerViewsRendererConfigurationProperties.html">FreemarkerViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -644,7 +668,7 @@
 <h3 id="_micronaut_views_handlebars_config_properties">Micronaut Views Handlebars Config Properties</h3>
 <a id="io.micronaut.views.handlebars.HandlebarsViewsRendererConfigurationProperties" href="#io.micronaut.views.handlebars.HandlebarsViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Configuration Properties for <a href="../api/io/micronaut/views/handlebars/HandlebarsViewsRendererConfigurationProperties.html">HandlebarsViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 8. Configuration Properties for <a href="../api/io/micronaut/views/handlebars/HandlebarsViewsRendererConfigurationProperties.html">HandlebarsViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -676,7 +700,7 @@
 <h3 id="_micronaut_views_htmx_config_properties">Micronaut Views Htmx Config Properties</h3>
 <a id="io.micronaut.views.htmx.HtmxConfigurationProperties" href="#io.micronaut.views.htmx.HtmxConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. Configuration Properties for <a href="../api/io/micronaut/views/htmx/HtmxConfigurationProperties.html">HtmxConfigurationProperties</a></caption>
+<caption class="title">Table 9. Configuration Properties for <a href="../api/io/micronaut/views/htmx/HtmxConfigurationProperties.html">HtmxConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -703,7 +727,7 @@
 <h3 id="_micronaut_views_jte_config_properties">Micronaut Views Jte Config Properties</h3>
 <a id="io.micronaut.views.jte.JteViewsRendererConfigurationProperties" href="#io.micronaut.views.jte.JteViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Configuration Properties for <a href="../api/io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html">JteViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 10. Configuration Properties for <a href="../api/io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html">JteViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -749,7 +773,7 @@
 <h3 id="_micronaut_views_pebble_config_properties">Micronaut Views Pebble Config Properties</h3>
 <a id="io.micronaut.views.pebble.PebbleConfigurationProperties" href="#io.micronaut.views.pebble.PebbleConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Configuration Properties for <a href="../api/io/micronaut/views/pebble/PebbleConfigurationProperties.html">PebbleConfigurationProperties</a></caption>
+<caption class="title">Table 11. Configuration Properties for <a href="../api/io/micronaut/views/pebble/PebbleConfigurationProperties.html">PebbleConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -840,7 +864,7 @@
 <h3 id="_micronaut_views_rocker_config_properties">Micronaut Views Rocker Config Properties</h3>
 <a id="io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties" href="#io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Configuration Properties for <a href="../api/io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html">RockerViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 12. Configuration Properties for <a href="../api/io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html">RockerViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -882,7 +906,7 @@
 <h3 id="_micronaut_views_soy_config_properties">Micronaut Views Soy Config Properties</h3>
 <a id="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties" href="#io.micronaut.views.soy.SoyViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Configuration Properties for <a href="../api/io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html">SoyViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 13. Configuration Properties for <a href="../api/io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html">SoyViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -914,7 +938,7 @@
 <h3 id="_micronaut_views_thymeleaf_config_properties">Micronaut Views Thymeleaf Config Properties</h3>
 <a id="io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties" href="#io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. Configuration Properties for <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html">ThymeleafViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 14. Configuration Properties for <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html">ThymeleafViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -983,10 +1007,37 @@
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
+<h3 id="_micronaut_views_turbo_config_properties">Micronaut Views Turbo Config Properties</h3>
+<a id="io.micronaut.views.turbo.TurboConfigurationProperties" href="#io.micronaut.views.turbo.TurboConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 15. Configuration Properties for <a href="../api/io/micronaut/views/turbo/TurboConfigurationProperties.html">TurboConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.turbo.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether the turbo integration is enabled. Default value (true).</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
 <h3 id="_micronaut_views_velocity_config_properties">Micronaut Views Velocity Config Properties</h3>
 <a id="io.micronaut.views.velocity.VelocityViewsRendererConfigurationProperties" href="#io.micronaut.views.velocity.VelocityViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. Configuration Properties for <a href="../api/io/micronaut/views/velocity/VelocityViewsRendererConfigurationProperties.html">VelocityViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 16. Configuration Properties for <a href="../api/io/micronaut/views/velocity/VelocityViewsRendererConfigurationProperties.html">VelocityViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
