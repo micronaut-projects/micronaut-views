@@ -45,18 +45,6 @@ import static java.lang.String.format;
  */
 @Singleton
 public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, REQUEST>, AutoCloseable {
-    /**
-     * TO DO
-     *
-     * - Find a way to use `renderToPipeableStream`?
-     * - Allow the fetch API to use the Micronaut http client API?
-     * - Get rid of the JSON serialization across the border in favour of nested proxy object mappings.
-     * - Work out how to make <Suspense> work.
-     * - Figure out the debugging story.
-     * - Implement the TextEncoder/Decoder objects in GraalJS.
-     * - Maybe update the `micronaut-spa-app` sample.
-     */
-
     private static final Logger LOG = LoggerFactory.getLogger(ReactViewsRenderer.class);
 
     /**
@@ -68,14 +56,14 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     private Context js;
 
     // Our top-level function that returns what's needed.
-    private Value renderJSFun;
+    private Value renderWithReact;
 
     @Client
     private final HttpClient httpClient;
 
     @Language("js")
     private static final String RENDER_SRC = """
-    (async function micronautRender(component, props, callback) {
+    async function renderWithReact(component, props, callback) {
         globalThis.__micronaut_prefetch = callback.recordPrefetch;
         const element = React.createElement(component, props, null);
 
@@ -106,7 +94,9 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
           if (done) break;
           callback.write(value);
         }
-    })
+    }
+
+    export { renderWithReact };
     """;
 
     // This is the overall module that exports both the React utilities we need, and the user's actual components.
@@ -136,7 +126,6 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
     @PostConstruct
     void init() throws IOException, IllegalStateException {
-        // We start in 'target' when run from Maven.
         bundlePath = Path.of(folder).resolve(MJS_FILENAME).toAbsolutePath().normalize();
         if (!Files.exists(bundlePath))
             throw new FileNotFoundException(bundlePath + " was not found in workspace, try running `npm run build` in the js directory.");
@@ -170,7 +159,12 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
                 global.putMember(name, ssrModule.getMember(name));
             }
 
-            renderJSFun = js.eval(Source.newBuilder("js", RENDER_SRC.stripIndent(), "render.js").build());
+            var renderModule = js.eval(
+                Source.newBuilder("js", RENDER_SRC.stripIndent(), "render.js")
+                    .mimeType("application/javascript+module")
+                    .build()
+            );
+            renderWithReact = renderModule.getMember("renderWithReact");
         }
     }
 
@@ -290,7 +284,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
         var propsProxy = new IntrospectableToPolyglotObject<>(js, true, props);
         var renderCallback = new RenderCallback(writer, componentName);
-        renderJSFun.execute(component, propsProxy, renderCallback);
+        renderWithReact.execute(component, propsProxy, renderCallback);
     }
 
     @PreDestroy
