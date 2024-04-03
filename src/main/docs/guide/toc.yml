@@ -27,6 +27,7 @@ views:
       reactpreparingjs: Preparing your Javascript
       reactsettingproperties: Setting serving properties
       reactprefetch: Prefetching API requests
+      reacttodo: Known limitations
   model:
     title: Working with Models
     custom: Dynamically Enriching Models

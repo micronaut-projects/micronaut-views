@@ -25,9 +25,9 @@ micronaut:
           cache-seconds: 0
 ----
 
-Set the hack property. TODO: This need will go away. The `micronaut.views.folder` property should also go away at some point.
+Set the hack property.
 
-If you want Micronaut to serve not only the pre-rendered HTML but also your Javascript assets you need to set up static file serving. Add the two properties you see above. TODO: Currently only /static/ is supported as a path. This will change.
+If you want Micronaut to serve not only the pre-rendered HTML but also your Javascript assets you need to set up static file serving. Add the two properties you see above.
 
 Finally, consider turning off response caching in development if you want hot reload to work with `npx webpack --watch`.
 

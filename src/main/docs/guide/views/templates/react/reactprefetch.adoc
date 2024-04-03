@@ -102,7 +102,7 @@ export { SWRConfig, useSWR };
 
 This file provides its own implementation of `useSWR` that asks Micronaut to prefetch the given URL and then returns the data, if the prefetch was successful. It calls `__micronaut_prefetch` which is a global function defined only during the server-side rendering process.
 
-Micronaut React SSR is smart about how prefetching works. Your Javascript doesn't block when it calls this function. Instead `+__micronaut_prefetch+` returns null and records the URL for later. Once every component has rendered, every API call is resolved in parallel (TODO, still serial). Then the server rerenders the page, but this time the `+__micronaut_prefetch+` function returns the data that was observed. If there are any new prefetch calls then the process repeats until no new URLs are seen. This lets you chain API calls on the server where latency is low.
+Micronaut React SSR is smart about how prefetching works. Your Javascript doesn't block when it calls this function. Instead `+__micronaut_prefetch+` returns null and records the URL for later. Once every component has rendered, every API call is resolved in parallel. Then the server rerenders the page, but this time the `+__micronaut_prefetch+` function returns the data that was observed. If there are any new prefetch calls then the process repeats until no new URLs are seen. This lets you chain API calls on the server where latency is low.
 
 We have our shim, but our app isn't using it yet. Let's fix that by using Webpack again. Edit your `webpack.server.js` file and add the following:
 

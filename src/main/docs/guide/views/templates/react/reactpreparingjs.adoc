@@ -1,20 +1,8 @@
 An app that uses SSR needs the React components to be bundled twice, once for the client and once for the server. For the server you need to make a Javascript module bundle that imports and then re-exports the (page) components you will render, along with `React`, `ReactServerDOM` and if you wish to benefit from the server-side request prefetching, `SWRConfig` from the `swr` module. The bundle must be compatible with GraalJS, which is not NodeJS and thus doesn't support the same set of APIs. You will also need to create a client-side bundle as per usual, and change how you start up React.
 
-To start we will need a `server.js` file. It should be a part of your frontend project and can be named and placed wherever you like, as the server will only need the final compiled bundle. This tutorial doesn't take you through how to create a ReactJS project from scratch - please refer to the React documentation for that. However, files that export page components should do so explicitly rather than relying on default exports, e.g.
+TIP: This tutorial doesn't take you through how to create a ReactJS project from scratch - please refer to the React documentation for that.
 
-[source,javascript]
-----
-export { App };
-----
-
-not
-
-[source,javascript]
-----
-export default App;
-----
-
-Your `server.js` should look like this:
+To start we will need a `server.js` file. It should be a part of your frontend project and can be named and placed wherever you like, as the server will only need the final compiled bundle. Your `server.js` should look like this:
 
 [source,javascript]
 .src/main/js/server.js

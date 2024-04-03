@@ -5,18 +5,15 @@ REST API calls that would otherwise be made by the browser.
 
 Micronaut's support for React SSR has the following useful features:
 
-* Javascript runs using https://www.graalvm.org/[GraalJS], a high performance Javascript engine native to the JVM.
-  Make sure to run your app on GraalVM or by compiling it to a native image to get full Javascript performance.
+* Javascript runs using https://www.graalvm.org/[GraalJS], a high performance Javascript engine native to the JVM. Make sure to run your app on GraalVM or by compiling it to a native image to get full Javascript performance.
 * You can pass Java objects to use as _props_ for your page component. This is convenient for passing in things like the user profile info.
-* If your React components use the https://swr.vercel.app/[SWR fetcher library] then Micronaut Views React can
-  pre-fetch the request content server-side and pre-populate the SWR cache, so when the `useSWR` hook is used on the
-  client the data is loaded immediately without round-trips. This reduces latency and improves page load robustness.
+* You can integrate fetcher libraries like https://swr.vercel.app/[SWR] so Micronaut Views React can pre-fetch the API response server-side and then pass it to the client in the initial HTML. The docs show how to integrate this with the `useSWR` hook, which is the recommended way to use this feature. This reduces latency and improves robustness.
 * Logging from Javascript is sent to the Micronaut logs. `console.log` and related will go to the `INFO` level of the logger named `js`, `console.error` and Javascript exceptions will go to the `ERROR` level of the same.
+
+You will need React components that return the entire page, including the `<html>` tag. You'll also need to prepare your Javascript (see below). Then just name your required page component in the `@View` annotation on a controller, for example `@View("App")` will render the `<App/>` component with whatever object is provided as props.
 
 To use React SSR, add the `micronaut-views-react` dependency to your classpath.
 
 dependency:micronaut-views-react[groupId="io.micronaut.views"]
 
-You will need React components that return the entire page, including the `<html>` tag. You'll also need to prepare your Javascript (see below). Then just name your required page component in the `@View` annotation on a controller, for example `@View("App")` will render the `<App/>` component with whatever object is provided as props.
-
-
+TIP: The repository containing this prototype is not yet available. Please contact Mike Hearn in Oracle Labs if you want to try it out.
