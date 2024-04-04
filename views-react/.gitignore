@@ -1,0 +1,4 @@
+src/test/js/node_modules
+src/test/resources/views/ssr-components.mjs
+src/test/resources/views/static/client.js
+src/test/resources/views/static/components_App_js.client.js

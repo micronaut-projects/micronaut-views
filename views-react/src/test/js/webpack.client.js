@@ -2,8 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: ['./src/client.js'],
-    watch: true,
+    entry: ['./client.js'],
     devtool: false,
     output: {
         path: path.resolve(__dirname, '../resources/views/static'),

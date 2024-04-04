@@ -1,5 +1,6 @@
 plugins {
     id "io.micronaut.build.internal.views-module"
+    id "com.github.node-gradle.node" version "7.0.2"
 }
 
 def graaljs = libs.graal.js
@@ -10,7 +11,8 @@ dependencies {
     api projects.micronautViewsCore
     api libs.jetbrains.annotations
     api libs.graal.polyglot
-    api platform(graaljs)
+    // TODO: Work out how to let users pick between community and enterprise versions of graaljs
+    api graaljs
     api mn.micronaut.http.client
 
     compileOnly(mn.micronaut.management)
@@ -29,12 +31,45 @@ dependencies {
     testImplementation(mn.snakeyaml)
 }
 
+// Set up a simple SSR project for testing purposes. We will need nodejs to run the bundlers.
+node {
+    download = true
+    version = "21.7.1"
+    nodeProjectDir = file("${project.projectDir}/src/test/js")
+}
+
+task buildTestClientJS(type: NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ["--mode", "development", "--config", "webpack.client.js"]
+    inputs.dir(fileTree("src/test/js/").exclude(".cache"))
+    outputs.file('src/test/resources/views/static/client.js')
+}
+
+task buildTestServerJS(type: NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ["--mode", "development", "--config", "webpack.server.js"]
+    inputs.dir(fileTree("src/test/js/").exclude(".cache"))
+    outputs.file('src/test/resources/views/ssr-components.mjs')
+}
+
+def buildTestJS = tasks.register("buildTestJS") {
+    it.dependsOn("buildTestClientJS", "buildTestServerJS")
+}
+
+tasks.named("processTestResources") {
+    it.dependsOn(buildTestJS)
+}
+
+// Ensure Maven users can consume the library.
+//
+// This hack is required because otherwise there is some sort of Maven/Gradle incompatibility.
+// Maven would not see or include the JS engine on the classpath when depending on this library.
+// It is something to do with the use of BOMs. So we add the dependency back in manually.
 publishing {
     publications {
         maven(MavenPublication) {
-            // This hack is required because otherwise there is some sort of Maven/Gradle incompatibility.
-            // Maven would not see or include the JS engine on the classpath when depending on this library.
-            // It is something to do with the use of BOMs. So we add the dependency back in manually.
             pom.withXml {
                 def root = asNode()
                 def dependenciesNode = root.get("dependencies")[0]

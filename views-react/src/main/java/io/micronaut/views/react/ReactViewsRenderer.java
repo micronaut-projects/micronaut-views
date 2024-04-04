@@ -65,6 +65,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     private static final String RENDER_SRC = """
     async function renderWithReact(component, props, callback) {
         globalThis.__micronaut_prefetch = callback.recordPrefetch;
+        console.log(`props = ${JSON.stringify(props)}`)
         const element = React.createElement(component, props, null);
 
         var stream;
@@ -133,6 +134,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         lastModified = Files.getLastModifiedTime(bundlePath);
 
         LOG.info("Initializing React SSR with {}", bundlePath);
+
         Logger jsLogger = LoggerFactory.getLogger("js");
         js = Context.newBuilder("js")
             .allowExperimentalOptions(true)
@@ -282,9 +284,22 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         if (component == null)
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
 
-        var propsProxy = new IntrospectableToPolyglotObject<>(js, true, props);
         var renderCallback = new RenderCallback(writer, componentName);
-        renderWithReact.execute(component, propsProxy, renderCallback);
+        if (isStringMap(props)) {
+            // TODO: Sandboxing. Do we need to deep clone here?
+            //noinspection unchecked
+            renderWithReact.execute(component, ProxyObject.fromMap((Map<String, Object>) props), renderCallback);
+        } else {
+            renderWithReact.execute(component, new IntrospectableToPolyglotObject<PROPS>(js, true, props), renderCallback);
+        }
+    }
+
+    private boolean isStringMap(PROPS props) {
+        if (props instanceof Map<?, ?> propsMap) {
+            return propsMap.keySet().stream().allMatch(it -> it instanceof String);
+        } else {
+            return false;
+        }
     }
 
     @PreDestroy

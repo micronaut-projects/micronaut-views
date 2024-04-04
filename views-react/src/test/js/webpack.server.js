@@ -4,9 +4,8 @@ const webpack = require('webpack');
 // This targets the browser even though we run it server-side, because that's closer to GraalJS.
 module.exports = {
     entry: ['web-streams-polyfill/dist/polyfill', './server.js'],
-    watch: true,
     output: {
-        path: path.resolve(__dirname, '../resources/views/server.js'),
+        path: path.resolve(__dirname, '../resources/views/'),
         filename: 'ssr-components.mjs',
         module: true,
         library: {
