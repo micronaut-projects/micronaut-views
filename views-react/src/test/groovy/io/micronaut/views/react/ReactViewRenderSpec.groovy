@@ -24,4 +24,6 @@ class ReactViewRenderSpec extends Specification {
         result.contains("Hello there")  // static HTML
         result.contains("\"name\":\"Mike\"")  // props
     }
+
+    // TODO: tests for server prefetch.
 }

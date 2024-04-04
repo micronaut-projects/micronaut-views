@@ -1,3 +1,4 @@
+import React from 'react';
 import {hydrateRoot} from 'react-dom/client';
 
 const pageComponentName = __micronaut_boot.rootComponent;
