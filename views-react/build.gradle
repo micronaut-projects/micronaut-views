@@ -3,17 +3,16 @@ plugins {
     id "com.github.node-gradle.node" version "7.0.2"
 }
 
-def graaljs = libs.graal.js
-
 dependencies {
     annotationProcessor(mnValidation.micronaut.validation.processor)
 
     api projects.micronautViewsCore
     api libs.jetbrains.annotations
-    api libs.graal.polyglot
-    // TODO: Work out how to let users pick between community and enterprise versions of graaljs
-    api graaljs
-    api mn.micronaut.http.client
+    implementation(mn.micronaut.http.client)
+
+    // The user of this library is expected to supply the JS dependency. That's because they may choose between
+    // the community edition (open source, slower) and the enterprise edition (liberal usage, not open source, faster).
+    implementation(libs.graal.polyglot)
 
     compileOnly(mn.micronaut.management)
     compileOnly(mnValidation.micronaut.validation)
@@ -29,6 +28,9 @@ dependencies {
     testImplementation(mn.micronaut.management)
     testImplementation(mnValidation.micronaut.validation)
     testImplementation(mn.snakeyaml)
+
+    // We will use enterprise edition for testing.
+    testImplementation(libs.graal.js)
 }
 
 // Set up a simple SSR project for testing purposes. We will need nodejs to run the bundlers.
@@ -60,26 +62,4 @@ def buildTestJS = tasks.register("buildTestJS") {
 
 tasks.named("processTestResources") {
     it.dependsOn(buildTestJS)
-}
-
-// Ensure Maven users can consume the library.
-//
-// This hack is required because otherwise there is some sort of Maven/Gradle incompatibility.
-// Maven would not see or include the JS engine on the classpath when depending on this library.
-// It is something to do with the use of BOMs. So we add the dependency back in manually.
-publishing {
-    publications {
-        maven(MavenPublication) {
-            pom.withXml {
-                def root = asNode()
-                def dependenciesNode = root.get("dependencies")[0]
-                def dependencyNode = dependenciesNode.appendNode('dependency')
-                dependencyNode.appendNode('groupId', 'org.graalvm.polyglot')
-                dependencyNode.appendNode('artifactId', 'js')
-                dependencyNode.appendNode('version', graaljs.get().version)
-                dependencyNode.appendNode('type', 'pom')
-                dependencyNode.appendNode('scope', 'import')
-            }
-        }
-    }
 }

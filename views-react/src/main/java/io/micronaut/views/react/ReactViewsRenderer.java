@@ -135,17 +135,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
         LOG.info("Initializing React SSR with {}", bundlePath);
 
-        Logger jsLogger = LoggerFactory.getLogger("js");
-        js = Context.newBuilder("js")
-            .allowExperimentalOptions(true)
-            .logHandler(LOG_HANDLER)
-            .allowAllAccess(true)  // TODO: Sandbox
-            .option("js.esm-eval-returns-exports", "true")
-            .option("js.unhandled-rejections", "throw")
-            .out(new OutputStreamToSLF4J(jsLogger, Level.INFO))
-            .err(new OutputStreamToSLF4J(jsLogger, Level.ERROR))
-            .build();
-
+        js = initEngine();
         Value global = js.getBindings("js");
 
         try (var reader = Files.newBufferedReader(bundlePath)) {
@@ -167,6 +157,28 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
                     .build()
             );
             renderWithReact = renderModule.getMember("renderWithReact");
+        }
+    }
+
+    private static Context initEngine() {
+        Logger jsLogger = LoggerFactory.getLogger("js");
+
+        Context.Builder contextBuilder = Context.newBuilder("js")
+            .allowExperimentalOptions(true)
+            .logHandler(LOG_HANDLER)
+            .allowAllAccess(true)  // TODO: Sandbox
+            .option("js.esm-eval-returns-exports", "true")
+            .option("js.unhandled-rejections", "throw")
+            .out(new OutputStreamToSLF4J(jsLogger, Level.INFO))
+            .err(new OutputStreamToSLF4J(jsLogger, Level.ERROR));
+
+        try {
+            return contextBuilder.build();
+        } catch (ExceptionInInitializerError e) {
+            // The catch handler is to work around a bug in Polyglot 24.0.0
+            if (e.getCause().getMessage().contains("version compatibility check failed")) {
+                throw new IllegalStateException("GraalJS version mismatch or it's missing. Please ensure you have added either org.graalvm.polyglot:js or org.graalvm.polyglot:js-community to your dependencies alongside Micronaut Views React, as it's up to you to select the best engine given your licensing constraints. See the user guide for more detail.");
+            } else throw e;
         }
     }
 
