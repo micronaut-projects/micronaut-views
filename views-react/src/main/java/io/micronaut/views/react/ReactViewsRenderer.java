@@ -13,10 +13,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import org.graalvm.polyglot.Context;
-import org.graalvm.polyglot.HostAccess;
-import org.graalvm.polyglot.Source;
-import org.graalvm.polyglot.Value;
+import org.graalvm.polyglot.*;
 import org.graalvm.polyglot.proxy.ProxyObject;
 import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
@@ -163,10 +160,14 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     private static Context initEngine() {
         Logger jsLogger = LoggerFactory.getLogger("js");
 
+        // TODO: Sandboxing is currently incompatible with esm-eval-returns-exports.
+        //       If the problem won't be fixed soon, rework to avoid depending on that feature so
+        //       the sandbox can be enabled.
+
         Context.Builder contextBuilder = Context.newBuilder("js")
             .allowExperimentalOptions(true)
             .logHandler(LOG_HANDLER)
-            .allowAllAccess(true)  // TODO: Sandbox
+            // .sandbox(SandboxPolicy.CONSTRAINED)
             .option("js.esm-eval-returns-exports", "true")
             .option("js.unhandled-rejections", "throw")
             .out(new OutputStreamToSLF4J(jsLogger, Level.INFO))
