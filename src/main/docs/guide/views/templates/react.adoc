@@ -1,3 +1,5 @@
+TIP: The repository containing this prototype is not yet available. Please contact Mike Hearn in Oracle Labs if you want to try it out.
+
 React server-side rendering (SSR) allows you to pre-render React components to HTML before the page is sent to the user.
 This improves performance by ensuring the page appears before any Javascript has loaded (albeit in a non-responsive
 state), makes it easier for search engines to index your pages, and can eliminate server round trips by pre-fetching
@@ -19,4 +21,6 @@ To use React SSR you need to add two dependencies.
 
 dependency:micronaut-views-react[groupId="io.micronaut.views"]
 
-TIP: The repository containing this prototype is not yet available. Please contact Mike Hearn in Oracle Labs if you want to try it out.
+The properties used can be customized by overriding the values of:
+
+include::{includedir}configurationProperties/io.micronaut.views.react.ReactViewsRendererConfiguration.adoc[]

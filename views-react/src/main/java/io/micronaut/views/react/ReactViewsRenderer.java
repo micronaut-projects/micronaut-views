@@ -44,11 +44,6 @@ import static java.lang.String.format;
 public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, REQUEST>, AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(ReactViewsRenderer.class);
 
-    /**
-     * The name of the bundled/webpacked JS file that must be placed in the view folder.
-     */
-    public static final String MJS_FILENAME = "ssr-components.mjs";
-
     // The context is a JavaScript world (global object and everything reachable from it).
     private Context js;
 
@@ -57,12 +52,12 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
     @Client
     private final HttpClient httpClient;
+    private final ReactViewsRendererConfiguration configuration;
 
     @Language("js")
     private static final String RENDER_SRC = """
-    async function renderWithReact(component, props, callback) {
+    async function renderWithReact(component, props, callback, config) {
         globalThis.__micronaut_prefetch = callback.recordPrefetch;
-        console.log(`props = ${JSON.stringify(props)}`)
         const element = React.createElement(component, props, null);
 
         var stream;
@@ -79,7 +74,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
             var bootstrapScriptContent = `var __micronaut_boot = ${JSON.stringify(boot)};`;
             stream = await ReactDOMServer.renderToReadableStream(element, {
                 bootstrapScriptContent: bootstrapScriptContent,
-                bootstrapScripts: ["/static/client.js"]
+                bootstrapScripts: [config.getClientBundleURL()]
             });
         } while (callback.didPrefetch());
 
@@ -114,19 +109,21 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
      *
      * @param httpClient An injected Micronaut HTTP client used for pre-fetching requests made with
      *                   the SWR Javascript library.
-     * @param viewsConfiguration Where to find the server-side Javascript.
+     * @param viewsConfiguration Where to find the server-side Javascript bundles.
+     * @param reactConfiguration Where to find the client-side Javascript and other React-specific settings.
      */
     @Inject
-    public ReactViewsRenderer(ViewsConfiguration viewsConfiguration, HttpClient httpClient) {
+    public ReactViewsRenderer(ViewsConfiguration viewsConfiguration, HttpClient httpClient, ReactViewsRendererConfiguration reactConfiguration) {
         folder = viewsConfiguration.getFolder();
         this.httpClient = httpClient;
+        this.configuration = reactConfiguration;
     }
 
     @PostConstruct
     void init() throws IOException, IllegalStateException {
-        bundlePath = Path.of(folder).resolve(MJS_FILENAME).toAbsolutePath().normalize();
+        bundlePath = Path.of(folder).resolve(configuration.getServerBundlePath()).toAbsolutePath().normalize();
         if (!Files.exists(bundlePath))
-            throw new FileNotFoundException(bundlePath + " was not found in workspace, try running `npm run build` in the js directory.");
+            throw new FileNotFoundException(String.format("Server bundle %s could not be found. Check your %s property.", bundlePath, ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
 
         lastModified = Files.getLastModifiedTime(bundlePath);
 
@@ -135,8 +132,9 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         js = initEngine();
         Value global = js.getBindings("js");
 
+        var bundleFileName = bundlePath.getFileName().toString();
         try (var reader = Files.newBufferedReader(bundlePath)) {
-            Source source = Source.newBuilder("js", reader, MJS_FILENAME)
+            Source source = Source.newBuilder("js", reader, bundleFileName)
                 .mimeType("application/javascript+module")
                 .build();
             ssrModule = js.eval(source);
@@ -144,7 +142,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
             // Make sure we can eval some code that uses the required modules.
             for (var name : REQUIRED_EXPORTED_SYMBOLS) {
                 if (!ssrModule.hasMember(name))
-                    throw new IllegalStateException(format("Your %s bundle must re-export the %s module.", MJS_FILENAME, name));
+                    throw new IllegalStateException(format("Your %s bundle must re-export the %s module.", bundleFileName, name));
                 global.putMember(name, ssrModule.getMember(name));
             }
 
@@ -167,6 +165,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         Context.Builder contextBuilder = Context.newBuilder("js")
             .allowExperimentalOptions(true)
             .logHandler(LOG_HANDLER)
+            .allowAllAccess(true)
             // .sandbox(SandboxPolicy.CONSTRAINED)
             .option("js.esm-eval-returns-exports", "true")
             .option("js.unhandled-rejections", "throw")
@@ -230,7 +229,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
             // Otherwise, queue it for fetching.
             if (urlsToPrefetch.add(url))
-                LOG.debug("React SSR request for <" + componentName + "/> attempted to fetch " + url);
+                LOG.debug("React SSR request for <{}/> attempted to fetch {}", componentName, url);
 
             return null;
         }
@@ -298,13 +297,12 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
 
         var renderCallback = new RenderCallback(writer, componentName);
-        if (isStringMap(props)) {
-            // TODO: Sandboxing. Do we need to deep clone here?
-            //noinspection unchecked
-            renderWithReact.execute(component, ProxyObject.fromMap((Map<String, Object>) props), renderCallback);
-        } else {
-            renderWithReact.execute(component, new IntrospectableToPolyglotObject<PROPS>(js, true, props), renderCallback);
-        }
+
+        // TODO: Sandboxing. Do we need to deep clone the props here?
+        @SuppressWarnings("unchecked")
+        ProxyObject propsObj = isStringMap(props) ? ProxyObject.fromMap((Map<String, Object>) props) : new IntrospectableToPolyglotObject<>(js, true, props);
+
+        renderWithReact.execute(component, propsObj, renderCallback, configuration);
     }
 
     private boolean isStringMap(PROPS props) {
