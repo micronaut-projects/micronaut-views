@@ -5,20 +5,66 @@ import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Context;
+import org.graalvm.polyglot.Source;
+import org.graalvm.polyglot.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
+
+import java.io.IOException;
+import java.util.List;
+
+import static java.lang.String.format;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Singleton
 class ReactJSContext implements AutoCloseable {
     @Inject
     JSEngineLogHandler engineLogHandler;
 
+    @Inject
+    JSBundlePaths jsBundlePaths;
+
     Context context;
+    Value render;
+
+    // Symbols the user's server side bundle might supply us with.
+    private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
+
+    Value ssrModule;
 
     @PostConstruct
-    void init() {
+    void init() throws IOException {
         context = createContext();
+
+        Value global = context.getBindings("js");
+        Source source = jsBundlePaths.readServerBundle();
+        ssrModule = context.eval(source);
+
+        if (!ssrModule.hasMember("React") && !ssrModule.hasMember("h"))
+            throw new IllegalStateException(format("Your %s bundle must re-export the React module or the 'h' symbol from Preact.", jsBundlePaths.bundleFileName));
+
+        // Make sure we can eval some code that uses the React APIs.
+        for (var name : IMPORT_SYMBOLS) {
+            if (!ssrModule.hasMember(name))
+                continue;
+            global.putMember(name, ssrModule.getMember(name));
+        }
+
+        // Evaluate our JS-side render logic to load it into the context.
+        Value renderModule = context.eval(
+            Source.newBuilder("js", loadRenderSource(), "render.js")
+                .mimeType("application/javascript+module")
+                .build()
+        );
+        render = renderModule.getMember("ssr");
+    }
+
+    private String loadRenderSource() throws IOException {
+        try (var stream = getClass().getResourceAsStream("render.js")) {
+            assert stream != null;
+            return new String(stream.readAllBytes(), UTF_8);
+        }
     }
 
     private Context createContext() {
@@ -48,6 +94,11 @@ class ReactJSContext implements AutoCloseable {
         }
     }
 
+    boolean moduleHasMember(String memberName) {
+        assert !IMPORT_SYMBOLS.contains(memberName) : "Should not query the server-side bundle for member name " + memberName;
+        return ssrModule.hasMember(memberName);
+    }
+
 
     @PreDestroy
     @Override
@@ -55,7 +106,7 @@ class ReactJSContext implements AutoCloseable {
         context.close();
     }
 
-    public void reinit() {
+    public void reinit() throws IOException {
         close();
         init();
     }

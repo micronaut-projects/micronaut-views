@@ -8,14 +8,11 @@ import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.uri.UriBuilder;
 import io.micronaut.views.ViewsRenderer;
-import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
-import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 import org.graalvm.polyglot.proxy.ProxyObject;
-import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,11 +21,9 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.attribute.FileTime;
 import java.util.*;
 
 import static io.micronaut.http.HttpHeaders.*;
-import static java.lang.String.format;
 
 /**
  * <p>Instantiates GraalJS and uses it to render React components server side. See the user guide
@@ -38,86 +33,17 @@ import static java.lang.String.format;
 public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, REQUEST> {
     private static final Logger LOG = LoggerFactory.getLogger(ReactViewsRenderer.class);
 
-    // Our top-level function that returns what's needed.
-    private Value render;
-
     @Client
     final HttpClient httpClient;
 
     @Inject
     ReactViewsRendererConfiguration reactConfiguration;
 
-    @Language("js")
-    private static final String RENDER_SRC = """
-        async function renderWithReact(component, props, callback, config) {
-            globalThis.__micronaut_prefetch = callback.recordPrefetch;
-            const element = React.createElement(component, props, null);
-
-            var stream;
-            do {
-                // Data to be passed to the browser after the main HTML has finished loading.
-                const boot = {
-                    rootProps: props,
-                    rootComponent: component.name,
-                    prefetch: callback.getPrefetchedData()
-                };
-
-                var bootstrapScriptContent = `var __micronaut_boot = ${JSON.stringify(boot)};`;
-                stream = await ReactDOMServer.renderToReadableStream(element, {
-                    bootstrapScriptContent: bootstrapScriptContent,
-                    bootstrapScripts: [config.getClientBundleURL()]
-                });
-            } while (callback.didPrefetch());
-
-            // This ugliness is because renderToPipeableStream (what we should really use) is only in the node build
-            // of react-dom/server, but we use the browser build. Trying to use the node build causes various errors
-            // and problems that I don't yet understand, something to do with module formats.
-            const reader = stream.getReader();
-            while (true) {
-              const { done, value } = await reader.read();
-              if (done) break;
-              callback.write(value);
-            }
-        }
-
-        async function renderWithPreact(component, props, callback, config) {
-            globalThis.__micronaut_prefetch = callback.recordPrefetch;
-            const html = renderToString(h(component, props, null))
-            callback.write(html)
-            const boot = {
-                rootProps: props,
-                rootComponent: component.name,
-                prefetch: callback.getPrefetchedData()
-            };
-            const bootstrapScriptContent = `var __micronaut_boot = ${JSON.stringify(boot)};`;
-            callback.write(`<script type="text/javascript">${bootstrapScriptContent}</script>`)
-            callback.write(`<script type="text/javascript" src="${config.getClientBundleURL()}" async="true">`)
-        }
-
-        async function ssr(component, props, callback, config) {
-            if (typeof ReactDOMServer !== 'undefined')
-                return renderWithReact(component, props, callback, config);
-            else
-                return renderWithPreact(component, props, callback, config);
-        }
-
-        export { ssr };
-        """;
-
-    // This is the overall module that exports both the React utilities we need, and the user's actual components.
-    // It is expected to be produced with webpack.
-    private Value ssrModule;
-
-    private FileTime lastModified;
-
     @Inject
     ReactJSContext reactJSContext;
 
     @Inject
     JSBundlePaths jsBundlePaths;
-
-    // Symbols the user's server side bundle might supply us with.
-    private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
 
     /**
      * Construct this renderer. Don't call it yourself, as Micronaut Views will set it up for you.
@@ -128,34 +54,6 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     @Inject
     public ReactViewsRenderer(HttpClient httpClient) {
         this.httpClient = httpClient;
-    }
-
-    @PostConstruct
-    void init() throws IOException, IllegalStateException {
-        LOG.info("Initializing React SSR with {}", jsBundlePaths.bundlePath);
-
-        var context = reactJSContext.context;
-        Value global = context.getBindings("js");
-
-        Source source = jsBundlePaths.readServerBundle();
-        ssrModule = context.eval(source);
-
-        if (!ssrModule.hasMember("React") && !ssrModule.hasMember("h"))
-            throw new IllegalStateException(format("Your %s bundle must re-export the React module or the 'h' symbol from Preact.", jsBundlePaths.bundleFileName));
-
-        // Make sure we can eval some code that uses the React APIs.
-        for (var name : IMPORT_SYMBOLS) {
-            if (!ssrModule.hasMember(name))
-                continue;
-            global.putMember(name, ssrModule.getMember(name));
-        }
-
-        var renderModule = context.eval(
-            Source.newBuilder("js", RENDER_SRC.stripIndent(), "render.js")
-                .mimeType("application/javascript+module")
-                .build()
-        );
-        render = renderModule.getMember("ssr");
     }
 
     /**
@@ -169,16 +67,17 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
      */
     @Override
     public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable REQUEST request) {
-        if (jsBundlePaths.wasModified())
-            reactJSContext.reinit();
-        return writer -> render(viewName, props, writer);
+        return writer -> {
+            if (jsBundlePaths.wasModified())
+                reactJSContext.reinit();
+
+            render(viewName, props, writer);
+        };
     }
 
     @Override
     public synchronized boolean exists(@NonNull String viewName) {
-        if (IMPORT_SYMBOLS.contains(viewName))
-            return false;
-        return ssrModule.hasMember(viewName);
+        return reactJSContext.moduleHasMember(viewName);
     }
 
     /**
@@ -280,7 +179,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     }
 
     private synchronized void render(String componentName, PROPS props, Writer writer) {
-        Value component = ssrModule.getMember(componentName);
+        Value component = reactJSContext.ssrModule.getMember(componentName);
         if (component == null)
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
 
@@ -288,9 +187,11 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
         // TODO: Sandboxing. Do we need to deep clone the props here?
         @SuppressWarnings("unchecked")
-        ProxyObject propsObj = isStringMap(props) ? ProxyObject.fromMap((Map<String, Object>) props) : new IntrospectableToPolyglotObject<>(reactJSContext.context, true, props);
+        ProxyObject propsObj = isStringMap(props) ?
+            ProxyObject.fromMap((Map<String, Object>) props) :
+            new IntrospectableToPolyglotObject<>(reactJSContext.context, true, props);
 
-        render.execute(component, propsObj, renderCallback, reactConfiguration);
+        reactJSContext.render.execute(component, propsObj, renderCallback, reactConfiguration);
     }
 
     private boolean isStringMap(PROPS props) {
