@@ -40,7 +40,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     ReactViewsRendererConfiguration reactConfiguration;
 
     @Inject
-    JSContext reactJSContext;
+    JSContextPool contextPool;
 
     @Inject
     JSBundlePaths jsBundlePaths;
@@ -68,16 +68,26 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     @Override
     public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable REQUEST request) {
         return writer -> {
-            if (jsBundlePaths.wasModified())
-                reactJSContext.reinit();
+            JSContext context = contextPool.acquire();
+            try {
+                if (jsBundlePaths.wasModified())
+                    context.reinit();
 
-            render(viewName, props, writer);
+                render(viewName, props, writer, context);
+            } finally {
+                contextPool.release(context);
+            }
         };
     }
 
     @Override
-    public synchronized boolean exists(@NonNull String viewName) {
-        return reactJSContext.moduleHasMember(viewName);
+    public boolean exists(@NonNull String viewName) {
+        var context = contextPool.acquire();
+        try {
+            return context.moduleHasMember(viewName);
+        } finally {
+            contextPool.release(context);
+        }
     }
 
     /**
@@ -91,10 +101,12 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
         private final Writer responseWriter;
         private final String componentName;
+        private final JSContext jsContext;
 
-        public RenderCallback(Writer responseWriter, String componentName) {
+        public RenderCallback(Writer responseWriter, String componentName, JSContext jsContext) {
             this.responseWriter = responseWriter;
             this.componentName = componentName;
+            this.jsContext = jsContext;
         }
 
         @HostAccess.Export
@@ -117,7 +129,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         private Value getPrefetchedDataForURL(URI url) {
             var result = prefetchedData.get(url);
             if (result == null) return null;
-            var jsonParse = reactJSContext.context.eval("js", "JSON.parse");
+            var jsonParse = jsContext.polyglotContext.eval("js", "JSON.parse");
             // TODO: Work out the story around result parsing in the absence of the fetcher?
             return jsonParse.execute(new String(result, StandardCharsets.UTF_8));
         }
@@ -179,20 +191,20 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         }
     }
 
-    private synchronized void render(String componentName, PROPS props, Writer writer) {
-        Value component = reactJSContext.ssrModule.getMember(componentName);
+    private void render(String componentName, PROPS props, Writer writer, JSContext context) {
+        Value component = context.ssrModule.getMember(componentName);
         if (component == null)
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
 
-        var renderCallback = new RenderCallback(writer, componentName);
+        var renderCallback = new RenderCallback(writer, componentName, context);
 
         // TODO: Sandboxing. Do we need to deep clone the props here?
         @SuppressWarnings("unchecked")
         ProxyObject propsObj = isStringMap(props) ?
             ProxyObject.fromMap((Map<String, Object>) props) :
-            new IntrospectableToPolyglotObject<>(reactJSContext.context, true, props);
+            new IntrospectableToPolyglotObject<>(context.polyglotContext, true, props);
 
-        reactJSContext.render.execute(component, propsObj, renderCallback, reactConfiguration);
+        context.render.execute(component, propsObj, renderCallback, reactConfiguration);
     }
 
     private boolean isStringMap(PROPS props) {

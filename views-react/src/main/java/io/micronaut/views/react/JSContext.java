@@ -3,7 +3,6 @@ package io.micronaut.views.react;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
@@ -17,7 +16,6 @@ import java.util.List;
 import static java.lang.String.format;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-@Singleton
 class JSContext implements AutoCloseable {
     @Inject
     JSEngineLogHandler engineLogHandler;
@@ -28,7 +26,7 @@ class JSContext implements AutoCloseable {
     @Inject
     CompiledJS compiledJS;
 
-    Context context;
+    Context polyglotContext;
     Value render;
 
     // Symbols the user's server side bundle might supply us with.
@@ -38,10 +36,10 @@ class JSContext implements AutoCloseable {
 
     @PostConstruct
     void init() throws IOException {
-        context = createContext();
+        polyglotContext = createContext();
 
-        Value global = context.getBindings("js");
-        ssrModule = context.eval(compiledJS.source);
+        Value global = polyglotContext.getBindings("js");
+        ssrModule = polyglotContext.eval(compiledJS.source);
 
         if (!ssrModule.hasMember("React") && !ssrModule.hasMember("h"))
             throw new IllegalStateException(format("Your %s bundle must re-export the React module or the 'h' symbol from Preact.", jsBundlePaths.bundleFileName));
@@ -54,7 +52,7 @@ class JSContext implements AutoCloseable {
         }
 
         // Evaluate our JS-side render logic to load it into the context.
-        Value renderModule = context.eval(
+        Value renderModule = polyglotContext.eval(
             Source.newBuilder("js", loadRenderSource(), "render.js")
                 .mimeType("application/javascript+module")
                 .build()
@@ -106,7 +104,7 @@ class JSContext implements AutoCloseable {
     @PreDestroy
     @Override
     public synchronized void close() {
-        context.close();
+        polyglotContext.close();
     }
 
     public void reinit() throws IOException {
