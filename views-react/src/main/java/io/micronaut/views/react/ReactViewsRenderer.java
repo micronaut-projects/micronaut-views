@@ -13,7 +13,10 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import org.graalvm.polyglot.*;
+import org.graalvm.polyglot.Context;
+import org.graalvm.polyglot.HostAccess;
+import org.graalvm.polyglot.Source;
+import org.graalvm.polyglot.Value;
 import org.graalvm.polyglot.proxy.ProxyObject;
 import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
@@ -37,8 +40,8 @@ import static io.micronaut.http.HttpHeaders.*;
 import static java.lang.String.format;
 
 /**
- * Instantiates GraalJS and uses it to render React components server side. The view name is the (exported) name of
- * the React component (class or function).
+ * <p>Instantiates GraalJS and uses it to render React components server side. See the user guide
+ * to learn more about how to render React/Preact apps server side.</p>
  */
 @Singleton
 public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, REQUEST>, AutoCloseable {
@@ -48,7 +51,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     private Context js;
 
     // Our top-level function that returns what's needed.
-    private Value renderWithReact;
+    private Value render;
 
     @Client
     private final HttpClient httpClient;
@@ -62,13 +65,11 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
         var stream;
         do {
-            var prefetchedData = callback.getPrefetchedData();
-
             // Data to be passed to the browser after the main HTML has finished loading.
             const boot = {
                 rootProps: props,
                 rootComponent: component.name,
-                prefetch: prefetchedData
+                prefetch: callback.getPrefetchedData()
             };
 
             var bootstrapScriptContent = `var __micronaut_boot = ${JSON.stringify(boot)};`;
@@ -89,7 +90,28 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         }
     }
 
-    export { renderWithReact };
+    async function renderWithPreact(component, props, callback, config) {
+        globalThis.__micronaut_prefetch = callback.recordPrefetch;
+        const html = renderToString(h(component, props, null))
+        callback.write(html)
+        const boot = {
+            rootProps: props,
+            rootComponent: component.name,
+            prefetch: callback.getPrefetchedData()
+        };
+        const bootstrapScriptContent = `var __micronaut_boot = ${JSON.stringify(boot)};`;
+        callback.write(`<script type="text/javascript">${bootstrapScriptContent}</script>`)
+        callback.write(`<script type="text/javascript" src="${config.getClientBundleURL()}" async="true">`)
+    }
+
+    async function ssr(component, props, callback, config) {
+        if (typeof ReactDOMServer !== 'undefined')
+            return renderWithReact(component, props, callback, config);
+        else
+            return renderWithPreact(component, props, callback, config);
+    }
+
+    export { ssr };
     """;
 
     // This is the overall module that exports both the React utilities we need, and the user's actual components.
@@ -102,7 +124,8 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
     private static final Handler LOG_HANDLER = new JSLogHandler();
 
-    private static final List<String> REQUIRED_EXPORTED_SYMBOLS = List.of("React", "ReactDOMServer");
+    // Symbols the user's server side bundle might supply us with.
+    private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
 
     /**
      * Construct this renderer. Don't call it yourself, as Micronaut Views will set it up for you.
@@ -139,10 +162,13 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
                 .build();
             ssrModule = js.eval(source);
 
-            // Make sure we can eval some code that uses the required modules.
-            for (var name : REQUIRED_EXPORTED_SYMBOLS) {
+            if (!ssrModule.hasMember("React") && !ssrModule.hasMember("h"))
+                throw new IllegalStateException(format("Your %s bundle must re-export the React module or the 'h' symbol from Preact.", bundleFileName));
+
+            // Make sure we can eval some code that uses the React APIs.
+            for (var name : IMPORT_SYMBOLS) {
                 if (!ssrModule.hasMember(name))
-                    throw new IllegalStateException(format("Your %s bundle must re-export the %s module.", bundleFileName, name));
+                    continue;
                 global.putMember(name, ssrModule.getMember(name));
             }
 
@@ -151,7 +177,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
                     .mimeType("application/javascript+module")
                     .build()
             );
-            renderWithReact = renderModule.getMember("renderWithReact");
+            render = renderModule.getMember("ssr");
         }
     }
 
@@ -199,7 +225,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
     @Override
     public synchronized boolean exists(@NonNull String viewName) {
-        if (REQUIRED_EXPORTED_SYMBOLS.contains(viewName))
+        if (IMPORT_SYMBOLS.contains(viewName))
             return false;
         return ssrModule.hasMember(viewName);
     }
@@ -274,6 +300,15 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         }
 
         @HostAccess.Export
+        public void write(String html) {
+            try {
+                responseWriter.write(html);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @HostAccess.Export
         public void write(int[] unsignedBytes) {
             try {
                 byte[] bytes = new byte[unsignedBytes.length];
@@ -302,7 +337,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         @SuppressWarnings("unchecked")
         ProxyObject propsObj = isStringMap(props) ? ProxyObject.fromMap((Map<String, Object>) props) : new IntrospectableToPolyglotObject<>(js, true, props);
 
-        renderWithReact.execute(component, propsObj, renderCallback, configuration);
+        render.execute(component, propsObj, renderCallback, configuration);
     }
 
     private boolean isStringMap(PROPS props) {

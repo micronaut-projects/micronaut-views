@@ -1,6 +1,5 @@
 Micronaut React SSR has the following known issues and limitations:
 
-- It has not been tested with PReact.
 - There is no sandboxing at the moment.
 - The need for the thread hack property will go away. The `micronaut.views.folder` property should also go away at some point.
 - The `+__micronaut_prefetch+` API could be replaced with a server-side implementation of the fetch API.

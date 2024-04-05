@@ -48,6 +48,14 @@ task buildTestClientJS(type: NpxTask) {
     outputs.file('src/test/resources/views/static/client.js')
 }
 
+task buildTestClientJSPreact(type: NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ["--mode", "development", "--config", "webpack.client.preact.js"]
+    inputs.dir(fileTree("src/test/js/").exclude(".cache"))
+    outputs.file('src/test/resources/views/static/client-preact.js')
+}
+
 task buildTestServerJS(type: NpxTask) {
     dependsOn npmInstall
     command = 'webpack'
@@ -56,8 +64,16 @@ task buildTestServerJS(type: NpxTask) {
     outputs.file('src/test/resources/views/ssr-components.mjs')
 }
 
+task buildTestServerJSPreact(type: NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ["--mode", "development", "--config", "webpack.server.preact.js"]
+    inputs.dir(fileTree("src/test/js/").exclude(".cache"))
+    outputs.file('src/test/resources/views/ssr-components.preact.mjs')
+}
+
 def buildTestJS = tasks.register("buildTestJS") {
-    it.dependsOn("buildTestClientJS", "buildTestServerJS")
+    it.dependsOn("buildTestClientJS", "buildTestServerJS", "buildTestClientJSPreact", "buildTestServerJSPreact")
 }
 
 tasks.named("processTestResources") {

@@ -27,6 +27,7 @@ views:
       reactpreparingjs: Preparing your Javascript
       reactsettingproperties: Setting serving properties
       reactprefetch: Prefetching API requests
+      preact: Integrating with Preact
       reacttodo: Known limitations
   model:
     title: Working with Models
