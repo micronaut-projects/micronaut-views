@@ -40,7 +40,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     ReactViewsRendererConfiguration reactConfiguration;
 
     @Inject
-    ReactJSContext reactJSContext;
+    JSContext reactJSContext;
 
     @Inject
     JSBundlePaths jsBundlePaths;
@@ -81,6 +81,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     }
 
     /**
+     * Needs to be public to be callable from the JS side.
      * @hidden
      */
     public class RenderCallback {

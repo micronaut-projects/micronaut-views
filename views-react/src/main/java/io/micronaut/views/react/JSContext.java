@@ -18,12 +18,15 @@ import static java.lang.String.format;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Singleton
-class ReactJSContext implements AutoCloseable {
+class JSContext implements AutoCloseable {
     @Inject
     JSEngineLogHandler engineLogHandler;
 
     @Inject
     JSBundlePaths jsBundlePaths;
+
+    @Inject
+    CompiledJS compiledJS;
 
     Context context;
     Value render;
@@ -38,8 +41,7 @@ class ReactJSContext implements AutoCloseable {
         context = createContext();
 
         Value global = context.getBindings("js");
-        Source source = jsBundlePaths.readServerBundle();
-        ssrModule = context.eval(source);
+        ssrModule = context.eval(compiledJS.source);
 
         if (!ssrModule.hasMember("React") && !ssrModule.hasMember("h"))
             throw new IllegalStateException(format("Your %s bundle must re-export the React module or the 'h' symbol from Preact.", jsBundlePaths.bundleFileName));
@@ -74,7 +76,8 @@ class ReactJSContext implements AutoCloseable {
         //       If the problem won't be fixed soon, rework to avoid depending on that feature so
         //       the sandbox can be enabled.
 
-        Context.Builder contextBuilder = Context.newBuilder("js")
+        Context.Builder contextBuilder = Context.newBuilder()
+            .engine(compiledJS.engine)
             .allowExperimentalOptions(true)
             .logHandler(engineLogHandler)
             .allowAllAccess(true)
