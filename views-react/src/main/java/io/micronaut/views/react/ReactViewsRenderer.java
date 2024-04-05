@@ -33,8 +33,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 import java.util.*;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 import static io.micronaut.http.HttpHeaders.*;
 import static java.lang.String.format;
@@ -122,7 +120,8 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     private FileTime lastModified;
     private Path bundlePath;
 
-    private static final Handler LOG_HANDLER = new JSLogHandler();
+    @Inject
+    private JSEngineLogHandler engineLogHandler;
 
     // Symbols the user's server side bundle might supply us with.
     private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
@@ -181,7 +180,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         }
     }
 
-    private static Context initEngine() {
+    private Context initEngine() {
         Logger jsLogger = LoggerFactory.getLogger("js");
 
         // TODO: Sandboxing is currently incompatible with esm-eval-returns-exports.
@@ -190,7 +189,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
         Context.Builder contextBuilder = Context.newBuilder("js")
             .allowExperimentalOptions(true)
-            .logHandler(LOG_HANDLER)
+            .logHandler(engineLogHandler)
             .allowAllAccess(true)
             // .sandbox(SandboxPolicy.CONSTRAINED)
             .option("js.esm-eval-returns-exports", "true")
@@ -369,41 +368,4 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         }
     }
 
-    private static class JSLogHandler extends Handler {
-        @Override
-        public void publish(LogRecord record) {
-            String message = record.getMessage();
-            Throwable thrown = record.getThrown();
-            String level = record.getLevel().getName();
-            switch (level) {
-                case "SEVERE":
-                    LOG.error(message, thrown);
-                    break;
-                case "WARNING":
-                    LOG.warn(message, thrown);
-                    break;
-                case "INFO":
-                    LOG.info(message, thrown);
-                    break;
-                case "CONFIG":
-                case "FINE":
-                    LOG.debug(message, thrown);
-                    break;
-                case "FINER":
-                case "FINEST":
-                    LOG.trace(message, thrown);
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + level);
-            }
-        }
-
-        @Override
-        public void flush() {
-        }
-
-        @Override
-        public void close() throws SecurityException {
-        }
-    }
 }
