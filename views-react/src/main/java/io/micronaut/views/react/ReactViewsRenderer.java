@@ -7,13 +7,10 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.uri.UriBuilder;
-import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
@@ -21,16 +18,12 @@ import org.graalvm.polyglot.proxy.ProxyObject;
 import org.intellij.lang.annotations.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.event.Level;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 import java.util.*;
 
@@ -42,86 +35,86 @@ import static java.lang.String.format;
  * to learn more about how to render React/Preact apps server side.</p>
  */
 @Singleton
-public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, REQUEST>, AutoCloseable {
+public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, REQUEST> {
     private static final Logger LOG = LoggerFactory.getLogger(ReactViewsRenderer.class);
-
-    // The context is a JavaScript world (global object and everything reachable from it).
-    private Context js;
 
     // Our top-level function that returns what's needed.
     private Value render;
 
     @Client
-    private final HttpClient httpClient;
-    private final ReactViewsRendererConfiguration configuration;
+    final HttpClient httpClient;
+
+    @Inject
+    ReactViewsRendererConfiguration reactConfiguration;
 
     @Language("js")
     private static final String RENDER_SRC = """
-    async function renderWithReact(component, props, callback, config) {
-        globalThis.__micronaut_prefetch = callback.recordPrefetch;
-        const element = React.createElement(component, props, null);
+        async function renderWithReact(component, props, callback, config) {
+            globalThis.__micronaut_prefetch = callback.recordPrefetch;
+            const element = React.createElement(component, props, null);
 
-        var stream;
-        do {
-            // Data to be passed to the browser after the main HTML has finished loading.
+            var stream;
+            do {
+                // Data to be passed to the browser after the main HTML has finished loading.
+                const boot = {
+                    rootProps: props,
+                    rootComponent: component.name,
+                    prefetch: callback.getPrefetchedData()
+                };
+
+                var bootstrapScriptContent = `var __micronaut_boot = ${JSON.stringify(boot)};`;
+                stream = await ReactDOMServer.renderToReadableStream(element, {
+                    bootstrapScriptContent: bootstrapScriptContent,
+                    bootstrapScripts: [config.getClientBundleURL()]
+                });
+            } while (callback.didPrefetch());
+
+            // This ugliness is because renderToPipeableStream (what we should really use) is only in the node build
+            // of react-dom/server, but we use the browser build. Trying to use the node build causes various errors
+            // and problems that I don't yet understand, something to do with module formats.
+            const reader = stream.getReader();
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              callback.write(value);
+            }
+        }
+
+        async function renderWithPreact(component, props, callback, config) {
+            globalThis.__micronaut_prefetch = callback.recordPrefetch;
+            const html = renderToString(h(component, props, null))
+            callback.write(html)
             const boot = {
                 rootProps: props,
                 rootComponent: component.name,
                 prefetch: callback.getPrefetchedData()
             };
-
-            var bootstrapScriptContent = `var __micronaut_boot = ${JSON.stringify(boot)};`;
-            stream = await ReactDOMServer.renderToReadableStream(element, {
-                bootstrapScriptContent: bootstrapScriptContent,
-                bootstrapScripts: [config.getClientBundleURL()]
-            });
-        } while (callback.didPrefetch());
-
-        // This ugliness is because renderToPipeableStream (what we should really use) is only in the node build
-        // of react-dom/server, but we use the browser build. Trying to use the node build causes various errors
-        // and problems that I don't yet understand, something to do with module formats.
-        const reader = stream.getReader();
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          callback.write(value);
+            const bootstrapScriptContent = `var __micronaut_boot = ${JSON.stringify(boot)};`;
+            callback.write(`<script type="text/javascript">${bootstrapScriptContent}</script>`)
+            callback.write(`<script type="text/javascript" src="${config.getClientBundleURL()}" async="true">`)
         }
-    }
 
-    async function renderWithPreact(component, props, callback, config) {
-        globalThis.__micronaut_prefetch = callback.recordPrefetch;
-        const html = renderToString(h(component, props, null))
-        callback.write(html)
-        const boot = {
-            rootProps: props,
-            rootComponent: component.name,
-            prefetch: callback.getPrefetchedData()
-        };
-        const bootstrapScriptContent = `var __micronaut_boot = ${JSON.stringify(boot)};`;
-        callback.write(`<script type="text/javascript">${bootstrapScriptContent}</script>`)
-        callback.write(`<script type="text/javascript" src="${config.getClientBundleURL()}" async="true">`)
-    }
+        async function ssr(component, props, callback, config) {
+            if (typeof ReactDOMServer !== 'undefined')
+                return renderWithReact(component, props, callback, config);
+            else
+                return renderWithPreact(component, props, callback, config);
+        }
 
-    async function ssr(component, props, callback, config) {
-        if (typeof ReactDOMServer !== 'undefined')
-            return renderWithReact(component, props, callback, config);
-        else
-            return renderWithPreact(component, props, callback, config);
-    }
-
-    export { ssr };
-    """;
+        export { ssr };
+        """;
 
     // This is the overall module that exports both the React utilities we need, and the user's actual components.
     // It is expected to be produced with webpack.
     private Value ssrModule;
 
-    private final String folder;
     private FileTime lastModified;
-    private Path bundlePath;
 
     @Inject
-    private JSEngineLogHandler engineLogHandler;
+    ReactJSContext reactJSContext;
+
+    @Inject
+    JSBundlePaths jsBundlePaths;
 
     // Symbols the user's server side bundle might supply us with.
     private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
@@ -131,80 +124,38 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
      *
      * @param httpClient An injected Micronaut HTTP client used for pre-fetching requests made with
      *                   the SWR Javascript library.
-     * @param viewsConfiguration Where to find the server-side Javascript bundles.
-     * @param reactConfiguration Where to find the client-side Javascript and other React-specific settings.
      */
     @Inject
-    public ReactViewsRenderer(ViewsConfiguration viewsConfiguration, HttpClient httpClient, ReactViewsRendererConfiguration reactConfiguration) {
-        folder = viewsConfiguration.getFolder();
+    public ReactViewsRenderer(HttpClient httpClient) {
         this.httpClient = httpClient;
-        this.configuration = reactConfiguration;
     }
 
     @PostConstruct
     void init() throws IOException, IllegalStateException {
-        bundlePath = Path.of(folder).resolve(configuration.getServerBundlePath()).toAbsolutePath().normalize();
-        if (!Files.exists(bundlePath))
-            throw new FileNotFoundException(String.format("Server bundle %s could not be found. Check your %s property.", bundlePath, ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
+        LOG.info("Initializing React SSR with {}", jsBundlePaths.bundlePath);
 
-        lastModified = Files.getLastModifiedTime(bundlePath);
+        var context = reactJSContext.context;
+        Value global = context.getBindings("js");
 
-        LOG.info("Initializing React SSR with {}", bundlePath);
+        Source source = jsBundlePaths.readServerBundle();
+        ssrModule = context.eval(source);
 
-        js = initEngine();
-        Value global = js.getBindings("js");
+        if (!ssrModule.hasMember("React") && !ssrModule.hasMember("h"))
+            throw new IllegalStateException(format("Your %s bundle must re-export the React module or the 'h' symbol from Preact.", jsBundlePaths.bundleFileName));
 
-        var bundleFileName = bundlePath.getFileName().toString();
-        try (var reader = Files.newBufferedReader(bundlePath)) {
-            Source source = Source.newBuilder("js", reader, bundleFileName)
+        // Make sure we can eval some code that uses the React APIs.
+        for (var name : IMPORT_SYMBOLS) {
+            if (!ssrModule.hasMember(name))
+                continue;
+            global.putMember(name, ssrModule.getMember(name));
+        }
+
+        var renderModule = context.eval(
+            Source.newBuilder("js", RENDER_SRC.stripIndent(), "render.js")
                 .mimeType("application/javascript+module")
-                .build();
-            ssrModule = js.eval(source);
-
-            if (!ssrModule.hasMember("React") && !ssrModule.hasMember("h"))
-                throw new IllegalStateException(format("Your %s bundle must re-export the React module or the 'h' symbol from Preact.", bundleFileName));
-
-            // Make sure we can eval some code that uses the React APIs.
-            for (var name : IMPORT_SYMBOLS) {
-                if (!ssrModule.hasMember(name))
-                    continue;
-                global.putMember(name, ssrModule.getMember(name));
-            }
-
-            var renderModule = js.eval(
-                Source.newBuilder("js", RENDER_SRC.stripIndent(), "render.js")
-                    .mimeType("application/javascript+module")
-                    .build()
-            );
-            render = renderModule.getMember("ssr");
-        }
-    }
-
-    private Context initEngine() {
-        Logger jsLogger = LoggerFactory.getLogger("js");
-
-        // TODO: Sandboxing is currently incompatible with esm-eval-returns-exports.
-        //       If the problem won't be fixed soon, rework to avoid depending on that feature so
-        //       the sandbox can be enabled.
-
-        Context.Builder contextBuilder = Context.newBuilder("js")
-            .allowExperimentalOptions(true)
-            .logHandler(engineLogHandler)
-            .allowAllAccess(true)
-            // .sandbox(SandboxPolicy.CONSTRAINED)
-            .option("js.esm-eval-returns-exports", "true")
-            .option("js.unhandled-rejections", "throw")
-            .out(new OutputStreamToSLF4J(jsLogger, Level.INFO))
-            .err(new OutputStreamToSLF4J(jsLogger, Level.ERROR));
-
-        try {
-            return contextBuilder.build();
-        } catch (ExceptionInInitializerError e) {
-            // The catch handler is to work around a bug in Polyglot 24.0.0
-            if (e.getCause().getMessage().contains("version compatibility check failed")) {
-                throw new IllegalStateException("GraalJS version mismatch or it's missing. Please ensure you have added either org.graalvm.polyglot:js or org.graalvm.polyglot:js-community to your dependencies alongside Micronaut Views React, as it's up to you to select the best engine given your licensing constraints. See the user guide for more detail.");
-            } else throw e;
-        }
+                .build()
+        );
+        render = renderModule.getMember("ssr");
     }
 
     /**
@@ -213,12 +164,13 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
      * the React libraries.
      *
      * @param viewName The function or class name of the React component to use as the root. It should return an html root tag.
-     * @param props If non-null, will be exposed to the given component as React props.
-     * @param request The HTTP request object, used for propagation of headers and cookies to prefetched HTTP requests.
+     * @param props    If non-null, will be exposed to the given component as React props.
+     * @param request  The HTTP request object, used for propagation of headers and cookies to prefetched HTTP requests.
      */
     @Override
     public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable REQUEST request) {
-        maybeReInit();
+        if (jsBundlePaths.wasModified())
+            reactJSContext.reinit();
         return writer -> render(viewName, props, writer);
     }
 
@@ -229,7 +181,9 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         return ssrModule.hasMember(viewName);
     }
 
-    /** @hidden  */
+    /**
+     * @hidden
+     */
     public class RenderCallback {
         private final Set<URI> urlsToPrefetch = new HashSet<>();
 
@@ -263,7 +217,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         private Value getPrefetchedDataForURL(URI url) {
             var result = prefetchedData.get(url);
             if (result == null) return null;
-            var jsonParse = js.eval("js", "JSON.parse");
+            var jsonParse = reactJSContext.context.eval("js", "JSON.parse");
             // TODO: Work out the story around result parsing in the absence of the fetcher?
             return jsonParse.execute(new String(result, StandardCharsets.UTF_8));
         }
@@ -334,9 +288,9 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
         // TODO: Sandboxing. Do we need to deep clone the props here?
         @SuppressWarnings("unchecked")
-        ProxyObject propsObj = isStringMap(props) ? ProxyObject.fromMap((Map<String, Object>) props) : new IntrospectableToPolyglotObject<>(js, true, props);
+        ProxyObject propsObj = isStringMap(props) ? ProxyObject.fromMap((Map<String, Object>) props) : new IntrospectableToPolyglotObject<>(reactJSContext.context, true, props);
 
-        render.execute(component, propsObj, renderCallback, configuration);
+        render.execute(component, propsObj, renderCallback, reactConfiguration);
     }
 
     private boolean isStringMap(PROPS props) {
@@ -346,26 +300,4 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
             return false;
         }
     }
-
-    @PreDestroy
-    @Override
-    public synchronized void close() {
-        js.close();
-    }
-
-    /**
-     * Check the bundle file on disk to see if it's been recompiled.
-     */
-    private void maybeReInit() {
-        try {
-            FileTime time = Files.getLastModifiedTime(bundlePath);
-            if (time.compareTo(lastModified) > 0) {
-                close();
-                init();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
