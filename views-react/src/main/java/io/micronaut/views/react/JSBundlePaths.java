@@ -33,8 +33,17 @@ class JSBundlePaths {
         lastModified = Files.getLastModifiedTime(bundlePath);
     }
 
-    boolean wasModified() {
+    private long lastModificationCheckTime = 0;
+
+    synchronized boolean wasModified() {
         try {
+            var now = System.currentTimeMillis();
+            // Skip the check if it was done very recently. This makes the check disappear from
+            // profiles under load.
+            if (now - lastModificationCheckTime <= 500)
+                return false;
+            lastModificationCheckTime = now;
+
             FileTime time = Files.getLastModifiedTime(bundlePath);
             if (time.compareTo(lastModified) > 0) {
                 lastModified = time;

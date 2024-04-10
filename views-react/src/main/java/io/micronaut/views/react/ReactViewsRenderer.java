@@ -48,8 +48,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     /**
      * Construct this renderer. Don't call it yourself, as Micronaut Views will set it up for you.
      *
-     * @param httpClient An injected Micronaut HTTP client used for pre-fetching requests made with
-     *                   the SWR Javascript library.
+     * @param httpClient An injected Micronaut HTTP client used for pre-fetching requests.
      */
     @Inject
     public ReactViewsRenderer(HttpClient httpClient) {
@@ -120,7 +119,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
             // Otherwise, queue it for fetching.
             if (urlsToPrefetch.add(url))
-                LOG.debug("React SSR request for <{}/> attempted to fetch {}", componentName, url);
+                LOG.trace("React SSR request for <{}/> attempted to fetch {}", componentName, url);
 
             return null;
         }
