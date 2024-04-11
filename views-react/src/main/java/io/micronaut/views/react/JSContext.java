@@ -6,14 +6,16 @@ import jakarta.inject.Inject;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
-import static java.lang.String.format;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 class JSContext implements AutoCloseable {
@@ -25,6 +27,9 @@ class JSContext implements AutoCloseable {
 
     @Inject
     CompiledJS compiledJS;
+
+    @Inject
+    ReactViewsRendererConfiguration configuration;
 
     Context polyglotContext;
     Value render;
@@ -41,30 +46,57 @@ class JSContext implements AutoCloseable {
         Value global = polyglotContext.getBindings("js");
         ssrModule = polyglotContext.eval(compiledJS.source);
 
-        if (!ssrModule.hasMember("React") && !ssrModule.hasMember("h"))
-            throw new IllegalStateException(format("Your %s bundle must re-export the React module or the 'h' symbol from Preact.", jsBundlePaths.bundleFileName));
-
-        // Make sure we can eval some code that uses the React APIs.
-        for (var name : IMPORT_SYMBOLS) {
-            if (!ssrModule.hasMember(name))
-                continue;
+//        if (!ssrModule.hasMember("React") && !ssrModule.hasMember("h"))
+//            throw new IllegalStateException(format("Your %s bundle must re-export the React module or the 'h' symbol from Preact.", jsBundlePaths.bundleFileName));
+//
+        // Take all the exports from the components bundle, and expose them to the render script.
+        for (var name : ssrModule.getMemberKeys()) {
             global.putMember(name, ssrModule.getMember(name));
         }
 
-        // Evaluate our JS-side render logic to load it into the context.
-        Value renderModule = polyglotContext.eval(
-            Source.newBuilder("js", loadRenderSource(), "render.js")
-                .mimeType("application/javascript+module")
-                .build()
-        );
+        // Evaluate our JS-side framework specific render logic.
+        Value renderModule = polyglotContext.eval(loadRenderSource());
         render = renderModule.getMember("ssr");
+        if (render == null)
+            throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported.".formatted(configuration.getRenderScript()));
     }
 
-    private String loadRenderSource() throws IOException {
-        try (var stream = getClass().getResourceAsStream("render.js")) {
-            assert stream != null;
-            return new String(stream.readAllBytes(), UTF_8);
+    private Source loadRenderSource() throws IOException {
+        String renderScriptName = configuration.getRenderScript();
+        String fileName;
+        String source;
+
+        if (renderScriptName.startsWith("classpath:")) {
+            var resourcePath = renderScriptName.substring("classpath:".length());
+            // Even on Windows, classpath specs use /
+            fileName = fileNameFromUNIXPath(resourcePath);
+            try (var stream = getClass().getResourceAsStream(resourcePath)) {
+                if (stream == null)
+                    throw new IllegalArgumentException("Render script not found on classpath: " + resourcePath);
+                source = new String(stream.readAllBytes(), UTF_8);
+            }
+        } else if (renderScriptName.startsWith("file:")) {
+            var path = Path.of(renderScriptName.substring("file:".length()));
+            if (!Files.exists(path))
+                throw new IllegalArgumentException("Render script not found: " + renderScriptName);
+            fileName = path.normalize().toAbsolutePath().getFileName().toString();
+            try (var stream = Files.newInputStream(path)) {
+                source = new String(stream.readAllBytes(), UTF_8);
+            }
+        } else {
+            throw new IllegalArgumentException("The renderScript name '%s' must begin with either `classpath:` or `file:`".formatted(renderScriptName));
         }
+
+        return Source.newBuilder("js", source, fileName)
+            .mimeType("application/javascript+module")
+            .build();
+    }
+
+    private static @NotNull String fileNameFromUNIXPath(String resourcePath) {
+        String fileName;
+        var i = resourcePath.lastIndexOf('/');
+        fileName = resourcePath.substring(i + 1);
+        return fileName;
     }
 
     private Context createContext() {

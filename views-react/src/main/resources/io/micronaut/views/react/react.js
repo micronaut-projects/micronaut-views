@@ -1,4 +1,4 @@
-async function renderWithReact(component, props, callback, config) {
+export async function ssr(component, props, callback, config) {
     globalThis.Micronaut = {
         prefetch: callback.recordPrefetch
     }
@@ -31,30 +31,3 @@ async function renderWithReact(component, props, callback, config) {
         callback.write(value);
     }
 }
-
-async function renderWithPreact(component, props, callback, config) {
-    globalThis.Micronaut = {
-        prefetch: callback.recordPrefetch
-    };
-    const html = renderToString(h(component, props, null))
-    callback.write(html)
-    const boot = {
-        rootProps: props,
-        rootComponent: component.name,
-        prefetch: callback.getPrefetchedData()
-    };
-
-    // The Micronaut object defined here is not the same as the Micronaut object defined server side.
-    const bootstrapScriptContent = `var Micronaut = ${JSON.stringify(boot)};`;
-    callback.write(`<script type="text/javascript">${bootstrapScriptContent}</script>`)
-    callback.write(`<script type="text/javascript" src="${config.getClientBundleURL()}" async="true">`)
-}
-
-async function ssr(component, props, callback, config) {
-    if (typeof ReactDOMServer !== 'undefined')
-        return renderWithReact(component, props, callback, config);
-    else
-        return renderWithPreact(component, props, callback, config);
-}
-
-export { ssr };

@@ -22,6 +22,9 @@ public interface ReactViewsRendererConfiguration {
     /** The default value for {@link #getServerBundlePath()} */
     String DEFAULT_SERVER_BUNDLE_PATH = "ssr-components.mjs";
 
+    /** The default value for {@link #getRenderScript()} */
+    String DEFAULT_RENDER_SCRIPT = "classpath:/io/micronaut/views/react/react.js";
+
     /**
      * @return the URL (relative or absolute) where the client Javascript bundle can be found. It will
      * be appended to the generated HTML in a &lt;script&gt; tag. Defaults
@@ -41,4 +44,15 @@ public interface ReactViewsRendererConfiguration {
     @NonNull
     @Bindable(defaultValue = DEFAULT_SERVER_BUNDLE_PATH)
     String getServerBundlePath();
+
+
+    /**
+     * @return Either a file path (starting with {@code file:} or a resource in the classpath
+     * (starting with {@code classpath:}) to a render script. Please see the user guide for
+     * more information on what this Javascript file should contain.
+     */
+    @NotBlank
+    @NonNull
+    @Bindable(defaultValue = DEFAULT_RENDER_SCRIPT)
+    String getRenderScript();
 }

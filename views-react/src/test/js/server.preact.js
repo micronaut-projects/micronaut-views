@@ -1,7 +1,7 @@
-import {h} from 'preact';
 import {renderToString} from 'preact-render-to-string';
+import * as preact from 'preact';
 
 // Page components
 import App from './components/App';
 
-export { h, renderToString, App };
+export { preact, renderToString, App };

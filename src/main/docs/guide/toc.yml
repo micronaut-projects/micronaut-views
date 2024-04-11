@@ -28,6 +28,7 @@ views:
       reactsettingproperties: Setting serving properties
       reactprefetch: Prefetching API requests
       preact: Integrating with Preact
+      reactrenderscripts: Render scripts
       reacttodo: Known limitations
   model:
     title: Working with Models

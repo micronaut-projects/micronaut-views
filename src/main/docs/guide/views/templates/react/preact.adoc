@@ -18,6 +18,8 @@ Your `client.js` should look like this:
 include::{srcjsReact}/client.preact.js[]
 ----
 
+Finally, you need to tell Micronaut Views React to use a different render script (see below). Set the `micronaut.views.react.render-script` application property to be `classpath:/io/micronaut/views/react/preact.js`.
+
 That's it. If you want to use existing React components then you will also need to set up aliases in your `webpack.{client,server}.js` files like this:
 
 [source,javascript]
