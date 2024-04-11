@@ -29,6 +29,7 @@ import io.micronaut.views.fields.messages.Message;
  * @param id It defines an identifier (ID) which must be unique in the whole document
  * @param label represents a caption for an item in a user interface
  * @param checked whether the radio button is checked
+ * @param disabled whether the radio button is disabled
  *
  * @author Sergio del Amo
  * @since 4.1.0
