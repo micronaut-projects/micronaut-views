@@ -25,7 +25,7 @@ import jakarta.inject.Singleton;
 /**
  * {@link TypedRequestArgumentBinder} for {@link HtmxRequestHeaders}.
  * @author Sergio del Amo
- * @since 6.0.0
+ * @since 5.2.0
  */
 @Singleton
 @Internal

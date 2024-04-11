@@ -17,7 +17,7 @@
  * HTMX related classes.
  * <a href="https://htmx.org">HTMX</a>
  * @author Sergio del Amo
- * @since 6.0.0
+ * @since 5.2.0
  */
 @Requires(beans = HtmxConfiguration.class)
 @Configuration

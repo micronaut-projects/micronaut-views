@@ -30,7 +30,6 @@ import java.util.Map;
 
 /**
  * Returns information about the current user so that it can be appended to the model being rendered.
- * @param <R> The request type
  * @author Sergio del Amo
  * @since 1.1.0
  */

@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * HTMX Response.
  * @author Sergio del Amo
- * @since 6.0.0
+ * @since 5.2.0
  * @param <T> The model type
  */
 @Experimental

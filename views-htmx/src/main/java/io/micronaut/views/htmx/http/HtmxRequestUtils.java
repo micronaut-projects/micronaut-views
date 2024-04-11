@@ -21,7 +21,7 @@ import io.micronaut.http.HttpRequest;
 /**
  * HTMX Request Utils.
  * @author Sergio del Amo
- * @since 6.0.0
+ * @since 5.2.0
  */
 public final class HtmxRequestUtils {
     private HtmxRequestUtils() {

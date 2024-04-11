@@ -19,7 +19,7 @@ package io.micronaut.views.htmx.http;
  * HTMX Response Headers.
  * @see <a href="https://htmx.org/reference/#response_headers">Response Headers Reference</a>
  * @author Sergio del Amo
- * @since 6.0.0
+ * @since 5.2.0
  */
 public final class HtmxResponseHeaders {
     /**

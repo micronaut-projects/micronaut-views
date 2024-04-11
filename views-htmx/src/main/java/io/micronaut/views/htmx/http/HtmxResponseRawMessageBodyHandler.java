@@ -45,7 +45,7 @@ import java.util.Collections;
 /**
  * {@link RawMessageBodyHandler} implementation for {@link HtmxResponse}.
  * @author Sergio del Amo
- * @since 6.0.0
+ * @since 5.2.0
  * @param <T> The model type
  */
 @Internal

@@ -26,7 +26,7 @@ import java.util.Optional;
  * HTMX Request Headers.
  * @see <a href="https://htmx.org/reference/#request_headers">HTMX Request Headers</a>
  * @author Sergio del Amo
- * @since 6.0.0
+ * @since 5.2.0
  */
 public interface HtmxRequestHeaders {
     /**

@@ -21,7 +21,7 @@ import io.micronaut.core.util.Toggleable;
  * Defines Htmx integration configuration.
  *
  * @author Sergio del Amo
- * @since 6.0.0
+ * @since 5.2.0
  */
 public interface HtmxConfiguration extends Toggleable {
 }

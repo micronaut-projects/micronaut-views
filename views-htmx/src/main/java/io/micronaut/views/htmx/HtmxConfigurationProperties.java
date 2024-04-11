@@ -23,7 +23,7 @@ import io.micronaut.views.ViewsConfigurationProperties;
 /**
  * {@link ConfigurationProperties} implementation of {@link HtmxConfiguration}.
  * @author Sergio del Amo
- * @since 6.0.0
+ * @since 5.2.0
  */
 @Requires(property = HtmxConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE, defaultValue = StringUtils.TRUE)
 @ConfigurationProperties(HtmxConfigurationProperties.PREFIX)

@@ -19,17 +19,15 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
 import jakarta.inject.Singleton;
-
 import java.util.Optional;
 
 /**
  * Default implementation of {@link ModelAndViewRenderer}.
- * <p>
  * Given a {@link ModelAndView} it will find the view by name, and render it with the model.
  * @param <T> The model type
  * @param <R> The request type
  * @author Tim Yates
- * @since 6.0.0
+ * @since 5.2.0
  */
 @Singleton
 @Internal

@@ -25,7 +25,7 @@ import java.util.Optional;
  * Renders a {@link ModelAndView}.
  * @param <T> The model type
  * @param <R> The request type
- * @since 6.0.0
+ * @since 5.2.0
  * @author Tim Yates
  */
 @FunctionalInterface

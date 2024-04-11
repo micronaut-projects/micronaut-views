@@ -16,7 +16,7 @@
 /**
  * HTMX HTTP Related classes.
  * @author Sergio del Amo
- * @since 6.0.0
+ * @since 5.2.0
  */
 @Configuration
 @Requires(classes = HttpRequest.class)
