@@ -47,8 +47,8 @@ public interface ReactViewsRendererConfiguration {
 
 
     /**
-     * @return Either a file path (starting with {@code file:} or a resource in the classpath
-     * (starting with {@code classpath:}) to a render script. Please see the user guide for
+     * @return Either a file path (starting with "file:" or a resource in the classpath
+     * (starting with "classpath:") to a render script. Please see the user guide for
      * more information on what this Javascript file should contain.
      */
     @NotBlank
