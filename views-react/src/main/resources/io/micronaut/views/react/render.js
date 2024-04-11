@@ -1,5 +1,7 @@
 async function renderWithReact(component, props, callback, config) {
-    globalThis.__micronaut_prefetch = callback.recordPrefetch;
+    globalThis.Micronaut = {
+        prefetch: callback.recordPrefetch
+    }
     const element = React.createElement(component, props, null);
 
     var stream;
@@ -11,7 +13,8 @@ async function renderWithReact(component, props, callback, config) {
             prefetch: callback.getPrefetchedData()
         };
 
-        var bootstrapScriptContent = `var __micronaut_boot = ${JSON.stringify(boot)};`;
+        // The Micronaut object defined here is not the same as the Micronaut object defined server side.
+        var bootstrapScriptContent = `var Micronaut = ${JSON.stringify(boot)};`;
         stream = await ReactDOMServer.renderToReadableStream(element, {
             bootstrapScriptContent: bootstrapScriptContent,
             bootstrapScripts: [config.getClientBundleURL()]
@@ -30,7 +33,9 @@ async function renderWithReact(component, props, callback, config) {
 }
 
 async function renderWithPreact(component, props, callback, config) {
-    globalThis.__micronaut_prefetch = callback.recordPrefetch;
+    globalThis.Micronaut = {
+        prefetch: callback.recordPrefetch
+    };
     const html = renderToString(h(component, props, null))
     callback.write(html)
     const boot = {
@@ -38,7 +43,9 @@ async function renderWithPreact(component, props, callback, config) {
         rootComponent: component.name,
         prefetch: callback.getPrefetchedData()
     };
-    const bootstrapScriptContent = `var __micronaut_boot = ${JSON.stringify(boot)};`;
+
+    // The Micronaut object defined here is not the same as the Micronaut object defined server side.
+    const bootstrapScriptContent = `var Micronaut = ${JSON.stringify(boot)};`;
     callback.write(`<script type="text/javascript">${bootstrapScriptContent}</script>`)
     callback.write(`<script type="text/javascript" src="${config.getClientBundleURL()}" async="true">`)
 }

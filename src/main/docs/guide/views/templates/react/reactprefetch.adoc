@@ -1,6 +1,6 @@
 In a classical React application the HTML that launches the app is static, and after the app has downloaded and run the user's data is loaded from the server by making REST API calls. This is convenient because it means data can be exposed in just one way (as JSON objects) which is used both for the initial load and for dynamic updates afterwards. The downside of this approach is it sacrifices performance. The user must wait for the app to download and start, and then wait for the data to load. Apps with this problem often show the user spinners or flashing skeletons to indicate that the app hasn't finished loading data yet.
 
-Prefetch allows the same requests that the browser JS would make on startup to be made by Micronaut itself when the page is server-side rendered. The responses are then encoded as JSON and included in a `<script>` tag at the bottom of the HTML, defined in a global variable named `__micronaut_boot.prefetch`. Your app can read from this cache the first time a request is made. Prefetching works best when integrated with a fetcher library. Here we will demonstrate how to integrate it with the http://swr.vercel.app[SWR library] by Vercel. SWR offers many useful features that make working with remote API calls in React easy. For example it eliminates duplicate requests, can re-run requests when the browser receives focus, can re-run requests on a timer and more.
+Prefetch allows the same requests that the browser JS would make on startup to be made by Micronaut itself when the page is server-side rendered. The responses are then encoded as JSON and included in a `<script>` tag at the bottom of the HTML, defined in a global variable named `Micronaut.prefetch`. Your app can read from this cache the first time a request is made. Prefetching works best when integrated with a fetcher library. Here we will demonstrate how to integrate it with the http://swr.vercel.app[SWR library] by Vercel. SWR offers many useful features that make working with remote API calls in React easy. For example it eliminates duplicate requests, can re-run requests when the browser receives focus, can re-run requests on a timer and more.
 
 Let's start by defining a simple component that will fetch the current time from the server using SWR. Here's the controller:
 
@@ -50,19 +50,19 @@ Let's start by configuring the SWR library to look at the cache of initial respo
 import {hydrateRoot} from 'react-dom/client';
 import {SWRConfig} from "swr";
 
-const pageComponentName = __micronaut_boot.rootComponent;
+const pageComponentName = Micronaut.rootComponent;
 
 import(`./components/${pageComponentName}.js`).then(module => {
     const swrConf = {
         fetcher: (resource, init) => fetch(resource, init).then(res => res.json()),
-        fallback: __micronaut_boot.prefetch,
+        fallback: Micronaut.prefetch,
         revalidateOnMount: false
     };
 
     const PageComponent = module[pageComponentName]
     hydrateRoot(document,
         <SWRConfig value={swrConf}>
-            <PageComponent {...__micronaut_boot.rootProps}/>
+            <PageComponent {...Micronaut.rootProps}/>
         </SWRConfig>
     )
 })
@@ -74,7 +74,7 @@ Here are the key changes:
 2. We wrapped the `<PageComponent/>` in it. This can be used to configure how SWR behaves in a subtree of the component hierarchy, although here we wrap the entire page in a context, so we're configuring the default behavior of the library.
 3. We pointed it at `swrConf` which is a JSON object of configuration options (see https://swr.vercel.app/docs/global-configuration[the SWR documentation] for details).
 4. We define a default fetching function that just converts to a promise yielding a parsed JSON object. This will be used when we call `useSWR("/url")` without any other arguments.
-5. We define the `fallback` property, which we set to the contents of `__micronaut_boot.prefetch`. This will be populated with a map of URLs to JSON contents.
+5. We define the `fallback` property, which we set to the contents of `Micronaut.prefetch`. This will be populated with a map of URLs to JSON contents.
 6. We turn off `revalidateOnMount`. If we didn't do this then the client would repeat the fetches that the server just did, and so we'd double up the load. SWR will still refetch at other times.
 
 That's it for setting up the client.
@@ -88,7 +88,7 @@ Create a new Javascript file called e.g. `SWRServerShim.js`:
 import {SWRConfig} from 'swr';
 
 export default function useSWR(url, ...args) {
-    const prefetched = __micronaut_prefetch(url);
+    const prefetched = Micronaut.prefetch(url);
     return {
         data: prefetched,
         isLoading: prefetched === null,
@@ -100,9 +100,9 @@ export default function useSWR(url, ...args) {
 export { SWRConfig, useSWR };
 ----
 
-This file provides its own implementation of `useSWR` that asks Micronaut to prefetch the given URL and then returns the data, if the prefetch was successful. It calls `__micronaut_prefetch` which is a global function defined only during the server-side rendering process.
+This file provides its own implementation of `useSWR` that asks Micronaut to prefetch the given URL and then returns the data, if the prefetch was successful. It calls `Micronaut.prefetch` which is a global function defined only during the server-side rendering process.
 
-Micronaut React SSR is smart about how prefetching works. Your Javascript doesn't block when it calls this function. Instead `+__micronaut_prefetch+` returns null and records the URL for later. Once every component has rendered, every API call is resolved in parallel. Then the server rerenders the page, but this time the `+__micronaut_prefetch+` function returns the data that was observed. If there are any new prefetch calls then the process repeats until no new URLs are seen. This lets you chain API calls on the server where latency is low.
+Micronaut React SSR is smart about how prefetching works. Your Javascript doesn't block when it calls this function. Instead `Micronaut.prefetch` returns null and records the URL for later. Once every component has rendered, every API call is resolved in parallel. Then the server rerenders the page, but this time the `Micronaut.prefetch` function returns the data that was observed. If there are any new prefetch calls then the process repeats until no new URLs are seen. This lets you chain API calls on the server where latency is low.
 
 We have our shim, but our app isn't using it yet. Let's fix that by using Webpack again. Edit your `webpack.server.js` file and add the following:
 
