@@ -57,7 +57,17 @@ public enum TurboStreamAction {
     /**
      * Inserts the content within the template tag after the element designated by the target dom id.
      */
-    AFTER("after");
+    AFTER("after"),
+
+    /**
+     * Replaces the element designated by the target dom id via morph.
+     */
+    MORPH("morph"),
+
+    /**
+     * Initiates a Page Refresh to render new content with morphing.
+     */
+    REFRESH("refresh");
 
     @NonNull
     private final String action;
