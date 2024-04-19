@@ -61,7 +61,7 @@ public class DefaultTurboStreamRenderer implements TurboStreamRenderer {
      * @param viewsRendererLocator View Renderer Locator
      * @deprecated Use {@link #DefaultTurboStreamRenderer(ViewsRendererLocator, ViewsModelDecorator)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "5.2.1", forRemoval = true)
     public DefaultTurboStreamRenderer(ViewsRendererLocator viewsRendererLocator) {
         this(viewsRendererLocator, null);
     }
