@@ -41,6 +41,8 @@ final class TurboStreamResponseBodySwapper implements ResponseBodySwapper<TurboS
     private static final String MEMBER_ACTION = "action";
     private static final String MEMBER_TARGET_DOM_ID = "targetDomId";
     private static final String MEMBER_TARGET_CSS_QUERY_SELECTOR = "targetCssQuerySelector";
+    private static final String MEMBER_REQUEST_ID = "requestId";
+    private static final String MEMBER_CHILDREN_ONLY = "childrenOnly";
     private static final int ORDER = 10;
 
     /**
@@ -77,6 +79,9 @@ final class TurboStreamResponseBodySwapper implements ResponseBodySwapper<TurboS
         builder.action(turboViewAnnotation.enumValue(MEMBER_ACTION, TurboStreamAction.class).orElse(TurboStreamAction.UPDATE));
         turboViewAnnotation.stringValue(MEMBER_TARGET_DOM_ID).ifPresent(builder::targetDomId);
         turboViewAnnotation.stringValue(MEMBER_TARGET_CSS_QUERY_SELECTOR).ifPresent(builder::targetCssQuerySelector);
+        turboViewAnnotation.stringValue(MEMBER_REQUEST_ID).ifPresent(builder::requestId);
+        turboViewAnnotation.booleanValue(MEMBER_CHILDREN_ONLY).ifPresent(builder::childrenOnly);
+
         if (builder.getTargetCssQuerySelector().isEmpty() && builder.getTargetDomId().isEmpty()) {
             httpHeaders
                     .get(TurboHttpHeaders.TURBO_FRAME, String.class)

@@ -31,13 +31,14 @@ import java.util.regex.Pattern;
  * @since 3.3.0
  */
 public final class TurboStream implements Renderable {
-
     private static final String TURBO_TEMPLATE_TAG = "template";
     private static final String TURBO_STREAM_TAG = "turbo-stream";
     private static final String TURBO_STREAM_CLOSING_TAG = "</turbo-stream>";
     private static final String TURBO_STREAM_ATTRIBUTE_TARGET = "target";
     private static final String TURBO_STREAM_ATTRIBUTE_ACTION = "action";
     private static final String TURBO_STREAM_ATTRIBUTE_TARGETS = "targets";
+    private static final String TURBO_STREAM_ATTRIBUTE_REQUEST_ID = "request-id";
+    private static final String TURBO_STREAM_ATTRIBUTE_CHILDREN_ONLY = "children-only";
     private static final String CLOSE_TAG = ">";
     private static final String OPEN_TAG = "<";
     private static final String SPACE = " ";
@@ -60,16 +61,31 @@ public final class TurboStream implements Renderable {
     @Nullable
     private final String targetCssQuerySelector;
 
+    /**
+     * request-id attribute, only relevant when action=refresh
+     */
+    @Nullable
+    private final String requestId;
+
+    /**
+     * Morph only the children of the element designated by the target dom id.
+     */
+    private final boolean childrenOnly;
+
     @Nullable
     private final Object template;
 
     TurboStream(@NonNull TurboStreamAction action,
                 @Nullable String targetDomId,
                 @Nullable String targetCssQuerySelector,
+                @Nullable String requestId,
+                boolean childrenOnly,
                 @Nullable Object template) {
         this.action = action;
         this.targetDomId = targetDomId;
         this.targetCssQuerySelector = targetCssQuerySelector;
+        this.requestId = requestId;
+        this.childrenOnly = childrenOnly;
         this.template = template;
     }
 
@@ -98,6 +114,22 @@ public final class TurboStream implements Renderable {
     @NonNull
     public Optional<String> getTargetCssQuerySelector() {
         return Optional.ofNullable(targetCssQuerySelector);
+    }
+
+    /**
+     *
+     * @return request-id attribute, only relevant when action=refresh
+     */
+    public Optional<String> getRequestId() {
+        return Optional.ofNullable(requestId);
+    }
+
+    /**
+     *
+     * @return Morph only the children of the element designated by the target dom id.
+     */
+    public boolean getChildrenOnly() {
+        return childrenOnly;
     }
 
     /**
@@ -155,6 +187,8 @@ public final class TurboStream implements Renderable {
         return OPEN_TAG + TURBO_STREAM_TAG + SPACE + htmlAttribute(TURBO_STREAM_ATTRIBUTE_ACTION, getAction().toString())
                 + getTargetDomIdHtmlAttribute().orElse("")
                 + getTargetCssQuerySelectorHtmlAttribute().orElse("")
+                + getRequestIdAttribute().orElse("")
+                + getChildrenOnlyAttribute().orElse("")
                 + CLOSE_TAG;
     }
 
@@ -168,6 +202,19 @@ public final class TurboStream implements Renderable {
     private Optional<String> getTargetCssQuerySelectorHtmlAttribute() {
         return getTargetCssQuerySelector()
                 .map(cssSelector -> SPACE + htmlAttribute(TURBO_STREAM_ATTRIBUTE_TARGETS, cssSelector));
+    }
+
+    @NonNull
+    private Optional<String> getRequestIdAttribute() {
+        return getRequestId()
+            .map(requestId -> SPACE + htmlAttribute(TURBO_STREAM_ATTRIBUTE_REQUEST_ID, requestId));
+    }
+
+    @NonNull
+    private Optional<String> getChildrenOnlyAttribute() {
+        return getChildrenOnly()
+            ? Optional.of(SPACE + TURBO_STREAM_ATTRIBUTE_CHILDREN_ONLY)
+            : Optional.empty();
     }
 
     @NonNull
@@ -199,6 +246,8 @@ public final class TurboStream implements Renderable {
         private TurboStreamAction action;
         private String targetDomId;
         private String targetCssQuerySelector;
+        private String requestId;
+        private boolean childrenOnly;
         private Object template;
         private String templateView;
         private Object templateModel;
@@ -261,6 +310,29 @@ public final class TurboStream implements Renderable {
         @NonNull
         public Builder targetCssQuerySelector(@NonNull String targetCssQuerySelector) {
             this.targetCssQuerySelector = targetCssQuerySelector;
+            return this;
+        }
+
+
+        /**
+         *
+         * @param requestId request-id attribute, only relevant when action=refresh
+         * @return The Builder
+         */
+        @NonNull
+        public Builder requestId(@NonNull String requestId) {
+            this.requestId = requestId;
+            return this;
+        }
+
+        /**
+         *
+         * @param childrenOnly Morph only the children of the element designated by the target dom id.
+         * @return The Builder
+         */
+        @NonNull
+        public Builder childrenOnly(boolean childrenOnly) {
+            this.childrenOnly = childrenOnly;
             return this;
         }
 
@@ -400,6 +472,8 @@ public final class TurboStream implements Renderable {
             return new TurboStream(action,
                     targetDomId,
                     targetCssQuerySelector,
+                    requestId,
+                    childrenOnly,
                     template);
         }
 
