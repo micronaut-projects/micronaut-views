@@ -202,7 +202,7 @@ class ModelAndViewTest {
 
 
         @Produces(TurboMediaType.TURBO_STREAM)
-        @Get("/turboStreamBuilderWithProrocessor")
+        @Get("/turboStreamBuilderWithProcessor")
         public TurboStream.Builder turboStreamBuilder() {
             return TurboStream.builder()
                     .action(TurboStreamAction.REPLACE)
