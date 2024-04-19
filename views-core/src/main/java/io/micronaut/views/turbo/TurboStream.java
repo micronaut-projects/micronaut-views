@@ -87,6 +87,24 @@ public final class TurboStream implements Renderable {
     @Nullable
     private final Object template;
 
+    /**
+     *
+     * @deprecated use the constructor that takes also the {@code requestId} and
+     * {@code childrenOnly} parameters instead
+     */
+    @Deprecated
+    TurboStream(@NonNull TurboStreamAction action,
+                @Nullable String targetDomId,
+                @Nullable String targetCssQuerySelector,
+                @Nullable Object template) {
+        this.action = action;
+        this.targetDomId = targetDomId;
+        this.targetCssQuerySelector = targetCssQuerySelector;
+        this.requestId = null;
+        this.childrenOnly = false;
+        this.template = template;
+    }
+
     TurboStream(@NonNull TurboStreamAction action,
                 @Nullable String targetDomId,
                 @Nullable String targetCssQuerySelector,
