@@ -23,6 +23,7 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.body.MessageBodyWriter;
 import io.micronaut.http.codec.CodecException;
+import io.micronaut.http.context.ServerRequestContext;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Singleton;
@@ -56,7 +57,7 @@ public class TurboStreamListOfBuilderMessageBodyWriter implements MessageBodyWri
                         @NonNull OutputStream outputStream) throws CodecException {
         outgoingHeaders.set(HttpHeaders.CONTENT_TYPE, TurboMediaType.TURBO_STREAM);
         for (TurboStream.Builder builder : turboStreamBuilders) {
-            turboStreamRenderer.render(builder, null)
+            turboStreamRenderer.render(builder, ServerRequestContext.currentRequest().orElse(null))
                     .ifPresent(writable -> {
                         try {
                             writable.writeTo(outputStream);
