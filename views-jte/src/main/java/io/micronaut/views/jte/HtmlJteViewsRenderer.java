@@ -21,6 +21,7 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ViewsConfiguration;
+import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Singleton;
 
 import java.nio.file.Paths;
@@ -32,7 +33,7 @@ import java.nio.file.Paths;
  * @author edward3h
  * @since 3.1.0
  */
-@Produces(MediaType.TEXT_HTML)
+@Produces(value = {MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM})
 @Singleton
 @Requires(classes = HttpRequest.class)
 public class HtmlJteViewsRenderer<T> extends JteViewsRenderer<T, HttpRequest<?>> {
