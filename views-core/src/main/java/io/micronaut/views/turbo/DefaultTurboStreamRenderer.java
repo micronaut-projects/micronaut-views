@@ -16,12 +16,16 @@
 package io.micronaut.views.turbo;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.NextMajorVersion;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.views.ModelAndView;
+import io.micronaut.views.ViewsModelDecorator;
 import io.micronaut.views.ViewsRendererLocator;
 import io.micronaut.views.turbo.http.TurboMediaType;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -36,9 +40,30 @@ import java.util.Optional;
 public class DefaultTurboStreamRenderer implements TurboStreamRenderer {
 
     protected final ViewsRendererLocator viewsRendererLocator;
+    @Nullable
+    @NextMajorVersion("remove the nullability annotation")
+    private final ViewsModelDecorator viewsModelDecorator;
 
-    public DefaultTurboStreamRenderer(ViewsRendererLocator viewsRendererLocator) {
+    /**
+     *
+     * @param viewsRendererLocator ViewRendererLocator
+     * @param viewsModelDecorator Views Model Decorator
+     */
+    @Inject
+    public DefaultTurboStreamRenderer(ViewsRendererLocator viewsRendererLocator,
+                                      ViewsModelDecorator viewsModelDecorator) {
         this.viewsRendererLocator = viewsRendererLocator;
+        this.viewsModelDecorator = viewsModelDecorator;
+    }
+
+    /**
+     *
+     * @param viewsRendererLocator View Renderer Locator
+     * @deprecated Use {@link #DefaultTurboStreamRenderer(ViewsRendererLocator, ViewsModelDecorator)} instead.
+     */
+    @Deprecated(since = "5.2.1", forRemoval = true)
+    public DefaultTurboStreamRenderer(ViewsRendererLocator viewsRendererLocator) {
+        this(viewsRendererLocator, null);
     }
 
     @Override
@@ -48,8 +73,13 @@ public class DefaultTurboStreamRenderer implements TurboStreamRenderer {
         return builder.getTemplateView()
                 .map(viewName ->  {
                     Object model =  builder.getTemplateModel().orElse(null);
-                    return viewsRendererLocator.resolveViewsRenderer(viewName, TurboMediaType.TURBO_STREAM, model)
-                            .flatMap(renderer -> builder.template(renderer.render(viewName, model, request))
+                    ModelAndView<Object> modelAndView = new ModelAndView<>(viewName, model);
+                    if (request != null && viewsModelDecorator != null) {
+                        viewsModelDecorator.decorate(request, modelAndView);
+                    }
+                    Object decoratedModel = modelAndView.getModel().orElse(null);
+                    return viewsRendererLocator.resolveViewsRenderer(viewName, TurboMediaType.TURBO_STREAM, decoratedModel)
+                            .flatMap(renderer -> builder.template(renderer.render(viewName, decoratedModel, request))
                                     .build()
                                     .render());
                 })
