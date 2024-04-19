@@ -186,7 +186,7 @@ class ModelAndViewTest {
         assertTrue(html.contains("<h1>config: test</h1>"));
 
         //when:
-        request = HttpRequest.GET("/turboStreamBuilderWithProrocessor").accept(TurboMediaType.TURBO_STREAM);
+        request = HttpRequest.GET("/turboStreamBuilderWithProcessor").accept(TurboMediaType.TURBO_STREAM);
         html = client.retrieve(request, String.class);
         assertTrue(html.contains("<h1>config: test</h1>"));
     }
