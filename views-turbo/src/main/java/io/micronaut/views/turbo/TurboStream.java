@@ -62,7 +62,7 @@ public final class TurboStream implements Renderable {
     private final String targetCssQuerySelector;
 
     /**
-     * request-id attribute, only relevant when action=refresh
+     * request-id attribute, only relevant when action=refresh.
      */
     @Nullable
     private final String requestId;

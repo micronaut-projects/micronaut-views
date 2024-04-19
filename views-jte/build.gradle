@@ -14,6 +14,7 @@ dependencies {
     testImplementation(mn.reactor)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(projects.micronautViewsTurbo)
 }
 
 jte {

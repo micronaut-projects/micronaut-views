@@ -15,12 +15,15 @@
  */
 package io.micronaut.views.turbo;
 
+
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.views.ModelAndView;
 import io.micronaut.views.TemplatedBuilder;
+import io.micronaut.views.ViewsModelDecorator;
 import io.micronaut.views.ViewsRendererLocator;
 
 import java.util.Optional;
@@ -32,17 +35,22 @@ import java.util.Optional;
  */
 @Internal
 abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
-    private final ViewsRendererLocator viewsRendererLocator;
+    protected final ViewsRendererLocator viewsRendererLocator;
+
+    private final ViewsModelDecorator viewsModelDecorator;
     private final String mediaType;
 
     /**
      *
      * @param viewsRendererLocator Views renderer Locator
+     * @param viewsModelDecorator Views Model Decorator
      * @param mediaType Media Type
      */
     protected AbstractTurboRenderer(ViewsRendererLocator viewsRendererLocator,
+                                    ViewsModelDecorator viewsModelDecorator,
                                     String mediaType) {
         this.viewsRendererLocator = viewsRendererLocator;
+        this.viewsModelDecorator = viewsModelDecorator;
         this.mediaType = mediaType;
     }
 
@@ -58,8 +66,13 @@ abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
         return builder.getTemplateView()
                 .map(viewName ->  {
                     Object model =  builder.getTemplateModel().orElse(null);
-                    return viewsRendererLocator.resolveViewsRenderer(viewName, mediaType, model)
-                            .flatMap(renderer -> builder.template(renderer.render(viewName, model, request))
+                    ModelAndView<Object> modelAndView = new ModelAndView<>(viewName, model);
+                    if (request != null && viewsModelDecorator != null) {
+                        viewsModelDecorator.decorate(request, modelAndView);
+                    }
+                    Object decoratedModel = modelAndView.getModel().orElse(null);
+                    return viewsRendererLocator.resolveViewsRenderer(viewName, mediaType, decoratedModel)
+                            .flatMap(renderer -> builder.template(renderer.render(viewName, decoratedModel, request))
                                     .build()
                                     .render());
                 })

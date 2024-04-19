@@ -26,6 +26,7 @@ import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.exceptions.ReadTimeoutException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.jte.JteViewsRenderer
+import io.micronaut.views.turbo.http.TurboMediaType
 import spock.lang.AutoCleanup
 import spock.lang.Issue
 import spock.lang.Shared
@@ -205,5 +206,24 @@ abstract class JteViewRendererSpec extends Specification {
         then:
         body
         rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
+    }
+
+    def "invoking jte turbo-stream renders a TURBO_STREAM response"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange(HttpRequest.GET('/jte/turbo-stream')
+                .accept(TurboMediaType.TURBO_STREAM), String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+
+        then:
+        body
+        body.contains("<h1>username: <span>sdelamo</span></h1>")
+        body.startsWith("<turbo-stream")
+        body.endsWith("</turbo-stream>")
     }
 }

@@ -26,6 +26,8 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Produces
 import io.micronaut.views.ModelAndView
 import io.micronaut.views.View
+import io.micronaut.views.turbo.TurboStreamView
+import io.micronaut.views.turbo.http.TurboMediaType
 import org.reactivestreams.Publisher
 import reactor.core.publisher.Mono
 
@@ -99,5 +101,12 @@ class JteController {
     @View("badsyntax.hbs")
     @Get("/badsyntax")
     void badsyntax() {
+    }
+
+    @TurboStreamView(value = "turbo-stream")
+    @Produces(value = [TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML])
+    @Get("/turbo-stream")
+    HttpResponse<Person> turboStream() {
+        HttpResponse.ok(new Person(loggedIn: true, username: 'sdelamo'));
     }
 }
