@@ -55,4 +55,16 @@ public @interface TurboView {
      * @return Target CSS Query Selector.
      */
     String targetCssQuerySelector() default "";
+
+    /**
+     *
+     * @return request-id attribute, only relevant when action=refresh
+     */
+    String requestId() default "";
+
+    /**
+     *
+     * @return morph only the children of the element designated by the target dom id
+     */
+    boolean childrenOnly() default false;
 }

@@ -155,6 +155,28 @@ class TurboStreamSpec extends Specification {
         "<turbo-stream action=\"update\" target=\"main-container\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == html
     }
 
+    void "verify TurboView annotation can specify requestId"() {
+        given:
+        BlockingHttpClient client = httpClient.toBlocking()
+
+        when:
+        String html = client.retrieve(HttpRequest.GET("/turbo/requestId").accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML))
+
+        then:
+        "<turbo-stream action=\"refresh\" request-id=\"abcd-1234\"><template><div class=\"message\">Hello World</div></template></turbo-stream>" == html
+    }
+
+    void "verify TurboView annotation can specify childrenOnly"() {
+        given:
+        BlockingHttpClient client = httpClient.toBlocking()
+
+        when:
+        String html = client.retrieve(HttpRequest.GET("/turbo/childrenOnly").accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML))
+
+        then:
+        "<turbo-stream action=\"morph\" children-only><template><div class=\"message\">Hello World</div></template></turbo-stream>" == html
+    }
+
     void "verify TurboView annotation can specify targetCssQuerySelector"() {
         given:
         BlockingHttpClient client = httpClient.toBlocking()
@@ -409,13 +431,27 @@ class TurboStreamSpec extends Specification {
         @TurboView("fragments/message")
         @Get("/update")
         String update() {
-            "Hello World";
+            "Hello World"
         }
 
         @Produces(TurboMediaType.TURBO_STREAM)
         @TurboView(value = "fragments/message", targetDomId = "main-container")
         @Get("/targetDomId")
         String targetDomId() {
+            "Hello World"
+        }
+
+        @Produces(TurboMediaType.TURBO_STREAM)
+        @TurboView(value = "fragments/message", action=TurboStreamAction.REFRESH, requestId = "abcd-1234")
+        @Get("/requestId")
+        String requestId() {
+            "Hello World"
+        }
+
+        @Produces(TurboMediaType.TURBO_STREAM)
+        @TurboView(value = "fragments/message", action=TurboStreamAction.MORPH, childrenOnly = true)
+        @Get("/childrenOnly")
+        String childrenOnly() {
             "Hello World"
         }
 
