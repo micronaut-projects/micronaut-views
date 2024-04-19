@@ -21,10 +21,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.views.ModelAndView;
-import io.micronaut.views.TemplatedBuilder;
-import io.micronaut.views.ViewsModelDecorator;
-import io.micronaut.views.ViewsRendererLocator;
+import io.micronaut.views.*;
 
 import java.util.Optional;
 
@@ -35,22 +32,18 @@ import java.util.Optional;
  */
 @Internal
 abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
-    protected final ViewsRendererLocator viewsRendererLocator;
+    protected final ModelAndViewRenderer modelAndViewRenderer;
 
-    private final ViewsModelDecorator viewsModelDecorator;
     private final String mediaType;
 
     /**
      *
-     * @param viewsRendererLocator Views renderer Locator
-     * @param viewsModelDecorator Views Model Decorator
+     * @param modelAndViewRenderer ModelAndViewRenderer
      * @param mediaType Media Type
      */
-    protected AbstractTurboRenderer(ViewsRendererLocator viewsRendererLocator,
-                                    ViewsModelDecorator viewsModelDecorator,
+    protected AbstractTurboRenderer(ModelAndViewRenderer modelAndViewRenderer,
                                     String mediaType) {
-        this.viewsRendererLocator = viewsRendererLocator;
-        this.viewsModelDecorator = viewsModelDecorator;
+        this.modelAndViewRenderer = modelAndViewRenderer;
         this.mediaType = mediaType;
     }
 
@@ -63,19 +56,12 @@ abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
     @NonNull
     public Optional<Writable> render(@NonNull T builder,
                                      @Nullable HttpRequest<?> request) {
-        return builder.getTemplateView()
-                .map(viewName ->  {
-                    Object model =  builder.getTemplateModel().orElse(null);
-                    ModelAndView<Object> modelAndView = new ModelAndView<>(viewName, model);
-                    if (request != null && viewsModelDecorator != null) {
-                        viewsModelDecorator.decorate(request, modelAndView);
-                    }
-                    Object decoratedModel = modelAndView.getModel().orElse(null);
-                    return viewsRendererLocator.resolveViewsRenderer(viewName, mediaType, decoratedModel)
-                            .flatMap(renderer -> builder.template(renderer.render(viewName, decoratedModel, request))
-                                    .build()
-                                    .render());
-                })
-                .orElseGet(() -> builder.build().render());
+
+        Optional<Writable> optionalWritable = builder.getTemplateView()
+            .map(viewName -> new ModelAndView<>(viewName, builder.getTemplateModel().orElse(null)))
+            .flatMap(modelAndView -> modelAndViewRenderer.render(modelAndView, request, mediaType));
+        return optionalWritable.isPresent()
+            ? optionalWritable
+            : builder.build().render();
     }
 }

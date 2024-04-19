@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.turbo;
 
+import io.micronaut.views.ModelAndViewRenderer;
 import io.micronaut.views.ViewsModelDecorator;
 import io.micronaut.views.ViewsRendererLocator;
 import jakarta.inject.Singleton;
@@ -28,11 +29,9 @@ import jakarta.inject.Singleton;
 public class DefaultTurboFrameRenderer extends AbstractTurboRenderer<TurboFrame.Builder> implements TurboFrameRenderer {
     /**
      * Constructor.
-     * @param viewsRendererLocator Views Renderer Locator.
-     * @param viewsModelDecorator Views Model Decorator.
+     * @param modelAndViewRenderer ModelAndViewRenderer.
      */
-    public DefaultTurboFrameRenderer(ViewsRendererLocator viewsRendererLocator,
-                                     ViewsModelDecorator viewsModelDecorator) {
-        super(viewsRendererLocator, viewsModelDecorator, "text/html");
+    public DefaultTurboFrameRenderer(ModelAndViewRenderer modelAndViewRenderer) {
+        super(modelAndViewRenderer, "text/html");
     }
 }
