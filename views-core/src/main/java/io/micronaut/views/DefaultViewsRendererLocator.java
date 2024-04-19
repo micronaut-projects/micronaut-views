@@ -90,13 +90,8 @@ public class DefaultViewsRendererLocator implements ViewsRendererLocator {
                     AnnotationValue<Produces> annotation = beanDefinition.getAnnotation(Produces.class);
                     if (annotation == null) {
                         return true;
-                    } else if (annotation.getValue(String[].class).isPresent()) {
-                        return Arrays.asList(annotation.getValue(String[].class).get())
-                            .contains(contentType);
-                    } else if (annotation.getValue(String.class).isPresent()) {
-                        return annotation.getValue(String.class).get().equals(contentType);
                     }
-                    return false;
+                    return Arrays.asList(annotation.stringValues()).contains(contentType);
                 })
                 .sorted((o1, o2) -> {
                     BeanDefinition<? extends ViewsRenderer> o1BeanDefinition = applicationContext.getBeanDefinition(o1.getClass());
