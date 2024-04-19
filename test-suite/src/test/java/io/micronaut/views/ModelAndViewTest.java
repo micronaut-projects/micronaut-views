@@ -26,6 +26,7 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.client.BlockingHttpClient;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
@@ -37,6 +38,9 @@ import io.micronaut.views.View;
 import io.micronaut.views.model.ConfigViewModelProcessor;
 import io.micronaut.views.model.FruitsController;
 import io.micronaut.views.model.ViewModelProcessor;
+import io.micronaut.views.turbo.TurboStream;
+import io.micronaut.views.turbo.TurboStreamAction;
+import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.junit.jupiter.api.Test;
@@ -180,6 +184,11 @@ class ModelAndViewTest {
 
         //and:
         assertTrue(html.contains("<h1>config: test</h1>"));
+
+        //when:
+        request = HttpRequest.GET("/turboStreamBuilderWithProrocessor").accept(TurboMediaType.TURBO_STREAM);
+        html = client.retrieve(request, String.class);
+        assertTrue(html.contains("<h1>config: test</h1>"));
     }
 
     @Requires(property = "spec.name", value = "ModelAndViewSpec")
@@ -189,6 +198,15 @@ class ModelAndViewTest {
         @Get("/pojo-processor")
         public Fruit pojoProcessor() {
             return new Fruit("orange", "orange");
+        }
+
+
+        @Produces(TurboMediaType.TURBO_STREAM)
+        @Get("/turboStreamBuilderWithProrocessor")
+        public TurboStream.Builder turboStreamBuilder() {
+            return TurboStream.builder()
+                    .action(TurboStreamAction.REPLACE)
+                    .template("fruits-processor", new Fruit("orange", "orange"));
         }
     }
 
