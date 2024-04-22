@@ -146,16 +146,26 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTemplateView()" class="member-name-link">getTemplateView</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(io.micronaut.http.HttpRequest,io.micronaut.http.HttpResponse)" class="member-name-link">of</a><wbr>(@NonNull io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#morph()" class="member-name-link">morph</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the Turbo action as <a href="TurboStreamAction.html#MORPH"><code>TurboStreamAction.MORPH</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static @NonNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(io.micronaut.http.HttpRequest,io.micronaut.http.HttpResponse)" class="member-name-link">of</a><wbr>(@NonNull io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
  @NonNull io.micronaut.http.HttpResponse&lt;?&gt;&nbsp;response)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a Turbo Stream builder if annotation <a href="TurboView.html" title="annotation interface in io.micronaut.views.turbo"><code>TurboView</code></a> is found in the route and the request is a turbo request.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#prepend()" class="member-name-link">prepend</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#prepend()" class="member-name-link">prepend</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the Turbo action as <a href="TurboStreamAction.html#PREPEND"><code>TurboStreamAction.PREPEND</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#refresh()" class="member-name-link">refresh</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the Turbo action as <a href="TurboStreamAction.html#REFRESH"><code>TurboStreamAction.REFRESH</code></a>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@NonNull <a href="TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove()" class="member-name-link">remove</a>()</code></div>
@@ -496,6 +506,30 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="annotations">@NonNull
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></span>&nbsp;<span class="element-name">replace</span>()</div>
 <div class="block">Sets the Turbo action as <a href="TurboStreamAction.html#REPLACE"><code>TurboStreamAction.REPLACE</code></a>.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the Builder</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="morph()">
+<h3>morph</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></span>&nbsp;<span class="element-name">morph</span>()</div>
+<div class="block">Sets the Turbo action as <a href="TurboStreamAction.html#MORPH"><code>TurboStreamAction.MORPH</code></a>.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the Builder</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="refresh()">
+<h3>refresh</h3>
+<div class="member-signature"><span class="annotations">@NonNull
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NonNull <a href="TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></span>&nbsp;<span class="element-name">refresh</span>()</div>
+<div class="block">Sets the Turbo action as <a href="TurboStreamAction.html#REFRESH"><code>TurboStreamAction.REFRESH</code></a>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the Builder</dd>
