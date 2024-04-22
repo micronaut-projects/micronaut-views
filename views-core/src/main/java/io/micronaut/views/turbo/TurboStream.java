@@ -487,6 +487,24 @@ public final class TurboStream implements Renderable {
         }
 
         /**
+         * Sets the Turbo action as {@link TurboStreamAction#MORPH}.
+         * @return the Builder
+         */
+        @NonNull
+        public Builder morph() {
+            return action(TurboStreamAction.MORPH);
+        }
+
+        /**
+         * Sets the Turbo action as {@link TurboStreamAction#REFRESH}.
+         * @return the Builder
+         */
+        @NonNull
+        public Builder refresh() {
+            return action(TurboStreamAction.REFRESH);
+        }
+
+        /**
          *
          * @return Builds the {@link TurboStream}.
          */

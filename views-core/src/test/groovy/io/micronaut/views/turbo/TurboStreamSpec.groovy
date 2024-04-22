@@ -28,6 +28,8 @@ import jakarta.inject.Singleton
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import java.util.function.Consumer
+
 @Property(name = "micronaut.http.client.follow-redirects", value = StringUtils.FALSE)
 @Property(name = "spec.name", value = "TurboStreamSpec")
 @MicronautTest
@@ -36,6 +38,73 @@ class TurboStreamSpec extends Specification {
     @Inject
     @Client("/")
     HttpClient httpClient
+
+    void "convenient methods to set action"(Consumer<TurboStream.Builder> builderConsumer, TurboStreamAction action) {
+        when:
+        TurboStream.Builder builder = TurboStream.builder()
+        builderConsumer.accept(builder)
+        TurboStream turboStream = builder.build()
+
+        then:
+        action == turboStream.action
+
+        where:
+        builderConsumer | action
+        new Consumer<TurboStream.Builder>() {
+            @Override
+            void accept(TurboStream.Builder b) {
+                b.append()
+            }
+        } | TurboStreamAction.APPEND
+        new Consumer<TurboStream.Builder>() {
+            @Override
+            void accept(TurboStream.Builder b) {
+                b.prepend()
+            }
+        } | TurboStreamAction.PREPEND
+        new Consumer<TurboStream.Builder>() {
+            @Override
+            void accept(TurboStream.Builder b) {
+                b.replace()
+            }
+        } | TurboStreamAction.REPLACE
+        new Consumer<TurboStream.Builder>() {
+            @Override
+            void accept(TurboStream.Builder b) {
+                b.update()
+            }
+        } | TurboStreamAction.UPDATE
+        new Consumer<TurboStream.Builder>() {
+            @Override
+            void accept(TurboStream.Builder b) {
+                b.remove()
+            }
+        } | TurboStreamAction.REMOVE
+        new Consumer<TurboStream.Builder>() {
+            @Override
+            void accept(TurboStream.Builder b) {
+                b.before()
+            }
+        } | TurboStreamAction.BEFORE
+        new Consumer<TurboStream.Builder>() {
+            @Override
+            void accept(TurboStream.Builder b) {
+                b.after()
+            }
+        } | TurboStreamAction.AFTER
+        new Consumer<TurboStream.Builder>() {
+            @Override
+            void accept(TurboStream.Builder b) {
+                b.morph()
+            }
+        } | TurboStreamAction.MORPH
+        new Consumer<TurboStream.Builder>() {
+            @Override
+            void accept(TurboStream.Builder b) {
+                b.refresh()
+            }
+        } | TurboStreamAction.REFRESH
+    }
 
     void "turbo stream append with target DOM ID and content"() {
         given:
