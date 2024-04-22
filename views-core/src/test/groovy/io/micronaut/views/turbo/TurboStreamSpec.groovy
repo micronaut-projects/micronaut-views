@@ -26,7 +26,6 @@ import io.micronaut.views.turbo.http.TurboMediaType
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
 import spock.lang.Specification
-import spock.lang.Unroll
 
 @Property(name = "micronaut.http.client.follow-redirects", value = StringUtils.FALSE)
 @Property(name = "spec.name", value = "TurboStreamSpec")
@@ -77,6 +76,8 @@ class TurboStreamSpec extends Specification {
         TurboStreamAction.BEFORE == TurboStream.builder().targetDomId(domId).before().build().getAction()
         TurboStreamAction.UPDATE == TurboStream.builder().targetDomId(domId).update().build().getAction()
         TurboStreamAction.REPLACE == TurboStream.builder().targetDomId(domId).replace().build().getAction()
+        TurboStreamAction.MORPH == TurboStream.builder().targetDomId(domId).morph().build().getAction()
+        TurboStreamAction.REFRESH == TurboStream.builder().targetDomId(domId).refresh().build().getAction()
     }
 
     void "template is not required"() {
@@ -231,7 +232,6 @@ class TurboStreamSpec extends Specification {
         "<!DOCTYPE html><html><head><title>Page Title</title></head><body><h1>Hello World</h1></body></html>" == responseHtml.body()
     }
 
-    @Unroll
     void "target CSS Query Selector must have letters, digits, hyphens underscores colons, and periods"(String domId) {
         when:
         TurboStream.builder()
@@ -253,7 +253,6 @@ class TurboStreamSpec extends Specification {
         ]
     }
 
-    @Unroll
     void "Illegal argument exception thrown if target CSS Query Selector contains something but letters, digits, hyphens underscores colons, and periods"(String domId) {
         when:
         TurboStream.builder()
@@ -272,7 +271,6 @@ class TurboStreamSpec extends Specification {
         ]
     }
 
-    @Unroll
     void "target CSS Query Selector validation can be disabled"(String domId) {
         when:
         TurboStream.builder()
@@ -292,7 +290,6 @@ class TurboStreamSpec extends Specification {
         ]
     }
 
-    @Unroll
     void "target DOM Id attribute must begin with a letter and may be followed by any number of letters, digits, hyphens underscores colons, and periods"(String domId) {
         when:
         TurboStream.builder()
@@ -315,7 +312,6 @@ class TurboStreamSpec extends Specification {
         ]
     }
 
-    @Unroll
     void "Illegal argument exception thrown if target DOM Id attribute does not begin with a letter and may be followed by any number of letters, digits, hyphens underscores colons, and periods"(String domId) {
         when:
         TurboStream.builder()
@@ -339,7 +335,6 @@ class TurboStreamSpec extends Specification {
         ]
     }
 
-    @Unroll
     void "Target DOM Id attribute validation can be disabled"(String domId) {
         when:
         TurboStream.builder()
@@ -442,14 +437,14 @@ class TurboStreamSpec extends Specification {
         }
 
         @Produces(TurboMediaType.TURBO_STREAM)
-        @TurboView(value = "fragments/message", action=TurboStreamAction.REFRESH, requestId = "abcd-1234")
+        @TurboView(value = "fragments/message", action = TurboStreamAction.REFRESH, requestId = "abcd-1234")
         @Get("/requestId")
         String requestId() {
             "Hello World"
         }
 
         @Produces(TurboMediaType.TURBO_STREAM)
-        @TurboView(value = "fragments/message", action=TurboStreamAction.MORPH, childrenOnly = true)
+        @TurboView(value = "fragments/message", action = TurboStreamAction.MORPH, childrenOnly = true)
         @Get("/childrenOnly")
         String childrenOnly() {
             "Hello World"
