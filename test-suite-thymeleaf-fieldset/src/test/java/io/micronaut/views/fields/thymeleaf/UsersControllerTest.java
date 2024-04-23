@@ -21,7 +21,7 @@ class UsersControllerTest {
         String html = assertDoesNotThrow(() -> client.retrieve(htmlGet("/users/auth")));
         assertTrue(html.contains("<!DOCTYPE html>"));
         assertTrue(html.contains("""
-                <form action="/login" method="post" data-turbo="true">\
+                <form action="/login" method="post">\
                 <div class="mb-3">\
                 <label for="username" class="form-label">Username</label>\
                 <input type="text" name="username" value="" id="username" class="form-control" required="required"/>\

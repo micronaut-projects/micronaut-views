@@ -56,7 +56,7 @@ class FormViewRenderTest {
         Fieldset fieldset = new Fieldset(List.of(textElement, el), Collections.emptyList());
         Form form = new Form("/foo/bar", "post", fieldset);
         assertEquals("""
-                <form action="/foo/bar" method="post" data-turbo="true">\
+                <form action="/foo/bar" method="post">\
                 <div class="mb-3">\
                 <label for="name" class="form-label">Name (4 to 8 characters):</label>\
                 <input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>\

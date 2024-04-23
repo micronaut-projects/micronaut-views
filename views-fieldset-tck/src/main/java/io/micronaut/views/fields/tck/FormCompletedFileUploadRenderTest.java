@@ -61,7 +61,7 @@ class FormCompletedFileUploadRenderTest {
             }
         };
         String expectedClass = """
-                        <form action="/foo/bar" method="post" enctype="multipart/form-data" data-turbo="true">\
+                        <form action="/foo/bar" method="post" enctype="multipart/form-data">\
                         <input type="hidden" name="id" value=""/>\
                         <div class="mb-3"><label for="alt" class="form-label">Alternative description of the image</label><input type="text" name="alt" value="" id="alt" class="form-control" required="required"/></div>\
                         <label for="file" class="form-label">File</label><input type="file" name="file" id="file" accept="image/png, image/jpeg" class="form-control" required="required"/>\

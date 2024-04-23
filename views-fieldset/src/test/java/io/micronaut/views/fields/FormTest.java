@@ -28,11 +28,11 @@ class FormTest {
         assertFalse(validator.validate(new Form(null, "post", fieldset, "application/x-www-form-urlencoded")).isEmpty());
 
         // method cannot be an empty string
-        assertFalse(validator.validate(new Form("/foo/bar", "", fieldset, null)).isEmpty());
+        assertFalse(validator.validate(new Form("/foo/bar", "", fieldset, null, null)).isEmpty());
         // method cannot be null
-        assertFalse(validator.validate(new Form("/foo/bar", null, fieldset, null)).isEmpty());
+        assertFalse(validator.validate(new Form("/foo/bar", null, fieldset, null, null)).isEmpty());
         // method can only be get or post
-        assertFalse(validator.validate(new Form("/foo/bar", "put", fieldset, null)).isEmpty());
+        assertFalse(validator.validate(new Form("/foo/bar", "put", fieldset, null, null)).isEmpty());
 
         //method cannot be get if enctype
         Set<ConstraintViolation<Form>> violations = validator.validate(new Form("/foo/bar", "get", fieldset, "application/x-www-form-urlencoded"));
@@ -50,11 +50,16 @@ class FormTest {
         assertFalse(validator.validate(new Form("/foo/bar", "post", fieldset, "text/html")).isEmpty());
 
         // enctype can be null
-        assertTrue(validator.validate(new Form("/foo/bar", "post", fieldset, null)).isEmpty());
+        assertTrue(validator.validate(new Form("/foo/bar", "post", fieldset, null, null)).isEmpty());
         assertTrue(validator.validate(new Form("/foo/bar", "post", fieldset, "application/x-www-form-urlencoded")).isEmpty());
         assertTrue(validator.validate(new Form("/foo/bar", "post", fieldset, "multipart/form-data")).isEmpty());
         assertTrue(validator.validate(new Form("/foo/bar", "post", fieldset, "text/plain")).isEmpty());
-        assertTrue(validator.validate(new Form("/foo/bar", "get", fieldset, null)).isEmpty());
+        assertTrue(validator.validate(new Form("/foo/bar", "get", fieldset, null, null)).isEmpty());
+
+        // dataturbo can be null, true or false
+        assertTrue(validator.validate(new Form("/foo/bar", "post", fieldset, null, null)).isEmpty());
+        assertTrue(validator.validate(new Form("/foo/bar", "post", fieldset, null, true)).isEmpty());
+        assertTrue(validator.validate(new Form("/foo/bar", "post", fieldset, null, false)).isEmpty());
 
     }
 }

@@ -38,6 +38,16 @@ class FormDataTurboRenderTest {
         assertNotNull(viewsRenderer);
         Form form = new Form("/foo/bar", "post", new Fieldset(Collections.emptyList(), Collections.emptyList()), "application/x-www-form-urlencoded");
         assertEquals("""
+                <form action="/foo/bar" method="post" enctype="application/x-www-form-urlencoded">\
+                </form>""",
+                TestUtils.render("fieldset/form.html", viewsRenderer, Map.of("form", form)));
+    }
+
+    @Test
+    void renderDataTurboTrue(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
+        assertNotNull(viewsRenderer);
+        Form form = new Form("/foo/bar", "post", new Fieldset(Collections.emptyList(), Collections.emptyList()), "application/x-www-form-urlencoded", true);
+        assertEquals("""
                 <form action="/foo/bar" method="post" enctype="application/x-www-form-urlencoded" data-turbo="true">\
                 </form>""",
                 TestUtils.render("fieldset/form.html", viewsRenderer, Map.of("form", form)));
