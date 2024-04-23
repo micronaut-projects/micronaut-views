@@ -30,7 +30,7 @@ import jakarta.validation.constraints.Pattern;
  * @param method Form Method. either `get` or `post`
  * @param fieldset Form fields
  * @param enctype how the form-data should be encoded when submitting it to the server
- * @param dataturbo enables Turbo Drive on a form, defaults to true
+ * @param dataturbo enables Turbo Drive on a form, defaults to not disabled
  */
 @Experimental
 @EnctypePostRequired
@@ -39,7 +39,7 @@ public record Form(@NonNull @NotBlank String action,
                    @NonNull @NotBlank @Pattern(regexp = "get|post") String method,
                    @NonNull @NotNull @Valid Fieldset fieldset,
                    @Nullable @Pattern(regexp = "application/x-www-form-urlencoded|multipart/form-data|text/plain") String enctype,
-                   boolean dataturbo) {
+                   @Nullable Boolean dataturbo) {
 
     private static final String POST = "post";
 
@@ -53,7 +53,7 @@ public record Form(@NonNull @NotBlank String action,
     public Form(@NonNull String action,
                 @NonNull String method,
                 @NonNull Fieldset fieldset,
-                boolean dataturbo) {
+                @Nullable Boolean dataturbo) {
         this(action, method, fieldset, null, dataturbo);
     }
 
@@ -68,7 +68,7 @@ public record Form(@NonNull @NotBlank String action,
                 @NonNull String method,
                 @NonNull Fieldset fieldset,
                 @Nullable String enctype) {
-        this(action, method, fieldset, enctype, true);
+        this(action, method, fieldset, enctype, null);
     }
 
     /**
@@ -80,7 +80,7 @@ public record Form(@NonNull @NotBlank String action,
     public Form(@NonNull String action,
                 @NonNull String method,
                 @NonNull Fieldset fieldset) {
-        this(action, method, fieldset, null, true);
+        this(action, method, fieldset, null, null);
     }
 
     /**
@@ -90,7 +90,7 @@ public record Form(@NonNull @NotBlank String action,
      */
     public Form(@NonNull String action,
                 @NonNull Fieldset fieldset) {
-        this(action, POST, fieldset, null, true);
+        this(action, POST, fieldset, null, null);
     }
 
     /**
@@ -102,6 +102,6 @@ public record Form(@NonNull @NotBlank String action,
     public Form(@NonNull String action,
                 @NonNull Fieldset fieldset,
                 @Nullable String enctype) {
-        this(action, POST, fieldset, enctype, true);
+        this(action, POST, fieldset, enctype, null);
     }
 }
