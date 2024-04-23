@@ -40,7 +40,7 @@ class BookControllerTest {
 
         html = assertDoesNotThrow(() -> client.retrieve(htmlGet("/books/create")));
         assertTrue(html.contains("""
-                <form action="/books/save" method="post">\
+                <form action="/books/save" method="post" data-turbo="true">\
                 <div class="mb-3">\
                 <label for="title" class="form-label">Title</label>\
                 <input type="text" name="title" value="" id="title" minlength="2" maxlength="255" class="form-control" required="required"/>\
@@ -71,7 +71,7 @@ class BookControllerTest {
         assertTrue(htmlOptional.isPresent());
         String html = htmlOptional.get();
         assertTrue(html.contains("""
-                <form action="/books/save" method="post">\
+                <form action="/books/save" method="post" data-turbo="true">\
                 <div class="mb-3">\
                 <label for="title" class="form-label">Title</label>\
                 <input type="text" name="title" value="Building Microservices" id="title" minlength="2" maxlength="255" class="form-control" required="required"/>\

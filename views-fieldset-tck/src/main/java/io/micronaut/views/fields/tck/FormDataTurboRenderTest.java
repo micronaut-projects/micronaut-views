@@ -31,14 +31,24 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests
 @MicronautTest(startApplication = false)
-class FormEncTypeRenderTest {
+class FormDataTurboRenderTest {
 
     @Test
-    void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
+    void renderDataTurboTrueByDefault(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
         assertNotNull(viewsRenderer);
         Form form = new Form("/foo/bar", "post", new Fieldset(Collections.emptyList(), Collections.emptyList()), "application/x-www-form-urlencoded");
         assertEquals("""
-                <form action="/foo/bar" method="post" enctype="application/x-www-form-urlencoded data-turbo="true">\
+                <form action="/foo/bar" method="post" enctype="application/x-www-form-urlencoded" data-turbo="true">\
+                </form>""",
+                TestUtils.render("fieldset/form.html", viewsRenderer, Map.of("form", form)));
+    }
+
+    @Test
+    void renderDataTurboFalse(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
+        assertNotNull(viewsRenderer);
+        Form form = new Form("/foo/bar", "post", new Fieldset(Collections.emptyList(), Collections.emptyList()), "application/x-www-form-urlencoded", false);
+        assertEquals("""
+                <form action="/foo/bar" method="post" enctype="application/x-www-form-urlencoded" data-turbo="false">\
                 </form>""",
                 TestUtils.render("fieldset/form.html", viewsRenderer, Map.of("form", form)));
     }
