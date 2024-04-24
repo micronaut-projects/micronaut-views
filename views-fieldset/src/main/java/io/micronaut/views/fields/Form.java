@@ -24,6 +24,12 @@ import jakarta.validation.constraints.Pattern;
 
 /**
  * Representation of an HTML form.
+ * <p>
+ * When <code>dataturbo</code> is set to false, the form includes the <code>data-turbo="false"</code> attribute, which disables
+ * Turbo Drive on links and forms including descendants.
+ * See the <a href="https://turbo.hotwired.dev/reference/attributes">Turbo Data Attributes documentation</a>
+ * for more information.
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  * @param action Form Action
