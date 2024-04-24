@@ -37,18 +37,18 @@ class JSBundlePaths {
     final Path bundlePath;
 
     private FileTime lastModified;
+    private long lastModificationCheckTime = 0;
 
     @Inject
     JSBundlePaths(ViewsConfiguration viewsConfiguration, ReactViewsRendererConfiguration reactConfiguration) throws IOException {
         var folder = viewsConfiguration.getFolder();
         bundlePath = Path.of(folder).resolve(reactConfiguration.getServerBundlePath()).toAbsolutePath().normalize();
-        if (!Files.exists(bundlePath))
+        if (!Files.exists(bundlePath)) {
             throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", bundlePath, ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
+        }
         bundleFileName = bundlePath.getFileName().toString();
         lastModified = Files.getLastModifiedTime(bundlePath);
     }
-
-    private long lastModificationCheckTime = 0;
 
     synchronized boolean wasModified() {
         try {

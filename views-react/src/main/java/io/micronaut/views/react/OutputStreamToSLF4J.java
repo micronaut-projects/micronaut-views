@@ -28,7 +28,7 @@ import java.nio.charset.Charset;
 /**
  * An output stream that looks for line separators and then writes out the lines of text to the given logger.
  */
-class OutputStreamToSLF4J extends OutputStream {
+final class OutputStreamToSLF4J extends OutputStream {
     private final Charset charset;
 
     private ByteBuffer buffer = ByteBuffer.allocate(512);
@@ -70,15 +70,17 @@ class OutputStreamToSLF4J extends OutputStream {
     }
 
     private void maybeResizeBuffer(int forAdditional) {
-        if (buffer.remaining() >= forAdditional)
+        if (buffer.remaining() >= forAdditional) {
             return;
+        }
 
         // Otherwise increase the buffer size by 1kb each time until it's big enough.
         var targetSize = buffer.position() + forAdditional;
         var newSize = buffer.capacity();
         assert newSize < targetSize;
-        while (newSize < targetSize)
+        while (newSize < targetSize) {
             newSize += 1024;
+        }
 
         var old = buffer;
         buffer = ByteBuffer.allocate(newSize);
@@ -89,8 +91,9 @@ class OutputStreamToSLF4J extends OutputStream {
     public void flush() throws IOException {
         buffer.flip();
         var lines = charset.decode(buffer).toString().split("\n");
-        for (String line : lines)
+        for (String line : lines) {
             loggingEventBuilder.log(line);
+        }
         buffer.clear();
     }
 }

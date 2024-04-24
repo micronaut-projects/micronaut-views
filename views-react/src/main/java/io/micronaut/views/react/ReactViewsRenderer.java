@@ -43,6 +43,9 @@ import static io.micronaut.http.HttpHeaders.*;
 /**
  * <p>Instantiates GraalJS and uses it to render React components server side. See the user guide
  * to learn more about how to render React/Preact apps server side.</p>
+ *
+ * @param <PROPS> An introspectable bean type that will be fed to the ReactJS root component as props.
+ * @param <REQUEST> Type of the HTTP request.
  */
 @Singleton
 public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, REQUEST> {
@@ -84,8 +87,9 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         return writer -> {
             JSContext context = contextPool.acquire();
             try {
-                if (jsBundlePaths.wasModified())
+                if (jsBundlePaths.wasModified()) {
                     context.reinit();
+                }
 
                 render(viewName, props, writer, context);
             } finally {
@@ -104,6 +108,31 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         }
     }
 
+    private void render(String componentName, PROPS props, Writer writer, JSContext context) {
+        Value component = context.ssrModule.getMember(componentName);
+        if (component == null) {
+            throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
+        }
+
+        var renderCallback = new RenderCallback(writer, componentName, context);
+
+        // TODO: Sandboxing. Do we need to deep clone the props here?
+        @SuppressWarnings("unchecked")
+        ProxyObject propsObj = isStringMap(props) ?
+            ProxyObject.fromMap((Map<String, Object>) props) :
+            new IntrospectableToPolyglotObject<>(context.polyglotContext, true, props);
+
+        context.render.execute(component, propsObj, renderCallback, reactConfiguration.getClientBundleURL());
+    }
+
+    private boolean isStringMap(PROPS props) {
+        if (props instanceof Map<?, ?> propsMap) {
+            return propsMap.keySet().stream().allMatch(it -> it instanceof String);
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Methods exposed to the ReactJS components and render scripts. Needs to be public to be
      * callable from the JS side.
@@ -112,7 +141,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
      *
      * @hidden
      */
-    public class RenderCallback {
+    public final class RenderCallback {
         private final Set<URI> urlsToPrefetch = new HashSet<>();
 
         private final HashMap<URI, byte[]> prefetchedData = new HashMap<>();
@@ -138,12 +167,14 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
 
             // If we already fetched it in a previous round, return the data now.
             var alreadyFetched = getPrefetchedDataForURL(url);
-            if (alreadyFetched != null)
+            if (alreadyFetched != null) {
                 return alreadyFetched;
+            }
 
             // Otherwise, queue it for fetching.
-            if (urlsToPrefetch.add(url))
+            if (urlsToPrefetch.add(url)) {
                 LOG.trace("React SSR request for <{}/> attempted to fetch {}", componentName, url);
+            }
 
             return null;
         }
@@ -151,7 +182,9 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         @org.jetbrains.annotations.Nullable
         private Value getPrefetchedDataForURL(URI url) {
             var result = prefetchedData.get(url);
-            if (result == null) return null;
+            if (result == null) {
+                return null;
+            }
             var jsonParse = jsContext.polyglotContext.eval("js", "JSON.parse");
             return jsonParse.execute(new String(result, StandardCharsets.UTF_8));
         }
@@ -199,8 +232,9 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         public void write(int[] unsignedBytes) {
             try {
                 byte[] bytes = new byte[unsignedBytes.length];
-                for (int i = 0; i < unsignedBytes.length; i++)
+                for (int i = 0; i < unsignedBytes.length; i++) {
                     bytes[i] = (byte) unsignedBytes[i];
+                }
                 responseWriter.write(new String(bytes, StandardCharsets.UTF_8));
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -210,30 +244,6 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         @HostAccess.Export
         public boolean didPrefetch() {
             return !urlsToPrefetch.isEmpty();
-        }
-    }
-
-    private void render(String componentName, PROPS props, Writer writer, JSContext context) {
-        Value component = context.ssrModule.getMember(componentName);
-        if (component == null)
-            throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
-
-        var renderCallback = new RenderCallback(writer, componentName, context);
-
-        // TODO: Sandboxing. Do we need to deep clone the props here?
-        @SuppressWarnings("unchecked")
-        ProxyObject propsObj = isStringMap(props) ?
-            ProxyObject.fromMap((Map<String, Object>) props) :
-            new IntrospectableToPolyglotObject<>(context.polyglotContext, true, props);
-
-        context.render.execute(component, propsObj, renderCallback, reactConfiguration.getClientBundleURL());
-    }
-
-    private boolean isStringMap(PROPS props) {
-        if (props instanceof Map<?, ?> propsMap) {
-            return propsMap.keySet().stream().allMatch(it -> it instanceof String);
-        } else {
-            return false;
         }
     }
 }

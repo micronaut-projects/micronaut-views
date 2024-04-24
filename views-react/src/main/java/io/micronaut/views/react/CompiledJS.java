@@ -32,16 +32,16 @@ import java.io.IOException;
  */
 @Singleton
 class CompiledJS implements AutoCloseable {
+    private static final Logger LOG = LoggerFactory.getLogger("js");
+
     final Engine engine;
     final Source source;
-
-    private static final Logger jsLogger = LoggerFactory.getLogger("js");
 
     @Inject
     public CompiledJS(JSBundlePaths jsBundlePaths, JSEngineLogHandler engineLogHandler, JSSandboxing sandboxing) throws IOException {
         var engineBuilder = Engine.newBuilder("js")
-            .out(new OutputStreamToSLF4J(jsLogger, Level.INFO))
-            .err(new OutputStreamToSLF4J(jsLogger, Level.ERROR))
+            .out(new OutputStreamToSLF4J(LOG, Level.INFO))
+            .err(new OutputStreamToSLF4J(LOG, Level.ERROR))
             .logHandler(engineLogHandler);
         engine = sandboxing.configure(engineBuilder).build();
         source = jsBundlePaths.readServerBundle();

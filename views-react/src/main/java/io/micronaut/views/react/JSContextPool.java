@@ -27,10 +27,10 @@ import java.util.LinkedList;
  */
 @Singleton
 class JSContextPool {
-    private final LinkedList<SoftReference<JSContext>> contexts = new LinkedList<>();
-
     @Inject
     ApplicationContext applicationContext;
+
+    private final LinkedList<SoftReference<JSContext>> contexts = new LinkedList<>();
 
     /**
      * Returns a cached context or creates a new one. You must give the JSContext to

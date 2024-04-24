@@ -31,13 +31,13 @@ public interface ReactViewsRendererConfiguration {
      */
     String PREFIX = ViewsConfigurationProperties.PREFIX + ".react";
 
-    /** The default value for {@link #getClientBundleURL()} */
+    /** The default value for {@link #getClientBundleURL()}. */
     String DEFAULT_CLIENT_BUNDLE_URL = "/static/client.js";
 
-    /** The default value for {@link #getServerBundlePath()} */
+    /** The default value for {@link #getServerBundlePath()}. */
     String DEFAULT_SERVER_BUNDLE_PATH = "ssr-components.mjs";
 
-    /** The default value for {@link #getRenderScript()} */
+    /** The default value for {@link #getRenderScript()}. */
     String DEFAULT_RENDER_SCRIPT = "classpath:/io/micronaut/views/react/react.js";
 
     /**

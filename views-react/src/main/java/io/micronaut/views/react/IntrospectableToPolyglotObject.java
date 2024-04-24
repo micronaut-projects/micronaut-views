@@ -25,6 +25,8 @@ import org.graalvm.polyglot.proxy.ProxyObject;
 /**
  * A wrapper that takes an {@code @Introspectable} object (bean) and lazily proxies it into a Polyglot language
  * context.
+ *
+ * @param <T> The type of the introspectable bean.
  */
 class IntrospectableToPolyglotObject<T> implements ProxyObject {
     private final Context context;
@@ -61,8 +63,9 @@ class IntrospectableToPolyglotObject<T> implements ProxyObject {
 
     @Override
     public void putMember(String key, Value value) {
-        if (readOnly)
+        if (readOnly) {
             throw new IllegalStateException("You cannot write to this object; it is marked read only from Java.");
+        }
         beanMap.put(key, value.asHostObject());
     }
 }

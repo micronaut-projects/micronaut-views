@@ -28,7 +28,7 @@ import java.util.logging.LogRecord;
  */
 @Singleton
 class JSEngineLogHandler extends Handler {
-    private static final Logger logger = LoggerFactory.getLogger(ReactViewsRenderer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ReactViewsRenderer.class);
 
     @Override
     public void publish(LogRecord record) {
@@ -37,21 +37,21 @@ class JSEngineLogHandler extends Handler {
         String level = record.getLevel().getName();
         switch (level) {
             case "SEVERE":
-                logger.error(message, thrown);
+                LOG.error(message, thrown);
                 break;
             case "WARNING":
-                logger.warn(message, thrown);
+                LOG.warn(message, thrown);
                 break;
             case "INFO":
-                logger.info(message, thrown);
+                LOG.info(message, thrown);
                 break;
             case "CONFIG":
             case "FINE":
-                logger.debug(message, thrown);
+                LOG.debug(message, thrown);
                 break;
             case "FINER":
             case "FINEST":
-                logger.trace(message, thrown);
+                LOG.trace(message, thrown);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + level);

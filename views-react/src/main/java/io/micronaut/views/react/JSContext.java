@@ -31,6 +31,9 @@ import java.util.List;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 class JSContext implements AutoCloseable {
+    // Symbols the user's server side bundle might supply us with.
+    private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
+
     @Inject
     JSBundlePaths jsBundlePaths;
 
@@ -48,10 +51,6 @@ class JSContext implements AutoCloseable {
     Value render;
     Value ssrModule;
 
-    // Symbols the user's server side bundle might supply us with.
-    private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
-
-
     @PostConstruct
     void init() throws IOException {
         polyglotContext = createContext();
@@ -68,8 +67,9 @@ class JSContext implements AutoCloseable {
         Source source = loadRenderSource();
         Value renderModule = polyglotContext.eval(source);
         render = renderModule.getMember("ssr");
-        if (render == null)
+        if (render == null) {
             throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported.".formatted(configuration.getRenderScript()));
+        }
     }
 
     private Source loadRenderSource() throws IOException {
@@ -82,14 +82,16 @@ class JSContext implements AutoCloseable {
             // Even on Windows, classpath specs use /
             fileName = fileNameFromUNIXPath(resourcePath);
             try (var stream = getClass().getResourceAsStream(resourcePath)) {
-                if (stream == null)
+                if (stream == null) {
                     throw new IllegalArgumentException("Render script not found on classpath: " + resourcePath);
+                }
                 source = new String(stream.readAllBytes(), UTF_8);
             }
         } else if (renderScriptName.startsWith("file:")) {
             var path = Path.of(renderScriptName.substring("file:".length()));
-            if (!Files.exists(path))
+            if (!Files.exists(path)) {
                 throw new IllegalArgumentException("Render script not found: " + renderScriptName);
+            }
             fileName = path.normalize().toAbsolutePath().getFileName().toString();
             try (var stream = Files.newInputStream(path)) {
                 source = new String(stream.readAllBytes(), UTF_8);
@@ -121,7 +123,9 @@ class JSContext implements AutoCloseable {
             // The catch handler is to work around a bug in Polyglot 24.0.0
             if (e.getCause().getMessage().contains("version compatibility check failed")) {
                 throw new IllegalStateException("GraalJS version mismatch or it's missing. Please ensure you have added either org.graalvm.polyglot:js or org.graalvm.polyglot:js-community to your dependencies alongside Micronaut Views React, as it's up to you to select the best engine given your licensing constraints. See the user guide for more detail.");
-            } else throw e;
+            } else {
+                throw e;
+            }
         } catch (IllegalArgumentException e) {
             // We need esm-eval-returns-exports=true but it's not compatible with the sandbox in this version of GraalJS.
             if (e.getMessage().contains("Option 'js.esm-eval-returns-exports' is experimental")) {
