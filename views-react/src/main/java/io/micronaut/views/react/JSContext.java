@@ -34,22 +34,21 @@ class JSContext implements AutoCloseable {
     // Symbols the user's server side bundle might supply us with.
     private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
 
-    @Inject
-    JSBundlePaths jsBundlePaths;
-
-    @Inject
-    CompiledJS compiledJS;
-
-    @Inject
-    ReactViewsRendererConfiguration configuration;
-
-    @Inject
-    JSSandboxing sandboxing;
-
-    // Accessed from ReactViewsRenderer.
+    // Accessed from ReactViewsRenderer
     Context polyglotContext;
     Value render;
     Value ssrModule;
+
+    private final CompiledJS compiledJS;
+    private final ReactViewsRendererConfiguration configuration;
+    private final JSSandboxing sandboxing;
+
+    @Inject
+    JSContext(CompiledJS compiledJS, ReactViewsRendererConfiguration configuration, JSSandboxing sandboxing) {
+        this.compiledJS = compiledJS;
+        this.configuration = configuration;
+        this.sandboxing = sandboxing;
+    }
 
     @PostConstruct
     void init() throws IOException {

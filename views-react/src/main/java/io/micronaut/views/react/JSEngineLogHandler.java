@@ -36,25 +36,12 @@ class JSEngineLogHandler extends Handler {
         Throwable thrown = record.getThrown();
         String level = record.getLevel().getName();
         switch (level) {
-            case "SEVERE":
-                LOG.error(message, thrown);
-                break;
-            case "WARNING":
-                LOG.warn(message, thrown);
-                break;
-            case "INFO":
-                LOG.info(message, thrown);
-                break;
-            case "CONFIG":
-            case "FINE":
-                LOG.debug(message, thrown);
-                break;
-            case "FINER":
-            case "FINEST":
-                LOG.trace(message, thrown);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + level);
+            case "SEVERE" -> LOG.error(message, thrown);
+            case "WARNING" -> LOG.warn(message, thrown);
+            case "INFO" -> LOG.info(message, thrown);
+            case "CONFIG", "FINE" -> LOG.debug(message, thrown);
+            case "FINER", "FINEST" -> LOG.trace(message, thrown);
+            default -> throw new IllegalStateException("Unexpected value: " + level);
         }
     }
 

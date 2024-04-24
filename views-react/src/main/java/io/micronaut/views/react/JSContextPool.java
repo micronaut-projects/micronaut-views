@@ -27,29 +27,36 @@ import java.util.LinkedList;
  */
 @Singleton
 class JSContextPool {
-    @Inject
-    ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
+    // Synchronized on JSContextPool.
     private final LinkedList<SoftReference<JSContext>> contexts = new LinkedList<>();
+
+    @Inject
+    JSContextPool(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     /**
      * Returns a cached context or creates a new one. You must give the JSContext to
      * {@link #release(JSContext)} when you're done with it to put it (back) into the pool.
      */
-    synchronized JSContext acquire() {
-        while (!contexts.isEmpty()) {
-            SoftReference<JSContext> ref = contexts.poll();
-            assert ref != null;
+    JSContext acquire() {
+        synchronized (this) {
+            while (!contexts.isEmpty()) {
+                SoftReference<JSContext> ref = contexts.poll();
+                assert ref != null;
 
-            var context = ref.get();
-            // context may have been garbage collected (== null).
-            if (context != null) {
-                return context;
+                var context = ref.get();
+                // context may have been garbage collected (== null).
+                if (context != null) {
+                    return context;
+                }
             }
         }
 
         // No more pooled contexts available, create one and return it. It'll be added to the
-        // pool when released.
+        // pool when released. No need to hold the lock whilst doing that.
         return applicationContext.createBean(JSContext.class);
     }
 
