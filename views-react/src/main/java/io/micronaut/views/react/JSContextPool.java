@@ -23,7 +23,11 @@ import java.lang.ref.SoftReference;
 import java.util.LinkedList;
 
 /**
- * Vends contexts to threads that need them.
+ * Vends contexts to threads that need them. We don't use ThreadLocals here because what matters
+ * is contention. If there are 30 server threads, but only a few requests ever use React, then
+ * we don't want to have 30 contexts in memory at all times because they are quite chunky objects.
+ * By only creating more when we are genuinely under load, we avoid bloat. This also fits better
+ * with virtual threads, where a thread may not live beyond the lifetime of a single request.
  */
 @Singleton
 class JSContextPool {
