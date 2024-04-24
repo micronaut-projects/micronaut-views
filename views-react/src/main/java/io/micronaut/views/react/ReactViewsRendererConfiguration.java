@@ -55,4 +55,12 @@ public interface ReactViewsRendererConfiguration {
     @NonNull
     @Bindable(defaultValue = DEFAULT_RENDER_SCRIPT)
     String getRenderScript();
+
+    /**
+     * @return If true, GraalJS sandboxing is enabled. This helps protect you against supply
+     * chain attacks that might inject code into your server via hijacked React components.
+     * It requires a sufficiently new version of GraalJS. Defaults to OFF.
+     */
+    @Bindable(defaultValue = "false")
+    boolean getSandbox();
 }

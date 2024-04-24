@@ -1,4 +1,4 @@
-export function ssr(component, props, callback, config) {
+export function ssr(component, props, callback, clientBundleURL) {
     globalThis.Micronaut = {
         prefetch: callback.recordPrefetch
     };
@@ -12,5 +12,5 @@ export function ssr(component, props, callback, config) {
 
     // The Micronaut object defined here is not the same as the Micronaut object defined server side.
     callback.write(`<script type="text/javascript">var Micronaut = ${JSON.stringify(boot)};</script>`)
-    callback.write(`<script type="text/javascript" src="${config.getClientBundleURL()}" async="true">`)
+    callback.write(`<script type="text/javascript" src="${clientBundleURL}" async="true">`)
 }

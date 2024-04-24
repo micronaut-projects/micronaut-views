@@ -5,7 +5,7 @@ A render script should be an ESM module that exports a single function called `s
 1. A function object for the page component to render.
 2. An object containing the root props.
 3. A callback object that contains APIs used to communicate with Micronaut.
-4. A config object that exposes the `micronaut.views.react.*` application properties.
+4. A string that receives the URL of the bundle that the browser should load. This is specified by the `micronaut.views.react.clientBundleURL` application property.
 
 The default render script looks like this:
 
@@ -23,7 +23,7 @@ The default render script for Preact looks like this:
 include::{srcjsReactRender}/preact.js[]
 ----
 
-A more sophisticated render script might support the use of head managers, do multiple renders, expose other APIs and so on.
+A more sophisticated render script might support the use of head managers (see below), do multiple renders, expose other APIs and so on.
 
 A render script is evaluated _after_ your server side bundle, and has access to any symbols your server script exported. If you wish to access a JS module you should therefore include it in your `server.js` that gets fed to Webpack or similar bundler, and then re-export it like this:
 

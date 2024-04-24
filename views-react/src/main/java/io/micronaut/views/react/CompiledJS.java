@@ -5,6 +5,9 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.Source;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
 import java.io.IOException;
 
@@ -14,11 +17,18 @@ import java.io.IOException;
  */
 @Singleton
 class CompiledJS implements AutoCloseable {
-    final Engine engine = Engine.create("js");
+    final Engine engine;
     final Source source;
 
+    private static final Logger jsLogger = LoggerFactory.getLogger("js");
+
     @Inject
-    public CompiledJS(JSBundlePaths jsBundlePaths) throws IOException {
+    public CompiledJS(JSBundlePaths jsBundlePaths, JSEngineLogHandler engineLogHandler, JSSandboxing sandboxing) throws IOException {
+        var engineBuilder = Engine.newBuilder("js")
+            .out(new OutputStreamToSLF4J(jsLogger, Level.INFO))
+            .err(new OutputStreamToSLF4J(jsLogger, Level.ERROR))
+            .logHandler(engineLogHandler);
+        engine = sandboxing.configure(engineBuilder).build();
         source = jsBundlePaths.readServerBundle();
     }
 

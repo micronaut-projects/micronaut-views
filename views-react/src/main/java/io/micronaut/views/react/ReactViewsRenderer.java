@@ -90,7 +90,11 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
     }
 
     /**
-     * Needs to be public to be callable from the JS side.
+     * Methods exposed to the ReactJS components and render scripts. Needs to be public to be
+     * callable from the JS side.
+     *
+     * WARNING: These methods may be invoked by sandboxed code. Treat calls adversarially.
+     *
      * @hidden
      */
     public class RenderCallback {
@@ -108,8 +112,13 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
             this.jsContext = jsContext;
         }
 
+        // TODO: This interface needs a rethink. We should depend on Elide's implementation of the
+        //       JS fetch API instead, as that already builds on top of Micronaut. Then we can get
+        //       rid of the custom interface here.
+
         @HostAccess.Export
         public Value recordPrefetch(String urlAsString) throws URISyntaxException {
+            // Validate.
             URI url = new URI(urlAsString);
 
             // If we already fetched it in a previous round, return the data now.
@@ -129,7 +138,6 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
             var result = prefetchedData.get(url);
             if (result == null) return null;
             var jsonParse = jsContext.polyglotContext.eval("js", "JSON.parse");
-            // TODO: Work out the story around result parsing in the absence of the fetcher?
             return jsonParse.execute(new String(result, StandardCharsets.UTF_8));
         }
 
@@ -203,7 +211,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
             ProxyObject.fromMap((Map<String, Object>) props) :
             new IntrospectableToPolyglotObject<>(context.polyglotContext, true, props);
 
-        context.render.execute(component, propsObj, renderCallback, reactConfiguration);
+        context.render.execute(component, propsObj, renderCallback, reactConfiguration.getClientBundleURL());
     }
 
     private boolean isStringMap(PROPS props) {

@@ -7,9 +7,6 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.event.Level;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,9 +17,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 class JSContext implements AutoCloseable {
     @Inject
-    JSEngineLogHandler engineLogHandler;
-
-    @Inject
     JSBundlePaths jsBundlePaths;
 
     @Inject
@@ -31,13 +25,17 @@ class JSContext implements AutoCloseable {
     @Inject
     ReactViewsRendererConfiguration configuration;
 
+    @Inject
+    JSSandboxing sandboxing;
+
+    // Accessed from ReactViewsRenderer.
     Context polyglotContext;
     Value render;
+    Value ssrModule;
 
     // Symbols the user's server side bundle might supply us with.
     private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
 
-    Value ssrModule;
 
     @PostConstruct
     void init() throws IOException {
@@ -46,16 +44,14 @@ class JSContext implements AutoCloseable {
         Value global = polyglotContext.getBindings("js");
         ssrModule = polyglotContext.eval(compiledJS.source);
 
-//        if (!ssrModule.hasMember("React") && !ssrModule.hasMember("h"))
-//            throw new IllegalStateException(format("Your %s bundle must re-export the React module or the 'h' symbol from Preact.", jsBundlePaths.bundleFileName));
-//
         // Take all the exports from the components bundle, and expose them to the render script.
         for (var name : ssrModule.getMemberKeys()) {
             global.putMember(name, ssrModule.getMember(name));
         }
 
         // Evaluate our JS-side framework specific render logic.
-        Value renderModule = polyglotContext.eval(loadRenderSource());
+        Source source = loadRenderSource();
+        Value renderModule = polyglotContext.eval(source);
         render = renderModule.getMember("ssr");
         if (render == null)
             throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported.".formatted(configuration.getRenderScript()));
@@ -100,30 +96,24 @@ class JSContext implements AutoCloseable {
     }
 
     private Context createContext() {
-        Logger jsLogger = LoggerFactory.getLogger("js");
-
-        // TODO: Sandboxing is currently incompatible with esm-eval-returns-exports.
-        //       If the problem won't be fixed soon, rework to avoid depending on that feature so
-        //       the sandbox can be enabled.
-
-        Context.Builder contextBuilder = Context.newBuilder()
+        var contextBuilder = Context.newBuilder()
             .engine(compiledJS.engine)
-            .allowExperimentalOptions(true)
-            .logHandler(engineLogHandler)
-            .allowAllAccess(true)
-            // .sandbox(SandboxPolicy.CONSTRAINED)
             .option("js.esm-eval-returns-exports", "true")
-            .option("js.unhandled-rejections", "throw")
-            .out(new OutputStreamToSLF4J(jsLogger, Level.INFO))
-            .err(new OutputStreamToSLF4J(jsLogger, Level.ERROR));
-
+            .option("js.unhandled-rejections", "throw");
         try {
-            return contextBuilder.build();
+            return sandboxing.configure(contextBuilder).build();
         } catch (ExceptionInInitializerError e) {
             // The catch handler is to work around a bug in Polyglot 24.0.0
             if (e.getCause().getMessage().contains("version compatibility check failed")) {
                 throw new IllegalStateException("GraalJS version mismatch or it's missing. Please ensure you have added either org.graalvm.polyglot:js or org.graalvm.polyglot:js-community to your dependencies alongside Micronaut Views React, as it's up to you to select the best engine given your licensing constraints. See the user guide for more detail.");
             } else throw e;
+        } catch (IllegalArgumentException e) {
+            // We need esm-eval-returns-exports=true but it's not compatible with the sandbox in this version of GraalJS.
+            if (e.getMessage().contains("Option 'js.esm-eval-returns-exports' is experimental")) {
+                throw new IllegalStateException("The sandboxing feature requires a newer version of GraalJS. Please upgrade and try again, or disable the sandboxing feature.");
+            } else {
+                throw e;
+            }
         }
     }
 
@@ -131,7 +121,6 @@ class JSContext implements AutoCloseable {
         assert !IMPORT_SYMBOLS.contains(memberName) : "Should not query the server-side bundle for member name " + memberName;
         return ssrModule.hasMember(memberName);
     }
-
 
     @PreDestroy
     @Override

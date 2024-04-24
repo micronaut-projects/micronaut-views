@@ -1,6 +1,6 @@
 Micronaut React SSR has the following known issues and limitations:
 
-- Server-side prefetching is currently unfinished, broken under load and should not be used for real.
+- Server-side prefetching is currently unfinished (not fetching in parallel), broken under load and should not be used for real.
 - There is no sandboxing right now.
 - The need for the thread hack property will go away. The `micronaut.views.folder` property should also go away at some point.
 - The `Micronaut.prefetch` API could be replaced with a server-side implementation of the fetch API.

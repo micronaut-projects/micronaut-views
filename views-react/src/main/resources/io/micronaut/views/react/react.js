@@ -1,4 +1,4 @@
-export async function ssr(component, props, callback, config) {
+export async function ssr(component, props, callback, clientBundleURL) {
     globalThis.Micronaut = {
         prefetch: callback.recordPrefetch
     }
@@ -17,7 +17,7 @@ export async function ssr(component, props, callback, config) {
         var bootstrapScriptContent = `var Micronaut = ${JSON.stringify(boot)};`;
         stream = await ReactDOMServer.renderToReadableStream(element, {
             bootstrapScriptContent: bootstrapScriptContent,
-            bootstrapScripts: [config.getClientBundleURL()]
+            bootstrapScripts: [clientBundleURL]
         });
     } while (callback.didPrefetch());
 
