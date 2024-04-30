@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,37 +15,61 @@
  */
 package io.micronaut.views.turbo;
 
+import io.micronaut.core.annotation.NextMajorVersion;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.views.ModelAndView;
 import io.micronaut.views.TemplatedBuilder;
+import io.micronaut.views.ViewsModelDecorator;
 import io.micronaut.views.ViewsRendererLocator;
+import io.micronaut.views.turbo.http.TurboMediaType;
+import jakarta.inject.Inject;
 
 import java.util.Optional;
 
 /**
+ * @param <T> The class to be built
  * @author Sergio del Amo
  * @since 3.4.0
- * @param <T> The class to be built
  */
 public abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?>> {
+
     private final ViewsRendererLocator viewsRendererLocator;
     private final String mediaType;
 
+    @Nullable
+    @NextMajorVersion("remove the nullability annotation")
+    private final ViewsModelDecorator viewsModelDecorator;
+
     /**
-     *
      * @param viewsRendererLocator Views renderer Locator
-     * @param mediaType Media Type
+     * @param viewsModelDecorator  Views Model Decorator
+     * @param mediaType            Media Type
      */
-    protected AbstractTurboRenderer(ViewsRendererLocator viewsRendererLocator,
-                                    String mediaType) {
+    @Inject
+    protected AbstractTurboRenderer(
+        ViewsRendererLocator viewsRendererLocator,
+        ViewsModelDecorator viewsModelDecorator,
+        String mediaType
+    ) {
         this.viewsRendererLocator = viewsRendererLocator;
+        this.viewsModelDecorator = viewsModelDecorator;
         this.mediaType = mediaType;
     }
 
     /**
-     *
+     * @param viewsRendererLocator Views renderer Locator
+     * @param mediaType            Media Type
+     */
+    @Deprecated(since = "5.2.1", forRemoval = true)
+    protected AbstractTurboRenderer(ViewsRendererLocator viewsRendererLocator,
+                                    String mediaType) {
+        this(viewsRendererLocator, null, mediaType);
+    }
+
+    /**
      * @param builder Builder
      * @param request The Request
      * @return An Optional Writable with the builder rendered
@@ -54,13 +78,17 @@ public abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?>> {
     public Optional<Writable> render(@NonNull T builder,
                                      @Nullable HttpRequest<?> request) {
         return builder.getTemplateView()
-                .map(viewName ->  {
-                    Object model =  builder.getTemplateModel().orElse(null);
-                    return viewsRendererLocator.resolveViewsRenderer(viewName, mediaType, model)
-                            .flatMap(renderer -> builder.template(renderer.render(viewName, model, request))
-                                    .build()
-                                    .render());
-                })
-                .orElseGet(() -> builder.build().render());
+            .map(viewName -> {
+                Object model = builder.getTemplateModel().orElse(null);
+                ModelAndView<Object> modelAndView = new ModelAndView<>(viewName, model);
+                if (request != null && viewsModelDecorator != null) {
+                    viewsModelDecorator.decorate(request, modelAndView);
+                }
+                Object decoratedModel = modelAndView.getModel().orElse(null);
+                return viewsRendererLocator.resolveViewsRenderer(viewName, TurboMediaType.TURBO_STREAM, decoratedModel)
+                    .flatMap(renderer -> builder.template(renderer.render(viewName, decoratedModel, request)).build()
+                        .render());
+            })
+            .orElseGet(() -> builder.build().render());
     }
 }
