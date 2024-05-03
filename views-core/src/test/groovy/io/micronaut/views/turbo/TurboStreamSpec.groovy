@@ -228,7 +228,7 @@ class TurboStreamSpec extends Specification {
         then:
         HttpStatus.OK == responseHtml.status()
         responseHtml.contentType.isPresent()
-        responseHtml.contentType.get().toString() == MediaType.TEXT_HTML
+        responseHtml.contentType.get().toString() == "$MediaType.TEXT_HTML;charset=utf-16"
         "<!DOCTYPE html><html><head><title>Page Title</title></head><body><h1>Hello World</h1></body></html>" == responseHtml.body()
     }
 
@@ -463,7 +463,7 @@ class TurboStreamSpec extends Specification {
             "Hello World"
         }
 
-        @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
+        @Produces(value = ['text/html; charset=utf-16', TurboMediaType.TURBO_STREAM])
         @View("home")
         @TurboView(value = "fragments/message")
         @Get("/withBothAnnotations")
