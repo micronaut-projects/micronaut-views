@@ -3,11 +3,6 @@ React SSR needs some Micronaut application properties to be set.
 [configuration]
 ----
 micronaut:
-  # HACK
-  http:
-    client:
-      allow-block-event-loop: true
-
   # Point to client and server JS
   views:
     folder: classes/views
@@ -25,9 +20,6 @@ micronaut:
           cache-seconds: 0
 ----
 
-Set the hack property.
-
 If you want Micronaut to serve not only the pre-rendered HTML but also your Javascript assets you need to set up static file serving. Add the two properties you see above.
 
 Finally, consider turning off response caching in development if you want hot reload to work with `npx webpack --watch`.
-

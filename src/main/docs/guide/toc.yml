@@ -26,7 +26,6 @@ views:
       title: React SSR
       reactpreparingjs: Preparing your Javascript
       reactsettingproperties: Setting serving properties
-      reactprefetch: Prefetching API requests
       preact: Integrating with Preact
       reactrenderscripts:
         title: Render scripts

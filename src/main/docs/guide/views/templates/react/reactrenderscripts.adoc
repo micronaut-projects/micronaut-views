@@ -35,9 +35,6 @@ export { mymod };
 
 The callback object has a few different APIs you can use:
 
-1. `recordPrefetch(url)`: If the given URL (string) that returns JSON was already fetched, returns the parsed JSON object, otherwise returns null and records it for fetching.
-2. `getPrefetchedData()`: Returns a JSON object mapping URLs that were previously passed to `recordPrefetch` to parsed objects.
-3. `write(string)`: Writes the given string to the network response.
-4. `write(bytes)`: Writes the given array of bytes to the network response.
-5. `didPrefetch()`: Returns true if `recordPrefetch` was called previously. Reset to false by a call to `getPrefetchedData()`.
+1. `write(string)`: Writes the given string to the network response.
+2. `write(bytes)`: Writes the given array of bytes to the network response.
 

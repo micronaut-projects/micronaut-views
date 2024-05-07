@@ -1,7 +1,6 @@
 React server-side rendering (SSR) allows you to pre-render React components to HTML before the page is sent to the user.
 This improves performance by ensuring the page appears before any Javascript has loaded (albeit in a non-responsive
-state), makes it easier for search engines to index your pages, and can eliminate server round trips by pre-fetching
-REST API calls that would otherwise be made by the browser.
+state) and makes it easier for search engines to index your pages.
 
 Micronaut's support for React SSR has the following useful features:
 
@@ -9,10 +8,9 @@ Micronaut's support for React SSR has the following useful features:
 * Compatible out of the box with both React and https://www.preactjs.com/[Preact], an alternative lighter weight implementation of the React concept.
 * Customize the Javascript used to invoke SSR to add features like head managers, or use the prepackaged default scripts to get going straight away.
 * You can pass any `@Introspectable` Java objects to use as _props_ for your page components. This is convenient for passing in things like the user profile info.
-* You can integrate fetcher libraries like https://swr.vercel.app/[SWR] so Micronaut Views React can pre-fetch the API response server-side and then pass it to the client in the initial HTML. The docs show how to integrate this with the `useSWR` hook, which is the recommended way to use this feature. This reduces latency and improves robustness.
 * Logging from Javascript is sent to the Micronaut logs. `console.log` and related will go to the `INFO` level of the logger named `js`, `console.error` and Javascript exceptions will go to the `ERROR` level of the same.
 
-By default you will need React components that return the entire page, including the `<html>` tag. You'll also need to prepare your Javascript (see below). Then just name your required page component in the `@View` annotation on a controller, for example `@View("App")` will render the `<App/>` component with whatever object is provided as props.
+By default, you will need React components that return the entire page, including the `<html>` tag. You'll also need to prepare your Javascript (see below). Then just name your required page component in the `@View` annotation on a controller, for example `@View("App")` will render the `<App/>` component with whatever object is provided as props. If your page components don't render the whole page you can use _render scripts_ to customize the HTML (see below). Your props may also include the authenticated username in the `security` object if using Micronaut Security (see below).
 
 To use React SSR you need to add two dependencies.
 

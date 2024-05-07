@@ -1,12 +1,6 @@
 Micronaut React SSR has the following known issues and limitations:
 
-- Server-side prefetching is currently unfinished (not fetching in parallel), broken under load and should not be used for real.
-- There is no sandboxing right now.
-- The need for the thread hack property will go away. The `micronaut.views.folder` property should also go away at some point.
-- The `Micronaut.prefetch` API could be replaced with a server-side implementation of the fetch API.
 - The way props interact with Micronaut Security isn't documented.
-- There is no way to extend the Javascript execution environment with custom Java-side objects.
+- There is currently no way to extend the Javascript execution environment with custom Java-side objects.
 - The rendering isn't streamed to the user.
-- You must include a `TextEncoder`/`TextDecoder` polyfill, as GraalJS doesn't currently support it.
-- There is no documentation on how to do debugging of the server-side JS.
 - `<Suspense>` is not supported.

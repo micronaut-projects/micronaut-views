@@ -3,10 +3,6 @@ Head managers are libraries that let you build up the contents of your `<head>` 
 [source,javascript]
 ----
 export async function ssr(component, props, callback, config) {
-    globalThis.Micronaut = {
-        prefetch: callback.recordPrefetch
-    }
-
     // Create the vdom.
     const element = React.createElement(component, props, null);
     // Render the given component, expecting it to fill a <div id="content"></div> in the <body> tag.
@@ -17,7 +13,6 @@ export async function ssr(component, props, callback, config) {
     const boot = {
         rootProps: props,
         rootComponent: component.name,
-        prefetch: callback.getPrefetchedData()
     };
 
     // Assemble the HTML.
