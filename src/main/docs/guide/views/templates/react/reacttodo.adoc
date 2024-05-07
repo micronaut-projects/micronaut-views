@@ -1,6 +1,6 @@
 Micronaut React SSR has the following known issues and limitations:
 
-- The way props interact with Micronaut Security isn't documented.
 - There is currently no way to extend the Javascript execution environment with custom Java-side objects.
+- There is no built-in support for server side fetching.
 - The rendering isn't streamed to the user.
 - `<Suspense>` is not supported.
