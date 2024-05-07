@@ -1,7 +1,12 @@
 // App.js
 import React from 'react';
 
-function App({name}) {
+function App({name, triggerSandbox}) {
+    if (triggerSandbox) {
+        // Verify that we aren't able to access host types due to the sandbox.
+        Java.type("java.lang.System");
+    }
+
     return (
         <html>
         <head>
