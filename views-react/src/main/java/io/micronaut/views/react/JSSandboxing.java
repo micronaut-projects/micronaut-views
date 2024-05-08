@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.core.annotation.Internal;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Context;
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * Some internal wrappers useful for centralizing sandbox configuration.
  */
 @Singleton
+@Internal
 class JSSandboxing {
     private static final Logger LOG = LoggerFactory.getLogger(JSSandboxing.class);
     private final boolean sandbox;

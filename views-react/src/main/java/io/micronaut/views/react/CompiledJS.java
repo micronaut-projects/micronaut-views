@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.core.annotation.Internal;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -31,6 +32,7 @@ import java.io.IOException;
  * into the JVM code cache.
  */
 @Singleton
+@Internal
 class CompiledJS implements AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger("js");
 

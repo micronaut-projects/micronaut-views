@@ -15,7 +15,8 @@
  */
 package io.micronaut.views.react;
 
-import org.jetbrains.annotations.NotNull;
+import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.annotation.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 import org.slf4j.spi.LoggingEventBuilder;
@@ -28,6 +29,7 @@ import java.nio.charset.Charset;
 /**
  * An output stream that looks for line separators and then writes out the lines of text to the given logger.
  */
+@Internal
 final class OutputStreamToSLF4J extends OutputStream {
     private final Charset charset;
 
@@ -64,7 +66,7 @@ final class OutputStreamToSLF4J extends OutputStream {
     }
 
     @Override
-    public void write(@NotNull byte[] b) throws IOException {
+    public void write(@NonNull byte[] b) throws IOException {
         maybeResizeBuffer(b.length);
         buffer.put(b);
     }

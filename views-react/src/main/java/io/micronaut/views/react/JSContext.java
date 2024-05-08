@@ -15,13 +15,14 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.annotation.NonNull;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,6 +31,11 @@ import java.util.List;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+/**
+ * A bean that handles the Javascript {@link Context} object representing a loaded execution
+ * environment usable by one thread at a time.
+ */
+@Internal
 class JSContext implements AutoCloseable {
     // Symbols the user's server side bundle might supply us with.
     private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
@@ -104,7 +110,7 @@ class JSContext implements AutoCloseable {
             .build();
     }
 
-    private static @NotNull String fileNameFromUNIXPath(String resourcePath) {
+    private static @NonNull String fileNameFromUNIXPath(String resourcePath) {
         String fileName;
         var i = resourcePath.lastIndexOf('/');
         fileName = resourcePath.substring(i + 1);

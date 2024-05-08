@@ -2,6 +2,8 @@ React server-side rendering (SSR) allows you to pre-render React components to H
 This improves performance by ensuring the page appears before any Javascript has loaded (albeit in a non-responsive
 state) and makes it easier for search engines to index your pages.
 
+NOTE: This module is experimental and subject to change.
+
 Micronaut's support for React SSR has the following useful features:
 
 * Javascript runs using https://www.graalvm.org/[GraalJS], a high performance Javascript engine native to the JVM. Make sure to run your app on GraalVM or by compiling it to a native image to get full Javascript performance.

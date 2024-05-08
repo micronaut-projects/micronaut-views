@@ -4,7 +4,6 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
@@ -12,16 +11,15 @@ dependencies {
     annotationProcessor(mnValidation.micronaut.validation.processor)
 
     api projects.micronautViewsCore
-    api libs.jetbrains.annotations
-    implementation(mn.micronaut.http.client)
+    implementation(mn.micronaut.http)
 
     // The user of this library is expected to supply the JS dependency. That's because they may choose between
     // the community edition (open source, slower) and the enterprise edition (liberal usage, not open source, faster).
     implementation(libs.graal.polyglot)
 
-    compileOnly(mn.micronaut.management)
-    compileOnly(mnValidation.micronaut.validation)
-    compileOnly(mn.micronaut.http)
+    compileOnly(mnValidation.micronaut.validation) {
+        because("For @NotBlank on config properties")
+    }
 
     testCompileOnly(mn.micronaut.inject.groovy)
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)

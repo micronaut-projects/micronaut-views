@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.core.annotation.Internal;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import java.util.logging.LogRecord;
  * Note that Javascript's {@code console.log()} is handled differently.
  */
 @Singleton
+@Internal
 class JSEngineLogHandler extends Handler {
     private static final Logger LOG = LoggerFactory.getLogger(ReactViewsRenderer.class);
 

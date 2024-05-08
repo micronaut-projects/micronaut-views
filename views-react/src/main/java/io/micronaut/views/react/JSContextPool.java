@@ -16,6 +16,7 @@
 package io.micronaut.views.react;
 
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.core.annotation.Internal;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -30,6 +31,7 @@ import java.util.LinkedList;
  * with virtual threads, where a thread may not live beyond the lifetime of a single request.
  */
 @Singleton
+@Internal
 class JSContextPool {
     private final ApplicationContext applicationContext;
 

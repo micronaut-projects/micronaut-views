@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.views.ViewsConfiguration;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -32,6 +33,7 @@ import static java.lang.String.format;
  * Wraps the computation of where to find the JS for client and server.
  */
 @Singleton
+@Internal
 class JSBundlePaths {
     final String bundleFileName;
     final Path bundlePath;
