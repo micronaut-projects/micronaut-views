@@ -1,11 +1,10 @@
 package io.micronaut.views.react
 
 import io.micronaut.context.annotation.Property
-import io.micronaut.context.exceptions.BeanInstantiationException
 import io.micronaut.core.io.Writable
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
-import spock.lang.FailsWith
+import org.graalvm.polyglot.PolyglotException
 import spock.lang.Specification
 
 @MicronautTest(startApplication = false, rebuildContext = true)
@@ -13,14 +12,17 @@ import spock.lang.Specification
 @Property(name = "micronaut.views.react.sandbox", value = "true")
 class SandboxReactRenderSpec extends Specification {
     @Inject
-    ReactViewsRenderer<?, ?> renderer;
+    ReactViewsRenderer<?> renderer
 
     // The version of GraalJS currently depended on is not compatible with the sandbox. When GraalJS is upgraded,
     // this unit test can be enabled.
-    @FailsWith(BeanInstantiationException)
+    //@FailsWith(BeanInstantiationException)
     void "views can be rendered with sandboxing enabled"() {
+        given:
+        def props = ["name": "Mike", "obj": new SomeBean("bar")]
+
         when:
-        Writable writable = renderer.render("App", ["name": "Mike"], null)
+        Writable writable = renderer.render("App", props, null)
         String result = new StringWriter().with {
             writable.writeTo(it)
             it.toString()
@@ -28,7 +30,7 @@ class SandboxReactRenderSpec extends Specification {
 
         then:
         result.contains("Hello there")
-        result.contains("\"name\":\"Mike\"")
+        result.contains("\"name\":\"Mike\",\"obj\":{\"foo\":\"bar\"}")
     }
 
     void "host types are inaccessible with the sandbox enabled"() {
@@ -42,7 +44,7 @@ class SandboxReactRenderSpec extends Specification {
         then:
         // The version of GraalJS currently depended on is not compatible with the sandbox. When GraalJS is upgraded,
         // this unit test can be enabled.
-        thrown(BeanInstantiationException)
-        //thrown(PolyglotException)
+        //thrown(BeanInstantiationException)
+        thrown(PolyglotException)
     }
 }

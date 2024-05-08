@@ -17,7 +17,9 @@ package io.micronaut.views.react;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.beans.BeanMap;
 import io.micronaut.core.io.Writable;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewsRenderer;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -35,10 +37,9 @@ import java.util.Map;
  * to learn more about how to render React/Preact apps server side.</p>
  *
  * @param <PROPS> An introspectable bean type that will be fed to the ReactJS root component as props.
- * @param <REQUEST> Type of the HTTP request.
  */
 @Singleton
-public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, REQUEST> {
+public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> {
     @Inject
     ReactViewsRendererConfiguration reactConfiguration;
 
@@ -65,7 +66,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
      * @param request  The HTTP request object.
      */
     @Override
-    public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable REQUEST request) {
+    public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
         return writer -> {
             JSContext context = contextPool.acquire();
             try {
@@ -73,7 +74,7 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
                     context.reinit();
                 }
 
-                render(viewName, props, writer, context);
+                render(viewName, props, writer, context, request);
             } finally {
                 contextPool.release(context);
             }
@@ -90,21 +91,22 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
         }
     }
 
-    private void render(String componentName, PROPS props, Writer writer, JSContext context) {
+    private void render(String componentName, PROPS props, Writer writer, JSContext context, @Nullable HttpRequest<?> request) {
         Value component = context.ssrModule.getMember(componentName);
         if (component == null) {
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
         }
 
-        var renderCallback = new RenderCallback(writer);
+        var renderCallback = new RenderCallback(writer, request);
 
-        // TODO: Sandboxing. Do we need to deep clone the props here?
+        // Get props into canonical String->Object form and from there wrap to ProxyObject for the
+        // JS engine. This is needed because props can come in several forms, and we need to
+        // wrap them recursively.
         @SuppressWarnings("unchecked")
-        ProxyObject propsObj = isStringMap(props) ?
-            ProxyObject.fromMap((Map<String, Object>) props) :
-            new IntrospectableToPolyglotObject<>(context.polyglotContext, true, props);
+        Map<String, Object> strObjMap = isStringMap(props) ? (Map<String, Object>) props : BeanMap.of(props);
+        ProxyObject propsObj = new ProxyObjectWithIntrospectableSupport(context.polyglotContext, strObjMap);
 
-        context.render.execute(component, propsObj, renderCallback, reactConfiguration.getClientBundleURL());
+        context.render.execute(component, propsObj, renderCallback, reactConfiguration.getClientBundleURL(), request);
     }
 
     private boolean isStringMap(PROPS props) {
@@ -119,15 +121,26 @@ public class ReactViewsRenderer<PROPS, REQUEST> implements ViewsRenderer<PROPS, 
      * Methods exposed to the ReactJS components and render scripts. Needs to be public to be
      * callable from the JS side.
      *
-     * WARNING: These methods may be invoked by sandboxed code. Treat calls adversarially.
+     * WARNING: These methods may be invoked by sandboxed code. Treat calls adversarially and
+     * mark methods with @HostAccess.Export to ensure they're visible inside the sandbox.
      *
      * @hidden
      */
     public static final class RenderCallback {
         private final Writer responseWriter;
+        private final @Nullable HttpRequest<?> request;
 
-        public RenderCallback(Writer responseWriter) {
+        RenderCallback(Writer responseWriter, HttpRequest<?> request) {
             this.responseWriter = responseWriter;
+            this.request = request;
+        }
+
+        @HostAccess.Export
+        @Nullable
+        public String url() {
+            if (request == null)
+                return null;
+            return request.getUri().toString();
         }
 
         @HostAccess.Export

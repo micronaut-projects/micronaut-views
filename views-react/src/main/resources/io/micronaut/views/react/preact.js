@@ -1,5 +1,8 @@
 export function ssr(component, props, callback, clientBundleURL) {
     globalThis.Micronaut = {};
+    const url = callback.url();
+    if (url)
+        props = {...props, "url": url};
     const html = renderToString(preact.h(component, props, null))
     callback.write(html)
     const boot = {

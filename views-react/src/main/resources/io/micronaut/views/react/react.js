@@ -1,5 +1,8 @@
 export async function ssr(component, props, callback, clientBundleURL) {
     globalThis.Micronaut = {};
+    const url = callback.url();
+    if (url)
+        props = {...props, "url": url};
     const element = React.createElement(component, props, null);
 
     // Data to be passed to the browser after the main HTML has finished loading.

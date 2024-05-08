@@ -7,10 +7,9 @@ Micronaut's support for React SSR has the following useful features:
 * Javascript runs using https://www.graalvm.org/[GraalJS], a high performance Javascript engine native to the JVM. Make sure to run your app on GraalVM or by compiling it to a native image to get full Javascript performance.
 * Compatible out of the box with both React and https://www.preactjs.com/[Preact], an alternative lighter weight implementation of the React concept.
 * Customize the Javascript used to invoke SSR to add features like head managers, or use the prepackaged default scripts to get going straight away.
+* The Javascript can be sandboxed, ensuring that your server environment is protected from possible supply chain attacks.
 * You can pass any `@Introspectable` Java objects to use as _props_ for your page components. This is convenient for passing in things like the user profile info.
 * Logging from Javascript is sent to the Micronaut logs. `console.log` and related will go to the `INFO` level of the logger named `js`, `console.error` and Javascript exceptions will go to the `ERROR` level of the same.
-
-By default, you will need React components that return the entire page, including the `<html>` tag. You'll also need to prepare your Javascript (see below). Then just name your required page component in the `@View` annotation on a controller, for example `@View("App")` will render the `<App/>` component with whatever object is provided as props. If your page components don't render the whole page you can use _render scripts_ to customize the HTML (see below). Your props may also include the authenticated username in the `security` object if using Micronaut Security (see below).
 
 To use React SSR you need to add two dependencies.
 
@@ -22,3 +21,17 @@ dependency:micronaut-views-react[groupId="io.micronaut.views"]
 The properties used can be customized by overriding the values of:
 
 include::{includedir}configurationProperties/io.micronaut.views.react.ReactViewsRendererConfiguration.adoc[]
+
+== How it fits together
+
+Props can be supplied in the form of an introspectable bean or a `Map<String, Object>`. Both forms will be serialized to JSON and sent to the client for hydration, as well as used to render the root component. The URL of the current page will be taken from the request and added to the props under the `url` key, which is useful when working with libraries like https://github.com/preactjs/preact-router[`preact-router`]. If you use `Map<String, Object>` as your model type and use Micronaut Security, authenticated usernames and other security info will be added to your props automatically.
+
+By default you will need React components that return the entire page, including the `<html>` tag. You'll also need to prepare your Javascript (see below). Then just name your required page component in the `@View` annotation on a controller, for example `@View("App")` will render the `<App/>` component with your page props.
+
+If your page components don't render the whole page or you need better control over how the framework is invoked you can use _render scripts_ (see below).
+
+== Sandbox
+
+By default Javascript executing server side runs with the same privilege level as the server itself. This is similar to the Node security model, but exposes you to supply chain attacks. If a third party React component you depend on turns out to be malicious or simply buggy, it could allow an attacker to run code server side instead of only inside the browser sandbox.
+
+Normally with React SSR you can't do much about this, but with Micronaut Views React you can enable a server-side sandbox if you use GraalVM 24.1 or higher. This prevents Javascript from accessing any Java host objects that haven't been specifically marked as accessible to the sandbox. To use this set `micronaut.views.react.sandbox` to true in your `application.properties`, and then ensure that any objects you use as props have their property getters annotated with `@org.graalvm.polyglot.HostAccess.Export`. If there are properties that happen to be on your beans that should _not_ be exposed to Javascript, just don't annotate them. Any properties not annotated will simply be invisible from inside the sandbox.

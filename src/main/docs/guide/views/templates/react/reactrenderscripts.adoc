@@ -37,4 +37,4 @@ The callback object has a few different APIs you can use:
 
 1. `write(string)`: Writes the given string to the network response.
 2. `write(bytes)`: Writes the given array of bytes to the network response.
-
+3. `url()`: Returns either null or a string containing the URL of the page being served. Useful for sending to page routers.
