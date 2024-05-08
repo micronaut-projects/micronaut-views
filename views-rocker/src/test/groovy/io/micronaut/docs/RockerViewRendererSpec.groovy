@@ -29,6 +29,8 @@ import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
+import java.nio.charset.StandardCharsets
+
 class RockerViewRendererSpec extends Specification {
 
     @Shared
@@ -81,10 +83,32 @@ class RockerViewRendererSpec extends Specification {
 
         when:
         String body = rsp.body()
+        MediaType contentType = rsp.contentType.get()
 
         then:
-        body
-        rsp.body().contains("<h1>username: <span>sdelamo</span></h1>")
+        contentType == MediaType.TEXT_HTML_TYPE
+        body.contains("<h1>username: <span>sdelamo</span></h1>")
+
+        and: 'the charset defaults to utf-8'
+        contentType.charset.get() == StandardCharsets.UTF_8
+    }
+
+    def "invoking /rocker/noCharset (with a Produces annotation with no charset) renders rocker template from a controller returning a map"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/rocker/noCharset', String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+        MediaType contentType = rsp.contentType.get()
+
+        then:
+        contentType == MediaType.TEXT_HTML_TYPE
+        contentType.charset.empty
+        body.contains("<h1>username: <span>sdelamo</span></h1>")
     }
 
     def "invoking /rocker/pojo renders rocker template from a controller returning a pojo"() {

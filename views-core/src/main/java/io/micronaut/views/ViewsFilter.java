@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,11 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.type.Argument;
-import io.micronaut.http.*;
+import io.micronaut.http.HttpAttributes;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.filter.HttpServerFilter;
@@ -40,6 +44,8 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -51,7 +57,9 @@ import java.util.Optional;
 @Requires(beans = ViewsResolver.class)
 @Filter(Filter.MATCH_ALL_PATTERN)
 public class ViewsFilter implements HttpServerFilter {
+
     private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
+    private static final MediaType UTF8_HTML = new MediaType(MediaType.TEXT_HTML, Map.of(MediaType.CHARSET_PARAMETER, "UTF-8"));
 
     /**
      * Views Resolver.
@@ -152,9 +160,9 @@ public class ViewsFilter implements HttpServerFilter {
                 }
 
                 try {
-                    Optional<ViewsRenderer> optionalViewsRenderer = viewsRendererLocator.resolveViewsRenderer(view,  type.toString(), body);
+                    Optional<ViewsRenderer> optionalViewsRenderer = viewsRendererLocator.resolveViewsRenderer(view,  type.getName(), body);
                     if (!optionalViewsRenderer.isPresent()) {
-                        LOG.debug("no view renderer found for media type: {}, ignoring", type.toString());
+                        LOG.debug("no view renderer found for media type: {}, ignoring", type);
                         return Flux.just(response);
                     }
                     ModelAndView<?> modelAndView = new ModelAndView<>(view, body instanceof ModelAndView ? ((ModelAndView<?>) body).getModel().orElse(null) : body);
@@ -184,10 +192,10 @@ public class ViewsFilter implements HttpServerFilter {
             return MediaType.APPLICATION_JSON_TYPE;
         }
         AnnotationMetadata route = routeMatch.get();
-        return (request == null ? route.getValue(Produces.class, MediaType.class) :
-                route.getValue(Produces.class, Argument.listOf(MediaType.class)).orElseGet(Collections::emptyList).stream().filter(mt -> accept(request, mt)).findFirst()
-        ).orElseGet(() -> (route.getValue(View.class).isPresent() || responseBody instanceof ModelAndView)
-                ? MediaType.TEXT_HTML_TYPE : MediaType.APPLICATION_JSON_TYPE);
+        Optional<MediaType> type = request == null
+            ? route.getValue(Produces.class, MediaType.class)
+            : route.getValue(Produces.class, Argument.listOf(MediaType.class)).orElseGet(Collections::emptyList).stream().filter(mt -> accept(request, mt)).findFirst();
+        return type.orElseGet(() -> (route.getValue(View.class).isPresent() || responseBody instanceof ModelAndView) ? UTF8_HTML : MediaType.APPLICATION_JSON_TYPE);
     }
 
     /**
@@ -203,8 +211,8 @@ public class ViewsFilter implements HttpServerFilter {
     }
 
     private static boolean accept(HttpRequest<?> request, MediaType mediaType) {
-        String acceptHeader = request.getHeaders().get(HttpHeaders.ACCEPT);
-        return acceptHeader != null && acceptHeader.equalsIgnoreCase(mediaType.toString());
+        List<MediaType> accept = request.getHeaders().accept();
+        return accept.isEmpty() || accept.stream().anyMatch(p -> p.equals(mediaType));
     }
 
     @NonNull

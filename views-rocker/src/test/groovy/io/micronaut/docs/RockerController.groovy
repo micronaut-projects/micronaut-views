@@ -40,6 +40,13 @@ class RockerController {
         return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"));
     }
 
+    @View("home")
+    @Produces(MediaType.TEXT_HTML)
+    @Get("/noCharset")
+    HttpResponse<?> noCharsetIndex() {
+        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"));
+    }
+
     @View("home.rocker.html")
     @Get("/pojo")
     HttpResponse<Person> pojo() {
