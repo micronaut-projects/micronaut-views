@@ -6,4 +6,6 @@ Additionally, you need to add JStachio's Java annotation processor.
 
 dependency:jstachio-apt[groupId="io.jstach",scope="annotationProcessor"]
 
+NOTE: For Kotlin, add the `jstachio-apt` dependency in https://docs.micronaut.io/4.4.3/guide/#kaptOrKsp[kapt or ksp scope], and for Groovy add `jstachio-apt` in compileOnly scope.
+
 Read the https://jstach.io/doc/jstachio/1.2.1/apidocs/#installation[Jstachio's user guide] to learn more.
