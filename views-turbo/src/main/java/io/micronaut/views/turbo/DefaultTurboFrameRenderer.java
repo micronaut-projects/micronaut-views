@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package io.micronaut.views.turbo;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewsModelDecorator;
 import io.micronaut.views.ViewsRendererLocator;
 import jakarta.inject.Singleton;
@@ -25,14 +27,18 @@ import jakarta.inject.Singleton;
  * @since 3.4.0
  */
 @Singleton
+@Requires(classes = HttpRequest.class)
 public class DefaultTurboFrameRenderer extends AbstractTurboRenderer<TurboFrame.Builder> implements TurboFrameRenderer {
+
     /**
      * Constructor.
      * @param viewsRendererLocator Views Renderer Locator.
-     * @param viewsModelDecorator Views Model Decorator.
+     * @param viewsModelDecorator Views Model Decorator
      */
-    public DefaultTurboFrameRenderer(ViewsRendererLocator viewsRendererLocator,
-                                     ViewsModelDecorator viewsModelDecorator) {
+    public DefaultTurboFrameRenderer(
+        ViewsRendererLocator viewsRendererLocator,
+        ViewsModelDecorator viewsModelDecorator
+    ) {
         super(viewsRendererLocator, viewsModelDecorator, "text/html");
     }
 }
