@@ -29,19 +29,18 @@ import io.micronaut.views.ViewsRendererLocator;
 import java.util.Optional;
 
 /**
+ * @param <T> The class to be built
  * @author Sergio del Amo
  * @since 3.4.0
- * @param <T> The class to be built
  */
 @Internal
 abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
-    protected final ViewsRendererLocator viewsRendererLocator;
 
+    protected final ViewsRendererLocator viewsRendererLocator;
     private final ViewsModelDecorator viewsModelDecorator;
     private final String mediaType;
 
     /**
-     *
      * @param viewsRendererLocator Views renderer Locator
      * @param viewsModelDecorator Views Model Decorator
      * @param mediaType Media Type
@@ -55,7 +54,6 @@ abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
     }
 
     /**
-     *
      * @param builder Builder
      * @param request The Request
      * @return An Optional Writable with the builder rendered

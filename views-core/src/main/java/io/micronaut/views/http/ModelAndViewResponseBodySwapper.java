@@ -20,15 +20,21 @@ import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpAttributes;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.View;
 import jakarta.inject.Singleton;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Resolves a {@link ModelAndView} body if route match is annotated with {@link View}.
@@ -39,6 +45,7 @@ import java.util.Optional;
 @Internal
 final class ModelAndViewResponseBodySwapper implements ResponseBodySwapper<ModelAndView<?>> {
 
+    private static final MediaType UTF8_HTML = new MediaType(MediaType.TEXT_HTML, Map.of(MediaType.CHARSET_PARAMETER, "UTF-8"));
     private static final int ORDER = 30;
 
     @Override
@@ -51,10 +58,11 @@ final class ModelAndViewResponseBodySwapper implements ResponseBodySwapper<Model
         if (body instanceof ModelAndView<?> modelAndView) {
             return Optional.of(new ResponseBodySwap<>(modelAndView, MediaType.TEXT_HTML));
         }
+        Optional<MediaType> mediaType = resolveMediaType(request, response, body);
         return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
                 .flatMap(route -> route.findAnnotation(View.class))
                 .map(ann -> modelAndViewOf(ann, body))
-                .map(m -> new ResponseBodySwap<>(m, MediaType.TEXT_HTML));
+                .map(m -> new ResponseBodySwap<>(m, mediaType.map(MediaType::toString).orElse(MediaType.TEXT_HTML)));
     }
 
     private <T> ModelAndView<T> modelAndViewOf(@NonNull AnnotationValue<View> an, @Nullable T body) {
@@ -64,6 +72,28 @@ final class ModelAndViewResponseBodySwapper implements ResponseBodySwapper<Model
             modelAndView.setModel(body);
         }
         return modelAndView;
+    }
+
+    private Optional<MediaType> resolveMediaType(@Nullable HttpRequest<?> request, @NonNull HttpResponse<?> response, @Nullable Object responseBody) {
+        Optional<AnnotationMetadata> routeMatch = response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class);
+        if (routeMatch.isEmpty()) {
+            return Optional.of(MediaType.APPLICATION_JSON_TYPE);
+        }
+        AnnotationMetadata route = routeMatch.get();
+        Optional<MediaType> type = request == null
+            ? route.getValue(Produces.class, MediaType.class)
+            : route.getValue(Produces.class, Argument.listOf(MediaType.class)).orElseGet(Collections::emptyList).stream().filter(mt -> accept(request, mt)).findFirst();
+
+        return type.or(defaultType(responseBody, route));
+    }
+
+    private static Supplier<Optional<? extends MediaType>> defaultType(Object responseBody, AnnotationMetadata route) {
+        return () -> Optional.of((route.getValue(View.class).isPresent() || responseBody instanceof ModelAndView) ? UTF8_HTML : MediaType.APPLICATION_JSON_TYPE);
+    }
+
+    private static boolean accept(HttpRequest<?> request, MediaType mediaType) {
+        List<MediaType> accept = request.getHeaders().accept();
+        return accept.isEmpty() || accept.stream().anyMatch(p -> p.equals(mediaType));
     }
 
     @Override

@@ -24,12 +24,19 @@ import jakarta.validation.constraints.Pattern;
 
 /**
  * Representation of an HTML form.
+ * <p>
+ * When <code>dataturbo</code> is set to false, the form includes the <code>data-turbo="false"</code> attribute, which disables
+ * Turbo Drive on links and forms including descendants.
+ * See the <a href="https://turbo.hotwired.dev/reference/attributes">Turbo Data Attributes documentation</a>
+ * for more information.
+ *
  * @author Sergio del Amo
  * @since 4.1.0
  * @param action Form Action
  * @param method Form Method. either `get` or `post`
  * @param fieldset Form fields
  * @param enctype how the form-data should be encoded when submitting it to the server
+ * @param dataturbo enables Turbo Drive on a form, defaults to not disabled
  */
 @Experimental
 @EnctypePostRequired
@@ -37,9 +44,38 @@ import jakarta.validation.constraints.Pattern;
 public record Form(@NonNull @NotBlank String action,
                    @NonNull @NotBlank @Pattern(regexp = "get|post") String method,
                    @NonNull @NotNull @Valid Fieldset fieldset,
-                   @Nullable @Pattern(regexp = "application/x-www-form-urlencoded|multipart/form-data|text/plain") String enctype) {
+                   @Nullable @Pattern(regexp = "application/x-www-form-urlencoded|multipart/form-data|text/plain") String enctype,
+                   @Nullable Boolean dataturbo) {
 
     private static final String POST = "post";
+
+    /**
+     *
+     * @param action Form Action
+     * @param method Form Method. either `get` or `post`
+     * @param fieldset Form fields
+     * @param dataturbo Form data-turbo
+     */
+    public Form(@NonNull String action,
+                @NonNull String method,
+                @NonNull Fieldset fieldset,
+                @Nullable Boolean dataturbo) {
+        this(action, method, fieldset, null, dataturbo);
+    }
+
+    /**
+     *
+     * @param action Form Action
+     * @param method Form Method. either `get` or `post`
+     * @param fieldset Form fields
+     * @param enctype how the form-data should be encoded when submitting it to the server
+     */
+    public Form(@NonNull String action,
+                @NonNull String method,
+                @NonNull Fieldset fieldset,
+                @Nullable String enctype) {
+        this(action, method, fieldset, enctype, null);
+    }
 
     /**
      *
@@ -50,7 +86,7 @@ public record Form(@NonNull @NotBlank String action,
     public Form(@NonNull String action,
                 @NonNull String method,
                 @NonNull Fieldset fieldset) {
-        this(action, method, fieldset, null);
+        this(action, method, fieldset, null, null);
     }
 
     /**
@@ -60,7 +96,7 @@ public record Form(@NonNull @NotBlank String action,
      */
     public Form(@NonNull String action,
                 @NonNull Fieldset fieldset) {
-        this(action, POST, fieldset, null);
+        this(action, POST, fieldset, null, null);
     }
 
     /**
@@ -72,6 +108,6 @@ public record Form(@NonNull @NotBlank String action,
     public Form(@NonNull String action,
                 @NonNull Fieldset fieldset,
                 @Nullable String enctype) {
-        this(action, POST, fieldset, enctype);
+        this(action, POST, fieldset, enctype, null);
     }
 }

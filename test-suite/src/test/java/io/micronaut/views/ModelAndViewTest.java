@@ -9,6 +9,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
@@ -21,6 +22,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.model.ConfigViewModelProcessor;
 import io.micronaut.views.model.FruitsController;
 import io.micronaut.views.model.ViewModelProcessor;
+import io.micronaut.views.turbo.TurboFrame;
 import io.micronaut.views.turbo.TurboStream;
 import io.micronaut.views.turbo.TurboStreamAction;
 import io.micronaut.views.turbo.http.TurboMediaType;
@@ -41,6 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Property(name = "micronaut.security.enabled", value = StringUtils.FALSE)
 @MicronautTest
 class ModelAndViewTest {
+
     @Inject
     @Client("/")
     HttpClient httpClient;
@@ -175,6 +178,13 @@ class ModelAndViewTest {
         request = HttpRequest.GET("/turboStreamBuilderWithProcessor").accept(TurboMediaType.TURBO_STREAM);
         html = client.retrieve(request, String.class);
         assertTrue(html.contains("<h1>config: test</h1>"));
+
+        //when:
+        request = HttpRequest.GET("/turboFrameBuilderWithProcessor").accept(MediaType.TEXT_HTML);
+        html = client.retrieve(request, String.class);
+        assertTrue(html.startsWith("<turbo-frame>"));
+        assertTrue(html.endsWith("</turbo-frame>"));
+        assertTrue(html.contains("<h1>config: test</h1>"));
     }
 
     @Requires(property = "spec.name", value = "ModelAndViewSpec")
@@ -192,6 +202,14 @@ class ModelAndViewTest {
             return TurboStream.builder()
                     .action(TurboStreamAction.REPLACE)
                     .template("fruits-processor", new Fruit("orange", "orange"));
+        }
+
+        @Produces(MediaType.TEXT_HTML)
+        @Get("/turboFrameBuilderWithProcessor")
+        public TurboFrame.Builder turboFrameBuilder() {
+            return (TurboFrame.Builder) TurboFrame.builder()
+                .templateView("fruits-processor")
+                .templateModel(new Fruit("orange", "orange"));
         }
     }
 

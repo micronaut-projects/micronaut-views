@@ -16,18 +16,10 @@
 package io.micronaut.views.http;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.AnnotationMetadata;
-import io.micronaut.core.annotation.AnnotationValueResolver;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
-import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.http.HttpAttributes;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MutableHttpResponse;
-import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.annotation.ResponseFilter;
 import io.micronaut.http.annotation.ServerFilter;
 
@@ -61,17 +53,9 @@ final class ResponseBodySwapperFilter {
         responsebodySwapper.swap(request, response)
                 .ifPresent(responseBodySwap -> {
                     response.body(responseBodySwap.body());
-                    if (ArrayUtils.isEmpty(produces(response)) && responseBodySwap.mediaType() != null) {
+                    if (responseBodySwap.mediaType() != null) {
                         response.contentType(responseBodySwap.mediaType());
                     }
                 });
-    }
-
-    @Nullable
-    private String[] produces(@NonNull HttpResponse<?> response) {
-        return response.getAttribute(HttpAttributes.ROUTE_MATCH, AnnotationMetadata.class)
-                .flatMap(route -> route.findAnnotation(Produces.class))
-                    .map(AnnotationValueResolver::stringValues)
-                .orElse(null);
     }
 }

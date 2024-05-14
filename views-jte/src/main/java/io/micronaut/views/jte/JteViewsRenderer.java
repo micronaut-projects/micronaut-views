@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2023 original authors
+ * Copyright 2017-2024 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.Arrays;
 
@@ -92,7 +91,7 @@ public abstract class JteViewsRenderer<T, R> implements ViewsRenderer<T, R> {
                 ))) {
                     List<Path> jteSrc = search.map(p -> p.resolve(folder))
                         .filter(Files::exists)
-                        .collect(Collectors.toList());
+                        .toList();
                     if (jteSrc.size() == 1) {
                         Path path = jteSrc.get(0);
                         LOGGER.info("Using dynamic views loaded from {}", path);
@@ -106,7 +105,7 @@ public abstract class JteViewsRenderer<T, R> implements ViewsRenderer<T, R> {
                 ))) {
                     List<Path> jteSrc = search
                         .filter(Files::exists)
-                        .collect(Collectors.toList());
+                        .toList();
                     if (jteSrc.size() == 1) {
                         Path path = jteSrc.get(0);
                         LOGGER.info("Using dynamic views loaded from {}", path);
