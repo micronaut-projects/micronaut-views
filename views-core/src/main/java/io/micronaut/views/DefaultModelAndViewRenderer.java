@@ -51,8 +51,13 @@ public class DefaultModelAndViewRenderer<T, R> implements ModelAndViewRenderer<T
             .flatMap(viewName -> {
                 viewsModelDecorator.decorate(request, modelAndView);
                 Object model = modelAndView.getModel().orElse(null);
-                return viewsRendererLocator.resolveViewsRenderer(viewName, mediaType, model)
+                return viewsRendererLocator.resolveViewsRenderer(viewName, mediaTypeName(mediaType), model)
                     .map(renderer -> renderer.render(viewName, model, request));
             });
+    }
+
+    // String manipulation so we don't pull in the html module
+    static String mediaTypeName(String mediaType) {
+        return mediaType == null ? null : mediaType.split(";", 2)[0].trim();
     }
 }
