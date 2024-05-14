@@ -92,7 +92,7 @@ public abstract class JteViewsRenderer<T, R> implements ViewsRenderer<T, R> {
                 ))) {
                     List<Path> jteSrc = search.map(p -> p.resolve(folder))
                         .filter(Files::exists)
-                        .collect(Collectors.toList());
+                        .toList();
                     if (jteSrc.size() == 1) {
                         Path path = jteSrc.get(0);
                         LOGGER.info("Using dynamic views loaded from {}", path);
@@ -106,7 +106,7 @@ public abstract class JteViewsRenderer<T, R> implements ViewsRenderer<T, R> {
                 ))) {
                     List<Path> jteSrc = search
                         .filter(Files::exists)
-                        .collect(Collectors.toList());
+                        .toList();
                     if (jteSrc.size() == 1) {
                         Path path = jteSrc.get(0);
                         LOGGER.info("Using dynamic views loaded from {}", path);
