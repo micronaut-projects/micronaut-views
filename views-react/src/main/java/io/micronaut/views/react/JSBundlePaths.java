@@ -25,7 +25,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.FileTime;
 
 import static java.lang.String.format;
 
@@ -38,9 +37,6 @@ class JSBundlePaths {
     final String bundleFileName;
     final Path bundlePath;
 
-    private FileTime lastModified;
-    private long lastModificationCheckTime = 0;
-
     @Inject
     JSBundlePaths(ViewsConfiguration viewsConfiguration, ReactViewsRendererConfiguration reactConfiguration) throws IOException {
         var folder = viewsConfiguration.getFolder();
@@ -49,28 +45,6 @@ class JSBundlePaths {
             throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", bundlePath, ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
         }
         bundleFileName = bundlePath.getFileName().toString();
-        lastModified = Files.getLastModifiedTime(bundlePath);
-    }
-
-    synchronized boolean wasModified() {
-        try {
-            var now = System.currentTimeMillis();
-            // Skip the check if it was done very recently. This makes the check disappear from
-            // profiles under load.
-            if (now - lastModificationCheckTime <= 500) {
-                return false;
-            }
-            lastModificationCheckTime = now;
-
-            FileTime time = Files.getLastModifiedTime(bundlePath);
-            if (time.compareTo(lastModified) > 0) {
-                lastModified = time;
-                return true;
-            }
-            return false;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     Source readServerBundle() throws IOException {

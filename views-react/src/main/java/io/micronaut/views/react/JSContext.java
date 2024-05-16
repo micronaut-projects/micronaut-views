@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.context.annotation.Parameter;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import jakarta.annotation.PostConstruct;
@@ -49,11 +50,15 @@ class JSContext implements AutoCloseable {
     private final ReactViewsRendererConfiguration configuration;
     private final JSSandboxing sandboxing;
 
+    // What version of the on-disk bundle (considering file change events) we were loaded from.
+    final int versionCounter;
+
     @Inject
-    JSContext(CompiledJS compiledJS, ReactViewsRendererConfiguration configuration, JSSandboxing sandboxing) {
+    JSContext(CompiledJS compiledJS, ReactViewsRendererConfiguration configuration, JSSandboxing sandboxing, @Parameter int versionCounter) {
         this.compiledJS = compiledJS;
         this.configuration = configuration;
         this.sandboxing = sandboxing;
+        this.versionCounter = versionCounter;
     }
 
     @PostConstruct
@@ -61,7 +66,7 @@ class JSContext implements AutoCloseable {
         polyglotContext = createContext();
 
         Value global = polyglotContext.getBindings("js");
-        ssrModule = polyglotContext.eval(compiledJS.source);
+        ssrModule = polyglotContext.eval(compiledJS.getSource());
 
         // Take all the exports from the components bundle, and expose them to the render script.
         for (var name : ssrModule.getMemberKeys()) {
@@ -150,10 +155,5 @@ class JSContext implements AutoCloseable {
     @Override
     public synchronized void close() {
         polyglotContext.close();
-    }
-
-    public void reinit() throws IOException {
-        close();
-        init();
     }
 }

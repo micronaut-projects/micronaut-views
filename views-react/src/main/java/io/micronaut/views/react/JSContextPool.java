@@ -16,9 +16,14 @@
 package io.micronaut.views.react;
 
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
+import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.ref.SoftReference;
 import java.util.LinkedList;
@@ -32,42 +37,54 @@ import java.util.LinkedList;
  */
 @Singleton
 @Internal
-class JSContextPool {
+class JSContextPool implements ApplicationEventListener<FileChangedEvent> {
+    private static final Logger LOG = LoggerFactory.getLogger(JSContextPool.class);
     private final ApplicationContext applicationContext;
+    private final JSBundlePaths paths;
 
-    // Synchronized on JSContextPool.
+    // Synchronized on 'this'.
     private final LinkedList<SoftReference<JSContext>> contexts = new LinkedList<>();
+    private int versionCounter = 0;   // File reloads.
 
     @Inject
-    JSContextPool(ApplicationContext applicationContext) {
+    JSContextPool(ApplicationContext applicationContext, JSBundlePaths paths) {
         this.applicationContext = applicationContext;
+        this.paths = paths;
     }
 
     /**
      * Returns a cached context or creates a new one. You must give the JSContext to
      * {@link #release(JSContext)} when you're done with it to put it (back) into the pool.
      */
-    JSContext acquire() {
-        synchronized (this) {
-            while (!contexts.isEmpty()) {
-                SoftReference<JSContext> ref = contexts.poll();
-                assert ref != null;
+    synchronized JSContext acquire() {
+        while (!contexts.isEmpty()) {
+            SoftReference<JSContext> ref = contexts.poll();
+            assert ref != null;
 
-                var context = ref.get();
-                // context may have been garbage collected (== null).
-                if (context != null) {
-                    return context;
-                }
+            var context = ref.get();
+            // context may have been garbage collected (== null), or it might be for an old
+            // version of the on-disk bundle. In both cases we just let it drift away as we
+            // now hold the only reference.
+            if (context != null && context.versionCounter == versionCounter) {
+                return context;
             }
         }
 
-        // No more pooled contexts available, create one and return it. It'll be added to the
-        // pool when released. No need to hold the lock whilst doing that.
-        return applicationContext.createBean(JSContext.class);
+        // No more pooled contexts available, create one and return it. It'll be added [back] to the
+        // pool when release() is called.
+        return applicationContext.createBean(JSContext.class, versionCounter);
     }
 
     synchronized void release(JSContext jsContext) {
         // Put it back into the pool for reuse.
         contexts.add(new SoftReference<>(jsContext));
+    }
+
+    @Override
+    public synchronized void onApplicationEvent(FileChangedEvent event) {
+        if (event.getPath().equals(paths.bundlePath) && event.getEventType() != WatchEventType.DELETE) {
+            LOG.info("Reloading Javascript bundle due to file change.");
+            versionCounter++;
+        }
     }
 }

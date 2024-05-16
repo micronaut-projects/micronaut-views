@@ -37,16 +37,30 @@ class CompiledJS implements AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger("js");
 
     final Engine engine;
-    final Source source;
+    private Source source;
+    private final JSBundlePaths jsBundlePaths;
 
     @Inject
-    public CompiledJS(JSBundlePaths jsBundlePaths, JSEngineLogHandler engineLogHandler, JSSandboxing sandboxing) throws IOException {
+    CompiledJS(JSBundlePaths jsBundlePaths, JSEngineLogHandler engineLogHandler, JSSandboxing sandboxing) {
         var engineBuilder = Engine.newBuilder("js")
             .out(new OutputStreamToSLF4J(LOG, Level.INFO))
             .err(new OutputStreamToSLF4J(LOG, Level.ERROR))
             .logHandler(engineLogHandler);
         engine = sandboxing.configure(engineBuilder).build();
-        source = jsBundlePaths.readServerBundle();
+        this.jsBundlePaths = jsBundlePaths;
+        reload();
+    }
+
+    synchronized Source getSource() {
+        return source;
+    }
+
+    synchronized void reload() {
+        try {
+            source = jsBundlePaths.readServerBundle();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

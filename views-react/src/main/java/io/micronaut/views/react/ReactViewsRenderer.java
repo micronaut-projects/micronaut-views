@@ -70,10 +70,6 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
         return writer -> {
             JSContext context = contextPool.acquire();
             try {
-                if (jsBundlePaths.wasModified()) {
-                    context.reinit();
-                }
-
                 render(viewName, props, writer, context, request);
             } finally {
                 contextPool.release(context);
@@ -120,7 +116,7 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
     /**
      * Methods exposed to the ReactJS components and render scripts. Needs to be public to be
      * callable from the JS side.
-     *
+     * <p>
      * WARNING: These methods may be invoked by sandboxed code. Treat calls adversarially and
      * mark methods with @HostAccess.Export to ensure they're visible inside the sandbox.
      *
