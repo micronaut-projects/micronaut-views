@@ -46,12 +46,12 @@ class JSContext implements AutoCloseable {
     Value render;
     Value ssrModule;
 
+    // What version of the on-disk bundle (considering file change events) we were loaded from.
+    final int versionCounter;
+
     private final CompiledJS compiledJS;
     private final ReactViewsRendererConfiguration configuration;
     private final JSSandboxing sandboxing;
-
-    // What version of the on-disk bundle (considering file change events) we were loaded from.
-    final int versionCounter;
 
     @Inject
     JSContext(CompiledJS compiledJS, ReactViewsRendererConfiguration configuration, JSSandboxing sandboxing, @Parameter int versionCounter) {

@@ -134,8 +134,9 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
         @HostAccess.Export
         @Nullable
         public String url() {
-            if (request == null)
+            if (request == null) {
                 return null;
+            }
             return request.getUri().toString();
         }
 
