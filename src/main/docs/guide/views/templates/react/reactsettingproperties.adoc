@@ -11,7 +11,18 @@ micronaut:
       js:
         mapping: "/static/**"
         paths: "classpath:static"
+----
 
+If you want Micronaut to serve not only the pre-rendered HTML but also your Javascript assets you need to set up static file serving. Add the two properties you see above.
+
+[[react-dev-mode]]
+== Development
+
+During development you want the fastest iteration speed possible. Firstly turn off response caching so hot reload works with `npx webpack --watch`. Micronaut Views React will automatically notice the file changed on disk and reload it.
+
+[configuration]
+----
+micronaut:
   # For development purposes only.
   server:
     netty:
@@ -20,6 +31,25 @@ micronaut:
           cache-seconds: 0
 ----
 
-If you want Micronaut to serve not only the pre-rendered HTML but also your Javascript assets you need to set up static file serving. Add the two properties you see above.
+If using Maven turn off Micronaut's automatic restart features so that changes to the compiled bundle JS don't cause the whole server to reboot:
 
-Finally, consider turning off response caching in development if you want hot reload to work with `npx webpack --watch`.
+[xml]
+----
+<plugin>
+    <groupId>io.micronaut.maven</groupId>
+    <artifactId>micronaut-maven-plugin</artifactId>
+    <version>...</version>
+    <configuration>
+        <watches>
+            <watch>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/*.js</exclude>
+                    <exclude>**/*.mjs</exclude>
+                </excludes>
+            </watch>
+        </watches>
+    </configuration>
+</plugin>
+----
+
