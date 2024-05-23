@@ -82,3 +82,7 @@ def buildTestJS = tasks.register("buildTestJS") {
 tasks.named("processTestResources") {
     it.dependsOn(buildTestJS)
 }
+
+micronautBuild {
+    binaryCompatibility.enabled.set(false)
+}
