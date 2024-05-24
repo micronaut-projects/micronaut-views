@@ -11,9 +11,16 @@ micronaut:
       js:
         mapping: "/static/**"
         paths: "classpath:static"
+
+  # A temporary workaround for a GraalJS limitation.
+  executors:
+    blocking:
+        virtual: false
 ----
 
-If you want Micronaut to serve not only the pre-rendered HTML but also your Javascript assets you need to set up static file serving. Add the two properties you see above.
+This sets up static file serving so your client JS will be served by your Micronaut app. This isn't mandatory: you can serve your client JS from anywhere, but you would need to set `micronaut.views.react.client-bundle-url` in that case to where the client root bundle can be found.
+
+IMPORTANT: Watch out for the last property that disables virtual threads. If you skip this you will get an error the first time a view is rendered. Future releases of GraalJS will remove the need to disable virtual threads in Micronaut.
 
 [[react-dev-mode]]
 == Development
