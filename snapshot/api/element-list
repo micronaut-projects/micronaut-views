@@ -17,12 +17,12 @@ io.micronaut.views.freemarker
 io.micronaut.views.handlebars
 io.micronaut.views.htmx
 io.micronaut.views.htmx.http
-io.micronaut.views.http
 io.micronaut.views.jstachio
 io.micronaut.views.jte
 io.micronaut.views.model
 io.micronaut.views.model.security
 io.micronaut.views.pebble
+io.micronaut.views.react
 io.micronaut.views.rocker
 io.micronaut.views.soy
 io.micronaut.views.thymeleaf
