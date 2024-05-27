@@ -22,6 +22,15 @@ views:
       title: JStachio
       jstachioInstallation: JStachio Installation
       jstachioExample: JStachio Example
+    react:
+      title: React SSR
+      reactpreparingjs: Preparing your Javascript
+      reactsettingproperties: Setting serving properties
+      preact: Integrating with Preact
+      reactrenderscripts:
+        title: Render scripts
+        reactheadmanagers: Using head managers
+      reacttodo: Known limitations
   model:
     title: Working with Models
     custom: Dynamically Enriching Models

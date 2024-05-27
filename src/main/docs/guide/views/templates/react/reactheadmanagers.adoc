@@ -1,0 +1,40 @@
+Head managers are libraries that let you build up the contents of your `<head>` block as your `<body>` renders. One use of custom render scripts is to integrate a head manager with your code. Here's an example of a simple render script that usees the https://github.com/nfl/react-helmet[React Helmet] library in this way. Remember to export `Helmet` from your server-side bundle.
+
+[source,javascript]
+----
+export async function ssr(component, props, callback, config) {
+    // Create the vdom.
+    const element = React.createElement(component, props, null);
+    // Render the given component, expecting it to fill a <div id="content"></div> in the <body> tag.
+    const body = ReactDOMServer.renderToString(element)
+    // Get the data that should populate the <head> from the Helmet library.
+    const helmet = Helmet.renderStatic();
+    // Data to be passed to the browser after the main HTML has finished loading.
+    const boot = {
+        rootProps: props,
+        rootComponent: component.name,
+    };
+
+    // Assemble the HTML.
+    const html = `
+    <!doctype html>
+    <html ${helmet.htmlAttributes.toString()}>
+        <head>
+            ${helmet.title.toString()}
+            ${helmet.meta.toString()}
+            ${helmet.link.toString()}
+        </head>
+        <body ${helmet.bodyAttributes.toString()}>
+            <div id="content">
+                ${body}
+            </div>
+
+            <script>var Micronaut = ${JSON.stringify(boot)};</script>
+            <script type="text/javascript" src="${config.getClientBundleURL()}" async="true"></script>
+        </body>
+    </html>`;
+
+    // Send it back.
+    callback.write(html);
+}
+----

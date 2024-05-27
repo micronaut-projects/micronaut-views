@@ -1,0 +1,96 @@
+plugins {
+    id "io.micronaut.build.internal.views-module"
+    id "com.github.node-gradle.node" version "7.0.2"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor(mnValidation.micronaut.validation.processor)
+
+    api projects.micronautViewsCore
+    implementation(mn.micronaut.http)
+
+    // The user of this library is expected to supply the JS dependency. That's because they may choose between
+    // the community edition (open source, slower) and the enterprise edition (liberal usage, not open source, faster).
+    implementation(libs.graal.polyglot)
+
+    compileOnly(mnValidation.micronaut.validation) {
+        because("For @NotBlank on config properties")
+    }
+
+    testCompileOnly(mn.micronaut.inject.groovy)
+    testAnnotationProcessor(mnValidation.micronaut.validation.processor)
+    testAnnotationProcessor(mn.micronaut.inject.java)
+
+    testImplementation(mnSerde.micronaut.serde.jackson)
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.management)
+    testImplementation(mnValidation.micronaut.validation)
+    testImplementation(mn.snakeyaml)
+
+    // We will use enterprise edition for testing.
+    testImplementation(libs.graal.js)
+}
+
+// Set up a simple SSR project for testing purposes. We will need nodejs to run the bundlers.
+node {
+    download = true
+    version = "21.7.1"
+    nodeProjectDir = file("${project.projectDir}/src/test/js")
+}
+
+task buildTestClientJS(type: NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ["--mode", "development", "--config", "webpack.client.js"]
+    inputs.dir(fileTree("src/test/js/").exclude(".cache"))
+    outputs.file('src/test/resources/views/static/client.js')
+}
+
+task buildTestClientJSPreact(type: NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ["--mode", "development", "--config", "webpack.client.preact.js"]
+    inputs.dir(fileTree("src/test/js/").exclude(".cache"))
+    outputs.file('src/test/resources/views/static/client-preact.js')
+}
+
+task buildTestServerJS(type: NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ["--mode", "development", "--config", "webpack.server.js"]
+    inputs.dir(fileTree("src/test/js/").exclude(".cache"))
+    outputs.file('src/test/resources/views/ssr-components.mjs')
+}
+
+task buildTestServerJSPreact(type: NpxTask) {
+    dependsOn npmInstall
+    command = 'webpack'
+    args = ["--mode", "development", "--config", "webpack.server.preact.js"]
+    inputs.dir(fileTree("src/test/js/").exclude(".cache"))
+    outputs.file('src/test/resources/views/ssr-components.preact.mjs')
+}
+
+def buildTestJS = tasks.register("buildTestJS") {
+    it.dependsOn("buildTestClientJS", "buildTestServerJS", "buildTestClientJSPreact", "buildTestServerJSPreact")
+}
+
+tasks.named("processTestResources") {
+    it.dependsOn(buildTestJS)
+}
+
+tasks.named("test") {
+    // This module depends on GraalVM 21 or higher due to the need for the esm-exports GraalJS option and inability
+    // to upgrade it on older JDKs that bundled languages together.
+    onlyIf {
+        JavaVersion.current() >= JavaVersion.VERSION_21
+    }
+}
+
+micronautBuild {
+    binaryCompatibility.enabled.set(false)
+}

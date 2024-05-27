@@ -1,0 +1,40 @@
+The code that kicks off the SSR process using your React libraries API is called a render script. Micronaut Views React ships with two pre-packaged render scripts, one for ReactJS and one for Preact, but you are also able to supply your own. This lets you take complete control over the server-side Javascript. To use a custom script, place it somewhere on your classpath or file system and then set the `micronaut.views.react.render-script` property to its path, prefixed with either `classpath:` or `file:` depending on where it should be found.
+
+A render script should be an ESM module that exports a single function called `ssr` that takes four arguments:
+
+1. A function object for the page component to render.
+2. An object containing the root props.
+3. A callback object that contains APIs used to communicate with Micronaut.
+4. A string that receives the URL of the bundle that the browser should load. This is specified by the `micronaut.views.react.clientBundleURL` application property.
+
+The default render script looks like this:
+
+[source,javascript]
+.classpath:/io/micronaut/views/react/react.js
+----
+include::{srcjsReactRender}/react.js[]
+----
+
+The default render script for Preact looks like this:
+
+[source,javascript]
+.classpath:/io/micronaut/views/react/preact.js
+----
+include::{srcjsReactRender}/preact.js[]
+----
+
+A more sophisticated render script might support the use of head managers (see below), do multiple renders, expose other APIs and so on.
+
+A render script is evaluated _after_ your server side bundle, and has access to any symbols your server script exported. If you wish to access a JS module you should therefore include it in your `server.js` that gets fed to Webpack or similar bundler, and then re-export it like this:
+
+[source,javascript]
+----
+import * as mymod from 'mymod';
+export { mymod };
+----
+
+The callback object has a few different APIs you can use:
+
+1. `write(string)`: Writes the given string to the network response.
+2. `write(bytes)`: Writes the given array of bytes to the network response.
+3. `url()`: Returns either null or a string containing the URL of the page being served. Useful for sending to page routers.

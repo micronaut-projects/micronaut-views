@@ -1,0 +1,62 @@
+React SSR needs some Micronaut application properties to be set.
+
+[configuration]
+----
+micronaut:
+  # Point to client and server JS
+  views:
+    folder: classes/views
+  router:
+    static-resources:
+      js:
+        mapping: "/static/**"
+        paths: "classpath:static"
+
+  # A temporary workaround for a GraalJS limitation.
+  executors:
+    blocking:
+        virtual: false
+----
+
+This sets up static file serving so your client JS will be served by your Micronaut app. This isn't mandatory: you can serve your client JS from anywhere, but you would need to set `micronaut.views.react.client-bundle-url` in that case to where the client root bundle can be found.
+
+IMPORTANT: Watch out for the last property that disables virtual threads. If you skip this you will get an error the first time a view is rendered. Future releases of GraalJS will remove the need to disable virtual threads in Micronaut.
+
+[[react-dev-mode]]
+== Development
+
+During development you want the fastest iteration speed possible. Firstly turn off response caching so hot reload works with `npx webpack --watch`. Micronaut Views React will automatically notice the file changed on disk and reload it.
+
+[configuration]
+----
+micronaut:
+  # For development purposes only.
+  server:
+    netty:
+      responses:
+        file:
+          cache-seconds: 0
+----
+
+If using Maven turn off Micronaut's automatic restart features so that changes to the compiled bundle JS don't cause the whole server to reboot:
+
+[xml]
+----
+<plugin>
+    <groupId>io.micronaut.maven</groupId>
+    <artifactId>micronaut-maven-plugin</artifactId>
+    <version>...</version>
+    <configuration>
+        <watches>
+            <watch>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/*.js</exclude>
+                    <exclude>**/*.mjs</exclude>
+                </excludes>
+            </watch>
+        </watches>
+    </configuration>
+</plugin>
+----
+

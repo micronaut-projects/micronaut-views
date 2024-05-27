@@ -1,0 +1,38 @@
+The https://www.preactjs.com/[Preact] library is a smaller and lighter weight implementation of React, with a few nice enhancements as well. Like React it also supports server side rendering and can be used with Micronaut React SSR. It requires some small changes to how you prepare your Javascript. Please read and understand how to prepare your JS for regular React first, as this section only covers the differences.
+
+Your `server.js` should look like this:
+
+[source,javascript]
+.src/main/js/server.js
+----
+include::{srcjsReact}/server.preact.js[]
+----
+
+Notice the differences: we're re-exporting the `h` symbol from Preact (which it uses instead of `React.createComponent`) and `renderToString` from the separate `preact-render-to-string` module. Otherwise the script is the same: we have to export each page component.
+
+Your `client.js` should look like this:
+
+[source,javascript]
+.src/main/js/client.js
+----
+include::{srcjsReact}/client.preact.js[]
+----
+
+Finally, you need to tell Micronaut Views React to use a different render script (see below). Set the `micronaut.views.react.render-script` application property to be `classpath:/io/micronaut/views/react/preact.js`.
+
+That's it. If you want to use existing React components then you will also need to set up aliases in your `webpack.{client,server}.js` files like this:
+
+[source,javascript]
+----
+module.exports = {
+    // ... existing values
+    resolve: {
+        alias: {
+            "react": "preact/compat",
+            "react-dom/test-utils": "preact/test-utils",
+            "react-dom": "preact/compat",     // Must be below test-utils
+            "react/jsx-runtime": "preact/jsx-runtime"
+        },
+    }
+}
+----

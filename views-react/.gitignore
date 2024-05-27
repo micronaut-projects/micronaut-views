@@ -1,0 +1,5 @@
+src/test/js/node_modules
+src/test/resources/views/ssr-components.mjs
+src/test/resources/views/ssr-components.preact.mjs
+src/test/resources/views/static/
+/src/test/js/package-lock.json
