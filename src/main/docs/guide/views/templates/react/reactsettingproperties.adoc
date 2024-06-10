@@ -3,9 +3,11 @@ React SSR needs some Micronaut application properties to be set.
 [configuration]
 ----
 micronaut:
-  # Point to client and server JS
+  # Point to the server-side JS. This value is the default.
   views:
-    folder: classes/views
+    react:
+      server-bundle-path: "classpath:views/ssr-components.mjs"
+
   router:
     static-resources:
       js:

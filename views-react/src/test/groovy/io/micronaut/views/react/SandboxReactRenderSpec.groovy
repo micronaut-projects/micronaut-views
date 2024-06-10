@@ -9,7 +9,7 @@ import spock.lang.FailsWith
 import spock.lang.Specification
 
 @MicronautTest(startApplication = false, rebuildContext = true)
-@Property(name = "micronaut.views.folder", value = "src/test/resources/views")
+@Property(name = "micronaut.views.react.server-bundle-path", value = "classpath:views/ssr-components.mjs")
 @Property(name = "micronaut.views.react.sandbox", value = "true")
 class SandboxReactRenderSpec extends Specification {
     @Inject
