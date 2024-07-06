@@ -82,7 +82,7 @@ class JSContextPool implements ApplicationEventListener<FileChangedEvent> {
 
     @Override
     public synchronized void onApplicationEvent(FileChangedEvent event) {
-        if (event.getPath().equals(paths.bundlePath) && event.getEventType() != WatchEventType.DELETE) {
+        if (paths.bundlePath != null && event.getPath().equals(paths.bundlePath) && event.getEventType() != WatchEventType.DELETE) {
             LOG.info("Reloading Javascript bundle due to file change.");
             versionCounter++;
         }

@@ -35,7 +35,7 @@ public interface ReactViewsRendererConfiguration {
     String DEFAULT_CLIENT_BUNDLE_URL = "/static/client.js";
 
     /** The default value for {@link #getServerBundlePath()}. */
-    String DEFAULT_SERVER_BUNDLE_PATH = "ssr-components.mjs";
+    String DEFAULT_SERVER_BUNDLE_PATH = "classpath:views/ssr-components.mjs";
 
     /** The default value for {@link #getRenderScript()}. */
     String DEFAULT_RENDER_SCRIPT = "classpath:/io/micronaut/views/react/react.js";

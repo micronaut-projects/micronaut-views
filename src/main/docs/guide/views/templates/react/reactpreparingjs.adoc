@@ -25,7 +25,7 @@ This Webpack config does several things:
 
 * It polyfills APIs that lack a native implementation in the GraalJS engine.
 * It ensures the output is a native Javascript module.
-* It names the result `ssr-components.mjs` which is the only name Micronaut React SSR accepts. All components must be in one server side bundle currently.
+* It names the result `ssr-components.mjs`. You can use any name, but it's looked for under this name in the `views` resource directory by default. All components must be in one server side bundle.
 * It makes the `SERVER` variable be statically true when the Javascript is being bundled for server-side rendering. This allows you to include/exclude code blocks at bundle optimization time.
 
 You can use such a config by running `npx webpack --mode production --config webpack.server.js`. Add the `--watch` flag if you want the bundle to be recreated whenever an input file changes. Micronaut React SSR will notice if the bundle file has changed on disk and reload it (see <<react-dev-mode,Development>>).

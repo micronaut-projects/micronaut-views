@@ -8,7 +8,7 @@ import jakarta.inject.Inject
 import spock.lang.Specification
 
 @MicronautTest(startApplication = false, rebuildContext = true)
-@Property(name = "micronaut.views.folder", value = "src/test/resources/views")
+@Property(name = "micronaut.views.react.server-bundle-path", value = "classpath:views/ssr-components.mjs")
 class ReactViewRenderSpec extends Specification {
     @Inject
     ReactViewsRenderer<?> renderer;

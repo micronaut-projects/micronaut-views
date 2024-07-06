@@ -12,9 +12,8 @@ import spock.lang.Specification
  * provide.
  */
 @MicronautTest(startApplication = false)
-@Property(name = "micronaut.views.folder", value = "src/test/resources/views")
 @Property(name = "micronaut.views.react.client-bundle-url", value = "/static/client.preact.js")
-@Property(name = "micronaut.views.react.server-bundle-path", value = "ssr-components.preact.mjs")
+@Property(name = "micronaut.views.react.server-bundle-path", value = "classpath:views/ssr-components.preact.mjs")
 @Property(name = "micronaut.views.react.render-script", value = "classpath:/io/micronaut/views/react/preact.js")
 class PreactViewRenderSpec extends Specification {
     @Inject

@@ -16,15 +16,20 @@
 package io.micronaut.views.react;
 
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.io.ResourceResolver;
 import io.micronaut.views.ViewsConfiguration;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Source;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.file.Path;
+import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -34,21 +39,37 @@ import static java.lang.String.format;
 @Singleton
 @Internal
 class JSBundlePaths {
+    // Source code file name, for JS stack traces.
     final String bundleFileName;
+
+    // URL of bundle file, could be a file:// or in a classpath jar.
+    final URL bundleURL;
+
+    // If a file:// (during development), the path of that file. Used for hot reloads.
+    @Nullable
     final Path bundlePath;
 
     @Inject
-    JSBundlePaths(ViewsConfiguration viewsConfiguration, ReactViewsRendererConfiguration reactConfiguration) throws IOException {
-        var folder = viewsConfiguration.getFolder();
-        bundlePath = Path.of(folder).resolve(reactConfiguration.getServerBundlePath()).toAbsolutePath().normalize();
-        if (!Files.exists(bundlePath)) {
-            throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", bundlePath, ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
+    JSBundlePaths(
+        ViewsConfiguration viewsConfiguration,
+        ReactViewsRendererConfiguration reactConfiguration,
+        ResourceResolver resolver
+    ) throws IOException {
+        Optional<URL> bundlePathOpt = resolver.getResource(reactConfiguration.getServerBundlePath());
+        if (bundlePathOpt.isEmpty()) {
+            throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", reactConfiguration.getServerBundlePath(), ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
         }
-        bundleFileName = bundlePath.getFileName().toString();
+        bundleURL = bundlePathOpt.get();
+        bundleFileName = bundleURL.getFile();
+        if (bundleURL.getProtocol().equals("file")) {
+            bundlePath = Path.of(bundleURL.getPath());
+        } else {
+            bundlePath = null;
+        }
     }
 
     Source readServerBundle() throws IOException {
-        try (var reader = Files.newBufferedReader(bundlePath)) {
+        try (var reader = new BufferedReader(new InputStreamReader(bundleURL.openStream()))) {
             return Source.newBuilder("js", reader, bundleFileName)
                 .mimeType("application/javascript+module")
                 .build();
