@@ -228,7 +228,7 @@ class TurboStreamSpec extends Specification {
         then:
         HttpStatus.OK == responseHtml.status()
         responseHtml.contentType.isPresent()
-        responseHtml.contentType.get().toString() == "$MediaType.TEXT_HTML;charset=ISO-8859-1"
+        responseHtml.contentType.get().toString() == "$MediaType.TEXT_HTML; charset=ISO-8859-1"
         "<!DOCTYPE html><html><head><title>Page Title</title></head><body><h1>Hello World</h1></body></html>" == responseHtml.body()
     }
 
