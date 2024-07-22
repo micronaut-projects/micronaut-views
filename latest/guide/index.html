@@ -199,7 +199,7 @@
         <h1>Micronaut Views</h1>
         <p></p>
         <p>Provides integration between Micronaut and server-side views technologies</p>
-        <p><strong>Version:</strong> 5.4.0 </p>
+        <p><strong>Version:</strong> 5.4.1 </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
@@ -2161,7 +2161,7 @@ This module is experimental and subject to change.
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.react.server-bundle-path</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">the path relative to micronaut.views.folder where the bundle used for
- server-side rendering can be found. Defaults to "ssr-components.mjs"</p></td>
+ server-side rendering can be found. Defaults to "classpath:views/ssr-components.mjs"</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.react.render-script</code></p></td>
@@ -2319,7 +2319,7 @@ module.exports = {
 <p>It ensures the output is a native Javascript module.</p>
 </li>
 <li>
-<p>It names the result <code>ssr-components.mjs</code> which is the only name Micronaut React SSR accepts. All components must be in one server side bundle currently.</p>
+<p>It names the result <code>ssr-components.mjs</code>. You can use any name, but it&#8217;s looked for under this name in the <code>views</code> resource directory by default. All components must be in one server side bundle.</p>
 </li>
 <li>
 <p>It makes the <code>SERVER</code> variable be statically true when the Javascript is being bundled for server-side rendering. This allows you to include/exclude code blocks at bundle optimization time.</p>
@@ -2410,7 +2410,7 @@ module.exports = {
 <div class="content">
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">micronaut.views.folder=classes/views
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">micronaut.views.react.server-bundle-path=classpath:views/ssr-components.mjs
 micronaut.router.static-resources.js.mapping=/static/**
 micronaut.router.static-resources.js.paths=classpath:static
 micronaut.executors.blocking.virtual=false</code></pre>
@@ -2419,9 +2419,11 @@ micronaut.executors.blocking.virtual=false</code></pre>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">micronaut:
-  # Point to client and server JS
+  # Point to the server-side JS. This value is the default.
   views:
-    folder: classes/views
+    react:
+      server-bundle-path: "classpath:views/ssr-components.mjs"
+
   router:
     static-resources:
       js:
@@ -2438,7 +2440,8 @@ micronaut.executors.blocking.virtual=false</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[micronaut]
   [micronaut.views]
-    folder="classes/views"
+    [micronaut.views.react]
+      server-bundle-path="classpath:views/ssr-components.mjs"
   [micronaut.router]
     [micronaut.router.static-resources]
       [micronaut.router.static-resources.js]
@@ -2453,7 +2456,9 @@ micronaut.executors.blocking.virtual=false</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy-config hljs" data-lang="groovy-config">micronaut {
   views {
-    folder = "classes/views"
+    react {
+      serverBundlePath = "classpath:views/ssr-components.mjs"
+    }
   }
   router {
     staticResources {
@@ -2476,7 +2481,9 @@ micronaut.executors.blocking.virtual=false</code></pre>
 <pre class="highlightjs highlight"><code class="language-hocon hljs" data-lang="hocon">{
   micronaut {
     views {
-      folder = "classes/views"
+      react {
+        server-bundle-path = "classpath:views/ssr-components.mjs"
+      }
     }
     router {
       static-resources {
@@ -2500,7 +2507,9 @@ micronaut.executors.blocking.virtual=false</code></pre>
 <pre class="highlightjs highlight"><code class="language-json-config hljs" data-lang="json-config">{
   "micronaut": {
     "views": {
-      "folder": "classes/views"
+      "react": {
+        "server-bundle-path": "classpath:views/ssr-components.mjs"
+      }
     },
     "router": {
       "static-resources": {
