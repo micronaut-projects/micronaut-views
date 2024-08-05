@@ -20,6 +20,19 @@ To use React SSR you need to add two dependencies.
 
 dependency:micronaut-views-react[groupId="io.micronaut.views"]
 
+== Scaffold a Micronaut frontend/backend project
+
+You can easily create a new ReactJS-based project from scratch using https://micronaut.io/launch[Micronaut Launch], the built-in IntelliJ Micronaut wizard, or the https://micronaut.io/download/[`mn` CLI tool]:
+
+[source,shell]
+----
+$ mn create-app --features=views-react my-cool-project
+----
+
+This will create a complete project with `webpack` based bundling for client and server side rendering, a pre-configured Micronaut Views React app, and a sample component/page handler.  Javascript package installation and bundling is handled by Gradle or Maven, depending on the value of the `--build` flag you pass to `mn` (we recommend Gradle as it will be much faster). The build scripts will even download NodeJS for you, so you don't need anything other than a JDK to get started.
+
+== Configuration properties
+
 The properties used can be customized by overriding the values of:
 
 include::{includedir}configurationProperties/io.micronaut.views.react.ReactViewsRendererConfiguration.adoc[]

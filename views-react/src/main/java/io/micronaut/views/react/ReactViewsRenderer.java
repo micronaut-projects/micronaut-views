@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.beans.BeanMap;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.http.exceptions.MessageBodyException;
 import io.micronaut.views.ViewsRenderer;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -46,9 +47,6 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
     @Inject
     JSContextPool contextPool;
 
-    @Inject
-    JSBundlePaths jsBundlePaths;
-
     /**
      * Construct this renderer. Don't call it yourself, as Micronaut Views will set it up for you.
      */
@@ -71,6 +69,9 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
             JSContext context = contextPool.acquire();
             try {
                 render(viewName, props, writer, context, request);
+            } catch (Exception e) {
+                // If we don't wrap and rethrow, the exception is swallowed and the request hangs.
+                throw new MessageBodyException("Could not render component " + viewName, e);
             } finally {
                 contextPool.release(context);
             }
