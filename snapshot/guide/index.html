@@ -2131,6 +2131,25 @@ This module is experimental and subject to change.
 </div>
 </div></p>
 </div>
+<div class="sect1">
+<h2 id="_scaffold_a_micronaut_frontendbackend_project">Scaffold a Micronaut frontend/backend project</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can easily create a new ReactJS-based project from scratch using <a href="https://micronaut.io/launch">Micronaut Launch</a>, the built-in IntelliJ Micronaut wizard, or the <a href="https://micronaut.io/download/"><code>mn</code> CLI tool</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ mn create-app --features=views-react my-cool-project</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will create a complete project with <code>webpack</code> based bundling for client and server side rendering, a pre-configured Micronaut Views React app, and a sample component/page handler.  Javascript package installation and bundling is handled by Gradle or Maven, depending on the value of the <code>--build</code> flag you pass to <code>mn</code> (we recommend Gradle as it will be much faster). The build scripts will even download NodeJS for you, so you don&#8217;t need anything other than a JDK to get started.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration_properties">Configuration properties</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The properties used can be customized by overriding the values of:</p>
 </div>
@@ -2179,6 +2198,8 @@ This module is experimental and subject to change.
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_how_it_fits_together">How it fits together</h2>
 <div class="sectionbody">
