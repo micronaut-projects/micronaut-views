@@ -15,7 +15,7 @@ class ReactViewRenderSpec extends Specification {
 
     void "views can be rendered with basic props"() {
         when:
-        Writable writable = renderer.render("App", ["name": "Mike"], null)
+        Writable writable = renderer.render("App", ["name": "Mike", "someNull": null, "obj": new SomeBean("foo", null)], null)
         String result = new StringWriter().with {
             writable.writeTo(it)
             it.toString()
@@ -23,6 +23,8 @@ class ReactViewRenderSpec extends Specification {
 
         then:
         result.contains("Hello there")
+        result.contains("Reading a property works: <!-- -->foo")
+        result.contains("Reading a null works: </p>")
         result.contains("\"name\":\"Mike\"")
     }
 

@@ -42,7 +42,7 @@ class ProxyObjectWithIntrospectableSupport implements ProxyObject {
     @Override
     public Object getMember(String key) {
         Object result = map.get(key);
-        if (BeanIntrospector.SHARED.findIntrospection(result.getClass()).isPresent()) {
+        if (result != null && BeanIntrospector.SHARED.findIntrospection(result.getClass()).isPresent()) {
             return new ProxyObjectWithIntrospectableSupport(context, BeanMap.of(result));
         } else {
             return context.asValue(result);

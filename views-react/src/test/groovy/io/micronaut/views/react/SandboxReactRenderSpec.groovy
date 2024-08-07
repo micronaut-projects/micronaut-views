@@ -20,7 +20,7 @@ class SandboxReactRenderSpec extends Specification {
     @FailsWith(BeanInstantiationException)
     void "views can be rendered with sandboxing enabled"() {
         given:
-        def props = ["name": "Mike", "obj": new SomeBean("bar")]
+        def props = ["name": "Mike", "obj": new SomeBean("bar", null)]
 
         when:
         Writable writable = renderer.render("App", props, null)

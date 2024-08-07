@@ -1,6 +1,7 @@
 package io.micronaut.views.react;
 
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.Nullable;
 import org.graalvm.polyglot.HostAccess;
 
 /**
@@ -9,13 +10,20 @@ import org.graalvm.polyglot.HostAccess;
 @Introspected
 public class SomeBean {
     private final String foo;
+    private final @Nullable String bar;
 
-    SomeBean(String foo) {
+    SomeBean(String foo, String bar) {
         this.foo = foo;
+        this.bar = bar;
     }
 
     @HostAccess.Export
     public String getFoo() {
         return foo;
+    }
+
+    @HostAccess.Export
+    public String getBar() {
+        return bar;
     }
 }
