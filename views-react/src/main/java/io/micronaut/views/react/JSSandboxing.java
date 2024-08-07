@@ -16,7 +16,6 @@
 package io.micronaut.views.react;
 
 import io.micronaut.core.annotation.Internal;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
