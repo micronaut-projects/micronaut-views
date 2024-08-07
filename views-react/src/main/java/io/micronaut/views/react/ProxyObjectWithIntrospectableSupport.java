@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.core.beans.BeanIntrospector;
@@ -36,6 +37,7 @@ import java.util.Map;
  * Reading a key whose value is an introspectable bean will use the {@link BeanMap} instead of
  * the regular polyglot mapping.
  */
+@Internal
 class ProxyObjectWithIntrospectableSupport implements ProxyObject {
     private final Context context;
     private final Object target;
