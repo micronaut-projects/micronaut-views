@@ -36,10 +36,8 @@ class JSBeanFactory {
      */
     @Singleton
     HostAccess hostAccess(ReactViewsRendererConfiguration configuration) {
-        if (configuration.getSandbox()) {
-            return HostAccess.CONSTRAINED;
-        } else {
-            return HostAccess.ALL;
-        }
+        return configuration.getSandbox()
+            ? HostAccess.CONSTRAINED
+            : HostAccess.ALL;
     }
 }
