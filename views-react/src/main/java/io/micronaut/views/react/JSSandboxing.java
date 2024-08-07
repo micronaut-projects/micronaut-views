@@ -35,7 +35,6 @@ class JSSandboxing {
     private final boolean sandbox;
     private final HostAccess hostAccess;
 
-    @Inject
     JSSandboxing(ReactViewsRendererConfiguration configuration, HostAccess hostAccess) {
         sandbox = configuration.getSandbox();
         if (sandbox) {
