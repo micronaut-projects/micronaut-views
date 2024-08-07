@@ -102,6 +102,30 @@ class ProxyObjectWithIntrospectableSupport implements ProxyObject {
         return context.asValue(null);
     }
 
+    @Override
+    public Object getMemberKeys() {
+        return ProxyArray.fromList(getInvokableNames());
+    }
+
+    @Override
+    public boolean hasMember(String key) {
+        return getInvokableNames().contains(key);
+    }
+
+    private ArrayList<Object> getInvokableNames() {
+        ArrayList<Object> propNames = new ArrayList<>(asMap().keySet());
+        if (introspection != null) {
+            introspection.getBeanMethods().forEach(it -> propNames.add(it.getName()));
+        }
+        return propNames;
+    }
+
+    @Override
+    public void putMember(String key, Value value) {
+        throw new UnsupportedOperationException();
+    }
+
+
     @SuppressWarnings("unchecked")
     private Map<String, Object> asMap() {
         return isStringMap ? (Map<String, Object>) target : BeanMap.of(target);
@@ -138,28 +162,5 @@ class ProxyObjectWithIntrospectableSupport implements ProxyObject {
             }
             throw new UnsupportedOperationException(String.format("No candidates found with the right number of arguments for method %s, needed at least %d but got %d", candidates.iterator().next().getName(), minNeeded, arguments.length));
         }
-    }
-
-    @Override
-    public Object getMemberKeys() {
-        return ProxyArray.fromList(getInvokableNames());
-    }
-
-    @Override
-    public boolean hasMember(String key) {
-        return getInvokableNames().contains(key);
-    }
-
-    private ArrayList<Object> getInvokableNames() {
-        ArrayList<Object> propNames = new ArrayList<>(asMap().keySet());
-        if (introspection != null) {
-            introspection.getBeanMethods().forEach(it -> propNames.add(it.getName()));
-        }
-        return propNames;
-    }
-
-    @Override
-    public void putMember(String key, Value value) {
-        throw new UnsupportedOperationException();
     }
 }
