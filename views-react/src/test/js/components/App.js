@@ -18,6 +18,7 @@ function App({name, obj, url, triggerSandbox}) {
             <p>URL is {url}</p>
             <p>Reading a property works: {obj.foo}</p>
             <p>Reading a null works: {obj.bar}</p>
+            <p>Calling a method works: {obj.sayGoodbye("Bob")}</p>
         </body>
         </html>
     );

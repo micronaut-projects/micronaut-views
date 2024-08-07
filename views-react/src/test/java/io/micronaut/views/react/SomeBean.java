@@ -1,5 +1,6 @@
 package io.micronaut.views.react;
 
+import io.micronaut.context.annotation.Executable;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.Nullable;
 import org.graalvm.polyglot.HostAccess;
@@ -25,5 +26,11 @@ public class SomeBean {
     @HostAccess.Export
     public String getBar() {
         return bar;
+    }
+
+    @HostAccess.Export
+    @Executable
+    public String sayGoodbye(String name) {
+        return "Goodbye " + name + "!";
     }
 }

@@ -26,6 +26,7 @@ class ReactViewRenderSpec extends Specification {
         result.contains("Reading a property works: <!-- -->foo")
         result.contains("Reading a null works: </p>")
         result.contains("\"name\":\"Mike\"")
+        result.contains("Calling a method works: <!-- -->Goodbye Bob!")
     }
 
     void "views can be rendered with basic props with a request"() {
@@ -34,7 +35,7 @@ class ReactViewRenderSpec extends Specification {
         req.getUri() >> URI.create("https://localhost/demopage")
 
         when:
-        Writable writable = renderer.render("App", ["name": "Mike"], req)
+        Writable writable = renderer.render("App", ["name": "Mike", "obj": new SomeBean("foo", null)], req)
         String result = new StringWriter().with {
             writable.writeTo(it)
             it.toString()
