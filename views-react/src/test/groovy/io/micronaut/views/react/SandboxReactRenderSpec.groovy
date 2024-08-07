@@ -31,7 +31,7 @@ class SandboxReactRenderSpec extends Specification {
 
         then:
         result.contains("Hello there")
-        result.contains("\"name\":\"Mike\",\"obj\":{\"foo\":\"bar\"}")
+        result.contains("{\"name\":\"Mike\",\"obj\":{\"bar\":null,\"foo\":\"bar\"}}")
     }
 
     void "host types are inaccessible with the sandbox enabled"() {
@@ -46,6 +46,6 @@ class SandboxReactRenderSpec extends Specification {
         // The version of GraalJS currently depended on is not compatible with the sandbox. When GraalJS is upgraded,
         // this unit test can be enabled.
         thrown(BeanInstantiationException)
-//        thrown(PolyglotException)
+//        thrown(MessageBodyException)
     }
 }
