@@ -34,7 +34,7 @@ class JSBeanFactory {
      * normal {@link HostAccess.Export} annotation, or allowing sandboxed JS to extend or implement
      * Java types.
      */
-    @Bean
+    @Singleton
     HostAccess hostAccess(ReactViewsRendererConfiguration configuration) {
         if (configuration.getSandbox()) {
             return HostAccess.CONSTRAINED;
