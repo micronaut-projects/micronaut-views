@@ -16,7 +16,6 @@
 package io.micronaut.views.react;
 
 import io.micronaut.core.annotation.Internal;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
@@ -33,31 +32,28 @@ import org.slf4j.LoggerFactory;
 class JSSandboxing {
     private static final Logger LOG = LoggerFactory.getLogger(JSSandboxing.class);
     private final boolean sandbox;
+    private final HostAccess hostAccess;
 
-    @Inject
-    JSSandboxing(ReactViewsRendererConfiguration configuration) {
+    JSSandboxing(ReactViewsRendererConfiguration configuration, HostAccess hostAccess) {
         sandbox = configuration.getSandbox();
-        if (sandbox) {
-            LOG.debug("ReactJS sandboxing enabled");
-        } else {
-            LOG.debug("ReactJS sandboxing disabled");
-        }
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("ReactJS sandboxing {}", sandbox ? "enabled" : "disabled");
+        } 
+        this.hostAccess = hostAccess;
     }
 
     Engine.Builder configure(Engine.Builder engineBuilder) {
         return engineBuilder.sandbox(sandbox ? SandboxPolicy.CONSTRAINED : SandboxPolicy.TRUSTED);
     }
 
-    Context.Builder configure(Context.Builder contextBuilder) {
+    Context.Builder configure(Context.Builder builder) {
         if (sandbox) {
-            return contextBuilder
-                .sandbox(SandboxPolicy.CONSTRAINED)
-                .allowHostAccess(HostAccess.CONSTRAINED);
+            return builder.sandbox(SandboxPolicy.CONSTRAINED).allowHostAccess(hostAccess);
         } else {
-            return contextBuilder
-                .sandbox(SandboxPolicy.TRUSTED)
-                .allowAllAccess(true)
-                .allowExperimentalOptions(true);
+            // allowExperimentalOptions is here because as of the time of writing (August 2024)
+            // the esm-eval-returns-exports option is experimental. That got fixed and this
+            // can be removed once the base version of GraalJS is bumped to 24.1 or higher.
+            return builder.sandbox(SandboxPolicy.TRUSTED).allowAllAccess(true).allowExperimentalOptions(true);
         }
     }
 }

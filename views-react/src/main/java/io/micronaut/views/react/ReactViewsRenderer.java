@@ -17,7 +17,6 @@ package io.micronaut.views.react;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.core.beans.BeanMap;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.exceptions.MessageBodyException;
@@ -31,7 +30,6 @@ import org.graalvm.polyglot.proxy.ProxyObject;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 /**
  * <p>Instantiates GraalJS and uses it to render React components server side. See the user guide
@@ -96,22 +94,11 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
 
         var renderCallback = new RenderCallback(writer, request);
 
-        // Get props into canonical String->Object form and from there wrap to ProxyObject for the
-        // JS engine. This is needed because props can come in several forms, and we need to
-        // wrap them recursively.
-        @SuppressWarnings("unchecked")
-        Map<String, Object> strObjMap = isStringMap(props) ? (Map<String, Object>) props : BeanMap.of(props);
-        ProxyObject propsObj = new ProxyObjectWithIntrospectableSupport(context.polyglotContext, strObjMap);
-
+        // We wrap the props object so we can use Micronaut's compile-time reflection implementation.
+        // This should be more native-image friendly (no need to write reflection config files), and
+        // might also be faster.
+        ProxyObject propsObj = new ProxyObjectWithIntrospectableSupport(context.polyglotContext, props);
         context.render.execute(component, propsObj, renderCallback, reactConfiguration.getClientBundleURL(), request);
-    }
-
-    private boolean isStringMap(PROPS props) {
-        if (props instanceof Map<?, ?> propsMap) {
-            return propsMap.keySet().stream().allMatch(it -> it instanceof String);
-        } else {
-            return false;
-        }
     }
 
     /**

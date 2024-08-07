@@ -20,7 +20,7 @@ class SandboxReactRenderSpec extends Specification {
     @FailsWith(BeanInstantiationException)
     void "views can be rendered with sandboxing enabled"() {
         given:
-        def props = ["name": "Mike", "obj": new SomeBean("bar")]
+        def props = ["name": "Mike", "obj": new SomeBean("bar", null)]
 
         when:
         Writable writable = renderer.render("App", props, null)
@@ -31,12 +31,12 @@ class SandboxReactRenderSpec extends Specification {
 
         then:
         result.contains("Hello there")
-        result.contains("\"name\":\"Mike\",\"obj\":{\"foo\":\"bar\"}")
+        result.contains("{\"name\":\"Mike\",\"obj\":{\"bar\":null,\"foo\":\"bar\"}}")
     }
 
     void "host types are inaccessible with the sandbox enabled"() {
         when:
-        Writable writable = renderer.render("App", ["name": "Mike", "triggerSandbox": true], null)
+        Writable writable = renderer.render("App", ["name": "Mike", "triggerSandbox": true, "obj": new SomeBean("foo", null)], null)
         new StringWriter().with {
             writable.writeTo(it)
             it.toString()
@@ -46,6 +46,8 @@ class SandboxReactRenderSpec extends Specification {
         // The version of GraalJS currently depended on is not compatible with the sandbox. When GraalJS is upgraded,
         // this unit test can be enabled.
         thrown(BeanInstantiationException)
-//        thrown(PolyglotException)
+//        def t = thrown(MessageBodyException)
+//        t.cause instanceof PolyglotException
+//        t.cause.message.contains("Java is not defined")
     }
 }
