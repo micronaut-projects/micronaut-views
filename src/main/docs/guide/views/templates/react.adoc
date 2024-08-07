@@ -41,14 +41,30 @@ include::{includedir}configurationProperties/io.micronaut.views.react.ReactViews
 
 Props can be supplied in the form of an introspectable bean or a `Map<String, Object>`. Both forms will be serialized to JSON and sent to the client for hydration, as well as used to render the root component. The URL of the current page will be taken from the request and added to the props under the `url` key, which is useful when working with libraries like https://github.com/preactjs/preact-router[`preact-router`]. If you use `Map<String, Object>` as your model type and use Micronaut Security, authenticated usernames and other security info will be added to your props automatically.
 
-On the server side prop objects are exposed to Javascript directly, without being serialized to JSON first. Micronaut's compile time reflection is used and this avoids some overhead, but more importantly means that methods marked `@Executable` can be invoked by your server side JS. Note that this is true even if the sandbox is enabled: being marked `@Executable` is enough. Arguments and return values are mapped to/from Java in a https://www.graalvm.org/sdk/javadoc/org/graalvm/polyglot/Value.html#target-type-mapping-heading[natural manner]. If your props bean returns a non-introspectable object from a property, it will be mapped in the normal way for GraalJS (meaning it will use runtime reflection and may require `@HostAccess.Export` on methods you wish to call).
+On the server side prop objects are exposed to Javascript directly, without being serialized to JSON first. Micronaut's compile time reflection is used and this avoids some overhead as well as simplifying access to your props (see below). If your props bean returns a non-introspectable object from a property, it will be mapped in the normal way for GraalJS (meaning it will use runtime reflection and may require `@HostAccess.Export` on methods you wish to call).
 
-By default you will need React components that return the entire page, including the `<html>` tag. You'll also need to prepare your Javascript (see below). Then just name your required page component in the `@View` annotation on a controller, for example `@View("App")` will render the `<App/>` component with your page props.
+By default, you will need React components that return the entire page, including the `<html>` tag. You'll also need to prepare your Javascript (see below). Then just name your required page component in the `@View` annotation on a controller, for example `@View("App")` will render the `<App/>` component with your page props.
 
 If your page components don't render the whole page or you need better control over how the framework is invoked you can use _render scripts_ (see below).
 
+== Accessing Java from Javascript
+
+The https://www.graalvm.org/latest/reference-manual/embed-languages/#access-java-from-guest-languages[usual GraalJS rules for accessing Java apply] with a few differences:
+
+1. Your root prop object and any introspectable object reachable from it can be accessed using normal Javascript property syntax, for instance if you have an `@Introspectable` bean with a `String getFoo()` method then you can just access that property by writing `props.foo` instead of `props.getFoo()`, as would normally be required when accessing Java objects.
+2. Methods annotated with `@Executable` can be invoked from Javascript. Arguments and return values are mapped to/from Java in a https://www.graalvm.org/sdk/javadoc/org/graalvm/polyglot/Value.html#target-type-mapping-heading[natural manner].
+3. Your code can use `Java.type("com.foo.bar.BazClass")` style calls to get access to Java classes and then instantiate them or call static methods on them.
+
+Note that props are read only. Attempting to set the value of a Java property on a props object will fail.
+
 == Sandbox
 
-By default Javascript executing server side runs with the same privilege level as the server itself. This is similar to the Node security model, but exposes you to supply chain attacks. If a third party React component you depend on turns out to be malicious or simply buggy, it could allow an attacker to run code server side instead of only inside the browser sandbox.
+By default, Javascript executing server side runs with the same privilege level as the server itself. This is similar to the Node security model but exposes you to supply chain attacks. If a third party React component you depend on turns out to be malicious or simply buggy, it could allow an attacker to run code server side instead of only inside the browser sandbox.
 
-Normally with React SSR you can't do much about this, but with Micronaut Views React you can enable a server-side sandbox if you use GraalVM 24.1 or higher. This prevents Javascript from accessing any Java host objects that haven't been specifically marked as accessible to the sandbox. To use this set `micronaut.views.react.sandbox` to true in your `application.properties`, and then ensure that any objects you use as props have their property getters annotated with `@org.graalvm.polyglot.HostAccess.Export`. If there are properties that happen to be on your beans that should _not_ be exposed to Javascript, just don't annotate them. Any properties not annotated will simply be invisible from inside the sandbox.
+Normally with React SSR you can't do much about this, but with Micronaut Views React you can enable a server-side sandbox if you use GraalVM 24.1 or higher. This prevents Javascript from accessing any Java host objects that haven't been specifically exposed into the sandbox. To use this set `micronaut.views.react.sandbox` to true in your `application.properties`.
+
+In this mode:
+
+- The `Java` top level object that lets code access any class will be gone.
+- Methods in `@Introspectable` objects reachable from your prop objects that are marked as `@Executable` will be exposed into the sandbox _regardless_ of sandbox settings. So be careful what methods you add to your props.
+- Any objects exposed via your root props that are *not* marked `@Introspectable` will be exposed via runtime reflection instead. In that case what's available inside the sandbox will depend on the https://www.graalvm.org/sdk/javadoc/org/graalvm/polyglot/HostAccess.html[`HostAccess`] policy, which can be customized by using the factory replacement mechanism (see the docs for Micronaut Core for details). By default anything not annotated with `@HostAccess.Exposed` will be invisible and uninvokable. Normally this is sufficient, but customizing the `HostAccess` can be useful if you want to expose third party code you don't control into the sandbox.

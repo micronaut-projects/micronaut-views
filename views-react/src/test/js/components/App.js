@@ -2,12 +2,7 @@
 import React from 'react';
 
 function App({name, obj, url, triggerSandbox}) {
-    if (triggerSandbox) {
-        // Verify that we aren't able to access host types due to the sandbox.
-        Java.type("java.lang.System");
-    }
-
-    return (
+    const markup = (
         <html>
         <head>
             <title>Hello World!</title>
@@ -22,6 +17,13 @@ function App({name, obj, url, triggerSandbox}) {
         </body>
         </html>
     );
+
+    if (triggerSandbox) {
+        // Verify that we aren't able to access host types due to the sandbox.
+        Java.type("java.lang.System");
+    }
+
+    return markup;
 }
 
 export default App;

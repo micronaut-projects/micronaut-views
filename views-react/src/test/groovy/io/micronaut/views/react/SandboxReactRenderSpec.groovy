@@ -36,7 +36,7 @@ class SandboxReactRenderSpec extends Specification {
 
     void "host types are inaccessible with the sandbox enabled"() {
         when:
-        Writable writable = renderer.render("App", ["name": "Mike", "triggerSandbox": true], null)
+        Writable writable = renderer.render("App", ["name": "Mike", "triggerSandbox": true, "obj": new SomeBean("foo", null)], null)
         new StringWriter().with {
             writable.writeTo(it)
             it.toString()
@@ -46,6 +46,8 @@ class SandboxReactRenderSpec extends Specification {
         // The version of GraalJS currently depended on is not compatible with the sandbox. When GraalJS is upgraded,
         // this unit test can be enabled.
         thrown(BeanInstantiationException)
-//        thrown(MessageBodyException)
+//        def t = thrown(MessageBodyException)
+//        t.cause instanceof PolyglotException
+//        t.cause.message.contains("Java is not defined")
     }
 }
