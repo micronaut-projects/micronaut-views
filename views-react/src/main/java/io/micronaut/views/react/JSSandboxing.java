@@ -37,11 +37,9 @@ class JSSandboxing {
 
     JSSandboxing(ReactViewsRendererConfiguration configuration, HostAccess hostAccess) {
         sandbox = configuration.getSandbox();
-        if (sandbox) {
-            LOG.debug("ReactJS sandboxing enabled");
-        } else {
-            LOG.debug("ReactJS sandboxing disabled");
-        }
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("ReactJS sandboxing {}", sandbox ? "enabled" : "disabled");
+        } 
         this.hostAccess = hostAccess;
     }
 
