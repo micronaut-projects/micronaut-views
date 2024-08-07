@@ -124,7 +124,7 @@ class ProxyObjectWithIntrospectableSupport implements ProxyObject {
     public void putMember(String key, Value value) {
         throw new UnsupportedOperationException();
     }
-    
+
     @SuppressWarnings("unchecked")
     private Map<String, Object> asMap() {
         return isStringMap ? (Map<String, Object>) target : BeanMap.of(target);
