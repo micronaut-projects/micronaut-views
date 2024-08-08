@@ -19,11 +19,8 @@ class SandboxReactRenderSpec extends Specification {
     // this unit test can be enabled.
     @FailsWith(BeanInstantiationException)
     void "views can be rendered with sandboxing enabled"() {
-        given:
-        def props = ["name": "Mike", "obj": new SomeBean("bar", null)]
-
         when:
-        Writable writable = renderer.render("App", props, null)
+        Writable writable = renderer.render("App", TestProps.basic, null)
         String result = new StringWriter().with {
             writable.writeTo(it)
             it.toString()
@@ -36,7 +33,7 @@ class SandboxReactRenderSpec extends Specification {
 
     void "host types are inaccessible with the sandbox enabled"() {
         when:
-        Writable writable = renderer.render("App", ["name": "Mike", "triggerSandbox": true, "obj": new SomeBean("foo", null)], null)
+        Writable writable = renderer.render("App", TestProps.triggerSandbox, null)
         new StringWriter().with {
             writable.writeTo(it)
             it.toString()
