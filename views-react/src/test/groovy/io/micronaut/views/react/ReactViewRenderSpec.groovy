@@ -27,6 +27,7 @@ class ReactViewRenderSpec extends Specification {
         result.contains("Reading a property works: <!-- -->foo")
         result.contains("Reading a null works: </p>")
         result.contains("\"name\":\"Mike\"")
+        result.contains("\"innerBean\":{\"a\":10,\"list\":[\"one\",\"two\"],\"map\":{}}")
         result.contains("Calling a method works: <!-- -->Goodbye Bob!")
     }
 

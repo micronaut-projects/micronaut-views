@@ -29,6 +29,7 @@ import org.graalvm.polyglot.proxy.ProxyObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -38,38 +39,43 @@ import java.util.Map;
  * the regular polyglot mapping.
  */
 @Internal
-class ProxyObjectWithIntrospectableSupport implements ProxyObject {
+final class ProxyObjectWithIntrospectableSupport implements ProxyObject {
     private final Context context;
     private final Object target;
-    private final boolean isStringMap;
 
     @Nullable
     private final BeanIntrospection<?> introspection;
 
-    ProxyObjectWithIntrospectableSupport(Context context, Object targetObject) {
-        this.context = context;
-
-        if (targetObject == null) {
-            throw new NullPointerException("Cannot proxy a null");
-        }
-
-        this.target = targetObject;
-        this.isStringMap = isStringMap(targetObject);
-        this.introspection = isStringMap ? null : BeanIntrospector.SHARED.findIntrospection(targetObject.getClass()).orElseThrow();
-    }
-
-    private ProxyObjectWithIntrospectableSupport(Context context, Object target, boolean isStringMap, BeanIntrospection<?> introspection) {
+    private ProxyObjectWithIntrospectableSupport(Context context, Object target, BeanIntrospection<?> introspection) {
         this.context = context;
         this.target = target;
-        this.isStringMap = isStringMap;
         this.introspection = introspection;
     }
 
-    private static boolean isStringMap(Object obj) {
-        if (obj instanceof Map<?, ?> map) {
-            return map.keySet().stream().allMatch(it -> it instanceof String);
+    /**
+     * Returns an object as a Truffle {@link Value} suitable for guest access, wrapping introspectable types with {@link ProxyObjectWithIntrospectableSupport}.
+     */
+    static Value wrap(Context context, Object object) {
+        if (object == null) {
+            return context.asValue(null);
+        } else  if (object instanceof Map<?, ?> map) {
+            // We need to recursively map the values.
+            var result = new HashMap<String, Object>();
+            map.forEach((key, value) -> result.put(key.toString(), wrap(context, value)));
+            return context.asValue(ProxyObject.fromMap(result));
+        } else if (object instanceof Collection<?> collection) {
+            // We need to recursively map the items. This could be lazy.
+            return context.asValue(collection.stream().map(it -> wrap(context, it)).toList());
+        } else if (object instanceof String) {
+            // We could ignore this case because we'd fall through the BeanIntrospector check, but that logs some debug spam and it's slower to look up objects we know we won't wrap anyway.
+            return context.asValue(object);
         } else {
-            return false;
+            var introspection = BeanIntrospector.SHARED.findIntrospection(object.getClass()).orElse(null);
+            if (introspection != null) {
+                return context.asValue(new ProxyObjectWithIntrospectableSupport(context, object, introspection));
+            } else {
+                return context.asValue(object);
+            }
         }
     }
 
@@ -80,13 +86,7 @@ class ProxyObjectWithIntrospectableSupport implements ProxyObject {
         // Is it a property?
         Object result = map.get(key);
         if (result != null) {
-            boolean resultIsMap = isStringMap(result);
-            var resultIntrospection = BeanIntrospector.SHARED.findIntrospection(result.getClass());
-            if (resultIsMap || resultIntrospection.isPresent()) {
-                return new ProxyObjectWithIntrospectableSupport(context, result, resultIsMap, resultIntrospection.orElseThrow());
-            } else {
-                return context.asValue(result);
-            }
+            return wrap(context, result);
         }
 
         // Can it be an @Executable method?
@@ -99,6 +99,7 @@ class ProxyObjectWithIntrospectableSupport implements ProxyObject {
             }
         }
 
+        // Not found.
         return context.asValue(null);
     }
 
@@ -125,9 +126,13 @@ class ProxyObjectWithIntrospectableSupport implements ProxyObject {
         throw new UnsupportedOperationException();
     }
 
-    @SuppressWarnings("unchecked")
     private Map<String, Object> asMap() {
-        return isStringMap ? (Map<String, Object>) target : BeanMap.of(target);
+        return BeanMap.of(target);
+    }
+
+    @Override
+    public String toString() {
+        return target.toString();
     }
 
     @SuppressWarnings("rawtypes")
