@@ -16,7 +16,7 @@ class ReactViewRenderSpec extends Specification {
 
     void "views can be rendered with basic props"() {
         when:
-        Writable writable = renderer.render("App", ["name": "Mike", "someNull": null, "obj": new SomeBean("foo", null)], null)
+        Writable writable = renderer.render("App", TestProps.basic, null)
         String result = new StringWriter().with {
             writable.writeTo(it)
             it.toString()
@@ -27,6 +27,7 @@ class ReactViewRenderSpec extends Specification {
         result.contains("Reading a property works: <!-- -->foo")
         result.contains("Reading a null works: </p>")
         result.contains("\"name\":\"Mike\"")
+        result.contains("\"innerBean\":{\"a\":10,\"list\":[\"one\",\"two\"],\"map\":{}}")
         result.contains("Calling a method works: <!-- -->Goodbye Bob!")
     }
 
@@ -36,7 +37,7 @@ class ReactViewRenderSpec extends Specification {
         req.getUri() >> URI.create("https://localhost/demopage")
 
         when:
-        Writable writable = renderer.render("App", ["name": "Mike", "obj": new SomeBean("foo", null)], req)
+        Writable writable = renderer.render("App", TestProps.basic, req)
         String result = new StringWriter().with {
             writable.writeTo(it)
             it.toString()
@@ -50,7 +51,7 @@ class ReactViewRenderSpec extends Specification {
 
     void "host access is OK if sandbox is disabled"() {
         when:
-        renderer.render("App", ["name": "Mike", "triggerSandbox": true, "obj": new SomeBean("foo", null)], null).writeTo(OutputStream.nullOutputStream())
+        renderer.render("App", TestProps.triggerSandbox, null).writeTo(OutputStream.nullOutputStream())
 
         then:
         notThrown(MessageBodyException)

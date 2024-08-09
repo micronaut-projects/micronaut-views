@@ -25,7 +25,6 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
-import org.graalvm.polyglot.proxy.ProxyObject;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -97,8 +96,8 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
         // We wrap the props object so we can use Micronaut's compile-time reflection implementation.
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
-        ProxyObject propsObj = new ProxyObjectWithIntrospectableSupport(context.polyglotContext, props);
-        context.render.execute(component, propsObj, renderCallback, reactConfiguration.getClientBundleURL(), request);
+        Value guestProps = ProxyObjectWithIntrospectableSupport.wrap(context.polyglotContext, props);
+        context.render.executeVoid(component, guestProps, renderCallback, reactConfiguration.getClientBundleURL(), request);
     }
 
     /**

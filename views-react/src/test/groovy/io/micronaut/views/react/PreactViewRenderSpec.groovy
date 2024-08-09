@@ -21,7 +21,7 @@ class PreactViewRenderSpec extends Specification {
 
     void "views can be rendered with basic props and no request"() {
         when:
-        Writable writable = renderer.render("App", ["name": "Mike", "obj": new SomeBean("foo", null)], null)
+        Writable writable = renderer.render("App", TestProps.basic, null)
         String result = new StringWriter().with {
             writable.writeTo(it)
             it.toString()
@@ -39,7 +39,7 @@ class PreactViewRenderSpec extends Specification {
         req.getUri() >> URI.create("https://localhost/demopage")
 
         when:
-        Writable writable = renderer.render("App", ["name": "Mike", "obj": new SomeBean("foo", null)], req)
+        Writable writable = renderer.render("App", TestProps.basic, req)
         String result = new StringWriter().with {
             writable.writeTo(it)
             it.toString()
