@@ -16,8 +16,10 @@
 package io.micronaut.views.react;
 
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.io.ResourceResolver;
 import io.micronaut.views.react.util.BeanPool;
 import io.micronaut.views.react.util.JavaUtilLoggingToSLF4J;
 import io.micronaut.views.react.util.OutputStreamToSLF4J;
@@ -25,9 +27,19 @@ import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.SandboxPolicy;
+import org.graalvm.polyglot.Source;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Optional;
+
+import static java.lang.String.format;
 
 /**
  * Allows the default Javascript context and host access policy to be controlled.
@@ -67,5 +79,21 @@ class ReactJSBeanFactory {
             .logHandler(new JavaUtilLoggingToSLF4J(LOG))
             .sandbox(sandbox ? SandboxPolicy.CONSTRAINED : SandboxPolicy.TRUSTED)
             .build();
+    }
+
+    @Bean
+    Source serverBundle(ResourceResolver resolver, ReactViewsRendererConfiguration reactConfiguration) throws IOException, URISyntaxException {
+        Optional<URL> bundlePathOpt = resolver.getResource(reactConfiguration.getServerBundlePath());
+        if (bundlePathOpt.isEmpty()) {
+            throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", reactConfiguration.getServerBundlePath(), ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
+        }
+        var bundleURL = bundlePathOpt.get();
+        Source.Builder sourceBuilder;
+        if (bundleURL.getProtocol().equals("file")) {
+            sourceBuilder = Source.newBuilder("js", new File(bundleURL.toURI()));
+        } else {
+            sourceBuilder = Source.newBuilder("js", bundleURL);
+        }
+        return sourceBuilder.mimeType("application/javascript+module").build();
     }
 }
