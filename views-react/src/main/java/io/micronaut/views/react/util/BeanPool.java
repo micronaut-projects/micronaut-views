@@ -16,8 +16,6 @@
 package io.micronaut.views.react.util;
 
 import io.micronaut.core.annotation.Internal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -48,51 +46,14 @@ import java.util.function.Supplier;
  * a sudden spike of traffic that drives many checkouts, memory usage may grow significantly
  * and not be released. Fixing this would be a good future improvement to the pool.
  * </p>
+ *
+ * @param <T> The type of the bean that being pooled.
  */
 @Internal
 public class BeanPool<T> {
     // TODO: Use @Scheduled to occasionally clear out beans that weren't accessed for a while to recover from traffic spikes.
 
-    private static final Logger LOG = LoggerFactory.getLogger(BeanPool.class);
-
     private final Supplier<T> factory;
-
-    /**
-     * A handle to a pooled object. Call {@link #get()} to obtain the wrapped reference, and then
-     * pass this handle to {@link BeanPool#checkIn(Handle)} to put it back. Alternatively you can
-     * just close this object to check it back in.
-     */
-    public interface Handle<T> extends Supplier<T>, AutoCloseable {
-        @Override
-        void close();
-    }
-
-    private final class PoolEntry implements Handle<T> {
-        final T obj;
-        final int version;
-
-        private PoolEntry(T obj, int version) {
-            this.obj = obj;
-            this.version = version;
-        }
-
-        @Override
-        public T get() {
-            return obj;
-        }
-
-        @Override
-        public void close() {
-            checkIn(this);
-        }
-
-        @Override
-        public String toString() {
-            return "PoolEntry[" +
-                "obj=" + obj + ", " +
-                "version=" + version + ']';
-        }
-    }
 
     // Synchronized on 'this'.
     private final LinkedList<SoftReference<PoolEntry>> pool = new LinkedList<>();
@@ -175,5 +136,45 @@ public class BeanPool<T> {
             }
         }
         pool.clear();
+    }
+
+
+    /**
+     * A handle to a pooled object. Call {@link #get()} to obtain the wrapped reference, and then
+     * pass this handle to {@link BeanPool#checkIn(Handle)} to put it back. Alternatively you can
+     * just close this object to check it back in.
+     *
+     * @param <T> The type of the object being referenced.
+     */
+    public interface Handle<T> extends Supplier<T>, AutoCloseable {
+        @Override
+        void close();
+    }
+
+    private final class PoolEntry implements Handle<T> {
+        final T obj;
+        final int version;
+
+        private PoolEntry(T obj, int version) {
+            this.obj = obj;
+            this.version = version;
+        }
+
+        @Override
+        public T get() {
+            return obj;
+        }
+
+        @Override
+        public void close() {
+            checkIn(this);
+        }
+
+        @Override
+        public String toString() {
+            return "PoolEntry[" +
+                "obj=" + obj + ", " +
+                "version=" + version + ']';
+        }
     }
 }
