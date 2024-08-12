@@ -48,7 +48,7 @@ class JSBeanFactory {
     @Singleton
     HostAccess hostAccess(ReactViewsRendererConfiguration configuration) {
         return configuration.getSandbox()
-            ? HostAccess.CONSTRAINED
+            ? HostAccess.newBuilder(HostAccess.CONSTRAINED).allowListAccess(true).allowMapAccess(true).build()
             : HostAccess.ALL;
     }
 

@@ -27,8 +27,9 @@ class SandboxReactRenderSpec extends Specification {
         }
 
         then:
-        result.contains("Hello there")
-        result.contains("{\"name\":\"Mike\",\"obj\":{\"bar\":null,\"foo\":\"bar\"}}")
+        result.contains("\"name\":\"Mike\"")
+        result.contains("\"innerBean\":{\"a\":10,\"list\":[\"one\",\"two\"],\"map\":{}}")
+        result.contains("Calling a method works: <!-- -->Goodbye Bob!")
     }
 
     void "host types are inaccessible with the sandbox enabled"() {
