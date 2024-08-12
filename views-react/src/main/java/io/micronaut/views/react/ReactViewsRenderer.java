@@ -22,6 +22,7 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.exceptions.MessageBodyException;
 import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.react.truffle.IntrospectableToTruffleAdapter;
 import io.micronaut.views.react.util.BeanPool;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -94,7 +95,7 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
         // We wrap the props object so we can use Micronaut's compile-time reflection implementation.
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
-        Value guestProps = ProxyObjectWithIntrospectableSupport.wrap(context.polyglotContext, props);
+        Value guestProps = IntrospectableToTruffleAdapter.wrap(context.polyglotContext, props);
         context.render.executeVoid(component, guestProps, renderCallback, reactConfiguration.getClientBundleURL(), request);
     }
 
