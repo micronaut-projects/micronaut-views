@@ -19,6 +19,8 @@ import io.micronaut.core.annotation.Internal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.LinkedList;
 import java.util.function.Supplier;
@@ -35,9 +37,17 @@ import java.util.function.Supplier;
  * the general rate of contention, rather than how many threads are in use.
  * </p>
  *
- * <p><b>Note:</b> this pool doesn't release objects in the background. If you have
+ * <p>
+ * Beans in the pool can be atomically cleared and closed (if they implement {@link Closeable}).
+ * Any beans checked out when {@link #clear()} is called will remain untouched, but when they are
+ * checked back in they will be closed and discarded at that point.
+ * </p>
+ *
+ * <p>
+ * <b>Note:</b> this pool doesn't release objects in the background. If you have
  * a sudden spike of traffic that drives many checkouts, memory usage may grow significantly
- * and not be released. Fixing this would be a good future improvement to the pool.</p>
+ * and not be released. Fixing this would be a good future improvement to the pool.
+ * </p>
  */
 @Internal
 public class BeanPool<T> {
@@ -126,25 +136,44 @@ public class BeanPool<T> {
     /**
      * Puts a context back into the pool. It should be returned in a 'clean' state, so whatever
      * thread picks it up next finds it ready to use and without any leftover data from prior
-     * usages.
+     * usages. If the pool has been {@link #clear() cleared} previously, and the pooled object is
+     * {@link Closeable}, then the object will be closed at this point (exceptions are ignored).
      *
      * @param handle The object you got from {@link #checkOut()}.
      */
     public synchronized void checkIn(Handle<T> handle) {
         var impl = (PoolEntry) handle;
         // Put it back into the pool for reuse unless it's out of date, in which case just let it drift.
-        if (impl.version == versionCounter)
+        if (impl.version == versionCounter) {
             pool.add(new SoftReference<>(impl));
+        } else if (impl.obj instanceof Closeable closeable) {
+            try {
+                closeable.close();
+            } catch (IOException ignored) {
+            }
+        }
     }
 
     /**
      * Empties the pool. Beans currently checked out with {@link #checkOut()} will not be re-added
-     * to the pool when {@link #checkIn(Handle)} is called.
+     * to the pool when {@link #checkIn(Handle)} is called, and may be closed if they are
+     * {@link Closeable}. Likewise, all beans in the pool are closed if they are {@link Closeable}
+     * and exceptions thrown by {@link Closeable#close()} are ignored.
      */
     public synchronized void clear() {
         versionCounter++;
-        if (versionCounter < 0)
+        if (versionCounter < 0) {
             throw new IllegalStateException("Version counter wrapped, you can't call releaseAll this many times.");
+        }
+        for (SoftReference<PoolEntry> ref : pool) {
+            var r = ref.get();
+            if (r != null && r.obj instanceof Closeable closeable) {
+                try {
+                    closeable.close();
+                } catch (IOException ignored) {
+                }
+            }
+        }
         pool.clear();
     }
 }
