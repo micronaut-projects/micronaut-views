@@ -15,12 +15,9 @@
  */
 package io.micronaut.views.react;
 
-import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.ResourceResolver;
-import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
-import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Source;
@@ -42,10 +39,8 @@ import static java.lang.String.format;
  */
 @Singleton
 @Internal
-class JSBundlePaths implements ApplicationEventListener<FileChangedEvent> {
+class JSBundlePaths {
     private static final Logger LOG = LoggerFactory.getLogger(JSBundlePaths.class);
-
-    private final JSContextPool contextPool;
 
     // Source code file name, for JS stack traces.
     private final String bundleFileName;
@@ -55,16 +50,10 @@ class JSBundlePaths implements ApplicationEventListener<FileChangedEvent> {
 
     // If a file:// (during development), the path of that file. Used for hot reloads.
     @Nullable
-    private final Path bundlePath;
+    final Path bundlePath;
 
     @Inject
-    JSBundlePaths(
-        JSContextPool contextPool,
-        ReactViewsRendererConfiguration reactConfiguration,
-        ResourceResolver resolver
-    ) throws IOException {
-        this.contextPool = contextPool;
-
+    JSBundlePaths(ReactViewsRendererConfiguration reactConfiguration, ResourceResolver resolver) throws IOException {
         Optional<URL> bundlePathOpt = resolver.getResource(reactConfiguration.getServerBundlePath());
         if (bundlePathOpt.isEmpty()) {
             throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", reactConfiguration.getServerBundlePath(), ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
@@ -73,6 +62,7 @@ class JSBundlePaths implements ApplicationEventListener<FileChangedEvent> {
         bundleFileName = bundleURL.getFile();
         if (bundleURL.getProtocol().equals("file")) {
             bundlePath = Path.of(bundleURL.getPath());
+            LOG.info("Using server-side JS bundle from local disk: {}", bundlePath);
         } else {
             bundlePath = null;
         }
@@ -83,14 +73,6 @@ class JSBundlePaths implements ApplicationEventListener<FileChangedEvent> {
             return Source.newBuilder("js", reader, bundleFileName)
                 .mimeType("application/javascript+module")
                 .build();
-        }
-    }
-
-    @Override
-    public void onApplicationEvent(FileChangedEvent event) {
-        if (bundlePath != null && event.getPath().equals(bundlePath) && event.getEventType() != WatchEventType.DELETE) {
-            LOG.info("Reloading Javascript bundle due to file change.");
-            contextPool.releaseAll();
         }
     }
 }

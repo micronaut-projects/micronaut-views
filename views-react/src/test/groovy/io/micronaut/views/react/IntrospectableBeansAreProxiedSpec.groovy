@@ -9,12 +9,12 @@ import spock.lang.Specification
 @MicronautTest(startApplication = false)
 class IntrospectableBeansAreProxiedSpec extends Specification {
     @Inject
-    JSContextPool contextPool
+    BeanPool contextPool
 
     void "introspectable bean can be proxied"() {
         given:
-        def jsContext = contextPool.acquire()
-        def context = jsContext.polyglotContext
+        BeanPool.Handle<JSContext> jsContext = contextPool.checkOut()
+        def context = jsContext.get().polyglotContext
         def bean = new SomeBean("foo value", "bar value", new SomeBean.InnerBean(10, Map.of("key", 123), List.of("one", "two", "three")))
 
         when:

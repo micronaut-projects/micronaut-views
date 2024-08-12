@@ -15,7 +15,10 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
+import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -33,21 +36,23 @@ import java.io.IOException;
  */
 @Singleton
 @Internal
-class CompiledJS implements AutoCloseable {
+class CompiledJS implements AutoCloseable, ApplicationEventListener<FileChangedEvent> {
     private static final Logger LOG = LoggerFactory.getLogger("js");
 
     final Engine engine;
+    private final BeanPool<JSContext> beanPool;
     private Source source;
     private final JSBundlePaths jsBundlePaths;
 
     @Inject
-    CompiledJS(JSBundlePaths jsBundlePaths, JSEngineLogHandler engineLogHandler, JSSandboxing sandboxing) {
+    CompiledJS(JSBundlePaths jsBundlePaths, JSEngineLogHandler engineLogHandler, JSSandboxing sandboxing, BeanPool<JSContext> beanPool) {
         var engineBuilder = Engine.newBuilder("js")
             .out(new OutputStreamToSLF4J(LOG, Level.INFO))
             .err(new OutputStreamToSLF4J(LOG, Level.ERROR))
             .logHandler(engineLogHandler);
         engine = sandboxing.configure(engineBuilder).build();
         this.jsBundlePaths = jsBundlePaths;
+        this.beanPool = beanPool;
         reload();
     }
 
@@ -55,7 +60,7 @@ class CompiledJS implements AutoCloseable {
         return source;
     }
 
-    synchronized void reload() {
+    private synchronized void reload() {
         try {
             source = jsBundlePaths.readServerBundle();
         } catch (IOException e) {
@@ -67,5 +72,14 @@ class CompiledJS implements AutoCloseable {
     @PreDestroy
     public void close() throws Exception {
         engine.close();
+    }
+
+    @Override
+    public void onApplicationEvent(FileChangedEvent event) {
+        if (jsBundlePaths.bundlePath != null && event.getPath().equals(jsBundlePaths.bundlePath) && event.getEventType() != WatchEventType.DELETE) {
+            LOG.info("Reloading Javascript bundle due to file change.");
+            reload();
+            beanPool.clear();
+        }
     }
 }
