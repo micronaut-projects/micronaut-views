@@ -19,10 +19,15 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.views.react.util.BeanPool;
+import io.micronaut.views.react.util.JavaUtilLoggingToSLF4J;
+import io.micronaut.views.react.util.OutputStreamToSLF4J;
 import jakarta.inject.Singleton;
+import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.HostAccess;
-
-;
+import org.graalvm.polyglot.SandboxPolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
 /**
  * Allows the default Javascript context and host access policy to be controlled.
@@ -30,6 +35,8 @@ import org.graalvm.polyglot.HostAccess;
 @Factory
 @Internal
 class JSBeanFactory {
+    private static final Logger LOG = LoggerFactory.getLogger("js");
+
     /**
      * This defaults to
      * {@link HostAccess#ALL} if the sandbox is disabled, or {@link HostAccess#CONSTRAINED} if it's on.
@@ -48,5 +55,17 @@ class JSBeanFactory {
     @Singleton
     BeanPool<JSContext> contextPool(ApplicationContext applicationContext) {
         return new BeanPool<>(() -> applicationContext.createBean(JSContext.class));
+    }
+
+    @Singleton
+    Engine engine(ReactViewsRendererConfiguration configuration) {
+        boolean sandbox = configuration.getSandbox();
+        LOG.debug("ReactJS sandboxing {}", sandbox ? "enabled" : "disabled");
+        return Engine.newBuilder("js")
+            .out(new OutputStreamToSLF4J(LOG, Level.INFO))
+            .err(new OutputStreamToSLF4J(LOG, Level.ERROR))
+            .logHandler(new JavaUtilLoggingToSLF4J(LOG))
+            .sandbox(sandbox ? SandboxPolicy.CONSTRAINED : SandboxPolicy.TRUSTED)
+            .build();
     }
 }
