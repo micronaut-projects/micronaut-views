@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
 import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import io.micronaut.views.react.util.BeanPool;
+import io.micronaut.views.react.util.JavaUtilLoggingToSLF4J;
 import io.micronaut.views.react.util.OutputStreamToSLF4J;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
@@ -47,11 +48,11 @@ class CompiledJS implements AutoCloseable, ApplicationEventListener<FileChangedE
     private final JSBundlePaths jsBundlePaths;
 
     @Inject
-    CompiledJS(JSBundlePaths jsBundlePaths, JSEngineLogHandler engineLogHandler, JSSandboxing sandboxing, BeanPool<JSContext> beanPool) {
+    CompiledJS(JSBundlePaths jsBundlePaths, JSSandboxing sandboxing, BeanPool<JSContext> beanPool) {
         var engineBuilder = Engine.newBuilder("js")
             .out(new OutputStreamToSLF4J(LOG, Level.INFO))
             .err(new OutputStreamToSLF4J(LOG, Level.ERROR))
-            .logHandler(engineLogHandler);
+            .logHandler(new JavaUtilLoggingToSLF4J(LOG));
         engine = sandboxing.configure(engineBuilder).build();
         this.jsBundlePaths = jsBundlePaths;
         this.beanPool = beanPool;
