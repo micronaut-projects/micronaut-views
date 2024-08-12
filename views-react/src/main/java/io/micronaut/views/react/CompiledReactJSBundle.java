@@ -16,13 +16,16 @@
 package io.micronaut.views.react;
 
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.Qualifier;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.inject.BeanType;
 import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
 import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import io.micronaut.views.react.util.BeanPool;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.Source;
@@ -30,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 /**
  * Holds the thread-safe {@link Engine} and {@link Source} which together pin compiled machine code
@@ -46,7 +50,7 @@ class CompiledReactJSBundle implements AutoCloseable, ApplicationEventListener<F
     private Source source;
 
     @Inject
-    CompiledReactJSBundle(Engine engine, BeanPool<ReactJSContext> beanPool, ApplicationContext applicationContext) {
+    CompiledReactJSBundle(@Named("react") Engine engine, BeanPool<ReactJSContext> beanPool, ApplicationContext applicationContext) {
         this.engine = engine;
         this.beanPool = beanPool;
         this.applicationContext = applicationContext;
@@ -72,7 +76,20 @@ class CompiledReactJSBundle implements AutoCloseable, ApplicationEventListener<F
         }
     }
 
+    private static class ReactSourceQualifier implements Qualifier<Source> {
+        @Override
+        public <BT extends BeanType<Source>> Stream<BT> reduce(Class<Source> beanType, Stream<BT> candidates) {
+            return candidates.filter(bt -> {
+                var n = bt.getBeanName();
+                return n.isPresent() && n.get().equals("react");
+            });
+        }
+
+        static ReactSourceQualifier INSTANCE = new ReactSourceQualifier();
+    }
+
     private synchronized void reload() {
-        source = applicationContext.createBean(Source.class);
+        // This ensures we ignore other Source objects that aren't marked as being for us.
+        source = applicationContext.createBean(Source.class, ReactSourceQualifier.INSTANCE);
     }
 }

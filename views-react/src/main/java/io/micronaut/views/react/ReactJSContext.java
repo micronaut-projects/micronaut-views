@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.NonNull;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.graalvm.polyglot.*;
 
 import java.io.IOException;
@@ -51,7 +52,7 @@ class ReactJSContext implements AutoCloseable {
     private final ReactViewsRendererConfiguration configuration;
 
     @Inject
-    ReactJSContext(CompiledReactJSBundle compiledJS, ReactViewsRendererConfiguration configuration, Engine engine, HostAccess hostAccess) {
+    ReactJSContext(CompiledReactJSBundle compiledJS, ReactViewsRendererConfiguration configuration, @Named("react") Engine engine, @Named("react") HostAccess hostAccess) {
         this.compiledJS = compiledJS;
         this.configuration = configuration;
         this.engine = engine;
