@@ -53,7 +53,11 @@ public final class IntrospectableToTruffleAdapter implements ProxyObject {
     }
 
     /**
-     * Returns an object as a Truffle {@link Value} suitable for guest access, wrapping introspectable types with {@link IntrospectableToTruffleAdapter}.
+     * Wraps an object as a Truffle {@link Value} suitable for guest access, wrapping introspectable types with {@link IntrospectableToTruffleAdapter}.
+     *
+     * @param context The language context to wrap the object into.
+     * @param object Either null, a {@link Map}, a {@link Collection}, an {@link io.micronaut.core.annotation.Introspected introspectable object}, or any other object supported by the Polyglot interop layer.
+     * @return A value that will return true to {@link Value#isProxyObject()}
      */
     public static Value wrap(Context context, Object object) {
         if (object == null) {

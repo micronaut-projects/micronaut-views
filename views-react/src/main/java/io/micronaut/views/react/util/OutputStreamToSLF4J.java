@@ -39,6 +39,8 @@ public final class OutputStreamToSLF4J extends OutputStream {
 
     /**
      * Creates a logging stream with the JVM's default character set.
+     *
+     * @param loggingEventBuilder Lets you customize how the log events are sent to SLF4J (e.g. level, logger).
      */
     public OutputStreamToSLF4J(LoggingEventBuilder loggingEventBuilder) {
         this(loggingEventBuilder, Charset.defaultCharset());
@@ -46,6 +48,9 @@ public final class OutputStreamToSLF4J extends OutputStream {
 
     /**
      * Creates a logging stream with the given character set.
+     *
+     * @param loggingEventBuilder Lets you customize how the log events are sent to SLF4J (e.g. level, logger).
+     * @param charset Encoding of strings being written to the output stream.
      */
     public OutputStreamToSLF4J(LoggingEventBuilder loggingEventBuilder, Charset charset) {
         this.loggingEventBuilder = loggingEventBuilder;
@@ -54,6 +59,9 @@ public final class OutputStreamToSLF4J extends OutputStream {
 
     /**
      * Creates a logging stream for the given logger and logging level.
+     *
+     * @param logger The SLF4J logger object that the stream should emit to.
+     * @param level What severity to log lines at.
      */
     public OutputStreamToSLF4J(Logger logger, Level level) {
         this(logger.makeLoggingEventBuilder(level));

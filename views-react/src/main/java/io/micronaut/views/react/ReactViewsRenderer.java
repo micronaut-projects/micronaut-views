@@ -102,6 +102,14 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
         context.render.executeVoid(component, guestProps, renderCallback, reactViewsRendererConfiguration.getClientBundleURL(), request);
     }
 
+    @Override
+    public void onApplicationEvent(FileChangedEvent event) {
+        if (event.getEventType() != WatchEventType.DELETE && reactJSBeanFactory.maybeReloadServerBundle(event.getPath())) {
+            beanPool.clear();
+            LOG.info("Reloaded React SSR bundle due to file change.");
+        }
+    }
+
     /**
      * Methods exposed to the ReactJS components and render scripts. Needs to be public to be
      * callable from the JS side.
@@ -149,14 +157,6 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
-    }
-
-    @Override
-    public void onApplicationEvent(FileChangedEvent event) {
-        if (event.getEventType() != WatchEventType.DELETE && reactJSBeanFactory.maybeReloadServerBundle(event.getPath())) {
-            beanPool.clear();
-            LOG.info("Reloaded React SSR bundle due to file change.");
         }
     }
 }

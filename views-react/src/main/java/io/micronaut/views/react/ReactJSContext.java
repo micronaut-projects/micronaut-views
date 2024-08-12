@@ -38,15 +38,15 @@ import java.util.stream.Stream;
 class ReactJSContext implements AutoCloseable {
     // Symbols the user's server side bundle might supply us with.
     private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
-    private final Engine engine;
-    private final HostAccess hostAccess;
-    private final ApplicationContext applicationContext;
 
     // Accessed from ReactViewsRenderer
     Context polyglotContext;
     Value render;
     Value ssrModule;
 
+    private final Engine engine;
+    private final HostAccess hostAccess;
+    private final ApplicationContext applicationContext;
     private final ReactViewsRendererConfiguration configuration;
 
     @Inject
@@ -60,22 +60,12 @@ class ReactJSContext implements AutoCloseable {
         this.applicationContext = applicationContext;
     }
 
-    private record NamedSourceQualifier(String name) implements Qualifier<Source> {
-        @Override
-        public <BT extends BeanType<Source>> Stream<BT> reduce(Class<Source> beanType, Stream<BT> candidates) {
-            return candidates.filter(bt -> name.equals(bt.getBeanName().orElse(null)));
-        }
-
-        static NamedSourceQualifier SSR = new NamedSourceQualifier("react");
-        static NamedSourceQualifier RENDER_SCRIPT = new NamedSourceQualifier("react-render-script");
-    }
-
     @PostConstruct
     void init() {
         polyglotContext = createContext();
 
         Value global = polyglotContext.getBindings("js");
-        ssrModule = loadNamedModule(NamedSourceQualifier.SSR);
+        ssrModule = loadNamedModule(NamedSourceQualifier.ssr);
 
         // Take all the exports from the components bundle, and expose them to the render script.
         for (var name : ssrModule.getMemberKeys()) {
@@ -83,7 +73,7 @@ class ReactJSContext implements AutoCloseable {
         }
 
         // Evaluate our JS-side framework specific render logic.
-        Value renderModule = loadNamedModule(NamedSourceQualifier.RENDER_SCRIPT);
+        Value renderModule = loadNamedModule(NamedSourceQualifier.renderScript);
         render = renderModule.getMember("ssr");
         if (render == null) {
             throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported.".formatted(configuration.getRenderScript()));
@@ -143,5 +133,15 @@ class ReactJSContext implements AutoCloseable {
     @Override
     public synchronized void close() {
         polyglotContext.close();
+    }
+
+    private record NamedSourceQualifier(String name) implements Qualifier<Source> {
+        static NamedSourceQualifier ssr = new NamedSourceQualifier("react");
+        static NamedSourceQualifier renderScript = new NamedSourceQualifier("react-render-script");
+
+        @Override
+        public <BT extends BeanType<Source>> Stream<BT> reduce(Class<Source> beanType, Stream<BT> candidates) {
+            return candidates.filter(bt -> name.equals(bt.getBeanName().orElse(null)));
+        }
     }
 }

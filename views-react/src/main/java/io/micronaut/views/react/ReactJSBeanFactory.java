@@ -50,6 +50,11 @@ import static java.lang.String.format;
 class ReactJSBeanFactory {
     private static final Logger LOG = LoggerFactory.getLogger("js");
 
+    // We cache the Source objects because they are expensive to create, but, we don't want them
+    // to be singleton beans so we can recreate them on file change.
+    private Source serverBundle;  // L(this)
+    private Source renderScript;  // L(this)
+
     /**
      * This defaults to {@link HostAccess#ALL} if the sandbox is disabled, or {@link
      * HostAccess#CONSTRAINED} if it's on. By replacing the {@link HostAccess} bean you can
@@ -82,11 +87,6 @@ class ReactJSBeanFactory {
             .sandbox(sandbox ? SandboxPolicy.CONSTRAINED : SandboxPolicy.TRUSTED)
             .build();
     }
-
-    // We cache the Source objects because they are expensive to create, but, we don't want them
-    // to be singleton beans so we can recreate them on file change.
-    private Source serverBundle;  // L(this)
-    private Source renderScript;  // L(this)
 
     @Bean
     @Named("react")
