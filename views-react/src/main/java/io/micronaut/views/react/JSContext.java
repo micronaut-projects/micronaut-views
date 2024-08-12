@@ -21,9 +21,7 @@ import io.micronaut.core.annotation.NonNull;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
-import org.graalvm.polyglot.Context;
-import org.graalvm.polyglot.Source;
-import org.graalvm.polyglot.Value;
+import org.graalvm.polyglot.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -41,6 +39,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 class JSContext implements AutoCloseable {
     // Symbols the user's server side bundle might supply us with.
     private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
+    private final Engine engine;
+    private final HostAccess hostAccess;
 
     // Accessed from ReactViewsRenderer
     Context polyglotContext;
@@ -49,13 +49,13 @@ class JSContext implements AutoCloseable {
 
     private final CompiledJS compiledJS;
     private final ReactViewsRendererConfiguration configuration;
-    private final JSSandboxing sandboxing;
 
     @Inject
-    JSContext(CompiledJS compiledJS, ReactViewsRendererConfiguration configuration, JSSandboxing sandboxing) {
+    JSContext(CompiledJS compiledJS, ReactViewsRendererConfiguration configuration, Engine engine, HostAccess hostAccess) {
         this.compiledJS = compiledJS;
         this.configuration = configuration;
-        this.sandboxing = sandboxing;
+        this.engine = engine;
+        this.hostAccess = hostAccess;
     }
 
     @PostConstruct
@@ -121,11 +121,26 @@ class JSContext implements AutoCloseable {
 
     private Context createContext() {
         var contextBuilder = Context.newBuilder()
-            .engine(compiledJS.engine)
+            .engine(engine)
             .option("js.esm-eval-returns-exports", "true")
             .option("js.unhandled-rejections", "throw");
+
+        if (configuration.getSandbox()) {
+            contextBuilder
+                .sandbox(SandboxPolicy.CONSTRAINED)
+                .allowHostAccess(hostAccess);
+        } else {
+            // allowExperimentalOptions is here because as of the time of writing (August 2024)
+            // the esm-eval-returns-exports option is experimental. That got fixed and this
+            // can be removed once the base version of GraalJS is bumped to 24.1 or higher.
+            contextBuilder
+                .sandbox(SandboxPolicy.TRUSTED)
+                .allowAllAccess(true)
+                .allowExperimentalOptions(true);
+        }
+
         try {
-            return sandboxing.configure(contextBuilder).build();
+            return contextBuilder.build();
         } catch (ExceptionInInitializerError e) {
             // The catch handler is to work around a bug in Polyglot 24.0.0
             if (e.getCause().getMessage().contains("version compatibility check failed")) {
