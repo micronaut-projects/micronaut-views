@@ -94,19 +94,23 @@ class ReactJSBeanFactory {
         // so we can recreate it.
         if (serverBundle == null) {
             Optional<URL> bundlePathOpt = resolver.getResource(reactConfiguration.getServerBundlePath());
-            if (bundlePathOpt.isEmpty()) {
-                throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", reactConfiguration.getServerBundlePath(), ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
-            }
-            var bundleURL = bundlePathOpt.get();
-            Source.Builder sourceBuilder;
-            if (bundleURL.getProtocol().equals("file")) {
-                sourceBuilder = Source.newBuilder("js", new File(bundleURL.toURI()));
-            } else {
-                sourceBuilder = Source.newBuilder("js", bundleURL);
-            }
-            serverBundle = sourceBuilder.mimeType("application/javascript+module").build();
+            serverBundle = serverBundleSourceBuilder(reactConfiguration, bundlePathOpt).build();
         }
         return serverBundle;
+    }
+
+    private static Source.Builder serverBundleSourceBuilder(ReactViewsRendererConfiguration config, Optional<URL> bundlePathOpt) throws FileNotFoundException, URISyntaxException {
+        if (bundlePathOpt.isEmpty()) {
+            throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", config.getServerBundlePath(), ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
+        }
+        URL bundleURL = bundlePathOpt.get();
+        Source.Builder sourceBuilder;
+        if (bundleURL.getProtocol().equals("file")) {
+            sourceBuilder = Source.newBuilder("js", new File(bundleURL.toURI()));
+        } else {
+            sourceBuilder = Source.newBuilder("js", bundleURL);
+        }
+        return sourceBuilder.mimeType("application/javascript+module");
     }
 
     synchronized boolean maybeReloadServerBundle(Path fileThatChanged) {
