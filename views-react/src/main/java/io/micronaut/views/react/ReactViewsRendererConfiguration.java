@@ -38,7 +38,7 @@ public interface ReactViewsRendererConfiguration {
     String DEFAULT_SERVER_BUNDLE_PATH = "classpath:views/ssr-components.mjs";
 
     /** The default value for {@link #getRenderScript()}. */
-    String DEFAULT_RENDER_SCRIPT = "classpath:/io/micronaut/views/react/react.js";
+    String DEFAULT_RENDER_SCRIPT = "classpath:io/micronaut/views/react/react.js";
 
     /**
      * @return the URL (relative or absolute) where the client Javascript bundle can be found. It will
