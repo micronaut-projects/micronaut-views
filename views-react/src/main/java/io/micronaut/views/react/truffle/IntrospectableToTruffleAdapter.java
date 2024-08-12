@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.react;
+package io.micronaut.views.react.truffle;
 
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Nullable;
@@ -39,23 +39,23 @@ import java.util.Map;
  * the regular polyglot mapping.
  */
 @Internal
-final class ProxyObjectWithIntrospectableSupport implements ProxyObject {
+public final class IntrospectableToTruffleAdapter implements ProxyObject {
     private final Context context;
     private final Object target;
 
     @Nullable
     private final BeanIntrospection<?> introspection;
 
-    private ProxyObjectWithIntrospectableSupport(Context context, Object target, BeanIntrospection<?> introspection) {
+    private IntrospectableToTruffleAdapter(Context context, Object target, BeanIntrospection<?> introspection) {
         this.context = context;
         this.target = target;
         this.introspection = introspection;
     }
 
     /**
-     * Returns an object as a Truffle {@link Value} suitable for guest access, wrapping introspectable types with {@link ProxyObjectWithIntrospectableSupport}.
+     * Returns an object as a Truffle {@link Value} suitable for guest access, wrapping introspectable types with {@link IntrospectableToTruffleAdapter}.
      */
-    static Value wrap(Context context, Object object) {
+    public static Value wrap(Context context, Object object) {
         if (object == null) {
             return context.asValue(null);
         } else  if (object instanceof Map<?, ?> map) {
@@ -67,12 +67,13 @@ final class ProxyObjectWithIntrospectableSupport implements ProxyObject {
             // We need to recursively map the items. This could be lazy.
             return context.asValue(collection.stream().map(it -> wrap(context, it)).toList());
         } else if (object instanceof String) {
-            // We could ignore this case because we'd fall through the BeanIntrospector check, but that logs some debug spam and it's slower to look up objects we know we won't wrap anyway.
+            // We could ignore this case because we'd fall through the BeanIntrospector check, but that logs some debug spam,
+            // and it's slower to look up objects we know we won't wrap anyway.
             return context.asValue(object);
         } else {
             var introspection = BeanIntrospector.SHARED.findIntrospection(object.getClass()).orElse(null);
             if (introspection != null) {
-                return context.asValue(new ProxyObjectWithIntrospectableSupport(context, object, introspection));
+                return context.asValue(new IntrospectableToTruffleAdapter(context, object, introspection));
             } else {
                 return context.asValue(object);
             }
