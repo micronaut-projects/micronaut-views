@@ -27,7 +27,6 @@ import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.react.truffle.IntrospectableToTruffleAdapter;
 import io.micronaut.views.react.util.BeanPool;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
@@ -45,21 +44,17 @@ import java.nio.charset.StandardCharsets;
  * @param <PROPS> An introspectable bean type that will be fed to the ReactJS root component as props.
  */
 @Singleton
-public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>, ApplicationEventListener<FileChangedEvent> {
+class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>, ApplicationEventListener<FileChangedEvent> {
     private static final Logger LOG = LoggerFactory.getLogger(ReactViewsRenderer.class);
-    @Inject
-    ReactViewsRendererConfiguration reactConfiguration;
 
-    @Inject
-    BeanPool<ReactJSContext> beanPool;
-    @Inject
-    private ReactJSBeanFactory reactJSBeanFactory;
+    private final BeanPool<ReactJSContext> beanPool;
+    private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
+    private final ReactJSBeanFactory reactJSBeanFactory;
 
-    /**
-     * Construct this renderer. Don't call it yourself, as Micronaut Views will set it up for you.
-     */
-    @Inject
-    public ReactViewsRenderer() {
+    ReactViewsRenderer(BeanPool<ReactJSContext> beanPool, ReactViewsRendererConfiguration reactViewsRendererConfiguration, ReactJSBeanFactory reactJSBeanFactory) {
+        this.beanPool = beanPool;
+        this.reactViewsRendererConfiguration = reactViewsRendererConfiguration;
+        this.reactJSBeanFactory = reactJSBeanFactory;
     }
 
     /**
@@ -104,7 +99,7 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
         Value guestProps = IntrospectableToTruffleAdapter.wrap(context.polyglotContext, props);
-        context.render.executeVoid(component, guestProps, renderCallback, reactConfiguration.getClientBundleURL(), request);
+        context.render.executeVoid(component, guestProps, renderCallback, reactViewsRendererConfiguration.getClientBundleURL(), request);
     }
 
     /**
