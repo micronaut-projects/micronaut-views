@@ -35,7 +35,7 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 /**
- * Wraps the computation of where to find the JS for client and server. Hot reloads on file changes.
+ * Wraps the computation of where to find the JS for client and server.
  */
 @Singleton
 @Internal
