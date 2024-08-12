@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.react;
+package io.micronaut.views.react.util;
 
 import io.micronaut.core.annotation.Internal;
 import org.slf4j.Logger;
@@ -113,7 +113,6 @@ public class BeanPool<T> {
 
             // The entry may have been garbage collected (== null), or it might be for an old
             // version. In both cases we just let it drift away as we now hold the only reference.
-            LOG.info("handle {}", handle);
             if (handle != null && handle.version == versionCounter) {
                 return handle;
             }

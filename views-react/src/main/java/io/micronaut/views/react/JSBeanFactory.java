@@ -18,6 +18,7 @@ package io.micronaut.views.react;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.views.react.util.BeanPool;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
 
