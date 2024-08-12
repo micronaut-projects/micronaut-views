@@ -19,7 +19,6 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.Qualifier;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.inject.BeanType;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -27,13 +26,8 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.graalvm.polyglot.*;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Stream;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * A bean that handles the Javascript {@link Context} object representing a loaded execution
@@ -66,22 +60,22 @@ class ReactJSContext implements AutoCloseable {
         this.applicationContext = applicationContext;
     }
 
-    private static class ReactSourceQualifier implements Qualifier<Source> {
+    private record NamedSourceQualifier(String name) implements Qualifier<Source> {
         @Override
         public <BT extends BeanType<Source>> Stream<BT> reduce(Class<Source> beanType, Stream<BT> candidates) {
-            return candidates.filter(bt -> "react".equals(bt.getBeanName().orElse(null)));
+            return candidates.filter(bt -> name.equals(bt.getBeanName().orElse(null)));
         }
 
-        static ReactSourceQualifier INSTANCE = new ReactSourceQualifier();
+        static NamedSourceQualifier SSR = new NamedSourceQualifier("react");
+        static NamedSourceQualifier RENDER_SCRIPT = new NamedSourceQualifier("react-render-script");
     }
 
     @PostConstruct
-    void init() throws IOException {
+    void init() {
         polyglotContext = createContext();
 
         Value global = polyglotContext.getBindings("js");
-        // This will return a cached, shared Source object.
-        ssrModule = polyglotContext.eval(applicationContext.createBean(Source.class, ReactSourceQualifier.INSTANCE));
+        ssrModule = loadNamedModule(NamedSourceQualifier.SSR);
 
         // Take all the exports from the components bundle, and expose them to the render script.
         for (var name : ssrModule.getMemberKeys()) {
@@ -89,52 +83,16 @@ class ReactJSContext implements AutoCloseable {
         }
 
         // Evaluate our JS-side framework specific render logic.
-        Source source = loadRenderSource();
-        Value renderModule = polyglotContext.eval(source);
+        Value renderModule = loadNamedModule(NamedSourceQualifier.RENDER_SCRIPT);
         render = renderModule.getMember("ssr");
         if (render == null) {
             throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported.".formatted(configuration.getRenderScript()));
         }
     }
 
-    private Source loadRenderSource() throws IOException {
-        String renderScriptName = configuration.getRenderScript();
-        String fileName;
-        String source;
-
-        if (renderScriptName.startsWith("classpath:")) {
-            var resourcePath = renderScriptName.substring("classpath:".length());
-            // Even on Windows, classpath specs use /
-            fileName = fileNameFromUNIXPath(resourcePath);
-            try (var stream = getClass().getResourceAsStream(resourcePath)) {
-                if (stream == null) {
-                    throw new IllegalArgumentException("Render script not found on classpath: " + resourcePath);
-                }
-                source = new String(stream.readAllBytes(), UTF_8);
-            }
-        } else if (renderScriptName.startsWith("file:")) {
-            var path = Path.of(renderScriptName.substring("file:".length()));
-            if (!Files.exists(path)) {
-                throw new IllegalArgumentException("Render script not found: " + renderScriptName);
-            }
-            fileName = path.normalize().toAbsolutePath().getFileName().toString();
-            try (var stream = Files.newInputStream(path)) {
-                source = new String(stream.readAllBytes(), UTF_8);
-            }
-        } else {
-            throw new IllegalArgumentException("The renderScript name '%s' must begin with either `classpath:` or `file:`".formatted(renderScriptName));
-        }
-
-        return Source.newBuilder("js", source, fileName)
-            .mimeType("application/javascript+module")
-            .build();
-    }
-
-    private static @NonNull String fileNameFromUNIXPath(String resourcePath) {
-        String fileName;
-        var i = resourcePath.lastIndexOf('/');
-        fileName = resourcePath.substring(i + 1);
-        return fileName;
+    private Value loadNamedModule(NamedSourceQualifier sourceQualifier) {
+        // This will return a cached, shared Source object.
+        return polyglotContext.eval(applicationContext.createBean(Source.class, sourceQualifier));
     }
 
     private Context createContext() {

@@ -83,31 +83,45 @@ class ReactJSBeanFactory {
             .build();
     }
 
+    // We cache the Source objects because they are expensive to create, but, we don't want them
+    // to be singleton beans so we can recreate them on file change.
     private Source serverBundle;  // L(this)
+    private Source renderScript;  // L(this)
 
     @Bean
     @Named("react")
     synchronized Source serverBundle(ResourceResolver resolver, ReactViewsRendererConfiguration reactConfiguration) throws IOException {
-        // We cache the Source object because it's expensive to create, but, we don't want it to be a singleton
-        // so we can recreate it.
         if (serverBundle == null) {
-            Optional<URL> bundlePathOpt = resolver.getResource(reactConfiguration.getServerBundlePath());
-            serverBundle = serverBundleSourceBuilder(reactConfiguration, bundlePathOpt).build();
+            serverBundle = loadSource(resolver, reactConfiguration.getServerBundlePath(), ".server-bundle-path");
         }
         return serverBundle;
     }
 
-    private static Source.Builder serverBundleSourceBuilder(ReactViewsRendererConfiguration config, Optional<URL> bundleURLOpt) throws FileNotFoundException {
-        if (bundleURLOpt.isEmpty()) {
-            throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", config.getServerBundlePath(), ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
+    @Bean
+    @Named("react-render-script")
+    synchronized Source renderScript(ResourceResolver resolver, ReactViewsRendererConfiguration config) throws IOException {
+        if (renderScript == null) {
+            renderScript = loadSource(resolver, config.getRenderScript(), ".render-script");
         }
-        Source.Builder sourceBuilder = Source.newBuilder("js", bundleURLOpt.get());
-        return sourceBuilder.mimeType("application/javascript+module");
+        return renderScript;
+    }
+
+    private static Source loadSource(ResourceResolver resolver, String desiredPath, String propName) throws IOException {
+        Optional<URL> sourceURL = resolver.getResource(desiredPath);
+        if (sourceURL.isEmpty()) {
+            throw new FileNotFoundException(format("Javascript %s could not be found. Check your %s property.", desiredPath, ReactViewsRendererConfiguration.PREFIX + propName));
+        }
+        Source.Builder sourceBuilder = Source.newBuilder("js", sourceURL.get());
+        return sourceBuilder.mimeType("application/javascript+module").build();
     }
 
     synchronized boolean maybeReloadServerBundle(Path fileThatChanged) {
         if (serverBundle != null && fileThatChanged.toAbsolutePath().equals(Paths.get(serverBundle.getPath()).toAbsolutePath())) {
             serverBundle = null;
+            return true;
+        }
+        if (renderScript != null && fileThatChanged.toAbsolutePath().equals(Paths.get(renderScript.getPath()).toAbsolutePath())) {
+            renderScript = null;
             return true;
         }
         return false;
