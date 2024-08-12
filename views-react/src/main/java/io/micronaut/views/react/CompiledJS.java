@@ -19,6 +19,7 @@ import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
 import io.micronaut.scheduling.io.watch.event.WatchEventType;
+import io.micronaut.views.react.util.BeanPool;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;

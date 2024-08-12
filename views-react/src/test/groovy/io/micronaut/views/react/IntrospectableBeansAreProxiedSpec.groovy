@@ -1,6 +1,7 @@
 package io.micronaut.views.react
 
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import io.micronaut.views.react.util.BeanPool
 import jakarta.inject.Inject
 import org.graalvm.polyglot.Value
 import org.graalvm.polyglot.proxy.ProxyObject

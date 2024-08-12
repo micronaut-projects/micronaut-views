@@ -22,6 +22,7 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.exceptions.MessageBodyException;
 import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.react.util.BeanPool;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
