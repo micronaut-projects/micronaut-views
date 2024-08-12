@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
@@ -28,7 +29,7 @@ import org.graalvm.polyglot.Source;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
+import java.nio.file.Paths;
 
 /**
  * Holds the thread-safe {@link Engine} and {@link Source} which together pin compiled machine code
@@ -41,27 +42,19 @@ class CompiledReactJSBundle implements AutoCloseable, ApplicationEventListener<F
 
     private final Engine engine;
     private final BeanPool<ReactJSContext> beanPool;
+    private final ApplicationContext applicationContext;
     private Source source;
-    private final ReactJSBundlePaths jsBundlePaths;
 
     @Inject
-    CompiledReactJSBundle(ReactJSBundlePaths jsBundlePaths, Engine engine, BeanPool<ReactJSContext> beanPool) {
-        this.jsBundlePaths = jsBundlePaths;
+    CompiledReactJSBundle(Engine engine, BeanPool<ReactJSContext> beanPool, ApplicationContext applicationContext) {
         this.engine = engine;
         this.beanPool = beanPool;
+        this.applicationContext = applicationContext;
         reload();
     }
 
     synchronized Source getSource() {
         return source;
-    }
-
-    private synchronized void reload() {
-        try {
-            source = jsBundlePaths.readServerBundle();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -72,10 +65,14 @@ class CompiledReactJSBundle implements AutoCloseable, ApplicationEventListener<F
 
     @Override
     public void onApplicationEvent(FileChangedEvent event) {
-        if (jsBundlePaths.bundlePath != null && event.getPath().equals(jsBundlePaths.bundlePath) && event.getEventType() != WatchEventType.DELETE) {
+        if (event.getPath().equals(Paths.get(source.getPath())) && event.getEventType() != WatchEventType.DELETE) {
             LOG.info("Reloading Javascript bundle due to file change.");
             reload();
             beanPool.clear();
         }
+    }
+
+    private synchronized void reload() {
+        source = applicationContext.createBean(Source.class);
     }
 }
