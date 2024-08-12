@@ -34,7 +34,7 @@ import org.slf4j.event.Level;
  */
 @Factory
 @Internal
-class JSBeanFactory {
+class ReactJSBeanFactory {
     private static final Logger LOG = LoggerFactory.getLogger("js");
 
     /**
@@ -53,8 +53,8 @@ class JSBeanFactory {
     }
 
     @Singleton
-    BeanPool<JSContext> contextPool(ApplicationContext applicationContext) {
-        return new BeanPool<>(() -> applicationContext.createBean(JSContext.class));
+    BeanPool<ReactJSContext> contextPool(ApplicationContext applicationContext) {
+        return new BeanPool<>(() -> applicationContext.createBean(ReactJSContext.class));
     }
 
     @Singleton

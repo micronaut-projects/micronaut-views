@@ -45,7 +45,7 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
     ReactViewsRendererConfiguration reactConfiguration;
 
     @Inject
-    BeanPool<JSContext> contextPool;
+    BeanPool<ReactJSContext> contextPool;
 
     /**
      * Construct this renderer. Don't call it yourself, as Micronaut Views will set it up for you.
@@ -66,7 +66,7 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
     @Override
     public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
         return writer -> {
-            try (BeanPool.Handle<JSContext> contextHandle = contextPool.checkOut()) {
+            try (BeanPool.Handle<ReactJSContext> contextHandle = contextPool.checkOut()) {
                 render(viewName, props, writer, contextHandle.get(), request);
             } catch (BeanInstantiationException e) {
                 throw e;
@@ -84,7 +84,7 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
         }
     }
 
-    private void render(String componentName, PROPS props, Writer writer, JSContext context, @Nullable HttpRequest<?> request) {
+    private void render(String componentName, PROPS props, Writer writer, ReactJSContext context, @Nullable HttpRequest<?> request) {
         Value component = context.ssrModule.getMember(componentName);
         if (component == null) {
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));

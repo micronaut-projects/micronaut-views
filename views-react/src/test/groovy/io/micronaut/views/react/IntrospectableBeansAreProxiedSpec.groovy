@@ -15,7 +15,7 @@ class IntrospectableBeansAreProxiedSpec extends Specification {
 
     void "introspectable bean can be proxied"() {
         given:
-        BeanPool.Handle<JSContext> jsContext = contextPool.checkOut()
+        BeanPool.Handle<ReactJSContext> jsContext = contextPool.checkOut()
         def context = jsContext.get().polyglotContext
         def bean = new SomeBean("foo value", "bar value", new SomeBean.InnerBean(10, Map.of("key", 123), List.of("one", "two", "three")))
 

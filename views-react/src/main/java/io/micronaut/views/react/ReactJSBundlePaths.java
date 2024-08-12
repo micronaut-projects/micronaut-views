@@ -39,8 +39,8 @@ import static java.lang.String.format;
  */
 @Singleton
 @Internal
-class JSBundlePaths {
-    private static final Logger LOG = LoggerFactory.getLogger(JSBundlePaths.class);
+class ReactJSBundlePaths {
+    private static final Logger LOG = LoggerFactory.getLogger(ReactJSBundlePaths.class);
 
     // Source code file name, for JS stack traces.
     private final String bundleFileName;
@@ -53,7 +53,7 @@ class JSBundlePaths {
     final Path bundlePath;
 
     @Inject
-    JSBundlePaths(ReactViewsRendererConfiguration reactConfiguration, ResourceResolver resolver) throws IOException {
+    ReactJSBundlePaths(ReactViewsRendererConfiguration reactConfiguration, ResourceResolver resolver) throws IOException {
         Optional<URL> bundlePathOpt = resolver.getResource(reactConfiguration.getServerBundlePath());
         if (bundlePathOpt.isEmpty()) {
             throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", reactConfiguration.getServerBundlePath(), ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));

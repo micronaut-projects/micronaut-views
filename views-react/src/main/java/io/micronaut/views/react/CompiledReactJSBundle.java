@@ -36,16 +36,16 @@ import java.io.IOException;
  */
 @Singleton
 @Internal
-class CompiledJS implements AutoCloseable, ApplicationEventListener<FileChangedEvent> {
+class CompiledReactJSBundle implements AutoCloseable, ApplicationEventListener<FileChangedEvent> {
     private static final Logger LOG = LoggerFactory.getLogger("js");
 
-    final Engine engine;
-    private final BeanPool<JSContext> beanPool;
+    private final Engine engine;
+    private final BeanPool<ReactJSContext> beanPool;
     private Source source;
-    private final JSBundlePaths jsBundlePaths;
+    private final ReactJSBundlePaths jsBundlePaths;
 
     @Inject
-    CompiledJS(JSBundlePaths jsBundlePaths, Engine engine, BeanPool<JSContext> beanPool) {
+    CompiledReactJSBundle(ReactJSBundlePaths jsBundlePaths, Engine engine, BeanPool<ReactJSContext> beanPool) {
         this.jsBundlePaths = jsBundlePaths;
         this.engine = engine;
         this.beanPool = beanPool;
