@@ -15,9 +15,12 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.Qualifier;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.inject.BeanType;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
@@ -28,6 +31,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -42,21 +46,33 @@ class ReactJSContext implements AutoCloseable {
     private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
     private final Engine engine;
     private final HostAccess hostAccess;
+    private final ApplicationContext applicationContext;
 
     // Accessed from ReactViewsRenderer
     Context polyglotContext;
     Value render;
     Value ssrModule;
 
-    private final CompiledReactJSBundle compiledJS;
     private final ReactViewsRendererConfiguration configuration;
 
     @Inject
-    ReactJSContext(CompiledReactJSBundle compiledJS, ReactViewsRendererConfiguration configuration, @Named("react") Engine engine, @Named("react") HostAccess hostAccess) {
-        this.compiledJS = compiledJS;
+    ReactJSContext(ReactViewsRendererConfiguration configuration,
+                   @Named("react") Engine engine,
+                   @Named("react") HostAccess hostAccess,
+                   ApplicationContext applicationContext) {
         this.configuration = configuration;
         this.engine = engine;
         this.hostAccess = hostAccess;
+        this.applicationContext = applicationContext;
+    }
+
+    private static class ReactSourceQualifier implements Qualifier<Source> {
+        @Override
+        public <BT extends BeanType<Source>> Stream<BT> reduce(Class<Source> beanType, Stream<BT> candidates) {
+            return candidates.filter(bt -> "react".equals(bt.getBeanName().orElse(null)));
+        }
+
+        static ReactSourceQualifier INSTANCE = new ReactSourceQualifier();
     }
 
     @PostConstruct
@@ -64,7 +80,8 @@ class ReactJSContext implements AutoCloseable {
         polyglotContext = createContext();
 
         Value global = polyglotContext.getBindings("js");
-        ssrModule = polyglotContext.eval(compiledJS.getSource());
+        // This will return a cached, shared Source object.
+        ssrModule = polyglotContext.eval(applicationContext.createBean(Source.class, ReactSourceQualifier.INSTANCE));
 
         // Take all the exports from the components bundle, and expose them to the render script.
         for (var name : ssrModule.getMemberKeys()) {
