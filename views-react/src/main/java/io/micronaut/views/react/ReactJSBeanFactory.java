@@ -33,10 +33,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -89,7 +87,7 @@ class ReactJSBeanFactory {
 
     @Bean
     @Named("react")
-    synchronized Source serverBundle(ResourceResolver resolver, ReactViewsRendererConfiguration reactConfiguration) throws IOException, URISyntaxException {
+    synchronized Source serverBundle(ResourceResolver resolver, ReactViewsRendererConfiguration reactConfiguration) throws IOException {
         // We cache the Source object because it's expensive to create, but, we don't want it to be a singleton
         // so we can recreate it.
         if (serverBundle == null) {
@@ -99,17 +97,11 @@ class ReactJSBeanFactory {
         return serverBundle;
     }
 
-    private static Source.Builder serverBundleSourceBuilder(ReactViewsRendererConfiguration config, Optional<URL> bundlePathOpt) throws FileNotFoundException, URISyntaxException {
-        if (bundlePathOpt.isEmpty()) {
+    private static Source.Builder serverBundleSourceBuilder(ReactViewsRendererConfiguration config, Optional<URL> bundleURLOpt) throws FileNotFoundException {
+        if (bundleURLOpt.isEmpty()) {
             throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", config.getServerBundlePath(), ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
         }
-        URL bundleURL = bundlePathOpt.get();
-        Source.Builder sourceBuilder;
-        if (bundleURL.getProtocol().equals("file")) {
-            sourceBuilder = Source.newBuilder("js", new File(bundleURL.toURI()));
-        } else {
-            sourceBuilder = Source.newBuilder("js", bundleURL);
-        }
+        Source.Builder sourceBuilder = Source.newBuilder("js", bundleURLOpt.get());
         return sourceBuilder.mimeType("application/javascript+module");
     }
 
