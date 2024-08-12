@@ -38,6 +38,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import static java.lang.String.format;
@@ -83,20 +85,35 @@ class ReactJSBeanFactory {
             .build();
     }
 
+    private Source serverBundle;  // L(this)
+
     @Bean
     @Named("react")
-    Source serverBundle(ResourceResolver resolver, ReactViewsRendererConfiguration reactConfiguration) throws IOException, URISyntaxException {
-        Optional<URL> bundlePathOpt = resolver.getResource(reactConfiguration.getServerBundlePath());
-        if (bundlePathOpt.isEmpty()) {
-            throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", reactConfiguration.getServerBundlePath(), ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
+    synchronized Source serverBundle(ResourceResolver resolver, ReactViewsRendererConfiguration reactConfiguration) throws IOException, URISyntaxException {
+        // We cache the Source object because it's expensive to create, but, we don't want it to be a singleton
+        // so we can recreate it.
+        if (serverBundle == null) {
+            Optional<URL> bundlePathOpt = resolver.getResource(reactConfiguration.getServerBundlePath());
+            if (bundlePathOpt.isEmpty()) {
+                throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", reactConfiguration.getServerBundlePath(), ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
+            }
+            var bundleURL = bundlePathOpt.get();
+            Source.Builder sourceBuilder;
+            if (bundleURL.getProtocol().equals("file")) {
+                sourceBuilder = Source.newBuilder("js", new File(bundleURL.toURI()));
+            } else {
+                sourceBuilder = Source.newBuilder("js", bundleURL);
+            }
+            serverBundle = sourceBuilder.mimeType("application/javascript+module").build();
         }
-        var bundleURL = bundlePathOpt.get();
-        Source.Builder sourceBuilder;
-        if (bundleURL.getProtocol().equals("file")) {
-            sourceBuilder = Source.newBuilder("js", new File(bundleURL.toURI()));
-        } else {
-            sourceBuilder = Source.newBuilder("js", bundleURL);
+        return serverBundle;
+    }
+
+    synchronized boolean maybeReloadServerBundle(Path fileThatChanged) {
+        if (serverBundle != null && fileThatChanged.toAbsolutePath().equals(Paths.get(serverBundle.getPath()).toAbsolutePath())) {
+            serverBundle = null;
+            return true;
         }
-        return sourceBuilder.mimeType("application/javascript+module").build();
+        return false;
     }
 }

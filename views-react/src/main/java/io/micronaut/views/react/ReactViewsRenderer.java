@@ -15,12 +15,15 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.context.exceptions.BeanInstantiationException;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.exceptions.MessageBodyException;
+import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
+import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.react.truffle.IntrospectableToTruffleAdapter;
 import io.micronaut.views.react.util.BeanPool;
@@ -28,6 +31,8 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -40,12 +45,15 @@ import java.nio.charset.StandardCharsets;
  * @param <PROPS> An introspectable bean type that will be fed to the ReactJS root component as props.
  */
 @Singleton
-public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> {
+public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>, ApplicationEventListener<FileChangedEvent> {
+    private static final Logger LOG = LoggerFactory.getLogger(ReactViewsRenderer.class);
     @Inject
     ReactViewsRendererConfiguration reactConfiguration;
 
     @Inject
-    BeanPool<ReactJSContext> contextPool;
+    BeanPool<ReactJSContext> beanPool;
+    @Inject
+    private ReactJSBeanFactory reactJSBeanFactory;
 
     /**
      * Construct this renderer. Don't call it yourself, as Micronaut Views will set it up for you.
@@ -66,7 +74,7 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
     @Override
     public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
         return writer -> {
-            try (BeanPool.Handle<ReactJSContext> contextHandle = contextPool.checkOut()) {
+            try (BeanPool.Handle<ReactJSContext> contextHandle = beanPool.checkOut()) {
                 render(viewName, props, writer, contextHandle.get(), request);
             } catch (BeanInstantiationException e) {
                 throw e;
@@ -79,7 +87,7 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        try (var contextHandle = contextPool.checkOut()) {
+        try (var contextHandle = beanPool.checkOut()) {
             return contextHandle.get().moduleHasMember(viewName);
         }
     }
@@ -146,6 +154,14 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    @Override
+    public void onApplicationEvent(FileChangedEvent event) {
+        if (event.getEventType() != WatchEventType.DELETE && reactJSBeanFactory.maybeReloadServerBundle(event.getPath())) {
+            beanPool.clear();
+            LOG.info("Reloaded React SSR bundle due to file change.");
         }
     }
 }
