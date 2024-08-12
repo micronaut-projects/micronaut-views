@@ -16,10 +16,7 @@
 package io.micronaut.views.react;
 
 import io.micronaut.context.ApplicationContext;
-import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
-import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
@@ -37,19 +34,16 @@ import java.util.LinkedList;
  */
 @Singleton
 @Internal
-class JSContextPool implements ApplicationEventListener<FileChangedEvent> {
-    private static final Logger LOG = LoggerFactory.getLogger(JSContextPool.class);
+class JSContextPool {
     private final ApplicationContext applicationContext;
-    private final JSBundlePaths paths;
 
     // Synchronized on 'this'.
     private final LinkedList<SoftReference<JSContext>> contexts = new LinkedList<>();
     private int versionCounter = 0;   // File reloads.
 
     @Inject
-    JSContextPool(ApplicationContext applicationContext, JSBundlePaths paths) {
+    JSContextPool(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
-        this.paths = paths;
     }
 
     /**
@@ -75,16 +69,26 @@ class JSContextPool implements ApplicationEventListener<FileChangedEvent> {
         return applicationContext.createBean(JSContext.class, versionCounter);
     }
 
+    /**
+     * Puts a context back into the pool. It should be returned in a 'clean' state, so whatever
+     * thread picks it up next finds it ready to use and without any leftover data from prior
+     * usages.
+     */
     synchronized void release(JSContext jsContext) {
-        // Put it back into the pool for reuse.
-        contexts.add(new SoftReference<>(jsContext));
+        // Put it back into the pool for reuse unless it's out of date, in which case just let it drift.
+        if (jsContext.versionCounter == versionCounter)
+            contexts.add(new SoftReference<>(jsContext));
     }
 
-    @Override
-    public synchronized void onApplicationEvent(FileChangedEvent event) {
-        if (paths.bundlePath != null && event.getPath().equals(paths.bundlePath) && event.getEventType() != WatchEventType.DELETE) {
-            LOG.info("Reloading Javascript bundle due to file change.");
-            versionCounter++;
-        }
+    /**
+     * Semantically this method empties the pool. The actual contexts won't be released until they
+     * are requested later, this implementation just marks them as out of date. Out of date contexts
+     * won't be re-added to the pool even if {@link #release(JSContext)} is called on them. It can
+     * be used if there is a need to reload all the contexts, e.g. because a file on disk changed.
+     */
+    synchronized void releaseAll() {
+        versionCounter++;
+        if (versionCounter < 0)
+            throw new IllegalStateException("Version counter wrapped, you can't call releaseAll this many times.");
     }
 }

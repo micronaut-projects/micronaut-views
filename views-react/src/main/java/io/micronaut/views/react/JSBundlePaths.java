@@ -15,13 +15,17 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.ResourceResolver;
-import io.micronaut.views.ViewsConfiguration;
+import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
+import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Source;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -34,27 +38,33 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 /**
- * Wraps the computation of where to find the JS for client and server.
+ * Wraps the computation of where to find the JS for client and server. Hot reloads on file changes.
  */
 @Singleton
 @Internal
-class JSBundlePaths {
+class JSBundlePaths implements ApplicationEventListener<FileChangedEvent> {
+    private static final Logger LOG = LoggerFactory.getLogger(JSBundlePaths.class);
+
+    private final JSContextPool contextPool;
+
     // Source code file name, for JS stack traces.
-    final String bundleFileName;
+    private final String bundleFileName;
 
     // URL of bundle file, could be a file:// or in a classpath jar.
-    final URL bundleURL;
+    private final URL bundleURL;
 
     // If a file:// (during development), the path of that file. Used for hot reloads.
     @Nullable
-    final Path bundlePath;
+    private final Path bundlePath;
 
     @Inject
     JSBundlePaths(
-        ViewsConfiguration viewsConfiguration,
+        JSContextPool contextPool,
         ReactViewsRendererConfiguration reactConfiguration,
         ResourceResolver resolver
     ) throws IOException {
+        this.contextPool = contextPool;
+
         Optional<URL> bundlePathOpt = resolver.getResource(reactConfiguration.getServerBundlePath());
         if (bundlePathOpt.isEmpty()) {
             throw new FileNotFoundException(format("Server bundle %s could not be found. Check your %s property.", reactConfiguration.getServerBundlePath(), ReactViewsRendererConfiguration.PREFIX + ".server-bundle-path"));
@@ -73,6 +83,14 @@ class JSBundlePaths {
             return Source.newBuilder("js", reader, bundleFileName)
                 .mimeType("application/javascript+module")
                 .build();
+        }
+    }
+
+    @Override
+    public void onApplicationEvent(FileChangedEvent event) {
+        if (bundlePath != null && event.getPath().equals(bundlePath) && event.getEventType() != WatchEventType.DELETE) {
+            LOG.info("Reloading Javascript bundle due to file change.");
+            contextPool.releaseAll();
         }
     }
 }
