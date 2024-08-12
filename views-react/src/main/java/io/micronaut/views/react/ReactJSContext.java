@@ -36,7 +36,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 @Internal
 @Bean
-class JSContext implements AutoCloseable {
+class ReactJSContext implements AutoCloseable {
     // Symbols the user's server side bundle might supply us with.
     private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
     private final Engine engine;
@@ -47,11 +47,11 @@ class JSContext implements AutoCloseable {
     Value render;
     Value ssrModule;
 
-    private final CompiledJS compiledJS;
+    private final CompiledReactJSBundle compiledJS;
     private final ReactViewsRendererConfiguration configuration;
 
     @Inject
-    JSContext(CompiledJS compiledJS, ReactViewsRendererConfiguration configuration, Engine engine, HostAccess hostAccess) {
+    ReactJSContext(CompiledReactJSBundle compiledJS, ReactViewsRendererConfiguration configuration, Engine engine, HostAccess hostAccess) {
         this.compiledJS = compiledJS;
         this.configuration = configuration;
         this.engine = engine;
