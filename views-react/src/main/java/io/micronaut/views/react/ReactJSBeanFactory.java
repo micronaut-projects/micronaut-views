@@ -23,6 +23,7 @@ import io.micronaut.core.io.ResourceResolver;
 import io.micronaut.views.react.util.BeanPool;
 import io.micronaut.views.react.util.JavaUtilLoggingToSLF4J;
 import io.micronaut.views.react.util.OutputStreamToSLF4J;
+import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.HostAccess;
@@ -50,14 +51,14 @@ class ReactJSBeanFactory {
     private static final Logger LOG = LoggerFactory.getLogger("js");
 
     /**
-     * This defaults to
-     * {@link HostAccess#ALL} if the sandbox is disabled, or {@link HostAccess#CONSTRAINED} if it's on.
-     * By replacing the {@link HostAccess} bean you can whitelist methods/properties by name or
-     * annotation, which can be useful for exposing third party libraries where you can't add the
-     * normal {@link HostAccess.Export} annotation, or allowing sandboxed JS to extend or implement
-     * Java types.
+     * This defaults to {@link HostAccess#ALL} if the sandbox is disabled, or {@link
+     * HostAccess#CONSTRAINED} if it's on. By replacing the {@link HostAccess} bean you can
+     * whitelist methods/properties by name or annotation, which can be useful for exposing third
+     * party libraries where you can't add the normal {@link HostAccess.Export} annotation, or
+     * allowing sandboxed JS to extend or implement Java types.
      */
     @Singleton
+    @Named("react")
     HostAccess hostAccess(ReactViewsRendererConfiguration configuration) {
         return configuration.getSandbox()
             ? HostAccess.newBuilder(HostAccess.CONSTRAINED).allowListAccess(true).allowMapAccess(true).build()
@@ -70,6 +71,7 @@ class ReactJSBeanFactory {
     }
 
     @Singleton
+    @Named("react")
     Engine engine(ReactViewsRendererConfiguration configuration) {
         boolean sandbox = configuration.getSandbox();
         LOG.debug("ReactJS sandboxing {}", sandbox ? "enabled" : "disabled");
@@ -82,6 +84,7 @@ class ReactJSBeanFactory {
     }
 
     @Bean
+    @Named("react")
     Source serverBundle(ResourceResolver resolver, ReactViewsRendererConfiguration reactConfiguration) throws IOException, URISyntaxException {
         Optional<URL> bundlePathOpt = resolver.getResource(reactConfiguration.getServerBundlePath());
         if (bundlePathOpt.isEmpty()) {
