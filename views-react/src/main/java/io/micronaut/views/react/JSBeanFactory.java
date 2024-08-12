@@ -15,10 +15,13 @@
  */
 package io.micronaut.views.react;
 
-import jakarta.inject.Singleton;;
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.Internal;
+import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
+
+;
 
 /**
  * Allows the default Javascript context and host access policy to be controlled.
@@ -39,5 +42,10 @@ class JSBeanFactory {
         return configuration.getSandbox()
             ? HostAccess.CONSTRAINED
             : HostAccess.ALL;
+    }
+
+    @Singleton
+    BeanPool<JSContext> contextPool(ApplicationContext applicationContext) {
+        return new BeanPool<>(() -> applicationContext.createBean(JSContext.class));
     }
 }

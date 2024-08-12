@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.context.exceptions.BeanInstantiationException;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
@@ -42,7 +43,7 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
     ReactViewsRendererConfiguration reactConfiguration;
 
     @Inject
-    JSContextPool contextPool;
+    BeanPool<JSContext> contextPool;
 
     /**
      * Construct this renderer. Don't call it yourself, as Micronaut Views will set it up for you.
@@ -63,25 +64,21 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
     @Override
     public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
         return writer -> {
-            JSContext context = contextPool.acquire();
-            try {
-                render(viewName, props, writer, context, request);
+            try (BeanPool.Handle<JSContext> contextHandle = contextPool.checkOut()) {
+                render(viewName, props, writer, contextHandle.get(), request);
+            } catch (BeanInstantiationException e) {
+                throw e;
             } catch (Exception e) {
                 // If we don't wrap and rethrow, the exception is swallowed and the request hangs.
                 throw new MessageBodyException("Could not render component " + viewName, e);
-            } finally {
-                contextPool.release(context);
             }
         };
     }
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        var context = contextPool.acquire();
-        try {
-            return context.moduleHasMember(viewName);
-        } finally {
-            contextPool.release(context);
+        try (var contextHandle = contextPool.checkOut()) {
+            return contextHandle.get().moduleHasMember(viewName);
         }
     }
 

@@ -15,7 +15,7 @@
  */
 package io.micronaut.views.react;
 
-import io.micronaut.context.annotation.Parameter;
+import io.micronaut.context.annotation.Bean;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import jakarta.annotation.PostConstruct;
@@ -37,6 +37,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * environment usable by one thread at a time.
  */
 @Internal
+@Bean
 class JSContext implements AutoCloseable {
     // Symbols the user's server side bundle might supply us with.
     private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
@@ -46,19 +47,15 @@ class JSContext implements AutoCloseable {
     Value render;
     Value ssrModule;
 
-    // What version of the on-disk bundle (considering file change events) we were loaded from.
-    final int versionCounter;
-
     private final CompiledJS compiledJS;
     private final ReactViewsRendererConfiguration configuration;
     private final JSSandboxing sandboxing;
 
     @Inject
-    JSContext(CompiledJS compiledJS, ReactViewsRendererConfiguration configuration, JSSandboxing sandboxing, @Parameter int versionCounter) {
+    JSContext(CompiledJS compiledJS, ReactViewsRendererConfiguration configuration, JSSandboxing sandboxing) {
         this.compiledJS = compiledJS;
         this.configuration = configuration;
         this.sandboxing = sandboxing;
-        this.versionCounter = versionCounter;
     }
 
     @PostConstruct
@@ -137,7 +134,7 @@ class JSContext implements AutoCloseable {
                 throw e;
             }
         } catch (IllegalArgumentException e) {
-            // We need esm-eval-returns-exports=true but it's not compatible with the sandbox in this version of GraalJS.
+            // We need esm-eval-returns-exports=true, but it's not compatible with the sandbox in this version of GraalJS.
             if (e.getMessage().contains("Option 'js.esm-eval-returns-exports' is experimental")) {
                 throw new IllegalStateException("The sandboxing feature requires a newer version of GraalJS. Please upgrade and try again, or disable the sandboxing feature.");
             } else {
