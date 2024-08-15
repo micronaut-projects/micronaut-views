@@ -29,6 +29,11 @@ import java.util.logging.LogRecord;
 public class JavaUtilLoggingToSLF4J extends Handler {
     private final Logger logger;
 
+    /**
+     * Constructs a handler that will forward messages to the given SLF4J logger.
+     *
+     * @param logger An SLF4J logger that will receive the translated messages.
+     */
     public JavaUtilLoggingToSLF4J(Logger logger) {
         this.logger = logger;
     }
