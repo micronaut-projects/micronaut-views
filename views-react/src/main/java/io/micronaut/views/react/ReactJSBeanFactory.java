@@ -35,7 +35,9 @@ import org.slf4j.event.Level;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -111,8 +113,13 @@ class ReactJSBeanFactory {
         if (sourceURL.isEmpty()) {
             throw new FileNotFoundException(format("Javascript %s could not be found. Check your %s property.", desiredPath, ReactViewsRendererConfiguration.PREFIX + propName));
         }
-        Source.Builder sourceBuilder = Source.newBuilder("js", sourceURL.get());
-        return sourceBuilder.mimeType("application/javascript+module").build();
+        URL url = sourceURL.get();
+        try (var reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8)) {
+            String path = url.getPath();
+            var fileName = path.substring(path.lastIndexOf('/') + 1);
+            Source.Builder sourceBuilder = Source.newBuilder("js", reader, fileName);
+            return sourceBuilder.mimeType("application/javascript+module").build();
+        }
     }
 
     synchronized boolean maybeReloadServerBundle(Path fileThatChanged) {
