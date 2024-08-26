@@ -49,7 +49,9 @@ import static java.lang.String.format;
  */
 @Factory
 @Internal
-class ReactJSBeanFactory {
+final class ReactJSBeanFactory {
+    static final String REACT_QUALIFIER = "react";
+
     private static final Logger LOG = LoggerFactory.getLogger("js");
 
     // We cache the Source objects because they are expensive to create, but, we don't want them
@@ -65,7 +67,7 @@ class ReactJSBeanFactory {
      * allowing sandboxed JS to extend or implement Java types.
      */
     @Singleton
-    @Named("react")
+    @Named(REACT_QUALIFIER)
     HostAccess hostAccess(ReactViewsRendererConfiguration configuration) {
         return configuration.getSandbox()
             ? HostAccess.newBuilder(HostAccess.CONSTRAINED).allowListAccess(true).allowMapAccess(true).build()
@@ -78,7 +80,7 @@ class ReactJSBeanFactory {
     }
 
     @Singleton
-    @Named("react")
+    @Named(REACT_QUALIFIER)
     Engine engine(ReactViewsRendererConfiguration configuration) {
         boolean sandbox = configuration.getSandbox();
         LOG.debug("ReactJS sandboxing {}", sandbox ? "enabled" : "disabled");
@@ -91,7 +93,7 @@ class ReactJSBeanFactory {
     }
 
     @Bean
-    @Named("react")
+    @Named(REACT_QUALIFIER)
     synchronized Source serverBundle(ResourceResolver resolver, ReactViewsRendererConfiguration reactConfiguration) throws IOException {
         if (serverBundle == null) {
             serverBundle = loadSource(resolver, reactConfiguration.getServerBundlePath(), ".server-bundle-path");
