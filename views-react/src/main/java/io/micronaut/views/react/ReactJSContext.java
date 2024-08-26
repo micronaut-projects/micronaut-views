@@ -24,10 +24,17 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import org.graalvm.polyglot.*;
+import org.graalvm.polyglot.Context;
+import org.graalvm.polyglot.Engine;
+import org.graalvm.polyglot.HostAccess;
+import org.graalvm.polyglot.SandboxPolicy;
+import org.graalvm.polyglot.Source;
+import org.graalvm.polyglot.Value;
 
 import java.util.List;
 import java.util.stream.Stream;
+
+import static io.micronaut.views.react.ReactJSBeanFactory.REACT_QUALIFIER;
 
 /**
  * A bean that handles the Javascript {@link Context} object representing a loaded execution
@@ -51,8 +58,8 @@ class ReactJSContext implements AutoCloseable {
 
     @Inject
     ReactJSContext(ReactViewsRendererConfiguration configuration,
-                   @Named("react") Engine engine,
-                   @Named("react") HostAccess hostAccess,
+                   @Named(REACT_QUALIFIER) Engine engine,
+                   @Named(REACT_QUALIFIER) HostAccess hostAccess,
                    ApplicationContext applicationContext) {
         this.configuration = configuration;
         this.engine = engine;
