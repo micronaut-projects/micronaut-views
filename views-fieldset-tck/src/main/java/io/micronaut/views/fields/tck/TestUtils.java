@@ -42,4 +42,20 @@ public final class TestUtils {
         writeable.writeTo(sw);
         return sw.toString();
     }
+
+    public static int countOccurrences(String mainString, String subString) {
+        if (mainString == null || subString == null || subString.isEmpty()) {
+            return 0;
+        }
+
+        int count = 0;
+        int index = 0;
+
+        while ((index = mainString.indexOf(subString, index)) != -1) {
+            count++;
+            index += subString.length();
+        }
+
+        return count;
+    }
 }
