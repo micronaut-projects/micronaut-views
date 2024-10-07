@@ -62,15 +62,18 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
      * or introspectable object), returns hydratable HTML that can be booted on the client using
      * the React libraries.
      *
-     * @param viewName The function or class name of the React component to use as the root. It should return an html root tag.
+     * @param viewName The function or class name of the React component to use as the root. It should return an HTML root tag.
      * @param props    If non-null, will be exposed to the given component as React props.
      * @param request  The HTTP request object.
      */
     @Override
     public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
         return writer -> {
-            try (BeanPool.Handle<ReactJSContext> contextHandle = beanPool.checkOut()) {
-                render(viewName, props, writer, contextHandle.get(), request);
+            try {
+                beanPool.useContext(handle -> {
+                    render(viewName, props, writer, handle.get(), request);
+                    return null;
+                });
             } catch (BeanInstantiationException e) {
                 throw e;
             } catch (Exception e) {
@@ -82,9 +85,7 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        try (var contextHandle = beanPool.checkOut()) {
-            return contextHandle.get().moduleHasMember(viewName);
-        }
+        return beanPool.useContext(handle -> handle.get().moduleHasMember(viewName));
     }
 
     private void render(String componentName, PROPS props, Writer writer, ReactJSContext context, @Nullable HttpRequest<?> request) {
