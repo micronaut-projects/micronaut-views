@@ -16,6 +16,7 @@
 package io.micronaut.views.react.util;
 
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.util.functional.ThrowingFunction;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -112,6 +113,29 @@ public class BeanPool<T> {
                 closeable.close();
             } catch (IOException ignored) {
             }
+        }
+    }
+
+    /**
+     * Runs the block with a handle checked out, checking it back in again at the end even if an
+     * exception is thrown.
+     *
+     * <p>
+     * This is implemented equivalently to:
+     * <pre>
+     * try (Handle<T> handle = checkOut()) {
+     *     return block.apply(handle);
+     * }
+     * </pre>
+     *
+     * @param block The lambda that will be executed with the checked out handle.
+     * @param <R> Return type of the block.
+     * @param <E> What type of exception the block can throw.
+     * @return the same object returned by the block.
+     */
+    public <R, E extends Throwable> R useContext(ThrowingFunction<Handle<T>, R, E> block) throws E {
+        try (Handle<T> handle = checkOut()) {
+            return block.apply(handle);
         }
     }
 
