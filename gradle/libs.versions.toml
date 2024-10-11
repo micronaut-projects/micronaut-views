@@ -45,6 +45,7 @@ managed-handlebars = { module = "com.github.jknack:handlebars", version.ref = "m
 managed-jstachio = { module = "io.jstach:jstachio", version.ref = "managed-jstachio" }
 managed-jstachio-apt = { module = "io.jstach:jstachio-apt", version.ref = "managed-jstachio" }
 managed-jte = { module = "gg.jte:jte", version.ref = "managed-jte" }
+managed-jte-native-resources = { module = "gg.jte:jte-native-resources", version.ref = "managed-jte" }
 managed-jte-kotlin = { module = "gg.jte:jte-kotlin", version.ref = "managed-jte" }
 managed-rocker-runtime = { module = "com.fizzed:rocker-runtime", version.ref = "managed-rocker" }
 managed-soy = { module = "com.google.template:soy", version.ref = "managed-soy" }
