@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -55,7 +56,7 @@ class FormViewRenderTest {
             .build();
         Fieldset fieldset = new Fieldset(List.of(textElement, el), Collections.emptyList());
         Form form = new Form("/foo/bar", "post", fieldset);
-        assertEquals("""
+        assertHtmlEquals("""
                 <form action="/foo/bar" method="post">\
                 <div class="mb-3">\
                 <label for="name" class="form-label">Name (4 to 8 characters):</label>\

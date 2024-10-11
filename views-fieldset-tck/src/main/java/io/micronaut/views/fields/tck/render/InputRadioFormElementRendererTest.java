@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Locale;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -66,7 +67,7 @@ class InputRadioFormElementRendererTest {
                     .build()
             ))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
                 <div class="form-check"><input type="radio" name="drone" value="huey" id="huey" class="form-check-input" checked="checked"/><label for="huey" class="form-label">Huey</label></div>\
                 <div class="form-check"><input type="radio" name="drone" value="dewey" id="dewey" class="form-check-input"/><label for="dewey" class="form-label">Dewey</label></div>\
                 <div class="form-check"><input type="radio" name="drone" value="louie" id="louie" class="form-check-input"/><label for="louie" class="form-label">Louie</label></div>""",

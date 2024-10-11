@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -68,22 +69,22 @@ class FormCompletedFileUploadRenderTest {
                         <input type="submit" value="Submit" class="btn btn-primary"/>\
                         </form>""";
         Form form = formGenerator.generate("/foo/bar", "post", EventImageSave.class, builderConsumer);
-        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar", "post", EventImageSave.class, FormGenerator.SUBMIT, builderConsumer);
-        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar", "post", EventImageSave.class, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
-        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar", EventImageSave.class, builderConsumer);
-        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar", EventImageSave.class, FormGenerator.SUBMIT, builderConsumer);
-        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar", EventImageSave.class, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
-        assertEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedClass, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         EventImageSave invalid = new EventImageSave("xxx", "", null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> validator.validate(invalid));
@@ -100,25 +101,25 @@ class FormCompletedFileUploadRenderTest {
                         <input type="submit" value="Submit" class="btn btn-primary"/>\
                         </form>""";
         form = formGenerator.generate("/foo/bar", "post", invalid, ex, builderConsumer);
-        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar", "post", invalid, ex, FormGenerator.SUBMIT, builderConsumer);
-        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar", "post", invalid, ex, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
-        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar",  invalid, ex, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
-        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar",  invalid, ex, builderConsumer);
-        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar",  invalid, ex, FormGenerator.SUBMIT, builderConsumer);
-        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar",  invalid, ex, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
-        assertEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
+        assertHtmlEquals(expectedInvalid, TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         EventImageSave valid = new EventImageSave("xxx", "Micronaut Logo", null);
         String expectedValid = """
@@ -129,19 +130,19 @@ class FormCompletedFileUploadRenderTest {
                         <input type="submit" value="Submit" class="btn btn-primary"/>\
                         </form>""";
         form = formGenerator.generate("/foo/bar", "post", valid, builderConsumer);
-        assertEquals(expectedValid,
+        assertHtmlEquals(expectedValid,
                 TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar", valid, builderConsumer);
-        assertEquals(expectedValid,
+        assertHtmlEquals(expectedValid,
             TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar", valid, FormGenerator.SUBMIT, builderConsumer);
-        assertEquals(expectedValid,
+        assertHtmlEquals(expectedValid,
             TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
 
         form = formGenerator.generate("/foo/bar", valid, new InputSubmitFormElement(FormGenerator.SUBMIT), builderConsumer);
-        assertEquals(expectedValid,
+        assertHtmlEquals(expectedValid,
             TestUtils.render(viewName, viewsRenderer, Map.of("form", form)));
     }
 

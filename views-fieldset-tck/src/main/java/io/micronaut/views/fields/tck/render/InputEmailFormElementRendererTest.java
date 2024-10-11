@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -51,7 +52,7 @@ class InputEmailFormElementRendererTest {
             .size(30)
             .label(Message.of("Enter your globex.com email:", null))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <label for="email" class="form-label">Enter your globex.com email:</label>\
             <input type="email" name="email" value="" id="email" pattern=".+@globex\\.com" size="30" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)

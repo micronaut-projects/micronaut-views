@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -52,7 +53,7 @@ class InputUrlFormElementRendererTest {
             .required(true)
             .label(Message.of("Enter an https:// URL:", null))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <label for="url" class="form-label">Enter an https:// URL:</label>\
             <input type="url" name="url" value="" id="url" placeholder="https://example.com" pattern="https://.*" size="30" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)

@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -61,15 +62,15 @@ class InputRadioViewRenderTest {
                     .build()
             ))
             .build();
-        String html = TestUtils.render("fieldset/inputradio.html", viewsRenderer, Map.of("el", el, "radio", huey)).trim();
+        String html = TestUtils.render("fieldset/inputradio", viewsRenderer, Map.of("el", el, "radio", huey)).trim();
 
         assertTrue(
             "<input type=\"radio\" name=\"drone\" value=\"huey\" id=\"huey\" class=\"form-check-input\" checked/>".equals(html)
                 || "<input type=\"radio\" name=\"drone\" value=\"huey\" id=\"huey\" class=\"form-check-input\" checked=\"checked\"/>".equals(html)
         );
 
-        html = TestUtils.render("fieldset/inputradios.html", viewsRenderer, Map.of("el", el));
-        assertEquals("""
+        html = TestUtils.render("fieldset/inputradios", viewsRenderer, Map.of("el", el));
+        assertHtmlEquals("""
                 <div class="form-check">\
                 <input type="radio" name="drone" value="huey" id="huey" class="form-check-input" checked="checked"/>\
                 <label for="huey" class="form-label">Huey</label>\

@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Map;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -44,10 +45,10 @@ class InputStringViewRenderTest {
             .required(true)
             .label(Message.of("Name (4 to 8 characters):"))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
                 <label for="name" class="form-label">Name (4 to 8 characters):</label>\
                 <input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>""",
-            TestUtils.render("fieldset/inputstring.html", viewsRenderer, Map.of("type", "text", "el", el))
+            TestUtils.render("fieldset/inputstring", viewsRenderer, Map.of("type", "text", "el", el))
         );
     }
 }

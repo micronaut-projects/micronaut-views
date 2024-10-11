@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -42,13 +43,13 @@ class InputSubmitViewRenderTest {
         String expected = """
             <input type="submit" value="Send Request" class="btn btn-primary"/>""";
 
-        assertEquals(expected, TestUtils.render("fieldset/inputsubmit.html", viewsRenderer, Collections.singletonMap("el", el)));
+        assertHtmlEquals(expected, TestUtils.render("fieldset/inputsubmit", viewsRenderer, Collections.singletonMap("el", el)));
 
         value = Message.of("Send Request", "foobar");
         el = InputSubmitFormElement.builder()
             .value(value)
             .build();
 
-        assertEquals(expected, TestUtils.render("fieldset/inputsubmit.html", viewsRenderer, Collections.singletonMap("el", el)));
+        assertHtmlEquals(expected, TestUtils.render("fieldset/inputsubmit", viewsRenderer, Collections.singletonMap("el", el)));
     }
 }

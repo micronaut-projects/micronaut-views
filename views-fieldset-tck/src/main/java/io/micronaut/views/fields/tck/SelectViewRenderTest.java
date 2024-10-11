@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -78,7 +78,7 @@ class SelectViewRenderTest {
                     .build()
             ))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
                 <label for="pet-select" class="form-label">Choose a pet:</label><select name="pets" id="pet-select" class="form-select">\
                 <option value="dog">Dog</option>\
                 <option value="cat">Cat</option>\
@@ -87,7 +87,7 @@ class SelectViewRenderTest {
                 <option value="spider">Spider</option>\
                 <option value="goldfish">Goldfish</option>\
                 </select>""",
-            TestUtils.render("fieldset/select.html", viewsRenderer, Map.of("el", el))
+            TestUtils.render("fieldset/select", viewsRenderer, Map.of("el", el))
         );
     }
 
@@ -98,7 +98,7 @@ class SelectViewRenderTest {
         assertNotNull(viewsRenderer);
 
         Fieldset fieldset = fieldsetGenerator.generate(new Clinic("cat"));
-        assertEquals("""
+        assertHtmlEquals("""
             <div class="mb-3">\
             <label for="pet" class="form-label">Pet</label>\
             <select name="pet" id="pet" class="form-select" required="required">\
@@ -109,12 +109,12 @@ class SelectViewRenderTest {
             <option value="spider">Spider</option>\
             <option value="goldfish">Goldfish</option>\
             </select>\
-            </div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+            </div>""", TestUtils.render("fieldset/fieldset", viewsRenderer, Map.of("el", fieldset)));
 
         Clinic invalid = new Clinic(null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> formValidator.validate(invalid));
         fieldset = fieldsetGenerator.generate(invalid, ex);
-        assertEquals("""
+        assertHtmlEquals("""
             <div class="mb-3">\
             <label for="pet" class="form-label">Pet</label>\
             <select name="pet" id="pet" class="form-select is-invalid" aria-describedby="petValidationServerFeedback" required="required">\
@@ -126,7 +126,7 @@ class SelectViewRenderTest {
             <option value="goldfish">Goldfish</option>\
             </select>\
             <div id="petValidationServerFeedback" class="invalid-feedback">must not be blank</div>\
-            </div>""", TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset)));
+            </div>""", TestUtils.render("fieldset/fieldset", viewsRenderer, Map.of("el", fieldset)));
     }
 
     @Requires(property = "spec.name", value = "SelectViewRenderTest")

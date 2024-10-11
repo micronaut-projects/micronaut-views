@@ -28,15 +28,7 @@ import java.util.List;
  * @since 4.1.0
  */
 @Experimental
-public interface InputStringFormElement {
-
-    /**
-     *
-     * @return Name of the form control. Submitted with the form as part of a name/value pair
-     */
-    @NonNull
-    String name();
-
+public interface InputStringFormElement extends FormElementAttributes {
     /**
      *
      * @return It defines an identifier (ID) which must be unique in the whole document
@@ -97,16 +89,4 @@ public interface InputStringFormElement {
      */
     @Nullable
     String value();
-
-    /**
-     *
-     * @return message for an HTML Label element.
-     */
-    @Nullable Message label();
-
-    /**
-     *
-     * @return Input Errors
-     */
-    @NonNull List<Message> errors();
 }

@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -48,7 +49,7 @@ class InputSubmitFormElementRenderTest {
         InputSubmitFormElement el = InputSubmitFormElement.builder()
             .value(value)
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <input type="submit" value="Send Request" class="btn btn-primary"/>""",
             renderer.render(el, Locale.ENGLISH)
         );

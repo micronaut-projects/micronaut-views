@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -52,7 +53,7 @@ class InputTextFormElementRendererTest {
             .required(true)
             .label(Message.of("Name (4 to 8 characters):", null))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <label for="name" class="form-label">Name (4 to 8 characters):</label>\
             <input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)

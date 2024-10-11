@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -50,7 +51,7 @@ class InputPasswordFormElementRendererTest {
             .required(true)
             .label(Message.of("Password (8 characters minimum):", null))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <label for="pass" class="form-label">Password (8 characters minimum):</label>\
             <input type="password" name="password" value="" id="pass" minlength="8" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)

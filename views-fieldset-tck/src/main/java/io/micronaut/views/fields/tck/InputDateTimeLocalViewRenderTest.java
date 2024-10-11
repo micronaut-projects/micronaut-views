@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -43,7 +44,7 @@ class InputDateTimeLocalViewRenderTest {
         assertNotNull(viewsRenderer);
 
         Fieldset fieldset = fieldsetGenerator.generate(new Event(LocalDateTime.of(2023, 10, 28, 16, 30)));
-        assertEquals("""
+        assertHtmlEquals("""
                 <div class="mb-3">\
                 <label for="meetingDate" class="form-label">Meeting Date</label>\
                 <input type="datetime-local" name="meetingDate" value="2023-10-28T16:30" id="meetingDate" class="form-control" required="required"/>\
@@ -55,7 +56,7 @@ class InputDateTimeLocalViewRenderTest {
         Event invalid = new Event(null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> formValidator.validate(invalid));
         fieldset = fieldsetGenerator.generate(invalid, ex);
-        assertEquals("""
+        assertHtmlEquals("""
                 <div class="mb-3">\
                 <label for="meetingDate" class="form-label">Meeting Date</label>\
                 <input type="datetime-local" name="meetingDate" value="" id="meetingDate" class="form-control is-invalid" aria-describedby="meetingDateValidationServerFeedback" required="required"/>\

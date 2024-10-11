@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Map;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -47,12 +48,12 @@ class InputEmailViewRenderTest {
         assertNotNull(viewsRenderer);
 
         Fieldset fieldset = fieldsetGenerator.generate(new Login("advocate@micronaut.io"));
-        assertEquals("""
+        assertHtmlEquals("""
                 <div class="mb-3">\
                 <label for="email" class="form-label">Email</label>\
                 <input type="email" name="email" value="advocate@micronaut.io" id="email" class="form-control" required="required"/>\
                 </div>""",
-            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+            TestUtils.render("fieldset/fieldset", viewsRenderer, Map.of("el", fieldset))
         );
 
 
@@ -60,13 +61,13 @@ class InputEmailViewRenderTest {
         Login invalid = new Login(null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> formValidator.validate(invalid));
         fieldset = fieldsetGenerator.generate(invalid, ex);
-        assertEquals("""
+        assertHtmlEquals("""
                 <div class="mb-3">\
                 <label for="email" class="form-label">Email</label>\
                 <input type="email" name="email" value="" id="email" class="form-control is-invalid" aria-describedby="emailValidationServerFeedback" required="required"/>\
                 <div id="emailValidationServerFeedback" class="invalid-feedback">must not be blank</div>\
                 </div>""",
-            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+            TestUtils.render("fieldset/fieldset", viewsRenderer, Map.of("el", fieldset))
         );
     }
 

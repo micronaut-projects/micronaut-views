@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 @MicronautTest(startApplication = false)
@@ -46,7 +47,7 @@ class InputCheckboxViewRenderTest {
                 Checkbox.builder().id("devils").name("devils").disabled(true).label(Message.of("Devils")).build()
             ))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
                 <label class="form-label">Attributes</label>\
                 <div class="form-check">\
                 <input type="checkbox" name="scales" value="" id="scales" class="form-check-input" checked="checked"/>\

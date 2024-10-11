@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -50,7 +51,7 @@ class InputNumberFormElementRendererTest {
             .min(10)
             .max(100)
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <label for="tentacles" class="form-label">Number of tentacles (10-100):</label>\
             <input type="number" name="tentacles" value="" id="tentacles" min="10" max="100" class="form-control"/>""",
             renderer.render(el, Locale.ENGLISH)

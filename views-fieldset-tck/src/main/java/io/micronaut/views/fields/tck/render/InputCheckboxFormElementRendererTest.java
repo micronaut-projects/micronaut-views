@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Locale;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -51,7 +52,7 @@ class InputCheckboxFormElementRendererTest {
                 Checkbox.builder().id("horns").name("horns").label(Message.of("Horns", null)).build()
             ))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <div class="form-check"><input type="checkbox" name="scales" value="" id="scales" class="form-check-input" checked="checked"/><label for="scales" class="form-label">Scales</label></div>\
             <div class="form-check"><input type="checkbox" name="horns" value="" id="horns" class="form-check-input"/><label for="horns" class="form-label">Horns</label></div>""",
             renderer.render(el, Locale.ENGLISH).trim()

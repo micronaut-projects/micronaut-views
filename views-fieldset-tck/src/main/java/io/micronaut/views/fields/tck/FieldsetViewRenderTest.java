@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -50,7 +51,7 @@ class FieldsetViewRenderTest {
             .build();
 
         Fieldset fieldset = new Fieldset(Collections.singletonList(textElement), Collections.emptyList());
-        assertEquals("""
+        assertHtmlEquals("""
                 <div class="mb-3">\
                 <label for="name" class="form-label">Name (4 to 8 characters):</label>\
                 <input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>\
@@ -64,7 +65,7 @@ class FieldsetViewRenderTest {
             .build();
 
         fieldset = new Fieldset(Arrays.asList(el, textElement), Collections.emptyList());
-        assertEquals("""
+        assertHtmlEquals("""
                 <input type="hidden" name="postId" value="34657"/>\
                 <div class="mb-3">\
                 <label for="name" class="form-label">Name (4 to 8 characters):</label>\

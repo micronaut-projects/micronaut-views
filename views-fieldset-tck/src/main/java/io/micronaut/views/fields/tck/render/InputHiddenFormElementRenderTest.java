@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -47,7 +48,7 @@ class InputHiddenFormElementRenderTest {
             .name("postId")
             .value("34657")
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <input type="hidden" name="postId" value="34657"/>""",
             renderer.render(el, Locale.ENGLISH)
         );

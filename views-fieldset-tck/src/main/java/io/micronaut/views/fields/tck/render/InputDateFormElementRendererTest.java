@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.Locale;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Property(name = "micronaut.views.form-element.render.views.input-date", value = "fieldset/inputdate.html")
@@ -51,7 +52,7 @@ class InputDateFormElementRendererTest {
             .max(LocalDate.of(2018, 12, 31))
             .value(LocalDate.of(2018, 7, 22))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <label for="start" class="form-label">Start date:</label>\
             <input type="date" name="trip-start" value="2018-07-22" id="start" min="2018-01-01" max="2018-12-31" class="form-control"/>""",
             renderer.render(el, Locale.ENGLISH)

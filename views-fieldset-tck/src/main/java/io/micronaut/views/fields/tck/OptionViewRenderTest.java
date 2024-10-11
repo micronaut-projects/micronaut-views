@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MicronautTest(startApplication = false)
@@ -38,12 +39,12 @@ class OptionViewRenderTest {
             .label(Message.of("Dog"))
             .build();
         String expected = "<option value=\"dog\">Dog</option>";
-        assertEquals(expected, TestUtils.render("fieldset/option.html", viewsRenderer, Collections.singletonMap("el", option)));
+        assertHtmlEquals(expected, TestUtils.render("fieldset/option", viewsRenderer, Collections.singletonMap("el", option)));
 
         option = Option.builder()
             .value("dog")
             .label(Message.of("Dog", "foobar"))
             .build();
-        assertEquals(expected, TestUtils.render("fieldset/option.html", viewsRenderer, Collections.singletonMap("el", option)));
+        assertHtmlEquals(expected, TestUtils.render("fieldset/option", viewsRenderer, Collections.singletonMap("el", option)));
     }
 }
