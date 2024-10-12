@@ -1,6 +1,6 @@
 plugins {
     id "io.micronaut.build.internal.views-module"
-    id "com.github.node-gradle.node" version "7.0.2"
+    id "com.github.node-gradle.node" version "7.1.0"
 }
 
 repositories {
