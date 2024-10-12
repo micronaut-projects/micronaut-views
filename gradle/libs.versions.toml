@@ -17,7 +17,7 @@ managed-rocker = "1.4.0"
 managed-soy = "2023-09-13"
 org-json = "20231013"
 managed-thymeleaf = "3.1.2.RELEASE"
-managed-velocity = "2.3"
+managed-velocity = "2.4"
 
 graal = "24.0.1"
 
