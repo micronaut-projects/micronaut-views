@@ -19,3 +19,5 @@ jte {
     generate()
     jteExtension("gg.jte.nativeimage.NativeResourcesExtension")
 }
+java.sourceCompatibility = JavaVersion.VERSION_21
+java.targetCompatibility = JavaVersion.VERSION_21
