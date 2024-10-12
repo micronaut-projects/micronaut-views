@@ -18,7 +18,6 @@ managed-soy = "2023-09-13"
 org-json = "20231013"
 managed-thymeleaf = "3.1.2.RELEASE"
 managed-velocity = "2.3"
-
 graal = "24.0.1"
 
 pebble = "3.2.2"
@@ -71,3 +70,6 @@ jetbrains-annotations = { module = "org.jetbrains:annotations", version = "24.1.
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 jte = { id = "gg.jte.gradle", version.ref = "managed-jte" }
+buildtools-native = { id = "org.graalvm.buildtools.native"}
+
+

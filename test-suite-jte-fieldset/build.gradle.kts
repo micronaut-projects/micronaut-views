@@ -1,6 +1,7 @@
 plugins {
     id("io.micronaut.build.internal.views-fieldset-tck")
     alias(libs.plugins.jte)
+    alias(libs.plugins.buildtools.native)
 }
 
 dependencies {
@@ -10,9 +11,11 @@ dependencies {
     implementation(projects.micronautViewsJte)
     implementation(projects.micronautViewsFieldset)
     testImplementation(projects.micronautViewsJte)
+    jteGenerate(libs.managed.jte.native.resources)
 }
-
+graalvmNative.toolchainDetection = true
 jte {
     sourceDirectory = file("src/test/jte").toPath()
     generate()
+    jteExtension("gg.jte.nativeimage.NativeResourcesExtension")
 }
