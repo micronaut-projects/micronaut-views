@@ -27,10 +27,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Locale;
 
 import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Property(name = "micronaut.views.form-element.render.views.input-submit", value = "fieldset/inputsubmit.html")
+@Property(name = "micronaut.views.form-element.render.views.input-submit", value = "fieldset/inputsubmit")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests

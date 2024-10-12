@@ -30,7 +30,7 @@ import java.util.Locale;
 import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Property(name = "micronaut.views.form-element.render.views.input-date", value = "fieldset/inputdate.html")
+@Property(name = "micronaut.views.form-element.render.views.input-date", value = "fieldset/inputdate")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests

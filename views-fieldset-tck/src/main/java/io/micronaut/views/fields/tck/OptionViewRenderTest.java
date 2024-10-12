@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MicronautTest(startApplication = false)
 @SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests

@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 
 import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MicronautTest(startApplication = false)
@@ -63,7 +62,7 @@ class FormViewRenderTest {
                 <input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>\
                 </div>\
                 <input type="submit" value="Send Request" class="btn btn-primary"/></form>""",
-            TestUtils.render("fieldset/form.html", viewsRenderer, Map.of("form", form))
+            TestUtils.render("fieldset/form", viewsRenderer, Map.of("form", form))
         );
     }
 }

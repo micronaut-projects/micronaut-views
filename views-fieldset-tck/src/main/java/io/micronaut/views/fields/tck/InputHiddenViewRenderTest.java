@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
-import static io.micronaut.views.fields.tck.TestUtils.assertEqualsIgnoreSpace;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

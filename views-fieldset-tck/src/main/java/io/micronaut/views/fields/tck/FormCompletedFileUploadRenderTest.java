@@ -40,7 +40,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests
@@ -52,7 +51,7 @@ class FormCompletedFileUploadRenderTest {
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer,
                 FormGenerator formGenerator,
                 EventImageSaveValidator validator) throws IOException {
-        String viewName = "fieldset/form.html";
+        String viewName = "fieldset/form";
         BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer = (propertyName, builder) -> {
             if (propertyName.equals("file")) {
                 builder.with("accept", "image/png, image/jpeg");

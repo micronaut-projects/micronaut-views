@@ -27,9 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @MicronautTest(startApplication = false)
 @SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests
@@ -64,11 +62,7 @@ class InputRadioViewRenderTest {
             .build();
         String html = TestUtils.render("fieldset/inputradio", viewsRenderer, Map.of("el", el, "radio", huey)).trim();
 
-        assertTrue(
-            "<input type=\"radio\" name=\"drone\" value=\"huey\" id=\"huey\" class=\"form-check-input\" checked/>".equals(html)
-                || "<input type=\"radio\" name=\"drone\" value=\"huey\" id=\"huey\" class=\"form-check-input\" checked=\"checked\"/>".equals(html)
-        );
-
+        assertHtmlEquals("<input type=\"radio\" name=\"drone\" value=\"huey\" id=\"huey\" class=\"form-check-input\" checked=\"checked\"/>", html);
         html = TestUtils.render("fieldset/inputradios", viewsRenderer, Map.of("el", el));
         assertHtmlEquals("""
                 <div class="form-check">\

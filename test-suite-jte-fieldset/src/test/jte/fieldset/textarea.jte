@@ -8,8 +8,7 @@
     cols="${el.cols()}"
     rows="${el.rows()}"
     class="form-control is-invalid"
-    aria-describedby="${el.name()}ValidationServerFeedback"
-    class="form-control">${el.value()}</textarea>
+    aria-describedby="${el.name()}ValidationServerFeedback">${el.value()}</textarea>
     @template.fieldset.errors(el.name(), el.errors())
 @else
 <textarea

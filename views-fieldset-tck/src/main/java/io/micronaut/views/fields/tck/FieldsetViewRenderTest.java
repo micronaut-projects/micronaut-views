@@ -29,7 +29,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MicronautTest(startApplication = false)
@@ -56,7 +55,7 @@ class FieldsetViewRenderTest {
                 <label for="name" class="form-label">Name (4 to 8 characters):</label>\
                 <input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>\
                 </div>""",
-            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+            TestUtils.render("fieldset/fieldset", viewsRenderer, Map.of("el", fieldset))
         );
 
         InputHiddenFormElement el = InputHiddenFormElement.builder()
@@ -71,7 +70,7 @@ class FieldsetViewRenderTest {
                 <label for="name" class="form-label">Name (4 to 8 characters):</label>\
                 <input type="text" name="name" value="" id="name" minlength="4" maxlength="8" size="10" class="form-control" required="required"/>\
                 </div>""",
-            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+            TestUtils.render("fieldset/fieldset", viewsRenderer, Map.of("el", fieldset))
         );
     }
 }
