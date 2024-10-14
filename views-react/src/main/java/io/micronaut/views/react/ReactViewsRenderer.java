@@ -15,23 +15,18 @@
  */
 package io.micronaut.views.react;
 
-import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.context.exceptions.BeanInstantiationException;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.exceptions.MessageBodyException;
-import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
-import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.react.truffle.IntrospectableToTruffleAdapter;
 import io.micronaut.views.react.util.BeanPool;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -44,17 +39,13 @@ import java.nio.charset.StandardCharsets;
  * @param <PROPS> An introspectable bean type that will be fed to the ReactJS root component as props.
  */
 @Singleton
-class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>, ApplicationEventListener<FileChangedEvent> {
-    private static final Logger LOG = LoggerFactory.getLogger(ReactViewsRenderer.class);
-
+class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> {
     private final BeanPool<ReactJSContext> beanPool;
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
-    private final ReactJSBeanFactory reactJSBeanFactory;
 
-    ReactViewsRenderer(BeanPool<ReactJSContext> beanPool, ReactViewsRendererConfiguration reactViewsRendererConfiguration, ReactJSBeanFactory reactJSBeanFactory) {
+    ReactViewsRenderer(BeanPool<ReactJSContext> beanPool, ReactViewsRendererConfiguration reactViewsRendererConfiguration) {
         this.beanPool = beanPool;
         this.reactViewsRendererConfiguration = reactViewsRendererConfiguration;
-        this.reactJSBeanFactory = reactJSBeanFactory;
     }
 
     /**
@@ -103,13 +94,6 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
         context.render.executeVoid(component, guestProps, renderCallback, reactViewsRendererConfiguration.getClientBundleURL(), request);
     }
 
-    @Override
-    public void onApplicationEvent(FileChangedEvent event) {
-        if (event.getEventType() != WatchEventType.DELETE && reactJSBeanFactory.maybeReloadServerBundle(event.getPath())) {
-            beanPool.clear();
-            LOG.info("Reloaded React SSR bundle due to file change.");
-        }
-    }
 
     /**
      * Methods exposed to the ReactJS components and render scripts. Needs to be public to be

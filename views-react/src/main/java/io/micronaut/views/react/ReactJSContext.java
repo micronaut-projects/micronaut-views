@@ -15,26 +15,15 @@
  */
 package io.micronaut.views.react;
 
-import io.micronaut.context.ApplicationContext;
-import io.micronaut.context.Qualifier;
 import io.micronaut.context.annotation.Bean;
+import io.micronaut.context.annotation.Parameter;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.inject.BeanType;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import org.graalvm.polyglot.Context;
-import org.graalvm.polyglot.Engine;
-import org.graalvm.polyglot.HostAccess;
-import org.graalvm.polyglot.SandboxPolicy;
-import org.graalvm.polyglot.Source;
-import org.graalvm.polyglot.Value;
+import org.graalvm.polyglot.*;
 
 import java.util.List;
-import java.util.stream.Stream;
-
-import static io.micronaut.views.react.ReactJSBeanFactory.REACT_QUALIFIER;
 
 /**
  * A bean that handles the Javascript {@link Context} object representing a loaded execution
@@ -53,18 +42,21 @@ class ReactJSContext implements AutoCloseable {
 
     private final Engine engine;
     private final HostAccess hostAccess;
-    private final ApplicationContext applicationContext;
+    private final Source ssrModuleSource;
+    private final Source renderSource;
     private final ReactViewsRendererConfiguration configuration;
 
     @Inject
     ReactJSContext(ReactViewsRendererConfiguration configuration,
-                   @Named(REACT_QUALIFIER) Engine engine,
-                   @Named(REACT_QUALIFIER) HostAccess hostAccess,
-                   ApplicationContext applicationContext) {
+                   @ReactBean Engine engine,
+                   @ReactBean HostAccess hostAccess,
+                   @Parameter Source ssrModuleSource,
+                   @Parameter Source renderSource) {
         this.configuration = configuration;
         this.engine = engine;
         this.hostAccess = hostAccess;
-        this.applicationContext = applicationContext;
+        this.ssrModuleSource = ssrModuleSource;
+        this.renderSource = renderSource;
     }
 
     @PostConstruct
@@ -72,7 +64,7 @@ class ReactJSContext implements AutoCloseable {
         polyglotContext = createContext();
 
         Value global = polyglotContext.getBindings("js");
-        ssrModule = loadNamedModule(NamedSourceQualifier.ssr);
+        ssrModule = polyglotContext.eval(ssrModuleSource);
 
         // Take all the exports from the components bundle, and expose them to the render script.
         for (var name : ssrModule.getMemberKeys()) {
@@ -80,16 +72,11 @@ class ReactJSContext implements AutoCloseable {
         }
 
         // Evaluate our JS-side framework specific render logic.
-        Value renderModule = loadNamedModule(NamedSourceQualifier.renderScript);
+        Value renderModule = polyglotContext.eval(renderSource);
         render = renderModule.getMember("ssr");
         if (render == null) {
             throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported.".formatted(configuration.getRenderScript()));
         }
-    }
-
-    private Value loadNamedModule(NamedSourceQualifier sourceQualifier) {
-        // This will return a cached, shared Source object.
-        return polyglotContext.eval(applicationContext.createBean(Source.class, sourceQualifier));
     }
 
     private Context createContext() {
@@ -140,15 +127,5 @@ class ReactJSContext implements AutoCloseable {
     @Override
     public synchronized void close() {
         polyglotContext.close();
-    }
-
-    private record NamedSourceQualifier(String name) implements Qualifier<Source> {
-        static NamedSourceQualifier ssr = new NamedSourceQualifier("react");
-        static NamedSourceQualifier renderScript = new NamedSourceQualifier("react-render-script");
-
-        @Override
-        public <BT extends BeanType<Source>> Stream<BT> reduce(Class<Source> beanType, Stream<BT> candidates) {
-            return candidates.filter(bt -> name.equals(bt.getBeanName().orElse(null)));
-        }
     }
 }
