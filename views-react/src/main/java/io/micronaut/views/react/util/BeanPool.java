@@ -122,8 +122,9 @@ public class BeanPool<T> {
      *
      * <p>
      * This is implemented equivalently to:
+     *
      * <pre>
-     * try (Handle<T> handle = checkOut()) {
+     * try (Handle&lt;T&gt; handle = checkOut()) {
      *     return block.apply(handle);
      * }
      * </pre>
@@ -131,6 +132,7 @@ public class BeanPool<T> {
      * @param block The lambda that will be executed with the checked out handle.
      * @param <R> Return type of the block.
      * @param <E> What type of exception the block can throw.
+     * @throws E if thrown by {@code block}.
      * @return the same object returned by the block.
      */
     public <R, E extends Throwable> R useContext(ThrowingFunction<Handle<T>, R, E> block) throws E {
