@@ -45,9 +45,10 @@ Content-Security-Policy: default-src https: self:; script-src 'nonce-4ze2IRazk4Y
 The nonce value can be accessed on the server as a request attribute named `cspNonce`. This is the value to use
 in the `nonce` attribute on `script` and related tags.  For example (adapt as appropriate for your template language):
 
-```html
+[source,html]
+----
 <script type="text/javascript" src="/path/to/script.js" nonce="${cspNonce}" />
-```
+----
 
 Inline scripts which aren't otherwise whitelisted will be declined for execution, unless CSP is operating in report-only
 mode. Inline scripts can be whitelisted with the syntax:
