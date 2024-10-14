@@ -15,34 +15,17 @@
  */
 package io.micronaut.views.react;
 
-import io.micronaut.context.ApplicationContext;
-import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.io.ResourceResolver;
-import io.micronaut.views.react.util.BeanPool;
 import io.micronaut.views.react.util.JavaUtilLoggingToSLF4J;
 import io.micronaut.views.react.util.OutputStreamToSLF4J;
-import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.SandboxPolicy;
-import org.graalvm.polyglot.Source;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Optional;
-
-import static java.lang.String.format;
 
 /**
  * Allows the default Javascript context and host access policy to be controlled.
@@ -50,14 +33,7 @@ import static java.lang.String.format;
 @Factory
 @Internal
 final class ReactJSBeanFactory {
-    static final String REACT_QUALIFIER = "react";
-
     private static final Logger LOG = LoggerFactory.getLogger("js");
-
-    // We cache the Source objects because they are expensive to create, but, we don't want them
-    // to be singleton beans so we can recreate them on file change.
-    private Source serverBundle;  // L(this)
-    private Source renderScript;  // L(this)
 
     /**
      * This defaults to {@link HostAccess#ALL} if the sandbox is disabled, or {@link
@@ -67,7 +43,7 @@ final class ReactJSBeanFactory {
      * allowing sandboxed JS to extend or implement Java types.
      */
     @Singleton
-    @Named(REACT_QUALIFIER)
+    @ReactBean
     HostAccess hostAccess(ReactViewsRendererConfiguration configuration) {
         return configuration.getSandbox()
             ? HostAccess.newBuilder(HostAccess.CONSTRAINED).allowListAccess(true).allowMapAccess(true).build()
@@ -75,12 +51,7 @@ final class ReactJSBeanFactory {
     }
 
     @Singleton
-    BeanPool<ReactJSContext> contextPool(ApplicationContext applicationContext) {
-        return new BeanPool<>(() -> applicationContext.createBean(ReactJSContext.class));
-    }
-
-    @Singleton
-    @Named(REACT_QUALIFIER)
+    @ReactBean
     Engine engine(ReactViewsRendererConfiguration configuration) {
         boolean sandbox = configuration.getSandbox();
         LOG.debug("ReactJS sandboxing {}", sandbox ? "enabled" : "disabled");
@@ -90,49 +61,5 @@ final class ReactJSBeanFactory {
             .logHandler(new JavaUtilLoggingToSLF4J(LOG))
             .sandbox(sandbox ? SandboxPolicy.CONSTRAINED : SandboxPolicy.TRUSTED)
             .build();
-    }
-
-    @Bean
-    @Named(REACT_QUALIFIER)
-    synchronized Source serverBundle(ResourceResolver resolver, ReactViewsRendererConfiguration reactConfiguration) throws IOException {
-        if (serverBundle == null) {
-            serverBundle = loadSource(resolver, reactConfiguration.getServerBundlePath(), ".server-bundle-path");
-        }
-        return serverBundle;
-    }
-
-    @Bean
-    @Named("react-render-script")
-    synchronized Source renderScript(ResourceResolver resolver, ReactViewsRendererConfiguration config) throws IOException {
-        if (renderScript == null) {
-            renderScript = loadSource(resolver, config.getRenderScript(), ".render-script");
-        }
-        return renderScript;
-    }
-
-    private static Source loadSource(ResourceResolver resolver, String desiredPath, String propName) throws IOException {
-        Optional<URL> sourceURL = resolver.getResource(desiredPath);
-        if (sourceURL.isEmpty()) {
-            throw new FileNotFoundException(format("Javascript %s could not be found. Check your %s property.", desiredPath, ReactViewsRendererConfiguration.PREFIX + propName));
-        }
-        URL url = sourceURL.get();
-        try (var reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8)) {
-            String path = url.getPath();
-            var fileName = path.substring(path.lastIndexOf('/') + 1);
-            Source.Builder sourceBuilder = Source.newBuilder("js", reader, fileName);
-            return sourceBuilder.mimeType("application/javascript+module").build();
-        }
-    }
-
-    synchronized boolean maybeReloadServerBundle(Path fileThatChanged) {
-        if (serverBundle != null && fileThatChanged.toAbsolutePath().equals(Paths.get(serverBundle.getPath()).toAbsolutePath())) {
-            serverBundle = null;
-            return true;
-        }
-        if (renderScript != null && fileThatChanged.toAbsolutePath().equals(Paths.get(renderScript.getPath()).toAbsolutePath())) {
-            renderScript = null;
-            return true;
-        }
-        return false;
     }
 }
