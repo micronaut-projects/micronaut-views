@@ -16,12 +16,10 @@
 package io.micronaut.views.react;
 
 import io.micronaut.context.annotation.Bean;
-import io.micronaut.context.annotation.Parameter;
 import io.micronaut.core.annotation.Internal;
-import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import jakarta.inject.Inject;
-import org.graalvm.polyglot.*;
+import org.graalvm.polyglot.Context;
+import org.graalvm.polyglot.Value;
 
 import java.util.List;
 
@@ -31,92 +29,12 @@ import java.util.List;
  */
 @Internal
 @Bean
-class ReactJSContext implements AutoCloseable {
+record ReactJSContext(Context polyglotContext,
+                      Value render,
+                      Value ssrModule) implements AutoCloseable {
+
     // Symbols the user's server side bundle might supply us with.
     private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
-
-    // Accessed from ReactViewsRenderer
-    Context polyglotContext;
-    Value render;
-    Value ssrModule;
-
-    private final Engine engine;
-    private final HostAccess hostAccess;
-    private final Source ssrModuleSource;
-    private final Source renderSource;
-    private final ReactViewsRendererConfiguration configuration;
-
-    @Inject
-    ReactJSContext(ReactViewsRendererConfiguration configuration,
-                   @ReactBean Engine engine,
-                   @ReactBean HostAccess hostAccess,
-                   @Parameter Source ssrModuleSource,
-                   @Parameter Source renderSource) {
-        this.configuration = configuration;
-        this.engine = engine;
-        this.hostAccess = hostAccess;
-        this.ssrModuleSource = ssrModuleSource;
-        this.renderSource = renderSource;
-    }
-
-    @PostConstruct
-    void init() {
-        polyglotContext = createContext();
-
-        Value global = polyglotContext.getBindings("js");
-        ssrModule = polyglotContext.eval(ssrModuleSource);
-
-        // Take all the exports from the components bundle, and expose them to the render script.
-        for (var name : ssrModule.getMemberKeys()) {
-            global.putMember(name, ssrModule.getMember(name));
-        }
-
-        // Evaluate our JS-side framework specific render logic.
-        Value renderModule = polyglotContext.eval(renderSource);
-        render = renderModule.getMember("ssr");
-        if (render == null) {
-            throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported.".formatted(configuration.getRenderScript()));
-        }
-    }
-
-    private Context createContext() {
-        var contextBuilder = Context.newBuilder()
-            .engine(engine)
-            .option("js.esm-eval-returns-exports", "true")
-            .option("js.unhandled-rejections", "throw");
-
-        if (configuration.getSandbox()) {
-            contextBuilder
-                .sandbox(SandboxPolicy.CONSTRAINED)
-                .allowHostAccess(hostAccess);
-        } else {
-            // allowExperimentalOptions is here because as of the time of writing (August 2024)
-            // the esm-eval-returns-exports option is experimental. That got fixed and this
-            // can be removed once the base version of GraalJS is bumped to 24.1 or higher.
-            contextBuilder
-                .sandbox(SandboxPolicy.TRUSTED)
-                .allowAllAccess(true)
-                .allowExperimentalOptions(true);
-        }
-
-        try {
-            return contextBuilder.build();
-        } catch (ExceptionInInitializerError e) {
-            // The catch handler is to work around a bug in Polyglot 24.0.0
-            if (e.getCause().getMessage().contains("version compatibility check failed")) {
-                throw new IllegalStateException("GraalJS version mismatch or it's missing. Please ensure you have added either org.graalvm.polyglot:js or org.graalvm.polyglot:js-community to your dependencies alongside Micronaut Views React, as it's up to you to select the best engine given your licensing constraints. See the user guide for more detail.");
-            } else {
-                throw e;
-            }
-        } catch (IllegalArgumentException e) {
-            // We need esm-eval-returns-exports=true, but it's not compatible with the sandbox in this version of GraalJS.
-            if (e.getMessage().contains("Option 'js.esm-eval-returns-exports' is experimental")) {
-                throw new IllegalStateException("The sandboxing feature requires a newer version of GraalJS. Please upgrade and try again, or disable the sandboxing feature.");
-            } else {
-                throw e;
-            }
-        }
-    }
 
     boolean moduleHasMember(String memberName) {
         assert !IMPORT_SYMBOLS.contains(memberName) : "Should not query the server-side bundle for member name " + memberName;
@@ -125,7 +43,7 @@ class ReactJSContext implements AutoCloseable {
 
     @PreDestroy
     @Override
-    public synchronized void close() {
+    public void close() {
         polyglotContext.close();
     }
 }
