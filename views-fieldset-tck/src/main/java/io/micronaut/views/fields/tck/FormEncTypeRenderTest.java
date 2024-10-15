@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
@@ -37,9 +37,9 @@ class FormEncTypeRenderTest {
     void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer) throws IOException {
         assertNotNull(viewsRenderer);
         Form form = new Form("/foo/bar", "post", new Fieldset(Collections.emptyList(), Collections.emptyList()), "application/x-www-form-urlencoded");
-        assertEquals("""
+        assertHtmlEquals("""
                 <form action="/foo/bar" method="post" enctype="application/x-www-form-urlencoded">\
                 </form>""",
-                TestUtils.render("fieldset/form.html", viewsRenderer, Map.of("form", form)));
+                TestUtils.render("fieldset/form", viewsRenderer, Map.of("form", form)));
     }
 }

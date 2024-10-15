@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -43,25 +43,24 @@ class TextareaViewRenderTest {
         assertNotNull(viewsRenderer);
 
         Fieldset fieldset = fieldsetGenerator.generate(new Post("bla bla bla"));
-        assertEquals("""
+        assertHtmlEquals("""
                 <div class="mb-3">\
                 <label for="description" class="form-label">Description</label>\
                 <textarea name="description" id="description" class="form-control">bla bla bla</textarea>\
                 </div>""",
-            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+            TestUtils.render("fieldset/fieldset", viewsRenderer, Map.of("el", fieldset))
         );
-
 
         Post invalid = new Post(null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> formValidator.validate(invalid));
         fieldset = fieldsetGenerator.generate(invalid, ex);
-        assertEquals("""
+        assertHtmlEquals("""
                 <div class="mb-3">\
                 <label for="description" class="form-label">Description</label>\
                 <textarea name="description" id="description" class="form-control is-invalid" aria-describedby="descriptionValidationServerFeedback"></textarea>\
                 <div id="descriptionValidationServerFeedback" class="invalid-feedback">must not be blank</div>\
                 </div>""",
-            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+            TestUtils.render("fieldset/fieldset", viewsRenderer, Map.of("el", fieldset))
         );
     }
 

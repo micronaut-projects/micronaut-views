@@ -27,10 +27,10 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalTime;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Property(name = "micronaut.views.form-element.render.views.input-time", value = "fieldset/inputtime.html")
+@Property(name = "micronaut.views.form-element.render.views.input-time", value = "fieldset/inputtime")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests
@@ -52,7 +52,7 @@ class InputTimeFormElementRendererTest {
             .max(LocalTime.of(18, 0))
             .value(LocalTime.of(10, 0))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
                 <label for="meeting-time" class="form-label">Choose a time for your appointment:</label>\
                 <input type="time" name="meeting-time" value="10:00" id="meeting-time" min="09:00" max="18:00" class="form-control"/>""",
             renderer.render(el, Locale.ENGLISH)

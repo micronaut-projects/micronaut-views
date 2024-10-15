@@ -34,6 +34,9 @@ include "test-suite-http"
 include "test-suite-groovy"
 include "test-suite-kotlin"
 include "test-suite-thymeleaf-fieldset"
+if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_21)) {
+include "test-suite-jte-fieldset"
+}
 include "test-suite-freemarker-fieldset"
 include "test-suite-graal:test-suite-graal-common"
 include "test-suite-graal:test-suite-graal-freemarker"

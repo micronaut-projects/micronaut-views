@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Property(name = "micronaut.views.form-element.render.views.input-tel", value = "fieldset/inputtel.html")
+@Property(name = "micronaut.views.form-element.render.views.input-tel", value = "fieldset/inputtel")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests
@@ -50,7 +50,7 @@ class InputTelFormElementRendererTest {
             .pattern("[0-9]{3}-[0-9]{3}-[0-9]{4}")
             .label(Message.of("Enter your phone number:", null))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <label for="phone" class="form-label">Enter your phone number:</label>\
             <input type="tel" name="phone" value="" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)

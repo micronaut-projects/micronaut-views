@@ -16,11 +16,7 @@
 package io.micronaut.views.fields.elements;
 
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.views.fields.messages.Message;
-
-import java.util.List;
 
 /**
  * API for html input of type string. e.g. input type text, password, url, tel.
@@ -28,15 +24,7 @@ import java.util.List;
  * @since 4.1.0
  */
 @Experimental
-public interface InputStringFormElement {
-
-    /**
-     *
-     * @return Name of the form control. Submitted with the form as part of a name/value pair
-     */
-    @NonNull
-    String name();
-
+public interface InputStringFormElement extends FormElementAttributes {
     /**
      *
      * @return It defines an identifier (ID) which must be unique in the whole document
@@ -97,16 +85,4 @@ public interface InputStringFormElement {
      */
     @Nullable
     String value();
-
-    /**
-     *
-     * @return message for an HTML Label element.
-     */
-    @Nullable Message label();
-
-    /**
-     *
-     * @return Input Errors
-     */
-    @NonNull List<Message> errors();
 }

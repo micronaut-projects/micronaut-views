@@ -28,10 +28,10 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Property(name = "micronaut.views.form-element.render.views.select", value = "fieldset/select.html")
+@Property(name = "micronaut.views.form-element.render.views.select", value = "fieldset/select")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests
@@ -76,7 +76,7 @@ class SelectFormElementRendererTest {
                     .build()
             ))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <label for="pet-select" class="form-label">Choose a pet:</label><select name="pets" id="pet-select" class="form-select">\
             <option value="dog">Dog</option>\
             <option value="cat">Cat</option>\

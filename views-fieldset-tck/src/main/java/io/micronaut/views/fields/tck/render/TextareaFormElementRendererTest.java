@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Property(name = "micronaut.views.form-element.render.views.textarea", value = "fieldset/textarea.html")
+@Property(name = "micronaut.views.form-element.render.views.textarea", value = "fieldset/textarea")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests
@@ -51,7 +51,7 @@ class TextareaFormElementRendererTest {
             .value("It was a dark and stormy night...")
             .label(Message.of("Tell us your story:", null))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
            <label for="story" class="form-label">Tell us your story:</label>\
            <textarea name="story" id="story" cols="33" rows="5" class="form-control">It was a dark and stormy night...</textarea>""",
             renderer.render(el, Locale.ENGLISH)

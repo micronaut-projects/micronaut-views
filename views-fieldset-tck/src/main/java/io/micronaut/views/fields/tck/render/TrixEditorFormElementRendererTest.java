@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Property(name = "micronaut.views.form-element.render.views.trix-editor", value = "fieldset/trixeditor.html")
+@Property(name = "micronaut.views.form-element.render.views.trix-editor", value = "fieldset/trixeditor")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests
@@ -49,7 +49,7 @@ class TrixEditorFormElementRendererTest {
             .value("Editor content goes here")
             .label(Message.of("Tell us your story:", null))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <label for="x" class="form-label">Tell us your story:</label>\
             <input type="hidden" name="content" value="Editor content goes here" id="x"/><trix-editor input="x"></trix-editor>""",
             renderer.render(el, Locale.ENGLISH)

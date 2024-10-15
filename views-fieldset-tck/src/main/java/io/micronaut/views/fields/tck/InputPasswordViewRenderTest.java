@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -43,24 +43,24 @@ class InputPasswordViewRenderTest {
         assertNotNull(viewsRenderer);
 
         Fieldset fieldset = fieldsetGenerator.generate(new Login("foo"));
-        assertEquals("""
+        assertHtmlEquals("""
                 <div class="mb-3">\
                 <label for="password" class="form-label">Password</label>\
                 <input type="password" name="password" value="foo" id="password" class="form-control" required="required"/>\
                 </div>""",
-            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+            TestUtils.render("fieldset/fieldset", viewsRenderer, Map.of("el", fieldset))
         );
 
         Login invalid = new Login(null);
         ConstraintViolationException ex = assertThrows(ConstraintViolationException.class, () -> formValidator.validate(invalid));
         fieldset = fieldsetGenerator.generate(invalid, ex);
-        assertEquals("""
+        assertHtmlEquals("""
                 <div class="mb-3">\
                 <label for="password" class="form-label">Password</label>\
                 <input type="password" name="password" value="" id="password" class="form-control is-invalid" aria-describedby="passwordValidationServerFeedback" required="required"/>\
                 <div id="passwordValidationServerFeedback" class="invalid-feedback">must not be blank</div>\
                 </div>""",
-            TestUtils.render("fieldset/fieldset.html", viewsRenderer, Map.of("el", fieldset))
+            TestUtils.render("fieldset/fieldset", viewsRenderer, Map.of("el", fieldset))
         );
     }
 

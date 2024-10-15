@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MicronautTest(startApplication = false)
@@ -41,11 +41,11 @@ class TrixEditorViewRenderTest {
             .value("It was a dark and stormy night...")
             .label(Message.of("Tell us your story:"))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
                 <label for="story" class="form-label">Tell us your story:</label>\
                 <input type="hidden" name="story" value="It was a dark and stormy night..." id="story"/>\
                 <trix-editor input="story"></trix-editor>""",
-            TestUtils.render("fieldset/trixeditor.html", viewsRenderer, Collections.singletonMap("el", el))
+            TestUtils.render("fieldset/trixeditor", viewsRenderer, Collections.singletonMap("el", el))
         );
     }
 }
