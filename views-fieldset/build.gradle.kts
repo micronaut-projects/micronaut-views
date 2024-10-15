@@ -12,6 +12,7 @@ dependencies {
     compileOnly(projects.micronautViewsCore)
     testImplementation(mnData.micronaut.data.model)
     testImplementation(mn.micronaut.http)
+    testImplementation(mn.micronaut.http.server.netty)
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(libs.junit.jupiter.api)
     testImplementation(mnTest.micronaut.test.junit5)

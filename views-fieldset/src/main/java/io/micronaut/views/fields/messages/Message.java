@@ -25,7 +25,9 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Message representation. It features an optional {@link Message#code()} to allow localization.
@@ -33,14 +35,41 @@ import java.util.List;
  * @since 4.1.0
  * @param defaultMessage The default message to use if no code is specified or no localized message found.
  * @param code The i18n code which can be used to fetch a localized message.
+ * @param variables The variables to use resolve message placeholders
  */
 @Experimental
 @Introspected
 public record Message(@NonNull @NotBlank String defaultMessage,
-                      @Nullable String code) implements Comparable<Message> {
+                      @Nullable String code,
+                      @Nullable Object[] variables) implements Comparable<Message> {
     private static final String REGEX = "(.)([A-Z])";
     private static final String REPLACEMENT = "$1 $2";
     private static final String DOT = ".";
+
+    public Message(@NonNull String defaultMessage, @Nullable String code) {
+        this(defaultMessage, code, null);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Message message = (Message) o;
+        return defaultMessage.equals(message.defaultMessage) &&
+                Objects.equals(code, message.code) &&
+                Arrays.equals(variables, message.variables);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(defaultMessage, code);
+        result = 31 * result + Arrays.hashCode(variables);
+        return result;
+    }
 
     @Override
     public int compareTo(Message o) {
@@ -70,6 +99,20 @@ public record Message(@NonNull @NotBlank String defaultMessage,
     public static Message of(@NonNull String defaultMessage,
                       @Nullable String code) {
         return new Message(defaultMessage, code);
+    }
+
+    /**
+     *
+     * @param defaultMessage The default message to use if no code is specified or no localized message found
+     * @param code The i18n code which can be used to fetch a localized message.
+     * @param variables The variables to use resolve message placeholders
+     * @return A {@link Message} instance.
+     */
+    @NonNull
+    public static Message of(@NonNull String defaultMessage,
+                             @Nullable String code,
+                             @Nullable Object... variables) {
+        return new Message(defaultMessage, code, variables);
     }
 
     /**
