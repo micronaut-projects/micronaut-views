@@ -76,7 +76,7 @@ final class ReactJSBeanFactory {
     }
 
     @Singleton
-    ApplicationEventListener<ReactJSSourcesChangedEvent> bookCleaner(BeanPool<ReactJSContext> contextPool) {
+    ApplicationEventListener<ReactJSSourcesChangedEvent> poolCleaner(BeanPool<ReactJSContext> contextPool) {
         // Clearing the pool ensures that new requests go via the pool and from there, back to
         // createContext() which will in turn then reload the files on disk.
         return event -> contextPool.clear();
