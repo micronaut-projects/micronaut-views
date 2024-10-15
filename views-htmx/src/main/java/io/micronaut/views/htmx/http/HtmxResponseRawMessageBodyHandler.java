@@ -17,61 +17,39 @@ package io.micronaut.views.htmx.http;
 
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
-import io.micronaut.core.io.buffer.ByteBuffer;
 import io.micronaut.core.type.Argument;
-import io.micronaut.core.type.Headers;
 import io.micronaut.core.type.MutableHeaders;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
-import io.micronaut.http.body.RawMessageBodyHandler;
+import io.micronaut.http.body.MessageBodyWriter;
 import io.micronaut.http.codec.CodecException;
 import io.micronaut.http.context.ServerRequestContext;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.ModelAndViewRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import jakarta.inject.Singleton;
-import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Collection;
-import java.util.Collections;
 
 /**
- * {@link RawMessageBodyHandler} implementation for {@link HtmxResponse}.
+ * {@link io.micronaut.http.body.MessageBodyHandler} implementation for {@link HtmxResponse}.
  * @author Sergio del Amo
  * @since 5.2.0
  * @param <T> The model type
  */
 @Internal
 @Singleton
-final class HtmxResponseRawMessageBodyHandler<T> implements RawMessageBodyHandler<HtmxResponse<T>> {
+final class HtmxResponseRawMessageBodyHandler<T> implements MessageBodyWriter<HtmxResponse<T>> {
     private static final Logger LOG = LoggerFactory.getLogger(HtmxResponseRawMessageBodyHandler.class);
 
     private final ModelAndViewRenderer<T, HttpRequest<?>> modelAndViewRenderer;
 
     public HtmxResponseRawMessageBodyHandler(ModelAndViewRenderer<T, HttpRequest<?>> modelAndViewRenderer) {
         this.modelAndViewRenderer = modelAndViewRenderer;
-    }
-
-    @Override
-    public @NonNull Collection<? extends Class<?>> getTypes() {
-        return Collections.singletonList(HtmxResponse.class);
-    }
-
-    @Override
-    public @NonNull Publisher<? extends HtmxResponse<T>> readChunked(@NonNull Argument<HtmxResponse<T>> type, @Nullable MediaType mediaType, @NonNull Headers httpHeaders, @NonNull Publisher<ByteBuffer<?>> input) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    @Override
-    public @Nullable HtmxResponse<T> read(@NonNull Argument<HtmxResponse<T>> type, @Nullable MediaType mediaType, @NonNull Headers httpHeaders, @NonNull InputStream inputStream) throws CodecException {
-        throw new UnsupportedOperationException("Not supported");
     }
 
     @Override
