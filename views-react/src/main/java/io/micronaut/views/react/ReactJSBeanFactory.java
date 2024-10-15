@@ -15,14 +15,20 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.context.annotation.Prototype;
+import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.views.react.util.BeanPool;
 import io.micronaut.views.react.util.JavaUtilLoggingToSLF4J;
 import io.micronaut.views.react.util.OutputStreamToSLF4J;
 import jakarta.inject.Singleton;
+import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.SandboxPolicy;
+import org.graalvm.polyglot.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
@@ -62,4 +68,84 @@ final class ReactJSBeanFactory {
             .sandbox(sandbox ? SandboxPolicy.CONSTRAINED : SandboxPolicy.TRUSTED)
             .build();
     }
+
+    @ReactBean
+    @Singleton
+    BeanPool<ReactJSContext> contextPool(ApplicationContext applicationContext) {
+        return new BeanPool<>(() -> applicationContext.createBean(ReactJSContext.class));
+    }
+
+    @Singleton
+    ApplicationEventListener<ReactJSSourcesChangedEvent> bookCleaner(BeanPool<ReactJSContext> contextPool) {
+        // Clearing the pool ensures that new requests go via the pool and from there, back to
+        // createContext() which will in turn then reload the files on disk.
+        return event -> contextPool.clear();
+    }
+
+    @ReactBean
+    @Singleton
+    Context polyglotContext(@ReactBean Engine engine,
+                            @ReactBean HostAccess hostAccess,
+                            ReactViewsRendererConfiguration configuration) {
+        var contextBuilder = Context.newBuilder()
+            .engine(engine)
+            .option("js.esm-eval-returns-exports", "true")
+            .option("js.unhandled-rejections", "throw");
+
+        if (configuration.getSandbox()) {
+            contextBuilder
+                .sandbox(SandboxPolicy.CONSTRAINED)
+                .allowHostAccess(hostAccess);
+        } else {
+            // allowExperimentalOptions is here because as of the time of writing (August 2024)
+            // the esm-eval-returns-exports option is experimental. That got fixed and this
+            // can be removed once the base version of GraalJS is bumped to 24.1 or higher.
+            contextBuilder
+                .sandbox(SandboxPolicy.TRUSTED)
+                .allowAllAccess(true)
+                .allowExperimentalOptions(true);
+        }
+
+        try {
+            return contextBuilder.build();
+        } catch (ExceptionInInitializerError e) {
+            // The catch handler is to work around a bug in Polyglot 24.0.0
+            if (e.getCause().getMessage().contains("version compatibility check failed")) {
+                throw new IllegalStateException("GraalJS version mismatch or it's missing. Please ensure you have added either org.graalvm.polyglot:js or org.graalvm.polyglot:js-community to your dependencies alongside Micronaut Views React, as it's up to you to select the best engine given your licensing constraints. See the user guide for more detail.");
+            } else {
+                throw e;
+            }
+        } catch (IllegalArgumentException e) {
+            // We need esm-eval-returns-exports=true, but it's not compatible with the sandbox in this version of GraalJS.
+            if (e.getMessage().contains("Option 'js.esm-eval-returns-exports' is experimental")) {
+                throw new IllegalStateException("The sandboxing feature requires a newer version of GraalJS. Please upgrade and try again, or disable the sandboxing feature.");
+            } else {
+                throw e;
+            }
+        }
+    }
+
+    @Prototype
+    ReactJSContext reactJsContext(@ReactBean Context polyglotContext,
+                                  ReactViewsRendererConfiguration configuration,
+                                  ReactJSSources reactJSSources) {
+
+        Value global = polyglotContext.getBindings("js");
+        Value ssrModule = polyglotContext.eval(reactJSSources.serverBundle());
+
+        // Take all the exports from the components bundle, and expose them to the render script.
+        for (var name : ssrModule.getMemberKeys()) {
+            global.putMember(name, ssrModule.getMember(name));
+        }
+
+        // Evaluate our JS-side framework specific render logic.
+        Value renderModule = polyglotContext.eval(reactJSSources.renderScript());
+        Value render = renderModule.getMember("ssr");
+        if (render == null) {
+            throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported.".formatted(configuration.getRenderScript()));
+        }
+
+        return new ReactJSContext(polyglotContext, render, ssrModule);
+    }
+
 }

@@ -80,7 +80,7 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
     }
 
     private void render(String componentName, PROPS props, Writer writer, ReactJSContext context, @Nullable HttpRequest<?> request) {
-        Value component = context.ssrModule.getMember(componentName);
+        Value component = context.ssrModule().getMember(componentName);
         if (component == null) {
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
         }
@@ -90,8 +90,8 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
         // We wrap the props object so we can use Micronaut's compile-time reflection implementation.
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
-        Value guestProps = IntrospectableToTruffleAdapter.wrap(context.polyglotContext, props);
-        context.render.executeVoid(component, guestProps, renderCallback, reactViewsRendererConfiguration.getClientBundleURL(), request);
+        Value guestProps = IntrospectableToTruffleAdapter.wrap(context.polyglotContext(), props);
+        context.render().executeVoid(component, guestProps, renderCallback, reactViewsRendererConfiguration.getClientBundleURL(), request);
     }
 
 
