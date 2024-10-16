@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.react;
+package io.micronaut.views.react.util;
 
 import io.micronaut.core.annotation.Internal;
-import jakarta.inject.Singleton;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
@@ -27,10 +25,18 @@ import java.util.logging.LogRecord;
  * Forwards/redirects log messages from the GraalJS / Truffle engines themselves to SLF4J.
  * Note that Javascript's {@code console.log()} is handled differently.
  */
-@Singleton
 @Internal
-class JSEngineLogHandler extends Handler {
-    private static final Logger LOG = LoggerFactory.getLogger(ReactViewsRenderer.class);
+public class JavaUtilLoggingToSLF4J extends Handler {
+    private final Logger logger;
+
+    /**
+     * Constructs a handler that will forward messages to the given SLF4J logger.
+     *
+     * @param logger An SLF4J logger that will receive the translated messages.
+     */
+    public JavaUtilLoggingToSLF4J(Logger logger) {
+        this.logger = logger;
+    }
 
     @Override
     public void publish(LogRecord record) {
@@ -38,11 +44,11 @@ class JSEngineLogHandler extends Handler {
         Throwable thrown = record.getThrown();
         String level = record.getLevel().getName();
         switch (level) {
-            case "SEVERE" -> LOG.error(message, thrown);
-            case "WARNING" -> LOG.warn(message, thrown);
-            case "INFO" -> LOG.info(message, thrown);
-            case "CONFIG", "FINE" -> LOG.debug(message, thrown);
-            case "FINER", "FINEST" -> LOG.trace(message, thrown);
+            case "SEVERE" -> logger.error(message, thrown);
+            case "WARNING" -> logger.warn(message, thrown);
+            case "INFO" -> logger.info(message, thrown);
+            case "CONFIG", "FINE" -> logger.debug(message, thrown);
+            case "FINER", "FINEST" -> logger.trace(message, thrown);
             default -> throw new IllegalStateException("Unexpected value: " + level);
         }
     }

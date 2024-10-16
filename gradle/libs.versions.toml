@@ -18,9 +18,7 @@ managed-soy = "2023-09-13"
 org-json = "20240303"
 managed-thymeleaf = "3.1.2.RELEASE"
 managed-velocity = "2.4"
-
-graal = "24.0.1"
-
+graal = "24.0.2"
 pebble = "3.2.2"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.9.25"

@@ -1,17 +1,7 @@
 # React SSR support for Micronaut
 
-## TODO
+This module uses GraalJS to implement server-side rendering for applications using React or similar libraries like Preact.
 
-1. Eliminate all TODOs from the docs.
-2. Make HTTP prefetches run in parallel.
-3. Reduce the need for config:
-   1. Work out what `micronaut.views.folder` is supposed to be when run from Maven. Get rid of the need to specify this.
-   2. Make it configurable and allow the path to the static assets to be configured so it doesn't have to be served from MN itself.
-   3. Get rid of the blocking of the event loop when prefetching. Pending answer from MN team about why IO pool switch isn't implemented.
-4. Write unit tests.
-5. Document what you can and cannot do in GraalJS.
-6. Find a way to use `renderToPipeableStream`?
-7. Replace `__micronaut_prefetch` with Sam's implementation of fetch() for Micronaut?
-8. Document how to do debugging?
-9. Implement / get implemented TextEncoder/TextDecoder
-10. Update the micronaut-spa-app sample.
+To get a project that uses it, try Micronaut Starter and request Views React. That will give you a fully functional
+frontend project with build system integration (NPM and Webpack integrated with Maven and Gradle). You can then easily
+add components and build up your frontend, or connect up an existing frontend codebase.
