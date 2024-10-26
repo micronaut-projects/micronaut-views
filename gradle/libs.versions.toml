@@ -64,7 +64,7 @@ groovy-json = { module = "org.apache.groovy:groovy-json" }
 graal-polyglot = { module = "org.graalvm.polyglot:polyglot", version.ref = "graal" }
 graal-js = { module = "org.graalvm.polyglot:js", version.ref = "graal" }
 
-jetbrains-annotations = { module = "org.jetbrains:annotations", version = "24.1.0" }
+jetbrains-annotations = { module = "org.jetbrains:annotations", version = "26.0.1" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
