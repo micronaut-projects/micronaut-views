@@ -30,6 +30,7 @@ include 'views-jte'
 include 'views-jstachio'
 
 include "test-suite"
+include "test-suite-csrf"
 include "test-suite-http"
 include "test-suite-groovy"
 include "test-suite-kotlin"
