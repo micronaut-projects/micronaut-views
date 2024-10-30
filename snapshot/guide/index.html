@@ -151,7 +151,9 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-fieldsetFetcher"><a href="#fieldsetFetcher"><strong>3.3.3</strong><span>Radio, Checkbox and Option Fetcher</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-customFormElement"><a href="#customFormElement"><strong>3.3.4</strong><span>Custom Form Elements</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-csrfHidden"><a href="#csrfHidden"><strong>3.3.4</strong><span>CSRF Token Hidden Field</span></a></div>
+        
+        <div class="toc-item" style="margin-left:20px" id="toc-item-customFormElement"><a href="#customFormElement"><strong>3.3.5</strong><span>Custom Form Elements</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-htmx"><a href="#htmx"><strong>3.4</strong><span>HTMX</span></a></div>
         
@@ -3466,7 +3468,20 @@ public class AuthorFetcher implements OptionFetcher&lt;Long&gt; {
 </div>
 </div>
 
-<h2 id="customFormElement"><a class="anchor" href="#customFormElement"></a>3.3.4 Custom Form Elements</h2>
+<h2 id="csrfHidden"><a class="anchor" href="#csrfHidden"></a>3.3.4 CSRF Token Hidden Field</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/5.6.x/src/main/docs/guide/views/fieldset/csrfHidden.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>If you use the <a href="https://micronaut-projects.github.io/micronaut-security/latest/guide/#csrf">Micronaut Security CSRF module</a>, and a CSRF token is resolved, the generated form automatically contains a hidden input with the CSRF token as the value.</p>
+</div>
+
+<h2 id="customFormElement"><a class="anchor" href="#customFormElement"></a>3.3.5 Custom Form Elements</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/5.6.x/src/main/docs/guide/views/fieldset/customFormElement.adoc"'>
@@ -4400,6 +4415,15 @@ micronaut.views.csp.policyDirectives=default-src https: self:; script-src 'nonce
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-txt hljs" data-lang="txt">Content-Security-Policy: default-src https: self:; script-src 'nonce-4ze2IRazk4Yu/j5K6SEzjA';</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The nonce value can be accessed on the server as a request attribute named <code>cspNonce</code>. This is the value to use
+in the <code>nonce</code> attribute on <code>script</code> and related tags.  For example (adapt as appropriate for your template language):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;script type="text/javascript" src="/path/to/script.js" nonce="${cspNonce}" /&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">

@@ -111,6 +111,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/tck/TestUtils.html#assertEqualsIgnoreSpace(java.lang.String,java.lang.String)" class="member-name-link">assertEqualsIgnoreSpace(String, String)</a> - Static method in class io.micronaut.views.fields.tck.<a href="io/micronaut/views/fields/tck/TestUtils.html" title="class in io.micronaut.views.fields.tck">TestUtils</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/tck/AsssertHtmlUtils.html#assertHtmlEquals(java.lang.String,java.lang.String)" class="member-name-link">assertHtmlEquals(String, String)</a> - Static method in class io.micronaut.views.fields.tck.<a href="io/micronaut/views/fields/tck/AsssertHtmlUtils.html" title="class in io.micronaut.views.fields.tck">AsssertHtmlUtils</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/tck/AsssertHtmlUtils.html" class="type-name-link" title="class in io.micronaut.views.fields.tck">AsssertHtmlUtils</a> - Class in <a href="io/micronaut/views/fields/tck/package-summary.html">io.micronaut.views.fields.tck</a></dt>
+<dd>
+<div class="block">Utils class to cleanup HTML strings to ease comparison.</div>
+</dd>
 <dt><a href="io/micronaut/views/fields/render/FormElementRenderer.html#ATTR_CHECKED" class="member-name-link">ATTR_CHECKED</a> - Static variable in interface io.micronaut.views.fields.render.<a href="io/micronaut/views/fields/render/FormElementRenderer.html" title="interface in io.micronaut.views.fields.render">FormElementRenderer</a></dt>
 <dd>
 <div class="block">HTML Attribute checked.</div>
@@ -447,6 +453,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/turbo/TurboStream.Builder.html#childrenOnly(boolean)" class="member-name-link">childrenOnly(boolean)</a> - Method in class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/tck/AsssertHtmlUtils.html#cleanup(java.lang.String)" class="member-name-link">cleanup(String)</a> - Static method in class io.micronaut.views.fields.tck.<a href="io/micronaut/views/fields/tck/AsssertHtmlUtils.html" title="class in io.micronaut.views.fields.tck">AsssertHtmlUtils</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/messages/Message.html#code()" class="member-name-link">code()</a> - Method in record class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./io/micronaut/views/fields/messages/Message.html#param-code"><code>code</code></a> record component.</div>
@@ -704,6 +712,12 @@ loadScripts(document, 'script');</script>
 <div class="block">Default implementation of <a href="io/micronaut/views/fields/FieldsetGenerator.html" title="interface in io.micronaut.views.fields"><code>FieldsetGenerator</code></a> which relies on the types being introspected.</div>
 </dd>
 <dt><a href="io/micronaut/views/fields/DefaultFieldGenerator.html#%3Cinit%3E(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver)" class="member-name-link">DefaultFieldGenerator(EnumOptionFetcher&lt;?&gt;, EnumRadioFetcher&lt;?&gt;, EnumCheckboxFetcher&lt;?&gt;, BeanContext, FormElementResolver)</a> - Constructor for class io.micronaut.views.fields.<a href="io/micronaut/views/fields/DefaultFieldGenerator.html" title="class in io.micronaut.views.fields">DefaultFieldGenerator</a></dt>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
+<div class="deprecation-comment">Use <a href="io/micronaut/views/fields/DefaultFieldGenerator.html#%3Cinit%3E(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver,java.util.List)"><code>DefaultFieldGenerator(io.micronaut.views.fields.fetchers.EnumOptionFetcher&lt;?&gt;,io.micronaut.views.fields.fetchers.EnumRadioFetcher&lt;?&gt;,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher&lt;?&gt;,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver,java.util.List&lt;io.micronaut.views.fields.FieldsetConsumer&gt;)</code></a> instead.</div>
+</div>
+</dd>
+<dt><a href="io/micronaut/views/fields/DefaultFieldGenerator.html#%3Cinit%3E(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver,java.util.List)" class="member-name-link">DefaultFieldGenerator(EnumOptionFetcher&lt;?&gt;, EnumRadioFetcher&lt;?&gt;, EnumCheckboxFetcher&lt;?&gt;, BeanContext, FormElementResolver, List&lt;FieldsetConsumer&gt;)</a> - Constructor for class io.micronaut.views.fields.<a href="io/micronaut/views/fields/DefaultFieldGenerator.html" title="class in io.micronaut.views.fields">DefaultFieldGenerator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/formelementresolvers/DefaultFormElementResolver.html" class="type-name-link" title="class in io.micronaut.views.fields.formelementresolvers">DefaultFormElementResolver</a> - Class in <a href="io/micronaut/views/fields/formelementresolvers/package-summary.html">io.micronaut.views.fields.formelementresolvers</a></dt>
 <dd>
@@ -992,8 +1006,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the value of the <a href="./io/micronaut/views/fields/elements/InputPasswordFormElement.html#param-errors"><code>errors</code></a> record component.</div>
 </dd>
-<dt><a href="io/micronaut/views/fields/elements/InputStringFormElement.html#errors()" class="member-name-link">errors()</a> - Method in interface io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/InputStringFormElement.html" title="interface in io.micronaut.views.fields.elements">InputStringFormElement</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/elements/InputTelFormElement.html#errors()" class="member-name-link">errors()</a> - Method in record class io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/InputTelFormElement.html" title="class in io.micronaut.views.fields.elements">InputTelFormElement</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./io/micronaut/views/fields/elements/InputTelFormElement.html#param-errors"><code>errors</code></a> record component.</div>
@@ -1102,6 +1114,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/micronaut/views/fields/Fieldset.html#%3Cinit%3E(java.util.List,java.util.List)" class="member-name-link">Fieldset(List&lt;? extends FormElement&gt;, List&lt;Message&gt;)</a> - Constructor for record class io.micronaut.views.fields.<a href="io/micronaut/views/fields/Fieldset.html" title="class in io.micronaut.views.fields">Fieldset</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>Fieldset</code> record class.</div>
+</dd>
+<dt><a href="io/micronaut/views/fields/FieldsetConsumer.html" class="type-name-link" title="interface in io.micronaut.views.fields">FieldsetConsumer</a> - Interface in <a href="io/micronaut/views/fields/package-summary.html">io.micronaut.views.fields</a></dt>
+<dd>
+<div class="block">A consumer of a list of <a href="io/micronaut/views/fields/FormElement.html" title="interface in io.micronaut.views.fields"><code>FormElement</code></a> fields.</div>
 </dd>
 <dt><a href="io/micronaut/views/fields/FieldsetGenerator.html" class="type-name-link" title="interface in io.micronaut.views.fields">FieldsetGenerator</a> - Interface in <a href="io/micronaut/views/fields/package-summary.html">io.micronaut.views.fields</a></dt>
 <dd>
@@ -2833,8 +2849,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the value of the <a href="./io/micronaut/views/fields/elements/InputRadioFormElement.html#param-label"><code>label</code></a> record component.</div>
 </dd>
-<dt><a href="io/micronaut/views/fields/elements/InputStringFormElement.html#label()" class="member-name-link">label()</a> - Method in interface io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/InputStringFormElement.html" title="interface in io.micronaut.views.fields.elements">InputStringFormElement</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/elements/InputTelFormElement.html#label()" class="member-name-link">label()</a> - Method in record class io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/InputTelFormElement.html" title="class in io.micronaut.views.fields.elements">InputTelFormElement</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./io/micronaut/views/fields/elements/InputTelFormElement.html#param-label"><code>label</code></a> record component.</div>
@@ -3137,8 +3151,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the value of the <a href="./io/micronaut/views/fields/elements/InputRadioFormElement.html#param-name"><code>name</code></a> record component.</div>
 </dd>
-<dt><a href="io/micronaut/views/fields/elements/InputStringFormElement.html#name()" class="member-name-link">name()</a> - Method in interface io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/InputStringFormElement.html" title="interface in io.micronaut.views.fields.elements">InputStringFormElement</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/elements/InputTelFormElement.html#name()" class="member-name-link">name()</a> - Method in record class io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/InputTelFormElement.html" title="class in io.micronaut.views.fields.elements">InputTelFormElement</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./io/micronaut/views/fields/elements/InputTelFormElement.html#param-name"><code>name</code></a> record component.</div>
