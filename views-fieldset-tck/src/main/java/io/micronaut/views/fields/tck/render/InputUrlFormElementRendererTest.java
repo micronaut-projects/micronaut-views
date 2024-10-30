@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Property(name = "micronaut.views.form-element.render.views.input-url", value = "fieldset/inputurl.html")
+@Property(name = "micronaut.views.form-element.render.views.input-url", value = "fieldset/inputurl")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests
@@ -52,7 +52,7 @@ class InputUrlFormElementRendererTest {
             .required(true)
             .label(Message.of("Enter an https:// URL:", null))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <label for="url" class="form-label">Enter an https:// URL:</label>\
             <input type="url" name="url" value="" id="url" placeholder="https://example.com" pattern="https://.*" size="30" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)
