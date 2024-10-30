@@ -16,6 +16,7 @@
 package io.micronaut.views.model.security;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.security.csrf.repository.CsrfTokenRepository;
@@ -34,7 +35,8 @@ import java.util.Map;
 @Requires(beans = {CsrfTokenRepository.class, CsrfViewModelProcessorConfiguration.class})
 @Requires(classes = HttpRequest.class)
 @Singleton
-public class CsrfViewModelProcessor extends MapViewModelProcessor {
+@Internal
+final class CsrfViewModelProcessor extends MapViewModelProcessor {
     private final CsrfTokenRepository<HttpRequest<?>> csrfTokenRepository;
     private final CsrfViewModelProcessorConfiguration csrfViewModelProcessorConfiguration;
 
