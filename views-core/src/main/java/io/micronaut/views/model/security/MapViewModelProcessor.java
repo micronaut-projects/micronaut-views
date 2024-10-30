@@ -27,7 +27,7 @@ import java.util.Map;
  * Abstract class to ease populating a map model and handle immutable maps.
  */
 @Internal
-public sealed interface MapViewModelProcessor
+sealed interface MapViewModelProcessor
         extends ViewModelProcessor<Map<String, Object>>
         permits CsrfViewModelProcessor, SecurityViewModelProcessor {
     @Override
