@@ -15,11 +15,18 @@ dependencies {
     testRuntimeOnly(mnLogging.logback.classic)
 
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
+    testImplementation(mnValidation.micronaut.validation)
+
     testImplementation(mnSerde.micronaut.serde.jackson)
     testImplementation(mn.micronaut.http.client)
-    testImplementation(mn.micronaut.inject.java)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.management)
-    testImplementation(mnValidation.micronaut.validation)
-    testImplementation(mn.snakeyaml)
+
+    testAnnotationProcessor(mn.micronaut.inject.java)
+    testImplementation(mnTest.micronaut.test.junit5)
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
