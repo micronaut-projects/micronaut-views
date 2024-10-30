@@ -31,12 +31,17 @@ import java.util.Map;
  * @author Sergio del Amo
  * @since 5.6.0
  */
-@Requires(property = SecurityViewModelProcessorConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
+@Requires(property = CsrfViewModelProcessor.ENABLED, notEquals = StringUtils.FALSE)
 @Requires(beans = {CsrfTokenRepository.class, CsrfViewModelProcessorConfiguration.class})
 @Requires(classes = HttpRequest.class)
 @Singleton
 @Internal
 final class CsrfViewModelProcessor extends MapViewModelProcessor {
+    /**
+     * Property to enable/disable the CsrfViewModelProcessor.
+     */
+    public static final String ENABLED = SecurityViewModelProcessorConfigurationProperties.PREFIX + ".enabled";
+
     private final CsrfTokenRepository<HttpRequest<?>> csrfTokenRepository;
     private final CsrfViewModelProcessorConfiguration csrfViewModelProcessorConfiguration;
 
