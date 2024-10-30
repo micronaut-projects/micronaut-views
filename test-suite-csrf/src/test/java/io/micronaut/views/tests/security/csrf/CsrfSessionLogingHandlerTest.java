@@ -57,6 +57,12 @@ class CsrfSessionLogingHandlerTest {
                 .cookie(Cookie.of("SESSION", sessionId));
         String html = assertDoesNotThrow(() -> client.retrieve(csrfEchoRequestWithSession));
         assertFalse(html.contains("<meta name=\"csrf-token\" />"));
+
+        // request the page without session and no csrf token is present
+        HttpRequest<?> csrfEchoRequestWithoutSession = HttpRequest.GET("/csrf/echo")
+                .contentType(MediaType.TEXT_HTML_TYPE);
+        html = assertDoesNotThrow(() -> client.retrieve(csrfEchoRequestWithoutSession));
+        assertTrue(html.contains("<meta name=\"csrf-token\" />"));
     }
 
     @Requires(property = "spec.name", value = "CsrfSessionLogingHandlerTest")
