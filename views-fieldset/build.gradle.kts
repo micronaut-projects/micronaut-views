@@ -6,6 +6,7 @@ dependencies {
     annotationProcessor(mnValidation.micronaut.validation.processor)
     implementation(mnValidation.micronaut.validation)
     compileOnly(mn.micronaut.http)
+    compileOnly(mnSecurity.micronaut.security.csrf)
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
     testImplementation(mnValidation.micronaut.validation)
 
