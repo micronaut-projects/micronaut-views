@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Property(name = "micronaut.views.form-element.render.views.input-password", value = "fieldset/inputpassword.html")
+@Property(name = "micronaut.views.form-element.render.views.input-password", value = "fieldset/inputpassword")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests
@@ -50,7 +50,7 @@ class InputPasswordFormElementRendererTest {
             .required(true)
             .label(Message.of("Password (8 characters minimum):", null))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <label for="pass" class="form-label">Password (8 characters minimum):</label>\
             <input type="password" name="password" value="" id="pass" minlength="8" class="form-control" required="required"/>""",
             renderer.render(el, Locale.ENGLISH)

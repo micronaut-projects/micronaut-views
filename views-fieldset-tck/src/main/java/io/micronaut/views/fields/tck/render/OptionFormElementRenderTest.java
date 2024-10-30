@@ -21,14 +21,16 @@ import io.micronaut.views.fields.elements.Option;
 import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import io.micronaut.views.fields.render.secondary.OptionFormElementRenderer;
+import io.micronaut.views.fields.tck.AsssertHtmlUtils;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Property(name = "micronaut.views.form-element.render.views.option", value = "fieldset/option.html")
+@Property(name = "micronaut.views.form-element.render.views.option", value = "fieldset/option")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests
@@ -47,7 +49,7 @@ class OptionFormElementRenderTest {
             .value("dog")
             .label(Message.of("Dog", null))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
                 <option value="dog">Dog</option>""",
             renderer.render(option, Locale.ENGLISH)
         );
@@ -58,10 +60,11 @@ class OptionFormElementRenderTest {
             .disabled(true)
             .build();
         String result = renderer.render(option, Locale.ENGLISH);
-        assertTrue("""
-            <option value="dog" selected="selected" disabled="disabled">Dog</option>""".equals(result)
-            || """
-            <option value="dog" disabled="disabled" selected="selected">Dog</option>""".equals(result)
+        assertTrue(
+            AsssertHtmlUtils.cleanup("<option value=\"dog\" selected=\"selected\" disabled=\"disabled\">Dog</option>").equals(AsssertHtmlUtils.cleanup(result)) ||
+            AsssertHtmlUtils.cleanup("<option value=\"dog\" disabled=\"disabled\" selected=\"selected\">Dog</option>").equals(AsssertHtmlUtils.cleanup(result)) ||
+                AsssertHtmlUtils.cleanup("<option value=\"dog\" disabled selected>Dog</option>").equals(AsssertHtmlUtils.cleanup(result)) ||
+                AsssertHtmlUtils.cleanup("<option value=\"dog\" selected disabled>Dog</option>").equals(AsssertHtmlUtils.cleanup(result))
         );
     }
 }
