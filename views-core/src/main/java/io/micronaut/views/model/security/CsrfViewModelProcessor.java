@@ -20,7 +20,6 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.security.csrf.repository.CsrfTokenRepository;
-import io.micronaut.views.model.MapViewModelProcessor;
 import jakarta.inject.Singleton;
 
 import java.util.Map;
@@ -36,7 +35,7 @@ import java.util.Map;
 @Requires(classes = HttpRequest.class)
 @Singleton
 @Internal
-final class CsrfViewModelProcessor extends MapViewModelProcessor {
+final class CsrfViewModelProcessor implements MapViewModelProcessor {
     /**
      * Property to enable/disable the CsrfViewModelProcessor.
      */
@@ -56,7 +55,7 @@ final class CsrfViewModelProcessor extends MapViewModelProcessor {
     }
 
     @Override
-    protected void populateModel(HttpRequest<?> request, Map<String, Object> model) {
+    public void populateModel(HttpRequest<?> request, Map<String, Object> model) {
         csrfTokenRepository.findCsrfToken(request)
                 .ifPresent(csrfToken -> model.put(csrfViewModelProcessorConfiguration.getCsrfTokenKey(), csrfToken));
     }

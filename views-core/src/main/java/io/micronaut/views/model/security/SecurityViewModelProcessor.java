@@ -21,7 +21,6 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.filters.SecurityFilter;
 import io.micronaut.security.utils.SecurityService;
-import io.micronaut.views.model.MapViewModelProcessor;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -38,7 +37,7 @@ import java.util.Map;
 @Requires(beans = {SecurityFilter.class, SecurityViewModelProcessorConfiguration.class})
 @Requires(classes = HttpRequest.class)
 @Singleton
-public class SecurityViewModelProcessor extends MapViewModelProcessor {
+public non-sealed class SecurityViewModelProcessor implements MapViewModelProcessor {
     private final SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration;
 
     /**
@@ -63,7 +62,7 @@ public class SecurityViewModelProcessor extends MapViewModelProcessor {
     }
 
     @Override
-    protected void populateModel(HttpRequest<?> request, Map<String, Object> model) {
+    public void populateModel(HttpRequest<?> request, Map<String, Object> model) {
         request.getAttribute(SecurityFilter.AUTHENTICATION, Authentication.class)
                 .ifPresent(authentication -> {
                     Map<String, Object> securityModel = securityModel(authentication);

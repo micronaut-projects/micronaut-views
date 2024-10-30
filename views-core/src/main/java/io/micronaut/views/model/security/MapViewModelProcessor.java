@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.model;
+package io.micronaut.views.model.security;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ModelAndView;
+import io.micronaut.views.model.ViewModelProcessor;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,9 +27,11 @@ import java.util.Map;
  * Abstract class to ease populating a map model and handle immutable maps.
  */
 @Internal
-public abstract class MapViewModelProcessor implements ViewModelProcessor<Map<String, Object>> {
+public sealed interface MapViewModelProcessor
+        extends ViewModelProcessor<Map<String, Object>>
+        permits CsrfViewModelProcessor, SecurityViewModelProcessor {
     @Override
-    public void process(@NonNull HttpRequest<?> request, @NonNull ModelAndView<Map<String, Object>> modelAndView) {
+    default void process(@NonNull HttpRequest<?> request, @NonNull ModelAndView<Map<String, Object>> modelAndView) {
         Map<String, Object> viewModel = modelAndView.getModel().orElseGet(() -> {
             final Map<String, Object> newModel = new HashMap<>(1);
             modelAndView.setModel(newModel);
@@ -47,6 +51,7 @@ public abstract class MapViewModelProcessor implements ViewModelProcessor<Map<St
      * @param req HTTP Request
      * @param model Model map being populated
      */
-    protected abstract void populateModel(@NonNull HttpRequest<?> req,
-                                          @NonNull Map<String, Object> model);
+    void populateModel(
+            @NonNull HttpRequest<?> req,
+            @NonNull Map<String, Object> model);
 }
