@@ -31,6 +31,7 @@ dependencies {
     testImplementation(mn.micronaut.management)
     testImplementation(mnValidation.micronaut.validation)
     testImplementation(mn.snakeyaml)
+    testImplementation(mn.groovy.json)
 
     // We will use enterprise edition for testing.
     testImplementation(libs.graal.js)
