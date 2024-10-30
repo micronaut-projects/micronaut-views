@@ -21,13 +21,8 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.filters.SecurityFilter;
 import io.micronaut.security.utils.SecurityService;
-import io.micronaut.views.ModelAndView;
-import io.micronaut.views.model.ViewModelProcessor;
-import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,10 +37,7 @@ import java.util.Map;
 @Requires(beans = {SecurityFilter.class, SecurityViewModelProcessorConfiguration.class})
 @Requires(classes = HttpRequest.class)
 @Singleton
-public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String, Object>> {
-
-    private static final Logger LOG = LoggerFactory.getLogger(SecurityViewModelProcessor.class);
-
+public non-sealed class SecurityViewModelProcessor implements MapViewModelProcessor {
     private final SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration;
 
     /**
@@ -70,24 +62,18 @@ public class SecurityViewModelProcessor implements ViewModelProcessor<Map<String
     }
 
     @Override
-    public void process(@NonNull HttpRequest<?> request, @NonNull ModelAndView<Map<String, Object>> modelAndView) {
-        request.getAttribute(SecurityFilter.AUTHENTICATION, Authentication.class).ifPresent(authentication -> {
-            Map<String, Object> securityModel = new HashMap<>();
-            securityModel.put(securityViewModelProcessorConfiguration.getPrincipalNameKey(), authentication.getName());
-            securityModel.put(securityViewModelProcessorConfiguration.getAttributesKey(), authentication.getAttributes());
-
-            Map<String, Object> viewModel = modelAndView.getModel().orElseGet(() -> {
-                final HashMap<String, Object> newModel = new HashMap<>(1);
-                modelAndView.setModel(newModel);
-                return newModel;
-            });
-            try {
-                viewModel.putIfAbsent(securityViewModelProcessorConfiguration.getSecurityKey(), securityModel);
-            } catch (UnsupportedOperationException ex) {
-                final HashMap<String, Object> modifiableModel = new HashMap<>(viewModel);
-                modifiableModel.putIfAbsent(securityViewModelProcessorConfiguration.getSecurityKey(), securityModel);
-                modelAndView.setModel(modifiableModel);
-            }
+    public void populateModel(HttpRequest<?> request, Map<String, Object> model) {
+        request.getAttribute(SecurityFilter.AUTHENTICATION, Authentication.class)
+                .ifPresent(authentication -> {
+                    Map<String, Object> securityModel = securityModel(authentication);
+                    model.put(securityViewModelProcessorConfiguration.getSecurityKey(), securityModel);
         });
+    }
+
+    private Map<String, Object> securityModel(Authentication authentication) {
+        Map<String, Object> securityModel = new HashMap<>();
+        securityModel.put(securityViewModelProcessorConfiguration.getPrincipalNameKey(), authentication.getName());
+        securityModel.put(securityViewModelProcessorConfiguration.getAttributesKey(), authentication.getAttributes());
+        return securityModel;
     }
 }

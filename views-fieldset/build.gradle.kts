@@ -13,10 +13,9 @@ dependencies {
     testImplementation(mnData.micronaut.data.model)
     testImplementation(mn.micronaut.http)
     testAnnotationProcessor(mn.micronaut.inject.java)
-    testImplementation(libs.junit.jupiter.api)
+    testImplementation(mnTest.junit.jupiter.api)
     testImplementation(mnTest.micronaut.test.junit5)
-    testRuntimeOnly(libs.junit.jupiter.engine)
-
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
     testRuntimeOnly(mnLogging.logback.classic)
 }
 micronautBuild {
