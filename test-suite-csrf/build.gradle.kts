@@ -5,7 +5,7 @@ plugins {
 dependencies {
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(mnTest.micronaut.test.junit5)
-    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
     testRuntimeOnly(mnLogging.logback.classic)
     testImplementation(mn.micronaut.http.client)
     testAnnotationProcessor(mnSerde.micronaut.serde.processor)

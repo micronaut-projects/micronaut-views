@@ -9,9 +9,9 @@ dependencies {
 
     testImplementation(mnValidation.micronaut.validation)
 
-    testImplementation(libs.junit.jupiter.api)
+    testImplementation(mnTest.junit.jupiter.api)
     testImplementation(mnTest.micronaut.test.junit5)
-    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
 
     testCompileOnly(mn.micronaut.inject.groovy)
     testImplementation(mn.micronaut.management)
