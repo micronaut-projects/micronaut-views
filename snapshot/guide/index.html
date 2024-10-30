@@ -4534,6 +4534,44 @@ public class BooksController {
 <div class="paragraph">
 <p>You can access information about the current user with the <code>security</code> map.</p>
 </div>
+<div class="sect2">
+<h3 id="_csrf_token_view_model_processor">CSRF Token View Model Processor</h3>
+<div class="paragraph">
+<p>If you use the <a href="https://micronaut-projects.github.io/micronaut-security/latest/guide/#csrf">Micronaut Security CSRF module</a>, there is also a view model processor for a model of type <code>Map&lt;String, Object&gt;</code>.
+If a CSRF Token can be resolved,  <code>CSRFViewModelProcessor</code> adds it to the model.</p>
+</div>
+<div class="paragraph">
+<p>The following properties allow you to customize the injection:</p>
+</div>
+<a id="io.micronaut.views.model.security.CsrfViewModelProcessorConfigurationProperties" href="#io.micronaut.views.model.security.CsrfViewModelProcessorConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Configuration Properties for <a href="../api/io/micronaut/views/model/security/CsrfViewModelProcessorConfigurationProperties.html">CsrfViewModelProcessorConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.csrf.views-model-decorator.csrf-token-key</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Model key for CSRF Token. Default value ("csrfToken").</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.security.csrf.views-model-decorator.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable {@link CsrfViewModelProcessor}. Default value (true).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 
 <h2 id="graal"><a class="anchor" href="#graal"></a>3.7 GraalVM Support</h2>
 
