@@ -42,5 +42,11 @@ public abstract class MapViewModelProcessor implements ViewModelProcessor<Map<St
         }
     }
 
-    protected abstract void populateModel(@NonNull HttpRequest<?> req, @NonNull Map<String, Object> model);
+    /**
+     * method to populate the supplied model map with extra entries.
+     * @param req HTTP Request
+     * @param model Model map being populated
+     */
+    protected abstract void populateModel(@NonNull HttpRequest<?> req,
+                                          @NonNull Map<String, Object> model);
 }
