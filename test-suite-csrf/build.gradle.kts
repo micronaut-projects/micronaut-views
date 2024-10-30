@@ -1,22 +1,20 @@
 plugins {
-    id("io.micronaut.build.internal.views-module")
+    `java-library`
+    id("io.micronaut.build.internal.views-tests")
 }
 dependencies {
-    api(projects.micronautViewsCore)
-    compileOnly(mn.micronaut.http)
     testAnnotationProcessor(mn.micronaut.inject.java)
-    testImplementation(mnTest.junit.jupiter.api)
     testImplementation(mnTest.micronaut.test.junit5)
     testRuntimeOnly(mnTest.junit.jupiter.engine)
     testRuntimeOnly(mnLogging.logback.classic)
+    testImplementation(mn.micronaut.http.client)
     testAnnotationProcessor(mnSerde.micronaut.serde.processor)
     testImplementation(mnSerde.micronaut.serde.jackson)
-    testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(projects.micronautViewsThymeleaf)
+    testImplementation(mnSecurity.micronaut.security.csrf)
+    testImplementation(mnSecurity.micronaut.security.session)
 }
-micronautBuild {
-    binaryCompatibility {
-        enabled.set(false)
-    }
+tasks.withType<Test> {
+    useJUnitPlatform()
 }

@@ -1,13 +1,13 @@
 [versions]
-micronaut = "4.6.6"
-micronaut-platform = "4.5.1"
+micronaut = "4.7.1"
+micronaut-platform = "4.6.3"
 micronaut-docs = '2.0.0'
-micronaut-test = "4.4.0"
-micronaut-data = "4.9.5"
+micronaut-test = "4.5.0"
+micronaut-data = "4.9.6"
 micronaut-sql = "5.8.2"
-micronaut-security = "4.10.2"
-micronaut-serde = "2.11.0"
-micronaut-validation = "4.7.0"
+micronaut-security = "4.11.0"
+micronaut-serde = "2.11.2"
+micronaut-validation = "4.8.0"
 micronaut-gradle-plugin = "4.4.3"
 managed-freemarker = "2.3.33"
 managed-handlebars = "4.3.1"
@@ -52,8 +52,6 @@ org-json = { module = "org.json:json", version.ref = "org-json" }
 managed-thymeleaf = { module = "org.thymeleaf:thymeleaf", version.ref = "managed-thymeleaf" }
 managed-velocity-engine-core = { module = "org.apache.velocity:velocity-engine-core", version.ref = "managed-velocity" }
 
-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
 junit-platform-engine = { module = "org.junit.platform:junit-platform-suite-engine" }
 pebble = { module = "io.pebbletemplates:pebble", version.ref = "pebble" }
 thymeleaf-extras-java8time = { module = "org.thymeleaf.extras:thymeleaf-extras-java8time", version.ref = "thymeleaf-extra-java8time" }
