@@ -19,7 +19,6 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.security.csrf.CsrfConfiguration;
 import io.micronaut.security.csrf.repository.CsrfTokenRepository;
 import jakarta.inject.Singleton;
 
@@ -40,7 +39,7 @@ final class CsrfViewModelProcessor implements MapViewModelProcessor {
     /**
      * Property to enable/disable the CsrfViewModelProcessor.
      */
-    public static final String ENABLED = CsrfConfiguration.PREFIX + ".views-model-decorator.enabled";
+    public static final String ENABLED = CsrfViewModelProcessorConfigurationProperties.PREFIX + ".enabled";
 
     private final CsrfTokenRepository<HttpRequest<?>> csrfTokenRepository;
     private final CsrfViewModelProcessorConfiguration csrfViewModelProcessorConfiguration;

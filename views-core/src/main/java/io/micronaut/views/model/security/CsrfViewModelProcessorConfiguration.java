@@ -19,7 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.Toggleable;
 
 /**
- * Configuration CSRF View Model Processor
+ * Configuration CSRF View Model Processor.
  * @author Sergio del Amo
  * @since 5.6.0
  */
