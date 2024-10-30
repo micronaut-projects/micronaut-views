@@ -39,6 +39,7 @@ views:
     fieldsetExample: Form Generation Example
     fieldsetAnnotations: Fieldset Annotations
     fieldsetFetcher: Radio, Checkbox and Option Fetcher
+    csrfHidden: CSRF Token Hidden Field
     customFormElement: Custom Form Elements
   htmx:
     title: HTMX

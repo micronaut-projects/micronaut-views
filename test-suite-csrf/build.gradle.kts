@@ -12,6 +12,7 @@ dependencies {
     testImplementation(mnSerde.micronaut.serde.jackson)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(projects.micronautViewsThymeleaf)
+    testImplementation(projects.micronautViewsFieldset)
     testImplementation(mnSecurity.micronaut.security.csrf)
     testImplementation(mnSecurity.micronaut.security.session)
 }
