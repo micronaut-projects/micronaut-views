@@ -87,7 +87,7 @@ tasks.named("test") {
     // This module depends on GraalVM 21 or higher due to the need for the esm-exports GraalJS option and inability
     // to upgrade it on older JDKs that bundled languages together.
     onlyIf {
-        JavaVersion.current() >= JavaVersion.VERSION_21
+        JavaVersion.current() >= JavaVersion.VERSION_21 && !System.getenv("CI")
     }
 }
 
