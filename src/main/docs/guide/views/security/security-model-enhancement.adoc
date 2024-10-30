@@ -25,3 +25,14 @@ include::{testsSuite}/resources/views/securitydecorator.vm[tag=html]
 ----
 
 You can access information about the current user with the `security` map.
+
+=== CSRF Token View Model Processor
+
+If you use the https://micronaut-projects.github.io/micronaut-security/latest/guide/#csrf[Micronaut Security CSRF module], there is also a view model processor for a model of type `Map<String, Object>`.
+If a CSRF Token can be resolved,  `CSRFViewModelProcessor` adds it to the model.
+
+The following properties allow you to customize the injection:
+
+include::{includedir}configurationProperties/io.micronaut.views.model.security.CsrfViewModelProcessorConfigurationProperties.adoc[]
+
+

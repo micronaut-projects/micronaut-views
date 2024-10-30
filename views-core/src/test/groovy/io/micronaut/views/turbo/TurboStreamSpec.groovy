@@ -18,6 +18,8 @@ import io.micronaut.http.annotation.Produces
 import io.micronaut.http.client.BlockingHttpClient
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
+import io.micronaut.security.annotation.Secured
+import io.micronaut.security.rules.SecurityRule
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import io.micronaut.views.View
 import io.micronaut.views.ViewsRenderer
@@ -385,6 +387,7 @@ class TurboStreamSpec extends Specification {
     }
 
     @Requires(property = "spec.name", value = "TurboStreamSpec")
+    @Secured(SecurityRule.IS_ANONYMOUS)
     @Controller("/turbo")
     static class TurboStreamWriteableController {
         @Produces(TurboMediaType.TURBO_STREAM)
@@ -506,6 +509,7 @@ class TurboStreamSpec extends Specification {
 
     @Requires(property = "spec.name", value = "TurboStreamSpec")
     @Controller("/customers")
+    @Secured(SecurityRule.IS_ANONYMOUS)
     static class CustomersController {
 
         @Get
