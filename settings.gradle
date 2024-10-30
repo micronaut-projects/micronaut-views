@@ -6,7 +6,7 @@ pluginManagement {
 }
 
 plugins {
-    id("io.micronaut.build.shared.settings") version "7.2.1"
+    id("io.micronaut.build.shared.settings") version "7.2.3"
 }
 
 enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
@@ -30,6 +30,7 @@ include 'views-jte'
 include 'views-jstachio'
 
 include "test-suite"
+include "test-suite-csrf"
 include "test-suite-http"
 include "test-suite-groovy"
 include "test-suite-kotlin"
