@@ -29,19 +29,28 @@ final class CsrfViewModelProcessorConfigurationProperties implements CsrfViewMod
     public static final String PREFIX = CsrfConfiguration.PREFIX + ".views-model-decorator";
 
     /**
+     * The default enable value.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static final boolean DEFAULT_ENABLED = true;
+
+    /**
      * The default csrfTokenKey value.
      */
     @SuppressWarnings("WeakerAccess")
     public static final String DEFAULT_CSRF_TOKEN = "csrfToken";
 
+    private boolean enabled = DEFAULT_ENABLED;
+
     @NonNull
     private String csrfTokenKey = DEFAULT_CSRF_TOKEN;
 
     /**
-     *
+     * Model key for CSRF Token. Default value ({@value #DEFAULT_CSRF_TOKEN}).
      * @return Model key for CSRF Token.
      */
-    public @NonNull String getCsrfTokenKey() {
+    @NonNull
+    public String getCsrfTokenKey() {
         return csrfTokenKey;
     }
 
@@ -53,4 +62,18 @@ final class CsrfViewModelProcessorConfigurationProperties implements CsrfViewMod
     public void setCsrfTokenKey(@NonNull String csrfTokenKey) {
         this.csrfTokenKey = csrfTokenKey;
     }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * Enable {@link CsrfViewModelProcessor}. Default value ({@value #DEFAULT_ENABLED}).
+     * @param enabled enabled flag
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
 }
