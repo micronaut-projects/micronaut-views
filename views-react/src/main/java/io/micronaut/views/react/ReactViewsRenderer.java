@@ -15,13 +15,15 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.context.exceptions.BeanInstantiationException;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.exceptions.MessageBodyException;
 import io.micronaut.views.ViewsRenderer;
-import jakarta.inject.Inject;
+import io.micronaut.views.react.truffle.IntrospectableToTruffleAdapter;
+import io.micronaut.views.react.util.BeanPool;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
@@ -37,18 +39,13 @@ import java.nio.charset.StandardCharsets;
  * @param <PROPS> An introspectable bean type that will be fed to the ReactJS root component as props.
  */
 @Singleton
-public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> {
-    @Inject
-    ReactViewsRendererConfiguration reactConfiguration;
+class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> {
+    private final BeanPool<ReactJSContext> beanPool;
+    private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
 
-    @Inject
-    JSContextPool contextPool;
-
-    /**
-     * Construct this renderer. Don't call it yourself, as Micronaut Views will set it up for you.
-     */
-    @Inject
-    public ReactViewsRenderer() {
+    ReactViewsRenderer(BeanPool<ReactJSContext> beanPool, ReactViewsRendererConfiguration reactViewsRendererConfiguration) {
+        this.beanPool = beanPool;
+        this.reactViewsRendererConfiguration = reactViewsRendererConfiguration;
     }
 
     /**
@@ -56,37 +53,34 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
      * or introspectable object), returns hydratable HTML that can be booted on the client using
      * the React libraries.
      *
-     * @param viewName The function or class name of the React component to use as the root. It should return an html root tag.
+     * @param viewName The function or class name of the React component to use as the root. It should return an HTML root tag.
      * @param props    If non-null, will be exposed to the given component as React props.
      * @param request  The HTTP request object.
      */
     @Override
     public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
         return writer -> {
-            JSContext context = contextPool.acquire();
             try {
-                render(viewName, props, writer, context, request);
+                beanPool.useContext(handle -> {
+                    render(viewName, props, writer, handle.get(), request);
+                    return null;
+                });
+            } catch (BeanInstantiationException e) {
+                throw e;
             } catch (Exception e) {
                 // If we don't wrap and rethrow, the exception is swallowed and the request hangs.
                 throw new MessageBodyException("Could not render component " + viewName, e);
-            } finally {
-                contextPool.release(context);
             }
         };
     }
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        var context = contextPool.acquire();
-        try {
-            return context.moduleHasMember(viewName);
-        } finally {
-            contextPool.release(context);
-        }
+        return beanPool.useContext(handle -> handle.get().moduleHasMember(viewName));
     }
 
-    private void render(String componentName, PROPS props, Writer writer, JSContext context, @Nullable HttpRequest<?> request) {
-        Value component = context.ssrModule.getMember(componentName);
+    private void render(String componentName, PROPS props, Writer writer, ReactJSContext context, @Nullable HttpRequest<?> request) {
+        Value component = context.ssrModule().getMember(componentName);
         if (component == null) {
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
         }
@@ -96,9 +90,10 @@ public class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpReque
         // We wrap the props object so we can use Micronaut's compile-time reflection implementation.
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
-        Value guestProps = ProxyObjectWithIntrospectableSupport.wrap(context.polyglotContext, props);
-        context.render.executeVoid(component, guestProps, renderCallback, reactConfiguration.getClientBundleURL(), request);
+        Value guestProps = IntrospectableToTruffleAdapter.wrap(context.polyglotContext(), props);
+        context.render().executeVoid(component, guestProps, renderCallback, reactViewsRendererConfiguration.getClientBundleURL(), request);
     }
+
 
     /**
      * Methods exposed to the ReactJS components and render scripts. Needs to be public to be

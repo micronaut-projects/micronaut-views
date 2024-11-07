@@ -1,6 +1,8 @@
 package io.micronaut.views.react
 
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import io.micronaut.views.react.truffle.IntrospectableToTruffleAdapter
+import io.micronaut.views.react.util.BeanPool
 import jakarta.inject.Inject
 import org.graalvm.polyglot.Value
 import org.graalvm.polyglot.proxy.ProxyObject
@@ -9,16 +11,16 @@ import spock.lang.Specification
 @MicronautTest(startApplication = false)
 class IntrospectableBeansAreProxiedSpec extends Specification {
     @Inject
-    JSContextPool contextPool
+    BeanPool contextPool
 
     void "introspectable bean can be proxied"() {
         given:
-        def jsContext = contextPool.acquire()
-        def context = jsContext.polyglotContext
+        BeanPool.Handle<ReactJSContext> jsContext = contextPool.checkOut()
+        def context = jsContext.get().polyglotContext
         def bean = new SomeBean("foo value", "bar value", new SomeBean.InnerBean(10, Map.of("key", 123), List.of("one", "two", "three")))
 
         when:
-        ProxyObject proxy = ProxyObjectWithIntrospectableSupport.wrap(context, bean).asProxyObject()
+        ProxyObject proxy = IntrospectableToTruffleAdapter.wrap(context, bean).asProxyObject()
         context.getBindings("js").putMember("bean", proxy)
 
         then:
@@ -29,7 +31,7 @@ class IntrospectableBeansAreProxiedSpec extends Specification {
         ProxyObject innerBean = ((Value) proxy.getMember("innerBean")).asProxyObject()
 
         then:
-        innerBean instanceof ProxyObjectWithIntrospectableSupport
+        innerBean instanceof IntrospectableToTruffleAdapter
 
         when:
         ProxyObject innerBeanMap = ((Value) innerBean.getMember("map")).asProxyObject()

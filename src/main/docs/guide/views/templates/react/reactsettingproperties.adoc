@@ -27,7 +27,7 @@ IMPORTANT: Watch out for the last property that disables virtual threads. If you
 [[react-dev-mode]]
 == Development
 
-During development you want the fastest iteration speed possible. Firstly turn off response caching so hot reload works with `npx webpack --watch`. Micronaut Views React will automatically notice the file changed on disk and reload it.
+During development you want the fastest iteration speed possible. These property changes will help:
 
 [configuration]
 ----
@@ -38,9 +38,15 @@ micronaut:
       responses:
         file:
           cache-seconds: 0
+  io:
+    watch:
+      enabled: true
+      paths: build/resources/main/views
 ----
 
-If using Maven turn off Micronaut's automatic restart features so that changes to the compiled bundle JS don't cause the whole server to reboot:
+The `paths` property is correct if you're using the default JS compilation setup created for you by Micronaut Starter. If your JS bundle is held in a different directory in your project, make sure to set the path appropriately.
+
+Now you can tell your build system to only recompile the needed files. In a Micronaut Starter based project that uses Gradle, just run `./gradlew --continuous processResources`. This will cause new bundles to be created for both client and server whenever your input JS changes. If using Maven turn off Micronaut's automatic restart features so that changes to the compiled bundle JS don't cause the whole server to reboot, and then make sure to re-run the Maven build when necessary:
 
 [xml]
 ----
@@ -61,4 +67,3 @@ If using Maven turn off Micronaut's automatic restart features so that changes t
     </configuration>
 </plugin>
 ----
-
