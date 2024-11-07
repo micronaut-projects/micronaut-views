@@ -1589,6 +1589,14 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html#getMemberKeys()" class="member-name-link">getMemberKeys()</a> - Method in class io.micronaut.views.react.truffle.<a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html" title="class in io.micronaut.views.react.truffle">IntrospectableToTruffleAdapter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/messages/LocalizedMessageResolver.html#getMessage(io.micronaut.views.fields.messages.Message)" class="member-name-link">getMessage(Message)</a> - Method in class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/LocalizedMessageResolver.html" title="class in io.micronaut.views.fields.messages">LocalizedMessageResolver</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/messages/MessageResolver.html#getMessage(io.micronaut.views.fields.messages.Message,java.util.Locale)" class="member-name-link">getMessage(Message, Locale)</a> - Method in class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/MessageResolver.html" title="class in io.micronaut.views.fields.messages">MessageResolver</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/messages/LocalizedMessageResolver.html#getMessageOrDefault(io.micronaut.views.fields.messages.Message)" class="member-name-link">getMessageOrDefault(Message)</a> - Method in class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/LocalizedMessageResolver.html" title="class in io.micronaut.views.fields.messages">LocalizedMessageResolver</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/messages/MessageResolver.html#getMessageOrDefault(io.micronaut.views.fields.messages.Message,java.util.Locale)" class="member-name-link">getMessageOrDefault(Message, Locale)</a> - Method in class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/MessageResolver.html" title="class in io.micronaut.views.fields.messages">MessageResolver</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/ModelAndView.html#getModel()" class="member-name-link">getModel()</a> - Method in class io.micronaut.views.<a href="io/micronaut/views/ModelAndView.html" title="class in io.micronaut.views">ModelAndView</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/htmx/http/HtmxResponse.html#getModelAndViews()" class="member-name-link">getModelAndViews()</a> - Method in class io.micronaut.views.htmx.http.<a href="io/micronaut/views/htmx/http/HtmxResponse.html" title="class in io.micronaut.views.htmx.http">HtmxResponse</a></dt>
@@ -2997,6 +3005,12 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Behaviour for changes to the src attribute.</div>
 </dd>
+<dt><a href="io/micronaut/views/fields/messages/LocalizedMessageResolver.html" class="type-name-link" title="class in io.micronaut.views.fields.messages">LocalizedMessageResolver</a> - Class in <a href="io/micronaut/views/fields/messages/package-summary.html">io.micronaut.views.fields.messages</a></dt>
+<dd>
+<div class="block">Utility class to resolve message of a <a href="io/micronaut/views/fields/messages/Message.html" title="class in io.micronaut.views.fields.messages"><code>Message</code></a> with a given <code>LocalizedMessageSource</code>.</div>
+</dd>
+<dt><a href="io/micronaut/views/fields/messages/LocalizedMessageResolver.html#%3Cinit%3E(io.micronaut.context.LocalizedMessageSource)" class="member-name-link">LocalizedMessageResolver(LocalizedMessageSource)</a> - Constructor for class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/LocalizedMessageResolver.html" title="class in io.micronaut.views.fields.messages">LocalizedMessageResolver</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:M">M</h2>
 <dl class="index">
@@ -3058,11 +3072,19 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Message representation.</div>
 </dd>
-<dt><a href="io/micronaut/views/fields/messages/Message.html#%3Cinit%3E(java.lang.String,java.lang.String)" class="member-name-link">Message(String, String)</a> - Constructor for record class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a></dt>
+<dt><a href="io/micronaut/views/fields/messages/Message.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Object%5B%5D)" class="member-name-link">Message(String, String, Object[])</a> - Constructor for record class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>Message</code> record class.</div>
 </dd>
+<dt><a href="io/micronaut/views/fields/messages/Message.html#%3Cinit%3E(java.lang.String,java.lang.String)" class="member-name-link">Message(String, String)</a> - Constructor for record class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html#MESSAGE" class="member-name-link">MESSAGE</a> - Static variable in annotation interface io.micronaut.views.fields.constraints.<a href="io/micronaut/views/fields/constraints/EnctypePostRequired.html" title="annotation interface in io.micronaut.views.fields.constraints">EnctypePostRequired</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/messages/MessageResolver.html" class="type-name-link" title="class in io.micronaut.views.fields.messages">MessageResolver</a> - Class in <a href="io/micronaut/views/fields/messages/package-summary.html">io.micronaut.views.fields.messages</a></dt>
+<dd>
+<div class="block">Utility class to resolve message of a <a href="io/micronaut/views/fields/messages/Message.html" title="class in io.micronaut.views.fields.messages"><code>Message</code></a> with a given <code>MessageSource</code>.</div>
+</dd>
+<dt><a href="io/micronaut/views/fields/messages/MessageResolver.html#%3Cinit%3E(io.micronaut.context.MessageSource)" class="member-name-link">MessageResolver(MessageSource)</a> - Constructor for class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/MessageResolver.html" title="class in io.micronaut.views.fields.messages">MessageResolver</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/thymeleaf/MessageSourceMessageResolver.html" class="type-name-link" title="class in io.micronaut.views.thymeleaf">MessageSourceMessageResolver</a> - Class in <a href="io/micronaut/views/thymeleaf/package-summary.html">io.micronaut.views.thymeleaf</a></dt>
 <dd>
@@ -3298,6 +3320,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/micronaut/views/fields/messages/Message.html#of(java.lang.String)" class="member-name-link">of(String)</a> - Static method in record class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/messages/Message.html#of(java.lang.String,java.lang.String)" class="member-name-link">of(String, String)</a> - Static method in record class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/fields/messages/Message.html#of(java.lang.String,java.lang.String,java.lang.Object...)" class="member-name-link">of(String, String, Object...)</a> - Static method in record class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/turbo/Loading.html#of(java.lang.String)" class="member-name-link">of(String)</a> - Static method in enum class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/Loading.html" title="enum class in io.micronaut.views.turbo">Loading</a></dt>
 <dd>&nbsp;</dd>
@@ -4947,6 +4971,10 @@ the order they are declared.</div>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
+</dd>
+<dt><a href="io/micronaut/views/fields/messages/Message.html#variables()" class="member-name-link">variables()</a> - Method in record class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./io/micronaut/views/fields/messages/Message.html#param-variables"><code>variables</code></a> record component.</div>
 </dd>
 <dt><a href="io/micronaut/views/velocity/VelocityViewsRenderer.html#velocityConfiguration" class="member-name-link">velocityConfiguration</a> - Variable in class io.micronaut.views.velocity.<a href="io/micronaut/views/velocity/VelocityViewsRenderer.html" title="class in io.micronaut.views.velocity">VelocityViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
