@@ -83,10 +83,30 @@ public record Message(@NonNull @NotBlank String defaultMessage,
         if (this.code() != null && o.code() == null) {
             return 1;
         }
-        if (this.code() == null) {
-            return 0;
+        if (this.code() != null) {
+            compare = this.code().compareTo(o.code());
+            if (compare != 0) {
+                return compare;
+            }
         }
-        return this.code().compareTo(o.code());
+        if (this.variables == null && o.variables != null) {
+            return -1;
+        }
+        if (this.variables != null && o.variables == null) {
+            return 1;
+        }
+        if (this.variables != null) {
+            for (int i = 0; i < Math.min(this.variables.length, o.variables.length); i++) {
+                if (this.variables[i] instanceof Comparable variablesComparable) {
+                    compare = variablesComparable.compareTo(o.variables[i]);
+                    if (compare != 0) {
+                        return compare;
+                    }
+                }
+            }
+            return Integer.compare(this.variables.length, o.variables.length);
+        }
+        return 0;
     }
 
     /**
