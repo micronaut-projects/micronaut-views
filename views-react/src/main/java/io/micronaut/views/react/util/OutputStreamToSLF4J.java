@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.react;
+package io.micronaut.views.react.util;
 
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
@@ -30,7 +30,7 @@ import java.nio.charset.Charset;
  * An output stream that looks for line separators and then writes out the lines of text to the given logger.
  */
 @Internal
-final class OutputStreamToSLF4J extends OutputStream {
+public final class OutputStreamToSLF4J extends OutputStream {
     private final Charset charset;
 
     private ByteBuffer buffer = ByteBuffer.allocate(512);
@@ -39,6 +39,8 @@ final class OutputStreamToSLF4J extends OutputStream {
 
     /**
      * Creates a logging stream with the JVM's default character set.
+     *
+     * @param loggingEventBuilder Lets you customize how the log events are sent to SLF4J (e.g. level, logger).
      */
     public OutputStreamToSLF4J(LoggingEventBuilder loggingEventBuilder) {
         this(loggingEventBuilder, Charset.defaultCharset());
@@ -46,6 +48,9 @@ final class OutputStreamToSLF4J extends OutputStream {
 
     /**
      * Creates a logging stream with the given character set.
+     *
+     * @param loggingEventBuilder Lets you customize how the log events are sent to SLF4J (e.g. level, logger).
+     * @param charset Encoding of strings being written to the output stream.
      */
     public OutputStreamToSLF4J(LoggingEventBuilder loggingEventBuilder, Charset charset) {
         this.loggingEventBuilder = loggingEventBuilder;
@@ -54,6 +59,9 @@ final class OutputStreamToSLF4J extends OutputStream {
 
     /**
      * Creates a logging stream for the given logger and logging level.
+     *
+     * @param logger The SLF4J logger object that the stream should emit to.
+     * @param level What severity to log lines at.
      */
     public OutputStreamToSLF4J(Logger logger, Level level) {
         this(logger.makeLoggingEventBuilder(level));

@@ -16,6 +16,7 @@
 package io.micronaut.views.jte;
 
 import gg.jte.ContentType;
+import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
@@ -34,6 +35,7 @@ import java.nio.file.Paths;
  * @since 3.1.0
  */
 @Produces(value = {MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM})
+@Primary
 @Singleton
 @Requires(classes = HttpRequest.class)
 public class HtmlJteViewsRenderer<T> extends JteViewsRenderer<T, HttpRequest<?>> {
