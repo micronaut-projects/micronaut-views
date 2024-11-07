@@ -23,6 +23,8 @@ io.micronaut.views.model
 io.micronaut.views.model.security
 io.micronaut.views.pebble
 io.micronaut.views.react
+io.micronaut.views.react.truffle
+io.micronaut.views.react.util
 io.micronaut.views.rocker
 io.micronaut.views.soy
 io.micronaut.views.thymeleaf

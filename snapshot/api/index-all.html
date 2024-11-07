@@ -234,6 +234,18 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Default Base64 encoder.</div>
 </dd>
+<dt><a href="io/micronaut/views/react/util/BeanPool.html" class="type-name-link" title="class in io.micronaut.views.react.util">BeanPool</a>&lt;<a href="io/micronaut/views/react/util/BeanPool.html" title="type parameter in BeanPool">T</a>&gt; - Class in <a href="io/micronaut/views/react/util/package-summary.html">io.micronaut.views.react.util</a></dt>
+<dd>
+<div class="block">An object pool for beans that are both expensive to construct and not thread safe.</div>
+</dd>
+<dt><a href="io/micronaut/views/react/util/BeanPool.html#%3Cinit%3E(java.util.function.Supplier)" class="member-name-link">BeanPool(Supplier&lt;T&gt;)</a> - Constructor for class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/BeanPool.html" title="class in io.micronaut.views.react.util">BeanPool</a></dt>
+<dd>
+<div class="block">Constructs an object pool that uses the given factory to create new entries.</div>
+</dd>
+<dt><a href="io/micronaut/views/react/util/BeanPool.Handle.html" class="type-name-link" title="interface in io.micronaut.views.react.util">BeanPool.Handle</a>&lt;<a href="io/micronaut/views/react/util/BeanPool.Handle.html" title="type parameter in BeanPool.Handle">T</a>&gt; - Interface in <a href="io/micronaut/views/react/util/package-summary.html">io.micronaut.views.react.util</a></dt>
+<dd>
+<div class="block">A handle to a pooled object.</div>
+</dd>
 <dt><a href="io/micronaut/views/turbo/TurboStream.Builder.html#before()" class="member-name-link">before()</a> - Method in class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></dt>
 <dd>
 <div class="block">Sets the Turbo action as <a href="io/micronaut/views/turbo/TurboStreamAction.html#BEFORE"><code>TurboStreamAction.BEFORE</code></a>.</div>
@@ -449,11 +461,27 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/elements/Radio.Builder.html#checked(boolean)" class="member-name-link">checked(boolean)</a> - Method in class io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/Radio.Builder.html" title="class in io.micronaut.views.fields.elements">Radio.Builder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/util/BeanPool.html#checkIn(io.micronaut.views.react.util.BeanPool.Handle)" class="member-name-link">checkIn(BeanPool.Handle&lt;T&gt;)</a> - Method in class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/BeanPool.html" title="class in io.micronaut.views.react.util">BeanPool</a></dt>
+<dd>
+<div class="block">Puts a context back into the pool.</div>
+</dd>
+<dt><a href="io/micronaut/views/react/util/BeanPool.html#checkOut()" class="member-name-link">checkOut()</a> - Method in class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/BeanPool.html" title="class in io.micronaut.views.react.util">BeanPool</a></dt>
+<dd>
+<div class="block">Returns a cached bean or creates a new one.</div>
+</dd>
 <dt><a href="io/micronaut/views/turbo/TurboView.html#childrenOnly()" class="member-name-link">childrenOnly()</a> - Element in annotation interface io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboView.html" title="annotation interface in io.micronaut.views.turbo">TurboView</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/turbo/TurboStream.Builder.html#childrenOnly(boolean)" class="member-name-link">childrenOnly(boolean)</a> - Method in class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/tck/AsssertHtmlUtils.html#cleanup(java.lang.String)" class="member-name-link">cleanup(String)</a> - Static method in class io.micronaut.views.fields.tck.<a href="io/micronaut/views/fields/tck/AsssertHtmlUtils.html" title="class in io.micronaut.views.fields.tck">AsssertHtmlUtils</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/util/BeanPool.html#clear()" class="member-name-link">clear()</a> - Method in class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/BeanPool.html" title="class in io.micronaut.views.react.util">BeanPool</a></dt>
+<dd>
+<div class="block">Empties the pool.</div>
+</dd>
+<dt><a href="io/micronaut/views/react/util/BeanPool.Handle.html#close()" class="member-name-link">close()</a> - Method in interface io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/BeanPool.Handle.html" title="interface in io.micronaut.views.react.util">BeanPool.Handle</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/util/JavaUtilLoggingToSLF4J.html#close()" class="member-name-link">close()</a> - Method in class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/JavaUtilLoggingToSLF4J.html" title="class in io.micronaut.views.react.util">JavaUtilLoggingToSLF4J</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/messages/Message.html#code()" class="member-name-link">code()</a> - Method in record class io.micronaut.views.fields.messages.<a href="io/micronaut/views/fields/messages/Message.html" title="class in io.micronaut.views.fields.messages">Message</a></dt>
 <dd>
@@ -1066,8 +1094,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/pebble/PebbleViewsRenderer.html#exists(java.lang.String)" class="member-name-link">exists(String)</a> - Method in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleViewsRenderer.html" title="class in io.micronaut.views.pebble">PebbleViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="io/micronaut/views/react/ReactViewsRenderer.html#exists(java.lang.String)" class="member-name-link">exists(String)</a> - Method in class io.micronaut.views.react.<a href="io/micronaut/views/react/ReactViewsRenderer.html" title="class in io.micronaut.views.react">ReactViewsRenderer</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/rocker/RockerViewsRenderer.html#exists(java.lang.String)" class="member-name-link">exists(String)</a> - Method in class io.micronaut.views.rocker.<a href="io/micronaut/views/rocker/RockerViewsRenderer.html" title="class in io.micronaut.views.rocker">RockerViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/soy/SoySauceViewsRenderer.html#exists(java.lang.String)" class="member-name-link">exists(String)</a> - Method in class io.micronaut.views.soy.<a href="io/micronaut/views/soy/SoySauceViewsRenderer.html" title="class in io.micronaut.views.soy">SoySauceViewsRenderer</a></dt>
@@ -1135,6 +1161,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">For routes annotated with <a href="io/micronaut/views/turbo/TurboView.html" title="annotation interface in io.micronaut.views.turbo"><code>TurboView</code></a> sets the response body to a <a href="io/micronaut/views/turbo/TurboStream.Builder.html" title="class in io.micronaut.views.turbo"><code>TurboStream.Builder</code></a>.</div>
 </dd>
+<dt><a href="io/micronaut/views/react/util/JavaUtilLoggingToSLF4J.html#flush()" class="member-name-link">flush()</a> - Method in class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/JavaUtilLoggingToSLF4J.html" title="class in io.micronaut.views.react.util">JavaUtilLoggingToSLF4J</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html#flush()" class="member-name-link">flush()</a> - Method in class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html" title="class in io.micronaut.views.react.util">OutputStreamToSLF4J</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/handlebars/HandlebarsViewsRenderer.html#folder" class="member-name-link">folder</a> - Variable in class io.micronaut.views.handlebars.<a href="io/micronaut/views/handlebars/HandlebarsViewsRenderer.html" title="class in io.micronaut.views.handlebars">HandlebarsViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/rocker/RockerViewsRenderer.html#folder" class="member-name-link">folder</a> - Variable in class io.micronaut.views.rocker.<a href="io/micronaut/views/rocker/RockerViewsRenderer.html" title="class in io.micronaut.views.rocker">RockerViewsRenderer</a></dt>
@@ -1555,6 +1585,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/turbo/TurboFrame.html#getLoading()" class="member-name-link">getLoading()</a> - Method in class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboFrame.html" title="class in io.micronaut.views.turbo">TurboFrame</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html#getMember(java.lang.String)" class="member-name-link">getMember(String)</a> - Method in class io.micronaut.views.react.truffle.<a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html" title="class in io.micronaut.views.react.truffle">IntrospectableToTruffleAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html#getMemberKeys()" class="member-name-link">getMemberKeys()</a> - Method in class io.micronaut.views.react.truffle.<a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html" title="class in io.micronaut.views.react.truffle">IntrospectableToTruffleAdapter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/ModelAndView.html#getModel()" class="member-name-link">getModel()</a> - Method in class io.micronaut.views.<a href="io/micronaut/views/ModelAndView.html" title="class in io.micronaut.views">ModelAndView</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/htmx/http/HtmxResponse.html#getModelAndViews()" class="member-name-link">getModelAndViews()</a> - Method in class io.micronaut.views.htmx.http.<a href="io/micronaut/views/htmx/http/HtmxResponse.html" title="class in io.micronaut.views.htmx.http">HtmxResponse</a></dt>
@@ -1844,6 +1878,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
+<dt><a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html#hasMember(java.lang.String)" class="member-name-link">hasMember(String)</a> - Method in class io.micronaut.views.react.truffle.<a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html" title="class in io.micronaut.views.react.truffle">IntrospectableToTruffleAdapter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/InputType.html#HIDDEN" class="member-name-link">HIDDEN</a> - Enum constant in enum class io.micronaut.views.fields.<a href="io/micronaut/views/fields/InputType.html" title="enum class in io.micronaut.views.fields">InputType</a></dt>
 <dd>
 <div class="block">HTML Input type hidden.</div>
@@ -2499,6 +2535,11 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="io/micronaut/views/fields/render/views/InputUrlViewsFormElementRenderer.html#%3Cinit%3E(io.micronaut.views.ViewsRenderer,io.micronaut.views.fields.render.views.FormElementRendererViewsConfiguration)" class="member-name-link">InputUrlViewsFormElementRenderer(ViewsRenderer&lt;Map&lt;String, FormElement&gt;, ?&gt;, FormElementRendererViewsConfiguration)</a> - Constructor for class io.micronaut.views.fields.render.views.<a href="io/micronaut/views/fields/render/views/InputUrlViewsFormElementRenderer.html" title="class in io.micronaut.views.fields.render.views">InputUrlViewsFormElementRenderer</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html" class="type-name-link" title="class in io.micronaut.views.react.truffle">IntrospectableToTruffleAdapter</a> - Class in <a href="io/micronaut/views/react/truffle/package-summary.html">io.micronaut.views.react.truffle</a></dt>
+<dd>
+<div class="block">A proxy object similar to that returned by <code>ProxyObject.fromMap(Map)</code>, but with support
+ for Micronaut's bean introspection system (a form of compile-time reflection code generation).</div>
+</dd>
 <dt><a href="io/micronaut/views/package-summary.html">io.micronaut.views</a> - package io.micronaut.views</dt>
 <dd>
 <div class="block">Contains classes specific to Views within Micronaut.</div>
@@ -2588,6 +2629,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Contains classes specific to Views rendered with Pebble.</div>
 </dd>
 <dt><a href="io/micronaut/views/react/package-summary.html">io.micronaut.views.react</a> - package io.micronaut.views.react</dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/truffle/package-summary.html">io.micronaut.views.react.truffle</a> - package io.micronaut.views.react.truffle</dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/util/package-summary.html">io.micronaut.views.react.util</a> - package io.micronaut.views.react.util</dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/rocker/package-summary.html">io.micronaut.views.rocker</a> - package io.micronaut.views.rocker</dt>
 <dd>
@@ -2737,6 +2782,14 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:J">J</h2>
 <dl class="index">
+<dt><a href="io/micronaut/views/react/util/JavaUtilLoggingToSLF4J.html" class="type-name-link" title="class in io.micronaut.views.react.util">JavaUtilLoggingToSLF4J</a> - Class in <a href="io/micronaut/views/react/util/package-summary.html">io.micronaut.views.react.util</a></dt>
+<dd>
+<div class="block">Forwards/redirects log messages from the GraalJS / Truffle engines themselves to SLF4J.</div>
+</dd>
+<dt><a href="io/micronaut/views/react/util/JavaUtilLoggingToSLF4J.html#%3Cinit%3E(org.slf4j.Logger)" class="member-name-link">JavaUtilLoggingToSLF4J(Logger)</a> - Constructor for class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/JavaUtilLoggingToSLF4J.html" title="class in io.micronaut.views.react.util">JavaUtilLoggingToSLF4J</a></dt>
+<dd>
+<div class="block">Constructs a handler that will forward messages to the given SLF4J logger.</div>
+</dd>
 <dt><a href="io/micronaut/views/jstachio/JStachioMessageBodyWriter.html" class="type-name-link" title="class in io.micronaut.views.jstachio">JStachioMessageBodyWriter</a>&lt;<a href="io/micronaut/views/jstachio/JStachioMessageBodyWriter.html" title="type parameter in JStachioMessageBodyWriter">T</a>&gt; - Class in <a href="io/micronaut/views/jstachio/package-summary.html">io.micronaut.views.jstachio</a></dt>
 <dd>
 <div class="block">A message body writer for JStachio JStache annotated models.</div>
@@ -3302,6 +3355,22 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/tck/TestUtils.html#output(io.micronaut.core.io.Writable)" class="member-name-link">output(Writable)</a> - Static method in class io.micronaut.views.fields.tck.<a href="io/micronaut/views/fields/tck/TestUtils.html" title="class in io.micronaut.views.fields.tck">TestUtils</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html" class="type-name-link" title="class in io.micronaut.views.react.util">OutputStreamToSLF4J</a> - Class in <a href="io/micronaut/views/react/util/package-summary.html">io.micronaut.views.react.util</a></dt>
+<dd>
+<div class="block">An output stream that looks for line separators and then writes out the lines of text to the given logger.</div>
+</dd>
+<dt><a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html#%3Cinit%3E(org.slf4j.Logger,org.slf4j.event.Level)" class="member-name-link">OutputStreamToSLF4J(Logger, Level)</a> - Constructor for class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html" title="class in io.micronaut.views.react.util">OutputStreamToSLF4J</a></dt>
+<dd>
+<div class="block">Creates a logging stream for the given logger and logging level.</div>
+</dd>
+<dt><a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html#%3Cinit%3E(org.slf4j.spi.LoggingEventBuilder)" class="member-name-link">OutputStreamToSLF4J(LoggingEventBuilder)</a> - Constructor for class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html" title="class in io.micronaut.views.react.util">OutputStreamToSLF4J</a></dt>
+<dd>
+<div class="block">Creates a logging stream with the JVM's default character set.</div>
+</dd>
+<dt><a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html#%3Cinit%3E(org.slf4j.spi.LoggingEventBuilder,java.nio.charset.Charset)" class="member-name-link">OutputStreamToSLF4J(LoggingEventBuilder, Charset)</a> - Constructor for class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html" title="class in io.micronaut.views.react.util">OutputStreamToSLF4J</a></dt>
+<dd>
+<div class="block">Creates a logging stream with the given character set.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:P">P</h2>
 <dl class="index">
@@ -3491,6 +3560,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/soy/SoyFileSetProvider.html#provideSoyFileSet()" class="member-name-link">provideSoyFileSet()</a> - Method in interface io.micronaut.views.soy.<a href="io/micronaut/views/soy/SoyFileSetProvider.html" title="interface in io.micronaut.views.soy">SoyFileSetProvider</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/util/JavaUtilLoggingToSLF4J.html#publish(java.util.logging.LogRecord)" class="member-name-link">publish(LogRecord)</a> - Method in class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/JavaUtilLoggingToSLF4J.html" title="class in io.micronaut.views.react.util">JavaUtilLoggingToSLF4J</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html#putMember(java.lang.String,org.graalvm.polyglot.Value)" class="member-name-link">putMember(String, Value)</a> - Method in class io.micronaut.views.react.truffle.<a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html" title="class in io.micronaut.views.react.truffle">IntrospectableToTruffleAdapter</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:R">R</h2>
 <dl class="index">
@@ -3519,14 +3592,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/micronaut/views/fields/fetchers/RadioFetcher.html" class="type-name-link" title="interface in io.micronaut.views.fields.fetchers">RadioFetcher</a>&lt;<a href="io/micronaut/views/fields/fetchers/RadioFetcher.html" title="type parameter in RadioFetcher">T</a>&gt; - Interface in <a href="io/micronaut/views/fields/fetchers/package-summary.html">io.micronaut.views.fields.fetchers</a></dt>
 <dd>
 <div class="block">Defines a Radio Fetcher API.</div>
-</dd>
-<dt><a href="io/micronaut/views/react/ReactViewsRenderer.html" class="type-name-link" title="class in io.micronaut.views.react">ReactViewsRenderer</a>&lt;<a href="io/micronaut/views/react/ReactViewsRenderer.html" title="type parameter in ReactViewsRenderer">PROPS</a>&gt; - Class in <a href="io/micronaut/views/react/package-summary.html">io.micronaut.views.react</a></dt>
-<dd>
-<div class="block">Instantiates GraalJS and uses it to render React components server side.</div>
-</dd>
-<dt><a href="io/micronaut/views/react/ReactViewsRenderer.html#%3Cinit%3E()" class="member-name-link">ReactViewsRenderer()</a> - Constructor for class io.micronaut.views.react.<a href="io/micronaut/views/react/ReactViewsRenderer.html" title="class in io.micronaut.views.react">ReactViewsRenderer</a></dt>
-<dd>
-<div class="block">Construct this renderer.</div>
 </dd>
 <dt><a href="io/micronaut/views/react/ReactViewsRendererConfiguration.html" class="type-name-link" title="interface in io.micronaut.views.react">ReactViewsRendererConfiguration</a> - Interface in <a href="io/micronaut/views/react/package-summary.html">io.micronaut.views.react</a></dt>
 <dd>
@@ -3632,12 +3697,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="io/micronaut/views/velocity/VelocityViewsRenderer.html#render(java.lang.String,org.apache.velocity.VelocityContext,java.lang.String,java.io.Writer)" class="member-name-link">render(String, VelocityContext, String, Writer)</a> - Method in class io.micronaut.views.velocity.<a href="io/micronaut/views/velocity/VelocityViewsRenderer.html" title="class in io.micronaut.views.velocity">VelocityViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="io/micronaut/views/react/ReactViewsRenderer.html#render(java.lang.String,PROPS,io.micronaut.http.HttpRequest)" class="member-name-link">render(String, PROPS, HttpRequest&lt;?&gt;)</a> - Method in class io.micronaut.views.react.<a href="io/micronaut/views/react/ReactViewsRenderer.html" title="class in io.micronaut.views.react">ReactViewsRenderer</a></dt>
-<dd>
-<div class="block">Given a &lt;ViewName/&gt; and optionally an object that represents some props (can be a map
- or introspectable object), returns hydratable HTML that can be booted on the client using
- the React libraries.</div>
-</dd>
 <dt><a href="io/micronaut/views/soy/SoySauceViewsRenderer.html#render(java.lang.String,T,io.micronaut.http.HttpRequest)" class="member-name-link">render(String, T, HttpRequest&lt;?&gt;)</a> - Method in class io.micronaut.views.soy.<a href="io/micronaut/views/soy/SoySauceViewsRenderer.html" title="class in io.micronaut.views.soy">SoySauceViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html#render(java.lang.String,T,io.micronaut.http.HttpRequest)" class="member-name-link">render(String, T, HttpRequest&lt;?&gt;)</a> - Method in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html" title="class in io.micronaut.views.thymeleaf">ThymeleafViewsRenderer</a></dt>
@@ -4587,6 +4646,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
+<dt><a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html#toString()" class="member-name-link">toString()</a> - Method in class io.micronaut.views.react.truffle.<a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html" title="class in io.micronaut.views.react.truffle">IntrospectableToTruffleAdapter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/turbo/Loading.html#toString()" class="member-name-link">toString()</a> - Method in enum class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/Loading.html" title="enum class in io.micronaut.views.turbo">Loading</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/turbo/TurboStreamAction.html#toString()" class="member-name-link">toString()</a> - Method in enum class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStreamAction.html" title="enum class in io.micronaut.views.turbo">TurboStreamAction</a></dt>
@@ -4725,6 +4786,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/micronaut/views/fields/InputType.html#URL" class="member-name-link">URL</a> - Enum constant in enum class io.micronaut.views.fields.<a href="io/micronaut/views/fields/InputType.html" title="enum class in io.micronaut.views.fields">InputType</a></dt>
 <dd>
 <div class="block">HTML Input type url.</div>
+</dd>
+<dt><a href="io/micronaut/views/react/util/BeanPool.html#useContext(io.micronaut.core.util.functional.ThrowingFunction)" class="member-name-link">useContext(ThrowingFunction&lt;BeanPool.Handle&lt;T&gt;, R, E&gt;)</a> - Method in class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/BeanPool.html" title="class in io.micronaut.views.react.util">BeanPool</a></dt>
+<dd>
+<div class="block">Runs the block with a handle checked out, checking it back in again at the end even if an
+ exception is thrown.</div>
 </dd>
 <dt><a href="io/micronaut/views/fields/tck/SigninForm.html#username()" class="member-name-link">username()</a> - Method in record class io.micronaut.views.fields.tck.<a href="io/micronaut/views/fields/tck/SigninForm.html" title="class in io.micronaut.views.fields.tck">SigninForm</a></dt>
 <dd>
@@ -5048,6 +5114,14 @@ the order they are declared.</div>
 <div class="block">Implementation of the <code>IEngineContext</code> interface for web processing.</div>
 </dd>
 <dt><a href="io/micronaut/views/thymeleaf/WebEngineContext.html#%3Cinit%3E(org.thymeleaf.IEngineConfiguration,org.thymeleaf.engine.TemplateData,java.util.Map,io.micronaut.http.HttpRequest,java.util.Locale,java.util.Map)" class="member-name-link">WebEngineContext(IEngineConfiguration, TemplateData, Map&lt;String, Object&gt;, HttpRequest&lt;?&gt;, Locale, Map&lt;String, Object&gt;)</a> - Constructor for class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/WebEngineContext.html" title="class in io.micronaut.views.thymeleaf">WebEngineContext</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html#wrap(org.graalvm.polyglot.Context,java.lang.Object)" class="member-name-link">wrap(Context, Object)</a> - Static method in class io.micronaut.views.react.truffle.<a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html" title="class in io.micronaut.views.react.truffle">IntrospectableToTruffleAdapter</a></dt>
+<dd>
+<div class="block">Wraps an object as a Truffle <code>Value</code> suitable for guest access, wrapping introspectable types with <a href="io/micronaut/views/react/truffle/IntrospectableToTruffleAdapter.html" title="class in io.micronaut.views.react.truffle"><code>IntrospectableToTruffleAdapter</code></a>.</div>
+</dd>
+<dt><a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html#write(byte%5B%5D)" class="member-name-link">write(byte[])</a> - Method in class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html" title="class in io.micronaut.views.react.util">OutputStreamToSLF4J</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html#write(int)" class="member-name-link">write(int)</a> - Method in class io.micronaut.views.react.util.<a href="io/micronaut/views/react/util/OutputStreamToSLF4J.html" title="class in io.micronaut.views.react.util">OutputStreamToSLF4J</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/turbo/TurboStreamBuilderMessageBodyWriter.html#writeTo(io.micronaut.core.type.Argument,io.micronaut.http.MediaType,io.micronaut.views.turbo.TurboStream.Builder,io.micronaut.core.type.MutableHeaders,java.io.OutputStream)" class="member-name-link">writeTo(Argument&lt;TurboStream.Builder&gt;, MediaType, TurboStream.Builder, MutableHeaders, OutputStream)</a> - Method in class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStreamBuilderMessageBodyWriter.html" title="class in io.micronaut.views.turbo">TurboStreamBuilderMessageBodyWriter</a></dt>
 <dd>&nbsp;</dd>
