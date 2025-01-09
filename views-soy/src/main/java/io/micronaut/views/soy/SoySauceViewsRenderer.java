@@ -128,6 +128,7 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>
             public Map<String, SoyValueProvider> getParamsAsMap() {
                 return null;
             }
+            
         });
         renderer.setData(context);
         if (injectNonce) {

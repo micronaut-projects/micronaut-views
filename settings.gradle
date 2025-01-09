@@ -54,6 +54,7 @@ micronautBuild {
     importMicronautCatalog()
     importMicronautCatalog("micronaut-data")
     importMicronautCatalog("micronaut-sql")
+    importMicronautCatalog("micronaut-grpc")
     importMicronautCatalog("micronaut-security")
     importMicronautCatalog("micronaut-serde")
     importMicronautCatalog("micronaut-validation")
