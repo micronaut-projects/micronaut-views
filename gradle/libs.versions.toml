@@ -24,11 +24,12 @@ pebble = "3.2.2"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.9.25"
 kotlinx-coroutines = "1.9.0"
-
+sonatype-scan = "3.0.0"
 micronaut-logging = "1.5.1"
-
+micronaut-grpc = "4.8.0"
 [libraries]
 # Core
+micronaut-grpc = { module = "io.micronaut.grpc:micronaut-grpc-bom", version.ref = "micronaut-grpc" }
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut' }
 micronaut-sql = { module = "io.micronaut.sql:micronaut-sql-bom", version.ref = "micronaut-sql" }
 micronaut-logging = { module = "io.micronaut.logging:micronaut-logging-bom", version.ref = "micronaut-logging" }
@@ -61,6 +62,7 @@ groovy-json = { module = "org.apache.groovy:groovy-json" }
 
 graal-polyglot = { module = "org.graalvm.polyglot:polyglot", version.ref = "graal" }
 graal-js = { module = "org.graalvm.polyglot:js", version.ref = "graal" }
+sonatype-scan = { module = "org.sonatype.gradle.plugins:scan-gradle-plugin", version.ref = "sonatype-scan" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
