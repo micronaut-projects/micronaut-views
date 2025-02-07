@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.turbo;
 
+
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -33,22 +34,23 @@ import java.util.Optional;
  * @since 3.4.0
  */
 @Internal
-public abstract class AbstractTurboRenderer<T extends TemplatedBuilder> {
+abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
 
-    private final ViewsRendererLocator viewsRendererLocator;
-    private final String mediaType;
+    protected final ViewsRendererLocator viewsRendererLocator;
     private final ViewsModelDecorator viewsModelDecorator;
+    private final String mediaType;
 
     /**
      * @param viewsRendererLocator Views renderer Locator
+     * @param viewsModelDecorator Views Model Decorator
      * @param mediaType Media Type
      */
     protected AbstractTurboRenderer(ViewsRendererLocator viewsRendererLocator,
-                                    String mediaType,
-                                    ViewsModelDecorator viewsModelDecorator) {
+                                    ViewsModelDecorator viewsModelDecorator,
+                                    String mediaType) {
         this.viewsRendererLocator = viewsRendererLocator;
-        this.mediaType = mediaType;
         this.viewsModelDecorator = viewsModelDecorator;
+        this.mediaType = mediaType;
     }
 
     /**
@@ -60,18 +62,18 @@ public abstract class AbstractTurboRenderer<T extends TemplatedBuilder> {
     public Optional<Writable> render(@NonNull T builder,
                                      @Nullable HttpRequest<?> request) {
         return builder.getTemplateView()
-                .map(viewName ->  {
-                    Object model =  builder.getTemplateModel().orElse(null);
-                    ModelAndView<Object> modelAndView = new ModelAndView<>(viewName, model);
-                    if (request != null && viewsModelDecorator != null) {
-                        viewsModelDecorator.decorate(request, modelAndView);
-                    }
-                    Object decoratedModel = modelAndView.getModel().orElse(null);
-                    return viewsRendererLocator.resolveViewsRenderer(viewName, mediaType, decoratedModel)
-                            .flatMap(renderer -> builder.template(renderer.render(viewName, decoratedModel, request))
-                                    .build()
-                                    .render());
-                })
-                .orElseGet(() -> builder.build().render());
+            .map(viewName ->  {
+                Object model =  builder.getTemplateModel().orElse(null);
+                ModelAndView<Object> modelAndView = new ModelAndView<>(viewName, model);
+                if (request != null && viewsModelDecorator != null) {
+                    viewsModelDecorator.decorate(request, modelAndView);
+                }
+                Object decoratedModel = modelAndView.getModel().orElse(null);
+                return viewsRendererLocator.resolveViewsRenderer(viewName, mediaType, decoratedModel)
+                    .flatMap(renderer -> builder.template(renderer.render(viewName, decoratedModel, request))
+                        .build()
+                        .render());
+            })
+            .orElseGet(() -> builder.build().render());
     }
 }

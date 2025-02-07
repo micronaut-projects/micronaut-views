@@ -18,13 +18,12 @@ import io.micronaut.http.annotation.Produces
 import io.micronaut.http.client.BlockingHttpClient
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
-import io.micronaut.security.annotation.Secured
-import io.micronaut.security.rules.SecurityRule
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import io.micronaut.views.View
 import io.micronaut.views.ViewsRenderer
 import io.micronaut.views.turbo.http.TurboHttpHeaders
 import io.micronaut.views.turbo.http.TurboMediaType
+import jakarta.annotation.security.PermitAll
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
 import spock.lang.Specification
@@ -387,7 +386,7 @@ class TurboStreamSpec extends Specification {
     }
 
     @Requires(property = "spec.name", value = "TurboStreamSpec")
-    @Secured(SecurityRule.IS_ANONYMOUS)
+    @PermitAll
     @Controller("/turbo")
     static class TurboStreamWriteableController {
         @Produces(TurboMediaType.TURBO_STREAM)
@@ -509,7 +508,7 @@ class TurboStreamSpec extends Specification {
 
     @Requires(property = "spec.name", value = "TurboStreamSpec")
     @Controller("/customers")
-    @Secured(SecurityRule.IS_ANONYMOUS)
+    @PermitAll
     static class CustomersController {
 
         @Get
