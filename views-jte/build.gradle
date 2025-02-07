@@ -9,7 +9,7 @@ dependencies {
     api(libs.managed.jte)
 
     api projects.micronautViewsCore
-    implementation(libs.managed.jte.kotlin)
+    testImplementation(libs.managed.jte.kotlin)
     testImplementation(mnSerde.micronaut.serde.jackson)
     testImplementation(mn.reactor)
     testImplementation(mn.micronaut.http.client)

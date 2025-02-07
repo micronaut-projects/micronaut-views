@@ -13,6 +13,8 @@ import io.micronaut.http.annotation.Header
 import io.micronaut.http.client.BlockingHttpClient
 import io.micronaut.http.client.HttpClient
 import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.security.annotation.Secured
+import io.micronaut.security.rules.SecurityRule
 import io.micronaut.views.View
 import io.micronaut.views.ViewsRenderer
 import io.micronaut.views.turbo.http.TurboHttpHeaders
@@ -133,6 +135,7 @@ class TurboFrameSpec extends Specification {
     }
 
     @Requires(property = "spec.name", value = "TurboFrameSpec")
+    @Secured(SecurityRule.IS_ANONYMOUS)
     @Controller("/frame")
     static class TurboFrameController {
         @Get

@@ -15,7 +15,6 @@
  */
 package io.micronaut.views.turbo;
 
-
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -34,23 +33,22 @@ import java.util.Optional;
  * @since 3.4.0
  */
 @Internal
-abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
+public abstract class AbstractTurboRenderer<T extends TemplatedBuilder> {
 
-    protected final ViewsRendererLocator viewsRendererLocator;
-    private final ViewsModelDecorator viewsModelDecorator;
+    private final ViewsRendererLocator viewsRendererLocator;
     private final String mediaType;
+    private final ViewsModelDecorator viewsModelDecorator;
 
     /**
      * @param viewsRendererLocator Views renderer Locator
-     * @param viewsModelDecorator Views Model Decorator
      * @param mediaType Media Type
      */
     protected AbstractTurboRenderer(ViewsRendererLocator viewsRendererLocator,
-                                    ViewsModelDecorator viewsModelDecorator,
-                                    String mediaType) {
+                                    String mediaType,
+                                    ViewsModelDecorator viewsModelDecorator) {
         this.viewsRendererLocator = viewsRendererLocator;
-        this.viewsModelDecorator = viewsModelDecorator;
         this.mediaType = mediaType;
+        this.viewsModelDecorator = viewsModelDecorator;
     }
 
     /**
