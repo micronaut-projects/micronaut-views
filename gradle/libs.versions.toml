@@ -2,12 +2,12 @@
 micronaut = "4.8.0"
 micronaut-platform = "4.3.1"
 micronaut-docs = '2.0.0'
-micronaut-validation = "4.5.0"
 micronaut-test = "4.6.2"
 micronaut-data = "4.11.1"
 micronaut-sql = "6.0.2"
 micronaut-security = "4.11.3"
 micronaut-serde = "2.13.1"
+micronaut-validation = "4.9.0"
 micronaut-gradle-plugin = "4.3.8"
 managed-freemarker = "2.3.32"
 managed-handlebars = "4.3.1"
