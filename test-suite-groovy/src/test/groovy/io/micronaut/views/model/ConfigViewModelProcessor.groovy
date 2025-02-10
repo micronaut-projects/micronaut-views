@@ -12,7 +12,7 @@ import java.util.Map;
 @Requires(property = "spec.name", value = "ModelAndViewSpec")
 //tag::class[]
 @Singleton // <1>
-public class ConfigViewModelProcessor implements ViewModelProcessor<Map<String, Object>, HttpRequest<?>> {
+public class ConfigViewModelProcessor implements ViewModelProcessor<Map<String, Object>> {
     private final ApplicationConfiguration config;
 
     ConfigViewModelProcessor(ApplicationConfiguration environment) {

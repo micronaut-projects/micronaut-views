@@ -25,7 +25,6 @@ dependencies {
     testImplementation(projects.micronautViewsHtmx)
     testImplementation(projects.micronautViewsVelocity)
     testImplementation(projects.micronautViewsCore)
-    testImplementation(projects.micronautViewsTurbo)
     testImplementation(projects.micronautViewsSoy)
     testImplementation(projects.micronautViewsHandlebars)
 }

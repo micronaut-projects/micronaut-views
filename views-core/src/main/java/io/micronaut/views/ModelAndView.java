@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2024 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,15 @@
  */
 package io.micronaut.views;
 
-import io.micronaut.core.annotation.NonNull;
-
 import java.util.Optional;
 
 /**
  * Holder for both Model and View.
  *
- * @param <T> The model type
  * @author Sergio del Amo
  * @author graemerocher
  * @since 1.0
+ * @param <T> The model type
  */
 public class ModelAndView<T> {
 
@@ -53,7 +51,6 @@ public class ModelAndView<T> {
     /**
      * @return view name to be rendered
      */
-    @NonNull
     public Optional<String> getView() {
         return Optional.ofNullable(view);
     }

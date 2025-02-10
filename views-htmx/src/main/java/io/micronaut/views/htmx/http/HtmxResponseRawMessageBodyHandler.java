@@ -19,69 +19,55 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.type.Argument;
 import io.micronaut.core.type.MutableHeaders;
-import io.micronaut.http.ByteBodyHttpResponse;
-import io.micronaut.http.ByteBodyHttpResponseWrapper;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
-import io.micronaut.http.MutableHttpResponse;
-import io.micronaut.http.body.ByteBodyFactory;
-import io.micronaut.http.body.CloseableByteBody;
-import io.micronaut.http.body.ResponseBodyWriter;
-import io.micronaut.http.body.TypedMessageBodyWriter;
+import io.micronaut.http.body.MessageBodyWriter;
 import io.micronaut.http.codec.CodecException;
+import io.micronaut.http.context.ServerRequestContext;
 import io.micronaut.views.ModelAndView;
-import io.micronaut.views.http.RawModelAndViewMessageBodyHandler;
+import io.micronaut.views.ModelAndViewRenderer;
+import io.micronaut.views.exceptions.ViewRenderingException;
 import jakarta.inject.Singleton;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * {@link io.micronaut.http.body.MessageBodyWriter} implementation for {@link HtmxResponse}.
+ * {@link io.micronaut.http.body.MessageBodyHandler} implementation for {@link HtmxResponse}.
  * @author Sergio del Amo
  * @since 5.2.0
  * @param <T> The model type
  */
 @Internal
 @Singleton
-final class HtmxResponseRawMessageBodyHandler<T> implements TypedMessageBodyWriter<HtmxResponse<T>>, ResponseBodyWriter<HtmxResponse<T>> {
-    private final RawModelAndViewMessageBodyHandler<T> delegate;
+final class HtmxResponseRawMessageBodyHandler<T> implements MessageBodyWriter<HtmxResponse<T>> {
+    private static final Logger LOG = LoggerFactory.getLogger(HtmxResponseRawMessageBodyHandler.class);
 
-    public HtmxResponseRawMessageBodyHandler(RawModelAndViewMessageBodyHandler<T> delegate) {
-        this.delegate = delegate;
-    }
+    private final ModelAndViewRenderer<T, HttpRequest<?>> modelAndViewRenderer;
 
-    @Override
-    public boolean isBlocking() {
-        return true;
-    }
-
-    @Override
-    public @NonNull Argument<HtmxResponse<T>> getType() {
-        return (Argument) Argument.of(HtmxResponse.class);
+    public HtmxResponseRawMessageBodyHandler(ModelAndViewRenderer<T, HttpRequest<?>> modelAndViewRenderer) {
+        this.modelAndViewRenderer = modelAndViewRenderer;
     }
 
     @Override
     public void writeTo(@NonNull Argument<HtmxResponse<T>> type, @NonNull MediaType mediaType, HtmxResponse<T> object, @NonNull MutableHeaders outgoingHeaders, @NonNull OutputStream outputStream) throws CodecException {
-        outgoingHeaders.set(HttpHeaders.CONTENT_TYPE, mediaType);
+        HttpRequest<?> httpRequest = ServerRequestContext.currentRequest().orElse(null);
         for (ModelAndView<T> modelAndView : object.getModelAndViews()) {
-            delegate.writeTo(null, mediaType, modelAndView, outgoingHeaders, outputStream);
+            modelAndViewRenderer.render(modelAndView, httpRequest, mediaType.toString())
+                    .ifPresent(writable -> {
+                        try {
+                            writable.writeTo(outputStream);
+                        } catch (IOException e) {
+                            if (LOG.isErrorEnabled()) {
+                                LOG.error("IOException writing ModelAndView to OutputStream", e);
+                            }
+                            throw new ViewRenderingException("IOException writing ModelAndView to OutputStream", e);
+                        }
+                    });
         }
-    }
-
-    @Override
-    public @NonNull ByteBodyHttpResponse<?> write(@NonNull ByteBodyFactory bodyFactory, @NonNull HttpRequest<?> request, @NonNull MutableHttpResponse<HtmxResponse<T>> httpResponse, @NonNull Argument<HtmxResponse<T>> type, @NonNull MediaType mediaType, HtmxResponse<T> object) throws CodecException {
-        httpResponse.getHeaders().contentTypeIfMissing(mediaType);
-        return ByteBodyHttpResponseWrapper.wrap(httpResponse, writePiece(bodyFactory, request, httpResponse, type, mediaType, object));
-    }
-
-    @Override
-    public @NonNull CloseableByteBody writePiece(@NonNull ByteBodyFactory bodyFactory, @NonNull HttpRequest<?> request, @NonNull HttpResponse<?> response, @NonNull Argument<HtmxResponse<T>> type, @NonNull MediaType mediaType, HtmxResponse<T> object) throws CodecException {
-        return bodyFactory.buffer(os -> {
-            for (ModelAndView<T> modelAndView : object.getModelAndViews()) {
-                delegate.writePieceTo(os, request, mediaType, modelAndView);
-            }
-        });
+        outgoingHeaders.set(HttpHeaders.CONTENT_TYPE, mediaType);
     }
 }

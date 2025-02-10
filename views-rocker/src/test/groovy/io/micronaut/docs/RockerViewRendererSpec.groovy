@@ -23,6 +23,7 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.views.ViewsFilter
 import io.micronaut.views.rocker.RockerViewsRenderer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
@@ -48,6 +49,7 @@ class RockerViewRendererSpec extends Specification {
     def "bean is loaded"() {
         when:
         embeddedServer.applicationContext.getBean(RockerViewsRenderer)
+        embeddedServer.applicationContext.getBean(ViewsFilter)
 
         then:
         noExceptionThrown()

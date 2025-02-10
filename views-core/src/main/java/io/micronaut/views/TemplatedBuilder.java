@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2024 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,15 +23,11 @@ import java.util.Optional;
 
 /**
  * Abstract class to be used by builders which support templates.
- *
- * @param <T> The class to be built
- * @param <SELF> The builder itself (so that it can be chained)
  * @author Sergio del Amo
  * @since 3.4.0
+ * @param <T> The class to be built
  */
-@SuppressWarnings("java:S119") // SELF is a better name here
-public abstract class TemplatedBuilder<T extends Renderable, SELF extends TemplatedBuilder<T, SELF>> {
-
+public abstract class TemplatedBuilder<T extends Renderable> {
     @Nullable
     private Object template;
 
@@ -42,11 +38,13 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
     private Object templateModel;
 
     /**
+     *
      * @return Build instance
      */
     public abstract T build();
 
     /**
+     *
      * @return The TurboStream template view name.
      */
     @NonNull
@@ -55,6 +53,7 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
     }
 
     /**
+     *
      * @return The TurboStream template model.
      */
     @NonNull
@@ -63,6 +62,7 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
     }
 
     /**
+     *
      * @return The Template
      */
     @Nullable
@@ -72,68 +72,58 @@ public abstract class TemplatedBuilder<T extends Renderable, SELF extends Templa
 
     /**
      * Sets the template with a View and Model.
-     *
-     * @param view  The View name
+     * @param view The View name
      * @param model The Model
      * @return The Builder
      */
     @NonNull
-    @SuppressWarnings("unchecked")
-    public SELF template(@NonNull String view, Object model) {
+    public TemplatedBuilder<T> template(@NonNull String view, Object model) {
         this.templateView = view;
         this.templateModel = model;
-        return (SELF) this;
+        return this;
     }
 
     /**
      * Sets the Turbo Frame  with a String. E.g. HTML.
-     *
      * @param html The turbo frame content
      * @return The Builder
      */
     @NonNull
-    @SuppressWarnings("unchecked")
-    public SELF template(@NonNull CharSequence html) {
+    public TemplatedBuilder<T> template(@NonNull String html) {
         this.template = html;
-        return (SELF) this;
+        return this;
     }
 
     /**
      * Sets the Turbo frame content with a {@link Writable}.
-     *
      * @param writable The template as a {@link Writable}.
      * @return The Builder
      */
     @NonNull
-    @SuppressWarnings("unchecked")
-    public SELF template(@NonNull Writable writable) {
+    public TemplatedBuilder<T> template(@NonNull Writable writable) {
         this.template = writable;
-        return (SELF) this;
+        return this;
     }
 
     /**
      * Sets the template's view name.
-     *
      * @param templateView The View name
      * @return The Builder
      */
     @NonNull
-    @SuppressWarnings("unchecked")
-    public SELF templateView(@NonNull String templateView) {
+    public TemplatedBuilder<T> templateView(@NonNull String templateView) {
         this.templateView = templateView;
-        return (SELF) this;
+        return this;
     }
 
     /**
      * Sets the template's model.
-     *
      * @param templateModel template model.
      * @return The Builder
      */
     @NonNull
-    @SuppressWarnings("unchecked")
-    public SELF templateModel(@NonNull Object templateModel) {
+    public TemplatedBuilder<T> templateModel(@NonNull Object templateModel) {
         this.templateModel = templateModel;
-        return (SELF) this;
+        return this;
     }
 }

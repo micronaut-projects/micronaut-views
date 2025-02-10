@@ -25,6 +25,7 @@ import io.micronaut.http.client.exceptions.HttpClientException
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.exceptions.ReadTimeoutException
 import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.views.ViewsFilter
 import io.micronaut.views.freemarker.FreemarkerViewsRenderer
 import io.micronaut.views.freemarker.FreemarkerViewsRendererConfigurationProperties
 import spock.lang.AutoCleanup
@@ -51,6 +52,7 @@ class FreemarkerViewRendererSpec extends Specification {
     def "bean is loaded"() {
         when:
         embeddedServer.applicationContext.getBean(FreemarkerViewsRenderer)
+        embeddedServer.applicationContext.getBean(ViewsFilter)
 
         then:
         noExceptionThrown()

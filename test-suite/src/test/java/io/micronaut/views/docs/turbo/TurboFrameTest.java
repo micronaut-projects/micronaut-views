@@ -23,12 +23,13 @@ import io.micronaut.views.ModelAndView;
 import io.micronaut.views.View;
 import io.micronaut.views.turbo.TurboFrame;
 import io.micronaut.views.turbo.TurboFrameView;
-import io.micronaut.views.turbo.TurboStreamView;
+import io.micronaut.views.turbo.TurboView;
 import io.micronaut.views.turbo.http.TurboHttpHeaders;
 import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -103,7 +104,7 @@ class TurboFrameTest {
 
         //tag::turboFramePost[]
         @Consumes(MediaType.MULTIPART_FORM_DATA)
-        @TurboStreamView("view")
+        @TurboView("view")
         @Produces(value = {MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM})
         @Post("/messages/{id}")
         Map<String, Object> processEdit(@Part int id, @Part String title, @Part String body) {

@@ -200,7 +200,7 @@ class ModelAndViewSpec extends Specification {
 
     @Requires(property = "spec.name", value = "ModelAndViewSpec")
     @Singleton
-    static class CustomViewModelProcessor implements ViewModelProcessor<AbstractView, HttpRequest<?>> {
+    static class CustomViewModelProcessor implements ViewModelProcessor<AbstractView> {
 
         private final ApplicationConfiguration config
 

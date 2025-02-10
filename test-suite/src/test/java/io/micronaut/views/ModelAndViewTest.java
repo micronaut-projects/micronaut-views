@@ -239,14 +239,14 @@ class ModelAndViewTest {
 
     @Requires(property = "spec.name", value = "ModelAndViewSpec")
     @Singleton
-    static class CustomViewModelProcessor<R> implements ViewModelProcessor<AbstractView, R> {
+    static class CustomViewModelProcessor implements ViewModelProcessor<AbstractView> {
         private final ApplicationConfiguration config;
         CustomViewModelProcessor(ApplicationConfiguration environment) {
             this.config = environment;
         }
 
         @Override
-        public void process(@NonNull R request,
+        public void process(@NonNull HttpRequest<?> request,
                             @NonNull ModelAndView<AbstractView> modelAndView) {
             modelAndView.getModel()
                     .ifPresent(model -> {

@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @Internal
 sealed interface MapViewModelProcessor
-        extends ViewModelProcessor<Map<String, Object>, HttpRequest<?>>
+        extends ViewModelProcessor<Map<String, Object>>
         permits CsrfViewModelProcessor, SecurityViewModelProcessor {
     @Override
     default void process(@NonNull HttpRequest<?> request, @NonNull ModelAndView<Map<String, Object>> modelAndView) {
