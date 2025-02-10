@@ -35,7 +35,6 @@ loadScripts(document, 'script');</script>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
-<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
 </ul>
@@ -103,23 +102,13 @@ implements <a href="FieldsetGenerator.html" title="interface in io.micronaut.vie
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver)" class="member-name-link">DefaultFieldGenerator</a><wbr>(<a href="fetchers/EnumOptionFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumOptionFetcher</a>&lt;?&gt;&nbsp;enumOptionFetcher,
- <a href="fetchers/EnumRadioFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumRadioFetcher</a>&lt;?&gt;&nbsp;enumRadioFetcher,
- <a href="fetchers/EnumCheckboxFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumCheckboxFetcher</a>&lt;?&gt;&nbsp;enumCheckboxFetcher,
- io.micronaut.context.BeanContext&nbsp;beanContext,
- <a href="formelementresolvers/FormElementResolver.html" title="interface in io.micronaut.views.fields.formelementresolvers">FormElementResolver</a>&nbsp;formElementResolver)</code></div>
-<div class="col-last even-row-color">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">Use <a href="#%3Cinit%3E(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver,java.util.List)"><code>DefaultFieldGenerator(io.micronaut.views.fields.fetchers.EnumOptionFetcher&lt;?&gt;,io.micronaut.views.fields.fetchers.EnumRadioFetcher&lt;?&gt;,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher&lt;?&gt;,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver,java.util.List&lt;io.micronaut.views.fields.FieldsetConsumer&gt;)</code></a> instead.</div>
-</div>
-</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver,java.util.List)" class="member-name-link">DefaultFieldGenerator</a><wbr>(<a href="fetchers/EnumOptionFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumOptionFetcher</a>&lt;?&gt;&nbsp;enumOptionFetcher,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver,java.util.List)" class="member-name-link">DefaultFieldGenerator</a><wbr>(<a href="fetchers/EnumOptionFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumOptionFetcher</a>&lt;?&gt;&nbsp;enumOptionFetcher,
  <a href="fetchers/EnumRadioFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumRadioFetcher</a>&lt;?&gt;&nbsp;enumRadioFetcher,
  <a href="fetchers/EnumCheckboxFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumCheckboxFetcher</a>&lt;?&gt;&nbsp;enumCheckboxFetcher,
  io.micronaut.context.BeanContext&nbsp;beanContext,
  <a href="formelementresolvers/FormElementResolver.html" title="interface in io.micronaut.views.fields.formelementresolvers">FormElementResolver</a>&nbsp;formElementResolver,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="FieldsetConsumer.html" title="interface in io.micronaut.views.fields">FieldsetConsumer</a>&gt;&nbsp;fieldsetConsumers)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -192,29 +181,6 @@ implements <a href="FieldsetGenerator.html" title="interface in io.micronaut.vie
 <dd><code>beanContext</code> - Bean Context</dd>
 <dd><code>formElementResolver</code> - Primary Form Element Resolver. <a href="formelementresolvers/CompositeFormElementResolver.html" title="class in io.micronaut.views.fields.formelementresolvers"><code>CompositeFormElementResolver</code></a>.</dd>
 <dd><code>fieldsetConsumers</code> - Fieldset Consumers</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="&lt;init&gt;(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver)">
-<h3>DefaultFieldGenerator</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="5.6.0")
-</span><span class="modifiers">public</span>&nbsp;<span class="element-name">DefaultFieldGenerator</span><wbr><span class="parameters">(<a href="fetchers/EnumOptionFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumOptionFetcher</a>&lt;?&gt;&nbsp;enumOptionFetcher,
- <a href="fetchers/EnumRadioFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumRadioFetcher</a>&lt;?&gt;&nbsp;enumRadioFetcher,
- <a href="fetchers/EnumCheckboxFetcher.html" title="class in io.micronaut.views.fields.fetchers">EnumCheckboxFetcher</a>&lt;?&gt;&nbsp;enumCheckboxFetcher,
- io.micronaut.context.BeanContext&nbsp;beanContext,
- <a href="formelementresolvers/FormElementResolver.html" title="interface in io.micronaut.views.fields.formelementresolvers">FormElementResolver</a>&nbsp;formElementResolver)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">Use <a href="#%3Cinit%3E(io.micronaut.views.fields.fetchers.EnumOptionFetcher,io.micronaut.views.fields.fetchers.EnumRadioFetcher,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver,java.util.List)"><code>DefaultFieldGenerator(io.micronaut.views.fields.fetchers.EnumOptionFetcher&lt;?&gt;,io.micronaut.views.fields.fetchers.EnumRadioFetcher&lt;?&gt;,io.micronaut.views.fields.fetchers.EnumCheckboxFetcher&lt;?&gt;,io.micronaut.context.BeanContext,io.micronaut.views.fields.formelementresolvers.FormElementResolver,java.util.List&lt;io.micronaut.views.fields.FieldsetConsumer&gt;)</code></a> instead.</div>
-</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>enumOptionFetcher</code> - Enum fetcher for <a href="elements/Option.html" title="class in io.micronaut.views.fields.elements"><code>Option</code></a>.</dd>
-<dd><code>enumRadioFetcher</code> - Enum fetcher for <a href="elements/Radio.html" title="class in io.micronaut.views.fields.elements"><code>Radio</code></a>.</dd>
-<dd><code>enumCheckboxFetcher</code> - Enum fetcher for <a href="elements/Checkbox.html" title="class in io.micronaut.views.fields.elements"><code>Checkbox</code></a>.</dd>
-<dd><code>beanContext</code> - Bean Context</dd>
-<dd><code>formElementResolver</code> - Primary Form Element Resolver. <a href="formelementresolvers/CompositeFormElementResolver.html" title="class in io.micronaut.views.fields.formelementresolvers"><code>CompositeFormElementResolver</code></a>.</dd>
 </dl>
 </section>
 </li>
