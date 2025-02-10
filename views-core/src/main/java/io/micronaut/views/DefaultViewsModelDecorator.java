@@ -16,26 +16,28 @@
 package io.micronaut.views;
 
 import io.micronaut.context.ApplicationContext;
-import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.http.HttpRequest;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.views.model.ViewModelProcessor;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Default implementation of {@link ViewsModelDecorator} which enhances a model by running it by all applicable ViewModelProcessors {@link ViewModelProcessor}.
+ * @param <T> the model type.
+ * @param <R> The request type
  * @author Sergio del Amo
  * @since 3.0.0
  */
 @Singleton
-@Requires(classes = HttpRequest.class)
-public class DefaultViewsModelDecorator implements ViewsModelDecorator {
+@Internal
+final class DefaultViewsModelDecorator<T, R> implements ViewsModelDecorator<T, R> {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultViewsModelDecorator.class);
 
     private final ApplicationContext applicationContext;
@@ -49,15 +51,15 @@ public class DefaultViewsModelDecorator implements ViewsModelDecorator {
     /**
      * Enhances a model by running it by all applicable ViewModelProcessors {@link ViewModelProcessor}.
      *
-     * @param request      The http request this model relates to.
+     * @param request      The request this model relates to.
      * @param modelAndView The ModelAndView to be enhanced.
      */
     @Override
-    public void decorate(HttpRequest<?> request, @NonNull ModelAndView<?> modelAndView) {
+    public void decorate(R request, @NonNull ModelAndView<T> modelAndView) {
         if (modelAndView.getModel().isPresent()) {
             Class<?> modelClass = modelAndView.getModel().get().getClass();
             Collection<ViewModelProcessor> processors = classToProcessors.computeIfAbsent(modelClass,
-                    aClass -> applicationContext.getBeansOfType(ViewModelProcessor.class, Qualifiers.byTypeArguments(modelClass)));
+                    aClass -> applicationContext.getBeansOfType(ViewModelProcessor.class, Qualifiers.byTypeArguments(modelClass, Object.class)));
             if (LOG.isDebugEnabled()) {
                 LOG.debug("located # {} view model processors for class {}", processors.size(), modelClass.getSimpleName());
             }

@@ -17,7 +17,7 @@ import io.micronaut.http.client.multipart.MultipartBody
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import io.micronaut.views.View
 import io.micronaut.views.turbo.TurboFrameView
-import io.micronaut.views.turbo.TurboView
+import io.micronaut.views.turbo.TurboStreamView
 import io.micronaut.views.turbo.http.TurboHttpHeaders
 import io.micronaut.views.turbo.http.TurboMediaType
 import jakarta.inject.Inject
@@ -88,7 +88,7 @@ class TurboFrameTest {
 
         //tag::turboFramePost[]
         @Consumes(MediaType.MULTIPART_FORM_DATA)
-        @TurboView("view")
+        @TurboStreamView("view")
         @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
         @Post("/messages/{id}")
         fun processEdit(@Part id: Int, @Part title: String, @Part body: String): Map<String, Any> {

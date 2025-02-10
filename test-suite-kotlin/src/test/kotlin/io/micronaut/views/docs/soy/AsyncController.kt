@@ -5,7 +5,8 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.views.View
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
 @Requires(property = "spec.name", value = "AsyncSpec")
@@ -15,10 +16,8 @@ class AsyncController {
     @View("index")
     @Get("/")
     suspend fun index(): HttpResponse<Map<String, String>> = run {
-        val futureResponse = GlobalScope.async {
+        CoroutineScope(Dispatchers.IO).async {
             HttpResponse.ok(mapOf("name" to "world"))
-        }
-        futureResponse.await()
+        }.await()
     }
-
 }
