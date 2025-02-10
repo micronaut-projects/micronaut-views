@@ -108,28 +108,6 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
         this.fieldsetConsumers = fieldsetConsumers;
     }
 
-    /**
-     * @param enumOptionFetcher   Enum fetcher for {@link Option}.
-     * @param enumRadioFetcher    Enum fetcher for {@link Radio}.
-     * @param enumCheckboxFetcher Enum fetcher for {@link Checkbox}.
-     * @param beanContext         Bean Context
-     * @param formElementResolver Primary Form Element Resolver. {@link io.micronaut.views.fields.formelementresolvers.CompositeFormElementResolver}.
-     * @deprecated Use {@link DefaultFieldGenerator(EnumOptionFetcher, EnumRadioFetcher, EnumCheckboxFetcher, BeanContext, FormElementResolver, List)} instead.
-     */
-    @Deprecated(forRemoval = true, since = "5.6.0")
-    public DefaultFieldGenerator(EnumOptionFetcher<?> enumOptionFetcher,
-                                 EnumRadioFetcher<?> enumRadioFetcher,
-                                 EnumCheckboxFetcher<?> enumCheckboxFetcher,
-                                 BeanContext beanContext,
-                                 FormElementResolver formElementResolver) {
-        this(enumOptionFetcher,
-                enumRadioFetcher,
-                enumCheckboxFetcher,
-                beanContext,
-                formElementResolver,
-                Collections.emptyList());
-    }
-
     @Override
     @NonNull
     public <T> Fieldset generate(@NonNull Class<T> type) {

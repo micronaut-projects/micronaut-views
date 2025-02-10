@@ -46,30 +46,6 @@ public record Checkbox(@NonNull String name,
                        boolean required,
                        @Nullable String id,
                        @Nullable Message label) implements FormElement, GlobalAttributes {
-
-    /**
-     * Instantiates a Checkbox.
-     *
-     * @param name     Name of the form control. Submitted with the form as part of a name/value pair
-     * @param value    A string representing the value of the checkbox.
-     * @param checked  A boolean attribute indicating whether this checkbox is checked by default (when the page loads).
-     * @param required If true indicates that the user must specify a value for the input before the owning form can be submitted.
-     * @param id       It defines an identifier (ID) which must be unique in the whole document
-     * @param label    represents a caption for an item in a user interface
-     * @deprecated Use {@link Checkbox(String, String, boolean, boolean, boolean, String, Message)} instead which includes disabled attribute.
-     */
-    @Deprecated(forRemoval = true, since = "5.2.0")
-    public Checkbox(
-        @NonNull String name,
-        @NonNull String value,
-        boolean checked,
-        boolean required,
-        @Nullable String id,
-        @Nullable Message label
-    ) {
-        this(name, value, checked, false, required, id, label);
-    }
-
     /**
      * @return A checkbox builder.
      */
