@@ -15,8 +15,8 @@
  */
 package io.micronaut.docs
 
-
 import io.micronaut.context.ApplicationContext
+import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
@@ -25,16 +25,13 @@ import io.micronaut.http.client.exceptions.HttpClientException
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.exceptions.ReadTimeoutException
 import io.micronaut.runtime.server.EmbeddedServer
-import io.micronaut.views.ViewsFilter
 import io.micronaut.views.pebble.PebbleViewsRenderer
 import spock.lang.AutoCleanup
 import spock.lang.Issue
 import spock.lang.Shared
 import spock.lang.Specification
-import spock.lang.Unroll
 
 import static io.micronaut.http.HttpHeaders.ACCEPT_LANGUAGE
-import static io.micronaut.http.HttpRequest.GET
 
 class PebbleViewsRendererSpec extends Specification {
 
@@ -52,12 +49,6 @@ class PebbleViewsRendererSpec extends Specification {
     HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient, embeddedServer.getURL())
 
     def "bean is loaded"() {
-        when:
-        embeddedServer.applicationContext.getBean(ViewsFilter)
-
-        then:
-        noExceptionThrown()
-
         when:
         embeddedServer.applicationContext.getBean(PebbleViewsRenderer)
 
@@ -187,10 +178,9 @@ class PebbleViewsRendererSpec extends Specification {
         rsp.body().contains("i18n: value-en")
     }
 
-    @Unroll
     def "invoking /i18n renders pebble i18n in different locales (#acceptLanguage)"() {
         when:
-        HttpResponse<String> rsp = client.toBlocking().exchange(GET('/pebble/i18n').header(ACCEPT_LANGUAGE, acceptLanguage), String)
+        HttpResponse<String> rsp = client.toBlocking().exchange(HttpRequest.GET('/pebble/i18n').header(ACCEPT_LANGUAGE, acceptLanguage), String)
 
         then:
         noExceptionThrown()

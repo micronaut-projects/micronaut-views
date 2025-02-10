@@ -16,17 +16,17 @@
 package io.micronaut.views.model;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ModelAndView;
 
 /**
  * Implementers of {@link ViewModelProcessor} process the {@link ModelAndView} and modify it prior to rendering.
  *
  * @param <T> the type this model processor should apply to
+ * @param <R> The request type
  * @author Sergio del Amo
  * @since 1.0
  */
-public interface ViewModelProcessor<T> {
+public interface ViewModelProcessor<T, R> {
 
     /**
      * Invoked prior to the view rendering.
@@ -35,6 +35,6 @@ public interface ViewModelProcessor<T> {
      * @param modelAndView The model and view
      */
     void process(
-            @NonNull HttpRequest<?> request,
+            @NonNull R request,
             @NonNull ModelAndView<T> modelAndView);
 }

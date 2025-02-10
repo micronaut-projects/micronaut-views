@@ -20,8 +20,6 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.filters.SecurityFilter;
-import io.micronaut.security.utils.SecurityService;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.HashMap;
@@ -29,7 +27,6 @@ import java.util.Map;
 
 /**
  * Returns information about the current user so that it can be appended to the model being rendered.
- *
  * @author Sergio del Amo
  * @since 1.1.0
  */
@@ -43,22 +40,8 @@ public non-sealed class SecurityViewModelProcessor implements MapViewModelProces
     /**
      * @param securityViewModelProcessorConfiguration The Security Views Model Decorator configuration
      */
-    @Inject
     public SecurityViewModelProcessor(SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration) {
         this.securityViewModelProcessorConfiguration = securityViewModelProcessorConfiguration;
-    }
-
-    /**
-     * @param securityViewModelProcessorConfiguration The Security Views Model Decorator configuration
-     * @param securityService                         Utility to access Security information
-     * @deprecated Use {@link #SecurityViewModelProcessor(SecurityViewModelProcessorConfiguration)} instead
-     */
-    @Deprecated(forRemoval = true, since = "5.2.0")
-    public SecurityViewModelProcessor(
-        SecurityViewModelProcessorConfiguration securityViewModelProcessorConfiguration,
-        SecurityService securityService
-    ) {
-        this(securityViewModelProcessorConfiguration);
     }
 
     @Override

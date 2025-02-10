@@ -8,7 +8,6 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
-import io.micronaut.views.ViewsFilter
 import io.micronaut.views.csp.CspFilter
 import io.micronaut.views.soy.AppendableToWritable
 import io.micronaut.views.soy.SoySauceViewsRenderer
@@ -19,7 +18,6 @@ import spock.lang.Specification
 
 import java.nio.charset.StandardCharsets
 import java.util.regex.Pattern
-
 
 class SoySauceViewRendererSpec extends Specification {
 
@@ -44,7 +42,6 @@ class SoySauceViewRendererSpec extends Specification {
     def "bean is loaded"() {
         when:
         embeddedServer.applicationContext.getBean(SoySauceViewsRenderer)
-        embeddedServer.applicationContext.getBean(ViewsFilter)
 
         then:
         noExceptionThrown()

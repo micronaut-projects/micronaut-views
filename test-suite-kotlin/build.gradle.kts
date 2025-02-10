@@ -23,6 +23,7 @@ dependencies {
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.http.client)
     testImplementation(projects.micronautViewsSoy)
+    testImplementation(projects.micronautViewsTurbo)
     testImplementation(libs.kotlinx.coroutines.core)
     testImplementation(projects.micronautViewsVelocity)
     testImplementation(projects.micronautViewsHandlebars)

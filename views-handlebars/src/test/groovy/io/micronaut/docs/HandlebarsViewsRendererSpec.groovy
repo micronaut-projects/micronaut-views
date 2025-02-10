@@ -24,7 +24,6 @@ import io.micronaut.http.client.exceptions.HttpClientException
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.http.client.exceptions.ReadTimeoutException
 import io.micronaut.runtime.server.EmbeddedServer
-import io.micronaut.views.ViewsFilter
 import io.micronaut.views.handlebars.HandlebarsViewsRenderer
 import spock.lang.AutoCleanup
 import spock.lang.Issue
@@ -47,12 +46,6 @@ class HandlebarsViewsRendererSpec extends Specification {
     HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient, embeddedServer.getURL())
 
     def "bean is loaded"() {
-        when:
-        embeddedServer.applicationContext.getBean(ViewsFilter)
-
-        then:
-        noExceptionThrown()
-
         when:
         embeddedServer.applicationContext.getBean(HandlebarsViewsRenderer)
 

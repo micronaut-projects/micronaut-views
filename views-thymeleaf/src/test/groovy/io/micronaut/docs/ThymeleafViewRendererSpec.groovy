@@ -23,7 +23,6 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
-import io.micronaut.views.ViewsFilter
 import io.micronaut.views.thymeleaf.ThymeleafViewsRenderer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
@@ -45,12 +44,6 @@ class ThymeleafViewRendererSpec extends Specification {
     HttpClient client = embeddedServer.getApplicationContext().createBean(HttpClient, embeddedServer.getURL())
 
     def "bean is loaded"() {
-        when:
-        embeddedServer.applicationContext.getBean(ViewsFilter)
-
-        then:
-        noExceptionThrown()
-
         when:
         embeddedServer.applicationContext.getBean(ThymeleafViewsRenderer)
 
@@ -179,7 +172,7 @@ class ThymeleafViewRendererSpec extends Specification {
         and:
         e.status == HttpStatus.NOT_FOUND
         e.response.getBody(String).get().contains("<h1>I'm sorry, <span>sdelamo</span>! You've reached a dead end. Status: <span></span>. Exception: <span>global</span></h1>")
-        
+
     }
 
     def "invoking /views/relative-link renders thymeleaf template with relative link"() {
