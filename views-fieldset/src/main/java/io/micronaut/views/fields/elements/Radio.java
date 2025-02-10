@@ -44,24 +44,6 @@ public record Radio(@NonNull String value,
 ) implements FormElement {
 
     /**
-     * Instantiates a Radio.
-     * @param value the value of the input radio element
-     * @param id It defines an identifier (ID) which must be unique in the whole document
-     * @param label represents a caption for an item in a user interface
-     * @param checked whether the radio button is checked
-     * @deprecated Use {@link Radio(String, String, Message, boolean, boolean)} instead which includes disabled attribute.
-     */
-    @Deprecated(since = "5.2.0", forRemoval = true)
-    public Radio(
-        @NonNull String value,
-        @Nullable String id,
-        @NonNull Message label,
-        @NonNull boolean checked
-    ) {
-        this(value, id, label, checked, false);
-    }
-
-    /**
      *
      * @return whether the radio button is checked
      */
