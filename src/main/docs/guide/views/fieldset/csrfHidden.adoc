@@ -1,0 +1,1 @@
+If you use the https://micronaut-projects.github.io/micronaut-security/latest/guide/#csrf[Micronaut Security CSRF module], and a CSRF token is resolved, the generated form automatically contains a hidden input with the CSRF token as the value. 

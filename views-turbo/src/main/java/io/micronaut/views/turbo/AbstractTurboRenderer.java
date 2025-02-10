@@ -62,18 +62,18 @@ abstract class AbstractTurboRenderer<T extends TemplatedBuilder<?, T>> {
     public Optional<Writable> render(@NonNull T builder,
                                      @Nullable HttpRequest<?> request) {
         return builder.getTemplateView()
-                .map(viewName ->  {
-                    Object model =  builder.getTemplateModel().orElse(null);
-                    ModelAndView<Object> modelAndView = new ModelAndView<>(viewName, model);
-                    if (request != null && viewsModelDecorator != null) {
-                        viewsModelDecorator.decorate(request, modelAndView);
-                    }
-                    Object decoratedModel = modelAndView.getModel().orElse(null);
-                    return viewsRendererLocator.resolveViewsRenderer(viewName, mediaType, decoratedModel)
-                            .flatMap(renderer -> builder.template(renderer.render(viewName, decoratedModel, request))
-                                    .build()
-                                    .render());
-                })
-                .orElseGet(() -> builder.build().render());
+            .map(viewName ->  {
+                Object model =  builder.getTemplateModel().orElse(null);
+                ModelAndView<Object> modelAndView = new ModelAndView<>(viewName, model);
+                if (request != null && viewsModelDecorator != null) {
+                    viewsModelDecorator.decorate(request, modelAndView);
+                }
+                Object decoratedModel = modelAndView.getModel().orElse(null);
+                return viewsRendererLocator.resolveViewsRenderer(viewName, mediaType, decoratedModel)
+                    .flatMap(renderer -> builder.template(renderer.render(viewName, decoratedModel, request))
+                        .build()
+                        .render());
+            })
+            .orElseGet(() -> builder.build().render());
     }
 }

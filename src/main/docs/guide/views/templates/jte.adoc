@@ -5,6 +5,10 @@ Add the `micronaut-views-jte` dependency to your classpath.
 
 dependency:micronaut-views-jte[groupId="io.micronaut.views"]
 
+If you want to write your views in Kotlin, you can include an additional dependency:
+
+dependency:jte-kotlin[groupId="gg.jte"]
+
 The example shown in the <<views, Views>> section, could be rendered with the following Jte template:
 
 [source,html]

@@ -1,0 +1,69 @@
+React SSR needs some Micronaut application properties to be set.
+
+[configuration]
+----
+micronaut:
+  # Point to the server-side JS. This value is the default.
+  views:
+    react:
+      server-bundle-path: "classpath:views/ssr-components.mjs"
+
+  router:
+    static-resources:
+      js:
+        mapping: "/static/**"
+        paths: "classpath:static"
+
+  # A temporary workaround for a GraalJS limitation.
+  executors:
+    blocking:
+        virtual: false
+----
+
+This sets up static file serving so your client JS will be served by your Micronaut app. This isn't mandatory: you can serve your client JS from anywhere, but you would need to set `micronaut.views.react.client-bundle-url` in that case to where the client root bundle can be found.
+
+IMPORTANT: Watch out for the last property that disables virtual threads. If you skip this you will get an error the first time a view is rendered. Future releases of GraalJS will remove the need to disable virtual threads in Micronaut.
+
+[[react-dev-mode]]
+== Development
+
+During development you want the fastest iteration speed possible. These property changes will help:
+
+[configuration]
+----
+micronaut:
+  # For development purposes only.
+  server:
+    netty:
+      responses:
+        file:
+          cache-seconds: 0
+  io:
+    watch:
+      enabled: true
+      paths: build/resources/main/views
+----
+
+The `paths` property is correct if you're using the default JS compilation setup created for you by Micronaut Starter. If your JS bundle is held in a different directory in your project, make sure to set the path appropriately.
+
+Now you can tell your build system to only recompile the needed files. In a Micronaut Starter based project that uses Gradle, just run `./gradlew --continuous processResources`. This will cause new bundles to be created for both client and server whenever your input JS changes. If using Maven turn off Micronaut's automatic restart features so that changes to the compiled bundle JS don't cause the whole server to reboot, and then make sure to re-run the Maven build when necessary:
+
+[xml]
+----
+<plugin>
+    <groupId>io.micronaut.maven</groupId>
+    <artifactId>micronaut-maven-plugin</artifactId>
+    <version>...</version>
+    <configuration>
+        <watches>
+            <watch>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/*.js</exclude>
+                    <exclude>**/*.mjs</exclude>
+                </excludes>
+            </watch>
+        </watches>
+    </configuration>
+</plugin>
+----

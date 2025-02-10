@@ -17,6 +17,8 @@ package io.micronaut.views.fields.tck;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.fields.Form;
+import io.micronaut.views.fields.FormGenerator;
 import io.micronaut.views.fields.elements.Checkbox;
 import io.micronaut.views.fields.elements.InputCheckboxFormElement;
 import io.micronaut.views.fields.messages.Message;
@@ -26,8 +28,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @MicronautTest(startApplication = false)
 @SuppressWarnings({"java:S5960"}) // Assertions are fine, these are tests
@@ -44,7 +46,7 @@ class InputCheckboxViewRenderTest {
                 Checkbox.builder().id("devils").name("devils").disabled(true).label(Message.of("Devils")).build()
             ))
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
                 <label class="form-label">Attributes</label>\
                 <div class="form-check">\
                 <input type="checkbox" name="scales" value="" id="scales" class="form-check-input" checked="checked"/>\
@@ -58,7 +60,15 @@ class InputCheckboxViewRenderTest {
                 <input type="checkbox" name="devils" value="" id="devils" class="form-check-input" disabled="disabled"/>\
                 <label for="devils" class="form-label">Devils</label>\
                 </div>""",
-            TestUtils.render("fieldset/inputcheckbox.html", viewsRenderer, Map.of("el", el)).trim()
+            TestUtils.render("fieldset/inputcheckbox", viewsRenderer, Map.of("el", el)).trim()
         );
+    }
+
+    @Test
+    void render(ViewsRenderer<Map<String, Object>, ?> viewsRenderer, FormGenerator formGenerator) throws IOException {
+        assertNotNull(viewsRenderer);
+        Form form = formGenerator.generate("/login", SigninForm.class);
+        String html = TestUtils.render("fieldset/form", viewsRenderer, Map.of("form", form)).trim();
+        assertEquals(1, TestUtils.countOccurrences(html, "Remember Me"));
     }
 }

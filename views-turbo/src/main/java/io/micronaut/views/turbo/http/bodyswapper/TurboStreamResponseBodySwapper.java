@@ -16,10 +16,7 @@
 package io.micronaut.views.turbo.http.bodyswapper;
 
 import io.micronaut.core.annotation.*;
-import io.micronaut.http.HttpAttributes;
-import io.micronaut.http.HttpHeaders;
-import io.micronaut.http.HttpRequest;
-import io.micronaut.http.HttpResponse;
+import io.micronaut.http.*;
 import io.micronaut.views.http.ResponseBodySwap;
 import io.micronaut.views.http.ResponseBodySwapper;
 import io.micronaut.views.turbo.TurboStream;

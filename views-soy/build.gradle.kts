@@ -1,13 +1,16 @@
 plugins {
-    id "io.micronaut.build.internal.views-module"
+    id("io.micronaut.build.internal.views-module")
 }
 
 dependencies {
     annotationProcessor(mnValidation.micronaut.validation.processor)
 
-    api projects.micronautViewsCore
-    api(libs.managed.soy)
-
+    api(projects.micronautViewsCore)
+    api(libs.managed.soy) {
+        exclude(group = "org.json", module = "json")
+    }
+    implementation(mnGrpc.protobuf.java) // apply com.google.protobuf:protobuf-java directly because the version brought transitively contains a vulnerable version.
+    implementation(libs.org.json)
     compileOnly(mn.micronaut.management)
     compileOnly(mnValidation.micronaut.validation)
     compileOnly(mn.micronaut.http)
@@ -23,3 +26,4 @@ dependencies {
     testImplementation(mnValidation.micronaut.validation)
     testImplementation(mn.snakeyaml)
 }
+

@@ -16,6 +16,7 @@ import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.views.View
 import io.micronaut.views.ViewsRenderer
 import io.micronaut.views.turbo.http.TurboHttpHeaders
+import jakarta.annotation.security.PermitAll
 import jakarta.inject.Singleton
 import spock.lang.Specification
 
@@ -133,6 +134,7 @@ class TurboFrameSpec extends Specification {
     }
 
     @Requires(property = "spec.name", value = "TurboFrameSpec")
+    @PermitAll
     @Controller("/frame")
     static class TurboFrameController {
         @Get

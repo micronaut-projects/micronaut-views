@@ -8,7 +8,7 @@ dependencies {
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
     testImplementation(mnValidation.micronaut.validation)
 
-    testImplementation(libs.junit.jupiter.api)
+    testImplementation(mnTest.junit.jupiter.api)
     testImplementation(mnTest.micronaut.test.junit5)
 
     testImplementation(libs.kotlin.stdlib.jdk8)
@@ -28,7 +28,7 @@ dependencies {
     testImplementation(projects.micronautViewsVelocity)
     testImplementation(projects.micronautViewsHandlebars)
 
-    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
     testRuntimeOnly(mnLogging.logback.classic)
 }
 

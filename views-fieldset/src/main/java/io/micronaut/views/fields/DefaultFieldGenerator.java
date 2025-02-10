@@ -33,6 +33,7 @@ import io.micronaut.views.fields.formelementresolvers.FormElementResolver;
 import io.micronaut.views.fields.messages.ConstraintViolationUtils;
 import io.micronaut.views.fields.messages.Message;
 import jakarta.annotation.Nonnull;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.*;
@@ -82,6 +83,7 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
 
     private final ConcurrentHashMap<Class<? extends RadioFetcher>, RadioFetcher> radioFetcherCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Class<? extends CheckboxFetcher>, CheckboxFetcher> checkboxFetcherCache = new ConcurrentHashMap<>();
+    private final List<FieldsetConsumer> fieldsetConsumers;
 
     /**
      * @param enumOptionFetcher   Enum fetcher for {@link Option}.
@@ -89,58 +91,87 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
      * @param enumCheckboxFetcher Enum fetcher for {@link Checkbox}.
      * @param beanContext         Bean Context
      * @param formElementResolver Primary Form Element Resolver. {@link io.micronaut.views.fields.formelementresolvers.CompositeFormElementResolver}.
+     * @param fieldsetConsumers Fieldset Consumers
      */
+    @Inject
     public DefaultFieldGenerator(EnumOptionFetcher<?> enumOptionFetcher,
                                  EnumRadioFetcher<?> enumRadioFetcher,
                                  EnumCheckboxFetcher<?> enumCheckboxFetcher,
                                  BeanContext beanContext,
-                                 FormElementResolver formElementResolver) {
+                                 FormElementResolver formElementResolver,
+                                 List<FieldsetConsumer> fieldsetConsumers) {
         this.enumOptionFetcher = enumOptionFetcher;
         this.enumRadioFetcher = enumRadioFetcher;
         this.enumCheckboxFetcher = enumCheckboxFetcher;
         this.beanContext = beanContext;
         this.formElementResolver = formElementResolver;
+        this.fieldsetConsumers = fieldsetConsumers;
+    }
+
+    /**
+     * @param enumOptionFetcher   Enum fetcher for {@link Option}.
+     * @param enumRadioFetcher    Enum fetcher for {@link Radio}.
+     * @param enumCheckboxFetcher Enum fetcher for {@link Checkbox}.
+     * @param beanContext         Bean Context
+     * @param formElementResolver Primary Form Element Resolver. {@link io.micronaut.views.fields.formelementresolvers.CompositeFormElementResolver}.
+     * @deprecated Use {@link DefaultFieldGenerator(EnumOptionFetcher, EnumRadioFetcher, EnumCheckboxFetcher, BeanContext, FormElementResolver, List)} instead.
+     */
+    @Deprecated(forRemoval = true, since = "5.6.0")
+    public DefaultFieldGenerator(EnumOptionFetcher<?> enumOptionFetcher,
+                                 EnumRadioFetcher<?> enumRadioFetcher,
+                                 EnumCheckboxFetcher<?> enumCheckboxFetcher,
+                                 BeanContext beanContext,
+                                 FormElementResolver formElementResolver) {
+        this(enumOptionFetcher,
+                enumRadioFetcher,
+                enumCheckboxFetcher,
+                beanContext,
+                formElementResolver,
+                Collections.emptyList());
     }
 
     @Override
     @NonNull
     public <T> Fieldset generate(@NonNull Class<T> type) {
         BeanIntrospection<T> introspection = BeanIntrospection.getIntrospection(type);
-        return new Fieldset(formElements(introspection.getBeanProperties(), null), Collections.emptyList());
+        return instantiateFieldset(formElements(introspection.getBeanProperties(), null), null);
     }
 
     @Override
     public <T> Fieldset generate(@NonNull Class<T> type,
                                  @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
         BeanIntrospection<T> introspection = BeanIntrospection.getIntrospection(type);
-        return new Fieldset(formElements(introspection.getBeanProperties(), builderConsumer), Collections.emptyList());
+        return instantiateFieldset(formElements(introspection.getBeanProperties(), builderConsumer), null);
     }
 
     @Override
     public Fieldset generate(@NonNull Object instance) {
-        return new Fieldset(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), null, null), Collections.emptyList());
+        return instantiateFieldset(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), null, null), null);
     }
 
     @Override
     @NonNull
     public Fieldset generate(@NonNull Object instance,
                              @NonNull BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
-        return new Fieldset(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), null, builderConsumer), Collections.emptyList());
+        return instantiateFieldset(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), null, builderConsumer), null);
     }
 
     @Override
     public Fieldset generate(@NonNull Object instance, @NonNull ConstraintViolationException ex) {
-        return generate(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), ex, null), ex);
+        return instantiateFieldset(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), ex, null), ex);
     }
 
     @Override
     public Fieldset generate(Object instance, ConstraintViolationException ex, BiConsumer<String, BeanIntrospection.Builder<? extends FormElement>> builderConsumer) {
-        return generate(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), ex, builderConsumer), ex);
+        return instantiateFieldset(generateOfBeanWrapper(BeanWrapper.getWrapper(instance), ex, builderConsumer), ex);
     }
 
-    @NonNull
-    private Fieldset generate(@NonNull List<? extends FormElement> fields, @NonNull ConstraintViolationException ex) {
-        return new Fieldset(fields, ex.getConstraintViolations()
+    private Fieldset instantiateFieldset(@NonNull List<? extends FormElement> fields, @Nullable ConstraintViolationException ex) {
+        List<FormElement> modifyableList = new ArrayList<>(fields);
+        for (FieldsetConsumer fieldsetConsumer : fieldsetConsumers) {
+            fieldsetConsumer.accept(modifyableList);
+        }
+        return new Fieldset(modifyableList, ex == null ? Collections.emptyList() : ex.getConstraintViolations()
                 .stream()
                 .filter(constraintViolationEx -> ConstraintViolationUtils.lastNode(constraintViolationEx).isEmpty())
                 .map(Message::of)

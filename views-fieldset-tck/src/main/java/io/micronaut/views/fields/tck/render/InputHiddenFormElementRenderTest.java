@@ -25,10 +25,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Property(name = "micronaut.views.form-element.render.views.input-hidden", value = "fieldset/inputhidden.html")
+@Property(name = "micronaut.views.form-element.render.views.input-hidden", value = "fieldset/inputhidden")
 @MicronautTest(startApplication = false)
 @SuppressWarnings({
     "java:S5960", // Assertions are fine, these are tests
@@ -47,7 +47,7 @@ class InputHiddenFormElementRenderTest {
             .name("postId")
             .value("34657")
             .build();
-        assertEquals("""
+        assertHtmlEquals("""
             <input type="hidden" name="postId" value="34657"/>""",
             renderer.render(el, Locale.ENGLISH)
         );

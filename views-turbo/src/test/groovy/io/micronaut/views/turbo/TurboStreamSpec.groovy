@@ -23,6 +23,7 @@ import io.micronaut.views.View
 import io.micronaut.views.ViewsRenderer
 import io.micronaut.views.turbo.http.TurboHttpHeaders
 import io.micronaut.views.turbo.http.TurboMediaType
+import jakarta.annotation.security.PermitAll
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
 import spock.lang.Specification
@@ -228,7 +229,7 @@ class TurboStreamSpec extends Specification {
         then:
         HttpStatus.OK == responseHtml.status()
         responseHtml.contentType.isPresent()
-        responseHtml.contentType.get().toString() == "$MediaType.TEXT_HTML;charset=ISO-8859-1"
+        responseHtml.contentType.get().toString() == "$MediaType.TEXT_HTML; charset=ISO-8859-1"
         "<!DOCTYPE html><html><head><title>Page Title</title></head><body><h1>Hello World</h1></body></html>" == responseHtml.body()
     }
 
@@ -385,6 +386,7 @@ class TurboStreamSpec extends Specification {
     }
 
     @Requires(property = "spec.name", value = "TurboStreamSpec")
+    @PermitAll
     @Controller("/turbo")
     static class TurboStreamWriteableController {
         @Produces(TurboMediaType.TURBO_STREAM)
@@ -506,6 +508,7 @@ class TurboStreamSpec extends Specification {
 
     @Requires(property = "spec.name", value = "TurboStreamSpec")
     @Controller("/customers")
+    @PermitAll
     static class CustomersController {
 
         @Get
