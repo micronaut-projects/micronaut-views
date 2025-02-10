@@ -201,7 +201,7 @@
         <h1>Micronaut Views</h1>
         <p></p>
         <p>Provides integration between Micronaut and server-side views technologies</p>
-        <p><strong>Version:</strong> 5.7.0-SNAPSHOT </p>
+        <p><strong>Version:</strong> 6.0.0-SNAPSHOT </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
@@ -3072,7 +3072,7 @@ export { mymod };</code></pre>
 <div class="title">src/main/java/myapp/model/ConfigViewModelProcessor.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton <i class="conum" data-value="1"></i><b>(1)</b>
-public class ConfigViewModelProcessor implements ViewModelProcessor&lt;Map&lt;String, Object&gt;&gt; {
+public class ConfigViewModelProcessor&lt;R&gt; implements ViewModelProcessor&lt;Map&lt;String, Object&gt;, R&gt; {
     private final ApplicationConfiguration config;
 
     ConfigViewModelProcessor(ApplicationConfiguration environment) {
@@ -3080,7 +3080,7 @@ public class ConfigViewModelProcessor implements ViewModelProcessor&lt;Map&lt;St
     }
 
     @Override
-    public void process(@NonNull HttpRequest&lt;?&gt; request,
+    public void process(@NonNull R request,
                         @NonNull ModelAndView&lt;Map&lt;String, Object&gt;&gt; modelAndView) {
         modelAndView.getModel()
                 .ifPresent(model -&gt; {
@@ -3712,6 +3712,25 @@ fun htmxResponseHeaders(htmxRequestHeaders: @NonNull HtmxRequestHeaders): HttpRe
 </div>
 </blockquote>
 </div>
+<div class="paragraph">
+<p>To add the Micronaut Views Turbo integration, add the following dependency on your classpath.</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-turbo")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-turbo&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
 
 <h2 id="turboFrameView"><a class="anchor" href="#turboFrameView"></a>3.5.1 TurboFrameView annotation</h2>
 
@@ -3990,7 +4009,7 @@ val writable = turboStream.render()</code></pre>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Produces(value = {MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM})
-@TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+@TurboStreamView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
 Map&lt;String, Object&gt; show() {
     return Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
@@ -4000,7 +4019,7 @@ Map&lt;String, Object&gt; show() {
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
-@TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+@TurboStreamView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
 Map&lt;String, Object&gt; show() {
   return Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
@@ -4010,7 +4029,7 @@ Map&lt;String, Object&gt; show() {
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
-@TurboView(value = "fruit", action = TurboStreamAction.APPEND)
+@TurboStreamView(value = "fruit", action = TurboStreamAction.APPEND)
 @Get("/turbofruit")
 fun show() = mapOf("fruit" to Fruit("Banana", "Yellow"))</code></pre>
 </div>
@@ -4101,7 +4120,7 @@ fun show() = mapOf("fruit" to Fruit("Banana", "Yellow"))</code></pre>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Consumes(MediaType.MULTIPART_FORM_DATA)
-@TurboView("view")
+@TurboStreamView("view")
 @Produces(value = {MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM})
 @Post("/messages/{id}")
 Map&lt;String, Object&gt; processEdit(@Part int id, @Part String title, @Part String body) {
@@ -4113,7 +4132,7 @@ Map&lt;String, Object&gt; processEdit(@Part int id, @Part String title, @Part St
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Consumes(MediaType.MULTIPART_FORM_DATA)
-@TurboView("view")
+@TurboStreamView("view")
 @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
 @Post("/messages/{id}")
 Map&lt;String, Object&gt; processEdit(@Part int id, @Part String title, @Part String body) {
@@ -4125,7 +4144,7 @@ Map&lt;String, Object&gt; processEdit(@Part int id, @Part String title, @Part St
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Consumes(MediaType.MULTIPART_FORM_DATA)
-@TurboView("view")
+@TurboStreamView("view")
 @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
 @Post("/messages/{id}")
 fun processEdit(@Part id: Int, @Part title: String, @Part body: String): Map&lt;String, Any&gt; {
@@ -4686,6 +4705,46 @@ Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graa
 
 <div class="paragraph">
 <p>This section outlines the breaking changes done in major versions of Micronaut Views.</p>
+</div>
+<div class="sect2">
+<h3 id="_6_0_0">6.0.0</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Turbo integration has been moved to its own dependency. To use the Turbo integration, add the following
+dependency:</p>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-turbo")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-turbo&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div></p>
+</div>
+<div class="paragraph">
+<p>The annotation <code>@TurboView</code> has been renamed to <a href="../api/io/micronaut/views/turbo/TurboStreamView.html">@TurboStreamView</a>.</p>
+</div>
+</li>
+<li>
+<p>The <code>ViewsModelDecorator</code> and <code>TurboStreamRenderer</code> now have generic types for their data and Request type, which breaks binary compatibility.</p>
+</li>
+<li>
+<p>The global <code>ViewsFilter</code> has been removed and replaced with individual <code>ResponseFilters</code>.</p>
+</li>
+<li>
+<p>The method <code>ThymeleafViewsRenderer.render(String, IContext, Writer)</code> deprecated previously has been removed.
+It is replaced by <code>render(String, Set&lt;String&gt;, IContext, Writer)</code></p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_4_0_0">4.0.0</h3>
