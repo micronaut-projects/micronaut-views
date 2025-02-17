@@ -27,6 +27,8 @@ import io.micronaut.views.react.util.BeanPool;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -40,6 +42,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Singleton
 class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> {
+    private static final Logger LOG = LoggerFactory.getLogger(ReactViewsRenderer.class);
     private final BeanPool<ReactJSContext> beanPool;
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
 
@@ -60,9 +63,14 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
     @Override
     public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
         return writer -> {
+            var renderCallback = new RenderCallback(writer, request);
+
             try {
                 beanPool.useContext(handle -> {
-                    render(viewName, props, writer, handle.get(), request);
+                    render(viewName, props, renderCallback, handle.get(), request);
+                    do {
+                        LOG.trace("Waiting for render callback to complete...");
+                    } while (!renderCallback.isWriteCompleted());
                     return null;
                 });
             } catch (BeanInstantiationException e) {
@@ -79,14 +87,11 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
         return beanPool.useContext(handle -> handle.get().moduleHasMember(viewName));
     }
 
-    private void render(String componentName, PROPS props, Writer writer, ReactJSContext context, @Nullable HttpRequest<?> request) {
+    private void render(String componentName, PROPS props, RenderCallback renderCallback, ReactJSContext context, @Nullable HttpRequest<?> request) {
         Value component = context.ssrModule().getMember(componentName);
         if (component == null) {
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
         }
-
-        var renderCallback = new RenderCallback(writer, request);
-
         // We wrap the props object so we can use Micronaut's compile-time reflection implementation.
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
@@ -107,6 +112,11 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
     public static final class RenderCallback {
         private final Writer responseWriter;
         private final @Nullable HttpRequest<?> request;
+        private boolean writeCompleted;
+
+        public void setWriteCompleted(boolean writeCompleted) {
+            this.writeCompleted = writeCompleted;
+        }
 
         RenderCallback(Writer responseWriter, HttpRequest<?> request) {
             this.responseWriter = responseWriter;
@@ -128,6 +138,8 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
                 responseWriter.write(html);
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            } finally {
+                writeCompleted = true;
             }
         }
 
@@ -141,7 +153,14 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
                 responseWriter.write(new String(bytes, StandardCharsets.UTF_8));
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            } finally {
+                writeCompleted = true;
             }
         }
+
+        public boolean isWriteCompleted() {
+            return writeCompleted;
+        }
+
     }
 }
