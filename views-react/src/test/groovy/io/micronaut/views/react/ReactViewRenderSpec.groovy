@@ -17,8 +17,7 @@ class ReactViewRenderSpec extends Specification {
 
     void "views can be rendered with basic props"() {
         when:
-        Writable writable = Mono.from(renderer.render("App", TestProps.basic, null)).block()
-        String result = WritableUtils.writableToString(writable).orElseThrow()
+        String result = Mono.from(renderer.render("App", TestProps.basic, null)).block()
 
         then:
         result.contains("Hello there")
@@ -35,8 +34,7 @@ class ReactViewRenderSpec extends Specification {
         req.getUri() >> URI.create("https://localhost/demopage")
 
         when:
-        Writable writable = Mono.from(renderer.render("App", TestProps.basic, req)).block()
-        String result = WritableUtils.writableToString(writable).orElseThrow()
+        String result = Mono.from(renderer.render("App", TestProps.basic, req)).block()
 
         then:
         result.contains("/static/client.js")
@@ -46,7 +44,7 @@ class ReactViewRenderSpec extends Specification {
 
     void "host access is OK if sandbox is disabled"() {
         when:
-        Mono.from(renderer.render("App", TestProps.triggerSandbox, null)).block().writeTo(OutputStream.nullOutputStream())
+        Mono.from(renderer.render("App", TestProps.triggerSandbox, null)).block()
 
         then:
         notThrown(MessageBodyException)

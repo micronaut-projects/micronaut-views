@@ -199,9 +199,9 @@ public class ViewsFilter implements HttpServerFilter {
                     ModelAndView<?> modelAndView = new ModelAndView<>(view, body instanceof ModelAndView ? ((ModelAndView<?>) body).getModel().orElse(null) : body);
                     viewsModelDecorator.decorate(request, modelAndView);
                     return Mono.from(viewsRenderer.render(view, modelAndView.getModel().orElse(null), request))
-                        .map(writable -> {
+                        .map(b -> {
                             response.contentType(type);
-                            response.body(writable);
+                            response.body(b);
                             return response;
                         });
                 } catch (ViewNotFoundException | ViewRenderingException e) {

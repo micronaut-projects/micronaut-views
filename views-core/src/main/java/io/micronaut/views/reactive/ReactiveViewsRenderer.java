@@ -28,11 +28,12 @@ import reactor.core.publisher.Mono;
  * Interface to be implemented by View Engines implementations.
  * @param <T> The model type
  * @param <R> The request type
+ * @param <O> The response type
  * @author Sergio del Amo
  * @since 1.0
  */
 @Type(ReactiveViewsRenderer.class)
-public interface ReactiveViewsRenderer<T, R> extends Ordered {
+public interface ReactiveViewsRenderer<T, R, O> extends Ordered {
 
     /**
      * @param viewName view name to be rendered
@@ -42,7 +43,7 @@ public interface ReactiveViewsRenderer<T, R> extends Ordered {
      */
     @NonNull
     @SingleResult
-    Publisher<Writable> render(@NonNull String viewName,
+    Publisher<O> render(@NonNull String viewName,
                                @Nullable T data,
                                @Nullable R request);
 

@@ -101,7 +101,7 @@ class DefaultReactiveViewsRendererLocator implements ReactiveViewsRendererLocato
             return beanContext.getBeansOfType(ReactiveViewsRenderer.class);
         }
         Collection<ViewsRenderer> viewsRenderers = beanContext.getBeansOfType(ViewsRenderer.class, Qualifiers.byTypeArguments(bodyClass, Object.class));
-        return beanContext.getBeansOfType(ReactiveViewsRenderer.class, Qualifiers.byTypeArguments(bodyClass, Object.class))
+        return beanContext.getBeansOfType(ReactiveViewsRenderer.class, Qualifiers.byTypeArguments(bodyClass, Object.class, Object.class))
             .stream()
             .filter(reactiveViewsRenderer -> {
                 if (reactiveViewsRenderer instanceof ReactiveViewsRendererAdapter<?,?> adapter) {

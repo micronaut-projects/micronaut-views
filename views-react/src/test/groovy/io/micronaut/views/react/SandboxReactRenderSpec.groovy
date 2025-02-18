@@ -20,8 +20,7 @@ class SandboxReactRenderSpec extends Specification {
 
     void "views can be rendered with sandboxing enabled"() {
         when:
-        Writable writable = Mono.from(renderer.render("App", TestProps.basic, null)).block()
-        String resultAsString = WritableUtils.writableToString(writable).orElseThrow()
+        String resultAsString = Mono.from(renderer.render("App", TestProps.basic, null)).block()
 
         String dataJSON = resultAsString.find(~/var Micronaut = (\{[^;]+});/).replace("var Micronaut = ", "")
         def data = new JsonSlurper().parseText(dataJSON)
@@ -35,7 +34,7 @@ class SandboxReactRenderSpec extends Specification {
 
     void "host types are inaccessible with the sandbox enabled"() {
         when:
-        Mono<Writable> mono = renderer.render("App", TestProps.triggerSandbox, null)
+        Mono<String> mono = renderer.render("App", TestProps.triggerSandbox, null)
 
         then:
         StepVerifier.create(mono)

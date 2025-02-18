@@ -22,8 +22,7 @@ class PreactViewRenderSpec extends Specification {
 
     void "views can be rendered with basic props and no request"() {
         when:
-        Writable writable = Mono.from(renderer.render("App", TestProps.basic, null)).block()
-        String result = WritableUtils.writableToString(writable).orElseThrow()
+        String result = Mono.from(renderer.render("App", TestProps.basic, null)).block()
 
         then:
         result.contains("/static/client.preact.js")
@@ -37,8 +36,7 @@ class PreactViewRenderSpec extends Specification {
         req.getUri() >> URI.create("https://localhost/demopage")
 
         when:
-        Writable writable = Mono.from(renderer.render("App", TestProps.basic, req)).block()
-        String result = WritableUtils.writableToString(writable).orElseThrow()
+        String result = Mono.from(renderer.render("App", TestProps.basic, req)).block()
 
         then:
         result.contains("/static/client.preact.js")

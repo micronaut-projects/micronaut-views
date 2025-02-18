@@ -39,7 +39,7 @@ import java.util.concurrent.CompletableFuture;
  * @param <PROPS> An introspectable bean type that will be fed to the ReactJS root component as props.
  */
 @Singleton
-class ReactViewsRenderer<PROPS> implements ReactiveViewsRenderer<PROPS, HttpRequest<?>> {
+class ReactViewsRenderer<PROPS> implements ReactiveViewsRenderer<PROPS, HttpRequest<?>, String> {
     private final BeanPool<ReactJSContext> beanPool;
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
 
@@ -58,7 +58,7 @@ class ReactViewsRenderer<PROPS> implements ReactiveViewsRenderer<PROPS, HttpRequ
      * @param request  The HTTP request object.
      */
     @Override
-    public @NonNull Mono<Writable> render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
+    public @NonNull Mono<String> render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
         StringBuilder sb = new StringBuilder();
         RenderCallback cb;
         try {
@@ -69,12 +69,9 @@ class ReactViewsRenderer<PROPS> implements ReactiveViewsRenderer<PROPS, HttpRequ
             // If we don't wrap and rethrow, the exception is swallowed and the request hangs.
             return Mono.error(new MessageBodyException("Could not render component " + viewName, e));
         }
-        Mono<String> monoString = cb.isDone()
+        return cb.isDone()
             ? Mono.just(cb.sb.toString())
             : Mono.fromFuture(cb);
-        return monoString.map(v -> (Writable) out -> {
-                out.write(sb.toString());
-            });
     }
 
     @Override

@@ -18,6 +18,7 @@ package io.micronaut.views.reactive;
 import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.io.Writable;
 import io.micronaut.views.ViewsRenderer;
 import jakarta.inject.Singleton;
 
@@ -27,7 +28,7 @@ class ReactiveViewsRendererFactory {
 
     @Singleton
     @EachBean(ViewsRenderer.class)
-    <T, R> ReactiveViewsRenderer<T, R> createReactiveViewsRenderer(ViewsRenderer<T, R>  viewsRenderer) {
+    <T, R> ReactiveViewsRenderer<T, R, Writable> createReactiveViewsRenderer(ViewsRenderer<T, R>  viewsRenderer) {
         return new ReactiveViewsRendererAdapter(viewsRenderer);
     }
 }
