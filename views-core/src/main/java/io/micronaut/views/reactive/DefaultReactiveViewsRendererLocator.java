@@ -31,7 +31,6 @@ import jakarta.inject.Singleton;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 /**
  * Default implementation of {@link ReactiveViewsRendererLocator}.
@@ -104,8 +103,10 @@ class DefaultReactiveViewsRendererLocator implements ReactiveViewsRendererLocato
         return beanContext.getBeansOfType(ReactiveViewsRenderer.class, Qualifiers.byTypeArguments(bodyClass, Object.class, Object.class))
             .stream()
             .filter(reactiveViewsRenderer -> {
-                if (reactiveViewsRenderer instanceof ReactiveViewsRendererAdapter<?,?> adapter) {
-                    return viewsRenderers.stream().map(vr -> vr.getClass()).anyMatch(clazz -> clazz == adapter.getDelegateClass());
+                if (reactiveViewsRenderer instanceof ReactiveViewsRendererAdapter<?, ?> adapter) {
+                    return viewsRenderers.stream()
+                            .map(vr -> vr.getClass())
+                            .anyMatch(clazz -> clazz == adapter.getDelegateClass());
                 }
                 return true;
 
@@ -114,7 +115,7 @@ class DefaultReactiveViewsRendererLocator implements ReactiveViewsRendererLocato
     }
 
     private BeanDefinition beanDefinitionForViewRenderer(ReactiveViewsRenderer reactiveViewsRenderer) {
-        if (reactiveViewsRenderer instanceof ReactiveViewsRendererAdapter<?,?> adapter) {
+        if (reactiveViewsRenderer instanceof ReactiveViewsRendererAdapter<?, ?> adapter) {
             return beanContext.getBeanDefinition(adapter.getDelegateClass());
         }
         return beanContext.getBeanDefinition(reactiveViewsRenderer.getClass());

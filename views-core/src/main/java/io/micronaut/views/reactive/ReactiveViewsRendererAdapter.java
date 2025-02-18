@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.reactive;
 
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.async.annotation.SingleResult;
@@ -30,11 +31,12 @@ import reactor.core.publisher.Mono;
  * @author Sergio del Amo
  * @since 1.0
  */
-public class ReactiveViewsRendererAdapter<T, R> implements ReactiveViewsRenderer<T, R, Writable> {
+@Internal
+class ReactiveViewsRendererAdapter<T, R> implements ReactiveViewsRenderer<T, R, Writable> {
 
     private final ViewsRenderer<T, R> delegate;
 
-    public ReactiveViewsRendererAdapter(ViewsRenderer<T, R> viewsRenderer) {
+    ReactiveViewsRendererAdapter(ViewsRenderer<T, R> viewsRenderer) {
         this.delegate = viewsRenderer;
     }
 

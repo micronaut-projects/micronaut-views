@@ -19,10 +19,8 @@ import io.micronaut.context.annotation.Type;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.async.annotation.SingleResult;
-import io.micronaut.core.io.Writable;
 import io.micronaut.core.order.Ordered;
 import org.reactivestreams.Publisher;
-import reactor.core.publisher.Mono;
 
 /**
  * Interface to be implemented by View Engines implementations.
