@@ -38,7 +38,7 @@ public interface ReactiveViewsRendererLocator {
      * @param mediaType Response Content Type
      * @param body Response Body
      * @return The {@link ViewsRenderer} able to resolve the view with the response body and media type
-     * @throws ViewNotFoundException if the view is not found for the resolved {@link ReactiveViewsRender}s.
+     * @throws ViewNotFoundException if the view is not found for the resolved {@link ReactiveViewsRenderer}s.
      */
     @NonNull
     Optional<ReactiveViewsRenderer> resolveViewsRenderer(@NonNull String view,
