@@ -19,10 +19,7 @@ class SandboxReactRenderSpec extends Specification {
     void "views can be rendered with sandboxing enabled"() {
         when:
         Writable writable = renderer.render("App", TestProps.basic, null)
-        String resultAsString = new StringWriter().with {
-            writable.writeTo(it)
-            it.toString()
-        }
+        String resultAsString = WritableUtils.writableToString(writable).orElseThrow()
 
         String dataJSON = resultAsString.find(~/var Micronaut = (\{[^;]+});/).replace("var Micronaut = ", "")
         def data = new JsonSlurper().parseText(dataJSON)
@@ -37,10 +34,7 @@ class SandboxReactRenderSpec extends Specification {
     void "host types are inaccessible with the sandbox enabled"() {
         when:
         Writable writable = renderer.render("App", TestProps.triggerSandbox, null)
-        new StringWriter().with {
-            writable.writeTo(it)
-            it.toString()
-        }
+        WritableUtils.writableToString(writable)
 
         then:
         def t = thrown(MessageBodyException)
