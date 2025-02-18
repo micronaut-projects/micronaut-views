@@ -17,7 +17,11 @@ class ReactViewRenderSpec extends Specification {
 
     void "views can be rendered with basic props"() {
         when:
+<<<<<<< HEAD
         Writable writable = Mono.from(renderer.render("App", TestProps.basic, null)).block()
+=======
+        Writable writable = renderer.render("App", TestProps.basic, null)
+>>>>>>> 5.7.x
         String result = WritableUtils.writableToString(writable).orElseThrow()
 
         then:
@@ -35,7 +39,11 @@ class ReactViewRenderSpec extends Specification {
         req.getUri() >> URI.create("https://localhost/demopage")
 
         when:
+<<<<<<< HEAD
         Writable writable = Mono.from(renderer.render("App", TestProps.basic, req)).block()
+=======
+        Writable writable = renderer.render("App", TestProps.basic, req)
+>>>>>>> 5.7.x
         String result = WritableUtils.writableToString(writable).orElseThrow()
 
         then:

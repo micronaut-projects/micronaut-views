@@ -21,7 +21,7 @@ class SandboxReactRenderSpec extends Specification {
     void "views can be rendered with sandboxing enabled"() {
         when:
         Writable writable = Mono.from(renderer.render("App", TestProps.basic, null)).block()
-        String resultAsString = WritableUtils.writableToString(writable).get()
+        String resultAsString = WritableUtils.writableToString(writable).orElseThrow()
 
         String dataJSON = resultAsString.find(~/var Micronaut = (\{[^;]+});/).replace("var Micronaut = ", "")
         def data = new JsonSlurper().parseText(dataJSON)
