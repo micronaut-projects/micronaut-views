@@ -6,6 +6,7 @@ import io.micronaut.http.HttpRequest
 import io.micronaut.http.exceptions.MessageBodyException
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
+import reactor.core.publisher.Mono
 import spock.lang.Specification
 
 @MicronautTest(startApplication = false, rebuildContext = true)
@@ -16,11 +17,8 @@ class ReactViewRenderSpec extends Specification {
 
     void "views can be rendered with basic props"() {
         when:
-        Writable writable = renderer.render("App", TestProps.basic, null)
-        String result = new StringWriter().with {
-            writable.writeTo(it)
-            it.toString()
-        }
+        Writable writable = Mono.from(renderer.render("App", TestProps.basic, null)).block()
+        String result = WritableUtils.writableToString(writable).orElseThrow()
 
         then:
         result.contains("Hello there")
@@ -37,11 +35,8 @@ class ReactViewRenderSpec extends Specification {
         req.getUri() >> URI.create("https://localhost/demopage")
 
         when:
-        Writable writable = renderer.render("App", TestProps.basic, req)
-        String result = new StringWriter().with {
-            writable.writeTo(it)
-            it.toString()
-        }
+        Writable writable = Mono.from(renderer.render("App", TestProps.basic, req)).block()
+        String result = WritableUtils.writableToString(writable).orElseThrow()
 
         then:
         result.contains("/static/client.js")
@@ -51,7 +46,7 @@ class ReactViewRenderSpec extends Specification {
 
     void "host access is OK if sandbox is disabled"() {
         when:
-        renderer.render("App", TestProps.triggerSandbox, null).writeTo(OutputStream.nullOutputStream())
+        Mono.from(renderer.render("App", TestProps.triggerSandbox, null)).block().writeTo(OutputStream.nullOutputStream())
 
         then:
         notThrown(MessageBodyException)

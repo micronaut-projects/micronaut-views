@@ -7,6 +7,8 @@ import io.micronaut.http.exceptions.MessageBodyException
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import org.graalvm.polyglot.PolyglotException
+import reactor.core.publisher.Mono
+import reactor.test.StepVerifier
 import spock.lang.Specification
 
 @MicronautTest(startApplication = false, rebuildContext = true)
@@ -18,11 +20,8 @@ class SandboxReactRenderSpec extends Specification {
 
     void "views can be rendered with sandboxing enabled"() {
         when:
-        Writable writable = renderer.render("App", TestProps.basic, null)
-        String resultAsString = new StringWriter().with {
-            writable.writeTo(it)
-            it.toString()
-        }
+        Writable writable = Mono.from(renderer.render("App", TestProps.basic, null)).block()
+        String resultAsString = WritableUtils.writableToString(writable).get()
 
         String dataJSON = resultAsString.find(~/var Micronaut = (\{[^;]+});/).replace("var Micronaut = ", "")
         def data = new JsonSlurper().parseText(dataJSON)
@@ -36,15 +35,15 @@ class SandboxReactRenderSpec extends Specification {
 
     void "host types are inaccessible with the sandbox enabled"() {
         when:
-        Writable writable = renderer.render("App", TestProps.triggerSandbox, null)
-        new StringWriter().with {
-            writable.writeTo(it)
-            it.toString()
-        }
+        Mono<Writable> mono = renderer.render("App", TestProps.triggerSandbox, null)
 
         then:
-        def t = thrown(MessageBodyException)
-        t.cause instanceof PolyglotException
-        t.cause.message.contains("Java is not defined")
+        StepVerifier.create(mono)
+                .expectErrorMatches { throwable ->
+                    throwable instanceof MessageBodyException &&
+                            throwable.cause instanceof PolyglotException &&
+                            throwable.cause.message.contains("Java is not defined")
+                }
+                .verify()
     }
 }
