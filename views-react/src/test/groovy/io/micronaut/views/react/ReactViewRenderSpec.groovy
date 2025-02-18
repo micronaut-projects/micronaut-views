@@ -17,10 +17,7 @@ class ReactViewRenderSpec extends Specification {
     void "views can be rendered with basic props"() {
         when:
         Writable writable = renderer.render("App", TestProps.basic, null)
-        String result = new StringWriter().with {
-            writable.writeTo(it)
-            it.toString()
-        }
+        String result = WritableUtils.writableToString(writable).orElseThrow()
 
         then:
         result.contains("Hello there")
@@ -38,10 +35,7 @@ class ReactViewRenderSpec extends Specification {
 
         when:
         Writable writable = renderer.render("App", TestProps.basic, req)
-        String result = new StringWriter().with {
-            writable.writeTo(it)
-            it.toString()
-        }
+        String result = WritableUtils.writableToString(writable).orElseThrow()
 
         then:
         result.contains("/static/client.js")
