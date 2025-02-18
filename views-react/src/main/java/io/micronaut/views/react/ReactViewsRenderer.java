@@ -62,17 +62,19 @@ class ReactViewsRenderer<PROPS> implements ReactiveViewsRenderer<PROPS, HttpRequ
     @Override
     public @NonNull Mono<Writable> render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
         StringBuilder sb = new StringBuilder();
-        return Mono.just(beanPool.useContext(handle -> render(viewName, props, sb, handle.get(), request)))
-            .onErrorMap(BeanInstantiationException.class, e -> e)
-            .onErrorMap(Exception.class, e -> new MessageBodyException("Could not render component " + viewName, e))
-            .flatMap(renderCallback -> {
-                if (renderCallback.isDone()) {
-                    return Mono.just(renderCallback.sb.toString());
-                } else {
-                    return Mono.fromFuture(renderCallback);
-                }
-            })
-            .map(v -> (Writable) out -> {
+        RenderCallback cb;
+        try {
+            cb = beanPool.useContext(handle -> render(viewName, props, sb, handle.get(), request));
+        } catch (BeanInstantiationException e) {
+            return Mono.error(e);
+        } catch (Exception e) {
+            // If we don't wrap and rethrow, the exception is swallowed and the request hangs.
+            return Mono.error(new MessageBodyException("Could not render component " + viewName, e));
+        }
+        Mono<String> monoString = cb.isDone()
+            ? Mono.just(cb.sb.toString())
+            : Mono.fromFuture(cb);
+        return monoString.map(v -> (Writable) out -> {
                 out.write(sb.toString());
             });
     }
@@ -140,7 +142,8 @@ class ReactViewsRenderer<PROPS> implements ReactiveViewsRenderer<PROPS, HttpRequ
             write(new String(bytes, StandardCharsets.UTF_8));
         }
 
-        public void done() {
+        @HostAccess.Export
+        public void complete() {
             super.complete(sb.toString());
         }
     }

@@ -25,7 +25,7 @@ export async function ssr(component, props, callback, clientBundleURL) {
     while (true) {
         const { done, value } = await reader.read();
         if (done) {
-            callback.done()
+            callback.complete()
             break;
         }
         callback.write(value);
