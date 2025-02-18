@@ -39,7 +39,7 @@ public interface ReactiveViewsRenderer<T, R, O> extends Ordered {
      * @param viewName view name to be rendered
      * @param data     response body to render it with a view
      * @param request  HTTP request
-     * @return A writable where the view will be written to.
+     * @return rendered view
      */
     @NonNull
     @SingleResult
