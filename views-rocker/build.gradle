@@ -26,7 +26,7 @@ dependencies {
     testAnnotationProcessor(mn.micronaut.inject.java)
 
     testImplementation(mnSerde.micronaut.serde.jackson)
-    testImplementation(mn.reactor)
+    testImplementation(mnReactor.micronaut.reactor)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mn.micronaut.management)

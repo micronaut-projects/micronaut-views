@@ -52,6 +52,7 @@ include "test-suite-graal:test-suite-graal-soy"
 micronautBuild {
     useStandardizedProjectNames=true
     importMicronautCatalog()
+    importMicronautCatalog("micronaut-reactor")
     importMicronautCatalog("micronaut-data")
     importMicronautCatalog("micronaut-sql")
     importMicronautCatalog("micronaut-grpc")

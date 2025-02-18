@@ -2,6 +2,7 @@
 micronaut = "4.8.3"
 micronaut-platform = "4.7.6"
 micronaut-docs = '2.0.0'
+micronaut-reactor = "3.7.0"
 micronaut-test = "4.7.0"
 micronaut-data = "4.11.1"
 micronaut-sql = "6.0.2"
@@ -31,6 +32,7 @@ micronaut-grpc = "4.8.0"
 # Core
 micronaut-grpc = { module = "io.micronaut.grpc:micronaut-grpc-bom", version.ref = "micronaut-grpc" }
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut' }
+micronaut-reactor = { module = 'io.micronaut.reactor:micronaut-reactor-bom', version.ref = 'micronaut-reactor' }
 micronaut-sql = { module = "io.micronaut.sql:micronaut-sql-bom", version.ref = "micronaut-sql" }
 micronaut-logging = { module = "io.micronaut.logging:micronaut-logging-bom", version.ref = "micronaut-logging" }
 micronaut-security = { module = "io.micronaut.security:micronaut-security-bom", version.ref = "micronaut-security" }
@@ -59,7 +61,6 @@ thymeleaf-extras-java8time = { module = "org.thymeleaf.extras:thymeleaf-extras-j
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 groovy-json = { module = "org.apache.groovy:groovy-json" }
-
 graal-polyglot = { module = "org.graalvm.polyglot:polyglot", version.ref = "graal" }
 graal-js = { module = "org.graalvm.polyglot:js", version.ref = "graal" }
 sonatype-scan = { module = "org.sonatype.gradle.plugins:scan-gradle-plugin", version.ref = "sonatype-scan" }
