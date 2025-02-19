@@ -16,6 +16,7 @@
 package io.micronaut.views.reactive;
 
 import io.micronaut.context.annotation.DefaultImplementation;
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.views.ViewsRenderer;
@@ -31,6 +32,7 @@ import java.util.Optional;
  */
 @FunctionalInterface
 @DefaultImplementation(DefaultReactiveViewsRendererLocator.class)
+@Experimental
 public interface ReactiveViewsRendererLocator {
     /**
      *
