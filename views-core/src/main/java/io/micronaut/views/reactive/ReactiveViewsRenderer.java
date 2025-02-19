@@ -28,7 +28,7 @@ import org.reactivestreams.Publisher;
  * @param <R> The request type
  * @param <O> The response type
  * @author Sergio del Amo
- * @since 1.0
+ * @since 5.8.0
  */
 @Experimental
 public interface ReactiveViewsRenderer<T, R, O> extends Ordered {
