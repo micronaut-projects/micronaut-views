@@ -50,7 +50,7 @@ final class DefaultReactiveViewsRendererLocator implements ReactiveViewsRenderer
 
     private final BeanContext beanContext;
 
-    public DefaultReactiveViewsRendererLocator(ApplicationContext beanContext) {
+    DefaultReactiveViewsRendererLocator(ApplicationContext beanContext) {
         this.beanContext = beanContext;
     }
 
