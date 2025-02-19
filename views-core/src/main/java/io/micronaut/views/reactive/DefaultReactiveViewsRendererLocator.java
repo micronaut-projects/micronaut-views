@@ -40,7 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Singleton
 @Internal
-class DefaultReactiveViewsRendererLocator implements ReactiveViewsRendererLocator {
+final class DefaultReactiveViewsRendererLocator implements ReactiveViewsRendererLocator {
 
     private final Map<ViewsRendererKey, ReactiveViewsRenderer> viewsRendererMap = new ConcurrentHashMap<>();
 

@@ -24,7 +24,7 @@ import jakarta.inject.Singleton;
 
 @Factory
 @Internal
-class ReactiveViewsRendererFactory {
+final class ReactiveViewsRendererFactory {
 
     @Singleton
     @EachBean(ViewsRenderer.class)

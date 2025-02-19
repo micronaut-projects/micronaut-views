@@ -32,7 +32,7 @@ import reactor.core.publisher.Mono;
  * @since 1.0
  */
 @Internal
-class ReactiveViewsRendererAdapter<T, R> implements ReactiveViewsRenderer<T, R, Writable> {
+final class ReactiveViewsRendererAdapter<T, R> implements ReactiveViewsRenderer<T, R, Writable> {
 
     private final ViewsRenderer<T, R> delegate;
 
