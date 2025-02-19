@@ -15,7 +15,6 @@
  */
 package io.micronaut.views.reactive;
 
-import io.micronaut.context.annotation.Type;
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -31,7 +30,6 @@ import org.reactivestreams.Publisher;
  * @author Sergio del Amo
  * @since 1.0
  */
-@Type(ReactiveViewsRenderer.class)
 @Experimental
 public interface ReactiveViewsRenderer<T, R, O> extends Ordered {
 
