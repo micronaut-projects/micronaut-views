@@ -1,11 +1,11 @@
 [versions]
-micronaut = "4.8.3"
+micronaut = "4.8.6"
 micronaut-platform = "4.7.6"
 micronaut-docs = '2.0.0'
 micronaut-reactor = "3.7.0"
 micronaut-test = "4.7.0"
-micronaut-data = "4.11.1"
-micronaut-sql = "6.0.2"
+micronaut-data = "4.11.2"
+micronaut-sql = "6.1.0"
 micronaut-security = "4.12.0"
 micronaut-serde = "2.14.0"
 micronaut-validation = "4.9.0"
@@ -26,8 +26,8 @@ thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.9.25"
 kotlinx-coroutines = "1.9.0"
 sonatype-scan = "3.0.0"
-micronaut-logging = "1.6.0"
-micronaut-grpc = "4.8.0"
+micronaut-logging = "1.6.1"
+micronaut-grpc = "4.9.0"
 [libraries]
 # Core
 micronaut-grpc = { module = "io.micronaut.grpc:micronaut-grpc-bom", version.ref = "micronaut-grpc" }

@@ -16,7 +16,6 @@ dependencies {
     implementation(mnReactor.micronaut.reactor)
     testImplementation(platform(mnReactor.micronaut.reactor.bom))
     testImplementation(libs.reactor.test)
-
     // The user of this library is expected to supply the JS dependency. That's because they may choose between
     // the community edition (open source, slower) and the enterprise edition (liberal usage, not open source, faster).
     implementation(libs.graal.polyglot)
