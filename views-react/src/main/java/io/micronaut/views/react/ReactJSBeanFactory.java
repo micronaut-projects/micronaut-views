@@ -83,7 +83,6 @@ final class ReactJSBeanFactory {
     }
 
     @ReactBean
-    @Singleton
     Context polyglotContext(@ReactBean Engine engine,
                             @ReactBean HostAccess hostAccess,
                             ReactViewsRendererConfiguration configuration) {
