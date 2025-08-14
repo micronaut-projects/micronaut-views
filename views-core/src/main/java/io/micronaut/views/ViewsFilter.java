@@ -15,7 +15,6 @@
  */
 package io.micronaut.views;
 
-import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
@@ -26,7 +25,6 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.MutableHttpResponse;
-import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
@@ -53,9 +51,9 @@ import java.util.Optional;
  *
  * @author Sergio del Amo
  * @since 1.0
+ * @deprecated Replaced by {@link ViewsFilter2}
  */
-@Requires(beans = ViewsResolver.class)
-@Filter(Filter.MATCH_ALL_PATTERN)
+@Deprecated(forRemoval = true)
 public class ViewsFilter implements HttpServerFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ViewsFilter.class);
