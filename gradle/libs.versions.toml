@@ -27,7 +27,7 @@ kotlin = "1.9.25"
 kotlinx-coroutines = "1.9.0"
 sonatype-scan = "3.1.2"
 micronaut-logging = "1.7.0"
-micronaut-grpc = "4.9.0"
+micronaut-grpc = "4.11.0"
 [libraries]
 # Core
 micronaut-grpc = { module = "io.micronaut.grpc:micronaut-grpc-bom", version.ref = "micronaut-grpc" }
