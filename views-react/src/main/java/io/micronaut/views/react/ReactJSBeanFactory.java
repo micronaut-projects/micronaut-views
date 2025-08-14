@@ -83,6 +83,7 @@ final class ReactJSBeanFactory {
     }
 
     @ReactBean
+    @Prototype
     Context polyglotContext(@ReactBean Engine engine,
                             @ReactBean HostAccess hostAccess,
                             ReactViewsRendererConfiguration configuration) {
