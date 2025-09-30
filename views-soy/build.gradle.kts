@@ -9,6 +9,13 @@ dependencies {
     api(libs.managed.soy) {
         exclude(group = "org.json", module = "json")
     }
+
+    constraints {
+        implementation("com.google.code.gson:gson:2.13.2") {
+            because("Older gson versions have security vulnerabilities")
+        }
+    }
+
     implementation(mnGrpc.protobuf.java) // apply com.google.protobuf:protobuf-java directly because the version brought transitively contains a vulnerable version.
     implementation(libs.org.json)
     compileOnly(mn.micronaut.management)
