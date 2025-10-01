@@ -2,7 +2,28 @@
   "resources": {
     "includes": [
       {
+        "condition": {
+          "typeReachable": "com.github.jknack.handlebars.HumanizeHelper$15"
+        },
+        "pattern": "\\QMETA-INF/services/humanize.spi.cache.CacheProvider\\E"
+      },
+      {
+        "condition": {
+          "typeReachable": "com.github.jknack.handlebars.HumanizeHelper$4"
+        },
+        "pattern": "\\QMETA-INF/services/humanize.spi.context.ContextFactory\\E"
+      },
+      {
+        "condition": {
+          "typeReachable": "com.github.jknack.handlebars.internal.Files"
+        },
         "pattern": "\\Qhelpers.nashorn.js\\E"
+      },
+      {
+        "condition": {
+          "typeReachable": "com.github.jknack.handlebars.HumanizeHelper$15"
+        },
+        "pattern": "\\Qhumanize.properties\\E"
       }
     ]
   },
