@@ -7,10 +7,15 @@ dependencies {
     annotationProcessor(mn.micronaut.graal)
 
     api projects.micronautViewsCore
-    api(libs.managed.velocity.engine.core) {
-        exclude(group: "org.apache.commons", module: "commons-lang3")
+    api(libs.managed.velocity.engine.core)
+
+    constraints {
+        implementation(libs.commons.lang3) {
+            because("Older versions have security vulnerabilities")
+        }
     }
-    implementation(libs.commons.lang3)
+    runtimeOnly(libs.commons.lang3)
+
     compileOnly(mn.micronaut.management)
     compileOnly(mnValidation.micronaut.validation)
 

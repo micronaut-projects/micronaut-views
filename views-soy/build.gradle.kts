@@ -10,6 +10,13 @@ dependencies {
         exclude(group = "org.json", module = "json")
         exclude(group = "com.google.code.gson", module = "gson")
     }
+
+    constraints {
+        runtimeOnly("com.google.code.gson:gson:2.13.2") {
+            because("Older gson versions have security vulnerabilities")
+        }
+    }
+
     implementation(mnGrpc.protobuf.java) // apply com.google.protobuf:protobuf-java directly because the version brought transitively contains a vulnerable version.
     implementation(libs.org.json)
     compileOnly(mn.micronaut.management)
