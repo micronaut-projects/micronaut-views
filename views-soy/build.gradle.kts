@@ -12,7 +12,7 @@ dependencies {
     }
 
     constraints {
-        implementation("com.google.code.gson:gson:2.13.2") {
+        runtimeOnly("com.google.code.gson:gson:2.13.2") {
             because("Older gson versions have security vulnerabilities")
         }
     }

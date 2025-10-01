@@ -10,10 +10,11 @@ dependencies {
     api(libs.managed.velocity.engine.core)
 
     constraints {
-        implementation("org.apache.commons:commons-lang3:3.18.0") {
+        implementation(libs.commons.lang3) {
             because("Older versions have security vulnerabilities")
         }
     }
+    runtimeOnly(libs.commons.lang3)
 
     compileOnly(mn.micronaut.management)
     compileOnly(mnValidation.micronaut.validation)
