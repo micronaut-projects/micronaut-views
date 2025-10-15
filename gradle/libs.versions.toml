@@ -27,8 +27,8 @@ thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.9.25"
 kotlinx-coroutines = "1.9.0"
 sonatype-scan = "3.1.4"
-micronaut-grpc = "4.11.0"
 micronaut-logging = "1.7.1"
+micronaut-grpc = "4.12.0"
 [libraries]
 # Core
 micronaut-grpc = { module = "io.micronaut.grpc:micronaut-grpc-bom", version.ref = "micronaut-grpc" }
