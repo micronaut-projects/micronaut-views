@@ -26,7 +26,6 @@ pebble = "3.2.4"
 thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlin = "1.9.25"
 kotlinx-coroutines = "1.9.0"
-sonatype-scan = "3.1.4"
 micronaut-logging = "1.7.1"
 micronaut-grpc = "4.12.0"
 [libraries]
@@ -65,7 +64,6 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 groovy-json = { module = "org.apache.groovy:groovy-json" }
 graal-polyglot = { module = "org.graalvm.polyglot:polyglot", version.ref = "graal" }
 graal-js = { module = "org.graalvm.polyglot:js", version.ref = "graal" }
-sonatype-scan = { module = "org.sonatype.gradle.plugins:scan-gradle-plugin", version.ref = "sonatype-scan" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
