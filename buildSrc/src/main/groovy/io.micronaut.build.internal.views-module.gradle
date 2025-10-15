@@ -5,4 +5,6 @@ plugins {
 ossIndexAudit {
    excludeCoordinates = ["io.pebbletemplates:pebble:3.2.4"] // no patched version https://ossindex.sonatype.org/component/pkg:maven/io.pebbletemplates/pebble
 }
-
+dependencies {
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}

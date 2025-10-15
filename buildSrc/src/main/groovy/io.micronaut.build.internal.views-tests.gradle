@@ -1,3 +1,11 @@
 plugins {
     id "io.micronaut.build.internal.views-base"
+    id "java-library"
 }
+repositories {
+    mavenCentral()
+}
+dependencies {
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
