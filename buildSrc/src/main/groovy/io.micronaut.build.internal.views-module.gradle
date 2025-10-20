@@ -3,3 +3,9 @@ plugins {
     id("io.micronaut.build.internal.module")
 }
 
+ossIndexAudit {
+    excludeCoordinates = [
+            "io.pebbletemplates:pebble:3.2.3" // no version patched  https://ossindex.sonatype.org/vulnerability/CVE-2025-1686
+    ]
+}
+
