@@ -26,4 +26,10 @@ dependencies {
     testImplementation(mn.micronaut.management)
     testImplementation(mnValidation.micronaut.validation)
     testImplementation(mn.snakeyaml)
+
+    constraints {
+        implementation("org.apache.commons:commons-lang3:3.18.0") {
+            because("previous versions have a CVE Vulnerability")
+        }
+    }
 }

@@ -25,5 +25,11 @@ dependencies {
     testImplementation(mn.micronaut.management)
     testImplementation(mnValidation.micronaut.validation)
     testImplementation(mn.snakeyaml)
+
+    constraints {
+        implementation("com.google.code.gson:gson:2.13.2") {
+            because("previous versions have a CVE Vulnerability")
+        }
+    }
 }
 
