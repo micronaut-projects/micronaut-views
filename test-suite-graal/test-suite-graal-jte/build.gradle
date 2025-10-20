@@ -6,6 +6,7 @@ plugins {
 dependencies {
     implementation(projects.testSuiteGraal.testSuiteGraalCommon)
     implementation(projects.micronautViewsJte)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 jte {
