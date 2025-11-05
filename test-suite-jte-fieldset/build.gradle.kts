@@ -1,5 +1,6 @@
 plugins {
     id("io.micronaut.build.internal.views-fieldset-tck")
+    id ("io.micronaut.build.internal.java-base")
     alias(libs.plugins.jte)
     alias(libs.plugins.buildtools.native)
 }
