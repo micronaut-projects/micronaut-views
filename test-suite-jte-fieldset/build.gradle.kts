@@ -16,7 +16,7 @@ dependencies {
     testImplementation(projects.micronautViewsJte)
     jteGenerate(libs.managed.jte.native.resources)
 }
-graalvmNative.toolchainDetection = true
+graalvmNative.toolchainDetection = false
 jte {
     sourceDirectory = file("src/test/jte").toPath()
     generate()
