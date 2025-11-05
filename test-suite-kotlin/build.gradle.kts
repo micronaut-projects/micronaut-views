@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.kapt)
     id("io.micronaut.build.internal.views-tests")
+    id ("io.micronaut.build.internal.kotlin-base")
 }
 
 dependencies {
@@ -34,10 +35,4 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
 }
