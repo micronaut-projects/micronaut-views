@@ -71,10 +71,10 @@ class SecurityViewModelProcessorTest {
                 assertNotNull(html)
 
                 //and:
-                assertFalse(html.contains("User: john"))
+                assertFalse(html!!.contains("User: john"))
 
                 //and:
-                assertTrue(html.contains("Custom: john"))
+                assertTrue(html!!.contains("Custom: john"))
             }
         }
     }
@@ -110,10 +110,10 @@ class SecurityViewModelProcessorTest {
 
                 //then:
                 assertNotNull(html)
-                assertTrue(html.contains("User: john email: john@email.com"))
+                assertTrue(html!!.contains("User: john email: john@email.com"))
 
                 //and:
-                assertTrue(html.contains("Developing Microservices"))
+                assertTrue(html!!.contains("Developing Microservices"))
             }
         }
     }
