@@ -7,6 +7,7 @@ dependencies {
     implementation(mnValidation.micronaut.validation)
     compileOnly(mn.micronaut.http)
     compileOnly(mnSecurity.micronaut.security.csrf)
+    compileOnly(libs.jakarta.validation.api)
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
     testImplementation(mnValidation.micronaut.validation)
 
