@@ -8,6 +8,7 @@ dependencies {
     api(projects.micronautViewsCore)
     api(libs.managed.soy) {
         exclude(group = "org.json", module = "json")
+        exclude(group = "com.google.code.gson", module = "gson")
     }
     implementation(mnGrpc.protobuf.java) // apply com.google.protobuf:protobuf-java directly because the version brought transitively contains a vulnerable version.
     implementation(libs.org.json)

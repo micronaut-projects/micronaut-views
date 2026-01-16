@@ -8,6 +8,11 @@ dependencies {
 
     api projects.micronautViewsCore
     api(libs.managed.velocity.engine.core)
+
+    constraints {
+        implementation("org.apache.commons:commons-lang3:3.18.0") because("CVE-2025-48924")
+    }
+
     compileOnly(mn.micronaut.management)
     compileOnly(mnValidation.micronaut.validation)
 
