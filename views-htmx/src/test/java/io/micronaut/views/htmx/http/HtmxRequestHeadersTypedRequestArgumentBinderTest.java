@@ -16,9 +16,7 @@ import io.micronaut.http.uri.UriBuilder;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ModelAndView;
 import jakarta.inject.Singleton;
-import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
-import spock.lang.Specification;
 
 import java.net.URI;
 import java.util.Collections;
