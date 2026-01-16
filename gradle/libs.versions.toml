@@ -58,7 +58,6 @@ groovy-json = { module = "org.apache.groovy:groovy-json" }
 
 graal-polyglot = { module = "org.graalvm.polyglot:polyglot", version.ref = "graal" }
 graal-js = { module = "org.graalvm.polyglot:js", version.ref = "graal" }
-sonatype-scan = { module = "org.sonatype.gradle.plugins:scan-gradle-plugin", version.ref = "sonatype-scan" }
 
 [plugins]
 jte = { id = "gg.jte.gradle", version.ref = "managed-jte" }
