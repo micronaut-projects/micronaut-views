@@ -4,3 +4,8 @@ plugins {
     id("org.sonatype.gradle.plugins.scan")
 }
 
+ossIndexAudit {
+    excludeCoordinates = [
+            "io.pebbletemplates:pebble:4.1.0" // CVE-2025-1686 is mitigated by disabling the Pebble {% include %} tag via DisallowExtensionCustomizerBuilder.
+    ]
+}
