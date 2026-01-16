@@ -2,7 +2,6 @@ package io.micronaut.views.tests.security.csrf;
 
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -26,6 +25,7 @@ import io.micronaut.views.fields.elements.InputPasswordFormElement;
 import io.micronaut.views.fields.elements.InputSubmitFormElement;
 import jakarta.inject.Singleton;
 import jakarta.validation.constraints.NotBlank;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

@@ -16,10 +16,10 @@
 package io.micronaut.views.fields.elements;
 
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.FormElement;
 import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.InputType;
+import org.jspecify.annotations.NonNull;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input">Input</a>

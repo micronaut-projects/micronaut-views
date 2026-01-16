@@ -16,7 +16,6 @@
 package io.micronaut.views.http;
 
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.type.Argument;
 import io.micronaut.core.type.MutableHeaders;
@@ -36,6 +35,7 @@ import io.micronaut.http.context.ServerRequestContext;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.ModelAndViewRenderer;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

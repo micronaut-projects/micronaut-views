@@ -16,7 +16,7 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Marker interface for HTML Form Elements.

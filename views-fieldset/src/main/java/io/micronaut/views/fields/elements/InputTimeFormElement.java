@@ -17,10 +17,10 @@ package io.micronaut.views.fields.elements;
 
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.views.fields.InputType;
 import io.micronaut.views.fields.messages.Message;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.time.LocalTime;
 import java.util.Collections;

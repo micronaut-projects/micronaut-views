@@ -22,10 +22,9 @@ import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
+import org.jspecify.annotations.Nullable;
 import reactor.core.publisher.Flux;
 import org.reactivestreams.Publisher;
-
-import io.micronaut.core.annotation.Nullable;
 
 import static io.micronaut.views.csp.CspConfiguration.DEFAULT_FILTER_PATH;
 import static io.micronaut.views.csp.CspConfiguration.FILTER_PATH;

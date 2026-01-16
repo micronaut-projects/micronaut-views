@@ -16,8 +16,6 @@
 package io.micronaut.views.pebble;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.LocaleResolver;
 import io.micronaut.core.util.StringUtils;
@@ -27,6 +25,8 @@ import io.micronaut.views.exceptions.ViewRenderingException;
 import io.pebbletemplates.pebble.PebbleEngine;
 import io.pebbletemplates.pebble.template.PebbleTemplate;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Locale;
 

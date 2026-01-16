@@ -15,8 +15,8 @@
  */
 package io.micronaut.views.thymeleaf;
 
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpRequest;
+import org.jspecify.annotations.Nullable;
 import org.thymeleaf.IEngineConfiguration;
 import org.thymeleaf.context.EngineContext;
 import org.thymeleaf.engine.TemplateData;

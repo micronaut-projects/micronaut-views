@@ -15,10 +15,10 @@
  */
 package io.micronaut.views.pebble;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.pebbletemplates.pebble.loader.ClasspathLoader;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Loader for Pebble templates.

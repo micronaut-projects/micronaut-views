@@ -2,7 +2,6 @@ package io.micronaut.views.docs.turbo;
 
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -27,6 +26,7 @@ import io.micronaut.views.turbo.TurboStreamView;
 import io.micronaut.views.turbo.http.TurboHttpHeaders;
 import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Inject;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;

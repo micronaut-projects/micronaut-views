@@ -15,9 +15,9 @@
  */
 package io.micronaut.views.thymeleaf;
 
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.server.HttpServerConfiguration;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.Nullable;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.exceptions.TemplateProcessingException;
 import org.thymeleaf.linkbuilder.StandardLinkBuilder;

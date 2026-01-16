@@ -16,10 +16,10 @@
 package io.micronaut.views.turbo;
 
 import io.micronaut.context.annotation.DefaultImplementation;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -38,6 +38,6 @@ public interface TurboFrameRenderer {
      * @return A Writable
      */
     @NonNull
-    Optional<Writable> render(@NonNull TurboFrame.Builder builder,
+    Optional<Writable> render(TurboFrame.@NonNull Builder builder,
                               @Nullable HttpRequest<?> request);
 }

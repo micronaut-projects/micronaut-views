@@ -2,7 +2,7 @@ package io.micronaut.views.jstachio.clazz;
 
 import io.jstach.jstache.JStache;
 import io.jstach.jstache.JStacheConfig;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @JStacheConfig(using = MicronautJStacheConfig.class)
 @JStache(path = "home")

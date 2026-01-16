@@ -17,11 +17,11 @@ package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.views.fields.messages.Message;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 

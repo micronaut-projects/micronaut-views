@@ -17,9 +17,9 @@ package io.micronaut.views.fields.elements;
 
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.InputType;
 import io.micronaut.views.fields.messages.Message;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Collections;
 import java.util.List;

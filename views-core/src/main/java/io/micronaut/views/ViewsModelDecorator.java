@@ -16,7 +16,7 @@
 package io.micronaut.views;
 
 import io.micronaut.context.annotation.DefaultImplementation;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Decorates a Views Model.

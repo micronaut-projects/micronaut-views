@@ -17,9 +17,9 @@ package io.micronaut.views.fields;
 
 import io.micronaut.context.annotation.DefaultImplementation;
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.beans.BeanIntrospection;
 import jakarta.validation.ConstraintViolationException;
+import org.jspecify.annotations.NonNull;
 
 import java.util.function.BiConsumer;
 

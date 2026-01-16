@@ -25,6 +25,8 @@ import io.micronaut.views.turbo.TurboStreamView;
 import io.micronaut.views.turbo.http.TurboHttpHeaders;
 import io.micronaut.views.turbo.http.TurboMediaType;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -69,8 +71,7 @@ final class TurboStreamResponseBodySwapper implements ResponseBodySwapper<TurboS
                 .map(b -> new ResponseBodySwap<>(b, TurboMediaType.TURBO_STREAM));
     }
 
-    @NonNull
-    private static TurboStream.Builder of(@NonNull AnnotationValue<TurboStreamView> turboViewAnnotation, @NonNull HttpHeaders httpHeaders, @Nullable Object body) {
+    private static TurboStream.@NonNull Builder of(@NonNull AnnotationValue<TurboStreamView> turboViewAnnotation, @NonNull HttpHeaders httpHeaders, @Nullable Object body) {
         TurboStream.Builder builder = TurboStream.builder();
         turboViewAnnotation.stringValue().ifPresent(builder::templateView);
         builder.action(turboViewAnnotation.enumValue(MEMBER_ACTION, TurboStreamAction.class).orElse(TurboStreamAction.UPDATE));

@@ -17,8 +17,8 @@ package io.micronaut.views.model.security;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.security.csrf.CsrfConfiguration;
+import org.jspecify.annotations.NonNull;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link CsrfViewModelProcessorConfiguration}.

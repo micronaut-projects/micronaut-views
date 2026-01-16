@@ -17,12 +17,12 @@ package io.micronaut.views.fields.messages;
 
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.beans.BeanProperty;
 import io.micronaut.core.util.StringUtils;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.constraints.NotBlank;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;

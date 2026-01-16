@@ -2,8 +2,6 @@ package io.micronaut.views.tests.security.csrf;
 
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.*;
 import io.micronaut.http.annotation.*;
@@ -21,6 +19,8 @@ import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.View;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

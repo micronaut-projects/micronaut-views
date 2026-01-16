@@ -16,7 +16,6 @@
 package io.micronaut.views.pebble;
 
 import io.micronaut.context.annotation.Factory;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.views.ViewsConfiguration;
 import io.pebbletemplates.pebble.PebbleEngine;
@@ -28,6 +27,7 @@ import io.pebbletemplates.pebble.loader.Loader;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;

@@ -17,13 +17,13 @@ package io.micronaut.views.fields.tck;
 
 import io.micronaut.context.annotation.Property;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.fields.Fieldset;
 import io.micronaut.views.fields.FieldsetGenerator;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.NotBlank;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

@@ -16,8 +16,8 @@
 package io.micronaut.views;
 
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Class used as a Map Key to resolve the {@link ViewsRenderer} to be used for a specific view, content type and body class.

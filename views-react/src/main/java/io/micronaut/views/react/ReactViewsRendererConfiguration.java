@@ -16,10 +16,10 @@
 package io.micronaut.views.react;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.views.ViewsConfigurationProperties;
 import jakarta.validation.constraints.NotBlank;
+import org.jspecify.annotations.NonNull;
 
 /**
  * An interface to the configuration properties for React server-side rendering.

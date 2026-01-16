@@ -26,6 +26,8 @@ import io.micronaut.views.turbo.TurboFrameView;
 import io.micronaut.views.turbo.VisitAction;
 import io.micronaut.views.turbo.http.TurboHttpHeaders;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -78,13 +80,11 @@ final class TurboFrameResponseBodySwapper implements ResponseBodySwapper<TurboFr
         return Optional.empty();
     }
 
-    @NonNull
-    private static TurboFrame.Builder instantiateTurboFrameBuilder(@Nullable Object body) {
+    private static TurboFrame.@NonNull Builder instantiateTurboFrameBuilder(@Nullable Object body) {
         return turboFrameBuilderInResponse(body).orElseGet(TurboFrame::builder);
     }
 
-    @NonNull
-    private static TurboFrame.Builder turboFrameBuilderOf(@NonNull AnnotationValue<TurboFrameView> ann,
+    private static TurboFrame.@NonNull Builder turboFrameBuilderOf(@NonNull AnnotationValue<TurboFrameView> ann,
                                                           String id,
                                                           @Nullable Object body) {
         TurboFrame.Builder builder = instantiateTurboFrameBuilder(body);

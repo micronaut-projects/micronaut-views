@@ -15,8 +15,8 @@
  */
 package io.micronaut.views.model;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.ModelAndView;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Implementers of {@link ViewModelProcessor} process the {@link ModelAndView} and modify it prior to rendering.

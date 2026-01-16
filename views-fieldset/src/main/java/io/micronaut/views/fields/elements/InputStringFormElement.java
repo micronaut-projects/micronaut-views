@@ -16,7 +16,7 @@
 package io.micronaut.views.fields.elements;
 
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * API for html input of type string. e.g. input type text, password, url, tel.

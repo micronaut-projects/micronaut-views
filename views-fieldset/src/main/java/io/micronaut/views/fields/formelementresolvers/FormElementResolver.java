@@ -16,10 +16,10 @@
 package io.micronaut.views.fields.formelementresolvers;
 
 import io.micronaut.core.annotation.Indexed;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.beans.BeanProperty;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.views.fields.FormElement;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
