@@ -1,6 +1,5 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.kapt)
+    id("io.micronaut.build.internal.kotlin-kapt")
     id("io.micronaut.build.internal.views-tests")
 }
 
@@ -11,7 +10,6 @@ dependencies {
     testImplementation(mnTest.junit.jupiter.api)
     testImplementation(mnTest.micronaut.test.junit5)
 
-    testImplementation(libs.kotlin.stdlib.jdk8)
     kaptTest(mn.micronaut.inject.java)
 
     testImplementation(mnSecurity.micronaut.security)
@@ -34,10 +32,4 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
 }
