@@ -10,6 +10,7 @@ dependencies {
     implementation(platform(mn.micronaut.core.bom))
     implementation(projects.micronautViewsJte)
     implementation(projects.micronautViewsFieldset)
+    implementation(libs.jakarta.validation.api)
     testImplementation(projects.micronautViewsJte)
     jteGenerate(libs.managed.jte.native.resources)
 }
