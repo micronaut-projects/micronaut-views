@@ -15,8 +15,8 @@
  */
 package io.micronaut.views.model.security;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.Toggleable;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Configuration CSRF View Model Processor.

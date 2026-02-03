@@ -104,17 +104,17 @@ class NonHTMLViewRendererTest {
 
         override fun render(
             viewName: String,
-            data: Library,
-            request: HttpRequest<*>
+            data: Library?,
+            request: HttpRequest<*>?
         ) = Writable { out ->
             out.write("<books>\n")
             out.write(
-                data.books.joinToString("\n") { "<book><isbn>${it.isbn}</isbn><name>${it.name}</name></book>" }
+                data!!.books.joinToString("\n") { "<book><isbn>${it.isbn}</isbn><name>${it.name}</name></book>" }
             )
             out.write("\n</books>")
         }
 
-        override fun exists(viewName: @NonNull String?): Boolean {
+        override fun exists(viewName: String): Boolean {
             return "books".equals(viewName, ignoreCase = true)
         }
     }
@@ -125,10 +125,10 @@ class NonHTMLViewRendererTest {
     class SingleBookViewRenderer : ViewsRenderer<Book, HttpRequest<*>> {
 
         // this renderer should not be used because it specifies a different type
-        override fun render(viewName: @NonNull String, data: @Nullable Book, request: @Nullable HttpRequest<*>) =
+        override fun render(viewName: String, data: Book?, request: HttpRequest<*>?) =
             Writable { out -> out.write("FAIL") }
 
-        override fun exists(viewName: @NonNull String?): Boolean {
+        override fun exists(viewName: String): Boolean {
             return true
         }
 
@@ -142,8 +142,8 @@ class NonHTMLViewRendererTest {
     @Singleton
     class CsvViewRenderer : ViewsRenderer<Library, HttpRequest<*>> {
 
-        override fun render(viewName: String?, data: Library, request: HttpRequest<*>) = Writable { out ->
-            out.write(data.books.joinToString("\n") { "${it.isbn},${it.name}" })
+        override fun render(viewName: String, data: Library?, request: HttpRequest<*>?) = Writable { out ->
+            out.write(data!!.books.joinToString("\n") { "${it.isbn},${it.name}" })
         }
 
         override fun exists(viewName: String) = "books".equals(viewName, ignoreCase = true)

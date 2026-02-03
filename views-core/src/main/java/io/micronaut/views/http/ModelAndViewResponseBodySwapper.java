@@ -18,8 +18,6 @@ package io.micronaut.views.http;
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpAttributes;
 import io.micronaut.http.HttpRequest;
@@ -29,6 +27,8 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.View;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;

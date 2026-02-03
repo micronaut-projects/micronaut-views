@@ -16,8 +16,8 @@
 package io.micronaut.views.fields.fetchers;
 
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.elements.Radio;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 

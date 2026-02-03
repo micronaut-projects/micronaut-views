@@ -62,10 +62,10 @@ class ModelAndViewTest {
         assertNotNull(html)
 
         //and:
-        assertTrue(html.contains("<h1>fruit: apple</h1>"))
+        assertTrue(html!!.contains("<h1>fruit: apple</h1>"))
 
         //and:
-        assertTrue(html.contains("<h1>color: red</h1>"))
+        assertTrue(html!!.contains("<h1>color: red</h1>"))
     }
 
     @Test
@@ -110,10 +110,10 @@ class ModelAndViewTest {
         assertNotNull(html)
 
         //and:
-        assertTrue(html.contains("<h1>fruit: orange</h1>"))
+        assertTrue(html!!.contains("<h1>fruit: orange</h1>"))
 
         //and:
-        assertTrue(html.contains("<h1>color: orange</h1>"))
+        assertTrue(html!!.contains("<h1>color: orange</h1>"))
     }
 
     @Test
@@ -141,7 +141,7 @@ class ModelAndViewTest {
         assertTrue(beanContext.containsBean(ConfigViewModelProcessor::class.java))
 
         //and:
-        assertTrue(html.contains("<h1>config: test</h1>"))
+        assertTrue(html!!.contains("<h1>config: test</h1>"))
     }
 
     @Test
@@ -169,7 +169,7 @@ class ModelAndViewTest {
         assertTrue(beanContext.containsBean(ConfigViewModelProcessor::class.java))
 
         //and:
-        assertTrue(html.contains("<h1>config: test</h1>"))
+        assertTrue(html!!.contains("<h1>config: test</h1>"))
     }
 
     @Controller

@@ -16,17 +16,18 @@
 package io.micronaut.views.pebble;
 
 import io.micronaut.context.annotation.Factory;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.views.ViewsConfiguration;
 import io.pebbletemplates.pebble.PebbleEngine;
 import io.pebbletemplates.pebble.attributes.methodaccess.MethodAccessValidator;
 import io.pebbletemplates.pebble.extension.Extension;
+import io.pebbletemplates.pebble.extension.core.DisallowExtensionCustomizerBuilder;
 import io.pebbletemplates.pebble.lexer.Syntax;
 import io.pebbletemplates.pebble.loader.Loader;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -89,6 +90,9 @@ public class PebbleEngineFactory {
     @Singleton
     public PebbleEngine create() {
         PebbleEngine.Builder builder = new PebbleEngine.Builder()
+            .registerExtensionCustomizer(new DisallowExtensionCustomizerBuilder()
+                .disallowedTokenParserTags(List.of("include"))
+                .build())
             .cacheActive(configuration.isCacheActive())
             .newLineTrimming(configuration.isNewLineTrimming())
             .autoEscaping(configuration.isAutoEscaping())
@@ -98,6 +102,7 @@ public class PebbleEngineFactory {
             .allowOverrideCoreOperators(configuration.isAllowOverrideCoreOperators())
             .literalDecimalTreatedAsInteger(configuration.isLiteralDecimalsAsIntegers())
             .literalNumbersAsBigDecimals(configuration.isLiteralNumbersAsBigDecimals());
+
 
         if (executorService != null) {
             builder.executorService(executorService);

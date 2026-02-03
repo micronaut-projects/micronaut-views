@@ -16,7 +16,6 @@
 package io.micronaut.views.turbo.http.bodywriter;
 
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.type.Argument;
 import io.micronaut.core.type.MutableHeaders;
 import io.micronaut.http.MediaType;
@@ -28,6 +27,7 @@ import io.micronaut.views.exceptions.ViewRenderingException;
 import io.micronaut.views.turbo.TurboFrame;
 import io.micronaut.views.turbo.TurboFrameRenderer;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

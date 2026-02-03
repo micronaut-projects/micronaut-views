@@ -21,10 +21,11 @@ import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Map;
 
 /**

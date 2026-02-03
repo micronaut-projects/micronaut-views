@@ -15,9 +15,9 @@
  */
 package io.micronaut.views.turbo;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.HashMap;

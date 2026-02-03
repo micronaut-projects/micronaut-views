@@ -15,10 +15,10 @@
  */
 package io.micronaut.views.htmx.http;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpRequest;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 

@@ -16,14 +16,14 @@
 package io.micronaut.views.turbo;
 
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.MediaType;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.ViewsModelDecorator;
 import io.micronaut.views.ViewsRendererLocator;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -48,7 +48,7 @@ final class DefaultTurboStreamRenderer<R> implements TurboStreamRenderer<R> {
 
     @Override
     @NonNull
-    public Optional<Writable> render(@NonNull TurboStream.Builder builder,
+    public Optional<Writable> render(TurboStream.@NonNull Builder builder,
                                      @Nullable R request) {
         return builder.getTemplateView()
             .map(viewName -> {

@@ -15,10 +15,10 @@
  */
 package io.micronaut.views.model.security;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.model.ViewModelProcessor;
+import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;

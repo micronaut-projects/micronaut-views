@@ -16,11 +16,11 @@
 package io.micronaut.views.fields.fetchers;
 
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.elements.Radio;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,8 +74,7 @@ public class EnumRadioFetcher<T> implements RadioFetcher<T> {
             .toList();
     }
 
-    @NonNull
-    private Radio.Builder radioButtonFromEnum(@NonNull Class<? extends Enum> type, @NonNull Enum instance) {
+    private Radio.@NonNull Builder radioButtonFromEnum(@NonNull Class<? extends Enum> type, @NonNull Enum instance) {
         String name = instance.name();
         return Radio.builder().id(name.toLowerCase()).value(name).label(Message.of(type, name));
     }

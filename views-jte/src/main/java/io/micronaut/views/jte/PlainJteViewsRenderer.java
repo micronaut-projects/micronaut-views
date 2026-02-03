@@ -20,7 +20,7 @@ import gg.jte.ContentType;
 import gg.jte.TemplateOutput;
 import gg.jte.html.HtmlTemplateOutput;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;

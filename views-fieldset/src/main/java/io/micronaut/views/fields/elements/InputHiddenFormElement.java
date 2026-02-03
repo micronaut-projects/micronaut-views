@@ -17,8 +17,8 @@ package io.micronaut.views.fields.elements;
 
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.InputType;
+import org.jspecify.annotations.NonNull;
 
 /**
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden">input hidden</a>

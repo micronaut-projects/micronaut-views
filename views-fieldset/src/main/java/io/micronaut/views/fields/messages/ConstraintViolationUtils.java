@@ -16,10 +16,10 @@
 package io.micronaut.views.fields.messages;
 
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ElementKind;
 import jakarta.validation.Path;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Iterator;
 import java.util.Optional;

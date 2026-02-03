@@ -16,9 +16,9 @@
 package io.micronaut.views.fields.render.views;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import io.micronaut.views.fields.render.FormElementRendererConfigurationProperties;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Configuration for {@link FormElementRenderer} based on views.

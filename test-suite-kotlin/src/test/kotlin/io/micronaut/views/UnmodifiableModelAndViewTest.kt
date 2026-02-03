@@ -42,9 +42,9 @@ class UnmodifiableModelAndViewTest {
 
                 //then:
                 assertNotNull(html)
-                assertTrue(html.contains("<blink>Security was added</blink>"))
-                assertTrue(html.contains("<h1>fruit: plum</h1>"))
-                assertTrue(html.contains("<h1>color: plum</h1>"))
+                assertTrue(html!!.contains("<blink>Security was added</blink>"))
+                assertTrue(html!!.contains("<h1>fruit: plum</h1>"))
+                assertTrue(html!!.contains("<h1>color: plum</h1>"))
             }
         }
     }
@@ -75,9 +75,9 @@ class UnmodifiableModelAndViewTest {
 
                 //then:
                 assertNotNull(html)
-                assertTrue(html.contains("<blink>Security was added</blink>"))
-                assertTrue(html.contains("<h1>fruit: plum</h1>"))
-                assertTrue(html.contains("<h1>color: plum</h1>"))
+                assertTrue(html!!.contains("<blink>Security was added</blink>"))
+                assertTrue(html!!.contains("<h1>fruit: plum</h1>"))
+                assertTrue(html!!.contains("<h1>color: plum</h1>"))
             }
         }
     }

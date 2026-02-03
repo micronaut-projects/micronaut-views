@@ -16,7 +16,8 @@
 package io.micronaut.views.fields.messages;
 
 import io.micronaut.context.LocalizedMessageSource;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
+
 import java.util.Optional;
 
 /**

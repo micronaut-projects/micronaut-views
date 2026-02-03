@@ -23,8 +23,6 @@ import java.nio.charset.StandardCharsets;
 import io.jstach.jstachio.JStachio;
 import io.jstach.jstachio.Output;
 import io.jstach.jstachio.Template;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.type.Argument;
 import io.micronaut.core.type.MutableHeaders;
 import io.micronaut.http.HttpHeaders;
@@ -33,6 +31,8 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.body.MessageBodyWriter;
 import io.micronaut.http.codec.CodecException;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A message body writer for JStachio JStache annotated models.

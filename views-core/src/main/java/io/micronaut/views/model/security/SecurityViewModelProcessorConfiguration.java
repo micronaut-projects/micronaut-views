@@ -16,7 +16,7 @@
 package io.micronaut.views.model.security;
 
 import io.micronaut.core.util.Toggleable;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Configuration for {@link SecurityViewModelProcessor}.

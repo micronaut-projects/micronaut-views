@@ -15,7 +15,7 @@
  */
 package io.micronaut.views.turbo;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Turbo Seven Actions.

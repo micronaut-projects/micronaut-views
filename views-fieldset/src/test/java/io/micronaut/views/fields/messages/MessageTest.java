@@ -5,7 +5,6 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.*;
 import io.micronaut.context.i18n.ResourceBundleMessageSource;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.LocaleResolver;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.server.util.locale.HttpLocalizedMessageSource;
@@ -17,6 +16,7 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Test;
 
 import java.util.Locale;

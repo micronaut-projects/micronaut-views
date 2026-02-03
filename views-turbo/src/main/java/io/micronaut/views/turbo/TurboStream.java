@@ -15,10 +15,10 @@
  */
 package io.micronaut.views.turbo;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.views.Renderable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Optional;

@@ -1,10 +1,11 @@
 package io.micronaut.views.model;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.runtime.ApplicationConfiguration;
 import io.micronaut.views.ModelAndView;
+import org.jspecify.annotations.NonNull;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

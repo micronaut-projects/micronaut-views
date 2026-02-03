@@ -18,7 +18,6 @@ package io.micronaut.views.fields.render.secondary;
 import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Secondary;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.InputType;
 import io.micronaut.views.fields.elements.Checkbox;
@@ -26,6 +25,7 @@ import io.micronaut.views.fields.HtmlAttribute;
 import io.micronaut.views.fields.elements.InputCheckboxFormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;

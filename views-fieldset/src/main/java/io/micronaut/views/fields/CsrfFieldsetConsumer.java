@@ -17,13 +17,14 @@ package io.micronaut.views.fields;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.context.ServerRequestContext;
 import io.micronaut.security.csrf.CsrfConfiguration;
 import io.micronaut.security.csrf.repository.CsrfTokenRepository;
 import io.micronaut.views.fields.elements.InputHiddenFormElement;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+
 import java.util.List;
 
 /**

@@ -15,9 +15,9 @@
  */
 package io.micronaut.views.turbo.http;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Utility class to decorate an HTTP response with Turbo content-type.

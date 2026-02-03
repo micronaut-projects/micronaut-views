@@ -16,9 +16,10 @@
 package io.micronaut.views.turbo;
 
 import io.micronaut.context.annotation.DefaultImplementation;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Optional;
 
 /**
@@ -37,6 +38,6 @@ public interface TurboStreamRenderer<R> {
      * @return A Writable
      */
     @NonNull
-    Optional<Writable> render(@NonNull TurboStream.Builder builder,
+    Optional<Writable> render(TurboStream.@NonNull Builder builder,
                               @Nullable R request);
 }

@@ -18,8 +18,8 @@ package io.micronaut.views.csp;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.util.Toggleable;
 import io.micronaut.views.ViewsConfigurationProperties;
+import org.jspecify.annotations.Nullable;
 
-import io.micronaut.core.annotation.Nullable;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Optional;

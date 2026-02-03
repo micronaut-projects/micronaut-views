@@ -2,7 +2,6 @@ package io.micronaut.views.fields.formsexamples;
 
 import io.micronaut.context.annotation.Property;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.fields.Fieldset;
 import io.micronaut.views.fields.FieldsetGenerator;
@@ -14,6 +13,7 @@ import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

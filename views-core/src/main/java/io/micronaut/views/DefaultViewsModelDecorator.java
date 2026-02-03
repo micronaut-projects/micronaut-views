@@ -17,7 +17,7 @@ package io.micronaut.views;
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.views.model.ViewModelProcessor;
 import jakarta.inject.Singleton;

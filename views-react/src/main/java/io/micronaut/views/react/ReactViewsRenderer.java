@@ -16,8 +16,6 @@
 package io.micronaut.views.react;
 
 import io.micronaut.context.exceptions.BeanInstantiationException;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.exceptions.MessageBodyException;
@@ -27,6 +25,8 @@ import io.micronaut.views.react.util.BeanPool;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.Writer;

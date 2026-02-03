@@ -16,11 +16,11 @@
 package io.micronaut.views.fields.fetchers;
 
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.views.fields.messages.Message;
 import io.micronaut.views.fields.elements.Checkbox;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,8 +73,7 @@ public class EnumCheckboxFetcher<T> implements CheckboxFetcher<T> {
             .toList();
     }
 
-    @NonNull
-    private Checkbox.Builder checkboxButtonFromEnum(@NonNull Class<? extends Enum> type,
+    private Checkbox.@NonNull Builder checkboxButtonFromEnum(@NonNull Class<? extends Enum> type,
                                                     @NonNull Enum instance) {
         String name = instance.name();
         return Checkbox.builder().id(name.toLowerCase()).value(name).label(Message.of(type, name));

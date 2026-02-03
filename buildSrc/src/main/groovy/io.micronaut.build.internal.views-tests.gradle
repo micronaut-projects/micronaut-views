@@ -1,3 +1,8 @@
 plugins {
     id "io.micronaut.build.internal.views-base"
 }
+
+dependencies {
+    testRuntimeOnly(mnTest.junit.platform.launcher)
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
+}

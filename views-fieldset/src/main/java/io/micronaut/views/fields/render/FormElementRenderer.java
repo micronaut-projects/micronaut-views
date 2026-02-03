@@ -17,8 +17,6 @@ package io.micronaut.views.fields.render;
 
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Experimental;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.views.fields.FormElement;
 import io.micronaut.views.fields.HtmlAttribute;
@@ -26,6 +24,8 @@ import io.micronaut.views.fields.HtmlTag;
 import io.micronaut.views.fields.InputType;
 import io.micronaut.views.fields.elements.InputStringFormElement;
 import io.micronaut.views.fields.messages.Message;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;

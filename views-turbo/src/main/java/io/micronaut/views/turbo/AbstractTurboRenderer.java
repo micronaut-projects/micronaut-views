@@ -17,14 +17,14 @@ package io.micronaut.views.turbo;
 
 
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.TemplatedBuilder;
 import io.micronaut.views.ViewsModelDecorator;
 import io.micronaut.views.ViewsRendererLocator;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 

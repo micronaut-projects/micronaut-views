@@ -16,7 +16,6 @@
 package io.micronaut.views.fields;
 
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.views.fields.elements.InputFileFormElement;
 import io.micronaut.views.fields.elements.InputSubmitFormElement;
@@ -24,6 +23,7 @@ import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;

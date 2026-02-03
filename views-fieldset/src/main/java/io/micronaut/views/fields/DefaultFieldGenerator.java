@@ -18,8 +18,6 @@ package io.micronaut.views.fields;
 import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.core.beans.BeanProperty;
 import io.micronaut.core.beans.BeanWrapper;
@@ -37,6 +35,8 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.*;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.util.*;

@@ -16,12 +16,12 @@
 package io.micronaut.views.fields.render.views;
 
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.Writable;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import io.micronaut.views.fields.FormElement;
 import io.micronaut.views.fields.render.FormElementRenderer;
+import org.jspecify.annotations.NonNull;
 
 import java.io.IOException;
 import java.io.StringWriter;

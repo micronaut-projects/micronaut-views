@@ -19,7 +19,7 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.config.SecurityConfigurationProperties;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link SecurityViewModelProcessorConfiguration}.

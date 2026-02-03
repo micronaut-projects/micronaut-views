@@ -16,7 +16,6 @@
 package io.micronaut.views.htmx.http;
 
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.type.Argument;
 import io.micronaut.core.type.MutableHeaders;
 import io.micronaut.http.ByteBodyHttpResponse;
@@ -34,6 +33,7 @@ import io.micronaut.http.codec.CodecException;
 import io.micronaut.views.ModelAndView;
 import io.micronaut.views.http.RawModelAndViewMessageBodyHandler;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
 
 import java.io.OutputStream;
 

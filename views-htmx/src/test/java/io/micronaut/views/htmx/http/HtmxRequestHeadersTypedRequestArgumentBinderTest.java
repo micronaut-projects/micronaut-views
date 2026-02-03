@@ -2,8 +2,6 @@ package io.micronaut.views.htmx.http;
 
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.*;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Consumes;
@@ -16,9 +14,9 @@ import io.micronaut.http.uri.UriBuilder;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.views.ModelAndView;
 import jakarta.inject.Singleton;
-import junit.framework.TestCase;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.Test;
-import spock.lang.Specification;
 
 import java.net.URI;
 import java.util.Collections;

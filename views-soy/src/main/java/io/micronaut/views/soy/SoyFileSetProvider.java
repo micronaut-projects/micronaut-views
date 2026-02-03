@@ -17,7 +17,7 @@ package io.micronaut.views.soy;
 
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.jbcsrc.api.SoySauce;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Interface via DI to acquire a {@link SoyFileSet}.

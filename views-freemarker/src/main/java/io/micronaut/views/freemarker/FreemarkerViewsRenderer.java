@@ -21,8 +21,6 @@ import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.views.ViewUtils;
@@ -31,6 +29,8 @@ import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
 

@@ -2,7 +2,7 @@ package io.micronaut.views.react;
 
 import io.micronaut.context.annotation.Executable;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
