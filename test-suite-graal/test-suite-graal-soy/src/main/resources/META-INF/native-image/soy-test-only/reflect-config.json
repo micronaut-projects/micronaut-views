@@ -9,5 +9,16 @@
         ]
       }
     ]
+  },
+  {
+    "name": "com.google.template.soy.data.SoyRecord",
+    "allPublicMethods": true,
+    "methods": [
+      {"name": "getPositionalParam", "parameterTypes": ["java.lang.String"]}
+    ]
+  },
+  {
+    "name": "com.google.template.soy.data.SoyValueProvider",
+    "allPublicMethods": true
   }
 ]
