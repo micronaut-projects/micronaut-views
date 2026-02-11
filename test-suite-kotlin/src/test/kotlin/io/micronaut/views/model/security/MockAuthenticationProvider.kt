@@ -7,7 +7,7 @@ import io.micronaut.security.authentication.provider.HttpRequestAuthenticationPr
 import jakarta.inject.Singleton
 
 @Singleton
-class MockAuthenticationProvider<B> : HttpRequestAuthenticationProvider<B> {
+class MockAuthenticationProvider<B : Any> : HttpRequestAuthenticationProvider<B> {
 
     override fun authenticate(
         requestContext: HttpRequest<B>,
