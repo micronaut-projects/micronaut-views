@@ -6,7 +6,6 @@ micronaut-sql = "6.0.2"
 micronaut-security = "4.12.0"
 micronaut-serde = "3.0.0-M2"
 micronaut-validation = "5.0.0-M1"
-jakarta-validation-api = "3.1.1"
 micronaut-gradle-plugin = "4.6.2"
 managed-freemarker = "2.3.34"
 managed-handlebars = "4.3.1"
@@ -34,7 +33,6 @@ micronaut-serde = { module = "io.micronaut.serde:micronaut-serde-bom", version.r
 micronaut-validation = { module = "io.micronaut.validation:micronaut-validation-bom", version.ref = "micronaut-validation" }
 micronaut-graal = {group = "io.micronaut", name = "micronaut-graal", version.ref = "micronaut" }
 micronaut-gradle-plugin = { module = "io.micronaut.gradle:micronaut-gradle-plugin", version.ref = "micronaut-gradle-plugin" }
-jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation-api" }
 
 managed-freemarker = { module = "org.freemarker:freemarker", version.ref = "managed-freemarker" }
 managed-handlebars = { module = "com.github.jknack:handlebars", version.ref = "managed-handlebars" }
