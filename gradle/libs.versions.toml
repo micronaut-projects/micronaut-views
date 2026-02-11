@@ -1,7 +1,7 @@
 [versions]
 micronaut = "5.0.0-M10"
 micronaut-platform = "4.10.7"
-micronaut-data = "4.11.1"
+micronaut-data = "4.14.3"
 micronaut-sql = "6.3.3"
 micronaut-security = "4.16.1"
 micronaut-serde = "3.0.0-M2"
