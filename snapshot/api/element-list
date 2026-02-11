@@ -1,4 +1,5 @@
 gg.jte.generated.precompiled
+gg.jte.generated.precompiled.fieldset
 io.micronaut.views
 io.micronaut.views.csp
 io.micronaut.views.exceptions
@@ -17,6 +18,8 @@ io.micronaut.views.freemarker
 io.micronaut.views.handlebars
 io.micronaut.views.htmx
 io.micronaut.views.htmx.http
+io.micronaut.views.http
+io.micronaut.views.info
 io.micronaut.views.jstachio
 io.micronaut.views.jte
 io.micronaut.views.model
