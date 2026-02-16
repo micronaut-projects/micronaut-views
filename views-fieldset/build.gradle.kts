@@ -5,6 +5,7 @@ plugins {
 dependencies {
     annotationProcessor(mnValidation.micronaut.validation.processor)
     api(mnValidation.validation)
+    api(projects.micronautViewsHtml)
     implementation(mnValidation.micronaut.validation)
     compileOnly(mn.micronaut.http)
     compileOnly(mnSecurity.micronaut.security.csrf)
