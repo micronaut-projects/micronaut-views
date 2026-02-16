@@ -10,7 +10,7 @@ import jakarta.inject.Singleton
 class MockAuthenticationProvider<B : Any> : HttpRequestAuthenticationProvider<B> {
 
     override fun authenticate(
-        requestContext: HttpRequest<B>,
+        requestContext: HttpRequest<B>?,
         authRequest: AuthenticationRequest<String, String>
     ): AuthenticationResponse = AuthenticationResponse.success(authRequest.identity, mapOf("email" to "john@email.com"))
 }
