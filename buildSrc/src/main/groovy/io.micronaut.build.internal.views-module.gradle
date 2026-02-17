@@ -1,7 +1,6 @@
 plugins {
     id("io.micronaut.build.internal.views-base")
     id("io.micronaut.build.internal.module")
-    id("org.sonatype.gradle.plugins.scan")
 }
 
 ossIndexAudit {
