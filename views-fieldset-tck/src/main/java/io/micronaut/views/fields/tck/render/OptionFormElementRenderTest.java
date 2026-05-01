@@ -28,7 +28,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Locale;
 
 import static io.micronaut.views.fields.tck.AsssertHtmlUtils.assertHtmlEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Property(name = "micronaut.views.form-element.render.views.option", value = "fieldset/option")
 @MicronautTest(startApplication = false)
