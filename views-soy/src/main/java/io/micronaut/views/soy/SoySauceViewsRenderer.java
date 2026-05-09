@@ -16,11 +16,10 @@
 package io.micronaut.views.soy;
 
 import com.google.template.soy.SoyFileSet;
-import com.google.template.soy.data.SoyTemplate;
-import com.google.template.soy.data.SoyValueProvider;
 import com.google.template.soy.error.SoyCompilationException;
 import com.google.template.soy.jbcsrc.api.RenderResult;
 import com.google.template.soy.jbcsrc.api.SoySauce;
+import com.google.template.soy.parseinfo.TemplateName;
 import com.google.template.soy.shared.SoyCssRenamingMap;
 import com.google.template.soy.shared.SoyIdRenamingMap;
 import io.micronaut.context.annotation.Requires;
@@ -118,18 +117,7 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>
 
         Map<String, Object> ijOverlay = new HashMap<>(1);
         Map<String, Object> context = ViewUtils.modelOf(data);
-        final SoySauce.Renderer renderer = soySauce.newRenderer(new SoyTemplate() {
-            @Override
-            public String getTemplateName() {
-                return viewName;
-            }
-
-            @Override
-            public Map<String, SoyValueProvider> getParamsAsMap() {
-                return null;
-            }
-            
-        });
+        final SoySauce.Renderer renderer = soySauce.renderTemplate(TemplateName.of(viewName));
         renderer.setData(context);
         if (injectNonce) {
             Optional<Object> nonceObj = request != null ? request.getAttribute(CspFilter.NONCE_PROPERTY) : Optional.empty();
