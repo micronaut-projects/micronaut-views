@@ -1,5 +1,8 @@
 package io.micronaut.docs
 
+import spock.lang.IgnoreIf
+
+@IgnoreIf({!env["CI"]})
 class BinaryJteViewRendererSpec extends JteViewRendererSpec {
     @Override
     Map<String, Object> getTestProperties() {
