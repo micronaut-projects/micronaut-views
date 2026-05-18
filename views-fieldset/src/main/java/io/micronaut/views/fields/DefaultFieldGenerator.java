@@ -105,8 +105,8 @@ public class DefaultFieldGenerator implements FieldsetGenerator {
     private final List<FieldsetConsumer> fieldsetConsumers;
 
     /**
-     * @param enumOptionFetcher   Enum fetcher for {@link Option}.
-     * @param enumRadioFetcher    Enum fetcher for {@link Radio}.
+     * @param enumOptionFetcher   Enum fetcher for {@link io.micronaut.views.fields.elements.Option}.
+     * @param enumRadioFetcher    Enum fetcher for {@link io.micronaut.views.fields.elements.Radio}.
      * @param enumCheckboxFetcher Enum fetcher for {@link Checkbox}.
      * @param beanContext         Bean Context
      * @param formElementResolver Primary Form Element Resolver. {@link io.micronaut.views.fields.formelementresolvers.CompositeFormElementResolver}.

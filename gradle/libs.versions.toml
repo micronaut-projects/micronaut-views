@@ -6,6 +6,7 @@ micronaut-data = "5.0.0-RC1"
 micronaut-sql = "7.0.1"
 micronaut-security = "5.0.0"
 micronaut-serde = "3.0.0"
+micronaut-reactor = "4.0.0"
 micronaut-validation = "5.0.0"
 micronaut-gradle-plugin = "5.0.0-M1"
 micronaut-grpc = "5.0.0"
@@ -25,6 +26,7 @@ thymeleaf-extra-java8time = "3.0.4.RELEASE"
 kotlinx-coroutines = "1.9.0"
 [libraries]
 # Core
+micronaut-reactor = { module = "io.micronaut.reactor:micronaut-reactor-bom", version.ref = "micronaut-reactor" }
 micronaut-grpc = { module = "io.micronaut.grpc:micronaut-grpc-bom", version.ref = "micronaut-grpc" }
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut' }
 micronaut-sql = { module = "io.micronaut.sql:micronaut-sql-bom", version.ref = "micronaut-sql" }

@@ -25,4 +25,5 @@ dependencies {
 
     testImplementation(mnTest.micronaut.test.junit5)
     testImplementation(mn.micronaut.http.client)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
