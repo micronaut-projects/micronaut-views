@@ -1,0 +1,15 @@
+[
+  {
+    "name": "com.google.template.soy.jbcsrc.api.SoySauceImpl$ContinuationImpl",
+    "fields": [
+      {"name": "hasContinueBeenCalled", "allowUnsafeAccess": true}
+    ]
+  },
+  {
+    "name": "com.google.template.soy.data.internal.ParamStore",
+    "allPublicMethods": true,
+    "methods": [
+      {"name": "getParameter", "parameterTypes": ["com.google.template.soy.data.RecordProperty"]}
+    ]
+  }
+]

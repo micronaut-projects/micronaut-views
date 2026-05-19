@@ -16,6 +16,7 @@ public class CompiledTemplatesProvider implements SoyFileSetProvider {
 
     @Override
     public SoySauce provideCompiledTemplates() {
+        SoyTemplateBuildTimeInitializer.ensureInitialized();
         SoySauceBuilder builder = new SoySauceBuilder();
         return builder.build();
     }
