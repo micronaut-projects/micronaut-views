@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Request</title>
+    </head>
+    <body>
+        <dl>
+            <dt>requestURI</dt>
+            <dd id="request-uri" th:text="${#request.requestURI}"></dd>
+            <dt>requestURL</dt>
+            <dd id="request-url" th:text="${#request.requestURL}"></dd>
+            <dt>contextPath</dt>
+            <dd id="context-path" th:text="${#request.contextPath}"></dd>
+            <dt>method</dt>
+            <dd id="method" th:text="${#request.method}"></dd>
+            <dt>ctxRequest</dt>
+            <dd id="ctx-request" th:text="${#ctx.getRequest() != null}"></dd>
+        </dl>
+    </body>
+</html>

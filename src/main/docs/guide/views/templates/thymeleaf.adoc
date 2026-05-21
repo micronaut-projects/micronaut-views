@@ -30,4 +30,10 @@ include::{testsviewsThymeleaf}/resources/views/layoutFile.html[]
 Use Thymeleaf templates with Micronaut i18n messages. Internationalization messages will be resolved from Micronaut's
 MessageSource automatically. For more information on the MessageSource, see the core documentation.
 
+Micronaut Views exposes a Micronaut-native Thymeleaf `#request` expression object for request metadata such as
+`requestURI`, `requestURL`, `contextPath`, `method`, `path`, and `queryString`.
+This object is backed by Micronaut's api:http.HttpRequest[] and is not a servlet request.
+Servlet-specific expression objects such as `#response` and `#servletContext` are not provided.
+When Micronaut's server request contains only a relative URI, `requestURL` also renders that relative URI path.
+
 TIP: See the guide for https://guides.micronaut.io/latest/micronaut-views-thymeleaf.html[Server-side HTML with Thymeleaf] to learn more.
