@@ -15,6 +15,7 @@
  */
 package io.micronaut.views.thymeleaf;
 
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.http.HttpRequest;
 import org.jspecify.annotations.Nullable;
 
@@ -26,7 +27,8 @@ import java.net.URI;
  * @author Sergio del Amo
  * @since 6.0.1
  */
-final class MicronautRequestExpressionObject {
+@Internal
+public final class MicronautRequestExpressionObject {
 
     private final HttpRequest<?> request;
 
