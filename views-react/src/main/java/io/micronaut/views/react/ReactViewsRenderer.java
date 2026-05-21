@@ -21,16 +21,16 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.exceptions.MessageBodyException;
-import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.react.truffle.IntrospectableToTruffleAdapter;
 import io.micronaut.views.react.util.BeanPool;
+import io.micronaut.views.reactive.ReactiveViewsRenderer;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
+import reactor.core.publisher.Mono;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * <p>Instantiates GraalJS and uses it to render React components server side. See the user guide
@@ -39,7 +39,7 @@ import java.nio.charset.StandardCharsets;
  * @param <PROPS> An introspectable bean type that will be fed to the ReactJS root component as props.
  */
 @Singleton
-class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> {
+class ReactViewsRenderer<PROPS> implements ReactiveViewsRenderer<PROPS, HttpRequest<?>, String> {
     private final BeanPool<ReactJSContext> beanPool;
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
 
@@ -58,20 +58,20 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
      * @param request  The HTTP request object.
      */
     @Override
-    public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
-        return writer -> {
-            try {
-                beanPool.useContext(handle -> {
-                    render(viewName, props, writer, handle.get(), request);
-                    return null;
-                });
-            } catch (BeanInstantiationException e) {
-                throw e;
-            } catch (Exception e) {
-                // If we don't wrap and rethrow, the exception is swallowed and the request hangs.
-                throw new MessageBodyException("Could not render component " + viewName, e);
-            }
-        };
+    public @NonNull Mono<String> render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
+        StringBuilder sb = new StringBuilder();
+        RenderCallback cb;
+        try {
+            cb = beanPool.useContext(handle -> render(viewName, props, sb, handle.get(), request));
+        } catch (BeanInstantiationException e) {
+            return Mono.error(e);
+        } catch (Exception e) {
+            // If we don't wrap and rethrow, the exception is swallowed and the request hangs.
+            return Mono.error(new MessageBodyException("Could not render component " + viewName, e));
+        }
+        return cb.isDone()
+            ? Mono.just(cb.sb.toString())
+            : Mono.fromFuture(cb);
     }
 
     @Override
@@ -79,19 +79,20 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
         return beanPool.useContext(handle -> handle.get().moduleHasMember(viewName));
     }
 
-    private void render(String componentName, PROPS props, Writer writer, ReactJSContext context, @Nullable HttpRequest<?> request) {
+    private RenderCallback render(String componentName, PROPS props, StringBuilder sb, ReactJSContext context, @Nullable HttpRequest<?> request) {
         Value component = context.ssrModule().getMember(componentName);
         if (component == null) {
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
         }
 
-        var renderCallback = new RenderCallback(writer, request);
+        var renderCallback = new RenderCallback(sb, request);
 
         // We wrap the props object so we can use Micronaut's compile-time reflection implementation.
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
         Value guestProps = IntrospectableToTruffleAdapter.wrap(context.polyglotContext(), props);
         context.render().executeVoid(component, guestProps, renderCallback, reactViewsRendererConfiguration.getClientBundleURL(), request);
+        return renderCallback;
     }
 
 
@@ -104,12 +105,12 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
      *
      * @hidden
      */
-    public static final class RenderCallback {
-        private final Writer responseWriter;
+    public static final class RenderCallback extends CompletableFuture<String> {
+        private final StringBuilder sb;
         private final @Nullable HttpRequest<?> request;
 
-        RenderCallback(Writer responseWriter, HttpRequest<?> request) {
-            this.responseWriter = responseWriter;
+        RenderCallback(StringBuilder sb, HttpRequest<?> request) {
+            this.sb = sb;
             this.request = request;
         }
 
@@ -124,24 +125,21 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
 
         @HostAccess.Export
         public void write(String html) {
-            try {
-                responseWriter.write(html);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            sb.append(html);
         }
 
         @HostAccess.Export
         public void write(int[] unsignedBytes) {
-            try {
-                byte[] bytes = new byte[unsignedBytes.length];
-                for (int i = 0; i < unsignedBytes.length; i++) {
-                    bytes[i] = (byte) unsignedBytes[i];
-                }
-                responseWriter.write(new String(bytes, StandardCharsets.UTF_8));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            byte[] bytes = new byte[unsignedBytes.length];
+            for (int i = 0; i < unsignedBytes.length; i++) {
+                bytes[i] = (byte) unsignedBytes[i];
             }
+            write(new String(bytes, StandardCharsets.UTF_8));
+        }
+
+        @HostAccess.Export
+        public void complete() {
+            super.complete(sb.toString());
         }
     }
 }

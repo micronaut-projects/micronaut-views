@@ -5,6 +5,7 @@ import io.micronaut.http.HttpRequest
 import io.micronaut.core.io.Writable
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
+import reactor.core.publisher.Mono
 import spock.lang.Specification
 /**
  * Preact is an alternative implementation of React that focuses on being smaller and having fewer sharp edges in
@@ -21,8 +22,7 @@ class PreactViewRenderSpec extends Specification {
 
     void "views can be rendered with basic props and no request"() {
         when:
-        Writable writable = renderer.render("App", TestProps.basic, null)
-        String result = WritableUtils.writableToString(writable).orElseThrow()
+        String result = Mono.from(renderer.render("App", TestProps.basic, null)).block()
 
         then:
         result.contains("/static/client.preact.js")
@@ -36,8 +36,7 @@ class PreactViewRenderSpec extends Specification {
         req.getUri() >> URI.create("https://localhost/demopage")
 
         when:
-        Writable writable = renderer.render("App", TestProps.basic, req)
-        String result = WritableUtils.writableToString(writable).orElseThrow()
+        String result = Mono.from(renderer.render("App", TestProps.basic, req)).block()
 
         then:
         result.contains("/static/client.preact.js")

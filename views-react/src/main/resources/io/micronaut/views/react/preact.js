@@ -13,4 +13,5 @@ export function ssr(component, props, callback, clientBundleURL) {
     // The Micronaut object defined here is not the same as the Micronaut object defined server side.
     callback.write(`<script type="text/javascript">var Micronaut = ${JSON.stringify(boot)};</script>`)
     callback.write(`<script type="text/javascript" src="${clientBundleURL}" async="true">`)
+    callback.complete()
 }

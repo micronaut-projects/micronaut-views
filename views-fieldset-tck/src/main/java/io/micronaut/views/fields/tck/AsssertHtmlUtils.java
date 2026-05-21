@@ -31,7 +31,7 @@ public final class AsssertHtmlUtils {
     }
 
     public static String cleanup(String html) {
-        String cleanup = html.replaceAll("\\s+","");
+        String cleanup = html.replaceAll("\\s+", "");
         cleanup = cleanup.replaceAll("value=\"\"", "");
         cleanup = cleanup.replaceAll("disabled=\"disabled\"", "disabled");
         cleanup = cleanup.replaceAll("selected=\"selected\"", "selected");

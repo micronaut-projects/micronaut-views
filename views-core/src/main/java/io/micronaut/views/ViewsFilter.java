@@ -33,6 +33,8 @@ import io.micronaut.http.filter.ServerFilterChain;
 import io.micronaut.http.filter.ServerFilterPhase;
 import io.micronaut.views.exceptions.ViewNotFoundException;
 import io.micronaut.views.exceptions.ViewRenderingException;
+import io.micronaut.views.reactive.ReactiveViewsRenderer;
+import io.micronaut.views.reactive.ReactiveViewsRendererLocator;
 import io.micronaut.views.turbo.TurboFrame;
 import io.micronaut.views.turbo.TurboFrameRenderer;
 import io.micronaut.views.turbo.TurboStreamRenderer;
@@ -42,6 +44,7 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Collections;
 import java.util.List;
@@ -68,7 +71,9 @@ public class ViewsFilter implements HttpServerFilter {
 
     /**
      * Views Render Locator.
+     * @deprecated unused
      */
+    @Deprecated(forRemoval = true, since = "5.8.0")
     protected final ViewsRendererLocator viewsRendererLocator;
 
     /**
@@ -86,14 +91,37 @@ public class ViewsFilter implements HttpServerFilter {
      */
     protected final TurboFrameRenderer turboFrameRenderer;
 
+    protected final ReactiveViewsRendererLocator reactiveViewsRendererLocator;
+
+    /**
+     * Constructor.
+     * @param viewsResolver Views Resolver
+     * @param reactiveViewsRendererLocator ViewRendererLocator
+     * @param viewsModelDecorator Views Model Decorator
+     * @param turboFrameRenderer Turbo Frame renderer
+     */
+    @Inject
+    public ViewsFilter(ViewsResolver viewsResolver,
+                       ReactiveViewsRendererLocator reactiveViewsRendererLocator,
+                       ViewsModelDecorator viewsModelDecorator,
+                       TurboFrameRenderer turboFrameRenderer) {
+        this.viewsResolver = viewsResolver;
+        this.viewsRendererLocator = null;
+        this.reactiveViewsRendererLocator = reactiveViewsRendererLocator;
+        this.viewsModelDecorator = viewsModelDecorator;
+        this.turboStreamRenderer = null;
+        this.turboFrameRenderer = turboFrameRenderer;
+    }
+
     /**
      * Constructor.
      * @param viewsResolver Views Resolver
      * @param viewsRendererLocator ViewRendererLocator
      * @param viewsModelDecorator Views Model Decorator
      * @param turboFrameRenderer Turbo Frame renderer
+     * @deprecated Use {@link ViewsFilter(ViewsResolver, ReactiveViewsRendererLocator, ViewsModelDecorator, TurboFrameRenderer)} instead.
      */
-    @Inject
+    @Deprecated(forRemoval = true, since = "5.8.0")
     public ViewsFilter(ViewsResolver viewsResolver,
                        ViewsRendererLocator viewsRendererLocator,
                        ViewsModelDecorator viewsModelDecorator,
@@ -102,6 +130,7 @@ public class ViewsFilter implements HttpServerFilter {
         this.viewsRendererLocator = viewsRendererLocator;
         this.viewsModelDecorator = viewsModelDecorator;
         this.turboStreamRenderer = null;
+        this.reactiveViewsRendererLocator = null;
         this.turboFrameRenderer = turboFrameRenderer;
     }
 
@@ -125,6 +154,7 @@ public class ViewsFilter implements HttpServerFilter {
         this.viewsModelDecorator = viewsModelDecorator;
         this.turboStreamRenderer = turboStreamRenderer;
         this.turboFrameRenderer = turboFrameRenderer;
+        this.reactiveViewsRendererLocator = null;
     }
 
     @Override
@@ -160,17 +190,20 @@ public class ViewsFilter implements HttpServerFilter {
                 }
 
                 try {
-                    Optional<ViewsRenderer> optionalViewsRenderer = viewsRendererLocator.resolveViewsRenderer(view,  type.getName(), body);
+                    Optional<ReactiveViewsRenderer> optionalViewsRenderer = reactiveViewsRendererLocator.resolveViewsRenderer(view,  type.getName(), body);
                     if (!optionalViewsRenderer.isPresent()) {
                         LOG.debug("no view renderer found for media type: {}, ignoring", type);
                         return Flux.just(response);
                     }
+                    ReactiveViewsRenderer viewsRenderer = optionalViewsRenderer.get();
                     ModelAndView<?> modelAndView = new ModelAndView<>(view, body instanceof ModelAndView ? ((ModelAndView<?>) body).getModel().orElse(null) : body);
                     viewsModelDecorator.decorate(request, modelAndView);
-                    Writable writable = optionalViewsRenderer.get().render(view, modelAndView.getModel().orElse(null), request);
-                    response.contentType(type);
-                    response.body(writable);
-                    return Flux.just(response);
+                    return Mono.from(viewsRenderer.render(view, modelAndView.getModel().orElse(null), request))
+                        .map(b -> {
+                            response.contentType(type);
+                            response.body(b);
+                            return response;
+                        });
                 } catch (ViewNotFoundException | ViewRenderingException e) {
                     return Flux.error(e);
                 }
