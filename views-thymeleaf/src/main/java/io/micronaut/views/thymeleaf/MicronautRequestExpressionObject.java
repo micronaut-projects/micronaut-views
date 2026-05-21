@@ -83,9 +83,7 @@ public final class MicronautRequestExpressionObject {
         } else {
             url.append(request.getServerName());
             int port = request.getServerAddress().getPort();
-            if (port > -1) {
-                url.append(':').append(port);
-            }
+            url.append(':').append(port);
         }
         url.append(uri.getRawPath());
         return url.toString();
