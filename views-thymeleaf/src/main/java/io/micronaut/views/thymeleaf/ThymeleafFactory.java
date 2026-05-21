@@ -67,23 +67,30 @@ public class ThymeleafFactory {
      * @param templateResolver The template resolver
      * @param engineContextFactory The engine context factory
      * @param linkBuilder The link builder
-     * @param micronautWebExpressionDialect The Micronaut web expression dialect
      * @param messageSourceMessageResolver The message resolver
      * @return The template engine
      */
-    @Singleton
     public TemplateEngine templateEngine(ITemplateResolver templateResolver,
                                          IEngineContextFactory engineContextFactory,
                                          ILinkBuilder linkBuilder,
-                                         MicronautWebExpressionDialect micronautWebExpressionDialect,
                                          MessageSourceMessageResolver messageSourceMessageResolver) {
         TemplateEngine engine = new TemplateEngine();
         engine.setEngineContextFactory(engineContextFactory);
         engine.setLinkBuilder(linkBuilder);
         engine.setTemplateResolver(templateResolver);
         engine.addDialect(new Java8TimeDialect());
-        engine.addDialect(micronautWebExpressionDialect);
         engine.addMessageResolver(messageSourceMessageResolver);
+        return engine;
+    }
+
+    @Singleton
+    TemplateEngine templateEngine(ITemplateResolver templateResolver,
+                                  IEngineContextFactory engineContextFactory,
+                                  ILinkBuilder linkBuilder,
+                                  MicronautWebExpressionDialect micronautWebExpressionDialect,
+                                  MessageSourceMessageResolver messageSourceMessageResolver) {
+        TemplateEngine engine = templateEngine(templateResolver, engineContextFactory, linkBuilder, messageSourceMessageResolver);
+        engine.addDialect(micronautWebExpressionDialect);
         return engine;
     }
 }
