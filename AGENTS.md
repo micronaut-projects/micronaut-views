@@ -6,8 +6,9 @@ unrelated company, workflow, or template-package policy.
 
 ## Repository Shape
 
-- The default development branch is `6.0.x`; confirm the intended target branch
-  before opening a pull request.
+- Confirm the intended target branch before opening a pull request. This
+  repository currently uses `6.0.x` for active development, while older docs and
+  automation may still mention `master`.
 - Runtime modules are named `views-*`, for example `views-core`,
   `views-thymeleaf`, `views-freemarker`, `views-handlebars`, `views-soy`,
   `views-jte`, `views-jstachio`, `views-pebble`, `views-rocker`, `views-htmx`,
@@ -25,9 +26,9 @@ unrelated company, workflow, or template-package policy.
 - Follow nearby Micronaut patterns before introducing new abstractions.
 - Use `jakarta.inject` APIs, constructor injection where practical, and
   `@ConfigurationProperties` for configuration models.
-- Use JSpecify annotations from `org.jspecify.annotations` for new or changed
-  nullability contracts. New Java packages should include `package-info.java`
-  with `@NullMarked` unless the surrounding package style clearly differs.
+- Use existing JSpecify annotations from `org.jspecify.annotations` for new or
+  changed nullability contracts. Do not introduce a repository-wide
+  `@NullMarked` package convention in a focused feature or bug-fix PR.
 - Mark non-user-facing APIs with `@io.micronaut.core.annotation.Internal`.
   Mark unstable user-facing APIs with `@Experimental`.
 - Preserve binary compatibility for public APIs. Prefer adding overloads or
