@@ -27,6 +27,7 @@ include 'views-velocity'
 include 'views-react'
 include 'views-rocker'
 include 'views-pebble'
+include 'views-qute'
 include 'views-jte'
 include 'views-jstachio'
 

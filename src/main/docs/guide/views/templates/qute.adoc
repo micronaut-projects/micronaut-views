@@ -1,0 +1,33 @@
+Micronaut Views Qute includes api:views.qute.QuteViewsRenderer[] which uses the
+https://quarkus.io/guides/qute[Qute] template engine through its standalone core library.
+
+Add the following dependency on your classpath. For example, in `build.gradle`
+
+dependency:micronaut-views-qute[groupId="io.micronaut.views"]
+
+The example shown in the <<views, Views>> section, could be rendered with the following Qute template:
+
+[source,html]
+.src/main/resources/views/home.html
+----
+include::{testsviewsQute}/resources/views/home.html[]
+----
+
+Qute templates are loaded from the Micronaut Views folder, which defaults to `views`, and the Qute renderer uses `html` as the default extension.
+
+[configuration]
+----
+micronaut:
+  views:
+    qute:
+      default-extension: html
+      strict-rendering: false
+----
+
+This integration uses Qute as a standalone template engine. It does not enable Quarkus runtime features such as CDI/Arc injection into templates, Quarkus REST integration, dev mode, or Qute type-safe template validation.
+
+HTML escaping is enabled by default for HTML templates. Template loading is restricted to classpath resources under the configured Views folder.
+
+The properties used can be customized by overriding the values of:
+
+include::{includedir}configurationProperties/io.micronaut.views.qute.QuteViewsRendererConfigurationProperties.adoc[]

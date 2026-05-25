@@ -17,6 +17,7 @@ views:
       soyfeaturesrenaming: Soy Features - Renaming
       buildingsoy: Building Soy
     pebble: Pebble
+    qute: Qute
     jte: JTE
     jstachio:
       title: JStachio

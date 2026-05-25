@@ -1,0 +1,25 @@
+plugins {
+    id "io.micronaut.build.internal.views-module"
+}
+
+dependencies {
+    annotationProcessor(mnValidation.micronaut.validation.processor)
+
+    api projects.micronautViewsCore
+    api(libs.managed.qute)
+
+    compileOnly(mnValidation.micronaut.validation)
+
+    testCompileOnly(mn.micronaut.inject.groovy)
+    testAnnotationProcessor(mnValidation.micronaut.validation.processor)
+    testAnnotationProcessor(mn.micronaut.inject.java)
+
+    testImplementation(mnSerde.micronaut.serde.jackson)
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mnValidation.micronaut.validation)
+}
+
+micronautBuild {
+    binaryCompatibility.enabled.set(false)
+}
