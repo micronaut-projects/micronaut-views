@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.thymeleaf;
+package io.micronaut.views.thymeleaf.webexpression;
 
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.server.HttpServerConfiguration;
+import io.micronaut.http.server.util.HttpHostResolver;
+import io.micronaut.views.thymeleaf.WebEngineContext;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.expression.IExpressionObjectFactory;
 
@@ -27,17 +30,21 @@ import java.util.Set;
  * Exposes Micronaut web expression objects to Thymeleaf templates.
  *
  * @author Sergio del Amo
- * @since 6.0.1
+ * @since 6.1.0
  */
-final class MicronautWebExpressionObjectFactory implements IExpressionObjectFactory {
+@Internal
+final class RequestExpressionObjectFactory implements IExpressionObjectFactory {
 
     private static final String REQUEST_EXPRESSION_OBJECT_NAME = "request";
     private static final Set<String> ALL_EXPRESSION_OBJECT_NAMES =
         Collections.singleton(REQUEST_EXPRESSION_OBJECT_NAME);
 
+    private final HttpHostResolver httpHostResolver;
     private final HttpServerConfiguration httpServerConfiguration;
 
-    MicronautWebExpressionObjectFactory(HttpServerConfiguration httpServerConfiguration) {
+    RequestExpressionObjectFactory(HttpHostResolver httpHostResolver,
+                                   HttpServerConfiguration httpServerConfiguration) {
+        this.httpHostResolver = httpHostResolver;
         this.httpServerConfiguration = httpServerConfiguration;
     }
 
@@ -55,7 +62,7 @@ final class MicronautWebExpressionObjectFactory implements IExpressionObjectFact
         if (request == null) {
             return null;
         }
-        return new MicronautRequestExpressionObject(request, httpServerConfiguration.getContextPath());
+        return new RequestExpressionObject(request, httpHostResolver::resolve, httpServerConfiguration.getContextPath());
     }
 
     @Override

@@ -16,7 +16,10 @@
 package io.micronaut.views.thymeleaf;
 
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.views.ViewsConfiguration;
+import io.micronaut.views.thymeleaf.webexpression.RequestExpressionDialect;
+import org.jspecify.annotations.Nullable;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.IEngineContextFactory;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
@@ -33,6 +36,7 @@ import jakarta.inject.Singleton;
  * @author James Kleeh
  * @since 1.1.0
  */
+@Internal
 @Factory
 public class ThymeleafFactory {
 
@@ -69,7 +73,9 @@ public class ThymeleafFactory {
      * @param linkBuilder The link builder
      * @param messageSourceMessageResolver The message resolver
      * @return The template engine
+     * @deprecated Use {@link ThymeleafFactory#templateEngine(ITemplateResolver, IEngineContextFactory, ILinkBuilder, MessageSourceMessageResolver, RequestExpressionDialect)} instead.
      */
+    @Deprecated(forRemoval = true, since = "6.1.0")
     public TemplateEngine templateEngine(ITemplateResolver templateResolver,
                                          IEngineContextFactory engineContextFactory,
                                          ILinkBuilder linkBuilder,
@@ -83,14 +89,24 @@ public class ThymeleafFactory {
         return engine;
     }
 
+    /**
+     * @param templateResolver The template resolver
+     * @param engineContextFactory The engine context factory
+     * @param linkBuilder The link builder
+     * @param messageSourceMessageResolver The message resolver
+     * @param requestExpressionDialect Request Expression Dialect
+     * @return The template engine
+     */
     @Singleton
     TemplateEngine templateEngine(ITemplateResolver templateResolver,
                                   IEngineContextFactory engineContextFactory,
                                   ILinkBuilder linkBuilder,
-                                  MicronautWebExpressionDialect micronautWebExpressionDialect,
-                                  MessageSourceMessageResolver messageSourceMessageResolver) {
+                                  MessageSourceMessageResolver messageSourceMessageResolver,
+                                  @Nullable RequestExpressionDialect requestExpressionDialect) {
         TemplateEngine engine = templateEngine(templateResolver, engineContextFactory, linkBuilder, messageSourceMessageResolver);
-        engine.addDialect(micronautWebExpressionDialect);
+        if (requestExpressionDialect != null) {
+            engine.addDialect(requestExpressionDialect);
+        }
         return engine;
     }
 }

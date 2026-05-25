@@ -13,22 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.thymeleaf;
+package io.micronaut.views.thymeleaf.webexpression;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.http.server.HttpServerConfiguration;
+import io.micronaut.http.server.util.HttpHostResolver;
 import jakarta.inject.Singleton;
 import org.thymeleaf.dialect.AbstractDialect;
-import org.thymeleaf.dialect.IExpressionObjectDialect;
 import org.thymeleaf.expression.IExpressionObjectFactory;
 
 /**
- * Thymeleaf dialect for Micronaut web expression objects.
+ * Thymeleaf dialect for {@link RequestExpressionObject} instantiated via the {@link RequestExpressionObjectFactory}.
  *
  * @author Sergio del Amo
- * @since 6.0.1
+ * @since 6.1.0
  */
+@Requires(beans = {HttpServerConfiguration.class, HttpHostResolver.class})
 @Singleton
-public class MicronautWebExpressionDialect extends AbstractDialect implements IExpressionObjectDialect {
+@Internal
+final class MicronautWebExpressionDialect extends AbstractDialect implements RequestExpressionDialect {
 
     private static final String DIALECT_NAME = "Micronaut Web";
 
@@ -37,9 +41,9 @@ public class MicronautWebExpressionDialect extends AbstractDialect implements IE
     /**
      * @param httpServerConfiguration HTTP server configuration
      */
-    public MicronautWebExpressionDialect(HttpServerConfiguration httpServerConfiguration) {
+    MicronautWebExpressionDialect(HttpServerConfiguration httpServerConfiguration, HttpHostResolver httpHostResolver) {
         super(DIALECT_NAME);
-        this.expressionObjectFactory = new MicronautWebExpressionObjectFactory(httpServerConfiguration);
+        this.expressionObjectFactory = new RequestExpressionObjectFactory(httpHostResolver, httpServerConfiguration);
     }
 
     @Override

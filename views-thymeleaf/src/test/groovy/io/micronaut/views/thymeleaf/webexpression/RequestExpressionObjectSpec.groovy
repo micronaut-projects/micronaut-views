@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.thymeleaf
+package io.micronaut.views.thymeleaf.webexpression
 
 import io.micronaut.http.HttpRequest
 import spock.lang.Specification
 
-import java.net.InetSocketAddress
-import java.net.URI
-
-class MicronautRequestExpressionObjectSpec extends Specification {
+class RequestExpressionObjectSpec extends Specification {
 
     void "exposes metadata from a relative request URI"() {
         given:
-        def expressionObject = new MicronautRequestExpressionObject(HttpRequest.GET('/views/request?name=Tim'), '/demo')
+        def expressionObject = new RequestExpressionObject(HttpRequest.GET('/views/request?name=Tim'), null, '/demo')
 
         expect:
         expressionObject.contextPath == '/demo'
@@ -38,12 +35,12 @@ class MicronautRequestExpressionObjectSpec extends Specification {
 
     void "returns empty context path when none is configured"() {
         expect:
-        new MicronautRequestExpressionObject(HttpRequest.GET('/views/request'), null).contextPath == ''
+        new RequestExpressionObject(HttpRequest.GET('/views/request'), null, null).contextPath == ''
     }
 
     void "uses the absolute URI authority for request URL"() {
         given:
-        def expressionObject = new MicronautRequestExpressionObject(HttpRequest.GET('https://example.com:8443/views/request?name=Tim'), null)
+        def expressionObject = new RequestExpressionObject(HttpRequest.GET('https://example.com:8443/views/request?name=Tim'), null, null)
 
         expect:
         expressionObject.requestURL == 'https://example.com:8443/views/request'
@@ -59,6 +56,6 @@ class MicronautRequestExpressionObjectSpec extends Specification {
         }
 
         expect:
-        new MicronautRequestExpressionObject(request, null).requestURL == 'https://example.com:443/views/request'
+        new RequestExpressionObject(request, null, null).requestURL == 'https://example.com:443/views/request'
     }
 }

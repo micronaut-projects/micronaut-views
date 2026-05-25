@@ -13,30 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.thymeleaf;
+package io.micronaut.views.thymeleaf.webexpression;
 
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.http.HttpRequest;
 import org.jspecify.annotations.Nullable;
 
 import java.net.URI;
+import java.util.function.Function;
 
 /**
  * Micronaut-native request expression object exposed to Thymeleaf as {@code #request}.
  *
  * @author Sergio del Amo
- * @since 6.0.1
+ * @since 6.1.0
  */
 @Internal
-public final class MicronautRequestExpressionObject {
+public final class RequestExpressionObject {
 
     private final HttpRequest<?> request;
+
+    private final Function<HttpRequest<?>, String> hostResolver;
 
     @Nullable
     private final String contextPath;
 
-    MicronautRequestExpressionObject(HttpRequest<?> request, @Nullable String contextPath) {
+    RequestExpressionObject(HttpRequest<?> request,
+                            @Nullable Function<HttpRequest<?>, String> hostResolver,
+                            @Nullable String contextPath) {
         this.request = request;
+        this.hostResolver = hostResolver;
         this.contextPath = contextPath;
     }
 
@@ -76,6 +82,13 @@ public final class MicronautRequestExpressionObject {
         if (!uri.isAbsolute()) {
             return getRequestURI();
         }
+        String host = hostResolver != null
+            ? hostResolver.apply(request)
+            : host(uri);
+        return host + uri.getRawPath();
+    }
+
+    private String host(URI uri) {
         StringBuilder url = new StringBuilder();
         url.append(uri.getScheme()).append("://");
         if (uri.getRawAuthority() != null) {
@@ -85,7 +98,6 @@ public final class MicronautRequestExpressionObject {
             int port = request.getServerAddress().getPort();
             url.append(':').append(port);
         }
-        url.append(uri.getRawPath());
         return url.toString();
     }
 
