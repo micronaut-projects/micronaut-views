@@ -32,7 +32,7 @@ import org.thymeleaf.expression.IExpressionObjectFactory;
 @Requires(beans = {HttpServerConfiguration.class, HttpHostResolver.class})
 @Singleton
 @Internal
-final class MicronautWebExpressionDialect extends AbstractDialect implements RequestExpressionDialect {
+final class HttpServerRequestExpressionDialect extends AbstractDialect implements RequestExpressionDialect {
 
     private static final String DIALECT_NAME = "Micronaut Web";
 
@@ -41,7 +41,7 @@ final class MicronautWebExpressionDialect extends AbstractDialect implements Req
     /**
      * @param httpServerConfiguration HTTP server configuration
      */
-    MicronautWebExpressionDialect(HttpServerConfiguration httpServerConfiguration, HttpHostResolver httpHostResolver) {
+    HttpServerRequestExpressionDialect(HttpServerConfiguration httpServerConfiguration, HttpHostResolver httpHostResolver) {
         super(DIALECT_NAME);
         this.expressionObjectFactory = new RequestExpressionObjectFactory(httpHostResolver, httpServerConfiguration);
     }
