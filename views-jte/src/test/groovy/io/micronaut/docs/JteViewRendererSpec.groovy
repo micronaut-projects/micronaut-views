@@ -37,7 +37,7 @@ abstract class JteViewRendererSpec extends Specification {
     @Shared
     @AutoCleanup
     EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
-            testProperties,
+            testProperties + ['micronaut.http.client.read-timeout': '30s'],
             "test")
 
     @Shared
