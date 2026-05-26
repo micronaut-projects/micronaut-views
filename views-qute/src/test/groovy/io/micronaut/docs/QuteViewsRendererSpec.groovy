@@ -16,6 +16,7 @@
 package io.micronaut.docs
 
 import io.micronaut.context.ApplicationContext
+import io.micronaut.core.io.Writable
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
@@ -159,5 +160,21 @@ class QuteViewsRendererSpec extends Specification {
 
         then:
         rsp.body().contains("&lt;admin&gt;")
+    }
+
+    def "xhtml templates escape expression output by default"() {
+        given:
+        QuteViewsRenderer renderer = embeddedServer.applicationContext.getBean(QuteViewsRenderer)
+
+        when:
+        Writable writable = renderer.render("xhtml.xhtml", [name: "<admin>"], null)
+        String body = new StringWriter().with {
+            writable.writeTo(it)
+            it.toString()
+        }
+
+        then:
+        body.contains("&lt;admin&gt;")
+        !body.contains("<admin>")
     }
 }

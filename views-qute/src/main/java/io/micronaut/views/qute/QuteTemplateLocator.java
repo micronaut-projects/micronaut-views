@@ -39,6 +39,7 @@ public class QuteTemplateLocator implements TemplateLocator {
 
     private static final String EXTENSION_HTML = "html";
     private static final String EXTENSION_HTM = "htm";
+    private static final String EXTENSION_XHTML = "xhtml";
     private static final String EXTENSION_TXT = "txt";
     private static final String EXTENSION_XML = "xml";
     private static final String EXTENSION_JSON = "json";
@@ -119,7 +120,8 @@ public class QuteTemplateLocator implements TemplateLocator {
     private static Optional<Variant> variant(String extension) {
         return switch (extension) {
             case EXTENSION_HTML -> Optional.of(Variant.forContentType(Variant.TEXT_HTML));
-            case EXTENSION_HTM -> Optional.of(Variant.forContentType(APPLICATION_XHTML));
+            case EXTENSION_HTM -> Optional.of(Variant.forContentType(Variant.TEXT_HTML));
+            case EXTENSION_XHTML -> Optional.of(Variant.forContentType(APPLICATION_XHTML));
             case EXTENSION_TXT -> Optional.of(Variant.forContentType(Variant.TEXT_PLAIN));
             case EXTENSION_XML -> Optional.of(Variant.forContentType(Variant.TEXT_XML));
             case EXTENSION_JSON -> Optional.of(Variant.forContentType(Variant.APPLICATION_JSON));
