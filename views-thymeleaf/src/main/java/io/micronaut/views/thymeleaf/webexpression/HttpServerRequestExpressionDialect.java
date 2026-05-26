@@ -21,6 +21,7 @@ import io.micronaut.http.server.HttpServerConfiguration;
 import io.micronaut.http.server.util.HttpHostResolver;
 import jakarta.inject.Singleton;
 import org.thymeleaf.dialect.AbstractDialect;
+import org.thymeleaf.dialect.IExpressionObjectDialect;
 import org.thymeleaf.expression.IExpressionObjectFactory;
 
 /**
@@ -32,7 +33,7 @@ import org.thymeleaf.expression.IExpressionObjectFactory;
 @Requires(beans = {HttpServerConfiguration.class, HttpHostResolver.class})
 @Singleton
 @Internal
-final class HttpServerRequestExpressionDialect extends AbstractDialect implements RequestExpressionDialect {
+public final class HttpServerRequestExpressionDialect extends AbstractDialect implements IExpressionObjectDialect {
 
     private static final String DIALECT_NAME = "Micronaut Web";
 

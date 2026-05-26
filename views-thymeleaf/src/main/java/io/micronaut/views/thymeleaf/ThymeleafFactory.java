@@ -18,7 +18,7 @@ package io.micronaut.views.thymeleaf;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.thymeleaf.webexpression.RequestExpressionDialect;
+import io.micronaut.views.thymeleaf.webexpression.HttpServerRequestExpressionDialect;
 import org.jspecify.annotations.Nullable;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.IEngineContextFactory;
@@ -73,7 +73,7 @@ public class ThymeleafFactory {
      * @param linkBuilder The link builder
      * @param messageSourceMessageResolver The message resolver
      * @return The template engine
-     * @deprecated Use {@link ThymeleafFactory#templateEngine(ITemplateResolver, IEngineContextFactory, ILinkBuilder, MessageSourceMessageResolver, RequestExpressionDialect)} instead.
+     * @deprecated Use {@link ThymeleafFactory#templateEngine(ITemplateResolver, IEngineContextFactory, ILinkBuilder, MessageSourceMessageResolver, HttpServerRequestExpressionDialect)} instead.
      */
     @Deprecated(forRemoval = true, since = "6.1.0")
     public TemplateEngine templateEngine(ITemplateResolver templateResolver,
@@ -102,7 +102,7 @@ public class ThymeleafFactory {
                                   IEngineContextFactory engineContextFactory,
                                   ILinkBuilder linkBuilder,
                                   MessageSourceMessageResolver messageSourceMessageResolver,
-                                  @Nullable RequestExpressionDialect requestExpressionDialect) {
+                                  @Nullable HttpServerRequestExpressionDialect requestExpressionDialect) {
         TemplateEngine engine = templateEngine(templateResolver, engineContextFactory, linkBuilder, messageSourceMessageResolver);
         if (requestExpressionDialect != null) {
             engine.addDialect(requestExpressionDialect);
