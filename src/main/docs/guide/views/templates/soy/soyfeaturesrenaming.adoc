@@ -17,7 +17,7 @@ micronaut:
   views:
     soy:
       enabled: true
-      renaming: true
+      renaming-enabled: true
 ----
 
 2. When building your styles with GSS, or a similar tool, generate a rewrite map:
@@ -69,24 +69,24 @@ public class RewriteMapProvider implements SoyNamingMapProvider {
    */
   @Nullable
   private static Map<String, String> loadMapFromJSON(URL mapPath) {
-    try {
-      return new ObjectMapper().readValue(mapPath, new TypeReference<Map<String, String>>() { });
-    } catch (Throwable thr) {
+    try (InputStream inputStream = mapPath.openStream()) {
+      return new ObjectMapper().readValue(inputStream, new TypeReference<Map<String, String>>() { });
+    } catch (IOException e) {
       //handle `JsonMappingException` and `IOException`, if, for instance, you're using Jackson
-      throw new RuntimeException(thr);
+      throw new RuntimeException(e);
     }
   }
 
   static {
     final URL mapPath =
-        SoyRenderConfigProvider.class.getClassLoader().getResource(RENAMING_MAP_NAME);
+        RewriteMapProvider.class.getClassLoader().getResource(RENAMING_MAP_NAME);
     if (mapPath != null) {
       // load the renaming map
       final Map<String, String> cssRenamingMap = loadMapFromJSON(mapPath);
-      if (renamingMapRaw != null) {
+      if (cssRenamingMap != null) {
         CSS_RENAMING_MAP = new SoyCssRenamingMap() {
           @Nullable @Override
-          public String get(@NotNull String className) {
+          public String get(String className) {
             // (or whatever logic you need to rewrite the class)
             return cssRenamingMap.get(className);
           }
