@@ -190,4 +190,24 @@ class ThymeleafViewRendererSpec extends Specification {
             body
             rsp.body().contains("<a href=\"/to-resolve\">Relative Link</a>")
     }
+
+    def "invoking /views/request renders Micronaut request expression object"() {
+        when:
+        HttpResponse<String> rsp = client.toBlocking().exchange('/views/request?name=Tim', String)
+
+        then:
+        noExceptionThrown()
+        rsp.status() == HttpStatus.OK
+
+        when:
+        String body = rsp.body()
+
+        then:
+        body
+        body.contains('<dd id="request-uri">/views/request</dd>')
+        body.contains('<dd id="request-url">/views/request</dd>')
+        body.contains('<dd id="context-path"></dd>')
+        body.contains('<dd id="method">GET</dd>')
+        body.contains('<dd id="ctx-request">true</dd>')
+    }
 }

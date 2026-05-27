@@ -117,6 +117,12 @@ class ViewsController {
         HttpResponse.ok()
     }
 
+    @View("request")
+    @Get("/request")
+    HttpResponse request() {
+        HttpResponse.ok()
+    }
+
     static class LocalException extends RuntimeException {
 
     }
