@@ -72,7 +72,7 @@ public class RewriteMapProvider implements SoyNamingMapProvider {
     try (InputStream inputStream = mapPath.openStream()) {
       return new ObjectMapper().readValue(inputStream, new TypeReference<Map<String, String>>() { });
     } catch (IOException e) {
-      //handle `JsonMappingException` and `IOException`, if, for instance, you're using Jackson
+      // handle `JsonMappingException` and `IOException`, if, for instance, you're using Jackson
       throw new RuntimeException(e);
     }
   }
