@@ -31,6 +31,7 @@ io.micronaut.views.react.util
 io.micronaut.views.rocker
 io.micronaut.views.soy
 io.micronaut.views.thymeleaf
+io.micronaut.views.thymeleaf.webexpression
 io.micronaut.views.turbo
 io.micronaut.views.turbo.http
 io.micronaut.views.velocity
