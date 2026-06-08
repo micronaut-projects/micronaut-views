@@ -5,6 +5,6 @@ plugins {
 
 ossIndexAudit {
     excludeCoordinates = [
-            "io.pebbletemplates:pebble:4.1.1" // CVE-2025-1686 is mitigated by disabling the Pebble {% include %} tag via DisallowExtensionCustomizerBuilder.
+            "io.pebbletemplates:pebble:4.1.2" // CVE-2025-1686 is mitigated by disabling the Pebble {% include %} tag via DisallowExtensionCustomizerBuilder.
     ]
 }
