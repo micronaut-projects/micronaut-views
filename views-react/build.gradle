@@ -91,7 +91,3 @@ tasks.named("test") {
         JavaVersion.current() >= JavaVersion.VERSION_21
     }
 }
-
-micronautBuild {
-    binaryCompatibility.enabled.set(false)
-}
