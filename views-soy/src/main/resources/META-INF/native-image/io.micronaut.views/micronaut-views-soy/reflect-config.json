@@ -1,5 +1,16 @@
 [
   {
+    "name": "java.util.Locale",
+    "methods": [
+      {
+        "name": "getDefault",
+        "parameterTypes": [
+          "java.util.Locale$Category"
+        ]
+      }
+    ]
+  },
+  {
     "name": "com.google.template.soy.jbcsrc.gen.sample",
     "methods": [
       {
