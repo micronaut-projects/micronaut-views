@@ -17,9 +17,3 @@ tasks.withType<JavaCompile> {
     val compilerArgs = options.compilerArgs
     compilerArgs.add("-Ajstache.resourcesPath=src/test/resources")
 }
-
-micronautBuild {
-    binaryCompatibility {
-        enabled.set(false)
-    }
-}

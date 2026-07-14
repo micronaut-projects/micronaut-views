@@ -21,8 +21,3 @@ dependencies {
     testRuntimeOnly(mnTest.junit.jupiter.engine)
     testRuntimeOnly(mnLogging.logback.classic)
 }
-micronautBuild {
-    binaryCompatibility {
-        enabled = false
-    }
-}

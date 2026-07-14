@@ -11,8 +11,3 @@ dependencies {
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
 }
-micronautBuild {
-    binaryCompatibility {
-        enabled.set(false)
-    }
-}

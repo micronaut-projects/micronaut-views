@@ -9,8 +9,3 @@ dependencies {
     annotationProcessor(mnValidation.micronaut.validation.processor)
     api(mnValidation.micronaut.validation)
 }
-micronautBuild {
-    binaryCompatibility {
-        enabled = false
-    }
-}

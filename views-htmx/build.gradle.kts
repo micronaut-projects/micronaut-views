@@ -15,8 +15,3 @@ dependencies {
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(projects.micronautViewsThymeleaf)
 }
-micronautBuild {
-    binaryCompatibility {
-        enabled.set(false)
-    }
-}
