@@ -44,7 +44,7 @@ node {
     nodeProjectDir = file("${project.projectDir}/src/test/js")
 }
 
-task buildTestClientJS(type: NpxTask) {
+tasks.register('buildTestClientJS', NpxTask) {
     dependsOn npmInstall
     command = 'webpack'
     args = ["--mode", "development", "--config", "webpack.client.js"]
@@ -52,7 +52,7 @@ task buildTestClientJS(type: NpxTask) {
     outputs.file('src/test/resources/views/static/client.js')
 }
 
-task buildTestClientJSPreact(type: NpxTask) {
+tasks.register('buildTestClientJSPreact', NpxTask) {
     dependsOn npmInstall
     command = 'webpack'
     args = ["--mode", "development", "--config", "webpack.client.preact.js"]
@@ -60,7 +60,7 @@ task buildTestClientJSPreact(type: NpxTask) {
     outputs.file('src/test/resources/views/static/client-preact.js')
 }
 
-task buildTestServerJS(type: NpxTask) {
+tasks.register('buildTestServerJS', NpxTask) {
     dependsOn npmInstall
     command = 'webpack'
     args = ["--mode", "development", "--config", "webpack.server.js"]
@@ -68,7 +68,7 @@ task buildTestServerJS(type: NpxTask) {
     outputs.file('src/test/resources/views/ssr-components.mjs')
 }
 
-task buildTestServerJSPreact(type: NpxTask) {
+tasks.register('buildTestServerJSPreact', NpxTask) {
     dependsOn npmInstall
     command = 'webpack'
     args = ["--mode", "development", "--config", "webpack.server.preact.js"]
