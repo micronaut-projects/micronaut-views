@@ -1400,11 +1400,7 @@ micronaut.views.soy.renaming=true</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[micronaut]
-  [micronaut.views]
-    [micronaut.views.soy]
-      enabled=true
-      renaming=true</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">micronaut = {views = {soy = {enabled = true, renaming = true}}}</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2593,18 +2589,7 @@ micronaut.executors.blocking.virtual=false</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[micronaut]
-  [micronaut.views]
-    [micronaut.views.react]
-      server-bundle-path="classpath:views/ssr-components.mjs"
-  [micronaut.router]
-    [micronaut.router.static-resources]
-      [micronaut.router.static-resources.js]
-        mapping="/static/**"
-        paths="classpath:static"
-  [micronaut.executors]
-    [micronaut.executors.blocking]
-      virtual=false</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">micronaut = {views = {react = {server-bundle-path = "classpath:views/ssr-components.mjs"}}, router = {static-resources = {js = {mapping = "/static/**", paths = "classpath:static"}}}, executors = {blocking = {virtual = false}}}</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -2732,16 +2717,7 @@ micronaut.io.watch.paths=build/resources/main/views</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[micronaut]
-  [micronaut.server]
-    [micronaut.server.netty]
-      [micronaut.server.netty.responses]
-        [micronaut.server.netty.responses.file]
-          cache-seconds=0
-  [micronaut.io]
-    [micronaut.io.watch]
-      enabled=true
-      paths="build/resources/main/views"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">micronaut = {server = {netty = {responses = {file = {cache-seconds = 0}}}}, io = {watch = {enabled = true, paths = "build/resources/main/views"}}}</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4339,10 +4315,7 @@ By default, CSP is disabled. To enable CSP, modify your configuration. For examp
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[micronaut]
-  [micronaut.views]
-    [micronaut.views.csp]
-      enabled=true</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">micronaut = {views = {csp = {enabled = true}}}</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4489,12 +4462,7 @@ micronaut.views.csp.policyDirectives=default-src https: self:; script-src 'nonce
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[micronaut]
-  [micronaut.views]
-    [micronaut.views.csp]
-      enabled=true
-      generateNonce=true
-      policyDirectives="default-src https: self:; script-src \'nonce-{#nonceValue}\';"</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">micronaut = {views = {csp = {enabled = true, generateNonce = true, policyDirectives = "default-src https: self:; script-src \'nonce-{#nonceValue}\';"}}}</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
