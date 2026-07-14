@@ -15,7 +15,7 @@ dependencies {
     implementation(mnReactor.micronaut.reactor)
     // The user of this library is expected to supply the JS dependency. That's because they may choose between
     // the community edition (open source, slower) and the enterprise edition (liberal usage, not open source, faster).
-    implementation(libs.graal.polyglot)
+    implementation("org.graalvm.polyglot:polyglot:${mn.versions.graal.get()}")
 
     compileOnly(mnValidation.micronaut.validation) {
         because("For @NotBlank on config properties")
@@ -34,7 +34,7 @@ dependencies {
     testImplementation(mn.groovy.json)
 
     // We will use enterprise edition for testing.
-    testImplementation(libs.graal.js)
+    testImplementation("org.graalvm.polyglot:js:${mn.versions.graal.get()}")
 }
 
 // Set up a simple SSR project for testing purposes. We will need nodejs to run the bundlers.
