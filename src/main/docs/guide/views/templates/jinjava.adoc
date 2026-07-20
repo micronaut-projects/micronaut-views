@@ -1,0 +1,24 @@
+Micronaut Views Jinjava includes api:views.jinjava.JinjavaViewsRenderer[] which uses
+https://github.com/HubSpot/jinjava[HubSpot Jinjava], a Java implementation of the Jinja template language.
+
+Add the following dependency to your classpath:
+
+dependency:micronaut-views-jinjava[groupId="io.micronaut.views"]
+
+Templates use the configured Views folder (by default, `src/main/resources/views`) and the `.jinja` extension.
+The renderer supports Jinja inheritance, imports, and includes. Referenced templates are restricted to the configured
+Views folder.
+
+[source,html]
+.src/main/resources/views/home.jinja
+----
+include::{testsviewsJinjava}/resources/views/home.jinja[]
+----
+
+== Configuration
+
+The renderer can be disabled with `micronaut.views.jinja.enabled=false`. Jinjava's configuration builder is exposed
+under `micronaut.views.jinja.config.*`; for example, set `micronaut.views.jinja.config.trim-blocks=true` to trim
+the first newline after a Jinja block.
+
+include::{includedir}configurationProperties/io.micronaut.views.jinjava.JinjavaViewsRendererConfigurationProperties.adoc[]
