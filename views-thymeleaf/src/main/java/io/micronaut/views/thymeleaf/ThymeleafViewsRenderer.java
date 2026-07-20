@@ -23,7 +23,6 @@ import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.server.util.locale.HttpLocaleResolver;
 import io.micronaut.views.ViewUtils;
-import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import jakarta.inject.Singleton;
@@ -37,7 +36,6 @@ import org.thymeleaf.exceptions.TemplateProcessingException;
 import org.thymeleaf.standard.expression.FragmentExpression;
 import org.thymeleaf.standard.expression.StandardExpressions;
 import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.io.Writer;
 import java.util.Locale;
@@ -115,28 +113,6 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
         var templateAndFragment = resolveTemplate(viewName);
         String location = viewLocation(templateAndFragment.templateName);
         return resourceLoader.getResourceAsStream(location).isPresent();
-    }
-
-    private TemplateEngine initializeTemplateEngine() {
-        TemplateEngine engine = new TemplateEngine();
-        engine.setTemplateResolver(templateResolver);
-        return engine;
-    }
-
-    private ClassLoaderTemplateResolver initializeTemplateResolver(ViewsConfiguration viewsConfiguration,
-                                                                   ThymeleafViewsRendererConfiguration thConfiguration) {
-        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-
-        templateResolver.setPrefix(ViewUtils.normalizeFolder(viewsConfiguration.getFolder()));
-        templateResolver.setCharacterEncoding(thConfiguration.getCharacterEncoding());
-        templateResolver.setTemplateMode(thConfiguration.getTemplateMode());
-        templateResolver.setSuffix(thConfiguration.getSuffix());
-        templateResolver.setForceSuffix(thConfiguration.getForceSuffix());
-        templateResolver.setForceTemplateMode(thConfiguration.getForceTemplateMode());
-        templateResolver.setCacheTTLMs(thConfiguration.getCacheTTLMs());
-        templateResolver.setCheckExistence(thConfiguration.getCheckExistence());
-        templateResolver.setCacheable(thConfiguration.getCacheable());
-        return templateResolver;
     }
 
     private String viewLocation(final String name) {
