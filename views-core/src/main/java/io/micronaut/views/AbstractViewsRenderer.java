@@ -55,8 +55,7 @@ public abstract class AbstractViewsRenderer<T, R> implements ViewsRenderer<T, R>
         this.resourceLoader = resourceLoader;
     }
 
-    @NonNull
-    protected final String defaultExtension() {
+    protected final @Nullable String defaultExtension() {
         return configuration.getDefaultExtension();
     }
 
