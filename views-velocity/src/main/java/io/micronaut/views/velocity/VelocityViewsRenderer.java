@@ -17,9 +17,9 @@ package io.micronaut.views.velocity;
 
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
+import io.micronaut.views.AbstractViewsRenderer;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -33,7 +33,6 @@ import jakarta.inject.Singleton;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * Renders with templates with Apache Velocity Project.
@@ -47,12 +46,11 @@ import java.util.Properties;
  * @param <R> The request type
  */
 @Singleton
-public class VelocityViewsRenderer<T, R> implements ViewsRenderer<T, R> {
+public class VelocityViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
 
     protected final VelocityEngine velocityEngine;
     protected final ViewsConfiguration viewsConfiguration;
     protected final VelocityViewsRendererConfiguration velocityConfiguration;
-    protected final String folder;
 
     /**
      * @param viewsConfiguration    Views Configuration
@@ -63,10 +61,10 @@ public class VelocityViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     public VelocityViewsRenderer(ViewsConfiguration viewsConfiguration,
                           VelocityViewsRendererConfiguration velocityConfiguration,
                           VelocityEngine velocityEngine) {
+        super(velocityConfiguration, viewsConfiguration.getFolder());
         this.viewsConfiguration = viewsConfiguration;
         this.velocityConfiguration = velocityConfiguration;
         this.velocityEngine = velocityEngine;
-        this.folder = viewsConfiguration.getFolder();
     }
 
     @NonNull
@@ -87,7 +85,7 @@ public class VelocityViewsRenderer<T, R> implements ViewsRenderer<T, R> {
      * @param writer The writer
      */
     public void render(@NonNull String view, VelocityContext context, String encoding, Writer writer) {
-        String viewName = viewName(view);
+        String viewName = viewLocationWithExtension(view);
         try {
             velocityEngine.mergeTemplate(viewName, encoding, context, writer);
         } catch (ResourceNotFoundException | ParseErrorException | MethodInvocationException e) {
@@ -98,31 +96,11 @@ public class VelocityViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     @Override
     public boolean exists(@NonNull String viewName) {
         try {
-            velocityEngine.getTemplate(viewName(viewName));
+            velocityEngine.getTemplate(viewLocationWithExtension(viewName));
         } catch (ResourceNotFoundException | ParseErrorException e) {
             throw new ViewRenderingException("Error rendering Velocity view [" + viewName + "]: " + e.getMessage(), e);
         }
         return true;
     }
 
-    /**
-     * Only used in the deprecated constructor.
-     */
-    private VelocityEngine initializeVelocityEngine() {
-        final Properties p = new Properties();
-        p.setProperty("resource.loaders", "class");
-        p.setProperty("resource.loader.class.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-        return new VelocityEngine(p);
-    }
-
-    private String viewName(final String name) {
-        return folder +
-                ViewUtils.normalizeFile(name, extension()) +
-                "." +
-                extension();
-    }
-
-    private String extension() {
-        return velocityConfiguration.getDefaultExtension();
-    }
 }

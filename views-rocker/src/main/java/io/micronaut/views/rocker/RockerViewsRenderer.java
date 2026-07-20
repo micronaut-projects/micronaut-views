@@ -18,9 +18,9 @@ package io.micronaut.views.rocker;
 import com.fizzed.rocker.BindableRockerModel;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
+import io.micronaut.views.AbstractViewsRenderer;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
@@ -37,12 +37,11 @@ import java.util.Map;
  * @param <R> The request type
  */
 @Singleton
-public class RockerViewsRenderer<T, R> implements ViewsRenderer<T, R> {
+public class RockerViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
 
     protected final RockerEngine rockerEngine;
     protected final ViewsConfiguration viewsConfiguration;
     protected final RockerViewsRendererConfiguration rockerConfiguration;
-    protected final String folder;
 
     /**
      * @param viewsConfiguration  Views Configuration
@@ -53,10 +52,10 @@ public class RockerViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     public RockerViewsRenderer(ViewsConfiguration viewsConfiguration,
                                RockerViewsRendererConfiguration rockerConfiguration,
                                RockerEngine rockerEngine) {
+        super(rockerConfiguration, viewsConfiguration.getFolder());
         this.viewsConfiguration = viewsConfiguration;
         this.rockerConfiguration = rockerConfiguration;
         this.rockerEngine = rockerEngine;
-        this.folder = viewsConfiguration.getFolder();
     }
 
     @NonNull
