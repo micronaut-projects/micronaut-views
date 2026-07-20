@@ -19,7 +19,6 @@ import com.hubspot.jinjava.Jinjava;
 import com.hubspot.jinjava.loader.ResourceNotFoundException;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
-import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.ViewUtils;
@@ -45,25 +44,19 @@ import java.io.InputStream;
 public final class JinjavaViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     private final Jinjava jinjava;
-    private final ClassPathResourceLoader resourceLoader;
     private final JinjavaResourceLocator resourceLocator;
     private final String extension;
 
     /**
      * @param jinjava The configured Jinjava engine
-     * @param resourceLoader The classpath resource loader
+     * @param resourceLocator The scoped Jinjava resource locator
      * @param viewsConfiguration Jinjava Views configuration
      */
     public JinjavaViewsRenderer(Jinjava jinjava,
-                                ClassPathResourceLoader resourceLoader,
+                                JinjavaResourceLocator resourceLocator,
                                 JinjavaViewsRendererConfigurationProperties viewsConfiguration) {
         this.jinjava = jinjava;
-        this.resourceLoader = resourceLoader;
-        if (jinjava.getResourceLocator() instanceof JinjavaResourceLocator locator) {
-            this.resourceLocator = locator;
-        } else {
-            throw new IllegalStateException("Jinjava resource locator must be an instance of JinjavaResourceLocator");
-        }
+        this.resourceLocator = resourceLocator;
         this.extension = viewsConfiguration.getDefaultExtension();
     }
 
@@ -94,7 +87,7 @@ public final class JinjavaViewsRenderer<T, R> implements ViewsRenderer<T, R> {
             return false;
         }
         try {
-            return resourceLoader.getResource(resourceLocator.location(viewLocation(viewName))).isPresent();
+            return resourceLocator.resourceLoader().getResource(resourceLocator.location(viewLocation(viewName))).isPresent();
         } catch (ResourceNotFoundException e) {
             return false;
         }
@@ -102,7 +95,7 @@ public final class JinjavaViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     private String load(String viewName) throws IOException {
         String location = resourceLocator.location(viewLocation(viewName));
-        try (InputStream inputStream = resourceLoader.getResourceAsStream(location)
+        try (InputStream inputStream = resourceLocator.resourceLoader().getResourceAsStream(location)
             .orElseThrow(() -> new ResourceNotFoundException(viewName))) {
             return new String(inputStream.readAllBytes(), jinjava.getGlobalConfig().getCharset());
         }

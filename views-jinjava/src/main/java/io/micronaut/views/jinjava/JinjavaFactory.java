@@ -29,18 +29,22 @@ import jakarta.inject.Singleton;
 @Factory
 public final class JinjavaFactory {
 
+    @Singleton
+    public JinjavaResourceLocator jinjavaResourceLocator(ViewsConfiguration viewsConfiguration,
+                                                         ClassPathResourceLoader resourceLoader) {
+        return new JinjavaResourceLocator(resourceLoader, viewsConfiguration.getFolder());
+    }
+
     /**
      * @param configuration Jinjava Views configuration
-     * @param viewsConfiguration Views configuration
-     * @param resourceLoader Classpath resource loader
+     * @param resourceLocator The scoped Jinjava resource locator
      * @return The configured Jinjava engine
      */
     @Singleton
     public Jinjava jinjava(JinjavaViewsRendererConfigurationProperties configuration,
-                           ViewsConfiguration viewsConfiguration,
-                           ClassPathResourceLoader resourceLoader) {
+                           JinjavaResourceLocator resourceLocator) {
         Jinjava jinjava = new Jinjava(configuration.build());
-        jinjava.setResourceLocator(new JinjavaResourceLocator(resourceLoader, viewsConfiguration.getFolder()));
+        jinjava.setResourceLocator(resourceLocator);
         return jinjava;
     }
 }

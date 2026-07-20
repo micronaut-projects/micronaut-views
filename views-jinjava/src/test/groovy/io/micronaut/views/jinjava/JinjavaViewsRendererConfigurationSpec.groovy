@@ -3,7 +3,6 @@ package io.micronaut.views.jinjava
 import com.hubspot.jinjava.Jinjava
 import io.micronaut.context.ApplicationContext
 import io.micronaut.core.io.Writable
-import io.micronaut.core.io.scan.ClassPathResourceLoader
 import spock.lang.Specification
 
 class JinjavaViewsRendererConfigurationSpec extends Specification {
@@ -36,6 +35,8 @@ class JinjavaViewsRendererConfigurationSpec extends Specification {
         then:
         result.contains('username: <span>Tim</span>')
         renderer.exists('tim')
+        !renderer.exists('')
+        !renderer.exists('layouts//base')
         !renderer.exists('../application.yml')
         !renderer.exists('missing')
 
@@ -54,22 +55,4 @@ class JinjavaViewsRendererConfigurationSpec extends Specification {
         context.close()
     }
 
-    void "requires Jinjava resource locator to be JinjavaResourceLocator"() {
-        given:
-        ApplicationContext context = ApplicationContext.run()
-
-        when:
-        new JinjavaViewsRenderer(
-            new Jinjava(),
-            context.getBean(ClassPathResourceLoader),
-            new JinjavaViewsRendererConfigurationProperties()
-        )
-
-        then:
-        IllegalStateException e = thrown()
-        e.message == 'Jinjava resource locator must be an instance of JinjavaResourceLocator'
-
-        cleanup:
-        context.close()
-    }
 }

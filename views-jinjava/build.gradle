@@ -12,6 +12,12 @@ dependencies {
     api projects.micronautViewsCore
     api(libs.managed.jinjava)
 
+    constraints {
+        implementation(libs.managed.commons.lang3.get()) because("GHSA-j288-q9x7-2f5v")
+        implementation(libs.managed.jackson.core.get()) because("GHSA-72hv-8253-57qq")
+        implementation(libs.managed.jackson.databind.get()) because("GHSA-5jmj-h7xm-6q6v")
+    }
+
     compileOnly(mn.micronaut.management)
     compileOnly(mnValidation.micronaut.validation)
 

@@ -53,12 +53,16 @@ final class JinjavaResourceLocator implements ResourceLocator {
         if (normalized.startsWith("/") || normalized.isEmpty()) {
             throw new ResourceNotFoundException(name);
         }
-        String[] segments = normalized.split("/");
+        String[] segments = normalized.split("/", -1);
         for (String segment : segments) {
             if (segment.equals("..") || segment.isEmpty()) {
                 throw new ResourceNotFoundException(name);
             }
         }
         return folder + normalized;
+    }
+
+    ClassPathResourceLoader resourceLoader() {
+        return resourceLoader;
     }
 }
