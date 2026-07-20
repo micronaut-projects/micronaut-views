@@ -59,7 +59,11 @@ public final class JinjavaViewsRenderer<T, R> implements ViewsRenderer<T, R> {
                                 JinjavaViewsRendererConfigurationProperties viewsConfiguration) {
         this.jinjava = jinjava;
         this.resourceLoader = resourceLoader;
-        this.resourceLocator = (JinjavaResourceLocator) jinjava.getResourceLocator();
+        if (jinjava.getResourceLocator() instanceof JinjavaResourceLocator locator) {
+            this.resourceLocator = locator;
+        } else {
+            throw new IllegalStateException("Jinjava resource locator must be an instance of JinjavaResourceLocator");
+        }
         this.extension = viewsConfiguration.getDefaultExtension();
     }
 

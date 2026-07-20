@@ -50,10 +50,11 @@ final class JinjavaResourceLocator implements ResourceLocator {
 
     String location(String name) throws ResourceNotFoundException {
         String normalized = name.replace('\\', '/');
-        if (normalized.startsWith("/") || normalized.split("/").length == 0) {
+        if (normalized.startsWith("/") || normalized.isEmpty()) {
             throw new ResourceNotFoundException(name);
         }
-        for (String segment : normalized.split("/")) {
+        String[] segments = normalized.split("/");
+        for (String segment : segments) {
             if (segment.equals("..") || segment.isEmpty()) {
                 throw new ResourceNotFoundException(name);
             }
