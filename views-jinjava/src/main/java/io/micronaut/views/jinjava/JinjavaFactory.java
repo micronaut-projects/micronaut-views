@@ -18,8 +18,6 @@ package io.micronaut.views.jinjava;
 import com.hubspot.jinjava.Jinjava;
 import com.hubspot.jinjava.JinjavaConfig;
 import io.micronaut.context.annotation.Factory;
-import io.micronaut.core.io.scan.ClassPathResourceLoader;
-import io.micronaut.views.ViewsConfiguration;
 import jakarta.inject.Singleton;
 
 /**
@@ -49,6 +47,6 @@ final class JinjavaFactory {
      */
     @Singleton
     JinjavaConfig jinjavaConfig(JinjavaViewsRendererConfigurationProperties configuration) {
-        return configuration.build();
+        return configuration.getConfig().build();
     }
 }

@@ -19,8 +19,10 @@ import com.hubspot.jinjava.JinjavaConfig;
 import io.micronaut.context.annotation.ConfigurationBuilder;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.core.util.Toggleable;
 import io.micronaut.views.ViewsConfigurationProperties;
+import io.micronaut.views.ViewsRendererConfiguration;
+import jakarta.inject.Named;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Configuration properties for Jinjava Views rendering.
@@ -28,7 +30,8 @@ import io.micronaut.views.ViewsConfigurationProperties;
  * @since 6.1.1
  */
 @ConfigurationProperties(JinjavaViewsRendererConfigurationProperties.PREFIX)
-public final class JinjavaViewsRendererConfigurationProperties implements Toggleable {
+@Named("jinjava")
+public final class JinjavaViewsRendererConfigurationProperties implements ViewsRendererConfiguration {
 
     /** The Jinjava Views configuration prefix. */
     public static final String PREFIX = ViewsConfigurationProperties.PREFIX + ".jinja";
@@ -61,7 +64,7 @@ public final class JinjavaViewsRendererConfigurationProperties implements Toggle
     /**
      * @return The default template extension
      */
-    public String getDefaultExtension() {
+    public @Nullable String getDefaultExtension() {
         return defaultExtension;
     }
 
@@ -79,12 +82,5 @@ public final class JinjavaViewsRendererConfigurationProperties implements Toggle
      */
     public JinjavaConfig.Builder getConfig() {
         return config;
-    }
-
-    /**
-     * @return The configured Jinjava configuration
-     */
-    public JinjavaConfig build() {
-        return config.build();
     }
 }
