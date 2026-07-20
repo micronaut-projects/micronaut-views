@@ -24,6 +24,7 @@ import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Loads Jinjava templates exclusively from the configured Views folder.
@@ -49,14 +50,23 @@ final class JinjavaResourceLocator implements ResourceLocator {
     }
 
     String location(String name) throws ResourceNotFoundException {
+        String location = locationOrNull(name);
+        if (location == null) {
+            throw new ResourceNotFoundException(name);
+        }
+        return location;
+    }
+
+    @Nullable
+    String locationOrNull(String name) {
         String normalized = name.replace('\\', '/');
         if (normalized.startsWith("/") || normalized.isEmpty()) {
-            throw new ResourceNotFoundException(name);
+            return null;
         }
         String[] segments = normalized.split("/", -1);
         for (String segment : segments) {
             if (segment.equals("..") || segment.isEmpty()) {
-                throw new ResourceNotFoundException(name);
+                return null;
             }
         }
         return folder + normalized;

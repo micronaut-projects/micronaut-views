@@ -83,14 +83,11 @@ public final class JinjavaViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        if (viewName == null) {
+        String location = resourceLocator.locationOrNull(viewLocation(viewName));
+        if (location == null) {
             return false;
         }
-        try {
-            return resourceLocator.resourceLoader().getResource(resourceLocator.location(viewLocation(viewName))).isPresent();
-        } catch (ResourceNotFoundException e) {
-            return false;
-        }
+        return resourceLocator.resourceLoader().getResource(location).isPresent();
     }
 
     private String load(String viewName) throws IOException {
