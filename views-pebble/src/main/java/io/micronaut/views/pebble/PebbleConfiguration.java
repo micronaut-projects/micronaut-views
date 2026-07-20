@@ -16,6 +16,7 @@
 package io.micronaut.views.pebble;
 
 import io.micronaut.core.util.Toggleable;
+import io.micronaut.views.ViewsRendererConfiguration;
 
 /**
  * Configuration for {@link PebbleViewsRenderer}.
@@ -23,21 +24,15 @@ import io.micronaut.core.util.Toggleable;
  * @author Ecmel Ercan
  * @since 2.2.0
  */
-public interface PebbleConfiguration extends Toggleable {
-
-    /**
-     * @return Gets <code>defaultExtension</code> property
-     */
-    String getDefaultExtension();
-
+public interface PebbleConfiguration extends ViewsRendererConfiguration {
     /**
      * @return Gets <code>cacheActive</code> property
-     */    
+     */
     boolean isCacheActive();
 
     /**
      * @return Gets <code>newLineTrimming</code> property
-     */    
+     */
     boolean isNewLineTrimming();
 
    /**
@@ -52,26 +47,26 @@ public interface PebbleConfiguration extends Toggleable {
 
     /**
      * @return Gets <code>strictVariables</code> property
-     */    
+     */
     boolean isStrictVariables();
 
     /**
      * @return Gets <code>greedyMatchMethod</code> property
-     */    
+     */
     boolean isGreedyMatchMethod();
 
     /**
      * @return Gets <code>isAllowOverrideCoreOperators</code> property
-     */    
+     */
     boolean isAllowOverrideCoreOperators();
 
         /**
      * @return Gets <code>literalDecimalsAsInteger</code> property
-     */    
+     */
     boolean isLiteralDecimalsAsIntegers();
 
     /**
      * @return Gets <code>literalNumbersAsBigDecimals</code> property
-     */    
+     */
     boolean isLiteralNumbersAsBigDecimals();
 }

@@ -15,7 +15,7 @@
  */
 package io.micronaut.views.velocity;
 
-import io.micronaut.core.util.Toggleable;
+import io.micronaut.views.ViewsRendererConfiguration;
 
 /**
  * Configuration for {@link VelocityViewsRenderer}.
@@ -23,10 +23,5 @@ import io.micronaut.core.util.Toggleable;
  * @author Sergio del Amo
  * @since 1.0
  */
-public interface VelocityViewsRendererConfiguration extends Toggleable {
-
-    /**
-     * @return Default extension for templates
-     */
-    String getDefaultExtension();
+public interface VelocityViewsRendererConfiguration extends ViewsRendererConfiguration {
 }

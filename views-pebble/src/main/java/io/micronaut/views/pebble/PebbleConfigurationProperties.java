@@ -19,6 +19,7 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.ViewsConfigurationProperties;
 import io.pebbletemplates.pebble.extension.escaper.EscapeFilter;
+import jakarta.inject.Named;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link PebbleConfiguration}.
@@ -26,6 +27,7 @@ import io.pebbletemplates.pebble.extension.escaper.EscapeFilter;
  * @author Ecmel Ercan
  * @since 2.2.0
  */
+@Named("Pebble")
 @ConfigurationProperties(PebbleConfigurationProperties.PREFIX)
 public class PebbleConfigurationProperties implements PebbleConfiguration {
 

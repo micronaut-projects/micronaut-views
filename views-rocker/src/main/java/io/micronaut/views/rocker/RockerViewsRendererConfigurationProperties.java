@@ -17,6 +17,7 @@ package io.micronaut.views.rocker;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.views.ViewsConfigurationProperties;
+import jakarta.inject.Named;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link RockerViewsRendererConfiguration}.
@@ -24,6 +25,7 @@ import io.micronaut.views.ViewsConfigurationProperties;
  * @author Sam Adams
  * @since 1.3.2
  */
+@Named("rocker")
 @ConfigurationProperties(RockerViewsRendererConfigurationProperties.PREFIX)
 public class RockerViewsRendererConfigurationProperties implements RockerViewsRendererConfiguration {
 

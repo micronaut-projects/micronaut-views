@@ -17,20 +17,15 @@ package io.micronaut.views.freemarker;
 
 import freemarker.template.Version;
 import io.micronaut.core.util.Toggleable;
+import io.micronaut.views.ViewsRendererConfiguration;
 
 /**
  * Configuration for {@link FreemarkerViewsRenderer}.
- * 
+ *
  * @author Jerónimo López
  * @since 1.1
  */
-public interface FreemarkerViewsRendererConfiguration extends Toggleable {
-
-    /**
-     * @return Default extension for templates
-     */
-    String getDefaultExtension();
-
+public interface FreemarkerViewsRendererConfiguration extends ViewsRendererConfiguration {
     /**
      * @return An optional Freemarker version number
      */

@@ -18,6 +18,7 @@ package io.micronaut.views.handlebars;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.ViewsConfigurationProperties;
+import jakarta.inject.Named;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link HandlebarsViewsRendererConfiguration}.
@@ -25,6 +26,7 @@ import io.micronaut.views.ViewsConfigurationProperties;
  * @author Sergio del Amo
  * @since 1.0
  */
+@Named("handlebars")
 @ConfigurationProperties(HandlebarsViewsRendererConfigurationProperties.PREFIX)
 public class HandlebarsViewsRendererConfigurationProperties implements HandlebarsViewsRendererConfiguration {
 

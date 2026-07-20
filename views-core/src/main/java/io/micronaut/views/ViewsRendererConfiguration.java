@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2026 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.views.rocker;
+package io.micronaut.views;
 
-import io.micronaut.views.ViewsRendererConfiguration;
+import io.micronaut.core.util.Toggleable;
+import org.jspecify.annotations.NonNull;
 
 /**
- * Configuration for {@link RockerViewsRenderer}.
+ * Configuration for {@link ViewsRenderer}.
  *
- * @author Sam Adams
- * @since 1.3.2
+ * @author Sergio del Amo
+ * @since 6.2.0
  */
-public interface RockerViewsRendererConfiguration extends ViewsRendererConfiguration {
-    /**
-     * @return If hot reloading is enabled
-     */
-    boolean isHotReloading();
+public interface ViewsRendererConfiguration extends Toggleable {
 
     /**
-     * @return If relaxed binding is enabled for dynamic templates
+     * @return Default extension for templates
      */
-    boolean isRelaxed();
-
+    @NonNull
+    String getDefaultExtension();
 }

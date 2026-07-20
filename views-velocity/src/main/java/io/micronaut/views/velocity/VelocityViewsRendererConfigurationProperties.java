@@ -17,6 +17,7 @@ package io.micronaut.views.velocity;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.views.ViewsConfigurationProperties;
+import jakarta.inject.Named;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link VelocityViewsRendererConfiguration}.
@@ -24,6 +25,7 @@ import io.micronaut.views.ViewsConfigurationProperties;
  * @author Sergio del Amo
  * @since 1.0
  */
+@Named("velocity")
 @ConfigurationProperties(VelocityViewsRendererConfigurationProperties.PREFIX)
 public class VelocityViewsRendererConfigurationProperties implements VelocityViewsRendererConfiguration {
 
