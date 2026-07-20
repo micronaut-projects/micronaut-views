@@ -27,6 +27,7 @@ import io.micronaut.core.naming.conventions.StringConvention;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsConfigurationProperties;
+import jakarta.inject.Named;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import java.util.Properties;
@@ -47,6 +48,7 @@ import java.util.Properties;
  * @author Jerónimo López
  * @since 1.1
  */
+@Named("freemarker")
 @Requires(classes = freemarker.template.Configuration.class)
 @ConfigurationProperties(FreemarkerViewsRendererConfigurationProperties.PREFIX)
 public class FreemarkerViewsRendererConfigurationProperties extends Configuration implements FreemarkerViewsRendererConfiguration {
@@ -111,7 +113,8 @@ public class FreemarkerViewsRendererConfigurationProperties extends Configuratio
      *
      * @return The default extension to use
      */
-    public @NonNull String getDefaultExtension() {
+    @Override
+    public @Nullable String getDefaultExtension() {
         return defaultExtension;
     }
 
