@@ -28,7 +28,7 @@ import org.jspecify.annotations.Nullable;
  * @author Ecmel Ercan
  * @since 2.2.0
  */
-@Named("Pebble")
+@Named("pebble")
 @ConfigurationProperties(PebbleConfigurationProperties.PREFIX)
 public class PebbleConfigurationProperties implements PebbleConfiguration {
 
