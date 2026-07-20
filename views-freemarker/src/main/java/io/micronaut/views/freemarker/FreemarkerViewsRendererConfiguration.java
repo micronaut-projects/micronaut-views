@@ -16,7 +16,6 @@
 package io.micronaut.views.freemarker;
 
 import freemarker.template.Version;
-import io.micronaut.core.util.Toggleable;
 import io.micronaut.views.ViewsRendererConfiguration;
 
 /**

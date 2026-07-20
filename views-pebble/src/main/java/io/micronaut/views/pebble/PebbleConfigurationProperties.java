@@ -20,6 +20,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.ViewsConfigurationProperties;
 import io.pebbletemplates.pebble.extension.escaper.EscapeFilter;
 import jakarta.inject.Named;
+import org.jspecify.annotations.Nullable;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link PebbleConfiguration}.
@@ -73,7 +74,7 @@ public class PebbleConfigurationProperties implements PebbleConfiguration {
     }
 
     @Override
-    public String getDefaultExtension() {
+    public @Nullable String getDefaultExtension() {
         return defaultExtension;
     }
 

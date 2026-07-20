@@ -16,7 +16,7 @@
 package io.micronaut.views;
 
 import io.micronaut.core.util.Toggleable;
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Configuration for {@link ViewsRenderer}.
@@ -29,6 +29,5 @@ public interface ViewsRendererConfiguration extends Toggleable {
     /**
      * @return Default extension for templates
      */
-    @NonNull
-    String getDefaultExtension();
+    @Nullable String getDefaultExtension();
 }

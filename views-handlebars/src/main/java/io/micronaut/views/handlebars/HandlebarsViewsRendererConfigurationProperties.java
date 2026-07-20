@@ -19,6 +19,7 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.ViewsConfigurationProperties;
 import jakarta.inject.Named;
+import org.jspecify.annotations.Nullable;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link HandlebarsViewsRendererConfiguration}.
@@ -67,7 +68,7 @@ public class HandlebarsViewsRendererConfigurationProperties implements Handlebar
      * @return Default extension for templates. By default {@value #DEFAULT_EXTENSION}.
      */
     @Override
-    public String getDefaultExtension() {
+    public @Nullable String getDefaultExtension() {
         return defaultExtension;
     }
 

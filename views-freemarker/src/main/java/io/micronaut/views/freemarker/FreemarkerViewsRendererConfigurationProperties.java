@@ -113,7 +113,8 @@ public class FreemarkerViewsRendererConfigurationProperties extends Configuratio
      *
      * @return The default extension to use
      */
-    public @NonNull String getDefaultExtension() {
+    @Override
+    public @Nullable String getDefaultExtension() {
         return defaultExtension;
     }
 

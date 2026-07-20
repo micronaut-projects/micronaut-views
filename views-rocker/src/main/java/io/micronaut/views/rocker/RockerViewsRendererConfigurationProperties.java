@@ -18,6 +18,7 @@ package io.micronaut.views.rocker;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.views.ViewsConfigurationProperties;
 import jakarta.inject.Named;
+import org.jspecify.annotations.Nullable;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link RockerViewsRendererConfiguration}.
@@ -76,7 +77,7 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
      * @return Default extension for templates. By default {@value #DEFAULT_EXTENSION}.
      */
     @Override
-    public String getDefaultExtension() {
+    public @Nullable String getDefaultExtension() {
         return defaultExtension;
     }
 

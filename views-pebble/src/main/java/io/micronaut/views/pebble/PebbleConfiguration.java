@@ -15,7 +15,6 @@
  */
 package io.micronaut.views.pebble;
 
-import io.micronaut.core.util.Toggleable;
 import io.micronaut.views.ViewsRendererConfiguration;
 
 /**
