@@ -23,9 +23,9 @@ import freemarker.template.TemplateException;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
+import io.micronaut.views.AbstractViewsRenderer;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -46,7 +46,7 @@ import java.io.IOException;
 @Requires(property = FreemarkerViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Requires(classes = Configuration.class)
 @Singleton
-public class FreemarkerViewsRenderer<T, R> implements ViewsRenderer<T, R> {
+public class FreemarkerViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
 
     /**
      * Views Configuration.
@@ -70,6 +70,7 @@ public class FreemarkerViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     @Inject
     public FreemarkerViewsRenderer(ViewsConfiguration viewsConfiguration,
                                    FreemarkerViewsRendererConfigurationProperties freemarkerConfiguration) {
+        super(freemarkerConfiguration, viewsConfiguration.getFolder());
         this.viewsConfiguration = viewsConfiguration;
         this.freemarkerMicronautConfiguration = freemarkerConfiguration;
         this.extension = freemarkerConfiguration.getDefaultExtension();
@@ -84,7 +85,7 @@ public class FreemarkerViewsRenderer<T, R> implements ViewsRenderer<T, R> {
         Template template;
         try {
             // this has to fail fast to avoid a ReadTimeoutException from ViewsFilter call
-            template = freemarkerMicronautConfiguration.getTemplate(viewLocation(viewName));
+            template = freemarkerMicronautConfiguration.getTemplate(viewNameWithExtension(viewName));
         } catch (IOException e) {
             throw new ViewRenderingException(
                     "Error rendering Freemarker view [" + viewName + "]: " + e.getMessage(), e);
@@ -102,7 +103,7 @@ public class FreemarkerViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     @Override
     public boolean exists(@NonNull String view) {
         try {
-            freemarkerMicronautConfiguration.getTemplate(viewLocation(view));
+            freemarkerMicronautConfiguration.getTemplate(viewNameWithExtension(view));
         } catch (ParseException | MalformedTemplateNameException e) {
             return true;
         } catch (IOException e) {
@@ -110,11 +111,4 @@ public class FreemarkerViewsRenderer<T, R> implements ViewsRenderer<T, R> {
         }
         return true;
     }
-
-    private String viewLocation(String name) {
-        return ViewUtils.normalizeFile(name, extension) +
-                ViewUtils.EXTENSION_SEPARATOR +
-                extension;
-    }
-
 }
