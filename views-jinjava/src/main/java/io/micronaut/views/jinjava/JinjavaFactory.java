@@ -16,6 +16,7 @@
 package io.micronaut.views.jinjava;
 
 import com.hubspot.jinjava.Jinjava;
+import com.hubspot.jinjava.JinjavaConfig;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.views.ViewsConfiguration;
@@ -27,24 +28,27 @@ import jakarta.inject.Singleton;
  * @since 6.1.1
  */
 @Factory
-public final class JinjavaFactory {
-
-    @Singleton
-    public JinjavaResourceLocator jinjavaResourceLocator(ViewsConfiguration viewsConfiguration,
-                                                         ClassPathResourceLoader resourceLoader) {
-        return new JinjavaResourceLocator(resourceLoader, viewsConfiguration.getFolder());
-    }
+final class JinjavaFactory {
 
     /**
-     * @param configuration Jinjava Views configuration
+     * @param jinjavaConfig Jinjava configuration
      * @param resourceLocator The scoped Jinjava resource locator
      * @return The configured Jinjava engine
      */
     @Singleton
-    public Jinjava jinjava(JinjavaViewsRendererConfigurationProperties configuration,
-                           JinjavaResourceLocator resourceLocator) {
-        Jinjava jinjava = new Jinjava(configuration.build());
+    Jinjava jinjava(JinjavaConfig jinjavaConfig,
+                    JinjavaResourceLocator resourceLocator) {
+        Jinjava jinjava = new Jinjava(jinjavaConfig);
         jinjava.setResourceLocator(resourceLocator);
         return jinjava;
+    }
+
+    /**
+     * @param configuration Jinjava Views configuration
+     * @return JinjavaConfig
+     */
+    @Singleton
+    JinjavaConfig jinjavaConfig(JinjavaViewsRendererConfigurationProperties configuration) {
+        return configuration.build();
     }
 }

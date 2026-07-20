@@ -19,60 +19,47 @@ import com.hubspot.jinjava.interpret.JinjavaInterpreter;
 import com.hubspot.jinjava.loader.ResourceLocator;
 import com.hubspot.jinjava.loader.ResourceNotFoundException;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.io.scan.ClassPathResourceLoader;
+import io.micronaut.core.io.IOUtils;
+import io.micronaut.core.io.ResourceLoader;
+import io.micronaut.views.ViewUtils;
+import io.micronaut.views.ViewsConfiguration;
+import jakarta.inject.Singleton;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import org.jspecify.annotations.Nullable;
 
 /**
  * Loads Jinjava templates exclusively from the configured Views folder.
  */
+@Singleton
 @Internal
 final class JinjavaResourceLocator implements ResourceLocator {
+    private final ResourceLoader resourceLoader;
 
-    private final ClassPathResourceLoader resourceLoader;
-    private final String folder;
-
-    JinjavaResourceLocator(ClassPathResourceLoader resourceLoader, String folder) {
-        this.resourceLoader = resourceLoader;
-        this.folder = folder;
+    JinjavaResourceLocator(ResourceLoader resourceLoader,
+                           ViewsConfiguration viewsConfiguration) {
+        this.resourceLoader = resourceLoader.forBase(ViewUtils.normalizeFolder(viewsConfiguration.getFolder()));
     }
 
     @Override
     public String getString(String name, Charset charset, JinjavaInterpreter interpreter) throws IOException {
-        String location = location(name);
-        try (InputStream inputStream = resourceLoader.getResourceAsStream(location)
-            .orElseThrow(() -> new ResourceNotFoundException(name))) {
-            return new String(inputStream.readAllBytes(), charset);
-        }
+        return getString(name, charset);
     }
 
-    String location(String name) throws ResourceNotFoundException {
-        String location = locationOrNull(name);
-        if (location == null) {
+    public String getString(String name, Charset charset) throws IOException {
+        String normalizedName = ViewUtils.normalizeFile(name, null);
+        if (normalizedName.contains("//")) {
             throw new ResourceNotFoundException(name);
         }
-        return location;
+        return IOUtils.readText(new BufferedReader(new InputStreamReader(
+            resourceLoader.getResourceAsStream(normalizedName)
+                .orElseThrow(() -> new ResourceNotFoundException(name)), charset)));
     }
 
-    @Nullable
-    String locationOrNull(String name) {
-        String normalized = name.replace('\\', '/');
-        if (normalized.startsWith("/") || normalized.isEmpty()) {
-            return null;
-        }
-        String[] segments = normalized.split("/", -1);
-        for (String segment : segments) {
-            if (segment.equals("..") || segment.isEmpty()) {
-                return null;
-            }
-        }
-        return folder + normalized;
-    }
-
-    ClassPathResourceLoader resourceLoader() {
-        return resourceLoader;
+    public boolean exists(String name) {
+        String normalizedName = ViewUtils.normalizeFile(name, null);
+        return !normalizedName.contains("//") && resourceLoader.getResource(normalizedName).isPresent();
     }
 }

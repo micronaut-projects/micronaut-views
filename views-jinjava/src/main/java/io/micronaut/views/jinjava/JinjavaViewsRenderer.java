@@ -16,7 +16,6 @@
 package io.micronaut.views.jinjava;
 
 import com.hubspot.jinjava.Jinjava;
-import com.hubspot.jinjava.loader.ResourceNotFoundException;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
@@ -29,7 +28,6 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Renders Views with HubSpot Jinjava.
@@ -68,7 +66,7 @@ public final class JinjavaViewsRenderer<T, R> implements ViewsRenderer<T, R> {
         ArgumentUtils.requireNonNull("viewName", viewName);
         String template;
         try {
-            template = load(viewName);
+            template = resourceLocator.getString(viewLocation(viewName), jinjava.getGlobalConfig().getCharset());
         } catch (IOException e) {
             throw new ViewRenderingException("Error rendering Jinjava view [" + viewName + "]: " + e.getMessage(), e);
         }
@@ -83,19 +81,7 @@ public final class JinjavaViewsRenderer<T, R> implements ViewsRenderer<T, R> {
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        String location = resourceLocator.locationOrNull(viewLocation(viewName));
-        if (location == null) {
-            return false;
-        }
-        return resourceLocator.resourceLoader().getResource(location).isPresent();
-    }
-
-    private String load(String viewName) throws IOException {
-        String location = resourceLocator.location(viewLocation(viewName));
-        try (InputStream inputStream = resourceLocator.resourceLoader().getResourceAsStream(location)
-            .orElseThrow(() -> new ResourceNotFoundException(viewName))) {
-            return new String(inputStream.readAllBytes(), jinjava.getGlobalConfig().getCharset());
-        }
+        return resourceLocator.exists(viewLocation(viewName));
     }
 
     private String viewLocation(String name) {
