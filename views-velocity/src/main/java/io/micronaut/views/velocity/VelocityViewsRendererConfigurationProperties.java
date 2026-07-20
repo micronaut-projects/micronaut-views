@@ -17,6 +17,8 @@ package io.micronaut.views.velocity;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.views.ViewsConfigurationProperties;
+import jakarta.inject.Named;
+import org.jspecify.annotations.Nullable;
 
 /**
  * {@link ConfigurationProperties} implementation of {@link VelocityViewsRendererConfiguration}.
@@ -24,6 +26,7 @@ import io.micronaut.views.ViewsConfigurationProperties;
  * @author Sergio del Amo
  * @since 1.0
  */
+@Named("velocity")
 @ConfigurationProperties(VelocityViewsRendererConfigurationProperties.PREFIX)
 public class VelocityViewsRendererConfigurationProperties implements VelocityViewsRendererConfiguration {
 
@@ -61,7 +64,7 @@ public class VelocityViewsRendererConfigurationProperties implements VelocityVie
      * @return Default extension for templates. By default {@value #DEFAULT_EXTENSION}.
      */
     @Override
-    public String getDefaultExtension() {
+    public @Nullable String getDefaultExtension() {
         return defaultExtension;
     }
 
