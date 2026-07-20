@@ -17,17 +17,12 @@ package io.micronaut.views.jinjava;
 
 import com.hubspot.jinjava.interpret.JinjavaInterpreter;
 import com.hubspot.jinjava.loader.ResourceLocator;
-import com.hubspot.jinjava.loader.ResourceNotFoundException;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.io.IOUtils;
 import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import jakarta.inject.Singleton;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 /**
@@ -45,21 +40,7 @@ final class JinjavaResourceLocator implements ResourceLocator {
 
     @Override
     public String getString(String name, Charset charset, JinjavaInterpreter interpreter) throws IOException {
-        return getString(name, charset);
+        return ViewUtils.readResourceAsString(resourceLoader, name, charset);
     }
 
-    public String getString(String name, Charset charset) throws IOException {
-        String normalizedName = ViewUtils.normalizeFile(name, null);
-        if (normalizedName.contains("//")) {
-            throw new ResourceNotFoundException(name);
-        }
-        return IOUtils.readText(new BufferedReader(new InputStreamReader(
-            resourceLoader.getResourceAsStream(normalizedName)
-                .orElseThrow(() -> new ResourceNotFoundException(name)), charset)));
-    }
-
-    public boolean exists(String name) {
-        String normalizedName = ViewUtils.normalizeFile(name, null);
-        return !normalizedName.contains("//") && resourceLoader.getResource(normalizedName).isPresent();
-    }
 }

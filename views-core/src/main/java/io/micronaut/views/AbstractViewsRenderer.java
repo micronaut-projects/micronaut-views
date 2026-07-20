@@ -17,8 +17,14 @@ package io.micronaut.views;
 
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.io.ResourceLoader;
+import io.micronaut.core.util.ArgumentUtils;
+import io.micronaut.views.exceptions.ViewRenderingException;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Objects;
 
 /**
  * Base class for view renderers that use a {@link ViewsRendererConfiguration}.
@@ -105,8 +111,20 @@ public abstract class AbstractViewsRenderer<T, R> implements ViewsRenderer<T, R>
         return folder + viewNameWithExtension(name);
     }
 
+    protected @NonNull String getTemplate(@NonNull String viewName, @NonNull Charset charset) {
+        ArgumentUtils.requireNonNull("viewName", viewName);
+        try {
+            return ViewUtils.readResourceAsString(Objects.requireNonNull(resourceLoader), viewLocationWithExtension(viewName), charset);
+        } catch (IOException e) {
+            throw new ViewRenderingException("Error rendering Jinjava view [" + viewName + "]: " + e.getMessage(), e);
+        }
+    }
+
     @Override
     public boolean exists(@NonNull String viewName) {
-        return viewName != null && resourceLoader != null && resourceLoader.getResource(folder + viewNameWithExtension(viewName)).isPresent();
+        String templateName = viewNameWithExtension(viewName);
+        return !templateName.contains("//")
+            && resourceLoader != null
+            && resourceLoader.getResource(folder + templateName).isPresent();
     }
 }

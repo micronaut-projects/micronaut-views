@@ -19,7 +19,6 @@ import com.hubspot.jinjava.Jinjava;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
-import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.AbstractViewsRenderer;
 import io.micronaut.views.ViewUtils;
@@ -30,8 +29,6 @@ import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-
-import java.io.IOException;
 
 /**
  * Renders Views with HubSpot Jinjava.
@@ -46,7 +43,6 @@ import java.io.IOException;
 public final class JinjavaViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
 
     private final Jinjava jinjava;
-    private final JinjavaResourceLocator resourceLocator;
 
     /**
      * @param viewsRendererConfiguration Jinjava Views configuration
@@ -62,7 +58,6 @@ public final class JinjavaViewsRenderer<T, R> extends AbstractViewsRenderer<T, R
                                 JinjavaResourceLocator resourceLocator) {
         super(viewsRendererConfiguration, viewsConfiguration, resourceLoader);
         this.jinjava = jinjava;
-        this.resourceLocator = resourceLocator;
     }
 
     @Override
@@ -70,13 +65,7 @@ public final class JinjavaViewsRenderer<T, R> extends AbstractViewsRenderer<T, R
     public Writable render(@NonNull String viewName,
                            @Nullable T data,
                            @Nullable R request) {
-        ArgumentUtils.requireNonNull("viewName", viewName);
-        String template;
-        try {
-            template = resourceLocator.getString(viewNameWithExtension(viewName), jinjava.getGlobalConfig().getCharset());
-        } catch (IOException e) {
-            throw new ViewRenderingException("Error rendering Jinjava view [" + viewName + "]: " + e.getMessage(), e);
-        }
+        String template = getTemplate(viewName, jinjava.getGlobalConfig().getCharset());
         return writer -> {
             try {
                 writer.write(jinjava.render(template, ViewUtils.modelOf(data)));

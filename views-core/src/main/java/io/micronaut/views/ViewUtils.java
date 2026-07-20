@@ -15,10 +15,17 @@
  */
 package io.micronaut.views;
 
+import io.micronaut.core.io.IOUtils;
+import io.micronaut.core.io.ResourceLoader;
+import io.micronaut.views.exceptions.ViewNotFoundException;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import io.micronaut.core.beans.BeanMap;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,5 +104,28 @@ public class ViewUtils {
             }
         }
         return path;
+    }
+
+    /**
+     * Loads a template resource as text.
+     *
+     * @param resourceLoader The resource loader
+     * @param name The template name
+     * @param charset The template character set
+     * @return The template text
+     * @throws IOException If the template cannot be read
+     * @since 6.2.0
+     */
+    @NonNull
+    public static String readResourceAsString(@NonNull ResourceLoader resourceLoader,
+                                              @NonNull String name,
+                                              @NonNull Charset charset) throws IOException {
+        String normalizedName = normalizeFile(name, null);
+        if (normalizedName.contains("//")) {
+            throw new ViewNotFoundException(name);
+        }
+        return IOUtils.readText(new BufferedReader(new InputStreamReader(
+            resourceLoader.getResourceAsStream(normalizedName)
+                .orElseThrow(() -> new ViewNotFoundException(name)), charset)));
     }
 }
