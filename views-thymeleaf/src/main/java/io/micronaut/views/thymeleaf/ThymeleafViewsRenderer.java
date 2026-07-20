@@ -117,28 +117,6 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
         return resourceLoader.getResourceAsStream(location).isPresent();
     }
 
-    private TemplateEngine initializeTemplateEngine() {
-        TemplateEngine engine = new TemplateEngine();
-        engine.setTemplateResolver(templateResolver);
-        return engine;
-    }
-
-    private ClassLoaderTemplateResolver initializeTemplateResolver(ViewsConfiguration viewsConfiguration,
-                                                                   ThymeleafViewsRendererConfiguration thConfiguration) {
-        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-
-        templateResolver.setPrefix(ViewUtils.normalizeFolder(viewsConfiguration.getFolder()));
-        templateResolver.setCharacterEncoding(thConfiguration.getCharacterEncoding());
-        templateResolver.setTemplateMode(thConfiguration.getTemplateMode());
-        templateResolver.setSuffix(thConfiguration.getSuffix());
-        templateResolver.setForceSuffix(thConfiguration.getForceSuffix());
-        templateResolver.setForceTemplateMode(thConfiguration.getForceTemplateMode());
-        templateResolver.setCacheTTLMs(thConfiguration.getCacheTTLMs());
-        templateResolver.setCheckExistence(thConfiguration.getCheckExistence());
-        templateResolver.setCacheable(thConfiguration.getCacheable());
-        return templateResolver;
-    }
-
     private String viewLocation(final String name) {
         return templateResolver.getPrefix() +
             ViewUtils.normalizeFile(name, templateResolver.getSuffix()) +
