@@ -35,6 +35,17 @@ public abstract class AbstractViewsRenderer<T, R> implements ViewsRenderer<T, R>
 
     /**
      * @param configuration Renderer configuration
+     * @param viewsConfiguration Views Configuration
+     * @param resourceLoader Resource Loader
+     */
+    protected AbstractViewsRenderer(@NonNull ViewsRendererConfiguration configuration,
+                                    @NonNull ViewsConfiguration viewsConfiguration,
+                                    @Nullable ResourceLoader resourceLoader) {
+        this(configuration, viewsConfiguration.getFolder(), resourceLoader);
+    }
+
+    /**
+     * @param configuration Renderer configuration
      * @param folder The template folder
      */
     protected AbstractViewsRenderer(@NonNull ViewsRendererConfiguration configuration,

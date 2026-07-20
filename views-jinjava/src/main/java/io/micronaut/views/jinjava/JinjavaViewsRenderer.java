@@ -17,12 +17,16 @@ package io.micronaut.views.jinjava;
 
 import com.hubspot.jinjava.Jinjava;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.views.AbstractViewsRenderer;
 import io.micronaut.views.ViewUtils;
-import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.ViewsConfiguration;
+import io.micronaut.views.ViewsRendererConfiguration;
 import io.micronaut.views.exceptions.ViewRenderingException;
+import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -39,23 +43,26 @@ import java.io.IOException;
 @Singleton
 @Requires(property = JinjavaViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 @Requires(classes = Jinjava.class)
-public final class JinjavaViewsRenderer<T, R> implements ViewsRenderer<T, R> {
+public final class JinjavaViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
 
     private final Jinjava jinjava;
     private final JinjavaResourceLocator resourceLocator;
-    private final String extension;
 
     /**
+     * @param viewsRendererConfiguration Jinjava Views configuration
+     * @param viewsConfiguration Views Configuration
+     * @param resourceLoader Resources Loader
      * @param jinjava The configured Jinjava engine
      * @param resourceLocator The scoped Jinjava resource locator
-     * @param viewsConfiguration Jinjava Views configuration
      */
-    public JinjavaViewsRenderer(Jinjava jinjava,
-                                JinjavaResourceLocator resourceLocator,
-                                JinjavaViewsRendererConfigurationProperties viewsConfiguration) {
+    public JinjavaViewsRenderer(@Named("jinjava") ViewsRendererConfiguration viewsRendererConfiguration,
+                                ViewsConfiguration viewsConfiguration,
+                                ResourceLoader resourceLoader,
+                                Jinjava jinjava,
+                                JinjavaResourceLocator resourceLocator) {
+        super(viewsRendererConfiguration, viewsConfiguration, resourceLoader);
         this.jinjava = jinjava;
         this.resourceLocator = resourceLocator;
-        this.extension = viewsConfiguration.getDefaultExtension();
     }
 
     @Override
@@ -66,7 +73,7 @@ public final class JinjavaViewsRenderer<T, R> implements ViewsRenderer<T, R> {
         ArgumentUtils.requireNonNull("viewName", viewName);
         String template;
         try {
-            template = resourceLocator.getString(viewLocation(viewName), jinjava.getGlobalConfig().getCharset());
+            template = resourceLocator.getString(viewNameWithExtension(viewName), jinjava.getGlobalConfig().getCharset());
         } catch (IOException e) {
             throw new ViewRenderingException("Error rendering Jinjava view [" + viewName + "]: " + e.getMessage(), e);
         }
@@ -77,14 +84,5 @@ public final class JinjavaViewsRenderer<T, R> implements ViewsRenderer<T, R> {
                 throw new ViewRenderingException("Error rendering Jinjava view [" + viewName + "]: " + e.getMessage(), e);
             }
         };
-    }
-
-    @Override
-    public boolean exists(@NonNull String viewName) {
-        return resourceLocator.exists(viewLocation(viewName));
-    }
-
-    private String viewLocation(String name) {
-        return ViewUtils.normalizeFile(name, extension) + ViewUtils.EXTENSION_SEPARATOR + extension;
     }
 }
