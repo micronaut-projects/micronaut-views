@@ -29,6 +29,7 @@ include 'views-rocker'
 include 'views-pebble'
 include 'views-jte'
 include 'views-jstachio'
+include 'views-jinjava'
 
 include "test-suite"
 include "test-suite-csrf"
@@ -47,6 +48,7 @@ include "test-suite-graal:test-suite-graal-velocty"
 include "test-suite-graal:test-suite-graal-jte"
 include "test-suite-graal:test-suite-graal-rocker"
 include "test-suite-graal:test-suite-graal-soy"
+include "test-suite-graal:test-suite-graal-jinjava"
 
 micronautBuild {
     useStandardizedProjectNames=true

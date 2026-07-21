@@ -18,6 +18,7 @@ views:
       buildingsoy: Building Soy
     pebble: Pebble
     jte: JTE
+    jinjava: Jinjava
     jstachio:
       title: JStachio
       jstachioInstallation: JStachio Installation

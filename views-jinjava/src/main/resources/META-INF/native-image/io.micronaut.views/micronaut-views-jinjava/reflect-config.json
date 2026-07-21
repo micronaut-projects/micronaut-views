@@ -1,0 +1,13 @@
+[
+  {
+    "name": "com.google.common.collect.Lists",
+    "methods": [
+      {
+        "name": "newArrayList",
+        "parameterTypes": [
+          "java.lang.Object[]"
+        ]
+      }
+    ]
+  }
+]
