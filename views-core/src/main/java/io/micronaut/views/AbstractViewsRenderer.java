@@ -20,6 +20,8 @@ import io.micronaut.core.io.ResourceLoader;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import java.util.Objects;
+
 /**
  * Base class for view renderers that use a {@link ViewsRendererConfiguration}.
  *
@@ -55,8 +57,8 @@ public abstract class AbstractViewsRenderer<T, R> implements ViewsRenderer<T, R>
         this.resourceLoader = resourceLoader;
     }
 
-    protected final @Nullable String defaultExtension() {
-        return configuration.getDefaultExtension();
+    protected final @NonNull String defaultExtension() {
+        return Objects.requireNonNull(configuration.getDefaultExtension(), "defaultExtension");
     }
 
     /**
@@ -68,7 +70,10 @@ public abstract class AbstractViewsRenderer<T, R> implements ViewsRenderer<T, R>
     @NonNull
     protected final String viewNameWithExtension(@NonNull String name) {
         String extension = defaultExtension();
-        return ViewUtils.normalizeFile(name, extension) + ViewUtils.EXTENSION_SEPARATOR + extension;
+        String extensionWithoutSeparator = extension.startsWith(ViewUtils.EXTENSION_SEPARATOR)
+            ? extension.substring(ViewUtils.EXTENSION_SEPARATOR.length())
+            : extension;
+        return ViewUtils.normalizeFile(name, extension) + ViewUtils.EXTENSION_SEPARATOR + extensionWithoutSeparator;
     }
 
     /**
