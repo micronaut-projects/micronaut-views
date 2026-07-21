@@ -23,9 +23,8 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.core.util.ArgumentUtils;
-import io.micronaut.views.ViewUtils;
+import io.micronaut.views.AbstractViewsRenderer;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -46,13 +45,12 @@ import java.io.IOException;
 @Requires(property = HandlebarsViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 @Requires(classes = Handlebars.class)
 @Singleton
-public class HandlebarsViewsRenderer<T, R> implements ViewsRenderer<T, R> {
+public class HandlebarsViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
 
     protected final ViewsConfiguration viewsConfiguration;
     protected final ResourceLoader resourceLoader;
     protected HandlebarsViewsRendererConfiguration handlebarsViewsRendererConfiguration;
     protected Handlebars handlebars;
-    protected String folder;
 
     /**
      * @param viewsConfiguration                   Views Configuration
@@ -65,10 +63,10 @@ public class HandlebarsViewsRenderer<T, R> implements ViewsRenderer<T, R> {
                                    ClassPathResourceLoader resourceLoader,
                                    HandlebarsViewsRendererConfiguration handlebarsViewsRendererConfiguration,
                                    Handlebars handlebars) {
+        super(handlebarsViewsRendererConfiguration, viewsConfiguration.getFolder(), resourceLoader);
         this.viewsConfiguration = viewsConfiguration;
         this.resourceLoader = resourceLoader;
         this.handlebarsViewsRendererConfiguration = handlebarsViewsRendererConfiguration;
-        this.folder = viewsConfiguration.getFolder();
         this.handlebars = handlebars;
     }
 
@@ -78,7 +76,7 @@ public class HandlebarsViewsRenderer<T, R> implements ViewsRenderer<T, R> {
                            @Nullable T data,
                            @Nullable R request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
-        String location = viewLocation(viewName);
+        String location = viewLocationWithoutExtension(viewName);
         Template template;
         try {
             template = handlebars.compile(location);
@@ -94,21 +92,4 @@ public class HandlebarsViewsRenderer<T, R> implements ViewsRenderer<T, R> {
         };
     }
 
-    @Override
-    public boolean exists(@NonNull String viewName) {
-        //noinspection ConstantConditions
-        if (viewName == null) {
-            return false;
-        }
-        String location = viewLocation(viewName) + ViewUtils.EXTENSION_SEPARATOR + extension();
-        return resourceLoader.getResource(location).isPresent();
-    }
-
-    private String viewLocation(final String name) {
-        return folder + ViewUtils.normalizeFile(name, extension());
-    }
-
-    private String extension() {
-        return handlebarsViewsRendererConfiguration.getDefaultExtension();
-    }
 }
