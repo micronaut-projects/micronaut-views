@@ -83,7 +83,9 @@ loadScripts(document, 'script');</script>
 <h1 title="Class FreemarkerViewsRenderer" class="title">Class FreemarkerViewsRenderer&lt;T,<wbr>R&gt;</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance"><a href="../AbstractViewsRenderer.html" title="class in io.micronaut.views">io.micronaut.views.AbstractViewsRenderer</a>&lt;T,<wbr>R&gt;
 <div class="inheritance">io.micronaut.views.freemarker.FreemarkerViewsRenderer&lt;T,<wbr>R&gt;</div>
+</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
@@ -100,8 +102,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="annotations">@Requires(property="micronaut.views.freemarker.enabled",notEquals="false") @Requires(classes=freemarker.template.Configuration.class)
 @Singleton
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">FreemarkerViewsRenderer&lt;T,<wbr>R&gt;</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;T,<wbr>R&gt;</span></div>
+<span class="extends-implements">extends <a href="../AbstractViewsRenderer.html" title="class in io.micronaut.views">AbstractViewsRenderer</a>&lt;T,<wbr>R&gt;</span></div>
 <div class="block">Renders Views with FreeMarker Java template engine.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -186,6 +187,9 @@ implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.view
 </div>
 </div>
 <div class="inherited-list">
+<h3 id="methods-inherited-from-class-io.micronaut.views.AbstractViewsRenderer">Methods inherited from class&nbsp;<a href="../AbstractViewsRenderer.html#method-summary" title="class in io.micronaut.views">AbstractViewsRenderer</a></h3>
+<code><a href="../AbstractViewsRenderer.html#defaultExtension()" title="defaultExtension()">defaultExtension</a>, <a href="../AbstractViewsRenderer.html#viewLocationWithExtension(java.lang.String)" title="viewLocationWithExtension(String)">viewLocationWithExtension</a>, <a href="../AbstractViewsRenderer.html#viewLocationWithoutExtension(java.lang.String)" title="viewLocationWithoutExtension(String)">viewLocationWithoutExtension</a>, <a href="../AbstractViewsRenderer.html#viewNameWithExtension(java.lang.String)" title="viewNameWithExtension(String)">viewNameWithExtension</a></code></div>
+<div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#method-summary" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 <div class="inherited-list">
@@ -268,8 +272,6 @@ implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.view
  @Nullable <a href="#type-param-T" title="type parameter in FreemarkerViewsRenderer">T</a>&nbsp;data,
  @Nullable <a href="#type-param-R" title="type parameter in FreemarkerViewsRenderer">R</a>&nbsp;request)</span></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../ViewsRenderer.html#render(java.lang.String,T,R)">render</a></code>&nbsp;in interface&nbsp;<code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="#type-param-T" title="type parameter in FreemarkerViewsRenderer">T</a>,<wbr><a href="#type-param-R" title="type parameter in FreemarkerViewsRenderer">R</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>viewName</code> - view name to be rendered</dd>
 <dd><code>data</code> - response body to render it with a view</dd>
@@ -288,6 +290,8 @@ implements <a href="../ViewsRenderer.html" title="interface in io.micronaut.view
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../ViewsRenderer.html#exists(java.lang.String)">exists</a></code>&nbsp;in interface&nbsp;<code><a href="../ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="#type-param-T" title="type parameter in FreemarkerViewsRenderer">T</a>,<wbr><a href="#type-param-R" title="type parameter in FreemarkerViewsRenderer">R</a>&gt;</code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../AbstractViewsRenderer.html#exists(java.lang.String)">exists</a></code>&nbsp;in class&nbsp;<code><a href="../AbstractViewsRenderer.html" title="class in io.micronaut.views">AbstractViewsRenderer</a>&lt;<a href="#type-param-T" title="type parameter in FreemarkerViewsRenderer">T</a>,<wbr><a href="#type-param-R" title="type parameter in FreemarkerViewsRenderer">R</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>view</code> - view name to be rendered</dd>
 <dt>Returns:</dt>
