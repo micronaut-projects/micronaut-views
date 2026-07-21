@@ -100,6 +100,6 @@ public abstract class AbstractViewsRenderer<T, R> implements ViewsRenderer<T, R>
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        return viewName != null && resourceLoader != null && resourceLoader.getResource(folder + viewNameWithExtension(viewName)).isPresent();
+        return resourceLoader != null && resourceLoader.getResource(folder + viewNameWithExtension(Objects.requireNonNull(viewName))).isPresent();
     }
 }
