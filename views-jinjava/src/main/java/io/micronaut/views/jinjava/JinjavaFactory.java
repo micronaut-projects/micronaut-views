@@ -18,6 +18,7 @@ package io.micronaut.views.jinjava;
 import com.hubspot.jinjava.Jinjava;
 import com.hubspot.jinjava.JinjavaConfig;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.core.annotation.Internal;
 import jakarta.inject.Singleton;
 
 /**
@@ -26,6 +27,7 @@ import jakarta.inject.Singleton;
  * @since 6.1.1
  */
 @Factory
+@Internal
 final class JinjavaFactory {
 
     /**

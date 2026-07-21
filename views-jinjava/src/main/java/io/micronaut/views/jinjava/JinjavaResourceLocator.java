@@ -19,6 +19,7 @@ import com.hubspot.jinjava.interpret.JinjavaInterpreter;
 import com.hubspot.jinjava.loader.ResourceLocator;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.io.ResourceLoader;
+import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import jakarta.inject.Singleton;
@@ -33,7 +34,7 @@ import java.nio.charset.Charset;
 final class JinjavaResourceLocator implements ResourceLocator {
     private final ResourceLoader resourceLoader;
 
-    JinjavaResourceLocator(ResourceLoader resourceLoader,
+    JinjavaResourceLocator(ClassPathResourceLoader resourceLoader,
                            ViewsConfiguration viewsConfiguration) {
         this.resourceLoader = resourceLoader.forBase(ViewUtils.normalizeFolder(viewsConfiguration.getFolder()));
     }

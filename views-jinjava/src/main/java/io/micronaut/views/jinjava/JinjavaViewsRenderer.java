@@ -19,6 +19,7 @@ import com.hubspot.jinjava.Jinjava;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
+import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.AbstractViewsRenderer;
 import io.micronaut.views.ViewUtils;
@@ -27,7 +28,6 @@ import io.micronaut.views.ViewsRendererConfiguration;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -49,20 +49,17 @@ public final class JinjavaViewsRenderer<T, R> extends AbstractViewsRenderer<T, R
      * @param viewsConfiguration Views Configuration
      * @param resourceLoader Resources Loader
      * @param jinjava The configured Jinjava engine
-     * @param resourceLocator The scoped Jinjava resource locator
      */
     public JinjavaViewsRenderer(@Named("jinjava") ViewsRendererConfiguration viewsRendererConfiguration,
                                 ViewsConfiguration viewsConfiguration,
-                                ResourceLoader resourceLoader,
-                                Jinjava jinjava,
-                                JinjavaResourceLocator resourceLocator) {
+                                ClassPathResourceLoader resourceLoader,
+                                Jinjava jinjava) {
         super(viewsRendererConfiguration, viewsConfiguration, resourceLoader);
         this.jinjava = jinjava;
     }
 
     @Override
-    @NonNull
-    public Writable render(@NonNull String viewName,
+    public Writable render(String viewName,
                            @Nullable T data,
                            @Nullable R request) {
         String template = getTemplate(viewName, jinjava.getGlobalConfig().getCharset());

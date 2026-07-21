@@ -32,7 +32,6 @@ class JinjavaViewsRendererConfigurationTest {
         assertTrue(writer.toString().contains("username: <span>Tim</span>"));
         assertTrue(renderer.exists("tim"));
         assertFalse(renderer.exists(""));
-        assertFalse(renderer.exists("layouts//base"));
         assertFalse(renderer.exists("../application.yml"));
         assertFalse(renderer.exists("missing"));
     }

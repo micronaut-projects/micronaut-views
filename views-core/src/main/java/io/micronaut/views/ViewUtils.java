@@ -121,9 +121,6 @@ public class ViewUtils {
                                               @NonNull String name,
                                               @NonNull Charset charset) throws IOException {
         String normalizedName = normalizeFile(name, null);
-        if (normalizedName.contains("//")) {
-            throw new ViewNotFoundException(name);
-        }
         return IOUtils.readText(new BufferedReader(new InputStreamReader(
             resourceLoader.getResourceAsStream(normalizedName)
                 .orElseThrow(() -> new ViewNotFoundException(name)), charset)));
