@@ -871,10 +871,271 @@
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
+<h3 id="_micronaut_views_jinjava_config_properties">Micronaut Views Jinjava Config Properties</h3>
+<a id="io.micronaut.views.jinjava.JinjavaViewsRendererConfigurationProperties" href="#io.micronaut.views.jinjava.JinjavaViewsRendererConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. Configuration Properties for <a href="../api/io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html">JinjavaViewsRendererConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Jinjava Views rendering is enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.default-extension</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The default template extension</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<a id="com.hubspot.jinjava.JinjavaConfig$Builder" href="#com.hubspot.jinjava.JinjavaConfig$Builder">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. Configuration Properties for <a href="../api/io/micronaut/com/hubspot/jinjava/JinjavaConfig.Builder.html">JinjavaConfig$Builder</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.charset</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.nio.charset.Charset</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.locale</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Locale</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.time-zone</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.ZoneId</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.disabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Map</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.restricted-methods</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.restricted-properties</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.util.Set</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.max-render-depth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.random-number-generator-strategy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.hubspot.jinjava.random.RandomNumberGeneratorStrategy</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.date-time-provider</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.hubspot.jinjava.objects.date.DateTimeProvider</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.trim-blocks</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.lstrip-blocks</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.enable-recursive-macro-calls</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.max-macro-recursion-depth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.read-only-resolver</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.el-resolver</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jinjava.javax.el.ELResolver</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.fail-on-unknown-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.max-output-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.nested-interpretation-enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.validation-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.max-string-length</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">long</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.max-list-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.max-map-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.range-limit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.max-num-deferred-tokens</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.interperter-factory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.hubspot.jinjava.interpret.InterpreterFactory</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.token-scanner-symbols</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.hubspot.jinjava.tree.parse.TokenScannerSymbols</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.execution-mode</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.hubspot.jinjava.mode.ExecutionMode</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.legacy-overrides</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.hubspot.jinjava.LegacyOverrides</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.enable-precise-divide-filter</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.enable-filter-chain-optimization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.object-mapper</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.fasterxml.jackson.databind.ObjectMapper</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.object-unwrapper</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.hubspot.jinjava.el.ObjectUnwrapper</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.processors</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.hubspot.jinjava.el.JinjavaProcessors</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.config.feature-config</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">com.hubspot.jinjava.features.FeatureConfig</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
 <h3 id="_micronaut_views_jte_config_properties">Micronaut Views Jte Config Properties</h3>
 <a id="io.micronaut.views.jte.JteViewsRendererConfigurationProperties" href="#io.micronaut.views.jte.JteViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Configuration Properties for <a href="../api/io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html">JteViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 13. Configuration Properties for <a href="../api/io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html">JteViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -926,7 +1187,7 @@
 <h3 id="_micronaut_views_pebble_config_properties">Micronaut Views Pebble Config Properties</h3>
 <a id="io.micronaut.views.pebble.PebbleConfigurationProperties" href="#io.micronaut.views.pebble.PebbleConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Configuration Properties for <a href="../api/io/micronaut/views/pebble/PebbleConfigurationProperties.html">PebbleConfigurationProperties</a></caption>
+<caption class="title">Table 14. Configuration Properties for <a href="../api/io/micronaut/views/pebble/PebbleConfigurationProperties.html">PebbleConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1030,7 +1291,7 @@
 <h3 id="_micronaut_views_react_config_properties">Micronaut Views React Config Properties</h3>
 <a id="io.micronaut.views.react.ReactViewsRendererConfiguration" href="#io.micronaut.views.react.ReactViewsRendererConfiguration">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. Configuration Properties for <a href="../api/io/micronaut/views/react/ReactViewsRendererConfiguration.html">ReactViewsRendererConfiguration</a></caption>
+<caption class="title">Table 15. Configuration Properties for <a href="../api/io/micronaut/views/react/ReactViewsRendererConfiguration.html">ReactViewsRendererConfiguration</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1085,7 +1346,7 @@
 <h3 id="_micronaut_views_rocker_config_properties">Micronaut Views Rocker Config Properties</h3>
 <a id="io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties" href="#io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. Configuration Properties for <a href="../api/io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html">RockerViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 16. Configuration Properties for <a href="../api/io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html">RockerViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1134,7 +1395,7 @@
 <h3 id="_micronaut_views_soy_config_properties">Micronaut Views Soy Config Properties</h3>
 <a id="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties" href="#io.micronaut.views.soy.SoyViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. Configuration Properties for <a href="../api/io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html">SoyViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 17. Configuration Properties for <a href="../api/io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html">SoyViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1170,7 +1431,7 @@
 <h3 id="_micronaut_views_thymeleaf_config_properties">Micronaut Views Thymeleaf Config Properties</h3>
 <a id="io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties" href="#io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 16. Configuration Properties for <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html">ThymeleafViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 18. Configuration Properties for <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html">ThymeleafViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1254,7 +1515,7 @@
 <h3 id="_micronaut_views_turbo_config_properties">Micronaut Views Turbo Config Properties</h3>
 <a id="io.micronaut.views.turbo.TurboConfigurationProperties" href="#io.micronaut.views.turbo.TurboConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 17. Configuration Properties for <a href="../api/io/micronaut/views/turbo/TurboConfigurationProperties.html">TurboConfigurationProperties</a></caption>
+<caption class="title">Table 19. Configuration Properties for <a href="../api/io/micronaut/views/turbo/TurboConfigurationProperties.html">TurboConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1284,7 +1545,7 @@
 <h3 id="_micronaut_views_velocity_config_properties">Micronaut Views Velocity Config Properties</h3>
 <a id="io.micronaut.views.velocity.VelocityViewsRendererConfigurationProperties" href="#io.micronaut.views.velocity.VelocityViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 18. Configuration Properties for <a href="../api/io/micronaut/views/velocity/VelocityViewsRendererConfigurationProperties.html">VelocityViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 20. Configuration Properties for <a href="../api/io/micronaut/views/velocity/VelocityViewsRendererConfigurationProperties.html">VelocityViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">

@@ -72,6 +72,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#modelOf(java.lang.Object)" tabindex="0">modelOf(Object)</a></li>
 <li><a href="#normalizeFolder(java.lang.String)" tabindex="0">normalizeFolder(String)</a></li>
 <li><a href="#normalizeFile(java.lang.String,java.lang.String)" tabindex="0">normalizeFile(String, String)</a></li>
+<li><a href="#readResourceAsString(io.micronaut.core.io.ResourceLoader,java.lang.String,java.nio.charset.Charset)" tabindex="0">readResourceAsString(ResourceLoader, String, Charset)</a></li>
 </ol>
 </li>
 </ol>
@@ -158,6 +159,13 @@ and never starts with a "/".</div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns a path with unix style folder
 separators that starts and ends with a "/".</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#readResourceAsString(io.micronaut.core.io.ResourceLoader,java.lang.String,java.nio.charset.Charset)" class="member-name-link">readResourceAsString</a><wbr>(@NonNull io.micronaut.core.io.ResourceLoader&nbsp;resourceLoader,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/charset/Charset.html" title="class or interface in java.nio.charset" class="external-link">Charset</a>&nbsp;charset)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Loads a template resource as text.</div>
 </div>
 </div>
 </div>
@@ -265,6 +273,30 @@ begin with a ".".</div>
 <dd><code>extension</code> - The file extension</dd>
 <dt>Returns:</dt>
 <dd>The normalized path</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="readResourceAsString(io.micronaut.core.io.ResourceLoader,java.lang.String,java.nio.charset.Charset)">
+<h3>readResourceAsString</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">readResourceAsString</span><wbr><span class="parameters">(@NonNull io.micronaut.core.io.ResourceLoader&nbsp;resourceLoader,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/charset/Charset.html" title="class or interface in java.nio.charset" class="external-link">Charset</a>&nbsp;charset)</span>
+                                            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Loads a template resource as text.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>resourceLoader</code> - The resource loader</dd>
+<dd><code>name</code> - The template name</dd>
+<dd><code>charset</code> - The template character set</dd>
+<dt>Returns:</dt>
+<dd>The template text</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - If the template cannot be read</dd>
+<dt>Since:</dt>
+<dd>6.2.0</dd>
 </dl>
 </div>
 </section>

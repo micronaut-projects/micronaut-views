@@ -55,12 +55,20 @@ loadScripts(document, 'script');</script>
 <dl class="index">
 <dt><a href="io/micronaut/views/AbstractViewsRenderer.html" class="type-name-link" title="class in io.micronaut.views">AbstractViewsRenderer&lt;T,<wbr>R&gt;</a> - Class in <a href="io/micronaut/views/package-summary.html">io.micronaut.views</a></dt>
 <dd>
-<div class="block">Base class for view renderers that use a <a href="io/micronaut/views/ViewsRendererConfiguration.html" title="interface in io.micronaut.views"><code>ViewsRendererConfiguration</code></a>.</div>
+<div class="block">Base class for view renderers backed by a <a href="io/micronaut/views/ViewsRendererConfiguration.html" title="interface in io.micronaut.views"><code>ViewsRendererConfiguration</code></a>.</div>
+</dd>
+<dt><a href="io/micronaut/views/AbstractViewsRenderer.html#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,io.micronaut.views.ViewsConfiguration,io.micronaut.core.io.ResourceLoader)" class="member-name-link">AbstractViewsRenderer(ViewsRendererConfiguration, ViewsConfiguration, ResourceLoader)</a> - Constructor for class io.micronaut.views.<a href="io/micronaut/views/AbstractViewsRenderer.html" title="class in io.micronaut.views">AbstractViewsRenderer</a></dt>
+<dd>
+<div class="block">Creates a renderer using the configured views folder and resource loader.</div>
 </dd>
 <dt><a href="io/micronaut/views/AbstractViewsRenderer.html#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,java.lang.String)" class="member-name-link">AbstractViewsRenderer(ViewsRendererConfiguration, String)</a> - Constructor for class io.micronaut.views.<a href="io/micronaut/views/AbstractViewsRenderer.html" title="class in io.micronaut.views">AbstractViewsRenderer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a renderer that only uses the shared name and location helpers.</div>
+</dd>
 <dt><a href="io/micronaut/views/AbstractViewsRenderer.html#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,java.lang.String,io.micronaut.core.io.ResourceLoader)" class="member-name-link">AbstractViewsRenderer(ViewsRendererConfiguration, String, ResourceLoader)</a> - Constructor for class io.micronaut.views.<a href="io/micronaut/views/AbstractViewsRenderer.html" title="class in io.micronaut.views">AbstractViewsRenderer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a renderer using the supplied template folder and optional resource loader.</div>
+</dd>
 <dt><a href="io/micronaut/views/fields/elements/InputFileFormElement.html#accept()" class="member-name-link">accept()</a> - Method in record class io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/InputFileFormElement.html" title="class in io.micronaut.views.fields.elements">InputFileFormElement</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./io/micronaut/views/fields/elements/InputFileFormElement.html#param-accept"><code>accept</code></a> record component.</div>
@@ -631,6 +639,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="io/micronaut/views/http/ViewsFilterConfiguration.html#DEFAULT_ENABLED" class="member-name-link">DEFAULT_ENABLED</a> - Static variable in class io.micronaut.views.http.<a href="io/micronaut/views/http/ViewsFilterConfiguration.html" title="class in io.micronaut.views.http">ViewsFilterConfiguration</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html#DEFAULT_ENABLED" class="member-name-link">DEFAULT_ENABLED</a> - Static variable in class io.micronaut.views.jinjava.<a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRendererConfigurationProperties</a></dt>
+<dd>
+<div class="block">Whether Jinjava Views rendering is enabled by default.</div>
+</dd>
 <dt><a href="io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html#DEFAULT_ENABLED" class="member-name-link">DEFAULT_ENABLED</a> - Static variable in class io.micronaut.views.model.security.<a href="io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html" title="class in io.micronaut.views.model.security">SecurityViewModelProcessorConfigurationProperties</a></dt>
 <dd>
 <div class="block">The default enable value.</div>
@@ -672,6 +684,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/micronaut/views/handlebars/HandlebarsViewsRendererConfigurationProperties.html#DEFAULT_EXTENSION" class="member-name-link">DEFAULT_EXTENSION</a> - Static variable in class io.micronaut.views.handlebars.<a href="io/micronaut/views/handlebars/HandlebarsViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.handlebars">HandlebarsViewsRendererConfigurationProperties</a></dt>
 <dd>
 <div class="block">The default extension.</div>
+</dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html#DEFAULT_EXTENSION" class="member-name-link">DEFAULT_EXTENSION</a> - Static variable in class io.micronaut.views.jinjava.<a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRendererConfigurationProperties</a></dt>
+<dd>
+<div class="block">The default Jinjava template extension.</div>
 </dd>
 <dt><a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html#DEFAULT_EXTENSION" class="member-name-link">DEFAULT_EXTENSION</a> - Static variable in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html" title="class in io.micronaut.views.pebble">PebbleConfigurationProperties</a></dt>
 <dd>&nbsp;</dd>
@@ -744,7 +760,9 @@ loadScripts(document, 'script');</script>
 <div class="block">The default suffix.</div>
 </dd>
 <dt><a href="io/micronaut/views/AbstractViewsRenderer.html#defaultExtension()" class="member-name-link">defaultExtension()</a> - Method in class io.micronaut.views.<a href="io/micronaut/views/AbstractViewsRenderer.html" title="class in io.micronaut.views">AbstractViewsRenderer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Obtains the configured default template extension.</div>
+</dd>
 <dt><a href="io/micronaut/views/fields/DefaultFieldGenerator.html" class="type-name-link" title="class in io.micronaut.views.fields">DefaultFieldGenerator</a> - Class in <a href="io/micronaut/views/fields/package-summary.html">io.micronaut.views.fields</a></dt>
 <dd>
 <div class="block">Default implementation of <a href="io/micronaut/views/fields/FieldsetGenerator.html" title="interface in io.micronaut.views.fields"><code>FieldsetGenerator</code></a> which relies on the types being introspected.</div>
@@ -1069,7 +1087,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="io/micronaut/views/fields/elements/TrixEditorFormElement.Builder.html#errors(java.util.List)" class="member-name-link">errors(List)</a> - Method in class io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/TrixEditorFormElement.Builder.html" title="class in io.micronaut.views.fields.elements">TrixEditorFormElement.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/AbstractViewsRenderer.html#exists(java.lang.String)" class="member-name-link">exists(String)</a> - Method in class io.micronaut.views.<a href="io/micronaut/views/AbstractViewsRenderer.html" title="class in io.micronaut.views">AbstractViewsRenderer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Determines whether a template resource for the given view name is available.</div>
+</dd>
 <dt><a href="io/micronaut/views/freemarker/FreemarkerViewsRenderer.html#exists(java.lang.String)" class="member-name-link">exists(String)</a> - Method in class io.micronaut.views.freemarker.<a href="io/micronaut/views/freemarker/FreemarkerViewsRenderer.html" title="class in io.micronaut.views.freemarker">FreemarkerViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/jte/JteViewsRenderer.html#exists(java.lang.String)" class="member-name-link">exists(String)</a> - Method in class io.micronaut.views.jte.<a href="io/micronaut/views/jte/JteViewsRenderer.html" title="class in io.micronaut.views.jte">JteViewsRenderer</a></dt>
@@ -1464,6 +1484,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html#getCompiledTemplates()" class="member-name-link">getCompiledTemplates()</a> - Method in class io.micronaut.views.soy.<a href="io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.soy">SoyViewsRendererConfigurationProperties</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html#getConfig()" class="member-name-link">getConfig()</a> - Method in class io.micronaut.views.jinjava.<a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRendererConfigurationProperties</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/thymeleaf/webexpression/RequestExpressionObject.html#getContextPath()" class="member-name-link">getContextPath()</a> - Method in class io.micronaut.views.thymeleaf.webexpression.<a href="io/micronaut/views/thymeleaf/webexpression/RequestExpressionObject.html" title="class in io.micronaut.views.thymeleaf.webexpression">RequestExpressionObject</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/model/security/CsrfViewModelProcessorConfiguration.html#getCsrfTokenKey()" class="member-name-link">getCsrfTokenKey()</a> - Method in interface io.micronaut.views.model.security.<a href="io/micronaut/views/model/security/CsrfViewModelProcessorConfiguration.html" title="interface in io.micronaut.views.model.security">CsrfViewModelProcessorConfiguration</a></dt>
@@ -1482,6 +1504,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">The default file extension for templates.</div>
 </dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html#getDefaultExtension()" class="member-name-link">getDefaultExtension()</a> - Method in class io.micronaut.views.jinjava.<a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRendererConfigurationProperties</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html#getDefaultExtension()" class="member-name-link">getDefaultExtension()</a> - Method in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html" title="class in io.micronaut.views.pebble">PebbleConfigurationProperties</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html#getDefaultExtension()" class="member-name-link">getDefaultExtension()</a> - Method in class io.micronaut.views.rocker.<a href="io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.rocker">RockerViewsRendererConfigurationProperties</a></dt>
@@ -1651,6 +1675,10 @@ improvements that you want to enable were already implemented.</div>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/turbo/TurboStream.html#getTemplate()" class="member-name-link">getTemplate()</a> - Method in class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStream.html" title="class in io.micronaut.views.turbo">TurboStream</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/AbstractViewsRenderer.html#getTemplate(java.lang.String,java.nio.charset.Charset)" class="member-name-link">getTemplate(String, Charset)</a> - Method in class io.micronaut.views.<a href="io/micronaut/views/AbstractViewsRenderer.html" title="class in io.micronaut.views">AbstractViewsRenderer</a></dt>
+<dd>
+<div class="block">Loads the template identified by the view name from the configured resource loader.</div>
+</dd>
 <dt><a href="io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfiguration.html#getTemplateMode()" class="member-name-link">getTemplateMode()</a> - Method in interface io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfiguration.html" title="interface in io.micronaut.views.thymeleaf">ThymeleafViewsRendererConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html#getTemplateMode()" class="member-name-link">getTemplateMode()</a> - Method in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.thymeleaf">ThymeleafViewsRendererConfigurationProperties</a></dt>
@@ -2612,6 +2640,10 @@ for Micronaut's bean introspection system (a form of compile-time reflection cod
 </dd>
 <dt><a href="io/micronaut/views/info/package-summary.html">io.micronaut.views.info</a> - package io.micronaut.views.info</dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/jinjava/package-summary.html">io.micronaut.views.jinjava</a> - package io.micronaut.views.jinjava</dt>
+<dd>
+<div class="block">Contains classes specific to Views rendered with Jinjava.</div>
+</dd>
 <dt><a href="io/micronaut/views/jstachio/package-summary.html">io.micronaut.views.jstachio</a> - package io.micronaut.views.jstachio</dt>
 <dd>
 <div class="block">Contains classes specific to Views rendered with JStachio.</div>
@@ -2717,6 +2749,8 @@ for Micronaut's bean introspection system (a form of compile-time reflection cod
 <dd>
 <div class="block">Whether the views filter is enabled.</div>
 </dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html#isEnabled()" class="member-name-link">isEnabled()</a> - Method in class io.micronaut.views.jinjava.<a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRendererConfigurationProperties</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html#isEnabled()" class="member-name-link">isEnabled()</a> - Method in class io.micronaut.views.model.security.<a href="io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html" title="class in io.micronaut.views.model.security">SecurityViewModelProcessorConfigurationProperties</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html#isEnabled()" class="member-name-link">isEnabled()</a> - Method in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html" title="class in io.micronaut.views.pebble">PebbleConfigurationProperties</a></dt>
@@ -2806,6 +2840,18 @@ for Micronaut's bean introspection system (a form of compile-time reflection cod
 <dd>
 <div class="block">Constructs a handler that will forward messages to the given SLF4J logger.</div>
 </dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRenderer.html" class="type-name-link" title="class in io.micronaut.views.jinjava">JinjavaViewsRenderer&lt;T,<wbr>R&gt;</a> - Class in <a href="io/micronaut/views/jinjava/package-summary.html">io.micronaut.views.jinjava</a></dt>
+<dd>
+<div class="block">Renders Views with HubSpot Jinjava.</div>
+</dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRenderer.html#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,io.micronaut.views.ViewsConfiguration,io.micronaut.core.io.scan.ClassPathResourceLoader,com.hubspot.jinjava.Jinjava)" class="member-name-link">JinjavaViewsRenderer(ViewsRendererConfiguration, ViewsConfiguration, ClassPathResourceLoader, Jinjava)</a> - Constructor for class io.micronaut.views.jinjava.<a href="io/micronaut/views/jinjava/JinjavaViewsRenderer.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRenderer</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html" class="type-name-link" title="class in io.micronaut.views.jinjava">JinjavaViewsRendererConfigurationProperties</a> - Class in <a href="io/micronaut/views/jinjava/package-summary.html">io.micronaut.views.jinjava</a></dt>
+<dd>
+<div class="block">Configuration properties for Jinjava Views rendering.</div>
+</dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html#%3Cinit%3E()" class="member-name-link">JinjavaViewsRendererConfigurationProperties()</a> - Constructor for class io.micronaut.views.jinjava.<a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRendererConfigurationProperties</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/jstachio/JStachioMessageBodyWriter.html" class="type-name-link" title="class in io.micronaut.views.jstachio">JStachioMessageBodyWriter&lt;T&gt;</a> - Class in <a href="io/micronaut/views/jstachio/package-summary.html">io.micronaut.views.jstachio</a></dt>
 <dd>
 <div class="block">A message body writer for JStachio JStache annotated models.</div>
@@ -3327,6 +3373,10 @@ Micronaut.</div>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/info/MicronautViewsHtmxModuleInfo.html#%3Cinit%3E()" class="member-name-link">MicronautViewsHtmxModuleInfo()</a> - Constructor for class io.micronaut.views.info.<a href="io/micronaut/views/info/MicronautViewsHtmxModuleInfo.html" title="class in io.micronaut.views.info">MicronautViewsHtmxModuleInfo</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/info/MicronautViewsJinjavaModuleInfo.html" class="type-name-link" title="class in io.micronaut.views.info">MicronautViewsJinjavaModuleInfo</a> - Class in <a href="io/micronaut/views/info/package-summary.html">io.micronaut.views.info</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/info/MicronautViewsJinjavaModuleInfo.html#%3Cinit%3E()" class="member-name-link">MicronautViewsJinjavaModuleInfo()</a> - Constructor for class io.micronaut.views.info.<a href="io/micronaut/views/info/MicronautViewsJinjavaModuleInfo.html" title="class in io.micronaut.views.info">MicronautViewsJinjavaModuleInfo</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/info/MicronautViewsJstachioModuleInfo.html" class="type-name-link" title="class in io.micronaut.views.info">MicronautViewsJstachioModuleInfo</a> - Class in <a href="io/micronaut/views/info/package-summary.html">io.micronaut.views.info</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/info/MicronautViewsJstachioModuleInfo.html#%3Cinit%3E()" class="member-name-link">MicronautViewsJstachioModuleInfo()</a> - Constructor for class io.micronaut.views.info.<a href="io/micronaut/views/info/MicronautViewsJstachioModuleInfo.html" title="class in io.micronaut.views.info">MicronautViewsJstachioModuleInfo</a></dt>
@@ -3798,6 +3848,10 @@ separators that starts and ends with a "/".</div>
 </dd>
 <dt><a href="io/micronaut/views/http/ViewsFilterConfiguration.html#PREFIX" class="member-name-link">PREFIX</a> - Static variable in class io.micronaut.views.http.<a href="io/micronaut/views/http/ViewsFilterConfiguration.html" title="class in io.micronaut.views.http">ViewsFilterConfiguration</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html#PREFIX" class="member-name-link">PREFIX</a> - Static variable in class io.micronaut.views.jinjava.<a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRendererConfigurationProperties</a></dt>
+<dd>
+<div class="block">The Jinjava Views configuration prefix.</div>
+</dd>
 <dt><a href="io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html#PREFIX" class="member-name-link">PREFIX</a> - Static variable in class io.micronaut.views.jte.<a href="io/micronaut/views/jte/JteViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jte">JteViewsRendererConfigurationProperties</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html#PREFIX" class="member-name-link">PREFIX</a> - Static variable in class io.micronaut.views.model.security.<a href="io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html" title="class in io.micronaut.views.model.security">SecurityViewModelProcessorConfigurationProperties</a></dt>
@@ -3923,6 +3977,10 @@ separators that starts and ends with a "/".</div>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/elements/TextareaFormElement.Builder.html#readOnly(boolean)" class="member-name-link">readOnly(boolean)</a> - Method in class io.micronaut.views.fields.elements.<a href="io/micronaut/views/fields/elements/TextareaFormElement.Builder.html" title="class in io.micronaut.views.fields.elements">TextareaFormElement.Builder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/ViewUtils.html#readResourceAsString(io.micronaut.core.io.ResourceLoader,java.lang.String,java.nio.charset.Charset)" class="member-name-link">readResourceAsString(ResourceLoader, String, Charset)</a> - Static method in class io.micronaut.views.<a href="io/micronaut/views/ViewUtils.html" title="class in io.micronaut.views">ViewUtils</a></dt>
+<dd>
+<div class="block">Loads a template resource as text.</div>
+</dd>
 <dt><a href="io/micronaut/views/turbo/TurboStream.Builder.html#refresh()" class="member-name-link">refresh()</a> - Method in class io.micronaut.views.turbo.<a href="io/micronaut/views/turbo/TurboStream.Builder.html" title="class in io.micronaut.views.turbo">TurboStream.Builder</a></dt>
 <dd>
 <div class="block">Sets the Turbo action as <a href="io/micronaut/views/turbo/TurboStreamAction.html#REFRESH"><code>TurboStreamAction.REFRESH</code></a>.</div>
@@ -4082,6 +4140,8 @@ separators that starts and ends with a "/".</div>
 <dt><a href="io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html#render(java.lang.String,T,io.micronaut.http.HttpRequest)" class="member-name-link">render(String, T, HttpRequest)</a> - Method in class io.micronaut.views.thymeleaf.<a href="io/micronaut/views/thymeleaf/ThymeleafViewsRenderer.html" title="class in io.micronaut.views.thymeleaf">ThymeleafViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/velocity/VelocityViewsRenderer.html#render(java.lang.String,org.apache.velocity.VelocityContext,java.lang.String,java.io.Writer)" class="member-name-link">render(String, VelocityContext, String, Writer)</a> - Method in class io.micronaut.views.velocity.<a href="io/micronaut/views/velocity/VelocityViewsRenderer.html" title="class in io.micronaut.views.velocity">VelocityViewsRenderer</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRenderer.html#render(java.lang.String,T,R)" class="member-name-link">render(String, T, R)</a> - Method in class io.micronaut.views.jinjava.<a href="io/micronaut/views/jinjava/JinjavaViewsRenderer.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/fields/tck/TestUtils.html#render(java.lang.String,io.micronaut.views.ViewsRenderer,java.util.Map)" class="member-name-link">render(String, ViewsRenderer, Map)</a> - Static method in class io.micronaut.views.fields.tck.<a href="io/micronaut/views/fields/tck/TestUtils.html" title="class in io.micronaut.views.fields.tck">TestUtils</a></dt>
 <dd>&nbsp;</dd>
@@ -4474,6 +4534,8 @@ separators that starts and ends with a "/".</div>
 <dd>
 <div class="block">The default extension.</div>
 </dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html#setDefaultExtension(java.lang.String)" class="member-name-link">setDefaultExtension(String)</a> - Method in class io.micronaut.views.jinjava.<a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRendererConfigurationProperties</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html#setDefaultExtension(java.lang.String)" class="member-name-link">setDefaultExtension(String)</a> - Method in class io.micronaut.views.pebble.<a href="io/micronaut/views/pebble/PebbleConfigurationProperties.html" title="class in io.micronaut.views.pebble">PebbleConfigurationProperties</a></dt>
 <dd>
 <div class="block">The default extension.</div>
@@ -4526,6 +4588,8 @@ separators that starts and ends with a "/".</div>
 <dd>
 <div class="block">Sets whether the filter is enabled.</div>
 </dd>
+<dt><a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html#setEnabled(boolean)" class="member-name-link">setEnabled(boolean)</a> - Method in class io.micronaut.views.jinjava.<a href="io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRendererConfigurationProperties</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html#setEnabled(boolean)" class="member-name-link">setEnabled(boolean)</a> - Method in class io.micronaut.views.model.security.<a href="io/micronaut/views/model/security/SecurityViewModelProcessorConfigurationProperties.html" title="class in io.micronaut.views.model.security">SecurityViewModelProcessorConfigurationProperties</a></dt>
 <dd>
 <div class="block">Enable <a href="io/micronaut/views/model/security/SecurityViewModelProcessor.html" title="class in io.micronaut.views.model.security"><code>SecurityViewModelProcessor</code></a>.</div>
@@ -5368,11 +5432,11 @@ the order they are declared.</div>
 </dd>
 <dt><a href="io/micronaut/views/AbstractViewsRenderer.html#viewLocationWithExtension(java.lang.String)" class="member-name-link">viewLocationWithExtension(String)</a> - Method in class io.micronaut.views.<a href="io/micronaut/views/AbstractViewsRenderer.html" title="class in io.micronaut.views">AbstractViewsRenderer</a></dt>
 <dd>
-<div class="block">Normalizes a view name relative to a template folder and appends the configured default extension.</div>
+<div class="block">Resolves a view name relative to the configured template folder with its default extension.</div>
 </dd>
 <dt><a href="io/micronaut/views/AbstractViewsRenderer.html#viewLocationWithoutExtension(java.lang.String)" class="member-name-link">viewLocationWithoutExtension(String)</a> - Method in class io.micronaut.views.<a href="io/micronaut/views/AbstractViewsRenderer.html" title="class in io.micronaut.views">AbstractViewsRenderer</a></dt>
 <dd>
-<div class="block">Normalizes a view name relative to a template folder without appending its extension.</div>
+<div class="block">Resolves a view name relative to the configured template folder without its extension.</div>
 </dd>
 <dt><a href="io/micronaut/views/model/ViewModelProcessor.html" class="type-name-link" title="interface in io.micronaut.views.model">ViewModelProcessor&lt;T,<wbr>R&gt;</a> - Interface in <a href="io/micronaut/views/model/package-summary.html">io.micronaut.views.model</a></dt>
 <dd>

@@ -20,6 +20,7 @@ io.micronaut.views.htmx
 io.micronaut.views.htmx.http
 io.micronaut.views.http
 io.micronaut.views.info
+io.micronaut.views.jinjava
 io.micronaut.views.jstachio
 io.micronaut.views.jte
 io.micronaut.views.model

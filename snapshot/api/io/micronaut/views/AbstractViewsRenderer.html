@@ -59,6 +59,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
+<li><a href="#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,io.micronaut.views.ViewsConfiguration,io.micronaut.core.io.ResourceLoader)" tabindex="0">AbstractViewsRenderer(ViewsRendererConfiguration, ViewsConfiguration, ResourceLoader)</a></li>
 <li><a href="#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,java.lang.String)" tabindex="0">AbstractViewsRenderer(ViewsRendererConfiguration, String)</a></li>
 <li><a href="#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,java.lang.String,io.micronaut.core.io.ResourceLoader)" tabindex="0">AbstractViewsRenderer(ViewsRendererConfiguration, String, ResourceLoader)</a></li>
 </ol>
@@ -66,6 +67,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#defaultExtension()" tabindex="0">defaultExtension()</a></li>
+<li><a href="#getTemplate(java.lang.String,java.nio.charset.Charset)" tabindex="0">getTemplate(String, Charset)</a></li>
 <li><a href="#viewNameWithExtension(java.lang.String)" tabindex="0">viewNameWithExtension(String)</a></li>
 <li><a href="#viewLocationWithoutExtension(java.lang.String)" tabindex="0">viewLocationWithoutExtension(String)</a></li>
 <li><a href="#viewLocationWithExtension(java.lang.String)" tabindex="0">viewLocationWithExtension(String)</a></li>
@@ -94,7 +96,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="freemarker/FreemarkerViewsRenderer.html" title="class in io.micronaut.views.freemarker">FreemarkerViewsRenderer</a>, <a href="handlebars/HandlebarsViewsRenderer.html" title="class in io.micronaut.views.handlebars">HandlebarsViewsRenderer</a>, <a href="rocker/RockerViewsRenderer.html" title="class in io.micronaut.views.rocker">RockerViewsRenderer</a>, <a href="velocity/VelocityViewsRenderer.html" title="class in io.micronaut.views.velocity">VelocityViewsRenderer</a></code></dd>
+<dd><code><a href="freemarker/FreemarkerViewsRenderer.html" title="class in io.micronaut.views.freemarker">FreemarkerViewsRenderer</a>, <a href="handlebars/HandlebarsViewsRenderer.html" title="class in io.micronaut.views.handlebars">HandlebarsViewsRenderer</a>, <a href="jinjava/JinjavaViewsRenderer.html" title="class in io.micronaut.views.jinjava">JinjavaViewsRenderer</a>, <a href="rocker/RockerViewsRenderer.html" title="class in io.micronaut.views.rocker">RockerViewsRenderer</a>, <a href="velocity/VelocityViewsRenderer.html" title="class in io.micronaut.views.velocity">VelocityViewsRenderer</a></code></dd>
 </dl>
 <hr>
 <div class="horizontal-scroll">
@@ -102,7 +104,12 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractViewsRenderer&lt;T,<wbr>R&gt;</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;T,<wbr>R&gt;</span></div>
-<div class="block">Base class for view renderers that use a <a href="ViewsRendererConfiguration.html" title="interface in io.micronaut.views"><code>ViewsRendererConfiguration</code></a>.</div>
+<div class="block">Base class for view renderers backed by a <a href="ViewsRendererConfiguration.html" title="interface in io.micronaut.views"><code>ViewsRendererConfiguration</code></a>.
+
+<p>Provides the common template-name normalization and resource-location construction used by
+renderer implementations. The configured default extension is required when resolving a view.
+A resource loader is optional so renderers that cannot check for template resources can still
+use the name and location helpers.</p></div>
 </div>
 </section>
 <section class="summary">
@@ -126,14 +133,25 @@ implements <a href="ViewsRenderer.html" title="interface in io.micronaut.views">
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected </code></div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,java.lang.String)" class="member-name-link">AbstractViewsRenderer</a><wbr>(@NonNull <a href="ViewsRendererConfiguration.html" title="interface in io.micronaut.views">ViewsRendererConfiguration</a>&nbsp;configuration,
- @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;folder)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,io.micronaut.views.ViewsConfiguration,io.micronaut.core.io.ResourceLoader)" class="member-name-link">AbstractViewsRenderer</a><wbr>(@NonNull <a href="ViewsRendererConfiguration.html" title="interface in io.micronaut.views">ViewsRendererConfiguration</a>&nbsp;configuration,
+ @NonNull <a href="ViewsConfiguration.html" title="interface in io.micronaut.views">ViewsConfiguration</a>&nbsp;viewsConfiguration,
+ @NonNull io.micronaut.core.io.ResourceLoader&nbsp;resourceLoader)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a renderer using the configured views folder and resource loader.</div>
+</div>
 <div class="col-first odd-row-color"><code>protected </code></div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,java.lang.String,io.micronaut.core.io.ResourceLoader)" class="member-name-link">AbstractViewsRenderer</a><wbr>(@NonNull <a href="ViewsRendererConfiguration.html" title="interface in io.micronaut.views">ViewsRendererConfiguration</a>&nbsp;configuration,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,java.lang.String)" class="member-name-link">AbstractViewsRenderer</a><wbr>(@NonNull <a href="ViewsRendererConfiguration.html" title="interface in io.micronaut.views">ViewsRendererConfiguration</a>&nbsp;configuration,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;folder)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a renderer that only uses the shared name and location helpers.</div>
+</div>
+<div class="col-first even-row-color"><code>protected </code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.views.ViewsRendererConfiguration,java.lang.String,io.micronaut.core.io.ResourceLoader)" class="member-name-link">AbstractViewsRenderer</a><wbr>(@NonNull <a href="ViewsRendererConfiguration.html" title="interface in io.micronaut.views">ViewsRendererConfiguration</a>&nbsp;configuration,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;folder,
  @Nullable io.micronaut.core.io.ResourceLoader&nbsp;resourceLoader)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a renderer using the supplied template folder and optional resource loader.</div>
+</div>
 </div>
 </section>
 </li>
@@ -150,23 +168,33 @@ implements <a href="ViewsRenderer.html" title="interface in io.micronaut.views">
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#defaultExtension()" class="member-name-link">defaultExtension</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Obtains the configured default template extension.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#exists(java.lang.String)" class="member-name-link">exists</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;viewName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#viewLocationWithExtension(java.lang.String)" class="member-name-link">viewLocationWithExtension</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determines whether a template resource for the given view name is available.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTemplate(java.lang.String,java.nio.charset.Charset)" class="member-name-link">getTemplate</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;viewName,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/charset/Charset.html" title="class or interface in java.nio.charset" class="external-link">Charset</a>&nbsp;charset)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Normalizes a view name relative to a template folder and appends the configured default extension.</div>
+<div class="block">Loads the template identified by the view name from the configured resource loader.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#viewLocationWithoutExtension(java.lang.String)" class="member-name-link">viewLocationWithoutExtension</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#viewLocationWithExtension(java.lang.String)" class="member-name-link">viewLocationWithExtension</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Normalizes a view name relative to a template folder without appending its extension.</div>
+<div class="block">Resolves a view name relative to the configured template folder with its default extension.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#viewNameWithExtension(java.lang.String)" class="member-name-link">viewNameWithExtension</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#viewLocationWithoutExtension(java.lang.String)" class="member-name-link">viewLocationWithoutExtension</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resolves a view name relative to the configured template folder without its extension.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#viewNameWithExtension(java.lang.String)" class="member-name-link">viewNameWithExtension</a><wbr>(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Normalizes a view name and appends the configured default extension.</div>
 </div>
 </div>
@@ -193,15 +221,33 @@ implements <a href="ViewsRenderer.html" title="interface in io.micronaut.views">
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="&lt;init&gt;(io.micronaut.views.ViewsRendererConfiguration,io.micronaut.views.ViewsConfiguration,io.micronaut.core.io.ResourceLoader)">
+<h3>AbstractViewsRenderer</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">AbstractViewsRenderer</span><wbr><span class="parameters">(@NonNull <a href="ViewsRendererConfiguration.html" title="interface in io.micronaut.views">ViewsRendererConfiguration</a>&nbsp;configuration,
+ @NonNull <a href="ViewsConfiguration.html" title="interface in io.micronaut.views">ViewsConfiguration</a>&nbsp;viewsConfiguration,
+ @NonNull io.micronaut.core.io.ResourceLoader&nbsp;resourceLoader)</span></div>
+<div class="block">Creates a renderer using the configured views folder and resource loader.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>configuration</code> - The renderer configuration, including the default template extension</dd>
+<dd><code>viewsConfiguration</code> - The shared views configuration</dd>
+<dd><code>resourceLoader</code> - The resource loader used to locate templates</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="&lt;init&gt;(io.micronaut.views.ViewsRendererConfiguration,java.lang.String)">
 <h3>AbstractViewsRenderer</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">AbstractViewsRenderer</span><wbr><span class="parameters">(@NonNull <a href="ViewsRendererConfiguration.html" title="interface in io.micronaut.views">ViewsRendererConfiguration</a>&nbsp;configuration,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;folder)</span></div>
+<div class="block">Creates a renderer that only uses the shared name and location helpers.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>configuration</code> - Renderer configuration</dd>
-<dd><code>folder</code> - The template folder</dd>
+<dd><code>configuration</code> - The renderer configuration, including the default template extension</dd>
+<dd><code>folder</code> - The template folder prefix</dd>
 </dl>
 </div>
 </section>
@@ -213,11 +259,12 @@ implements <a href="ViewsRenderer.html" title="interface in io.micronaut.views">
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">AbstractViewsRenderer</span><wbr><span class="parameters">(@NonNull <a href="ViewsRendererConfiguration.html" title="interface in io.micronaut.views">ViewsRendererConfiguration</a>&nbsp;configuration,
  @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;folder,
  @Nullable io.micronaut.core.io.ResourceLoader&nbsp;resourceLoader)</span></div>
+<div class="block">Creates a renderer using the supplied template folder and optional resource loader.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>configuration</code> - Renderer configuration</dd>
-<dd><code>folder</code> - The template folder</dd>
-<dd><code>resourceLoader</code> - The template resource loader</dd>
+<dd><code>configuration</code> - The renderer configuration, including the default template extension</dd>
+<dd><code>folder</code> - The template folder prefix</dd>
+<dd><code>resourceLoader</code> - The resource loader used to locate templates, if supported by the renderer</dd>
 </dl>
 </div>
 </section>
@@ -235,6 +282,33 @@ implements <a href="ViewsRenderer.html" title="interface in io.micronaut.views">
 <h3>defaultExtension</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">defaultExtension</span>()</div>
+<div class="block">Obtains the configured default template extension.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The configured default extension</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - If no default extension is configured</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getTemplate(java.lang.String,java.nio.charset.Charset)">
+<h3>getTemplate</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getTemplate</span><wbr><span class="parameters">(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;viewName,
+ @NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/charset/Charset.html" title="class or interface in java.nio.charset" class="external-link">Charset</a>&nbsp;charset)</span></div>
+<div class="block">Loads the template identified by the view name from the configured resource loader.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>viewName</code> - The requested view name, with or without the configured extension</dd>
+<dd><code>charset</code> - The character set used to decode the template</dd>
+<dt>Returns:</dt>
+<dd>The template text</dd>
+<dt>Throws:</dt>
+<dd><code><a href="exceptions/ViewRenderingException.html" title="class in io.micronaut.views.exceptions">ViewRenderingException</a></code> - If the template cannot be loaded</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - If this renderer has no resource loader</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -243,7 +317,10 @@ implements <a href="ViewsRenderer.html" title="interface in io.micronaut.views">
 <h3>viewNameWithExtension</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">viewNameWithExtension</span><wbr><span class="parameters">(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
-<div class="block">Normalizes a view name and appends the configured default extension.</div>
+<div class="block">Normalizes a view name and appends the configured default extension.
+
+<p>The supplied name may already include the configured extension. The configured extension
+may include a leading <code>.</code>; the returned name always contains exactly one separator.</p></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>name</code> - The requested view name</dd>
@@ -258,12 +335,12 @@ implements <a href="ViewsRenderer.html" title="interface in io.micronaut.views">
 <h3>viewLocationWithoutExtension</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">viewLocationWithoutExtension</span><wbr><span class="parameters">(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
-<div class="block">Normalizes a view name relative to a template folder without appending its extension.</div>
+<div class="block">Resolves a view name relative to the configured template folder without its extension.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>name</code> - The requested view name</dd>
 <dt>Returns:</dt>
-<dd>The template location</dd>
+<dd>The folder-qualified template location without its extension</dd>
 </dl>
 </div>
 </section>
@@ -273,12 +350,12 @@ implements <a href="ViewsRenderer.html" title="interface in io.micronaut.views">
 <h3>viewLocationWithExtension</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">viewLocationWithExtension</span><wbr><span class="parameters">(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
-<div class="block">Normalizes a view name relative to a template folder and appends the configured default extension.</div>
+<div class="block">Resolves a view name relative to the configured template folder with its default extension.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>name</code> - The requested view name</dd>
 <dt>Returns:</dt>
-<dd>The template path</dd>
+<dd>The folder-qualified template location with its extension</dd>
 </dl>
 </div>
 </section>
@@ -288,13 +365,16 @@ implements <a href="ViewsRenderer.html" title="interface in io.micronaut.views">
 <h3>exists</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">exists</span><wbr><span class="parameters">(@NonNull <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;viewName)</span></div>
+<div class="block">Determines whether a template resource for the given view name is available.
+
+<p>Returns <code>false</code> when this renderer was created without a resource loader.</p></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ViewsRenderer.html#exists(java.lang.String)">exists</a></code>&nbsp;in interface&nbsp;<code><a href="ViewsRenderer.html" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;<a href="#type-param-T" title="type parameter in AbstractViewsRenderer">T</a>,<wbr><a href="#type-param-R" title="type parameter in AbstractViewsRenderer">R</a>&gt;</code></dd>
 <dt>Parameters:</dt>
-<dd><code>viewName</code> - view name to be rendered</dd>
+<dd><code>viewName</code> - The requested view name, with or without the configured extension</dd>
 <dt>Returns:</dt>
-<dd>true if a template can be found for the supplied view name.</dd>
+<dd>Whether the corresponding template resource exists</dd>
 </dl>
 </div>
 </section>

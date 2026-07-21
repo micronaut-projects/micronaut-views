@@ -121,25 +121,27 @@
         
         <div class="toc-item" style="margin-left:20px" id="toc-item-jte"><a href="#jte"><strong>3.1.8</strong><span>JTE</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-jstachio"><a href="#jstachio"><strong>3.1.9</strong><span>JStachio</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-jinjava"><a href="#jinjava"><strong>3.1.9</strong><span>Jinjava</span></a></div>
         
-        <div class="toc-item" style="margin-left:30px" id="toc-item-jstachioInstallation"><a href="#jstachioInstallation"><strong>3.1.9.1</strong><span>JStachio Installation</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-jstachio"><a href="#jstachio"><strong>3.1.10</strong><span>JStachio</span></a></div>
         
-        <div class="toc-item" style="margin-left:30px" id="toc-item-jstachioExample"><a href="#jstachioExample"><strong>3.1.9.2</strong><span>JStachio Example</span></a></div>
+        <div class="toc-item" style="margin-left:30px" id="toc-item-jstachioInstallation"><a href="#jstachioInstallation"><strong>3.1.10.1</strong><span>JStachio Installation</span></a></div>
         
-        <div class="toc-item" style="margin-left:20px" id="toc-item-react"><a href="#react"><strong>3.1.10</strong><span>React SSR</span></a></div>
+        <div class="toc-item" style="margin-left:30px" id="toc-item-jstachioExample"><a href="#jstachioExample"><strong>3.1.10.2</strong><span>JStachio Example</span></a></div>
         
-        <div class="toc-item" style="margin-left:30px" id="toc-item-reactpreparingjs"><a href="#reactpreparingjs"><strong>3.1.10.1</strong><span>Preparing your Javascript</span></a></div>
+        <div class="toc-item" style="margin-left:20px" id="toc-item-react"><a href="#react"><strong>3.1.11</strong><span>React SSR</span></a></div>
         
-        <div class="toc-item" style="margin-left:30px" id="toc-item-reactsettingproperties"><a href="#reactsettingproperties"><strong>3.1.10.2</strong><span>Setting serving properties</span></a></div>
+        <div class="toc-item" style="margin-left:30px" id="toc-item-reactpreparingjs"><a href="#reactpreparingjs"><strong>3.1.11.1</strong><span>Preparing your Javascript</span></a></div>
         
-        <div class="toc-item" style="margin-left:30px" id="toc-item-preact"><a href="#preact"><strong>3.1.10.3</strong><span>Integrating with Preact</span></a></div>
+        <div class="toc-item" style="margin-left:30px" id="toc-item-reactsettingproperties"><a href="#reactsettingproperties"><strong>3.1.11.2</strong><span>Setting serving properties</span></a></div>
         
-        <div class="toc-item" style="margin-left:30px" id="toc-item-reactrenderscripts"><a href="#reactrenderscripts"><strong>3.1.10.4</strong><span>Render scripts</span></a></div>
+        <div class="toc-item" style="margin-left:30px" id="toc-item-preact"><a href="#preact"><strong>3.1.11.3</strong><span>Integrating with Preact</span></a></div>
         
-        <div class="toc-item" style="margin-left:40px" id="toc-item-reactheadmanagers"><a href="#reactheadmanagers"><strong>3.1.10.4.1</strong><span>Using head managers</span></a></div>
+        <div class="toc-item" style="margin-left:30px" id="toc-item-reactrenderscripts"><a href="#reactrenderscripts"><strong>3.1.11.4</strong><span>Render scripts</span></a></div>
         
-        <div class="toc-item" style="margin-left:30px" id="toc-item-reacttodo"><a href="#reacttodo"><strong>3.1.10.5</strong><span>Known limitations</span></a></div>
+        <div class="toc-item" style="margin-left:40px" id="toc-item-reactheadmanagers"><a href="#reactheadmanagers"><strong>3.1.11.4.1</strong><span>Using head managers</span></a></div>
+        
+        <div class="toc-item" style="margin-left:30px" id="toc-item-reacttodo"><a href="#reacttodo"><strong>3.1.11.5</strong><span>Known limitations</span></a></div>
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-model"><a href="#model"><strong>3.2</strong><span>Working with Models</span></a></div>
         
@@ -1957,7 +1959,97 @@ secure and lightweight template engine for Java and Kotlin.</p>
 </div>
 </div>
 
-<h2 id="jstachio"><a class="anchor" href="#jstachio"></a>3.1.9 JStachio</h2>
+<h2 id="jinjava"><a class="anchor" href="#jinjava"></a>3.1.9 Jinjava</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/jinjava.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Micronaut Views Jinjava includes <a href="../api/io/micronaut/views/jinjava/JinjavaViewsRenderer.html">JinjavaViewsRenderer</a> which uses
+<a href="https://github.com/HubSpot/jinjava">HubSpot Jinjava</a>, a Java implementation of the Jinja template language.</p>
+</div>
+<div class="paragraph">
+<p>Add the following dependency to your classpath:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.views:micronaut-views-jinjava")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-views-jinjava&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+<div class="paragraph">
+<p>Templates use the configured Views folder (by default, <code>src/main/resources/views</code>) and the <code>.jinja</code> extension.
+The renderer supports Jinja inheritance, imports, and includes. Referenced templates are restricted to the configured
+Views folder.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/views/home.jinja</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">{% extends "layouts/base.jinja" %}
+{% block content %}
+{% include "partials/user.jinja" %}
+{% endblock %}</code></pre>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration">Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The renderer can be disabled with <code>micronaut.views.jinja.enabled=false</code>. Jinjava&#8217;s configuration builder is exposed
+under <code>micronaut.views.jinja.config.*</code>; for example, set <code>micronaut.views.jinja.config.trim-blocks=true</code> to trim
+the first newline after a Jinja block.</p>
+</div>
+<a id="io.micronaut.views.jinjava.JinjavaViewsRendererConfigurationProperties" href="#io.micronaut.views.jinjava.JinjavaViewsRendererConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/views/jinjava/JinjavaViewsRendererConfigurationProperties.html">JinjavaViewsRendererConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Jinjava Views rendering is enabled</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.default-extension</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The default template extension</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<h2 id="jstachio"><a class="anchor" href="#jstachio"></a>3.1.10 JStachio</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/jstachio.adoc"'>
@@ -1970,7 +2062,7 @@ secure and lightweight template engine for Java and Kotlin.</p>
 <p>Micronaut Views JStachio includes <a href="../api/io/micronaut/views/jstachio/JStachioMessageBodyWriter.html">JStachioMessageBodyWriter</a>, which uses <a href="https://github.com/jstachio/jstachio">JStachio</a>, a type-safe compiled Mustache-based template engine, to render templates.</p>
 </div>
 
-<h2 id="jstachioInstallation"><a class="anchor" href="#jstachioInstallation"></a>3.1.9.1 JStachio Installation</h2>
+<h2 id="jstachioInstallation"><a class="anchor" href="#jstachioInstallation"></a>3.1.10.1 JStachio Installation</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/jstachio/jstachioInstallation.adoc"'>
@@ -2038,7 +2130,7 @@ For Kotlin, add the <code>jstachio-apt</code> dependency in <a href="https://doc
 <p>Read the <a href="https://jstach.io/doc/jstachio/1.2.1/apidocs/#installation">Jstachio&#8217;s user guide</a> to learn more.</p>
 </div>
 
-<h2 id="jstachioExample"><a class="anchor" href="#jstachioExample"></a>3.1.9.2 JStachio Example</h2>
+<h2 id="jstachioExample"><a class="anchor" href="#jstachioExample"></a>3.1.10.2 JStachio Example</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/jstachio/jstachioExample.adoc"'>
@@ -2131,7 +2223,7 @@ import io.jstach.jstache.JStachePath;</code></pre>
 </div>
 </div>
 
-<h2 id="react"><a class="anchor" href="#react"></a>3.1.10 React SSR</h2>
+<h2 id="react"><a class="anchor" href="#react"></a>3.1.11 React SSR</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react.adoc"'>
@@ -2356,7 +2448,7 @@ This module is experimental and subject to change.
 </div>
 </div>
 
-<h2 id="reactpreparingjs"><a class="anchor" href="#reactpreparingjs"></a>3.1.10.1 Preparing your Javascript</h2>
+<h2 id="reactpreparingjs"><a class="anchor" href="#reactpreparingjs"></a>3.1.11.1 Preparing your Javascript</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/reactpreparingjs.adoc"'>
@@ -2545,7 +2637,7 @@ module.exports = {
 <p>Run Webpack to generate the needed Javascript files for both client and server.</p>
 </div>
 
-<h2 id="reactsettingproperties"><a class="anchor" href="#reactsettingproperties"></a>3.1.10.2 Setting serving properties</h2>
+<h2 id="reactsettingproperties"><a class="anchor" href="#reactsettingproperties"></a>3.1.11.2 Setting serving properties</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/reactsettingproperties.adoc"'>
@@ -2818,7 +2910,7 @@ micronaut.io.watch.paths=build/resources/main/views</code></pre>
 </div>
 </div>
 
-<h2 id="preact"><a class="anchor" href="#preact"></a>3.1.10.3 Integrating with Preact</h2>
+<h2 id="preact"><a class="anchor" href="#preact"></a>3.1.11.3 Integrating with Preact</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/preact.adoc"'>
@@ -2886,7 +2978,7 @@ import(`./components/${pageComponentName}.js`).then(module =&gt; {
 </div>
 </div>
 
-<h2 id="reactrenderscripts"><a class="anchor" href="#reactrenderscripts"></a>3.1.10.4 Render scripts</h2>
+<h2 id="reactrenderscripts"><a class="anchor" href="#reactrenderscripts"></a>3.1.11.4 Render scripts</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/reactrenderscripts.adoc"'>
@@ -3008,7 +3100,7 @@ export { mymod };</code></pre>
 </ol>
 </div>
 
-<h2 id="reactheadmanagers"><a class="anchor" href="#reactheadmanagers"></a>3.1.10.4.1 Using head managers</h2>
+<h2 id="reactheadmanagers"><a class="anchor" href="#reactheadmanagers"></a>3.1.11.4.1 Using head managers</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/reactheadmanagers.adoc"'>
@@ -3060,7 +3152,7 @@ export { mymod };</code></pre>
 </div>
 </div>
 
-<h2 id="reacttodo"><a class="anchor" href="#reacttodo"></a>3.1.10.5 Known limitations</h2>
+<h2 id="reacttodo"><a class="anchor" href="#reacttodo"></a>3.1.11.5 Known limitations</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/reacttodo.adoc"'>
