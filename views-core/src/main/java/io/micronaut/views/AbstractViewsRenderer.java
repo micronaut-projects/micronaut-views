@@ -17,13 +17,9 @@ package io.micronaut.views;
 
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.io.ResourceLoader;
-import io.micronaut.core.util.ArgumentUtils;
-import io.micronaut.views.exceptions.ViewRenderingException;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Objects;
 
 /**
@@ -38,17 +34,6 @@ public abstract class AbstractViewsRenderer<T, R> implements ViewsRenderer<T, R>
     private final ViewsRendererConfiguration configuration;
     private final @Nullable ResourceLoader resourceLoader;
     private final String folder;
-
-    /**
-     * @param configuration Renderer configuration
-     * @param viewsConfiguration Views Configuration
-     * @param resourceLoader Resource Loader
-     */
-    protected AbstractViewsRenderer(@NonNull ViewsRendererConfiguration configuration,
-                                    @NonNull ViewsConfiguration viewsConfiguration,
-                                    @Nullable ResourceLoader resourceLoader) {
-        this(configuration, viewsConfiguration.getFolder(), resourceLoader);
-    }
 
     /**
      * @param configuration Renderer configuration
@@ -72,9 +57,8 @@ public abstract class AbstractViewsRenderer<T, R> implements ViewsRenderer<T, R>
         this.resourceLoader = resourceLoader;
     }
 
-    @NonNull
-    protected final String defaultExtension() {
-        return configuration.getDefaultExtension();
+    protected final @NonNull String defaultExtension() {
+        return Objects.requireNonNull(configuration.getDefaultExtension(), "defaultExtension");
     }
 
     /**
@@ -86,7 +70,10 @@ public abstract class AbstractViewsRenderer<T, R> implements ViewsRenderer<T, R>
     @NonNull
     protected final String viewNameWithExtension(@NonNull String name) {
         String extension = defaultExtension();
-        return ViewUtils.normalizeFile(name, extension) + ViewUtils.EXTENSION_SEPARATOR + extension;
+        String extensionWithoutSeparator = extension.startsWith(ViewUtils.EXTENSION_SEPARATOR)
+            ? extension.substring(ViewUtils.EXTENSION_SEPARATOR.length())
+            : extension;
+        return ViewUtils.normalizeFile(name, extension) + ViewUtils.EXTENSION_SEPARATOR + extensionWithoutSeparator;
     }
 
     /**
@@ -111,20 +98,8 @@ public abstract class AbstractViewsRenderer<T, R> implements ViewsRenderer<T, R>
         return folder + viewNameWithExtension(name);
     }
 
-    protected @NonNull String getTemplate(@NonNull String viewName, @NonNull Charset charset) {
-        ArgumentUtils.requireNonNull("viewName", viewName);
-        try {
-            return ViewUtils.readResourceAsString(Objects.requireNonNull(resourceLoader), viewLocationWithExtension(viewName), charset);
-        } catch (IOException e) {
-            throw new ViewRenderingException("Error rendering Jinjava view [" + viewName + "]: " + e.getMessage(), e);
-        }
-    }
-
     @Override
     public boolean exists(@NonNull String viewName) {
-        String templateName = viewNameWithExtension(viewName);
-        return !templateName.contains("//")
-            && resourceLoader != null
-            && resourceLoader.getResource(folder + templateName).isPresent();
+        return resourceLoader != null && resourceLoader.getResource(folder + viewNameWithExtension(Objects.requireNonNull(viewName))).isPresent();
     }
 }

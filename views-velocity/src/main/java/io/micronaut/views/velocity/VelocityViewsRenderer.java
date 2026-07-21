@@ -97,7 +97,9 @@ public class VelocityViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
     public boolean exists(@NonNull String viewName) {
         try {
             velocityEngine.getTemplate(viewLocationWithExtension(viewName));
-        } catch (ResourceNotFoundException | ParseErrorException e) {
+        } catch (ResourceNotFoundException _) {
+            return false;
+        } catch (ParseErrorException e) {
             throw new ViewRenderingException("Error rendering Velocity view [" + viewName + "]: " + e.getMessage(), e);
         }
         return true;
