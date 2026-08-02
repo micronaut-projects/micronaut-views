@@ -30,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.file.Path;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -104,10 +105,10 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
         }
 
         var path = event.getPath().toAbsolutePath();
-        if (serverBundle != null && path.equals(Paths.get(serverBundle.getPath()).toAbsolutePath())) {
+        if (serverBundle != null && path.equals(sourcePath(serverBundle))) {
             serverBundle = null;
         }
-        if (renderScript != null && path.equals(Paths.get(renderScript.getPath()).toAbsolutePath())) {
+        if (renderScript != null && path.equals(sourcePath(renderScript))) {
             renderScript = null;
         }
 
@@ -118,5 +119,9 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
         generation++;
         LOG.info("Reloaded React SSR bundle due to file change.");
         sourcesChangedEventPublisher.publishEvent(new ReactJSSourcesChangedEvent(this, generation));
+    }
+
+    private static Path sourcePath(Source source) {
+        return Paths.get(source.getURI()).toAbsolutePath();
     }
 }
