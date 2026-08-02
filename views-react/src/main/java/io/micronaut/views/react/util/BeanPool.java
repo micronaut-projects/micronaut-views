@@ -50,7 +50,7 @@ import java.util.function.Supplier;
  */
 @Internal
 public class BeanPool<T> {
-    // TODO: Use @Scheduled to occasionally clear out beans that weren't accessed for a while to recover from traffic spikes.
+    // A future enhancement could periodically clear beans that were not accessed recently.
 
     private final Supplier<T> factory;
 

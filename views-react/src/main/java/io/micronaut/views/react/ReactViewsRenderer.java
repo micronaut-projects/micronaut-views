@@ -70,7 +70,8 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
         return writer -> {
             try {
                 contextProvider.withContext(context -> {
-                    render(viewName, props, writer, loaded(context), request);
+                    LoadedReactContext loaded = loaded(context);
+                    render(viewName, props, writer, context, loaded, request);
                     return null;
                 });
             } catch (BeanInstantiationException e) {
@@ -112,14 +113,15 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
                     throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported."
                         .formatted(reactViewsRendererConfiguration.getRenderScript()));
                 }
-                loaded = new LoadedReactContext(generation, context, render, ssrModule);
+                loaded = new LoadedReactContext(generation, render, ssrModule);
                 loadedContexts.put(context, loaded);
             }
             return loaded;
         }
     }
 
-    private void render(String componentName, PROPS props, Writer writer, LoadedReactContext context, @Nullable HttpRequest<?> request) {
+    private void render(String componentName, PROPS props, Writer writer, Context polyglotContext,
+                        LoadedReactContext context, @Nullable HttpRequest<?> request) {
         Value component = context.ssrModule().getMember(componentName);
         if (component == null) {
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
@@ -130,12 +132,11 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
         // We wrap the props object so we can use Micronaut's compile-time reflection implementation.
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
-        Value guestProps = IntrospectableToTruffleAdapter.wrap(context.polyglotContext(), props);
+        Value guestProps = IntrospectableToTruffleAdapter.wrap(polyglotContext, props);
         context.render().executeVoid(component, guestProps, renderCallback, reactViewsRendererConfiguration.getClientBundleURL(), request);
     }
 
     private record LoadedReactContext(long generation,
-                                      Context polyglotContext,
                                       Value render,
                                       Value ssrModule) {
         private static final java.util.Set<String> IMPORT_SYMBOLS =
@@ -155,7 +156,6 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
      * WARNING: These methods may be invoked by sandboxed code. Treat calls adversarially and
      * mark methods with @HostAccess.Export to ensure they're visible inside the sandbox.
      *
-     * @hidden
      */
     public static final class RenderCallback {
         private final Writer responseWriter;

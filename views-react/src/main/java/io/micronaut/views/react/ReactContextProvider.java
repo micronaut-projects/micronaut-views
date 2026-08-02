@@ -29,7 +29,7 @@ import java.util.function.Function;
  * change.</p>
  *
  * @author Micronaut Team
- * @since 6.4.0
+ * @since 6.3.0
  */
 @Experimental
 @FunctionalInterface

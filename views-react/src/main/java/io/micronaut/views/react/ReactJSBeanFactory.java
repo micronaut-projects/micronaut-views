@@ -28,7 +28,6 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.SandboxPolicy;
-import org.graalvm.polyglot.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
@@ -125,10 +124,8 @@ final class ReactJSBeanFactory {
     }
 
     @Prototype
-    ReactJSContext reactJsContext(@ReactBean Context polyglotContext,
-                                  ReactViewsRendererConfiguration configuration,
-                                  ReactJSSources reactJSSources) {
-        return new ReactJSContext(polyglotContext, null, null);
+    ReactJSContext reactJsContext(@ReactBean Context polyglotContext) {
+        return new ReactJSContext(polyglotContext);
     }
 
 }
