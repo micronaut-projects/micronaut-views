@@ -18,7 +18,7 @@ package io.micronaut.views.react;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Prototype;
-import io.micronaut.context.event.ApplicationEventListener;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.views.react.util.BeanPool;
 import io.micronaut.views.react.util.JavaUtilLoggingToSLF4J;
@@ -28,7 +28,6 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.SandboxPolicy;
-import org.graalvm.polyglot.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
@@ -76,10 +75,9 @@ final class ReactJSBeanFactory {
     }
 
     @Singleton
-    ApplicationEventListener<ReactJSSourcesChangedEvent> poolCleaner(BeanPool<ReactJSContext> contextPool) {
-        // Clearing the pool ensures that new requests go via the pool and from there, back to
-        // createContext() which will in turn then reload the files on disk.
-        return event -> contextPool.clear();
+    @Requires(missingBeans = ReactContextProvider.class)
+    ReactContextProvider reactContextProvider(BeanPool<ReactJSContext> contextPool) {
+        return new DefaultReactContextProvider(contextPool);
     }
 
     @ReactBean
@@ -126,26 +124,8 @@ final class ReactJSBeanFactory {
     }
 
     @Prototype
-    ReactJSContext reactJsContext(@ReactBean Context polyglotContext,
-                                  ReactViewsRendererConfiguration configuration,
-                                  ReactJSSources reactJSSources) {
-
-        Value global = polyglotContext.getBindings("js");
-        Value ssrModule = polyglotContext.eval(reactJSSources.serverBundle());
-
-        // Take all the exports from the components bundle, and expose them to the render script.
-        for (var name : ssrModule.getMemberKeys()) {
-            global.putMember(name, ssrModule.getMember(name));
-        }
-
-        // Evaluate our JS-side framework specific render logic.
-        Value renderModule = polyglotContext.eval(reactJSSources.renderScript());
-        Value render = renderModule.getMember("ssr");
-        if (render == null) {
-            throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported.".formatted(configuration.getRenderScript()));
-        }
-
-        return new ReactJSContext(polyglotContext, render, ssrModule);
+    ReactJSContext reactJsContext(@ReactBean Context polyglotContext) {
+        return new ReactJSContext(polyglotContext);
     }
 
 }

@@ -17,29 +17,14 @@ package io.micronaut.views.react;
 
 import jakarta.annotation.PreDestroy;
 import org.graalvm.polyglot.Context;
-import org.graalvm.polyglot.Value;
-
-import java.util.List;
 
 /**
  * A bean that handles the Javascript {@link Context} object representing a loaded execution
  * environment usable by one thread at a time.
  *
  * @param polyglotContext A single-threaded Javascript language context (global vars etc).
- * @param render The {@code ssr} function defined in Javascript.
- * @param ssrModule The JS module containing the user's React components.
  */
-record ReactJSContext(Context polyglotContext,
-                      Value render,
-                      Value ssrModule) implements AutoCloseable {
-    // Symbols the user's server side bundle might supply us with.
-    private static final List<String> IMPORT_SYMBOLS = List.of("React", "ReactDOMServer", "renderToString", "h");
-
-    boolean moduleHasMember(String memberName) {
-        assert !IMPORT_SYMBOLS.contains(memberName) : "Should not query the server-side bundle for member name " + memberName;
-        return ssrModule.hasMember(memberName);
-    }
-
+record ReactJSContext(Context polyglotContext) implements AutoCloseable {
     @PreDestroy
     @Override
     public void close() {

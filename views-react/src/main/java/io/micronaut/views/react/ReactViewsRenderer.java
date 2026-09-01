@@ -16,13 +16,14 @@
 package io.micronaut.views.react;
 
 import io.micronaut.context.exceptions.BeanInstantiationException;
+import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.exceptions.MessageBodyException;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.react.truffle.IntrospectableToTruffleAdapter;
-import io.micronaut.views.react.util.BeanPool;
 import jakarta.inject.Singleton;
+import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
 import org.jspecify.annotations.NonNull;
@@ -31,6 +32,8 @@ import org.jspecify.annotations.Nullable;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * <p>Instantiates GraalJS and uses it to render React components server side. See the user guide
@@ -39,13 +42,18 @@ import java.nio.charset.StandardCharsets;
  * @param <PROPS> An introspectable bean type that will be fed to the ReactJS root component as props.
  */
 @Singleton
-class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> {
-    private final BeanPool<ReactJSContext> beanPool;
+class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>, ApplicationEventListener<ReactJSSourcesChangedEvent> {
+    private final ReactContextProvider contextProvider;
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
+    private final ReactJSSources reactJSSources;
+    private final Map<Context, LoadedReactContext> loadedContexts = new WeakHashMap<>();
 
-    ReactViewsRenderer(BeanPool<ReactJSContext> beanPool, ReactViewsRendererConfiguration reactViewsRendererConfiguration) {
-        this.beanPool = beanPool;
+    ReactViewsRenderer(ReactContextProvider contextProvider,
+                       ReactViewsRendererConfiguration reactViewsRendererConfiguration,
+                       ReactJSSources reactJSSources) {
+        this.contextProvider = contextProvider;
         this.reactViewsRendererConfiguration = reactViewsRendererConfiguration;
+        this.reactJSSources = reactJSSources;
     }
 
     /**
@@ -61,8 +69,9 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
     public @NonNull Writable render(@NonNull String viewName, @Nullable PROPS props, @Nullable HttpRequest<?> request) {
         return writer -> {
             try {
-                beanPool.useContext(handle -> {
-                    render(viewName, props, writer, handle.get(), request);
+                contextProvider.withContext(context -> {
+                    LoadedReactContext loaded = loaded(context);
+                    render(viewName, props, writer, context, loaded, request);
                     return null;
                 });
             } catch (BeanInstantiationException e) {
@@ -76,10 +85,43 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
 
     @Override
     public boolean exists(@NonNull String viewName) {
-        return beanPool.useContext(handle -> handle.get().moduleHasMember(viewName));
+        return contextProvider.withContext(context -> loaded(context).moduleHasMember(viewName));
     }
 
-    private void render(String componentName, PROPS props, Writer writer, ReactJSContext context, @Nullable HttpRequest<?> request) {
+    @Override
+    public void onApplicationEvent(ReactJSSourcesChangedEvent event) {
+        long generation = event.generation();
+        synchronized (loadedContexts) {
+            loadedContexts.clear();
+        }
+        contextProvider.sourcesChanged(generation);
+    }
+
+    private LoadedReactContext loaded(Context context) {
+        long generation = reactJSSources.generation();
+        synchronized (loadedContexts) {
+            LoadedReactContext loaded = loadedContexts.get(context);
+            if (loaded == null || loaded.generation() != generation) {
+                Value global = context.getBindings("js");
+                Value ssrModule = context.eval(reactJSSources.serverBundle());
+                for (String name : ssrModule.getMemberKeys()) {
+                    global.putMember(name, ssrModule.getMember(name));
+                }
+                Value renderModule = context.eval(reactJSSources.renderScript());
+                Value render = renderModule.getMember("ssr");
+                if (render == null) {
+                    throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported."
+                        .formatted(reactViewsRendererConfiguration.getRenderScript()));
+                }
+                loaded = new LoadedReactContext(generation, render, ssrModule);
+                loadedContexts.put(context, loaded);
+            }
+            return loaded;
+        }
+    }
+
+    private void render(String componentName, PROPS props, Writer writer, Context polyglotContext,
+                        LoadedReactContext context, @Nullable HttpRequest<?> request) {
         Value component = context.ssrModule().getMember(componentName);
         if (component == null) {
             throw new IllegalArgumentException("Component name %s wasn't exported from the SSR module.".formatted(componentName));
@@ -90,8 +132,20 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
         // We wrap the props object so we can use Micronaut's compile-time reflection implementation.
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
-        Value guestProps = IntrospectableToTruffleAdapter.wrap(context.polyglotContext(), props);
+        Value guestProps = IntrospectableToTruffleAdapter.wrap(polyglotContext, props);
         context.render().executeVoid(component, guestProps, renderCallback, reactViewsRendererConfiguration.getClientBundleURL(), request);
+    }
+
+    private record LoadedReactContext(long generation,
+                                      Value render,
+                                      Value ssrModule) {
+        private static final java.util.Set<String> IMPORT_SYMBOLS =
+            java.util.Set.of("React", "ReactDOMServer", "renderToString", "h");
+
+        boolean moduleHasMember(String memberName) {
+            assert !IMPORT_SYMBOLS.contains(memberName);
+            return ssrModule.hasMember(memberName);
+        }
     }
 
 
@@ -102,7 +156,6 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
      * WARNING: These methods may be invoked by sandboxed code. Treat calls adversarially and
      * mark methods with @HostAccess.Export to ensure they're visible inside the sandbox.
      *
-     * @hidden
      */
     public static final class RenderCallback {
         private final Writer responseWriter;
