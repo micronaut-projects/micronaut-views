@@ -1,0 +1,13 @@
+{
+  "reflection": [
+    {
+      "type": "tools.jackson.databind.json.JsonMapper",
+      "methods": [
+        {
+          "name": "builder",
+          "parameterTypes": []
+        }
+      ]
+    }
+  ]
+}
