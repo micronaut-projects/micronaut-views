@@ -40,7 +40,10 @@ class FreemarkerViewRendererSpec extends Specification {
                     'spec.name': 'freemarker',
                     'micronaut.security.enabled': false,
                     'micronaut.views.freemarker.lazy-imports': true,
-                    'micronaut.views.freemarker.settings.urlEscapingCharset': 'UTF-8'
+                    'micronaut.views.freemarker.settings.urlEscapingCharset': 'UTF-8',
+                    // Core 5.2 omits exception messages from error responses by default;
+                    // the /freemarker/bogus test checks the view-not-found message reaches the client
+                    'micronaut.server.error-response-include-message': 'always'
             ],
             "test")
 
