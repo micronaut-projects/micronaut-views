@@ -1,5 +1,5 @@
 [versions]
-micronaut = "5.1.7"
+micronaut = "5.2.0"
 micronaut-platform = "5.0.5"
 micronaut-data = "5.1.0"
 micronaut-sql = "7.1.0"
