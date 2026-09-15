@@ -23,9 +23,25 @@ import io.micronaut.context.event.ApplicationEvent;
  * @author Denis Stepanov
  */
 final class ReactJSSourcesChangedEvent extends ApplicationEvent {
+    private final long generation;
 
-    public ReactJSSourcesChangedEvent(ReactJSSources source) {
+    /**
+     * Records the source generation in the event so context providers can invalidate their
+     * context-bound module state without assuming that a source change permits closing a context.
+     *
+     * @param source The source manager that detected the change
+     * @param generation The newly active source generation
+     */
+    public ReactJSSourcesChangedEvent(ReactJSSources source, long generation) {
         super(source);
+        this.generation = generation;
+    }
+
+    /**
+     * @return The source generation active after the change
+     */
+    long generation() {
+        return generation;
     }
 
 }
