@@ -1,0 +1,2 @@
+<h1>fruit: $fruit.getName()</h1>
+<h2>color: $fruit.getColor()</h2>

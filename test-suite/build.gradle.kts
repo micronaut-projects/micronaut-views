@@ -6,6 +6,7 @@ plugins {
 dependencies {
     testAnnotationProcessor(mn.micronaut.inject.java)
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
+    testAnnotationProcessor(mnSerde.micronaut.serde.processor)
 
     testImplementation(mnValidation.micronaut.validation)
 
@@ -28,6 +29,16 @@ dependencies {
     testImplementation(projects.micronautViewsTurbo)
     testImplementation(projects.micronautViewsSoy)
     testImplementation(projects.micronautViewsHandlebars)
+    testImplementation(projects.micronautViewsThymeleaf)
+    testImplementation(projects.micronautViewsFieldset)
+}
+
+// The fieldset documentation examples render forms with the Thymeleaf fragments of the fieldset test suite
+tasks.named<ProcessResources>("processTestResources") {
+    from(rootProject.file("test-suite-thymeleaf-fieldset/src/test/resources/views/fieldset")) {
+        into("views/fieldset")
+        exclude("*.md")
+    }
 }
 
 tasks.withType<Test> {
