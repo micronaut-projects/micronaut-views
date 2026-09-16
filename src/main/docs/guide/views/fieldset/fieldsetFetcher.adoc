@@ -18,16 +18,15 @@ Imagine you want a form to associate an author with a book form, such as:
 </form>"
 ----
 
-In Java, you will create a representation for the form submission. Something like:
+You will create a representation for the form submission. Something like:
 
-[source,java]
-----
-include::{testssuitefieldsetthymeleaf}/java/io/micronaut/views/fields/thymeleaf/BookAuthorSave.java[]
-----
+snippet::io.micronaut.views.docs.fieldset.BookAuthorSave[tags="clazz",languages="java,kotlin,groovy"]
 
 The `fetcher` member of the `Select` annotation allows you to specify a class. `AuthorFetcher` is a `Singleton` of type `OptionFetcher`, and you could write it, for example, like this:
 
-[source,java]
-----
-include::{testssuitefieldsetthymeleaf}/java/io/micronaut/views/fields/thymeleaf/AuthorFetcher.java[]
-----
+snippet::io.micronaut.views.docs.fieldset.AuthorFetcher[tags="clazz",languages="java,kotlin,groovy"]
+
+[.lang-python]
+--
+NOTE: A Python class cannot currently implement api:views.fields.fetchers.OptionFetcher[]: its `generate(Class<T>)` and `generate(T)` methods are overloads with the same number of parameters, and Python has no method overloading. Option fetchers must be written in Java, Kotlin or Groovy.
+--

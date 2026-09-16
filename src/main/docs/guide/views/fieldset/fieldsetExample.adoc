@@ -15,21 +15,20 @@ Imagine, you want to create an application which displays a form such as:
 </form>
 ----
 
-In Java, you will create a representation for the form submission. Something like:
+You will create a representation for the form submission. Something like:
 
-[source,java]
-----
-include::{testssuitefieldsetthymeleaf}/java/io/micronaut/views/fields/thymeleaf/BookSave.java[]
-----
+snippet::io.micronaut.views.docs.fieldset.BookSave[]
 
 NOTE: The field types and the validation annotations in the previous code sample influence the form generation.
 
 Then using the form generation API, create a controller such as:
 
-[source,java]
-----
-include::{testssuitefieldsetthymeleaf}/java/io/micronaut/views/fields/thymeleaf/BookController.java[tag=clazz]
-----
+snippet::io.micronaut.views.docs.fieldset.BookController[tags="clazz"]
+
+[.lang-python]
+--
+NOTE: The Python controller is annotated with `@Validated` so that the `@Valid` body is validated: the Python compiler only applies around advice to a class that carries an `@Around` stereotype explicitly.
+--
 
 https://micronaut.io/launch?features=views-thymeleaf[Micronaut Launch] or the Micronaut Command Line Interface (CLI) will generate Thymeleaf fragments to render a form when you select the `views-thymeleaf` feature.
 

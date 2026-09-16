@@ -10,11 +10,7 @@ include::{includedir}configurationProperties/io.micronaut.views.model.security.S
 
 In a controller, you can return a model without specifying in the model the authenticated user:
 
-[source,java]
-.src/main/java/myapp/BooksController.java
-----
-include::{testsSuite}/java/io/micronaut/views/model/security/BooksController.java[tags=class]
-----
+snippet::io.micronaut.views.model.security.BooksController[tags="class"]
 
 and still access the authenticated user in the view (for example a velocity template):
 

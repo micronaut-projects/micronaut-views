@@ -12,29 +12,13 @@ Your controller's method can render the response with a template by using the ap
 
 The following is an example of a controller which renders a template by passing a model as a `java.util.Map` via the returned response object.
 
-[source,java]
-.src/main/java/myapp/ViewsController.java
-----
-include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=clazz]
-
-include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=map]
-
-}
-----
+snippet::io.micronaut.views.docs.views.ViewsController[tags="clazz,map,endclass"]
 
 <1> Use `@View` annotation to indicate the view name which should be used to render a view for the route.
 
 In addition, you can return any POJO object and the properties of the POJO will be exposed to the view for rendering:
 
-[source,java]
-.src/main/java/myapp/ViewsController.java
-----
-include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=clazz]
-
-include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=pojo]
-
-}
-----
+snippet::io.micronaut.views.docs.views.ViewsController[tags="clazz,pojo,endclass"]
 
 <1> Use `@View` annotation to indicate the view name which should be used to render the POJO responded by the controller.
 
@@ -42,13 +26,7 @@ Use the https://micronaut-projects.github.io/micronaut-core/latest/api/io/micron
 
 You can also return a api:views.ModelAndView[] and skip specifying the api:views.View[] annotation.
 
-[source,java]
-.src/main/java/myapp/ViewsController.java
-----
-include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=clazz]
-
-include::{testsviewsThymeleaf}/groovy/io/micronaut/docs/ViewsController.groovy[tags=modelAndView]
-----
+snippet::io.micronaut.views.docs.views.ViewsController[tags="clazz,modelAndView,endclass"]
 
 Moreover, the Controller's method can return a POJO annotated with `@Introspected` to the view:
 
