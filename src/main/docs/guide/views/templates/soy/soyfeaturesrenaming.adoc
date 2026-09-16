@@ -17,7 +17,7 @@ micronaut:
   views:
     soy:
       enabled: true
-      renaming: true
+      renaming-enabled: true
 ----
 
 2. When building your styles with GSS, or a similar tool, generate a rewrite map:
@@ -52,59 +52,14 @@ must be a string literal (variables cannot be used):
     --output templates.jar \
     --srcs [...templates...];
 
-The last step is to provide the renaming map to Micronaut Views Soy:
-```java
-@Singleton
-public class RewriteMapProvider implements SoyNamingMapProvider {
-  /** Filename for the JSON class renaming map. */
-  private static final String RENAMING_MAP_NAME = "renaming-map.json";
+The last step is to provide the renaming map to Micronaut Views Soy with a bean of type api:views.soy.SoyNamingMapProvider[]:
 
-  /** Naming map to use for classes. */
-  private static SoyCssRenamingMap CSS_RENAMING_MAP = null;
+snippet::io.micronaut.views.docs.soy.RewriteMapProvider[tags="clazz"]
 
-  /**
-   * Load JSON embedded in a JAR resource into a naming map for Soy rendering.
-   *
-   * @param mapPath URL to the JAR resource we should load.
-   */
-  @Nullable
-  private static Map<String, String> loadMapFromJSON(URL mapPath) {
-    try {
-      return new ObjectMapper().readValue(mapPath, new TypeReference<Map<String, String>>() { });
-    } catch (Throwable thr) {
-      //handle `JsonMappingException` and `IOException`, if, for instance, you're using Jackson
-      throw new RuntimeException(thr);
-    }
-  }
-
-  static {
-    final URL mapPath =
-        SoyRenderConfigProvider.class.getClassLoader().getResource(RENAMING_MAP_NAME);
-    if (mapPath != null) {
-      // load the renaming map
-      final Map<String, String> cssRenamingMap = loadMapFromJSON(mapPath);
-      if (renamingMapRaw != null) {
-        CSS_RENAMING_MAP = new SoyCssRenamingMap() {
-          @Nullable @Override
-          public String get(@NotNull String className) {
-            // (or whatever logic you need to rewrite the class)
-            return cssRenamingMap.get(className);
-          }
-        };
-      }
-    }
-  }
-
-  /**
-   * Provide a CSS renaming map to Soy/Micronaut.
-   *
-   * @return Inflated Soy CSS renaming map.
-   */
-  @Nullable @Override public SoyCssRenamingMap cssRenamingMap() {
-    return CSS_RENAMING_MAP;
-  }
-}
-```
+[.lang-python]
+--
+NOTE: `cssRenamingMap()` overrides a default method of the `SoyNamingMapProvider` interface; the Python compiler only bridges abstract interface methods to Java automatically, so the Python method is annotated with `@Executable`.
+--
 
 Then, your output will be renamed. Referencing the Soy template sample above, output would look something like this:
 ```html

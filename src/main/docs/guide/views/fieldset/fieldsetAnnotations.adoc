@@ -15,12 +15,9 @@ Sometimes, more than the Java type is needed to define the input type. For examp
 </form>
 ----
 
-In Java, you will create a representation for the form submission and annotate the `password` field with ann:views.fields.annotations.InputPassword[]. Something like:
+You will create a representation for the form submission and annotate the `password` field with ann:views.fields.annotations.InputPassword[]. Something like:
 
-[source,java]
-----
-include::{testssuitefieldsetthymeleaf}/java/io/micronaut/views/fields/thymeleaf/Login.java[]
-----
+snippet::io.micronaut.views.docs.fieldset.Login[]
 
 The following annotations are available:
 

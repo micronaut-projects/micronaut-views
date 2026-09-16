@@ -66,20 +66,9 @@ Using the standard `@View` annotation will invoke the template dynamically witho
 Instead the compiled template should be invoked within the controller and a `RockerWritable` returned.
 
 
-[source,java]
-----
-import io.micronaut.views.rocker.RockerWritable;
-import views.home;
-...
+NOTE: Rocker compiles each template to a Java class (`views.home` for `views/home.rocker.html`), so this example is Java only.
 
-    @Get("/")
-    @Produces(TEXT_HTML)
-    public HttpResponse<?> staticTemplate() {
-        return HttpResponse.ok(new RockerWritable(home.template(true, "sdelamo")));
-    }
-
-...
-----
+snippet::io.micronaut.views.rocker.docs.HomeController[tags="clazz",project="views-rocker",language="java"]
 
 === Configuration
 
