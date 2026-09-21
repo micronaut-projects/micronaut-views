@@ -25,11 +25,6 @@ Then using the form generation API, create a controller such as:
 
 snippet::io.micronaut.views.docs.fieldset.BookController[tags="clazz"]
 
-[.lang-python]
---
-NOTE: The Python controller is annotated with `@Validated` so that the `@Valid` body is validated: the Python compiler only applies around advice to a class that carries an `@Around` stereotype explicitly.
---
-
 https://micronaut.io/launch?features=views-thymeleaf[Micronaut Launch] or the Micronaut Command Line Interface (CLI) will generate Thymeleaf fragments to render a form when you select the `views-thymeleaf` feature.
 
 Thanks to those fragments, rendering the form for the `/books/create` route in the previous example is really simple:

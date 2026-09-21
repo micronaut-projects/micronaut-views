@@ -56,11 +56,6 @@ The last step is to provide the renaming map to Micronaut Views Soy with a bean 
 
 snippet::io.micronaut.views.docs.soy.RewriteMapProvider[tags="clazz"]
 
-[.lang-python]
---
-NOTE: `cssRenamingMap()` overrides a default method of the `SoyNamingMapProvider` interface; the Python compiler only bridges abstract interface methods to Java automatically, so the Python method is annotated with `@Executable`.
---
-
 Then, your output will be renamed. Referencing the Soy template sample above, output would look something like this:
 ```html
 <div class="a-b-c a-b-c-d">... content, and stuff...</div>

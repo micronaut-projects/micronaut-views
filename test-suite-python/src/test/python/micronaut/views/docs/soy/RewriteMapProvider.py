@@ -1,7 +1,7 @@
 from com.google.template.soy.shared import SoyCssRenamingMap
 from jakarta.inject import Singleton
 from java.lang import String
-from micronaut.context.annotation import Executable, Requires
+from micronaut.context.annotation import Requires
 from micronaut.core.io import ResourceLoader
 from micronaut.core.type import Argument
 from micronaut.json import JsonMapper
@@ -31,7 +31,6 @@ class RewriteMapProvider(SoyNamingMapProvider):
         json = resource_loader.getResourceAsStream(self.RENAMING_MAP_NAME).orElse(None)
         self.css_renaming_map = {} if json is None else dict(json_mapper.readValue(json, Argument.mapOf(String, String)))
 
-    @Executable
     def cssRenamingMap(self) -> SoyCssRenamingMap:
         return CssRenamingMap(self.css_renaming_map)
 # end::clazz[]

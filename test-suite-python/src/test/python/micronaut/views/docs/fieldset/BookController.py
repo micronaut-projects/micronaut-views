@@ -5,7 +5,6 @@ from micronaut.context.annotation import Requires
 from micronaut.http import HttpRequest, HttpResponse, MediaType
 from micronaut.http.annotation import Body, Consumes, Controller, Error, Get, Post, Produces
 from micronaut.http.uri import UriBuilder
-from micronaut.validation import Validated
 from micronaut.views import ModelAndView, View
 from micronaut.views.fields import FormGenerator
 
@@ -16,7 +15,6 @@ from .BookSave import BookSave
 
 @Requires(property="spec.name", value="BookControllerTest")
 # tag::clazz[]
-@Validated
 @Controller("/books")
 class BookController:
     CONTROLLER_PATH = "/books"
@@ -41,7 +39,7 @@ class BookController:
 
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Post("/save")
+    @Post(SAVE_PATH)
     def save(self, bookSave: Annotated[BookSave, Valid, Body]) -> HttpResponse:
         self.book_repository.save(Book(bookSave.title, bookSave.pages))
         return HttpResponse.seeOther(UriBuilder.of(self.CONTROLLER_PATH).path("list").build())

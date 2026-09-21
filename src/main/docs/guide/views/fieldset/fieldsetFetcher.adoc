@@ -20,13 +20,9 @@ Imagine you want a form to associate an author with a book form, such as:
 
 You will create a representation for the form submission. Something like:
 
-snippet::io.micronaut.views.docs.fieldset.BookAuthorSave[tags="clazz",languages="java,kotlin,groovy"]
+snippet::io.micronaut.views.docs.fieldset.BookAuthorSave[tags="clazz"]
 
 The `fetcher` member of the `Select` annotation allows you to specify a class. `AuthorFetcher` is a `Singleton` of type `OptionFetcher`, and you could write it, for example, like this:
 
-snippet::io.micronaut.views.docs.fieldset.AuthorFetcher[tags="clazz",languages="java,kotlin,groovy"]
+snippet::io.micronaut.views.docs.fieldset.AuthorFetcher[tags="clazz"]
 
-[.lang-python]
---
-NOTE: A Python class cannot currently implement api:views.fields.fetchers.OptionFetcher[]: its `generate(Class<T>)` and `generate(T)` methods are overloads with the same number of parameters, and Python has no method overloading. Option fetchers must be written in Java, Kotlin or Groovy.
---

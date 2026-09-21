@@ -1,6 +1,5 @@
 from typing import Annotated
 
-import java
 from jakarta.inject import Inject
 from java.lang import String
 from micronaut.context import BeanContext
@@ -9,15 +8,11 @@ from micronaut.http import HttpRequest, HttpStatus
 from micronaut.http.client import HttpClient
 from micronaut.http.client.annotation import Client
 from micronaut.test.extensions.junit5.annotation import MicronautTest
+from micronaut.views.model.security import SecurityViewModelProcessor
 from org.junit.jupiter.api import Test
 
 from .BooksController import BooksController
 from .MockAuthenticationProvider import MockAuthenticationProvider
-
-# TODO(python): java.type needed because the Python snippet package `micronaut/views/model/security` shadows the
-# generated `micronaut.views.model.security` module, so `from micronaut.views.model.security import
-# SecurityViewModelProcessor` resolves to the Python package (compiler fix merged, not yet released).
-SecurityViewModelProcessor = java.type("io.micronaut.views.model.security.SecurityViewModelProcessor")
 
 
 @Property(name="spec.name", value="SecurityViewModelProcessorSpec")
