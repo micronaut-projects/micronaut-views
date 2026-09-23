@@ -5,18 +5,24 @@ export async function ssr(component, props, callback, clientBundleURL) {
         props = {...props, "url": url};
     const element = React.createElement(component, props, null);
 
-    // Data to be passed to the browser after the main HTML has finished loading.
-    const boot = {
-        rootProps: props,
-        rootComponent: component.name,
-    };
+    // Data to be passed to the browser after the main HTML has finished loading. Only a render that a
+    // browser will receive can hydrate, so a render with no client bundle -- an email body, say -- gets
+    // the markup and nothing else. Emitting the bootstrap there serialises the whole model into a
+    // document that can never use it.
+    let options = {};
+    if (clientBundleURL) {
+        const boot = {
+            rootProps: props,
+            rootComponent: component.name,
+        };
 
-    // The Micronaut object defined here is not the same as the Micronaut object defined server side.
-    const bootstrapScriptContent = `var Micronaut = ${JSON.stringify(boot)};`;
-    const stream = await ReactDOMServer.renderToReadableStream(element, {
-        bootstrapScriptContent: bootstrapScriptContent,
-        bootstrapScripts: [clientBundleURL]
-    });
+        // The Micronaut object defined here is not the same as the Micronaut object defined server side.
+        options = {
+            bootstrapScriptContent: `var Micronaut = ${JSON.stringify(boot)};`,
+            bootstrapScripts: [clientBundleURL]
+        };
+    }
+    const stream = await ReactDOMServer.renderToReadableStream(element, options);
 
     // This ugliness is because renderToPipeableStream (what we should really use) is only in the node build
     // of react-dom/server, but we use the browser build. Trying to use the node build causes various errors
