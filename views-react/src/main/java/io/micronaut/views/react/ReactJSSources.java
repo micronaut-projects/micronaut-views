@@ -42,6 +42,7 @@ import static java.lang.String.format;
 @Singleton
 class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     private static final Logger LOG = LoggerFactory.getLogger(ReactJSSources.class);
+    private static final String HOST_POLYFILLS_PATH = "classpath:io/micronaut/views/react/host-polyfills.js";
     private final ResourceResolver resourceResolver;
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
     private final ApplicationEventPublisher<ReactJSSourcesChangedEvent> sourcesChangedEventPublisher;
@@ -50,6 +51,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     // to be singleton beans so we can recreate them on file change.
     private Source serverBundle;  // L(this)
     private Source renderScript;  // L(this)
+    private Source hostPolyfills;  // L(this)
 
     ReactJSSources(ResourceResolver resourceResolver,
                    ReactViewsRendererConfiguration reactViewsRendererConfiguration,
@@ -64,6 +66,13 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             serverBundle = loadSource(resourceResolver, reactViewsRendererConfiguration.getServerBundlePath(), ".server-bundle-path");
         }
         return serverBundle;
+    }
+
+    synchronized Source hostPolyfills() {
+        if (hostPolyfills == null) {
+            hostPolyfills = loadSource(resourceResolver, HOST_POLYFILLS_PATH, ".host-polyfills");
+        }
+        return hostPolyfills;
     }
 
     synchronized Source renderScript() {
