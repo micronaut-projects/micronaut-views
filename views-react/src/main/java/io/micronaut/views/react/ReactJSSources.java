@@ -30,8 +30,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.IdentityHashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static java.lang.String.format;
@@ -52,6 +56,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     private Source serverBundle;  // L(this)
     private Source renderScript;  // L(this)
     private Source hostPolyfills;  // L(this)
+    private final Map<Source, Path> sourceOrigins = new IdentityHashMap<>();  // L(this)
 
     ReactJSSources(ResourceResolver resourceResolver,
                    ReactViewsRendererConfiguration reactViewsRendererConfiguration,
@@ -82,7 +87,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
         return renderScript;
     }
 
-    private static Source loadSource(ResourceResolver resolver, String desiredPath, String propName) {
+    private Source loadSource(ResourceResolver resolver, String desiredPath, String propName) {
         try {
             Optional<URL> sourceURL = resolver.getResource(desiredPath);
             if (sourceURL.isEmpty()) {
@@ -93,11 +98,41 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
                 String path = url.getPath();
                 var fileName = path.substring(path.lastIndexOf('/') + 1);
                 Source.Builder sourceBuilder = Source.newBuilder("js", reader, fileName);
-                return sourceBuilder.mimeType("application/javascript+module").build();
+                Source source = sourceBuilder.mimeType("application/javascript+module").build();
+                // A Source built from a Reader has no path of its own, so remember where it came from:
+                // the file watcher reports absolute paths and that is the only way to match them.
+                rememberOrigin(source, url);
+                return source;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void rememberOrigin(Source source, URL url) {
+        if (!"file".equals(url.getProtocol())) {
+            return;
+        }
+        try {
+            sourceOrigins.put(source, Paths.get(url.toURI()).toAbsolutePath());
+        } catch (URISyntaxException | RuntimeException e) {
+            LOG.debug("Could not record the origin of {} for file watching", url, e);
+        }
+    }
+
+    /**
+     * Whether a watched file that changed is the file this {@link Source} was loaded from.
+     *
+     * <p>{@link Source#getPath()} is null for a source built from a {@link java.io.Reader}, which is how
+     * both of these are loaded, so comparing against it threw a {@link NullPointerException} out of the
+     * watch thread and killed it -- taking every later reload with it.
+     */
+    private boolean isOrigin(Source source, Path changed) {
+        if (source == null) {
+            return false;
+        }
+        Path origin = sourceOrigins.get(source);
+        return origin != null && origin.equals(changed);
     }
 
     @Override
@@ -107,10 +142,12 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
         }
 
         var path = event.getPath().toAbsolutePath();
-        if (path.equals(Paths.get(serverBundle.getPath()).toAbsolutePath())) {
+        if (isOrigin(serverBundle, path)) {
+            sourceOrigins.remove(serverBundle);
             serverBundle = null;
         }
-        if (path.equals(Paths.get(renderScript.getPath()).toAbsolutePath())) {
+        if (isOrigin(renderScript, path)) {
+            sourceOrigins.remove(renderScript);
             renderScript = null;
         }
 
