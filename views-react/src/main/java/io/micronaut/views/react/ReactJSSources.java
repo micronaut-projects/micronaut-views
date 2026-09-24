@@ -23,15 +23,17 @@ import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import io.micronaut.views.react.util.BeanPool;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Source;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
-import java.nio.file.Path;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
@@ -43,6 +45,7 @@ import static java.lang.String.format;
 @Singleton
 class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     private static final Logger LOG = LoggerFactory.getLogger(ReactJSSources.class);
+    private static final String HOST_POLYFILLS_PATH = "classpath:io/micronaut/views/react/host-polyfills.js";
     private final ResourceResolver resourceResolver;
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
     private final ApplicationEventPublisher<ReactJSSourcesChangedEvent> sourcesChangedEventPublisher;
@@ -51,6 +54,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     // to be singleton beans so we can recreate them on file change.
     private Source serverBundle;  // L(this)
     private Source renderScript;  // L(this)
+    private Source hostPolyfills;  // L(this)
     private long generation;
 
     ReactJSSources(ResourceResolver resourceResolver,
@@ -66,6 +70,13 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             serverBundle = loadSource(resourceResolver, reactViewsRendererConfiguration.getServerBundlePath(), ".server-bundle-path");
         }
         return serverBundle;
+    }
+
+    synchronized Source hostPolyfills() {
+        if (hostPolyfills == null) {
+            hostPolyfills = loadSource(resourceResolver, HOST_POLYFILLS_PATH, ".host-polyfills");
+        }
+        return hostPolyfills;
     }
 
     synchronized Source renderScript() {
@@ -89,12 +100,38 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             try (var reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8)) {
                 String path = url.getPath();
                 var fileName = path.substring(path.lastIndexOf('/') + 1) + "?mn-react-generation=" + generation;
+                // A Source built from a Reader has no path of its own, so stamp the URL it came from:
+                // the file watcher reports absolute paths and that is the only way to match them.
                 Source.Builder sourceBuilder = Source.newBuilder("js", reader, fileName)
-                    .uri(java.net.URI.create(url.toString()));
+                    .uri(URI.create(url.toString()));
                 return sourceBuilder.mimeType("application/javascript+module").build();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Whether a watched file that changed is the file this {@link Source} was loaded from.
+     *
+     * <p>{@link Source#getPath()} is null for a source built from a {@link java.io.Reader}, which is how
+     * all of these are loaded, so the origin is the URI stamped on the source instead. A source that did
+     * not come from a {@code file:} URL, such as one inside a jar, never matches rather than throwing:
+     * an exception here escapes the watch thread and kills it, taking every later reload with it.
+     */
+    private static boolean isOrigin(@Nullable Source source, Path changed) {
+        if (source == null) {
+            return false;
+        }
+        URI uri = source.getURI();
+        if (uri == null || !"file".equals(uri.getScheme())) {
+            return false;
+        }
+        try {
+            return Paths.get(uri).toAbsolutePath().normalize().equals(changed);
+        } catch (RuntimeException e) {
+            LOG.debug("Could not resolve the origin of {} for file watching", uri, e);
+            return false;
         }
     }
 
@@ -104,11 +141,11 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             return;
         }
 
-        var path = event.getPath().toAbsolutePath();
-        if (serverBundle != null && path.equals(sourcePath(serverBundle))) {
+        var path = event.getPath().toAbsolutePath().normalize();
+        if (isOrigin(serverBundle, path)) {
             serverBundle = null;
         }
-        if (renderScript != null && path.equals(sourcePath(renderScript))) {
+        if (isOrigin(renderScript, path)) {
             renderScript = null;
         }
 
@@ -119,9 +156,5 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
         generation++;
         LOG.info("Reloaded React SSR bundle due to file change.");
         sourcesChangedEventPublisher.publishEvent(new ReactJSSourcesChangedEvent(this, generation));
-    }
-
-    private static Path sourcePath(Source source) {
-        return Paths.get(source.getURI()).toAbsolutePath();
     }
 }

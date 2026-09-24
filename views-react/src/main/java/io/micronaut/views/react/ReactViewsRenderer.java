@@ -103,6 +103,10 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
             LoadedReactContext loaded = loadedContexts.get(context);
             if (loaded == null || loaded.generation() != generation) {
                 Value global = context.getBindings("js");
+                // Before the bundle, not after: React captures the host globals it needs at
+                // module-evaluation time, so a polyfill installed later is already too late.
+                // The script is guarded, so re-evaluating it in a context on reload is harmless.
+                context.eval(reactJSSources.hostPolyfills());
                 Value ssrModule = context.eval(reactJSSources.serverBundle());
                 for (String name : ssrModule.getMemberKeys()) {
                     global.putMember(name, ssrModule.getMember(name));
@@ -133,7 +137,15 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
         Value guestProps = IntrospectableToTruffleAdapter.wrap(polyglotContext, props);
-        context.render().executeVoid(component, guestProps, renderCallback, reactViewsRendererConfiguration.getClientBundleURL(), request);
+        // Without a client bundle URL the render script emits markup only. A render that no browser will
+        // receive -- an email body built by micronaut-email-template, which has no request -- cannot
+        // hydrate, and the bootstrap it would otherwise carry serialises the whole view model into the
+        // message. `hydrate-without-request` decides that case; it defaults to the historical behaviour.
+        String clientBundleURL = reactViewsRendererConfiguration.getClientBundleURL();
+        if (request == null && !reactViewsRendererConfiguration.isHydrateWithoutRequest()) {
+            clientBundleURL = null;
+        }
+        context.render().executeVoid(component, guestProps, renderCallback, clientBundleURL, request);
     }
 
     private record LoadedReactContext(long generation,

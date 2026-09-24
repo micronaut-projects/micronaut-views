@@ -34,6 +34,9 @@ public interface ReactViewsRendererConfiguration {
     /** The default value for {@link #getClientBundleURL()}. */
     String DEFAULT_CLIENT_BUNDLE_URL = "/static/client.js";
 
+    /** The default value for {@link #isHydrateWithoutRequest()}. */
+    boolean DEFAULT_HYDRATE_WITHOUT_REQUEST = true;
+
     /** The default value for {@link #getServerBundlePath()}. */
     String DEFAULT_SERVER_BUNDLE_PATH = "classpath:views/ssr-components.mjs";
 
@@ -50,6 +53,23 @@ public interface ReactViewsRendererConfiguration {
     @Bindable(defaultValue = DEFAULT_CLIENT_BUNDLE_URL)
     @SuppressWarnings("unused")  // Accessed from Javascript via reflection.
     String getClientBundleURL();
+
+    /**
+     * Whether a render with no {@link io.micronaut.http.HttpRequest} still emits the hydration
+     * bootstrap: the {@code Micronaut} object carrying the serialised view model, and the script tag
+     * for the client bundle.
+     *
+     * <p>Such a render is not being sent to a browser. An email body built by
+     * {@code micronaut-email-template} is the common case: it cannot hydrate, the bundle URL has no
+     * origin to resolve against, and the bootstrap puts the entire model into the delivered message --
+     * a password reset token along with everything else. Set this to {@code false} to render markup
+     * only in that case; a render with a request is unaffected either way.
+     *
+     * @return whether to hydrate a render that has no request. Defaults to
+     * {@value #DEFAULT_HYDRATE_WITHOUT_REQUEST}, which is the historical behaviour.
+     */
+    @Bindable(defaultValue = "true")
+    boolean isHydrateWithoutRequest();
 
     /**
      * @return the path relative to micronaut.views.folder where the bundle used for

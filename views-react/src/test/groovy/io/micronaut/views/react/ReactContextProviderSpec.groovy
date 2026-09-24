@@ -92,6 +92,7 @@ class ReactContextProviderSpec extends Specification {
         }
         ReactJSSources sources = Mock()
         sources.generation() >>> [0L, 1L]
+        sources.hostPolyfills() >> module("", "host-polyfills.js")
         sources.serverBundle() >> serverBundle
         sources.renderScript() >> renderScript
         ReactViewsRenderer renderer = new ReactViewsRenderer(provider, configuration, sources)

@@ -5,6 +5,10 @@ export function ssr(component, props, callback, clientBundleURL) {
         props = {...props, "url": url};
     const html = renderToString(preact.h(component, props, null))
     callback.write(html)
+    // As in react.js: without a client bundle there is nothing to hydrate, so emit markup only.
+    if (!clientBundleURL) {
+        return;
+    }
     const boot = {
         rootProps: props,
         rootComponent: component.name,
