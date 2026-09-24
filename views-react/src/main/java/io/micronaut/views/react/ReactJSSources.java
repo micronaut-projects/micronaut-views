@@ -30,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.file.Path;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -50,6 +51,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     // to be singleton beans so we can recreate them on file change.
     private Source serverBundle;  // L(this)
     private Source renderScript;  // L(this)
+    private long generation;
 
     ReactJSSources(ResourceResolver resourceResolver,
                    ReactViewsRendererConfiguration reactViewsRendererConfiguration,
@@ -73,7 +75,11 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
         return renderScript;
     }
 
-    private static Source loadSource(ResourceResolver resolver, String desiredPath, String propName) {
+    synchronized long generation() {
+        return generation;
+    }
+
+    private Source loadSource(ResourceResolver resolver, String desiredPath, String propName) {
         try {
             Optional<URL> sourceURL = resolver.getResource(desiredPath);
             if (sourceURL.isEmpty()) {
@@ -82,8 +88,9 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             URL url = sourceURL.get();
             try (var reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8)) {
                 String path = url.getPath();
-                var fileName = path.substring(path.lastIndexOf('/') + 1);
-                Source.Builder sourceBuilder = Source.newBuilder("js", reader, fileName);
+                var fileName = path.substring(path.lastIndexOf('/') + 1) + "?mn-react-generation=" + generation;
+                Source.Builder sourceBuilder = Source.newBuilder("js", reader, fileName)
+                    .uri(java.net.URI.create(url.toString()));
                 return sourceBuilder.mimeType("application/javascript+module").build();
             }
         } catch (IOException e) {
@@ -98,10 +105,10 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
         }
 
         var path = event.getPath().toAbsolutePath();
-        if (path.equals(Paths.get(serverBundle.getPath()).toAbsolutePath())) {
+        if (serverBundle != null && path.equals(sourcePath(serverBundle))) {
             serverBundle = null;
         }
-        if (path.equals(Paths.get(renderScript.getPath()).toAbsolutePath())) {
+        if (renderScript != null && path.equals(sourcePath(renderScript))) {
             renderScript = null;
         }
 
@@ -109,7 +116,12 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             return;
         }
 
+        generation++;
         LOG.info("Reloaded React SSR bundle due to file change.");
-        sourcesChangedEventPublisher.publishEvent(new ReactJSSourcesChangedEvent(this));
+        sourcesChangedEventPublisher.publishEvent(new ReactJSSourcesChangedEvent(this, generation));
+    }
+
+    private static Path sourcePath(Source source) {
+        return Paths.get(source.getURI()).toAbsolutePath();
     }
 }

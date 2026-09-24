@@ -18,8 +18,6 @@ package io.micronaut.views.react.util;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.util.functional.ThrowingFunction;
 
-import java.io.Closeable;
-import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.LinkedList;
 import java.util.function.Supplier;
@@ -37,7 +35,7 @@ import java.util.function.Supplier;
  * </p>
  *
  * <p>
- * Beans in the pool can be atomically cleared and closed (if they implement {@link Closeable}).
+ * Beans in the pool can be atomically cleared and closed (if they implement {@link AutoCloseable}).
  * Any beans checked out when {@link #clear()} is called will remain untouched, but when they are
  * checked back in they will be closed and discarded at that point.
  * </p>
@@ -52,7 +50,7 @@ import java.util.function.Supplier;
  */
 @Internal
 public class BeanPool<T> {
-    // TODO: Use @Scheduled to occasionally clear out beans that weren't accessed for a while to recover from traffic spikes.
+    // A future enhancement could periodically clear beans that were not accessed recently.
 
     private final Supplier<T> factory;
 
@@ -99,7 +97,7 @@ public class BeanPool<T> {
      * Puts a context back into the pool. It should be returned in a 'clean' state, so whatever
      * thread picks it up next finds it ready to use and without any leftover data from prior
      * usages. If the pool has been {@link #clear() cleared} previously, and the pooled object is
-     * {@link Closeable}, then the object will be closed at this point (exceptions are ignored).
+     * {@link AutoCloseable}, then the object will be closed at this point (exceptions are ignored).
      *
      * @param handle The object you got from {@link #checkOut()}.
      */
@@ -108,10 +106,10 @@ public class BeanPool<T> {
         // Put it back into the pool for reuse unless it's out of date, in which case just let it drift.
         if (impl.version == versionCounter) {
             pool.add(new SoftReference<>(impl));
-        } else if (impl.obj instanceof Closeable closeable) {
+        } else if (impl.obj instanceof AutoCloseable closeable) {
             try {
                 closeable.close();
-            } catch (IOException ignored) {
+            } catch (Exception ignored) {
             }
         }
     }
@@ -144,8 +142,8 @@ public class BeanPool<T> {
     /**
      * Empties the pool. Beans currently checked out with {@link #checkOut()} will not be re-added
      * to the pool when {@link #checkIn(Handle)} is called, and may be closed if they are
-     * {@link Closeable}. Likewise, all beans in the pool are closed if they are {@link Closeable}
-     * and exceptions thrown by {@link Closeable#close()} are ignored.
+     * {@link AutoCloseable}. Likewise, all beans in the pool are closed if they are {@link AutoCloseable}
+     * and exceptions thrown by {@link AutoCloseable#close()} are ignored.
      */
     public synchronized void clear() {
         versionCounter++;
@@ -154,10 +152,10 @@ public class BeanPool<T> {
         }
         for (SoftReference<PoolEntry> ref : pool) {
             var r = ref.get();
-            if (r != null && r.obj instanceof Closeable closeable) {
+            if (r != null && r.obj instanceof AutoCloseable closeable) {
                 try {
                     closeable.close();
-                } catch (IOException ignored) {
+                } catch (Exception ignored) {
                 }
             }
         }
