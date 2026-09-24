@@ -20,12 +20,19 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.sse.Event;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 import org.reactivestreams.Publisher;
 
 /**
  * Reports a rebuild over server-sent events.
  */
 @Requires(bean = ReactDevConfiguration.class)
+// Without this the browser's EventSource gets a 401 in any application using micronaut-security,
+// and the page never hears about a rebuild. Harmless where security is absent: the annotation is
+// simply not there. The endpoint reports that a rebuild happened and nothing else, and it only
+// exists in development.
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("${" + ReactDevConfiguration.PREFIX + ".path:" + ReactDevConfiguration.DEFAULT_PATH + "}")
 final class ReactDevReloadController {
     private final ReactDevReloadBroadcaster broadcaster;

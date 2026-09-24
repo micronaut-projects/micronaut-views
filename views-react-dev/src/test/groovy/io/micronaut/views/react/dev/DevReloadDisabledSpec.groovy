@@ -1,30 +1,25 @@
 package io.micronaut.views.react.dev
 
-import io.micronaut.context.annotation.Property
-import io.micronaut.http.HttpRequest
-import io.micronaut.http.MediaType
-import io.micronaut.http.client.HttpClient
-import io.micronaut.http.client.annotation.Client
+import io.micronaut.context.ApplicationContext
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import io.micronaut.views.react.ReactRenderPostProcessor
 import jakarta.inject.Inject
 import spock.lang.Specification
 
 /**
- * In dev, but not asked for. Being on the classpath is not consent.
+ * In dev, but not asked for. Being on the classpath is not consent: nothing is registered, so
+ * nothing is injected and no endpoint is routable.
  */
-@MicronautTest(environments = ["dev"], rebuildContext = true)
-@Property(name = "spec.name", value = "devreload")
+@MicronautTest(startApplication = false, environments = ["dev"], rebuildContext = true)
 class DevReloadDisabledSpec extends Specification {
     @Inject
-    @Client("/")
-    HttpClient client
+    ApplicationContext context
 
-    void "nothing is injected unless enabled"() {
-        when:
-        String body = client.toBlocking().retrieve(HttpRequest.GET("/page").accept(MediaType.TEXT_HTML))
-
-        then:
-        body.contains("Hello there")
-        !body.contains("data-micronaut-views-react-dev-reload")
+    void "nothing is registered unless enabled"() {
+        expect:
+        !context.containsBean(ReactDevConfiguration)
+        !context.containsBean(ReactRenderPostProcessor)
+        !context.containsBean(ReactDevReloadController)
+        !context.containsBean(ReactDevReloadBroadcaster)
     }
 }

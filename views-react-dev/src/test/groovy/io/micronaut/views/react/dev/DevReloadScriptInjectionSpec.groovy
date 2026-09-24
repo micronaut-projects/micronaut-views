@@ -1,44 +1,51 @@
 package io.micronaut.views.react.dev
 
+import io.micronaut.context.ApplicationContext
 import io.micronaut.context.annotation.Property
 import io.micronaut.http.HttpRequest
-import io.micronaut.http.MediaType
-import io.micronaut.http.client.HttpClient
-import io.micronaut.http.client.annotation.Client
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import io.micronaut.views.react.ReactRenderPostProcessor
 import jakarta.inject.Inject
 import spock.lang.Specification
 
 /**
- * The script goes into rendered HTML and nowhere else.
+ * What gets added to a rendered page, and to what.
  */
-@MicronautTest(environments = ["dev"], rebuildContext = true)
-@Property(name = "spec.name", value = "devreload")
+@MicronautTest(startApplication = false, environments = ["dev"], rebuildContext = true)
 @Property(name = "micronaut.views.react.dev.enabled", value = "true")
 class DevReloadScriptInjectionSpec extends Specification {
     @Inject
-    @Client("/")
-    HttpClient client
+    ApplicationContext context
 
-    void "an HTML response carries the refresh script"() {
+    void "a render for a browser gets the refresh script"() {
+        given:
+        ReactRenderPostProcessor injector = context.getBean(ReactRenderPostProcessor)
+        HttpRequest<?> request = Mock()
+        def writer = new StringWriter()
+
         when:
-        String body = client.toBlocking().retrieve(HttpRequest.GET("/page").accept(MediaType.TEXT_HTML))
-
-        then: "the page is intact"
-        body.contains("Hello there")
-
-        and: "and listens on the configured endpoint"
-        body.contains("data-micronaut-views-react-dev-reload")
-        body.contains("new EventSource('/micronaut/views/react/dev-reload')")
-        body.contains("location.reload()")
-    }
-
-    void "a response that is not HTML is left alone"() {
-        when:
-        String body = client.toBlocking().retrieve(HttpRequest.GET("/page/data").accept(MediaType.APPLICATION_JSON))
+        injector.afterRender(writer, request)
 
         then:
-        body.contains("there")
-        !body.contains("data-micronaut-views-react-dev-reload")
+        writer.toString().contains("data-micronaut-views-react-dev-reload")
+        writer.toString().contains("new EventSource('/micronaut/views/react/dev-reload')")
+        writer.toString().contains("location.reload()")
+    }
+
+    void "a render with no request gets nothing"() {
+        given: "an email body, which no browser will receive"
+        ReactRenderPostProcessor injector = context.getBean(ReactRenderPostProcessor)
+        def writer = new StringWriter()
+
+        when:
+        injector.afterRender(writer, null)
+
+        then:
+        writer.toString().isEmpty()
+    }
+
+    void "the endpoint the script listens on follows the configured path"() {
+        expect:
+        context.getBean(ReactDevConfiguration).path == "/micronaut/views/react/dev-reload"
     }
 }

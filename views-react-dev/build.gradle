@@ -12,6 +12,9 @@ dependencies {
     compileOnly(mnValidation.micronaut.validation) {
         because("For constraints on config properties")
     }
+    compileOnly(mnSecurity.micronaut.security) {
+        because("To mark the reload endpoint anonymous where micronaut-security is in use, without depending on it")
+    }
 
     testCompileOnly(mn.micronaut.inject.groovy)
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
