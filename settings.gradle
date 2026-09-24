@@ -6,7 +6,7 @@ pluginManagement {
 }
 
 plugins {
-    id("io.micronaut.build.shared.settings") version "8.0.2"
+    id("io.micronaut.build.shared.settings") version "8.1.2"
 }
 
 enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
@@ -36,6 +36,7 @@ include "test-suite-csrf"
 include "test-suite-http"
 include "test-suite-groovy"
 include "test-suite-kotlin"
+include "test-suite-python"
 include "test-suite-thymeleaf-fieldset"
 include "test-suite-jte-fieldset"
 include "test-suite-freemarker-fieldset"

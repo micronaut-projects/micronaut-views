@@ -18,16 +18,11 @@ Imagine you want a form to associate an author with a book form, such as:
 </form>"
 ----
 
-In Java, you will create a representation for the form submission. Something like:
+You will create a representation for the form submission. Something like:
 
-[source,java]
-----
-include::{testssuitefieldsetthymeleaf}/java/io/micronaut/views/fields/thymeleaf/BookAuthorSave.java[]
-----
+snippet::io.micronaut.views.docs.fieldset.BookAuthorSave[tags="clazz"]
 
 The `fetcher` member of the `Select` annotation allows you to specify a class. `AuthorFetcher` is a `Singleton` of type `OptionFetcher`, and you could write it, for example, like this:
 
-[source,java]
-----
-include::{testssuitefieldsetthymeleaf}/java/io/micronaut/views/fields/thymeleaf/AuthorFetcher.java[]
-----
+snippet::io.micronaut.views.docs.fieldset.AuthorFetcher[tags="clazz"]
+

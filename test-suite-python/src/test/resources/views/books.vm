@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books</title>
+</head>
+<body>
+<h2>#books: $books.size()</h2>
+</body>
+</html>

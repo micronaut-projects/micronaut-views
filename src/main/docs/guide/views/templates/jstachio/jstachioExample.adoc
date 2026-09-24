@@ -5,27 +5,17 @@ to configure the views directory since it does not use the api:views.ViewsFilter
 
 Instead, a controller returns a model annotated with `@JStache` referencing the `view` name.
 
-[source,java]
-.src/main/java/io/micronaut/views/jstachio/pkginfo/HomeController.java
-----
-include::{testsviewsJstachio}/java/io/micronaut/views/jstachio/pkginfo/HomeController.java[tag=clazz]
-----
+NOTE: JStachio generates the template renderers with a Java annotation processor from `@JStache` annotated Java classes and records, so the examples in this section are Java only.
 
-[source,java]
-.src/main/java/io/micronaut/views/jstachio/pkginfo/HomeModel.java
-----
-include::{testsviewsJstachio}/java/io/micronaut/views/jstachio/pkginfo/HomeModel.java[]
-----
+snippet::io.micronaut.views.jstachio.pkginfo.HomeController[tags="clazz",project="views-jstachio",language="java",title="HomeController.java"]
+
+snippet::io.micronaut.views.jstachio.pkginfo.HomeModel[project="views-jstachio",language="java",title="HomeModel.java"]
 
 You can provide a `suffix` and `prefix` for every model with the `@JStacheConfig` annotation.
 
 Add a `package-info.java` in the same package of your model classes.
 
-[source,java]
-.src/main/java/io/micronaut/views/jstachio/pkginfo/package-info.java
-----
-include::{testsviewsJstachio}/java/io/micronaut/views/jstachio/pkginfo/package-info.java[]
-----
+snippet::io.micronaut.views.jstachio.pkginfo.package-info[project="views-jstachio",language="java",title="package-info.java"]
 
 The previous example renders the following template:
 
