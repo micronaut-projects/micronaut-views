@@ -17,7 +17,6 @@ package io.micronaut.views.jinjava;
 
 import com.hubspot.jinjava.Jinjava;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.core.util.StringUtils;

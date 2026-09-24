@@ -28,7 +28,6 @@ import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsConfigurationProperties;
 import jakarta.inject.Named;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import java.util.Properties;
 
