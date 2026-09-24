@@ -114,7 +114,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             return;
         }
         try {
-            sourceOrigins.put(source, Paths.get(url.toURI()).toAbsolutePath());
+            sourceOrigins.put(source, Paths.get(url.toURI()).toAbsolutePath().normalize());
         } catch (URISyntaxException | RuntimeException e) {
             LOG.debug("Could not record the origin of {} for file watching", url, e);
         }
@@ -141,7 +141,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             return;
         }
 
-        var path = event.getPath().toAbsolutePath();
+        var path = event.getPath().toAbsolutePath().normalize();
         if (isOrigin(serverBundle, path)) {
             sourceOrigins.remove(serverBundle);
             serverBundle = null;
