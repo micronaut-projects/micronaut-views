@@ -1,16 +1,15 @@
 plugins {
-    id "io.micronaut.build.internal.views-module"
+    id("io.micronaut.build.internal.views-module")
 }
 
 micronautBuild {
-    // New in 6.2.1, so there is no earlier release to compare against.
-    binaryCompatibility.enabledAfter("6.2.1")
+    binaryCompatibility.enabledAfter("6.3.0")
 }
 
 dependencies {
     annotationProcessor(mnValidation.micronaut.validation.processor)
 
-    api projects.micronautViewsReact
+    api(projects.micronautViewsReact)
     implementation(mn.micronaut.http)
     implementation(mnReactor.micronaut.reactor)
 
