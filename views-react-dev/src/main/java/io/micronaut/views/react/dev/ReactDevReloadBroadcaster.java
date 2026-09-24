@@ -20,22 +20,20 @@ import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.views.react.ReactJSSourcesChangedEvent;
 import io.micronaut.views.react.ReactViewsRendererConfiguration;
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.Disposable;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.Sinks;
 import reactor.core.scheduler.Schedulers;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import jakarta.inject.Singleton;
-import reactor.core.publisher.Flux;
-import reactor.core.Disposable;
-import reactor.core.publisher.Mono;
-import reactor.core.publisher.Sinks;
-
 import java.time.Duration;
-
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -48,6 +46,8 @@ import java.util.concurrent.atomic.AtomicLong;
 final class ReactDevReloadBroadcaster implements ApplicationEventListener<ReactJSSourcesChangedEvent>, Ordered {
     private static final Logger LOG = LoggerFactory.getLogger(ReactDevReloadBroadcaster.class);
 
+    private static final Duration STABILITY_POLL = Duration.ofMillis(150);
+    private static final Duration STABILITY_DEADLINE = Duration.ofSeconds(10);
 
     /**
      * Identifies the current state of the bundle. A page carries the token it was rendered with,
@@ -67,9 +67,6 @@ final class ReactDevReloadBroadcaster implements ApplicationEventListener<ReactJ
      * immediately rather than waiting for the next rebuild.
      */
     private final Sinks.Many<String> rebuilds = Sinks.many().replay().latest();
-
-    private static final Duration STABILITY_POLL = Duration.ofMillis(150);
-    private static final Duration STABILITY_DEADLINE = Duration.ofSeconds(10);
 
     private final Duration quietPeriod;
 

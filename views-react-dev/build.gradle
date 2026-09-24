@@ -2,6 +2,11 @@ plugins {
     id "io.micronaut.build.internal.views-module"
 }
 
+micronautBuild {
+    // New in 6.2.1, so there is no earlier release to compare against.
+    binaryCompatibility.enabledAfter("6.2.1")
+}
+
 dependencies {
     annotationProcessor(mnValidation.micronaut.validation.processor)
 
