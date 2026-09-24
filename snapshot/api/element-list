@@ -27,6 +27,7 @@ io.micronaut.views.model
 io.micronaut.views.model.security
 io.micronaut.views.pebble
 io.micronaut.views.react
+io.micronaut.views.react.dev
 io.micronaut.views.react.truffle
 io.micronaut.views.react.util
 io.micronaut.views.rocker

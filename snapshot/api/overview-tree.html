@@ -81,6 +81,7 @@ loadScripts(document, 'script');</script>
 <li><a href="io/micronaut/views/model/security/package-tree.html">io.micronaut.views.model.security</a>, </li>
 <li><a href="io/micronaut/views/pebble/package-tree.html">io.micronaut.views.pebble</a>, </li>
 <li><a href="io/micronaut/views/react/package-tree.html">io.micronaut.views.react</a>, </li>
+<li><a href="io/micronaut/views/react/dev/package-tree.html">io.micronaut.views.react.dev</a>, </li>
 <li><a href="io/micronaut/views/react/truffle/package-tree.html">io.micronaut.views.react.truffle</a>, </li>
 <li><a href="io/micronaut/views/react/util/package-tree.html">io.micronaut.views.react.util</a>, </li>
 <li><a href="io/micronaut/views/rocker/package-tree.html">io.micronaut.views.rocker</a>, </li>
@@ -141,6 +142,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">io.micronaut.views.info.<a href="io/micronaut/views/info/MicronautViewsJstachioModuleInfo.html" class="type-name-link" title="class in io.micronaut.views.info">MicronautViewsJstachioModuleInfo</a></li>
 <li class="circle">io.micronaut.views.info.<a href="io/micronaut/views/info/MicronautViewsJteModuleInfo.html" class="type-name-link" title="class in io.micronaut.views.info">MicronautViewsJteModuleInfo</a></li>
 <li class="circle">io.micronaut.views.info.<a href="io/micronaut/views/info/MicronautViewsPebbleModuleInfo.html" class="type-name-link" title="class in io.micronaut.views.info">MicronautViewsPebbleModuleInfo</a></li>
+<li class="circle">io.micronaut.views.info.<a href="io/micronaut/views/info/MicronautViewsReactDevModuleInfo.html" class="type-name-link" title="class in io.micronaut.views.info">MicronautViewsReactDevModuleInfo</a></li>
 <li class="circle">io.micronaut.views.info.<a href="io/micronaut/views/info/MicronautViewsReactModuleInfo.html" class="type-name-link" title="class in io.micronaut.views.info">MicronautViewsReactModuleInfo</a></li>
 <li class="circle">io.micronaut.views.info.<a href="io/micronaut/views/info/MicronautViewsRockerModuleInfo.html" class="type-name-link" title="class in io.micronaut.views.info">MicronautViewsRockerModuleInfo</a></li>
 <li class="circle">io.micronaut.views.info.<a href="io/micronaut/views/info/MicronautViewsSoyModuleInfo.html" class="type-name-link" title="class in io.micronaut.views.info">MicronautViewsSoyModuleInfo</a></li>
@@ -199,6 +201,15 @@ loadScripts(document, 'script');</script>
 <li class="circle">io.micronaut.views.fields.fetchers.<a href="io/micronaut/views/fields/fetchers/EnumCheckboxFetcher.html" class="type-name-link" title="class in io.micronaut.views.fields.fetchers">EnumCheckboxFetcher</a>&lt;T&gt; (implements io.micronaut.views.fields.fetchers.<a href="io/micronaut/views/fields/fetchers/CheckboxFetcher.html" title="interface in io.micronaut.views.fields.fetchers">CheckboxFetcher</a>&lt;T&gt;)</li>
 <li class="circle">io.micronaut.views.fields.fetchers.<a href="io/micronaut/views/fields/fetchers/EnumOptionFetcher.html" class="type-name-link" title="class in io.micronaut.views.fields.fetchers">EnumOptionFetcher</a>&lt;T&gt; (implements io.micronaut.views.fields.fetchers.<a href="io/micronaut/views/fields/fetchers/OptionFetcher.html" title="interface in io.micronaut.views.fields.fetchers">OptionFetcher</a>&lt;T&gt;)</li>
 <li class="circle">io.micronaut.views.fields.fetchers.<a href="io/micronaut/views/fields/fetchers/EnumRadioFetcher.html" class="type-name-link" title="class in io.micronaut.views.fields.fetchers">EnumRadioFetcher</a>&lt;T&gt; (implements io.micronaut.views.fields.fetchers.<a href="io/micronaut/views/fields/fetchers/RadioFetcher.html" title="interface in io.micronaut.views.fields.fetchers">RadioFetcher</a>&lt;T&gt;)</li>
+<li class="circle">java.util.<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/EventObject.html" class="type-name-link external-link" title="class or interface in java.util">EventObject</a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)
+<ul>
+<li class="circle">io.micronaut.context.event.ApplicationEvent
+<ul>
+<li class="circle">io.micronaut.views.react.<a href="io/micronaut/views/react/ReactJSSourcesChangedEvent.html" class="type-name-link" title="class in io.micronaut.views.react">ReactJSSourcesChangedEvent</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="circle">io.micronaut.views.fields.render.<a href="io/micronaut/views/fields/render/FormElementRendererConfigurationProperties.html" class="type-name-link" title="class in io.micronaut.views.fields.render">FormElementRendererConfigurationProperties</a> (implements io.micronaut.views.fields.render.<a href="io/micronaut/views/fields/render/FormElementRendererConfiguration.html" title="interface in io.micronaut.views.fields.render">FormElementRendererConfiguration</a>)</li>
 <li class="circle">io.micronaut.views.fields.tck.<a href="io/micronaut/views/fields/tck/FormValidator.html" class="type-name-link" title="class in io.micronaut.views.fields.tck">FormValidator</a></li>
 <li class="circle">io.micronaut.views.handlebars.<a href="io/micronaut/views/handlebars/HandlebarsFactory.html" class="type-name-link" title="class in io.micronaut.views.handlebars">HandlebarsFactory</a></li>
@@ -408,11 +419,13 @@ loadScripts(document, 'script');</script>
 <li class="circle">io.micronaut.core.order.Ordered
 <ul>
 <li class="circle">io.micronaut.views.fields.formelementresolvers.<a href="io/micronaut/views/fields/formelementresolvers/FormElementResolver.html" class="type-name-link" title="interface in io.micronaut.views.fields.formelementresolvers">FormElementResolver</a></li>
+<li class="circle">io.micronaut.views.react.<a href="io/micronaut/views/react/ReactRenderPostProcessor.html" class="type-name-link" title="interface in io.micronaut.views.react">ReactRenderPostProcessor</a></li>
 <li class="circle">io.micronaut.views.http.<a href="io/micronaut/views/http/ResponseBodySwapper.html" class="type-name-link" title="interface in io.micronaut.views.http">ResponseBodySwapper</a>&lt;B&gt;</li>
 <li class="circle">io.micronaut.views.<a href="io/micronaut/views/ViewsRenderer.html" class="type-name-link" title="interface in io.micronaut.views">ViewsRenderer</a>&lt;T,<wbr>R&gt;</li>
 </ul>
 </li>
 <li class="circle">io.micronaut.views.fields.fetchers.<a href="io/micronaut/views/fields/fetchers/RadioFetcher.html" class="type-name-link" title="interface in io.micronaut.views.fields.fetchers">RadioFetcher</a>&lt;T&gt;</li>
+<li class="circle">io.micronaut.views.react.dev.<a href="io/micronaut/views/react/dev/ReactDevConfiguration.html" class="type-name-link" title="interface in io.micronaut.views.react.dev">ReactDevConfiguration</a></li>
 <li class="circle">io.micronaut.views.react.<a href="io/micronaut/views/react/ReactViewsRendererConfiguration.html" class="type-name-link" title="interface in io.micronaut.views.react">ReactViewsRendererConfiguration</a></li>
 <li class="circle">io.micronaut.views.<a href="io/micronaut/views/Renderable.html" class="type-name-link" title="interface in io.micronaut.views">Renderable</a></li>
 <li class="circle">io.micronaut.views.soy.<a href="io/micronaut/views/soy/SoyFileSetProvider.html" class="type-name-link" title="interface in io.micronaut.views.soy">SoyFileSetProvider</a></li>

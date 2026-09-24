@@ -1355,10 +1355,62 @@
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
+<h3 id="_micronaut_views_react_dev_config_properties">Micronaut Views React Dev Config Properties</h3>
+<a id="io.micronaut.views.react.dev.ReactDevConfiguration" href="#io.micronaut.views.react.dev.ReactDevConfiguration">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 16. Configuration Properties for <a href="../api/io/micronaut/views/react/dev/ReactDevConfiguration.html">ReactDevConfiguration</a></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.react.dev.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to tell the browser when the server bundle has been rebuilt.</p>
+<p class="tableblock"> &lt;p&gt;Off by default. It serves an unauthenticated endpoint and adds a script to every rendered
+ page, so it has to be asked for rather than inferred.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.react.dev.path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the path that both transports are served from, and that the injected script connects
+ to. Defaults to "/micronaut/views/react/dev-reload".</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/micronaut/views/react/dev-reload</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.react.dev.quiet-period</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.time.Duration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">How long to wait for bundle writes to settle before telling the browser.</p>
+<p class="tableblock"> &lt;p&gt;This is not politeness, it is correctness. The file watcher fires when the bundler starts
+ writing, and {@code micronaut-views-react} only drops its cached bundle then&#8201;&#8212;&#8201;it re-reads
+ lazily, on the next render. Announce immediately and the browser reloads within milliseconds,
+ that render re-reads a half-written file, and the stale content is cached as the new bundle.
+ The page then sits there with old markup and a current token. Measured in a real browser.</p>
+<p class="tableblock"> &lt;p&gt;Waiting for a quiet period means the first render after a rebuild happens once the bundler
+ has finished, so it reads the finished file.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1s</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
 <h3 id="_micronaut_views_rocker_config_properties">Micronaut Views Rocker Config Properties</h3>
 <a id="io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties" href="#io.micronaut.views.rocker.RockerViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 16. Configuration Properties for <a href="../api/io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html">RockerViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 17. Configuration Properties for <a href="../api/io/micronaut/views/rocker/RockerViewsRendererConfigurationProperties.html">RockerViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1407,7 +1459,7 @@
 <h3 id="_micronaut_views_soy_config_properties">Micronaut Views Soy Config Properties</h3>
 <a id="io.micronaut.views.soy.SoyViewsRendererConfigurationProperties" href="#io.micronaut.views.soy.SoyViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 17. Configuration Properties for <a href="../api/io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html">SoyViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 18. Configuration Properties for <a href="../api/io/micronaut/views/soy/SoyViewsRendererConfigurationProperties.html">SoyViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1443,7 +1495,7 @@
 <h3 id="_micronaut_views_thymeleaf_config_properties">Micronaut Views Thymeleaf Config Properties</h3>
 <a id="io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties" href="#io.micronaut.views.thymeleaf.ThymeleafViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 18. Configuration Properties for <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html">ThymeleafViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 19. Configuration Properties for <a href="../api/io/micronaut/views/thymeleaf/ThymeleafViewsRendererConfigurationProperties.html">ThymeleafViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1527,7 +1579,7 @@
 <h3 id="_micronaut_views_turbo_config_properties">Micronaut Views Turbo Config Properties</h3>
 <a id="io.micronaut.views.turbo.TurboConfigurationProperties" href="#io.micronaut.views.turbo.TurboConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 19. Configuration Properties for <a href="../api/io/micronaut/views/turbo/TurboConfigurationProperties.html">TurboConfigurationProperties</a></caption>
+<caption class="title">Table 20. Configuration Properties for <a href="../api/io/micronaut/views/turbo/TurboConfigurationProperties.html">TurboConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1557,7 +1609,7 @@
 <h3 id="_micronaut_views_velocity_config_properties">Micronaut Views Velocity Config Properties</h3>
 <a id="io.micronaut.views.velocity.VelocityViewsRendererConfigurationProperties" href="#io.micronaut.views.velocity.VelocityViewsRendererConfigurationProperties">&#128279;</a>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 20. Configuration Properties for <a href="../api/io/micronaut/views/velocity/VelocityViewsRendererConfigurationProperties.html">VelocityViewsRendererConfigurationProperties</a></caption>
+<caption class="title">Table 21. Configuration Properties for <a href="../api/io/micronaut/views/velocity/VelocityViewsRendererConfigurationProperties.html">VelocityViewsRendererConfigurationProperties</a></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
