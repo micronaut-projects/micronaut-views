@@ -19,9 +19,22 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.views.react.ReactJSSourcesChangedEvent;
+import io.micronaut.views.react.ReactViewsRendererConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import reactor.core.scheduler.Schedulers;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import jakarta.inject.Singleton;
 import reactor.core.publisher.Flux;
+import reactor.core.Disposable;
+import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
+
+import java.time.Duration;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -33,6 +46,8 @@ import java.util.concurrent.atomic.AtomicLong;
 @Requires(bean = ReactDevConfiguration.class)
 @Singleton
 final class ReactDevReloadBroadcaster implements ApplicationEventListener<ReactJSSourcesChangedEvent>, Ordered {
+    private static final Logger LOG = LoggerFactory.getLogger(ReactDevReloadBroadcaster.class);
+
 
     /**
      * Identifies the current state of the bundle. A page carries the token it was rendered with,
@@ -53,14 +68,100 @@ final class ReactDevReloadBroadcaster implements ApplicationEventListener<ReactJ
      */
     private final Sinks.Many<String> rebuilds = Sinks.many().replay().latest();
 
-    ReactDevReloadBroadcaster() {
+    private static final Duration STABILITY_POLL = Duration.ofMillis(150);
+    private static final Duration STABILITY_DEADLINE = Duration.ofSeconds(10);
+
+    private final Duration quietPeriod;
+
+    /** The bundle to watch settle, or {@code null} when it is not a file. */
+    private final Path bundle;
+
+    /** The announcement waiting for writes to settle, restarted by each further change. */
+    private Disposable pending;  // L(this)
+
+    ReactDevReloadBroadcaster(ReactDevConfiguration configuration,
+                              ReactViewsRendererConfiguration viewsConfiguration) {
+        this.quietPeriod = configuration.getQuietPeriod();
+        this.bundle = bundleFile(viewsConfiguration);
         rebuilds.tryEmitNext(currentToken());
     }
 
     @Override
     public void onApplicationEvent(ReactJSSourcesChangedEvent event) {
         token.incrementAndGet();
-        rebuilds.tryEmitNext(currentToken());
+        announceOnceWritesSettle();
+    }
+
+    /**
+     * Announces the rebuild once nothing further has changed for the quiet period, restarting the
+     * wait if another change arrives.
+     *
+     * <p>See {@link ReactDevConfiguration#getQuietPeriod()} for why announcing immediately does not
+     * work: the browser reloads faster than the bundler finishes writing.
+     */
+    private synchronized void announceOnceWritesSettle() {
+        if (pending != null) {
+            pending.dispose();
+        }
+        pending = Mono.delay(quietPeriod)
+            .publishOn(Schedulers.boundedElastic())
+            .doOnNext(ignored -> awaitStableBundle())
+            .subscribe(ignored -> rebuilds.tryEmitNext(currentToken()));
+    }
+
+    /**
+     * Blocks until the bundle file has stopped growing, or the deadline passes.
+     *
+     * <p>A fixed wait is a guess at how long the bundler takes, and the measured failure is exactly
+     * what happens when the guess is short: the browser reloads, that render re-reads a file still
+     * being written, and the stale content is cached as the new bundle. Watching the file settle
+     * asks the real question instead. The deadline is there so a bundle being written continuously
+     * cannot wedge this forever.
+     */
+    private void awaitStableBundle() {
+        if (bundle == null) {
+            return;
+        }
+        long deadline = System.nanoTime() + STABILITY_DEADLINE.toNanos();
+        long previous = -1;
+        while (System.nanoTime() < deadline) {
+            long current = sizeOf(bundle);
+            if (current >= 0 && current == previous) {
+                return;
+            }
+            previous = current;
+            try {
+                Thread.sleep(STABILITY_POLL.toMillis());
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+        LOG.debug("dev reload: {} was still changing after {}, announcing anyway", bundle, STABILITY_DEADLINE);
+    }
+
+    private static long sizeOf(Path path) {
+        try {
+            return Files.size(path);
+        } catch (IOException e) {
+            return -1;
+        }
+    }
+
+    /**
+     * @return the bundle as a file to watch settle, or {@code null} when it is not one -- a bundle
+     * on the classpath does not change under a running application
+     */
+    private static Path bundleFile(ReactViewsRendererConfiguration configuration) {
+        String path = configuration.getServerBundlePath();
+        if (path == null || !path.startsWith("file:")) {
+            return null;
+        }
+        try {
+            return Paths.get(path.substring("file:".length())).toAbsolutePath().normalize();
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 
     /**

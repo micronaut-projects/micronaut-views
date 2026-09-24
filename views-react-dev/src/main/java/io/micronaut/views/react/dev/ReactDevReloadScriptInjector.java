@@ -46,7 +46,15 @@ final class ReactDevReloadScriptInjector implements ReactRenderPostProcessor {
         (function () {
           var rendered = '%s';
           var source = new EventSource('%s');
+          // Exposed so the state of the connection can be inspected from the console, or from a
+          // test driving a real browser. This is a development module; there is nothing to hide.
+          var state = window.__micronautViewsReactDevReload = {
+            rendered: rendered, opens: 0, errors: 0, messages: [], source: source
+          };
+          source.addEventListener('open', function () { state.opens++; });
+          source.addEventListener('error', function () { state.errors++; });
           source.addEventListener('reload', function (event) {
+            state.messages.push(event.data);
             if (event.data !== rendered) {
               location.reload();
             }

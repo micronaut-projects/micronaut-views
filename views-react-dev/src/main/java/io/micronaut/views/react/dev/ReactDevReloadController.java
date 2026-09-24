@@ -23,6 +23,8 @@ import io.micronaut.http.sse.Event;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import org.reactivestreams.Publisher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Reports a rebuild over server-sent events.
@@ -35,6 +37,8 @@ import org.reactivestreams.Publisher;
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("${" + ReactDevConfiguration.PREFIX + ".path:" + ReactDevConfiguration.DEFAULT_PATH + "}")
 final class ReactDevReloadController {
+    private static final Logger LOG = LoggerFactory.getLogger(ReactDevReloadController.class);
+
     private final ReactDevReloadBroadcaster broadcaster;
 
     ReactDevReloadController(ReactDevReloadBroadcaster broadcaster) {
@@ -46,6 +50,10 @@ final class ReactDevReloadController {
      */
     @Get(produces = MediaType.TEXT_EVENT_STREAM)
     Publisher<Event<String>> stream() {
-        return broadcaster.rebuilds().map(at -> Event.of(at).name("reload"));
+        return broadcaster.rebuilds()
+            .doOnSubscribe(subscription -> LOG.debug("dev reload: a browser is listening"))
+            .doOnCancel(() -> LOG.debug("dev reload: a browser stopped listening"))
+            .doOnNext(at -> LOG.debug("dev reload: announcing bundle {}", at))
+            .map(at -> Event.of(at).name("reload"));
     }
 }

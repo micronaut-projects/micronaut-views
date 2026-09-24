@@ -21,6 +21,8 @@ import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.bind.annotation.Bindable;
 
+import java.time.Duration;
+
 /**
  * Refreshing the browser when the React server bundle is rebuilt.
  *
@@ -49,6 +51,11 @@ public interface ReactDevConfiguration {
     String DEFAULT_PATH = "/micronaut/views/react/dev-reload";
 
     /**
+     * The default value for {@link #getQuietPeriod()}.
+     */
+    String DEFAULT_QUIET_PERIOD = "1s";
+
+    /**
      * Whether to tell the browser when the server bundle has been rebuilt.
      *
      * <p>Off by default. It serves an unauthenticated endpoint and adds a script to every rendered
@@ -66,5 +73,23 @@ public interface ReactDevConfiguration {
     @NonNull
     @Bindable(defaultValue = DEFAULT_PATH)
     String getPath();
+
+    /**
+     * How long to wait for bundle writes to settle before telling the browser.
+     *
+     * <p>This is not politeness, it is correctness. The file watcher fires when the bundler starts
+     * writing, and {@code micronaut-views-react} only drops its cached bundle then -- it re-reads
+     * lazily, on the next render. Announce immediately and the browser reloads within milliseconds,
+     * that render re-reads a half-written file, and the stale content is cached as the new bundle.
+     * The page then sits there with old markup and a current token. Measured in a real browser.
+     *
+     * <p>Waiting for a quiet period means the first render after a rebuild happens once the bundler
+     * has finished, so it reads the finished file.
+     *
+     * @return the quiet period. Defaults to {@value #DEFAULT_QUIET_PERIOD}.
+     */
+    @NonNull
+    @Bindable(defaultValue = DEFAULT_QUIET_PERIOD)
+    Duration getQuietPeriod();
 
 }
