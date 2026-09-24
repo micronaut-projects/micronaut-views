@@ -1,0 +1,87 @@
+The React views module already reloads the server bundle while the application is running: it watches
+the file, drops its pool of GraalJS contexts, and the next render uses the rebuild. See
+<<react-dev-mode,Development>> for the `micronaut.io.watch` configuration that turns that on.
+
+Nothing tells the browser, though, so the refresh is still manual. The `micronaut-views-react-dev`
+module closes that gap: it adds a small script to every rendered page which listens for a rebuild and
+reloads when one happens.
+
+== Installation
+
+Declare it as a *development-only* dependency, so a production build does not carry it at all:
+
+dependency:micronaut-views-react-dev[groupId="io.micronaut.views",scope="developmentOnly"]
+
+Then enable it. Two things have to be true before anything is registered — the application must be
+running in the `dev` environment, and the property must be set:
+
+[configuration]
+----
+micronaut:
+  views:
+    react:
+      dev:
+        enabled: true
+----
+
+The property alone is deliberately not enough. A setting left behind in a committed configuration
+file should not turn a production deployment into one that serves an unauthenticated endpoint.
+
+TIP: `src/main/resources/application-dev.yml` is the natural home for this, since it is only read in
+the environment the module requires anyway.
+
+== Configuration
+
+include::{includedir}configurationProperties/io.micronaut.views.react.dev.ReactDevConfiguration.adoc[]
+
+The endpoint is served with `@Secured(SecurityRule.IS_ANONYMOUS)` where api:security.annotation.Secured[]
+is on the classpath. Without that the browser's `EventSource` is rejected in any application using
+Micronaut Security, and the page never hears about a rebuild.
+
+== How it works
+
+The module listens for the event the React views module publishes when it has dropped a stale bundle,
+and reports each rebuild over
+https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events[server-sent events]. `EventSource`
+reconnects by itself, so a full application restart refreshes the page as well as an in-process reload
+does.
+
+Two details are worth knowing, because both were needed to make the refresh reliable rather than
+occasional:
+
+* *A rebuild is announced only once the bundle has stopped being written.* The file watcher fires as
+  the bundler starts writing, and the React views module re-reads the bundle lazily, on the next
+  render. Announcing immediately means the browser reloads within milliseconds and that render reads a
+  half-written file, caching stale content. `micronaut.views.react.dev.quiet-period` controls how long
+  to wait for writes to settle.
+* *A page carries the bundle version it was rendered with*, and reloads only when the server reports a
+  different one. A reload that still lands too early therefore corrects itself, rather than leaving the
+  page showing old markup.
+
+Rendered pages are also served `Cache-Control: no-store` while the module is enabled. Without it the
+browser is free to answer its own reload from cache and show the page it already had.
+
+== Adding to a rendered page yourself
+
+The module adds its script through api:views.react.ReactRenderPostProcessor[], which is called once a
+component has written its markup. Implement it to add something of your own to every rendered page
+without touching the render script:
+
+[source,java]
+----
+@Singleton
+public class MyPostProcessor implements ReactRenderPostProcessor {
+    @Override
+    public void afterRender(Writer writer, @Nullable HttpRequest<?> request) throws IOException {
+        if (request != null) {   // <1>
+            writer.write("<!-- rendered by Micronaut -->");
+        }
+    }
+}
+----
+<1> A render with no request is not going to a browser. An email body built by
+`micronaut-email-template` is the common case, and usually wants nothing added.
+
+NOTE: There is no HTTP filter equivalent. A `@View` route's response body is still a
+api:views.ModelAndView[] while filters run, and the markup is not produced until a message body writer
+encodes it — after the last filter. This is the point at which rendered markup exists.

@@ -28,6 +28,7 @@ views:
       reactpreparingjs: Preparing your Javascript
       reactsettingproperties: Setting serving properties
       preact: Integrating with Preact
+      reactdevreload: Refreshing the browser on rebuild
       reactrenderscripts:
         title: Render scripts
         reactheadmanagers: Using head managers
