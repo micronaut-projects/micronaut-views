@@ -91,7 +91,15 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
         Value guestProps = IntrospectableToTruffleAdapter.wrap(context.polyglotContext(), props);
-        context.render().executeVoid(component, guestProps, renderCallback, reactViewsRendererConfiguration.getClientBundleURL(), request);
+        // Without a client bundle URL the render script emits markup only. A render that no browser will
+        // receive -- an email body built by micronaut-email-template, which has no request -- cannot
+        // hydrate, and the bootstrap it would otherwise carry serialises the whole view model into the
+        // message. `hydrate-without-request` decides that case; it defaults to the historical behaviour.
+        String clientBundleURL = reactViewsRendererConfiguration.getClientBundleURL();
+        if (request == null && !reactViewsRendererConfiguration.isHydrateWithoutRequest()) {
+            clientBundleURL = null;
+        }
+        context.render().executeVoid(component, guestProps, renderCallback, clientBundleURL, request);
     }
 
 
