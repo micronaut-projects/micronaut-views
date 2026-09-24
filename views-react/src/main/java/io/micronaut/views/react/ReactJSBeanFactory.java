@@ -131,6 +131,11 @@ final class ReactJSBeanFactory {
                                   ReactJSSources reactJSSources) {
 
         Value global = polyglotContext.getBindings("js");
+
+        // Before the bundle, not after: React captures the host globals it needs at
+        // module-evaluation time, so a polyfill installed later is already too late.
+        polyglotContext.eval(reactJSSources.hostPolyfills());
+
         Value ssrModule = polyglotContext.eval(reactJSSources.serverBundle());
 
         // Take all the exports from the components bundle, and expose them to the render script.
