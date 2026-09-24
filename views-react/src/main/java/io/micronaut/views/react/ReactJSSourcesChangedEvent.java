@@ -20,11 +20,15 @@ import io.micronaut.context.event.ApplicationEvent;
 /**
  * The ReactJS sources changed event.
  *
+ * <p>Published when the server bundle or the render script has been reloaded, after the pool of
+ * GraalJS contexts has been dropped. Public so that a development module can tell the browser to
+ * refresh; {@code micronaut-views-react-dev} is the one that does.
+ *
  * @author Denis Stepanov
  */
-final class ReactJSSourcesChangedEvent extends ApplicationEvent {
+public final class ReactJSSourcesChangedEvent extends ApplicationEvent {
 
-    public ReactJSSourcesChangedEvent(ReactJSSources source) {
+    public ReactJSSourcesChangedEvent(Object source) {
         super(source);
     }
 

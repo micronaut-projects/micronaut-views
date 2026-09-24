@@ -30,6 +30,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -42,10 +43,14 @@ import java.nio.charset.StandardCharsets;
 class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> {
     private final BeanPool<ReactJSContext> beanPool;
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
+    private final List<ReactRenderPostProcessor> postProcessors;
 
-    ReactViewsRenderer(BeanPool<ReactJSContext> beanPool, ReactViewsRendererConfiguration reactViewsRendererConfiguration) {
+    ReactViewsRenderer(BeanPool<ReactJSContext> beanPool,
+                       ReactViewsRendererConfiguration reactViewsRendererConfiguration,
+                       List<ReactRenderPostProcessor> postProcessors) {
         this.beanPool = beanPool;
         this.reactViewsRendererConfiguration = reactViewsRendererConfiguration;
+        this.postProcessors = postProcessors;
     }
 
     /**
@@ -100,6 +105,13 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>> 
             clientBundleURL = null;
         }
         context.render().executeVoid(component, guestProps, renderCallback, clientBundleURL, request);
+        for (ReactRenderPostProcessor postProcessor : postProcessors) {
+            try {
+                postProcessor.afterRender(writer, request);
+            } catch (IOException e) {
+                throw new MessageBodyException("Could not post-process the render of " + componentName, e);
+            }
+        }
     }
 
 
