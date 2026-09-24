@@ -32,6 +32,7 @@ import org.jspecify.annotations.Nullable;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -46,14 +47,17 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
     private final ReactContextProvider contextProvider;
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
     private final ReactJSSources reactJSSources;
+    private final List<ReactRenderPostProcessor> postProcessors;
     private final Map<Context, LoadedReactContext> loadedContexts = new WeakHashMap<>();
 
     ReactViewsRenderer(ReactContextProvider contextProvider,
                        ReactViewsRendererConfiguration reactViewsRendererConfiguration,
-                       ReactJSSources reactJSSources) {
+                       ReactJSSources reactJSSources,
+                       List<ReactRenderPostProcessor> postProcessors) {
         this.contextProvider = contextProvider;
         this.reactViewsRendererConfiguration = reactViewsRendererConfiguration;
         this.reactJSSources = reactJSSources;
+        this.postProcessors = postProcessors;
     }
 
     /**
@@ -146,6 +150,13 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
             clientBundleURL = null;
         }
         context.render().executeVoid(component, guestProps, renderCallback, clientBundleURL, request);
+        for (ReactRenderPostProcessor postProcessor : postProcessors) {
+            try {
+                postProcessor.afterRender(writer, request);
+            } catch (IOException e) {
+                throw new MessageBodyException("Could not post-process the render of " + componentName, e);
+            }
+        }
     }
 
     private record LoadedReactContext(long generation,

@@ -20,9 +20,13 @@ import io.micronaut.context.event.ApplicationEvent;
 /**
  * The ReactJS sources changed event.
  *
+ * <p>Published when the server bundle or the render script has been reloaded, after the pool of
+ * GraalJS contexts has been dropped. Public so that a development module can tell the browser to
+ * refresh; {@code micronaut-views-react-dev} is the one that does.
+ *
  * @author Denis Stepanov
  */
-final class ReactJSSourcesChangedEvent extends ApplicationEvent {
+public final class ReactJSSourcesChangedEvent extends ApplicationEvent {
     private final long generation;
 
     /**
@@ -32,7 +36,7 @@ final class ReactJSSourcesChangedEvent extends ApplicationEvent {
      * @param source The source manager that detected the change
      * @param generation The newly active source generation
      */
-    public ReactJSSourcesChangedEvent(ReactJSSources source, long generation) {
+    public ReactJSSourcesChangedEvent(Object source, long generation) {
         super(source);
         this.generation = generation;
     }
@@ -40,7 +44,7 @@ final class ReactJSSourcesChangedEvent extends ApplicationEvent {
     /**
      * @return The source generation active after the change
      */
-    long generation() {
+    public long generation() {
         return generation;
     }
 

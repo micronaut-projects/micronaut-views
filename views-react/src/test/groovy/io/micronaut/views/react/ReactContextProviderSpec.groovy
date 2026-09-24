@@ -95,7 +95,7 @@ class ReactContextProviderSpec extends Specification {
         sources.hostPolyfills() >> module("", "host-polyfills.js")
         sources.serverBundle() >> serverBundle
         sources.renderScript() >> renderScript
-        ReactViewsRenderer renderer = new ReactViewsRenderer(provider, configuration, sources)
+        ReactViewsRenderer renderer = new ReactViewsRenderer(provider, configuration, sources, [])
 
         when:
         String result = WritableUtils.writableToString(renderer.render("App", [:], null)).orElseThrow()
@@ -133,6 +133,6 @@ class ReactContextProviderSpec extends Specification {
         sources.generation() >> 0L
         sources.serverBundle() >> serverBundle
         sources.renderScript() >> renderScript
-        new ReactViewsRenderer(provider, configuration, sources)
+        new ReactViewsRenderer(provider, configuration, sources, [])
     }
 }
