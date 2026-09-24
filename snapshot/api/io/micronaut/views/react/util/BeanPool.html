@@ -102,7 +102,7 @@ the general rate of contention, rather than how many threads are in use.
 </p>
 
 <p>
-Beans in the pool can be atomically cleared and closed (if they implement <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link"><code>Closeable</code></a>).
+Beans in the pool can be atomically cleared and closed (if they implement <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link"><code>AutoCloseable</code></a>).
 Any beans checked out when <a href="#clear()"><code>clear()</code></a> is called will remain untouched, but when they are
 checked back in they will be closed and discarded at that point.
 </p>
@@ -241,7 +241,7 @@ done with it to put it back into the pool.</dd>
 <div class="block">Puts a context back into the pool. It should be returned in a 'clean' state, so whatever
 thread picks it up next finds it ready to use and without any leftover data from prior
 usages. If the pool has been <a href="#clear()"><code>cleared</code></a> previously, and the pooled object is
-<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link"><code>Closeable</code></a>, then the object will be closed at this point (exceptions are ignored).</div>
+<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link"><code>AutoCloseable</code></a>, then the object will be closed at this point (exceptions are ignored).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>handle</code> - The object you got from <a href="#checkOut()"><code>checkOut()</code></a>.</dd>
@@ -287,8 +287,8 @@ try (Handle&lt;T&gt; handle = checkOut()) {
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clear</span>()</div>
 <div class="block">Empties the pool. Beans currently checked out with <a href="#checkOut()"><code>checkOut()</code></a> will not be re-added
 to the pool when <a href="#checkIn(io.micronaut.views.react.util.BeanPool.Handle)"><code>checkIn(Handle)</code></a> is called, and may be closed if they are
-<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link"><code>Closeable</code></a>. Likewise, all beans in the pool are closed if they are <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link"><code>Closeable</code></a>
-and exceptions thrown by <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/Closeable.html#close()" title="class or interface in java.io" class="external-link"><code>Closeable.close()</code></a> are ignored.</div>
+<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link"><code>AutoCloseable</code></a>. Likewise, all beans in the pool are closed if they are <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link"><code>AutoCloseable</code></a>
+and exceptions thrown by <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link"><code>AutoCloseable.close()</code></a> are ignored.</div>
 </div>
 </section>
 </li>
