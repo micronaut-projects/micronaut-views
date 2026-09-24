@@ -24,7 +24,7 @@
         }
     </script>
     <style type="text/css">
-        .lang-java { display: block }; .lang-python { display: block }; .lang-kotlin { display: block }; .lang-groovy { display: block }; .lang-scala { display: block }; 
+        .lang-java { display: block }; .lang-python { display: block }; .lang-kotlin { display: block }; .lang-groovy { display: block }; 
     </style>
 </head>
 
@@ -205,13 +205,13 @@
         <h1>Micronaut Views</h1>
         <p></p>
         <p>Provides integration between Micronaut and server-side views technologies</p>
-        <p><strong>Version:</strong> 6.3.0-SNAPSHOT </p>
+        <p><strong>Version:</strong> 6.2.1-SNAPSHOT </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -224,7 +224,7 @@
 <h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>2 Release History</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/releaseHistory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/releaseHistory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -240,7 +240,7 @@
 <h1 id="views"><a class="anchor" href="#views"></a>3 Server Side View Rendering</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -265,54 +265,16 @@ project. If you use this feature and wish to use a different folder, set the pro
 <div class="paragraph">
 <p>The following is an example of a controller which renders a template by passing a model as a <code>java.util.Map</code> via the returned response object.</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
+<div class="title">src/main/java/myapp/ViewsController.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/views")
-public class ViewsController {
+class ViewsController {
 
-    @View("home") // <b class="conum">(1)</b>
-    @Get
+    @View("home")
+    @Get("/")
     public HttpResponse&lt;?&gt; index() {
-        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"));
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Controller("/views")
-class ViewsController:
-
-    @View("home")  # <b class="conum">(1)</b>
-    @Get
-    def index(self) -&gt; HttpResponse:
-        return HttpResponse.ok({"loggedIn": True, "username": "sdelamo"})</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Controller("/views")
-class ViewsController {
-
-    @View("home") // <b class="conum">(1)</b>
-    @Get
-    fun index(): HttpResponse&lt;*&gt; {
-        return HttpResponse.ok(mapOf("loggedIn" to true, "username" to "sdelamo"))
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Controller("/views")
-class ViewsController {
-
-    @View("home") // <b class="conum">(1)</b>
-    @Get
-    HttpResponse&lt;?&gt; index() {
-        HttpResponse.ok([loggedIn: true, username: "sdelamo"])
+        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"))
     }
 
 }</code></pre>
@@ -329,54 +291,16 @@ class ViewsController {
 <div class="paragraph">
 <p>In addition, you can return any POJO object and the properties of the POJO will be exposed to the view for rendering:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
+<div class="title">src/main/java/myapp/ViewsController.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/views")
-public class ViewsController {
+class ViewsController {
 
-    @View("home") // <b class="conum">(1)</b>
+    @View("home")
     @Get("/pojo")
     public HttpResponse&lt;Person&gt; pojo() {
-        return HttpResponse.ok(new Person("sdelamo", true));
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Controller("/views")
-class ViewsController:
-
-    @View("home")  # <b class="conum">(1)</b>
-    @Get("/pojo")
-    def pojo(self) -&gt; HttpResponse:
-        return HttpResponse.ok(Person("sdelamo", True))</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Controller("/views")
-class ViewsController {
-
-    @View("home") // <b class="conum">(1)</b>
-    @Get("/pojo")
-    fun pojo(): HttpResponse&lt;Person&gt; {
-        return HttpResponse.ok(Person("sdelamo", true))
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Controller("/views")
-class ViewsController {
-
-    @View("home") // <b class="conum">(1)</b>
-    @Get("/pojo")
-    HttpResponse&lt;Person&gt; pojo() {
-        HttpResponse.ok(new Person("sdelamo", true))
+        return HttpResponse.ok(new Person("sdelamo", true))
     }
 
 }</code></pre>
@@ -396,53 +320,17 @@ class ViewsController {
 <div class="paragraph">
 <p>You can also return a <a href="../api/io/micronaut/views/ModelAndView.html">ModelAndView</a> and skip specifying the <a href="../api/io/micronaut/views/View.html">View</a> annotation.</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
+<div class="title">src/main/java/myapp/ViewsController.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/views")
-public class ViewsController {
-
-    @Get("/modelAndView")
-    public ModelAndView&lt;Person&gt; modelAndView() {
-        return new ModelAndView&lt;&gt;("home", new Person("sdelamo", true));
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Controller("/views")
-class ViewsController:
-
-    @Get("/modelAndView")
-    def model_and_view(self) -&gt; ModelAndView:
-        return ModelAndView("home", Person("sdelamo", True))</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Controller("/views")
 class ViewsController {
 
     @Get("/modelAndView")
-    fun modelAndView(): ModelAndView&lt;Person&gt; {
-        return ModelAndView("home", Person("sdelamo", true))
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Controller("/views")
-class ViewsController {
-
-    @Get("/modelAndView")
-    ModelAndView&lt;Person&gt; modelAndView() {
-        new ModelAndView&lt;&gt;("home", new Person("sdelamo", true))
-    }
-
-}</code></pre>
+    ModelAndView modelAndView() {
+        return new ModelAndView("home",
+                new Person("sdelamo", true))
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -455,14 +343,6 @@ class ViewsController {
     public Fruit index() {
         return new Fruit("apple", "red");
     }</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">    @View("fruits")
-    @Get
-    def index(self) -&gt; Fruit:
-        return Fruit("apple", "red")</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -503,7 +383,7 @@ If you want to render a template directly on your code (for example, to generate
 <h2 id="templates"><a class="anchor" href="#templates"></a>3.1 Template Engines</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -516,7 +396,7 @@ If you want to render a template directly on your code (for example, to generate
 <h2 id="thymeleaf"><a class="anchor" href="#thymeleaf"></a>3.1.1 Thymeleaf</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/thymeleaf.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/thymeleaf.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -542,15 +422,6 @@ the <a href="https://www.thymeleaf.org">Thymeleaf</a> Java template engine.</p>
     &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-views-thymeleaf&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-thymeleaf"</span>,
-]</code></pre>
 </div>
 </div>
 </p>
@@ -711,7 +582,7 @@ See the guide for <a href="https://guides.micronaut.io/latest/micronaut-views-th
 <h2 id="handlebars"><a class="anchor" href="#handlebars"></a>3.1.2 Handlebars.java</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/handlebars.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/handlebars.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -737,15 +608,6 @@ the <a href="http://jknack.github.io/handlebars.java/">Handlebars.java</a> proje
     &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-views-handlebars&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-handlebars"</span>,
-]</code></pre>
 </div>
 </div>
 </p>
@@ -775,7 +637,7 @@ runtime = [
 <h2 id="velocity"><a class="anchor" href="#velocity"></a>3.1.3 Apache Velocity</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/velocity.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/velocity.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -801,15 +663,6 @@ the <a href="http://velocity.apache.org">Apache Velocity</a> Java-based template
     &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-views-velocity&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-velocity"</span>,
-]</code></pre>
 </div>
 </div>
 </p>
@@ -839,7 +692,7 @@ runtime = [
 <h2 id="freemarker"><a class="anchor" href="#freemarker"></a>3.1.4 Apache Freemarker</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/freemarker.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/freemarker.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -865,15 +718,6 @@ the <a href="https://freemarker.apache.org">Apache Freemarker</a> Java-based tem
     &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-views-freemarker&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-freemarker"</span>,
-]</code></pre>
 </div>
 </div>
 </p>
@@ -913,7 +757,7 @@ runtime = [
 <h2 id="rocker"><a class="anchor" href="#rocker"></a>3.1.5 Rocker</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/rocker.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/rocker.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -939,15 +783,6 @@ the <a href="https://github.com/fizzed/rocker">Rocker</a> Java-based template en
     &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-views-rocker&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-rocker"</span>,
-]</code></pre>
 </div>
 </div>
 </p>
@@ -1028,25 +863,19 @@ sourceSets {
 Using the standard <code>@View</code> annotation will invoke the template dynamically without these checks.
 Instead the compiled template should be invoked within the controller and a <code>RockerWritable</code> returned.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Rocker compiles each template to a Java class (<code>views.home</code> for <code>views/home.rocker.html</code>), so this example is Java only.
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    @Get
-    @Produces(MediaType.TEXT_HTML)
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import io.micronaut.views.rocker.RockerWritable;
+import views.home;
+...
+
+    @Get("/")
+    @Produces(TEXT_HTML)
     public HttpResponse&lt;?&gt; staticTemplate() {
         return HttpResponse.ok(new RockerWritable(home.template(true, "sdelamo")));
-    }</code></pre>
+    }
+
+...</code></pre>
 </div>
 </div>
 </div>
@@ -1105,7 +934,7 @@ Rocker compiles each template to a Java class (<code>views.home</code> for <code
 <h2 id="soy"><a class="anchor" href="#soy"></a>3.1.6 Soy/Closure Support</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/soy.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/soy.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1136,22 +965,13 @@ client-side, with the ability to compile templates into Java, Python, or JavaScr
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-soy"</span>,
-]</code></pre>
-</div>
-</div>
 </p>
 </div>
 
 <h2 id="soyconfiguration"><a class="anchor" href="#soyconfiguration"></a>3.1.6.1 Soy Configuration</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/soy/soyconfiguration.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/soy/soyconfiguration.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1190,19 +1010,13 @@ runtime = [
 <td class="tableblock halign-left valign-top"><p class="tableblock">Turns renaming on or off. Default value (true).</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.soy.renaming</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
 </tbody>
 </table>
 
 <h2 id="soyusage"><a class="anchor" href="#soyusage"></a>3.1.6.2 Soy Usage</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/soy/soyusage.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/soy/soyusage.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1283,28 +1097,6 @@ public class CustomSoyFileSetProvider implements SoyFileSetProvider {
         return builder.build();
     }
 }</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Singleton
-class CustomSoyFileSetProvider(SoyFileSetProvider):
-    VIEWS = ["home.soy"]
-
-    def __init__(self, views_configuration: ViewsConfiguration, resource_loader: ResourceLoader):
-        self.folder = views_configuration.getFolder()
-        self.resource_loader = resource_loader
-
-    def provideSoyFileSet(self) -&gt; SoyFileSet:
-        builder = SoyFileSet.builder()
-        for template in self.VIEWS:
-            url = self.resource_loader.getResource(self.folder + "/" + template)
-            if url.isPresent():
-                try:
-                    builder.add(File(url.get().toURI()))
-                except Exception:
-                    LOG.warning("Exception raised while generating the SoyFileSet for folder %s", self.folder, exc_info=True)
-        return builder.build()</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1408,17 +1200,6 @@ public class SoyController {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Controller("/soy")
-class SoyController:
-
-    @View("sample.home")
-    @Get
-    def home(self) -&gt; HttpResponse:
-        return HttpResponse.ok({"loggedIn": True, "username": "sgammon"})</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Controller("/soy")
 class SoyController {
 
@@ -1473,7 +1254,7 @@ app, pre-compile your templates using the AOT bytecode compiler.</p>
 <h2 id="soyfeaturestemplatesecurity"><a class="anchor" href="#soyfeaturestemplatesecurity"></a>3.1.6.3 Soy Features - Template Security</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/soy/soyfeaturestemplatesecurity.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/soy/soyfeaturestemplatesecurity.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1567,7 +1348,7 @@ template like so:</p>
 <h2 id="soyfeaturesrenaming"><a class="anchor" href="#soyfeaturesrenaming"></a>3.1.6.4 Soy Features - Renaming</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/soy/soyfeaturesrenaming.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/soy/soyfeaturesrenaming.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1607,7 +1388,7 @@ Micronaut Views Soy:</p>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">micronaut.views.soy.enabled=true
-micronaut.views.soy.renaming-enabled=true</code></pre>
+micronaut.views.soy.renaming=true</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1616,12 +1397,12 @@ micronaut.views.soy.renaming-enabled=true</code></pre>
   views:
     soy:
       enabled: true
-      renaming-enabled: true</code></pre>
+      renaming: true</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">micronaut = {views = {soy = {enabled = true, renaming-enabled = true}}}</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">micronaut = {views = {soy = {enabled = true, renaming = true}}}</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -1630,7 +1411,7 @@ micronaut.views.soy.renaming-enabled=true</code></pre>
   views {
     soy {
       enabled = true
-      renamingEnabled = true
+      renaming = true
     }
   }
 }</code></pre>
@@ -1643,7 +1424,7 @@ micronaut.views.soy.renaming-enabled=true</code></pre>
     views {
       soy {
         enabled = true
-        renaming-enabled = true
+        renaming = true
       }
     }
   }
@@ -1657,7 +1438,7 @@ micronaut.views.soy.renaming-enabled=true</code></pre>
     "views": {
       "soy": {
         "enabled": true,
-        "renaming-enabled": true
+        "renaming": true
       }
     }
   }
@@ -1719,117 +1500,59 @@ must be a string literal (variables cannot be used):</p>
 </ol>
 </div>
 <div class="paragraph">
-<p>The last step is to provide the renaming map to Micronaut Views Soy with a bean of type <a href="../api/io/micronaut/views/soy/SoyNamingMapProvider.html">SoyNamingMapProvider</a>:</p>
+<p>The last step is to provide the renaming map to Micronaut Views Soy:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
 public class RewriteMapProvider implements SoyNamingMapProvider {
-    /** Filename for the JSON class renaming map. */
-    private static final String RENAMING_MAP_NAME = "renaming-map.json";
+  /** Filename for the JSON class renaming map. */
+  private static final String RENAMING_MAP_NAME = "renaming-map.json";
 
-    private final Map&lt;String, String&gt; cssRenamingMap;
+  /** Naming map to use for classes. */
+  private static SoyCssRenamingMap CSS_RENAMING_MAP = null;
 
-    RewriteMapProvider(ResourceLoader resourceLoader, JsonMapper jsonMapper) throws IOException {
-        // load the renaming map embedded as a resource
-        try (InputStream json = resourceLoader.getResourceAsStream(RENAMING_MAP_NAME).orElse(null)) {
-            this.cssRenamingMap = json == null ? Collections.emptyMap() :
-                    jsonMapper.readValue(json, Argument.mapOf(String.class, String.class));
-        }
+  /**
+   * Load JSON embedded in a JAR resource into a naming map for Soy rendering.
+   *
+   * @param mapPath URL to the JAR resource we should load.
+   */
+  @Nullable
+  private static Map&lt;String, String&gt; loadMapFromJSON(URL mapPath) {
+    try {
+      return new ObjectMapper().readValue(mapPath, new TypeReference&lt;Map&lt;String, String&gt;&gt;() { });
+    } catch (Throwable thr) {
+      //handle `JsonMappingException` and `IOException`, if, for instance, you're using Jackson
+      throw new RuntimeException(thr);
     }
+  }
 
-    /**
-     * Provide a CSS renaming map to Soy/Micronaut.
-     *
-     * @return Inflated Soy CSS renaming map.
-     */
-    @Nullable
-    @Override
-    public SoyCssRenamingMap cssRenamingMap() {
-        // (or whatever logic you need to rewrite the class)
-        return cssRenamingMap::get;
+  static {
+    final URL mapPath =
+        SoyRenderConfigProvider.class.getClassLoader().getResource(RENAMING_MAP_NAME);
+    if (mapPath != null) {
+      // load the renaming map
+      final Map&lt;String, String&gt; cssRenamingMap = loadMapFromJSON(mapPath);
+      if (renamingMapRaw != null) {
+        CSS_RENAMING_MAP = new SoyCssRenamingMap() {
+          @Nullable @Override
+          public String get(@NotNull String className) {
+            // (or whatever logic you need to rewrite the class)
+            return cssRenamingMap.get(className);
+          }
+        };
+      }
     }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">class CssRenamingMap(SoyCssRenamingMap):
+  }
 
-    def __init__(self, renaming_map: dict[str, str]):
-        self.renaming_map = renaming_map
-
-    def get(self, className: str) -&gt; str | None:
-        # (or whatever logic you need to rewrite the class)
-        return self.renaming_map.get(className)
-@Singleton
-class RewriteMapProvider(SoyNamingMapProvider):
-    RENAMING_MAP_NAME = "renaming-map.json"  # Filename for the JSON class renaming map.
-
-    def __init__(self, resource_loader: ResourceLoader, json_mapper: JsonMapper):
-        # load the renaming map embedded as a resource
-        json = resource_loader.getResourceAsStream(self.RENAMING_MAP_NAME).orElse(None)
-        self.css_renaming_map = {} if json is None else dict(json_mapper.readValue(json, Argument.mapOf(String, String)))
-
-    def cssRenamingMap(self) -&gt; SoyCssRenamingMap:
-        return CssRenamingMap(self.css_renaming_map)</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Singleton
-class RewriteMapProvider(resourceLoader: ResourceLoader, jsonMapper: JsonMapper) : SoyNamingMapProvider {
-
-    private val cssRenamingMap: Map&lt;String, String&gt; =
-        // load the renaming map embedded as a resource
-        resourceLoader.getResourceAsStream(RENAMING_MAP_NAME).map { json -&gt;
-            json.use { jsonMapper.readValue(it, Argument.mapOf(String::class.java, String::class.java)) }
-        }.orElse(emptyMap())
-
-    /**
-     * Provide a CSS renaming map to Soy/Micronaut.
-     *
-     * @return Inflated Soy CSS renaming map.
-     */
-    override fun cssRenamingMap(): SoyCssRenamingMap {
-        // (or whatever logic you need to rewrite the class)
-        return SoyCssRenamingMap { className -&gt; cssRenamingMap[className] }
-    }
-
-    companion object {
-        /** Filename for the JSON class renaming map. */
-        private const val RENAMING_MAP_NAME = "renaming-map.json"
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Singleton
-class RewriteMapProvider implements SoyNamingMapProvider {
-    /** Filename for the JSON class renaming map. */
-    private static final String RENAMING_MAP_NAME = "renaming-map.json"
-
-    private final Map&lt;String, String&gt; cssRenamingMap
-
-    RewriteMapProvider(ResourceLoader resourceLoader, JsonMapper jsonMapper) {
-        // load the renaming map embedded as a resource
-        InputStream json = resourceLoader.getResourceAsStream(RENAMING_MAP_NAME).orElse(null)
-        this.cssRenamingMap = json == null ? [:] :
-                json.withCloseable { jsonMapper.readValue(it, Argument.mapOf(String, String)) }
-    }
-
-    /**
-     * Provide a CSS renaming map to Soy/Micronaut.
-     *
-     * @return Inflated Soy CSS renaming map.
-     */
-    @Nullable
-    @Override
-    SoyCssRenamingMap cssRenamingMap() {
-        // (or whatever logic you need to rewrite the class)
-        return { String className -&gt; cssRenamingMap[className] } as SoyCssRenamingMap
-    }
+  /**
+   * Provide a CSS renaming map to Soy/Micronaut.
+   *
+   * @return Inflated Soy CSS renaming map.
+   */
+  @Nullable @Override public SoyCssRenamingMap cssRenamingMap() {
+    return CSS_RENAMING_MAP;
+  }
 }</code></pre>
 </div>
 </div>
@@ -1853,7 +1576,7 @@ class RewriteMapProvider implements SoyNamingMapProvider {
 <h2 id="buildingsoy"><a class="anchor" href="#buildingsoy"></a>3.1.6.5 Building Soy</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/soy/buildingsoy.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/soy/buildingsoy.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1914,7 +1637,7 @@ Compiles templates into Python sources for use server-side.</p>
 <h2 id="pebble"><a class="anchor" href="#pebble"></a>3.1.7 Pebble</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/pebble.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/pebble.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1940,15 +1663,6 @@ the <a href="https://pebbletemplates.io/">Pebble</a> project.</p>
     &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-views-pebble&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-pebble"</span>,
-]</code></pre>
 </div>
 </div>
 </p>
@@ -2081,7 +1795,7 @@ runtime = [
 <h2 id="jte"><a class="anchor" href="#jte"></a>3.1.8 JTE</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/jte.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/jte.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2109,15 +1823,6 @@ secure and lightweight template engine for Java and Kotlin.</p>
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-jte"</span>,
-]</code></pre>
-</div>
-</div>
 </p>
 </div>
 <div class="paragraph">
@@ -2136,15 +1841,6 @@ runtime = [
     &lt;groupId&gt;gg.jte&lt;/groupId&gt;
     &lt;artifactId&gt;jte-kotlin&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"gg.jte:jte-kotlin"</span>,
-]</code></pre>
 </div>
 </div>
 </p>
@@ -2258,15 +1954,6 @@ runtime = [
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"gg.jte:jte-kotlin"</span>,
-]</code></pre>
-</div>
-</div>
 </p>
 </div>
 </div>
@@ -2275,7 +1962,7 @@ runtime = [
 <h2 id="jinjava"><a class="anchor" href="#jinjava"></a>3.1.9 Jinjava</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/jinjava.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/jinjava.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2301,15 +1988,6 @@ runtime = [
     &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-views-jinjava&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-jinjava"</span>,
-]</code></pre>
 </div>
 </div>
 </p>
@@ -2374,7 +2052,7 @@ the first newline after a Jinja block.</p>
 <h2 id="jstachio"><a class="anchor" href="#jstachio"></a>3.1.10 JStachio</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/jstachio.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/jstachio.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2387,7 +2065,7 @@ the first newline after a Jinja block.</p>
 <h2 id="jstachioInstallation"><a class="anchor" href="#jstachioInstallation"></a>3.1.10.1 JStachio Installation</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/jstachio/jstachioInstallation.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/jstachio/jstachioInstallation.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2409,15 +2087,6 @@ the first newline after a Jinja block.</p>
     &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-views-jstachio&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-jstachio"</span>,
-]</code></pre>
 </div>
 </div>
 </p>
@@ -2443,15 +2112,6 @@ runtime = [
 &lt;/annotationProcessorPaths&gt;</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-build = [
-    <span class="hljs-string">"io.jstach:jstachio-apt"</span>,
-]</code></pre>
-</div>
-</div>
 </p>
 </div>
 <div class="admonitionblock note">
@@ -2473,7 +2133,7 @@ For Kotlin, add the <code>jstachio-apt</code> dependency in <a href="https://doc
 <h2 id="jstachioExample"><a class="anchor" href="#jstachioExample"></a>3.1.10.2 JStachio Example</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/jstachio/jstachioExample.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/jstachio/jstachioExample.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2497,20 +2157,8 @@ to configure the views directory since it does not use the <a href="../api/io/mi
 <div class="paragraph">
 <p>Instead, a controller returns a model annotated with <code>@JStache</code> referencing the <code>view</code> name.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-JStachio generates the template renderers with a Java annotation processor from <code>@JStache</code> annotated Java classes and records, so the examples in this section are Java only.
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title">HomeController.java</div>
+<div class="listingblock">
+<div class="title">src/main/java/io/micronaut/views/jstachio/pkginfo/HomeController.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/views")
 public class HomeController {
@@ -2522,8 +2170,8 @@ public class HomeController {
 }</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="title">HomeModel.java</div>
+<div class="listingblock">
+<div class="title">src/main/java/io/micronaut/views/jstachio/pkginfo/HomeModel.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.jstachio.pkginfo;
 
@@ -2541,8 +2189,8 @@ public record HomeModel(@Nullable String username, boolean loggedIn) {
 <div class="paragraph">
 <p>Add a <code>package-info.java</code> in the same package of your model classes.</p>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="title">package-info.java</div>
+<div class="listingblock">
+<div class="title">src/main/java/io/micronaut/views/jstachio/pkginfo/package-info.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@JStacheConfig(
     pathing = @JStachePath(prefix = "views/", suffix = ".mustache")
@@ -2578,7 +2226,7 @@ import io.jstach.jstache.JStachePath;</code></pre>
 <h2 id="react"><a class="anchor" href="#react"></a>3.1.11 React SSR</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/react.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2654,15 +2302,6 @@ This module is experimental and subject to change.
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-react"</span>,
-]</code></pre>
-</div>
-</div>
 </p>
 </div>
 <div class="sect1">
@@ -2712,6 +2351,18 @@ runtime = [
  be appended to the generated HTML in a &lt;script&gt; tag. Defaults
  to "/static/client.js"</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">/static/client.js</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.react.hydrate-without-request</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether a render with no <a href="../api/io/micronaut/http/HttpRequest.html">HttpRequest</a> still emits the hydration
+ bootstrap: the {@code Micronaut} object carrying the serialised view model, and the script tag
+ for the client bundle.</p>
+<p class="tableblock"> &lt;p&gt;Such a render is not being sent to a browser. An email body built by
+ {@code micronaut-email-template} is the common case: it cannot hydrate, the bundle URL has no
+ origin to resolve against, and the bootstrap puts the entire model into the delivered message&#8201;&#8212;&#8201; a password reset token along with everything else. Set this to {@code false} to render markup
+ only in that case; a render with a request is unaffected either way.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.react.server-bundle-path</code></p></td>
@@ -2812,7 +2463,7 @@ runtime = [
 <h2 id="reactpreparingjs"><a class="anchor" href="#reactpreparingjs"></a>3.1.11.1 Preparing your Javascript</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/react/reactpreparingjs.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/reactpreparingjs.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -3001,7 +2652,7 @@ module.exports = {
 <h2 id="reactsettingproperties"><a class="anchor" href="#reactsettingproperties"></a>3.1.11.2 Setting serving properties</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/react/reactsettingproperties.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/reactsettingproperties.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -3274,7 +2925,7 @@ micronaut.io.watch.paths=build/resources/main/views</code></pre>
 <h2 id="preact"><a class="anchor" href="#preact"></a>3.1.11.3 Integrating with Preact</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/react/preact.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/preact.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -3342,7 +2993,7 @@ import(`./components/${pageComponentName}.js`).then(module =&gt; {
 <h2 id="reactrenderscripts"><a class="anchor" href="#reactrenderscripts"></a>3.1.11.4 Render scripts</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/react/reactrenderscripts.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/reactrenderscripts.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -3383,18 +3034,24 @@ import(`./components/${pageComponentName}.js`).then(module =&gt; {
         props = {...props, "url": url};
     const element = React.createElement(component, props, null);
 
-    // Data to be passed to the browser after the main HTML has finished loading.
-    const boot = {
-        rootProps: props,
-        rootComponent: component.name,
-    };
+    // Data to be passed to the browser after the main HTML has finished loading. Only a render that a
+    // browser will receive can hydrate, so a render with no client bundle -- an email body, say -- gets
+    // the markup and nothing else. Emitting the bootstrap there serialises the whole model into a
+    // document that can never use it.
+    let options = {};
+    if (clientBundleURL) {
+        const boot = {
+            rootProps: props,
+            rootComponent: component.name,
+        };
 
-    // The Micronaut object defined here is not the same as the Micronaut object defined server side.
-    const bootstrapScriptContent = `var Micronaut = ${JSON.stringify(boot)};`;
-    const stream = await ReactDOMServer.renderToReadableStream(element, {
-        bootstrapScriptContent: bootstrapScriptContent,
-        bootstrapScripts: [clientBundleURL]
-    });
+        // The Micronaut object defined here is not the same as the Micronaut object defined server side.
+        options = {
+            bootstrapScriptContent: `var Micronaut = ${JSON.stringify(boot)};`,
+            bootstrapScripts: [clientBundleURL]
+        };
+    }
+    const stream = await ReactDOMServer.renderToReadableStream(element, options);
 
     // This ugliness is because renderToPipeableStream (what we should really use) is only in the node build
     // of react-dom/server, but we use the browser build. Trying to use the node build causes various errors
@@ -3421,6 +3078,10 @@ import(`./components/${pageComponentName}.js`).then(module =&gt; {
         props = {...props, "url": url};
     const html = renderToString(preact.h(component, props, null))
     callback.write(html)
+    // As in react.js: without a client bundle there is nothing to hydrate, so emit markup only.
+    if (!clientBundleURL) {
+        return;
+    }
     const boot = {
         rootProps: props,
         rootComponent: component.name,
@@ -3464,7 +3125,7 @@ export { mymod };</code></pre>
 <h2 id="reactheadmanagers"><a class="anchor" href="#reactheadmanagers"></a>3.1.11.4.1 Using head managers</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/react/reactheadmanagers.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/reactheadmanagers.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -3516,7 +3177,7 @@ export { mymod };</code></pre>
 <h2 id="reacttodo"><a class="anchor" href="#reacttodo"></a>3.1.11.5 Known limitations</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/templates/react/reacttodo.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/templates/react/reacttodo.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -3542,7 +3203,7 @@ export { mymod };</code></pre>
 <h2 id="model"><a class="anchor" href="#model"></a>3.2 Working with Models</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/model.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/model.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -3555,7 +3216,7 @@ export { mymod };</code></pre>
 <h2 id="custom"><a class="anchor" href="#custom"></a>3.2.1 Dynamically Enriching Models</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/model/custom.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/model/custom.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -3567,9 +3228,10 @@ export { mymod };</code></pre>
 <div class="paragraph">
 <p>The following example shows a bean of type <a href="../api/io/micronaut/views/model/ViewModelProcessor.html">ViewModelProcessor</a> which includes a fictitious configuration object in the rendering context:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
+<div class="title">src/main/java/myapp/model/ConfigViewModelProcessor.java</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton // <b class="conum">(1)</b>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton <i class="conum" data-value="1"></i><b>(1)</b>
 public class ConfigViewModelProcessor&lt;R&gt; implements ViewModelProcessor&lt;Map&lt;String, Object&gt;, R&gt; {
     private final ApplicationConfiguration config;
 
@@ -3590,63 +3252,11 @@ public class ConfigViewModelProcessor&lt;R&gt; implements ViewModelProcessor&lt;
 }</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Singleton  # <b class="conum">(1)</b>
-class ConfigViewModelProcessor(ViewModelProcessor[dict, object]):
-
-    def __init__(self, config: ApplicationConfiguration):
-        self.config = config
-
-    def process(self, request: object, modelAndView: ModelAndView) -&gt; None:
-        model = modelAndView.getModel()
-        if model.isPresent() and self.config.getName().isPresent():
-            model.get()["applicationName"] = self.config.getName().get()</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Singleton // <b class="conum">(1)</b>
-class ConfigViewModelProcessor internal constructor(private val config: ApplicationConfiguration) :
-    ViewModelProcessor&lt;MutableMap&lt;String, Any&gt;, HttpRequest&lt;*&gt;&gt; {
-
-    override fun process(request: HttpRequest&lt;*&gt;, modelAndView: ModelAndView&lt;MutableMap&lt;String, Any&gt;&gt;) {
-        modelAndView.model
-            .ifPresent { model -&gt;
-                config.name.ifPresent { name -&gt; model["applicationName"] = name }
-            }
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Singleton // <b class="conum">(1)</b>
-public class ConfigViewModelProcessor implements ViewModelProcessor&lt;Map&lt;String, Object&gt;, HttpRequest&lt;?&gt;&gt; {
-    private final ApplicationConfiguration config;
-
-    ConfigViewModelProcessor(ApplicationConfiguration environment) {
-        this.config = environment;
-    }
-
-    @Override
-    public void process(@NonNull HttpRequest&lt;?&gt; request,
-                        @NonNull ModelAndView&lt;Map&lt;String, Object&gt;&gt; modelAndView) {
-        modelAndView.getModel()
-                .ifPresent(model -&gt; {
-                    if (config.getName().isPresent()) {
-                        model.put("applicationName", config.getName().get());
-                    }
-                });
-    }
-}</code></pre>
-</div>
-</div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Use <code>@Singleton</code> to designate this class as a singleton in the Micronaut Bean Context.</td>
+<td>Use <code>javax.inject.Singleton</code> to designate this class as a singleton in the Micronaut Bean Context.</td>
 </tr>
 </table>
 </div>
@@ -3657,7 +3267,7 @@ public class ConfigViewModelProcessor implements ViewModelProcessor&lt;Map&lt;St
 <h2 id="fieldset"><a class="anchor" href="#fieldset"></a>3.3 Fieldset Generation</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/fieldset.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/fieldset.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -3699,22 +3309,13 @@ Fieldset API is experimental and subject to change.
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-fieldset"</span>,
-]</code></pre>
-</div>
-</div>
 </p>
 </div>
 
 <h2 id="fieldsetExample"><a class="anchor" href="#fieldsetExample"></a>3.3.1 Form Generation Example</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/fieldset/fieldsetExample.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/fieldset/fieldsetExample.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -3739,11 +3340,11 @@ runtime = [
 </div>
 </div>
 <div class="paragraph">
-<p>You will create a representation for the form submission. Something like:</p>
+<p>In Java, you will create a representation for the form submission. Something like:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.docs.fieldset;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
 
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.validation.constraints.Max;
@@ -3755,67 +3356,6 @@ import jakarta.validation.constraints.Size;
 @Serdeable
 public record BookSave(@Size(min = 2, max = 255) @NotBlank String title,
                        @Min(1) @Max(21450) @NotNull Integer pages) {
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from dataclasses import dataclass
-from typing import Annotated
-
-from jakarta.validation.constraints import Max, Min, NotBlank, NotNull, Size
-from micronaut.serde.annotation import Serdeable
-
-
-@Serdeable
-@dataclass
-class BookSave:
-    title: Annotated[str, Size(min=2, max=255), NotBlank]
-    pages: Annotated[int | None, Min(1), Max(21450), NotNull]</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.views.docs.fieldset
-
-import io.micronaut.serde.annotation.Serdeable
-import jakarta.validation.constraints.Max
-import jakarta.validation.constraints.Min
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
-import jakarta.validation.constraints.Size
-
-@Serdeable
-data class BookSave(@field:Size(min = 2, max = 255) @field:NotBlank val title: String,
-                    @field:Min(1) @field:Max(21450) @field:NotNull val pages: Int?)</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package io.micronaut.views.docs.fieldset
-
-import io.micronaut.serde.annotation.Serdeable
-import jakarta.validation.constraints.Max
-import jakarta.validation.constraints.Min
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
-import jakarta.validation.constraints.Size
-
-@Serdeable
-class BookSave {
-    @Size(min = 2, max = 255)
-    @NotBlank
-    final String title
-
-    @Min(1L)
-    @Max(21450L)
-    @NotNull
-    final Integer pages
-
-    BookSave(String title, Integer pages) {
-        this.title = title
-        this.pages = pages
-    }
 }</code></pre>
 </div>
 </div>
@@ -3834,7 +3374,7 @@ The field types and the validation annotations in the previous code sample influ
 <div class="paragraph">
 <p>Then using the form generation API, create a controller such as:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/books")
 class BookController {
@@ -3870,8 +3410,8 @@ class BookController {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Post(SAVE_PATH)
     HttpResponse&lt;?&gt; save(@Valid @Body BookSave bookSave) {
-        bookRepository.save(new Book(bookSave.title(), bookSave.pages()));
-        return HttpResponse.seeOther(UriBuilder.of(CONTROLLER_PATH).path("list").build());
+        bookRepository.save(new Book(null, bookSave.title(), bookSave.pages()));
+        return HttpResponse.seeOther(UriBuilder.of("/books").path("list").build());
     }
 
     @Error(exception = ConstraintViolationException.class)
@@ -3886,151 +3426,6 @@ class BookController {
             }
         }
         return HttpResponse.serverError();
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Controller("/books")
-class BookController:
-    CONTROLLER_PATH = "/books"
-    SAVE_PATH = "/save"
-    FORM = "form"
-
-    def __init__(self, form_generator: FormGenerator, book_repository: BookRepository):
-        self.form_generator = form_generator
-        self.book_repository = book_repository
-
-    @Produces(MediaType.TEXT_HTML)
-    @View("/books/create.html")
-    @Get("/create")
-    def create(self) -&gt; dict[str, object]:
-        return {self.FORM: self.form_generator.generate(self.CONTROLLER_PATH + self.SAVE_PATH, BookSave)}
-
-    @Produces(MediaType.TEXT_HTML)
-    @View("/books/list.html")
-    @Get("/list")
-    def list(self) -&gt; dict[str, object]:
-        return {"books": self.book_repository.find_all()}
-
-    @Produces(MediaType.TEXT_HTML)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Post(SAVE_PATH)
-    def save(self, bookSave: Annotated[BookSave, Valid, Body]) -&gt; HttpResponse:
-        self.book_repository.save(Book(bookSave.title, bookSave.pages))
-        return HttpResponse.seeOther(UriBuilder.of(self.CONTROLLER_PATH).path("list").build())
-
-    @Error(exception=ConstraintViolationException)
-    def on_constraint_violation_exception(self, request: HttpRequest, ex: ConstraintViolationException) -&gt; HttpResponse:
-        if request.getPath() == self.CONTROLLER_PATH + self.SAVE_PATH:
-            book_save = request.getBody(BookSave)
-            if book_save.isPresent():
-                form = self.form_generator.generate(self.CONTROLLER_PATH + self.SAVE_PATH, book_save.get(), ex)
-                body = ModelAndView("/books/create.html", {self.FORM: form})
-                return HttpResponse.unprocessableEntity().body(body)
-        return HttpResponse.serverError()</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Controller("/books")
-open class BookController(private val formGenerator: FormGenerator,
-                     private val bookRepository: BookRepository) {
-
-    @Produces(MediaType.TEXT_HTML)
-    @View("/books/create.html")
-    @Get("/create")
-    fun create(): Map&lt;String, Any&gt; {
-        return mapOf(FORM to formGenerator.generate(CONTROLLER_PATH + SAVE_PATH, BookSave::class.java))
-    }
-
-    @Produces(MediaType.TEXT_HTML)
-    @View("/books/list.html")
-    @Get("/list")
-    fun list(): Map&lt;String, Any&gt; {
-        return mapOf("books" to bookRepository.findAll())
-    }
-
-    @Produces(MediaType.TEXT_HTML)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Post(SAVE_PATH)
-    open fun save(@Valid @Body bookSave: BookSave): HttpResponse&lt;*&gt; {
-        bookRepository.save(Book(bookSave.title, bookSave.pages))
-        return HttpResponse.seeOther&lt;Any&gt;(UriBuilder.of(CONTROLLER_PATH).path("list").build())
-    }
-
-    @Error(exception = ConstraintViolationException::class)
-    fun onConstraintViolationException(request: HttpRequest&lt;*&gt;, ex: ConstraintViolationException): HttpResponse&lt;*&gt; {
-        if (request.path == CONTROLLER_PATH + SAVE_PATH) {
-            val bookSave = request.getBody(BookSave::class.java).orElse(null)
-            if (bookSave != null) {
-                val form = formGenerator.generate(CONTROLLER_PATH + SAVE_PATH, bookSave, ex)
-                val body = ModelAndView("/books/create.html", mapOf(FORM to form))
-                return HttpResponse.unprocessableEntity&lt;Any&gt;().body(body)
-            }
-        }
-        return HttpResponse.serverError&lt;Any&gt;()
-    }
-
-    companion object {
-        const val CONTROLLER_PATH = "/books"
-        const val SAVE_PATH = "/save"
-        const val FORM = "form"
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Controller("/books")
-class BookController {
-    public static final String CONTROLLER_PATH = "/books"
-    public static final String SAVE_PATH = "/save"
-    public static final String FORM = "form"
-
-    private final FormGenerator formGenerator
-    private final BookRepository bookRepository
-
-    BookController(FormGenerator formGenerator,
-                   BookRepository bookRepository) {
-        this.formGenerator = formGenerator
-        this.bookRepository = bookRepository
-    }
-
-    @Produces(MediaType.TEXT_HTML)
-    @View("/books/create.html")
-    @Get("/create")
-    Map&lt;String, Object&gt; create() {
-        [(FORM): formGenerator.generate(CONTROLLER_PATH + SAVE_PATH, BookSave)]
-    }
-
-    @Produces(MediaType.TEXT_HTML)
-    @View("/books/list.html")
-    @Get("/list")
-    Map&lt;String, Object&gt; list() {
-        [books: bookRepository.findAll()]
-    }
-
-    @Produces(MediaType.TEXT_HTML)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Post(SAVE_PATH)
-    HttpResponse&lt;?&gt; save(@Valid @Body BookSave bookSave) {
-        bookRepository.save(new Book(bookSave.title, bookSave.pages))
-        HttpResponse.seeOther(UriBuilder.of(CONTROLLER_PATH).path("list").build())
-    }
-
-    @Error(exception = ConstraintViolationException)
-    HttpResponse&lt;?&gt; onConstraintViolationException(HttpRequest&lt;?&gt; request, ConstraintViolationException ex) {
-        if (request.path == CONTROLLER_PATH + SAVE_PATH) {
-            Optional&lt;BookSave&gt; bookSaveOptional = request.getBody(BookSave)
-            if (bookSaveOptional.isPresent()) {
-                Form form = formGenerator.generate(CONTROLLER_PATH + SAVE_PATH, bookSaveOptional.get(), ex)
-                ModelAndView&lt;Map&lt;String, Object&gt;&gt; body = new ModelAndView&lt;&gt;("/books/create.html", [(FORM): form])
-                return HttpResponse.unprocessableEntity().body(body)
-            }
-        }
-        HttpResponse.serverError()
     }
 }</code></pre>
 </div>
@@ -4062,7 +3457,7 @@ class BookController {
 <h2 id="fieldsetAnnotations"><a class="anchor" href="#fieldsetAnnotations"></a>3.3.2 Fieldset Annotations</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/fieldset/fieldsetAnnotations.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/fieldset/fieldsetAnnotations.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4087,11 +3482,11 @@ class BookController {
 </div>
 </div>
 <div class="paragraph">
-<p>You will create a representation for the form submission and annotate the <code>password</code> field with <a href="../api/io/micronaut/views/fields/annotations/InputPassword.html">@InputPassword</a>. Something like:</p>
+<p>In Java, you will create a representation for the form submission and annotate the <code>password</code> field with <a href="../api/io/micronaut/views/fields/annotations/InputPassword.html">@InputPassword</a>. Something like:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.docs.fieldset;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
 
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.views.fields.annotations.InputPassword;
@@ -4100,60 +3495,6 @@ import jakarta.validation.constraints.NotBlank;
 @Introspected
 public record Login(@NotBlank String username,
                     @InputPassword @NotBlank String password) {
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">from dataclasses import dataclass
-from typing import Annotated
-
-from jakarta.validation.constraints import NotBlank
-from micronaut.core.annotation import Introspected
-from micronaut.views.fields.annotations import InputPassword
-
-
-@Introspected
-@dataclass
-class Login:
-    username: Annotated[str, NotBlank]
-    password: Annotated[str, InputPassword, NotBlank]</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.views.docs.fieldset
-
-import io.micronaut.core.annotation.Introspected
-import io.micronaut.views.fields.annotations.InputPassword
-import jakarta.validation.constraints.NotBlank
-
-@Introspected
-data class Login(@field:NotBlank val username: String,
-                 @field:InputPassword @field:NotBlank val password: String)</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package io.micronaut.views.docs.fieldset
-
-import io.micronaut.core.annotation.Introspected
-import io.micronaut.views.fields.annotations.InputPassword
-import jakarta.validation.constraints.NotBlank
-
-@Introspected
-class Login {
-    @NotBlank
-    final String username
-
-    @InputPassword
-    @NotBlank
-    final String password
-
-    Login(String username, String password) {
-        this.username = username
-        this.password = password
-    }
 }</code></pre>
 </div>
 </div>
@@ -4226,7 +3567,7 @@ class Login {
 <h2 id="fieldsetFetcher"><a class="anchor" href="#fieldsetFetcher"></a>3.3.3 Radio, Checkbox and Option Fetcher</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/fieldset/fieldsetFetcher.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/fieldset/fieldsetFetcher.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4255,57 +3596,37 @@ class Login {
 </div>
 </div>
 <div class="paragraph">
-<p>You will create a representation for the form submission. Something like:</p>
+<p>In Java, you will create a representation for the form submission. Something like:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Serdeable
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
+
+import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.views.fields.annotations.InputHidden;
+import io.micronaut.views.fields.annotations.Select;
+import jakarta.validation.constraints.NotNull;
+
+@Serdeable
 public record BookAuthorSave(@NotNull @InputHidden Long bookId,
                              @NotNull @Select(fetcher = AuthorFetcher.class) Long authorId) {
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Serdeable
-@dataclass
-class BookAuthorSave:
-    bookId: Annotated[int, NotNull, InputHidden]
-    authorId: Annotated[int | None, NotNull, Select(fetcher=AuthorFetcher)]</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Serdeable
-data class BookAuthorSave(@field:NotNull @field:InputHidden val bookId: Long,
-                          @field:NotNull @field:Select(fetcher = AuthorFetcher::class) val authorId: Long?)</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Serdeable
-class BookAuthorSave {
-    @NotNull
-    @InputHidden
-    final Long bookId
-
-    @NotNull
-    @Select(fetcher = AuthorFetcher)
-    final Long authorId
-
-    BookAuthorSave(Long bookId, Long authorId) {
-        this.bookId = bookId
-        this.authorId = authorId
-    }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The <code>fetcher</code> member of the <code>Select</code> annotation allows you to specify a class. <code>AuthorFetcher</code> is a <code>Singleton</code> of type <code>OptionFetcher</code>, and you could write it, for example, like this:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Singleton
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.views.fields.thymeleaf;
+
+import io.micronaut.views.fields.messages.Message;
+import io.micronaut.views.fields.elements.Option;
+import io.micronaut.views.fields.fetchers.OptionFetcher;
+import jakarta.inject.Singleton;
+import java.util.List;
+
+@Singleton
 public class AuthorFetcher implements OptionFetcher&lt;Long&gt; {
     private final AuthorRepository authorRepository;
 
@@ -4338,92 +3659,11 @@ public class AuthorFetcher implements OptionFetcher&lt;Long&gt; {
 }</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Singleton
-class AuthorFetcher(OptionFetcher[int]):
-
-    def __init__(self, author_repository: AuthorRepository):
-        self.author_repository = author_repository
-
-    def generate(self, type_or_instance) -&gt; list[Option]:
-        options = []
-        for author in self.author_repository.find_all():
-            builder = (Option.builder()
-                       .value(str(author.id))
-                       .label(Message.of(author.title)))
-            if isinstance(type_or_instance, int):
-                builder.selected(author.id == type_or_instance)
-            options.append(builder.build())
-        return options</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Singleton
-class AuthorFetcher(private val authorRepository: AuthorRepository) : OptionFetcher&lt;Long&gt; {
-
-    override fun generate(type: Class&lt;Long&gt;): List&lt;Option&gt; {
-        return authorRepository.findAll()
-            .map { author -&gt;
-                Option.builder()
-                    .value(author.id.toString())
-                    .label(Message.of(author.title))
-                    .build()
-            }
-    }
-
-    override fun generate(instance: Long): List&lt;Option&gt; {
-        return authorRepository.findAll()
-            .map { author -&gt;
-                Option.builder()
-                    .selected(author.id == instance)
-                    .value(author.id.toString())
-                    .label(Message.of(author.title))
-                    .build()
-            }
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Singleton
-class AuthorFetcher implements OptionFetcher&lt;Long&gt; {
-    private final AuthorRepository authorRepository
-
-    AuthorFetcher(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository
-    }
-
-    @Override
-    List&lt;Option&gt; generate(Class&lt;Long&gt; type) {
-        authorRepository.findAll()
-                .collect { author -&gt; Option.builder()
-                        .value(String.valueOf(author.id))
-                        .label(Message.of(author.title))
-                        .build()
-                }
-    }
-
-    @Override
-    List&lt;Option&gt; generate(Long instance) {
-        authorRepository.findAll()
-                .collect { author -&gt; Option.builder()
-                        .selected(author.id == instance)
-                        .value(String.valueOf(author.id))
-                        .label(Message.of(author.title))
-                        .build()
-                }
-    }
-}</code></pre>
-</div>
-</div>
 
 <h2 id="csrfHidden"><a class="anchor" href="#csrfHidden"></a>3.3.4 CSRF Token Hidden Field</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/fieldset/csrfHidden.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/fieldset/csrfHidden.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4436,7 +3676,7 @@ class AuthorFetcher implements OptionFetcher&lt;Long&gt; {
 <h2 id="customFormElement"><a class="anchor" href="#customFormElement"></a>3.3.5 Custom Form Elements</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/fieldset/customFormElement.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/fieldset/customFormElement.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4452,7 +3692,7 @@ class AuthorFetcher implements OptionFetcher&lt;Long&gt; {
 <h2 id="htmx"><a class="anchor" href="#htmx"></a>3.4 HTMX</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/htmx.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/htmx.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4476,22 +3716,13 @@ class AuthorFetcher implements OptionFetcher&lt;Long&gt; {
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-htmx"</span>,
-]</code></pre>
-</div>
-</div>
 </p>
 </div>
 
 <h2 id="htmxRequestHeaders"><a class="anchor" href="#htmxRequestHeaders"></a>3.4.1 HTMX Request Headers</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/htmx/htmxRequestHeaders.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/htmx/htmxRequestHeaders.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4514,16 +3745,6 @@ ModelAndView&lt;Map&lt;String, Object&gt;&gt; index(@Nullable HtmxRequestHeaders
     }
     return new ModelAndView&lt;&gt;("fruits", model);
 }</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Get
-def index(self, htmxRequestHeaders: HtmxRequestHeaders | None) -&gt; ModelAndView:
-    model = {"fruit": Fruit("Apple", "Red")}
-    if htmxRequestHeaders is not None:
-        return ModelAndView("fruit", model)
-    return ModelAndView("fruits", model)</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4554,7 +3775,7 @@ ModelAndView&lt;Map&lt;String, Object&gt;&gt; index(@Nullable HtmxRequestHeaders
 <h2 id="outOfBandSwaps"><a class="anchor" href="#outOfBandSwaps"></a>3.4.2 Out of Band Swaps</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/htmx/outOfBandSwaps.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/htmx/outOfBandSwaps.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4572,16 +3793,6 @@ HtmxResponse&lt;?&gt; outOfBandSwaps(@NonNull HtmxRequestHeaders htmxRequestHead
             .modelAndView(new ModelAndView&lt;&gt;("swap", Collections.emptyMap()))
             .build();
 }</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Post
-def out_of_band_swaps(self, htmxRequestHeaders: HtmxRequestHeaders) -&gt; HtmxResponse:
-    return (HtmxResponse.builder()
-            .modelAndView(ModelAndView("fruit", {"fruit": Fruit("Apple", "Red")}))
-            .modelAndView(ModelAndView("swap", {}))
-            .build())</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4610,7 +3821,7 @@ HtmxResponse&lt;?&gt; outOfBandSwaps(@NonNull HtmxRequestHeaders htmxRequestHead
 <h2 id="htmxResponseHeaders"><a class="anchor" href="#htmxResponseHeaders"></a>3.4.3 HTMX Response Headers</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/htmx/htmxResponseHeaders.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/htmx/htmxResponseHeaders.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4625,13 +3836,6 @@ HtmxResponse&lt;?&gt; outOfBandSwaps(@NonNull HtmxRequestHeaders htmxRequestHead
 HttpResponse&lt;?&gt; htmxResponseHeaders(@NonNull HtmxRequestHeaders htmxRequestHeaders) {
     return HttpResponse.ok().header(HtmxResponseHeaders.HX_REFRESH, StringUtils.TRUE);
 }</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Get("/responseHeaders")
-def htmx_response_headers(self, htmxRequestHeaders: HtmxRequestHeaders) -&gt; HttpResponse:
-    return HttpResponse.ok().header(HtmxResponseHeaders.HX_REFRESH, "true")</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4654,7 +3858,7 @@ HttpResponse&lt;?&gt; htmxResponseHeaders(@NonNull HtmxRequestHeaders htmxReques
 <h2 id="turbo"><a class="anchor" href="#turbo"></a>3.5 Turbo</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/turbo.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/turbo.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4688,22 +3892,13 @@ HttpResponse&lt;?&gt; htmxResponseHeaders(@NonNull HtmxRequestHeaders htmxReques
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-turbo"</span>,
-]</code></pre>
-</div>
-</div>
 </p>
 </div>
 
 <h2 id="turboFrameView"><a class="anchor" href="#turboFrameView"></a>3.5.1 TurboFrameView annotation</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/turbo/turboFrameView.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/turbo/turboFrameView.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4796,16 +3991,6 @@ Map&lt;String, Object&gt; index() {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Produces(MediaType.TEXT_HTML)
-@TurboFrameView("form")
-@View("edit")
-@Get
-def index(self) -&gt; dict[str, object]:
-    return {"message": Message(1, "My message title", "My message content")}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Produces(MediaType.TEXT_HTML)
 @TurboFrameView("form")
 @View("edit")
@@ -4829,7 +4014,7 @@ Map&lt;String, Object&gt; index() {
 <h2 id="turboFrameBuilder"><a class="anchor" href="#turboFrameBuilder"></a>3.5.2 TurboFrame Builder</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/turbo/turboFrameBuilder.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/turbo/turboFrameBuilder.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4855,20 +4040,6 @@ HttpResponse&lt;?&gt; index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) Stri
                             .templateView("form"))
             .contentType(MediaType.TEXT_HTML);
 }</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Produces(MediaType.TEXT_HTML)
-@Get("/builder")
-def index(self, turboFrame: Annotated[str | None, Header(TurboHttpHeaders.TURBO_FRAME)]) -&gt; HttpResponse:
-    message_id = 1
-    model = {"message": Message(message_id, "My message title", "My message content")}
-    return HttpResponse.ok(ModelAndView("edit", model) if turboFrame is None else
-                           TurboFrame.builder()
-                           .id("message_" + str(message_id))
-                           .templateModel(model)
-                           .templateView("form")).contentType(MediaType.TEXT_HTML)</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4912,7 +4083,7 @@ HttpResponse&lt;?&gt; index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) Stri
 <h2 id="turboStreamFluidApi"><a class="anchor" href="#turboStreamFluidApi"></a>3.5.3 Turbo Stream Fluid API</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/turbo/turboStreamFluidApi.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/turbo/turboStreamFluidApi.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -4932,16 +4103,6 @@ HttpResponse&lt;?&gt; index(@Nullable @Header(TurboHttpHeaders.TURBO_FRAME) Stri
     .template("Content to append to container designated with the dom_id.")
     .build();
 Optional&lt;Writable&gt; writable = turboStream.render();</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">turbo_stream = (TurboStream.builder()
-                .action(TurboStreamAction.APPEND)
-                .targetDomId("dom_id")
-                .template("Content to append to container designated with the dom_id.")
-                .build())
-writable = turbo_stream.render()</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -4978,15 +4139,6 @@ Optional&lt;Writable&gt; writable = turboStream.render();</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"
-"&lt;template&gt;"
-"Content to append to container designated with the dom_id."
-"&lt;/template&gt;"
-"&lt;/turbo-stream&gt;"</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;" +
     "&lt;template&gt;" +
         "Content to append to container designated with the dom_id." +
@@ -5007,7 +4159,7 @@ Optional&lt;Writable&gt; writable = turboStream.render();</code></pre>
 <h2 id="turboView"><a class="anchor" href="#turboView"></a>3.5.4 TurboView Annotation</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/turbo/turboView.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/turbo/turboView.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -5025,15 +4177,6 @@ Optional&lt;Writable&gt; writable = turboStream.render();</code></pre>
 Map&lt;String, Object&gt; show() {
     return Collections.singletonMap("fruit", new Fruit("Banana", "Yellow"));
 }</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Produces(value=[MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
-@TurboStreamView(value="fruit", action=TurboStreamAction.APPEND)
-@Get("/turbofruit")
-def show(self) -&gt; dict[str, object]:
-    return {"fruit": Fruit("Banana", "Yellow")}</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -5066,13 +4209,6 @@ Map&lt;String, Object&gt; show() {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">request = (HttpRequest.GET("/turbofruit")
-           .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
-           .header(TurboHttpHeaders.TURBO_FRAME, "dom_id"))</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">val request: HttpRequest&lt;*&gt; = HttpRequest.GET&lt;Any&gt;("/turbofruit")
     .accept(TurboMediaType.TURBO_STREAM, MediaType.TEXT_HTML, MediaType.APPLICATION_XHTML)
     .header(TurboHttpHeaders.TURBO_FRAME, "dom_id")</code></pre>
@@ -5095,16 +4231,6 @@ Map&lt;String, Object&gt; show() {
         "&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n" +
         "&lt;h2&gt;color: Yellow&lt;/h2&gt;\n" +
     "&lt;/template&gt;" +
-"&lt;/turbo-stream&gt;"</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">"&lt;turbo-stream action=\"append\" target=\"dom_id\"&gt;"
-"&lt;template&gt;"
-"&lt;h1&gt;fruit: Banana&lt;/h1&gt;\n"
-"&lt;h2&gt;color: Yellow&lt;/h2&gt;\n"
-"&lt;/template&gt;"
 "&lt;/turbo-stream&gt;"</code></pre>
 </div>
 </div>
@@ -5135,7 +4261,7 @@ Map&lt;String, Object&gt; show() {
 <h2 id="turboStreamContentType"><a class="anchor" href="#turboStreamContentType"></a>3.5.5 Turbo Stream Media Type</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/turbo/turboStreamContentType.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/turbo/turboStreamContentType.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -5168,17 +4294,6 @@ Map&lt;String, Object&gt; processEdit(@Part int id, @Part String title, @Part St
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Consumes(MediaType.MULTIPART_FORM_DATA)
-@TurboStreamView("view")
-@Produces(value=[MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
-@Post("/messages/{id}")
-def process_edit(self, id: Annotated[int, Part], title: Annotated[str, Part], body: Annotated[str, Part]) -&gt; dict[str, object]:
-    # Process the posted data, and return the updated message
-    return {"message": Message(id, title, body)}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Consumes(MediaType.MULTIPART_FORM_DATA)
 @TurboStreamView("view")
 @Produces(value = [MediaType.TEXT_HTML, TurboMediaType.TURBO_STREAM])
@@ -5205,7 +4320,7 @@ Map&lt;String, Object&gt; processEdit(@Part int id, @Part String title, @Part St
 <h2 id="turboStreamTemplate"><a class="anchor" href="#turboStreamTemplate"></a>3.5.6 Turbo Streams with Templates</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/turbo/turboStreamTemplate.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/turbo/turboStreamTemplate.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -5224,17 +4339,6 @@ TurboStream.Builder builder = TurboStream.builder()
     .targetDomId("dom_id")
     .template(view, model);
 Optional&lt;Writable&gt; writable = turboStreamRenderer.render(builder, null);</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">view = "fruit"
-model = {"fruit": Fruit("Banana", "Yellow")}
-builder = (TurboStream.builder()
-           .action(TurboStreamAction.APPEND)
-           .targetDomId("dom_id")
-           .template(view, model))
-writable = turbo_stream_renderer.render(builder, None)</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -5263,7 +4367,7 @@ Optional&lt;Writable&gt; writable = turboStreamRenderer.render(builder, null)</c
 <h2 id="turboGuides"><a class="anchor" href="#turboGuides"></a>3.5.7 Guides</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/turbo/turboGuides.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/turbo/turboGuides.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -5286,7 +4390,7 @@ Optional&lt;Writable&gt; writable = turboStreamRenderer.render(builder, null)</c
 <h2 id="security"><a class="anchor" href="#security"></a>3.6 Security</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/security.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/security.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -5297,7 +4401,7 @@ Optional&lt;Writable&gt; writable = turboStreamRenderer.render(builder, null)</c
 <h2 id="csp"><a class="anchor" href="#csp"></a>3.6.1 Content Security Policy</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/security/csp.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/security/csp.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -5553,7 +4657,7 @@ mode. Inline scripts can be whitelisted with the syntax:</p>
 <h2 id="security-model-enhancement"><a class="anchor" href="#security-model-enhancement"></a>3.6.2 Integration with Micronaut Security</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/security/security-model-enhancement.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/security/security-model-enhancement.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -5627,49 +4731,10 @@ mode. Inline scripts can be whitelisted with the syntax:</p>
 <div class="paragraph">
 <p>In a controller, you can return a model without specifying in the model the authenticated user:</p>
 </div>
-<div class="listingblock multi-language-sample">
+<div class="listingblock">
+<div class="title">src/main/java/myapp/BooksController.java</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Controller("/")
-public class BooksController {
-
-    @Secured(SecurityRule.IS_AUTHENTICATED)
-    @View("securitydecorator")
-    @Get
-    public Map&lt;String, Object&gt; index() {
-        Map&lt;String, Object&gt; model = new HashMap&lt;&gt;();
-        model.put("books", Arrays.asList("Developing Microservices"));
-        return model;
-    }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python">@Controller("/")
-class BooksController:
-
-    @Secured(SecurityRule.IS_AUTHENTICATED)
-    @View("securitydecorator")
-    @Get
-    def index(self) -&gt; dict[str, object]:
-        return {"books": ["Developing Microservices"]}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Controller("/")
-class BooksController {
-
-    @Secured(SecurityRule.IS_AUTHENTICATED)
-    @View("securitydecorator")
-    @Get
-    fun index() = mapOf("books" to listOf("Developing Microservices"))
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Controller("/")
 public class BooksController {
 
     @Secured(SecurityRule.IS_AUTHENTICATED)
@@ -5760,7 +4825,7 @@ If a CSRF Token can be resolved,  <code>CSRFViewModelProcessor</code> adds it to
 <h2 id="graal"><a class="anchor" href="#graal"></a>3.7 GraalVM Support</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/views/graal.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/views/graal.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -5791,7 +4856,7 @@ Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graa
 <h1 id="viewsGuides"><a class="anchor" href="#viewsGuides"></a>4 Guides</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/viewsGuides.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/viewsGuides.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -5807,7 +4872,7 @@ Learn more about <a href="https://docs.micronaut.io/latest/guide/index.html#graa
 <h1 id="breaks"><a class="anchor" href="#breaks"></a>5 Breaking Changes</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/breaks.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/breaks.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -5836,15 +4901,6 @@ dependency:</p>
     &lt;groupId&gt;io.micronaut.views&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-views-turbo&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="title"></div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="pyronaut">[tool.pyronaut.dependencies]
-runtime = [
-    <span class="hljs-string">"io.micronaut.views:micronaut-views-turbo"</span>,
-]</code></pre>
 </div>
 </div>
 </p>
@@ -5936,7 +4992,7 @@ This change has added another Generic type to ViewRenderer, and breaks binary co
 <h1 id="repository"><a class="anchor" href="#repository"></a>6 Repository</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.3.x/src/main/docs/guide/repository.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-views/edit/6.2.x/src/main/docs/guide/repository.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
