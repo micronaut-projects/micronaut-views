@@ -82,7 +82,13 @@ jobs:
         with:
           distribution: 'graalvm'
           java-version: '25'
-          version: '25.3'
+          # Must match the org.graalvm.* version the Micronaut platform resolves for
+          # micronaut-context-python, currently 25.4.4.1.1. GraalPy and Truffle will not run on a
+          # different GraalVM than the jars were built for, and the mismatch does not report itself
+          # as a version problem: the tests fail in Truffle's own static initialisers with
+          # EnumConstantNotPresentException, or the Python compiler dies with "Compiler
+          # initialization failed cannot continue". Check this when micronaut is bumped.
+          version: '25.4'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-job-reports: true
 
