@@ -41,7 +41,7 @@ class DevReloadBundleSettlesSpec extends Specification {
 
         when: "the bundle changes"
         Files.writeString(bundle, "export default { bigger: 'than before' }")
-        publisher.publishEvent(new ReactJSSourcesChangedEvent(this))
+        publisher.publishEvent(new ReactJSSourcesChangedEvent(this, 1L))
 
         then: "the token advances and is announced"
         new PollingConditions(timeout: 20).eventually {
