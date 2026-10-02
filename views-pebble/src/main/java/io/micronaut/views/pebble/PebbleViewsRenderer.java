@@ -16,19 +16,22 @@
 package io.micronaut.views.pebble;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.watch.ResourceChange;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.LocaleResolver;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.ViewUtils;
-import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.ReloadableViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import io.pebbletemplates.pebble.PebbleEngine;
 import io.pebbletemplates.pebble.template.PebbleTemplate;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Renders Views with Pebble.
@@ -42,19 +45,38 @@ import java.util.Locale;
 @Singleton
 @Requires(property = PebbleConfigurationProperties.ENABLED, notEquals = StringUtils.FALSE)
 @Requires(classes = PebbleEngine.class)
-public class PebbleViewsRenderer<T, R> implements ViewsRenderer<T, R> {
+public class PebbleViewsRenderer<T, R> implements ReloadableViewsRenderer<T, R> {
 
     private final PebbleEngine engine;
     private final LocaleResolver<R> httpLocaleResolver;
+    private final String extension;
 
     /**
      * @param engine             Pebble Engine
      * @param httpLocaleResolver The locale resolver
+     * @deprecated Use {@link #PebbleViewsRenderer(PebbleEngine, LocaleResolver, PebbleConfiguration)} instead.
      */
+    @Deprecated(since = "6.4.0")
     public PebbleViewsRenderer(PebbleEngine engine,
                                LocaleResolver<R> httpLocaleResolver) {
         this.engine = engine;
         this.httpLocaleResolver = httpLocaleResolver;
+        this.extension = PebbleConfigurationProperties.DEFAULT_EXTENSION;
+    }
+
+    /**
+     * @param engine             Pebble Engine
+     * @param httpLocaleResolver The locale resolver
+     * @param configuration      The Pebble configuration
+     * @since 6.4.0
+     */
+    @Inject
+    public PebbleViewsRenderer(PebbleEngine engine,
+                               LocaleResolver<R> httpLocaleResolver,
+                               PebbleConfiguration configuration) {
+        this.engine = engine;
+        this.httpLocaleResolver = httpLocaleResolver;
+        this.extension = configuration.getDefaultExtension();
     }
 
     @Override
@@ -79,5 +101,25 @@ public class PebbleViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     @Override
     public boolean exists(@NonNull String name) {
         return engine.getLoader().resourceExists(name);
+    }
+
+    /**
+     * @return The configured default extension
+     */
+    @Override
+    public @NonNull Set<String> extensions() {
+        return extension == null || extension.isEmpty() ? Set.of() : Set.of(extension);
+    }
+
+    /**
+     * Invalidates the compiled templates and the tag cache of the engine: a template may be extended or
+     * imported by others.
+     *
+     * @param change The templates that changed or went
+     */
+    @Override
+    public void reload(@NonNull ResourceChange change) {
+        engine.getTemplateCache().invalidateAll();
+        engine.getTagCache().invalidateAll();
     }
 }

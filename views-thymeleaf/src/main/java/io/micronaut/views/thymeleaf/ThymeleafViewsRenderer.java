@@ -16,6 +16,7 @@
 package io.micronaut.views.thymeleaf;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.watch.ResourceChange;
 import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
@@ -23,8 +24,10 @@ import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.server.util.locale.HttpLocaleResolver;
 import io.micronaut.views.ViewUtils;
-import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.ReloadableViewsRenderer;
+import io.micronaut.views.ViewsSourceRoots;
 import io.micronaut.views.exceptions.ViewRenderingException;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -53,27 +56,48 @@ import java.util.Set;
  */
 @Singleton
 @Requires(classes = {HttpRequest.class, HttpLocaleResolver.class})
-public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>> {
+public class ThymeleafViewsRenderer<T> implements ReloadableViewsRenderer<T, HttpRequest<?>> {
 
     protected final AbstractConfigurableTemplateResolver templateResolver;
     protected final TemplateEngine engine;
     protected final HttpLocaleResolver httpLocaleResolver;
     protected ResourceLoader resourceLoader;
+    private final ViewsSourceRoots sourceRoots;
 
     /**
      * @param templateResolver   The template resolver
      * @param templateEngine     The template engine
      * @param resourceLoader     The resource loader
      * @param httpLocaleResolver The locale resolver
+     * @deprecated Use {@link #ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver, TemplateEngine, ClassPathResourceLoader, HttpLocaleResolver, ViewsSourceRoots)} instead.
      */
+    @Deprecated(since = "6.4.0")
     public ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver templateResolver,
                                   TemplateEngine templateEngine,
                                   ClassPathResourceLoader resourceLoader,
                                   HttpLocaleResolver httpLocaleResolver) {
+        this(templateResolver, templateEngine, resourceLoader, httpLocaleResolver, ViewsSourceRoots.none());
+    }
+
+    /**
+     * @param templateResolver   The template resolver
+     * @param templateEngine     The template engine
+     * @param resourceLoader     The resource loader
+     * @param httpLocaleResolver The locale resolver
+     * @param sourceRoots        The views source roots, read ahead of the class path in development mode
+     * @since 6.4.0
+     */
+    @Inject
+    public ThymeleafViewsRenderer(AbstractConfigurableTemplateResolver templateResolver,
+                                  TemplateEngine templateEngine,
+                                  ClassPathResourceLoader resourceLoader,
+                                  HttpLocaleResolver httpLocaleResolver,
+                                  ViewsSourceRoots sourceRoots) {
         this.templateResolver = templateResolver;
         this.resourceLoader = resourceLoader;
         this.engine = templateEngine;
         this.httpLocaleResolver = httpLocaleResolver;
+        this.sourceRoots = sourceRoots;
     }
 
     @Override
@@ -111,8 +135,35 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
     @Override
     public boolean exists(@NonNull String viewName) {
         var templateAndFragment = resolveTemplate(viewName);
+        if (sourceRoots.isEnabled() && sourceRoots.resolve(templateAndFragment.templateName, templateResolver.getSuffix()).isPresent()) {
+            return true;
+        }
         String location = viewLocation(templateAndFragment.templateName);
         return resourceLoader.getResourceAsStream(location).isPresent();
+    }
+
+    /**
+     * @return The extension of the configured suffix, or none to watch every views file when there is no suffix
+     */
+    @Override
+    public @NonNull Set<String> extensions() {
+        String suffix = templateResolver.getSuffix();
+        if (suffix == null) {
+            return Set.of();
+        }
+        int dot = suffix.lastIndexOf('.');
+        String extension = dot < 0 ? suffix : suffix.substring(dot + 1);
+        return extension.isEmpty() ? Set.of() : Set.of(extension);
+    }
+
+    /**
+     * Clears the template cache of the engine: a template may be a fragment or a layout of others.
+     *
+     * @param change The templates that changed or went
+     */
+    @Override
+    public void reload(@NonNull ResourceChange change) {
+        engine.clearTemplateCache();
     }
 
     private String viewLocation(final String name) {
