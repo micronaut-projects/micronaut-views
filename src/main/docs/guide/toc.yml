@@ -33,6 +33,7 @@ views:
         title: Render scripts
         reactheadmanagers: Using head managers
       reacttodo: Known limitations
+  devmode: Reloading Templates in Development Mode
   model:
     title: Working with Models
     custom: Dynamically Enriching Models
