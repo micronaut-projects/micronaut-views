@@ -25,7 +25,6 @@ import io.micronaut.views.ReloadableViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import io.pebbletemplates.pebble.PebbleEngine;
 import io.pebbletemplates.pebble.template.PebbleTemplate;
-import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -49,34 +48,15 @@ public class PebbleViewsRenderer<T, R> implements ReloadableViewsRenderer<T, R> 
 
     private final PebbleEngine engine;
     private final LocaleResolver<R> httpLocaleResolver;
-    private final String extension;
 
     /**
      * @param engine             Pebble Engine
      * @param httpLocaleResolver The locale resolver
-     * @deprecated Use {@link #PebbleViewsRenderer(PebbleEngine, LocaleResolver, PebbleConfiguration)} instead.
      */
-    @Deprecated(since = "6.4.0")
     public PebbleViewsRenderer(PebbleEngine engine,
                                LocaleResolver<R> httpLocaleResolver) {
         this.engine = engine;
         this.httpLocaleResolver = httpLocaleResolver;
-        this.extension = PebbleConfigurationProperties.DEFAULT_EXTENSION;
-    }
-
-    /**
-     * @param engine             Pebble Engine
-     * @param httpLocaleResolver The locale resolver
-     * @param configuration      The Pebble configuration
-     * @since 6.4.0
-     */
-    @Inject
-    public PebbleViewsRenderer(PebbleEngine engine,
-                               LocaleResolver<R> httpLocaleResolver,
-                               PebbleConfiguration configuration) {
-        this.engine = engine;
-        this.httpLocaleResolver = httpLocaleResolver;
-        this.extension = configuration.getDefaultExtension();
     }
 
     @Override
@@ -104,11 +84,14 @@ public class PebbleViewsRenderer<T, R> implements ReloadableViewsRenderer<T, R> 
     }
 
     /**
-     * @return The configured default extension
+     * None, to watch every views file: the default extension is only appended to a name without one, and a
+     * template may extend or import another named with any extension, such as {@code layout.peb}.
+     *
+     * @return No extension
      */
     @Override
     public @NonNull Set<String> extensions() {
-        return extension == null || extension.isEmpty() ? Set.of() : Set.of(extension);
+        return Set.of();
     }
 
     /**

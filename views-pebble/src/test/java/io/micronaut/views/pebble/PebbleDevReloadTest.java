@@ -49,9 +49,9 @@ class PebbleDevReloadTest {
     }
 
     @Test
-    void inDevelopmentModeAnEditedParentTemplateIsSeenByItsChildren() throws IOException {
-        Path layout = write("devreload/layout.html", "<header>first header</header>{% block content %}{% endblock %}");
-        Path child = write("devreload/child.html", "{% extends \"devreload/layout.html\" %}{% block content %}<p>child</p>{% endblock %}");
+    void inDevelopmentModeAnEditedParentTemplateOfAnotherExtensionIsSeenByItsChildren() throws IOException {
+        Path layout = write("devreload/layout.peb", "<header>first header</header>{% block content %}{% endblock %}");
+        Path child = write("devreload/child.html", "{% extends \"devreload/layout.peb\" %}{% block content %}<p>child</p>{% endblock %}");
         try (EmbeddedServer server = ApplicationContext.run(EmbeddedServer.class, Map.of(DevelopmentMode.PROPERTY, true, "spec.name", SPEC));
              HttpClient client = HttpClient.create(server.getURL())) {
             ApplicationContext context = server.getApplicationContext();

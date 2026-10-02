@@ -31,7 +31,6 @@ import org.jspecify.annotations.Nullable;
  * Registers the resource watches of views-core, in development mode only.
  *
  * @author graemerocher
- * @since 6.4.0
  */
 @Internal
 final class ViewsWatches {

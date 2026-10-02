@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -50,9 +51,9 @@ class ThymeleafDevReloadTest {
     }
 
     @Test
-    void inDevelopmentModeAnEditedLayoutIsSeenByThePagesThatUseIt() throws IOException {
-        Path layout = write("devreload/layout.html", "<div th:fragment=\"banner\">first banner</div>");
-        Path page = write("devreload/layout-page.html", "<main><div th:replace=\"~{devreload/layout :: banner}\"></div></main>");
+    void inDevelopmentModeAnEditedLayoutOfAnotherExtensionIsSeenByThePagesThatUseIt() throws IOException {
+        Path layout = write("devreload/layout.xml", "<div th:fragment=\"banner\">first banner</div>");
+        Path page = write("devreload/layout-page.html", "<main><div th:replace=\"~{devreload/layout.xml :: banner}\"></div></main>");
         try (EmbeddedServer server = ApplicationContext.run(EmbeddedServer.class, Map.of(DevelopmentMode.PROPERTY, true, "spec.name", SPEC));
              HttpClient client = HttpClient.create(server.getURL())) {
             ApplicationContext context = server.getApplicationContext();
@@ -82,6 +83,16 @@ class ThymeleafDevReloadTest {
             notify(context, List.of(home), List.of(), true);
             notify(context, List.of(home), List.of(), false);
             assertEquals(before, get(client, "/devreload/home"));
+        }
+    }
+
+    @Test
+    void theRendererWatchesItsSuffixOnlyWhenTheResolverForcesIt() {
+        try (ApplicationContext context = ApplicationContext.run(Map.of(DevelopmentMode.PROPERTY, true))) {
+            assertEquals(Set.of(), context.getBean(ThymeleafViewsRenderer.class).extensions());
+        }
+        try (ApplicationContext context = ApplicationContext.run(Map.of(DevelopmentMode.PROPERTY, true, "micronaut.views.thymeleaf.force-suffix", true))) {
+            assertEquals(Set.of("html"), context.getBean(ThymeleafViewsRenderer.class).extensions());
         }
     }
 

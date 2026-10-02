@@ -143,12 +143,15 @@ public class ThymeleafViewsRenderer<T> implements ReloadableViewsRenderer<T, Htt
     }
 
     /**
-     * @return The extension of the configured suffix, or none to watch every views file when there is no suffix
+     * The extension of the configured suffix when the resolver forces it. Otherwise a template named with an
+     * extension of its own, such as {@code layout.xml}, is read as it is named, so every views file is watched.
+     *
+     * @return The extensions, or none to watch every views file
      */
     @Override
     public @NonNull Set<String> extensions() {
         String suffix = templateResolver.getSuffix();
-        if (suffix == null) {
+        if (suffix == null || !templateResolver.getForceSuffix()) {
             return Set.of();
         }
         int dot = suffix.lastIndexOf('.');

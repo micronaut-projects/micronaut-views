@@ -37,7 +37,6 @@ import java.util.Set;
  * development launcher reports through the context's resource watch; outside development mode, none.
  *
  * @author graemerocher
- * @since 6.4.0
  */
 @Internal
 @Singleton

@@ -31,7 +31,6 @@ import java.util.Optional;
  * is read from there, so that an edit is rendered without a copy step; any other is read from the class path.
  *
  * @author graemerocher
- * @since 6.4.0
  */
 @Internal
 final class SourceRootsTemplateResolver extends ClassLoaderTemplateResolver {

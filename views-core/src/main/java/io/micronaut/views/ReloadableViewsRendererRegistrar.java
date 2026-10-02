@@ -30,7 +30,6 @@ import java.util.Set;
  * so the renderer's watches close with it.
  *
  * @author graemerocher
- * @since 6.4.0
  */
 @Internal
 @Singleton

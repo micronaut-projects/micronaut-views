@@ -27,7 +27,6 @@ import java.util.Optional;
  * The source roots of {@link ViewsSourceRoots#none()}.
  *
  * @author graemerocher
- * @since 6.4.0
  */
 @Internal
 enum NoViewsSourceRoots implements ViewsSourceRoots {

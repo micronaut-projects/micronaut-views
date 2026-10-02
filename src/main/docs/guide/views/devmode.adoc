@@ -11,10 +11,10 @@ This needs no configuration. The launcher reports its `views` resource roots (`m
 |Engine |In development mode
 
 |Thymeleaf
-|Reads templates from the source roots ahead of the class path, and clears the engine's template cache when a template with the configured suffix (`.html` by default) changes. A layout or a fragment is picked up by the pages that use it.
+|Reads templates from the source roots ahead of the class path, and clears the engine's template cache when a template changes: every views file when the resolver does not force its suffix (the default, since a template named `layout.xml` is read as it is named), only the files with the suffix when `micronaut.views.thymeleaf.force-suffix` is set. A layout or a fragment is picked up by the pages that use it.
 
 |Pebble
-|The default loader reads templates from the source roots ahead of the class path, and the engine's template and tag caches are invalidated when a template with the default extension (`micronaut.views.pebble.default-extension`, `html` by default) changes. A loader bean of your own is left as it is.
+|The default loader reads templates from the source roots ahead of the class path, and the engine's template and tag caches are invalidated when any views file changes, since a template may extend or import one named with any extension. A loader bean of your own is left as it is.
 |===
 
 The other engines keep their own reload settings for now.
