@@ -44,9 +44,11 @@ micronaut:
       paths: build/resources/main/views
 ----
 
-This makes the server pick up a rebuilt bundle without a restart. It does not tell the browser, so the
+This makes the server pick up a rebuilt bundle without a restart. The directory of the bundle is registered with the application's file watcher, so it is noticed even when `paths` does not cover it. It does not tell the browser, so the
 refresh is still manual — see <<reactdevreload,Refreshing the browser on rebuild>> for the module that
 closes that gap.
+
+Under the Micronaut development launcher (`./gradlew mnDev` or `mvn mn:dev`) none of this is needed: a bundle under one of the launcher's resource roots is reloaded when the launcher reports its change, and the browser is refreshed through the launcher's LiveReload server once the new bundle is loaded. See <<devmode,development mode>>.
 
 The `paths` property is correct if you're using the default JS compilation setup created for you by Micronaut Starter. If your JS bundle is held in a different directory in your project, make sure to set the path appropriately.
 

@@ -30,9 +30,21 @@ This needs no configuration. The launcher reports its `views` resource roots (`m
 
 |Velocity
 |The default engine reads the templates of the views folder from the source roots ahead of the class path, and the class path through the application's class loader. It caches no template, so there is nothing to clear.
+
+|Soy
+|The file set is compiled again when a `.soy` file changes. It is the file set your api:views.soy.SoyFileSetProvider[] provides, asked for again: build it with api:views.soy.SoyTemplateSources[], which finds each file in the source roots ahead of the class path, so that the edit is what is compiled. While the file set does not compile, rendering fails with the compilation error. Templates the provider precompiled are classes, and follow the class reload.
+
+|Rocker
+|With `com.fizzed:rocker-compiler` on the class path (a `developmentOnly` dependency) and a JDK, every Rocker template of the source roots is compiled at runtime, with Rocker's own parser and generator, against the application's classes, and compiled again on the next render after a Rocker template changes. Any other template is the class the build generated, loaded through the application's class loader, so it follows the class reload. Without `rocker-compiler`, an edited template is rendered once the build regenerates it: use the build tool's compile mode (`micronaut.dev.compile.mode=build-tool`) so that the Rocker plugin runs. A template returned as a `RockerWritable` from `views.home.template(...)` is always the generated class. See the note below on `hot-reloading`.
+
+|JStachio
+|Templates are compiled into classes by the annotation processor, so an edit is a class change: the next generation renders it. There is nothing to watch and no setting.
+
+|React
+|A server bundle or render script read from a file is reloaded when the launcher reports a change of it under one of its resource roots, and through the process's file watcher otherwise (see <<react-dev-mode,Development>>). The browser is refreshed through the launcher's LiveReload server once the new bundle is loaded, and `micronaut-views-react-dev` leaves its own script out of the page while LiveReload runs.
 |===
 
-Soy, Rocker, JStachio and React keep their own reload settings for now. Rocker and JStachio templates are classes, so they follow the class reload once the build regenerates them.
+NOTE: `micronaut.views.rocker.hot-reloading` is deprecated. It turns on Rocker's own hot reloading (`RockerRuntime`) outside development mode, as before, and has no effect in development mode. Rocker's reloading cannot work under the launcher: `RockerRuntime` is one per process, in the library class loader shared by every generation, it reads its template directory from `rocker-compiler.conf`, and it defines the recompiled classes in a loader whose parent is the library class loader. A template that imports a class of the application, which the launcher loads in a generation class loader, does not link there. In development mode `RockerRuntime` keeps its plain bootstrap, which finds a template's class through the loader of its model, and views compiles the templates of the source roots itself.
 
 Further roots can be configured. They are read in development mode only, ahead of the launcher's roots:
 
