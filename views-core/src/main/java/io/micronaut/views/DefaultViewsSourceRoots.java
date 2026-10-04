@@ -22,6 +22,7 @@ import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
@@ -104,9 +105,16 @@ final class DefaultViewsSourceRoots implements ViewsSourceRoots {
         if (roots.isEmpty()) {
             return Optional.empty();
         }
-        String name = ViewUtils.normalizeFile(viewName, extension);
+        String name = viewName.replace('\\', '/');
+        while (name.startsWith("/")) {
+            name = name.substring(1);
+        }
         if (extension != null && !extension.isEmpty()) {
-            name = name + (extension.startsWith(ViewUtils.EXTENSION_SEPARATOR) ? extension : ViewUtils.EXTENSION_SEPARATOR + extension);
+            String suffix = extension.startsWith(ViewUtils.EXTENSION_SEPARATOR) ? extension : ViewUtils.EXTENSION_SEPARATOR + extension;
+            // appended unless the whole name already ends with it; a directory such as archive.html/ is left as it is
+            if (!name.endsWith(suffix)) {
+                name = name + suffix;
+            }
         }
         if (name.isEmpty()) {
             return Optional.empty();
@@ -118,11 +126,20 @@ final class DefaultViewsSourceRoots implements ViewsSourceRoots {
             } catch (InvalidPathException e) {
                 return Optional.empty();
             }
-            // a name that climbs out of the root resolves to nothing, as it would on the class path
-            if (candidate.startsWith(root) && Files.isRegularFile(candidate)) {
+            // a name that climbs out of the root resolves to nothing, as it would on the class path, and so does
+            // one that leaves it through a symbolic link
+            if (candidate.startsWith(root) && Files.isRegularFile(candidate) && isWithin(root, candidate)) {
                 return Optional.of(candidate);
             }
         }
         return Optional.empty();
+    }
+
+    private static boolean isWithin(Path root, Path candidate) {
+        try {
+            return candidate.toRealPath().startsWith(root.toRealPath());
+        } catch (IOException e) {
+            return false;
+        }
     }
 }

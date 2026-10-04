@@ -77,6 +77,14 @@ class ViewsReloadTest {
             assertEquals(List.of(views), sourceRoots.roots());
             assertEquals(Optional.of(views.resolve("index.html")), sourceRoots.resolve("index", "html"));
             assertEquals(Optional.empty(), sourceRoots.resolve("../secret", "html"));
+            // nor through a symbolic link
+            Files.createSymbolicLink(views.resolve("outside"), root);
+            assertEquals(Optional.empty(), sourceRoots.resolve("outside/secret", "html"));
+            // a directory named with the extension is not mistaken for it
+            Files.createDirectories(views.resolve("archive.html"));
+            Files.writeString(views.resolve("archive.html/welcome.html"), "nested");
+            assertEquals(Optional.of(views.resolve("archive.html/welcome.html")), sourceRoots.resolve("archive.html/welcome", "html"));
+            assertEquals(Optional.of(views.resolve("archive.html/welcome.html")), sourceRoots.resolve("archive.html/welcome.html", "html"));
         }
     }
 
