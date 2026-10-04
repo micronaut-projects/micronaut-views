@@ -149,6 +149,10 @@ public class SoySauceViewsRenderer<T> implements ReloadableViewsRenderer<T, Http
         } catch (ViewRenderingException e) {
             LOG.error("{}", e.getMessage());
             compileFailure = e;
+        } catch (RuntimeException e) {
+            // the provider failed to build the file set, for example because a file it adds was removed
+            LOG.error("Soy file set could not be built: {}", e.getMessage());
+            compileFailure = new ViewRenderingException("Soy file set could not be built: " + e.getMessage(), e);
         }
     }
 

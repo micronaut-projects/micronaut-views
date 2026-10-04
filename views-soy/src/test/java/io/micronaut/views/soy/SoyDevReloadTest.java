@@ -74,6 +74,14 @@ class SoyDevReloadTest {
             Files.writeString(page, PAGE.formatted("three"));
             notify(context, List.of(page), false);
             assertTrue(get(client, "/devreload/page").contains("three Sergio"));
+
+            // a file the provider adds is removed: the provider fails, and so does rendering, until it is back
+            Files.delete(page);
+            ((DefaultBeanContext) context).notifyResourceChange(new ResourceChange(ResourceKind.VIEWS, List.of(root), List.of(), List.of(page), false));
+            assertThrows(HttpClientResponseException.class, () -> get(client, "/devreload/page"));
+            Files.writeString(page, PAGE.formatted("four"));
+            notify(context, List.of(page), false);
+            assertTrue(get(client, "/devreload/page").contains("four Sergio"));
         }
     }
 
