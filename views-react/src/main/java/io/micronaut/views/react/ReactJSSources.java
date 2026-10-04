@@ -51,9 +51,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -84,8 +87,8 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     private Source serverBundle;  // L(this)
     private Source renderScript;  // L(this)
     private Source hostPolyfills;  // L(this)
-    // the time and size of the files the scripts were read from: a change reported for a file that is still as it
-    // was read, reported again by another watch or after the script was read again, drops nothing
+    // the digest of what the scripts were read as: a change reported for a file that still holds it, reported again
+    // by another watch or after the script was read again, drops nothing
     private @Nullable String serverBundleStamp;  // L(this)
     private @Nullable String renderScriptStamp;  // L(this)
     private long generation;
@@ -246,25 +249,28 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     }
 
     private static @Nullable String stampOf(@Nullable Source source) {
-        if (source == null) {
+        if (source == null || source.getURI() == null || !"file".equals(source.getURI().getScheme())) {
             return null;
         }
-        URI uri = source.getURI();
-        if (uri == null || !"file".equals(uri.getScheme())) {
-            return null;
-        }
-        try {
-            return stampOf(Paths.get(uri));
-        } catch (RuntimeException e) {
-            return null;
-        }
+        return digest(source.getCharacters().toString());
     }
 
     private static @Nullable String stampOf(Path file) {
         try {
-            return Files.getLastModifiedTime(file).toInstant() + ":" + Files.size(file);
+            // decoded as the script was read, so that the same file yields the same digest
+            return digest(new String(Files.readAllBytes(file), StandardCharsets.UTF_8));
         } catch (IOException e) {
             return null;
+        }
+    }
+
+    private static String digest(String content) {
+        try {
+            byte[] hash = MessageDigest.getInstance("SHA-256").digest(content.getBytes(StandardCharsets.UTF_8));
+            return HexFormat.of().formatHex(hash);
+        } catch (NoSuchAlgorithmException e) {
+            // every platform has SHA-256; without it every change reloads
+            return Long.toString(System.nanoTime());
         }
     }
 

@@ -21,6 +21,7 @@ import com.fizzed.rocker.RockerModel;
 import com.fizzed.rocker.TemplateBindException;
 import com.fizzed.rocker.TemplateNotFoundException;
 import com.fizzed.rocker.runtime.DefaultRockerBootstrap;
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.views.ViewsSourceRoots;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import org.jspecify.annotations.Nullable;
@@ -70,6 +71,7 @@ public class RockerEngine implements AutoCloseable {
      * @param classLoader The application's class loader
      * @since 6.4.0
      */
+    @Experimental
     public RockerEngine(String path, String extension, ViewsSourceRoots sourceRoots, ClassLoader classLoader) {
         this.path = path;
         this.extension = extension;

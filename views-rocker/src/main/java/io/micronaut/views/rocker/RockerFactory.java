@@ -19,6 +19,7 @@ import com.fizzed.rocker.runtime.RockerRuntime;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsSourceRoots;
 import org.slf4j.Logger;
@@ -64,6 +65,7 @@ public class RockerFactory {
      * @return The Rocker engine
      * @since 6.4.0
      */
+    @Experimental
     @Singleton
     @Bean(preDestroy = "close")
     @SuppressWarnings("deprecation")
