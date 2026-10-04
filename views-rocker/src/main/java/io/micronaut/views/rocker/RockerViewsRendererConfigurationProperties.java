@@ -85,7 +85,10 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
      * Whether hot reloading is enabled. Default value ({@value #DEFAULT_HOT_RELOADING}).
      *
      * @return boolean flag indicating whether hot reloading is enabled.
+     * @deprecated Rocker's own hot reloading, outside development mode. Under the development launcher, the
+     * templates of the views source roots are compiled after an edit without it.
      */
+    @Deprecated(since = "6.4.0")
     @Override
     public boolean isHotReloading() {
         return hotReloading;
@@ -124,7 +127,10 @@ public class RockerViewsRendererConfigurationProperties implements RockerViewsRe
      * Hot reloading requires an additional dependency on {@code com.fizzed:rocker-compiler:1.2.3:provided}.
      *
      * @param hotReloading True if it is
+     * @deprecated Rocker's own hot reloading, outside development mode. Under the development launcher, the
+     * templates of the views source roots are compiled after an edit without it.
      */
+    @Deprecated(since = "6.4.0")
     public void setHotReloading(boolean hotReloading) {
         this.hotReloading = hotReloading;
     }

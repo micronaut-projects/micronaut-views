@@ -49,6 +49,7 @@ commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "co
 jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 managed-rocker-runtime = { module = "com.fizzed:rocker-runtime", version.ref = "managed-rocker" }
+rocker-compiler = { module = "com.fizzed:rocker-compiler", version.ref = "managed-rocker" }
 managed-soy = { module = "com.google.template:soy", version.ref = "managed-soy" }
 org-json = { module = "org.json:json", version.ref = "org-json" }
 managed-thymeleaf = { module = "org.thymeleaf:thymeleaf", version.ref = "managed-thymeleaf" }
