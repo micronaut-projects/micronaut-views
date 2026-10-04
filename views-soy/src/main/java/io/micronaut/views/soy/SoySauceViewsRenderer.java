@@ -23,12 +23,13 @@ import com.google.template.soy.parseinfo.TemplateName;
 import com.google.template.soy.shared.SoyCssRenamingMap;
 import com.google.template.soy.shared.SoyIdRenamingMap;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.watch.ResourceChange;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.views.ViewUtils;
+import io.micronaut.views.ReloadableViewsRenderer;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.csp.CspConfiguration;
 import io.micronaut.views.csp.CspFilter;
 import io.micronaut.views.exceptions.ViewRenderingException;
@@ -42,6 +43,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 
@@ -56,7 +58,7 @@ import java.util.concurrent.ExecutionException;
 @Requires(classes = HttpRequest.class)
 @Singleton
 @SuppressWarnings({"WeakerAccess", "UnstableApiUsage"})
-public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>> {
+public class SoySauceViewsRenderer<T> implements ReloadableViewsRenderer<T, HttpRequest<?>> {
 
     private static final Logger LOG = LoggerFactory.getLogger(SoySauceViewsRenderer.class);
     private static final String INJECTED_NONCE_PROPERTY = "csp_nonce";
@@ -64,8 +66,15 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>
     protected final ViewsConfiguration viewsConfiguration;
     protected final SoyViewsRendererConfigurationProperties soyMicronautConfiguration;
     protected final SoyNamingMapProvider namingMapProvider;
+    /**
+     * The templates compiled when the renderer was created. In development mode, {@link #reload(ResourceChange)}
+     * compiles the file set again, and the renderer renders the latest compilation instead.
+     */
     protected final SoySauce soySauce;
     private final boolean injectNonce;
+    private final boolean precompiled;
+    private volatile SoySauce current;
+    private volatile @Nullable ViewRenderingException compileFailure;
 
     /**
      * @param viewsConfiguration Views configuration properties.
@@ -82,22 +91,64 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>
         this.soyMicronautConfiguration = soyConfiguration;
         this.namingMapProvider = namingMapProvider;
         this.injectNonce = cspConfiguration != null && cspConfiguration.isNonceEnabled();
-        final SoySauce precompiled = soyConfiguration.getCompiledTemplates();
-        if (precompiled != null) {
-            this.soySauce = precompiled;
+        final SoySauce compiledTemplates = soyConfiguration.getCompiledTemplates();
+        if (compiledTemplates != null) {
+            this.soySauce = compiledTemplates;
+            this.precompiled = true;
         } else {
             LOG.warn("Compiling Soy templates (this may take a moment)...");
-            SoyFileSet fileSet = soyConfiguration.getFileSet();
-            if (fileSet == null) {
-                throw new IllegalStateException(
-                        "Unable to load Soy templates: no file set, no compiled templates provided.");
-            }
-            try {
-                this.soySauce = fileSet.compileTemplates();
-            } catch (SoyCompilationException se) {
-                throw new ViewRenderingException(
-                    "Soy template compilation failed: " + se.getMessage(), se);
-            }
+            this.soySauce = compile();
+            this.precompiled = false;
+        }
+        this.current = soySauce;
+    }
+
+    private SoySauce compile() {
+        SoyFileSet fileSet = soyMicronautConfiguration.getFileSet();
+        if (fileSet == null) {
+            throw new IllegalStateException(
+                    "Unable to load Soy templates: no file set, no compiled templates provided.");
+        }
+        try {
+            return fileSet.compileTemplates();
+        } catch (SoyCompilationException se) {
+            throw new ViewRenderingException(
+                "Soy template compilation failed: " + se.getMessage(), se);
+        }
+    }
+
+    /**
+     * The Soy files: a change to one compiles the file set again.
+     *
+     * @return {@code soy}
+     * @since 6.4.0
+     */
+    @Override
+    public @NonNull Set<String> extensions() {
+        return Set.of("soy");
+    }
+
+    /**
+     * Compiles the file set again, as the {@link SoyFileSetProvider} provides it, and renders the new templates
+     * from then on. A provider whose file set reads its files from URLs or files, such as one built with
+     * {@link SoyTemplateSources}, reads the edited files. While the file set does not compile, rendering fails
+     * with the compilation error, until a change compiles it again. Templates the provider precompiled are left
+     * as they are: they are classes, and follow the class reload.
+     *
+     * @param change The Soy files that changed or went
+     * @since 6.4.0
+     */
+    @Override
+    public void reload(@NonNull ResourceChange change) {
+        if (precompiled) {
+            return;
+        }
+        try {
+            current = compile();
+            compileFailure = null;
+        } catch (ViewRenderingException e) {
+            LOG.error("{}", e.getMessage());
+            compileFailure = e;
         }
     }
 
@@ -114,10 +165,14 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>
                            @Nullable T data,
                            @Nullable HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
+        ViewRenderingException failure = compileFailure;
+        if (failure != null) {
+            throw failure;
+        }
 
         Map<String, Object> ijOverlay = new HashMap<>(1);
         Map<String, Object> context = ViewUtils.modelOf(data);
-        final SoySauce.Renderer renderer = soySauce.renderTemplate(TemplateName.of(viewName));
+        final SoySauce.Renderer renderer = current.renderTemplate(TemplateName.of(viewName));
         renderer.setData(context);
         if (injectNonce) {
             Optional<Object> nonceObj = request != null ? request.getAttribute(CspFilter.NONCE_PROPERTY) : Optional.empty();
@@ -182,7 +237,7 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>
      */
     @Override
     public boolean exists(@NonNull String view) {
-        return soySauce.hasTemplate(view);
+        return current.hasTemplate(view);
     }
 
 }
