@@ -15,6 +15,9 @@
  */
 package io.micronaut.views.freemarker;
 
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.cache.MultiTemplateLoader;
+import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import freemarker.template.Version;
@@ -27,8 +30,13 @@ import io.micronaut.core.naming.conventions.StringConvention;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsConfigurationProperties;
+import io.micronaut.views.ViewsSourceRoots;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.jspecify.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -75,16 +83,47 @@ public class FreemarkerViewsRendererConfigurationProperties extends Configuratio
      * @param viewsConfiguration The views configuration
      * @param version The minimum version
      * @param resourceLoader The resource loader
+     * @deprecated Use {@link #FreemarkerViewsRendererConfigurationProperties(ViewsConfiguration, String, ClassPathResourceLoader, ViewsSourceRoots)} instead.
      */
+    @Deprecated(since = "6.4.0")
+    public FreemarkerViewsRendererConfigurationProperties(
+            ViewsConfiguration viewsConfiguration,
+            @Nullable String version,
+            @Nullable ClassPathResourceLoader resourceLoader) {
+        this(viewsConfiguration, version, resourceLoader, ViewsSourceRoots.none());
+    }
+
+    /**
+     * In development mode, templates are read from the views source roots ahead of the class path, so that an
+     * edit is rendered without a copy step. Otherwise they are read from the class path only.
+     *
+     * @param viewsConfiguration The views configuration
+     * @param version The minimum version
+     * @param resourceLoader The resource loader
+     * @param sourceRoots The views source roots
+     * @since 6.4.0
+     */
+    @Inject
     public FreemarkerViewsRendererConfigurationProperties(
             ViewsConfiguration viewsConfiguration,
             @Property(name = PREFIX + ".incompatible-improvements") @Nullable String version,
-            @Nullable ClassPathResourceLoader resourceLoader) {
+            @Nullable ClassPathResourceLoader resourceLoader,
+            ViewsSourceRoots sourceRoots) {
         super(version != null ? new Version(version) : Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-        if (resourceLoader != null) {
-            setClassLoaderForTemplateLoading(
-                    resourceLoader.getClassLoader(), "/" + viewsConfiguration.getFolder()
-            );
+        String basePackagePath = "/" + viewsConfiguration.getFolder();
+        if (sourceRoots.isEnabled()) {
+            List<TemplateLoader> loaders = new ArrayList<>(2);
+            loaders.add(new SourceRootsTemplateLoader(sourceRoots));
+            if (resourceLoader != null) {
+                loaders.add(new ClassTemplateLoader(resourceLoader.getClassLoader(), basePackagePath));
+            }
+            MultiTemplateLoader templateLoader = new MultiTemplateLoader(loaders.toArray(new TemplateLoader[0]));
+            // the source roots arrive with the launcher's first batch, and a template moves between the loaders
+            // as it is added to or removed from them: every lookup asks the source roots first
+            templateLoader.setSticky(false);
+            setTemplateLoader(templateLoader);
+        } else if (resourceLoader != null) {
+            setClassLoaderForTemplateLoading(resourceLoader.getClassLoader(), basePackagePath);
         }
     }
 
