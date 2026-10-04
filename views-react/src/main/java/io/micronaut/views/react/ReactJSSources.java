@@ -91,6 +91,11 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     // by another watch or after the script was read again, drops nothing
     private @Nullable String serverBundleStamp;  // L(this)
     private @Nullable String renderScriptStamp;  // L(this)
+    // the files the scripts were last read from, kept while a script is dropped, and whether reading them again after
+    // a change failed: a later write to them is then a change too, though no script is cached
+    private @Nullable Path serverBundleOrigin;  // L(this)
+    private @Nullable Path renderScriptOrigin;  // L(this)
+    private boolean reloadFailed;  // L(this)
     private long generation;
 
     private final @Nullable BeanProvider<FileWatcher> fileWatchers;
@@ -135,6 +140,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
         if (serverBundle == null) {
             serverBundle = loadSource(resourceResolver, reactViewsRendererConfiguration.getServerBundlePath(), ".server-bundle-path");
             serverBundleStamp = stampOf(serverBundle);
+            serverBundleOrigin = originOf(serverBundle);
         }
         return serverBundle;
     }
@@ -150,6 +156,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
         if (renderScript == null) {
             renderScript = loadSource(resourceResolver, reactViewsRendererConfiguration.getRenderScript(), ".render-script");
             renderScriptStamp = stampOf(renderScript);
+            renderScriptOrigin = originOf(renderScript);
         }
         return renderScript;
     }
@@ -172,9 +179,11 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             try {
                 serverBundle();
                 renderScript();
+                reloadFailed = false;
             } catch (RuntimeException e) {
-                // the render reports it; the browser is refreshed to show it
+                // the render reports it; the browser is refreshed to show it, and the next write is reloaded too
                 LOG.warn("Could not load the rebuilt React SSR bundle: {}", e.getMessage());
+                reloadFailed = true;
             }
             return true;
         }
@@ -245,6 +254,18 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static @Nullable Path originOf(Source source) {
+        URI uri = source.getURI();
+        if (uri == null || !"file".equals(uri.getScheme())) {
+            return null;
+        }
+        try {
+            return Paths.get(uri).toAbsolutePath().normalize();
+        } catch (RuntimeException e) {
+            return null;
         }
     }
 
@@ -323,6 +344,10 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
                 }
                 if (isOrigin(renderScript, path) && !Objects.equals(renderScriptStamp, stampOf(path))) {
                     renderScript = null;
+                    dropped = true;
+                }
+                if (reloadFailed && (path.equals(serverBundleOrigin) || path.equals(renderScriptOrigin))) {
+                    // the scripts are not cached, since reading them failed: this write is worth another try
                     dropped = true;
                 }
             }

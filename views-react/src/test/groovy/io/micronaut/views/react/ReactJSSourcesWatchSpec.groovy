@@ -136,13 +136,28 @@ class ReactJSSourcesWatchSpec extends Specification {
         then: "the file is as it was read: nothing is reloaded"
         trigger.reloads == 1
 
+        when: "the bundle is half gone while the bundler writes it: loading it fails"
+        Files.delete(bundle)
+        notify(context, ResourceKind.STATIC, [bundle])
+
+        then: "the browser is refreshed to show the failure"
+        trigger.reloads == 2
+
+        when: "the bundler finishes"
+        Files.writeString(bundle, "export default { v: 6 }")
+        notify(context, ResourceKind.STATIC, [bundle])
+
+        then: "the write is reloaded, though nothing was cached"
+        trigger.reloads == 3
+        trigger.bundleWhenReloaded.contains("v: 6")
+
         when: "the server is off"
         trigger.enabled = false
         Files.writeString(bundle, "export default { v: 5 }")
         notify(context, ResourceKind.STATIC, [bundle])
 
         then:
-        trigger.reloads == 1
+        trigger.reloads == 3
         !context.getBean(ReactBrowserRefresh).isActive()
 
         cleanup:
