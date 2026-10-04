@@ -23,7 +23,9 @@ Jte templates may be precompiled at build time. This can be done by a https://jt
 
 === Dynamic Reloading
 
-When `dynamic` is enabled (see below), jte will load templates from the project source directory, and will reload them after changes.
+In development mode, under the Micronaut development launcher, templates of the views source roots are compiled at runtime and compiled again after an edit, with no configuration: see <<devmode, development mode>>.
+
+When `dynamic` is enabled (see below), jte will load templates from the project source directory, and will reload them after changes. `dynamic` and `dynamic-source-path` are deprecated in favour of development mode.
 
 === Configuration
 

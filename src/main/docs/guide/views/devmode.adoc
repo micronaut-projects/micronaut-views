@@ -15,9 +15,24 @@ This needs no configuration. The launcher reports its `views` resource roots (`m
 
 |Pebble
 |The default loader reads templates from the source roots ahead of the class path, and the engine's template and tag caches are invalidated when any views file changes, since a template may extend or import one named with any extension. A loader bean of your own is left as it is.
+
+|Freemarker
+|The configuration reads templates from the source roots ahead of the class path, and its template cache is cleared when any views file changes, since a template may include or import one named with any extension. Freemarker's own `template_update_delay` setting is left as it is: it is Freemarker's check of a template's time, which still applies in production.
+
+|JTE
+|A template found in the source roots is compiled from there at runtime, into `micronaut.views.jte.dynamic-path`, and compiled again on the next render after a `.jte` or `.kte` file changes, together with the templates that use it. Any other template is rendered from its precompiled class, which follows the class reload, or compiled from the class path when it has none. `micronaut.views.jte.dynamic` and `dynamic-source-path` are deprecated: in development mode, the dynamic source directory is read after the source roots.
+
+|Handlebars
+|The default engine reads the templates of the views folder from the source roots ahead of the class path. It has no template cache and compiles a template on every render, so an edit is rendered on the next request. An engine of your own configured with a cache has it cleared when any views file changes.
+
+|Jinjava
+|Templates and the templates they include or extend are read from the source roots ahead of the class path. Jinjava parses a template on every render, so there is nothing to clear.
+
+|Velocity
+|The default engine reads the templates of the views folder from the source roots ahead of the class path, and the class path through the application's class loader. It caches no template, so there is nothing to clear.
 |===
 
-The other engines keep their own reload settings for now.
+Soy, Rocker, JStachio and React keep their own reload settings for now. Rocker and JStachio templates are classes, so they follow the class reload once the build regenerates them.
 
 Further roots can be configured. They are read in development mode only, ahead of the launcher's roots:
 
