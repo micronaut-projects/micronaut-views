@@ -25,11 +25,15 @@ public interface JteViewsRendererConfiguration {
     /**
      * Use dynamic/hot reload templates.
      * @return true to enable reloading templates.
+     * @deprecated Run the application in development mode (micronaut-dev) instead, where templates of the views
+     * source roots are compiled at runtime and compiled again after an edit.
      */
+    @Deprecated(since = "6.4.0")
     boolean isDynamic();
 
     /**
-     * When using dynamic templates, the root directory to write generated source and classes under.
+     * When compiling templates at runtime, in development mode or with dynamic templates, the root directory to
+     * write generated source and classes under.
      * @return the directory
      */
     String getDynamicPath();
@@ -38,7 +42,10 @@ public interface JteViewsRendererConfiguration {
      * When using dynamic templates, the root source directory to search. If not specified, jte will
      * search src/main/jte and src/main/resources/&lt;folder&gt; where folder is ViewsConfiguration.getFolder().
      * @return the directory
+     * @deprecated Run the application in development mode (micronaut-dev) instead, which reads templates from the
+     * views source roots ({@code micronaut.dev.resources.views} or {@code micronaut.views.source-roots}).
      */
+    @Deprecated(since = "6.4.0")
     String getDynamicSourcePath();
 
     /**

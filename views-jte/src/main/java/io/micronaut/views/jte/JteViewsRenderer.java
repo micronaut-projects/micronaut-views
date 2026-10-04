@@ -21,12 +21,14 @@ import gg.jte.TemplateEngine;
 import gg.jte.TemplateOutput;
 import gg.jte.resolve.DirectoryCodeResolver;
 import gg.jte.resolve.ResourceCodeResolver;
+import io.micronaut.context.watch.ResourceChange;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import io.micronaut.core.io.Writable;
+import io.micronaut.views.ReloadableViewsRenderer;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
-import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.ViewsSourceRoots;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,39 +37,89 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 import java.util.Arrays;
 
 /**
  * View renderer using JTE.
  *
+ * <p>In development mode, templates found under the {@link ViewsSourceRoots views source roots} are compiled from
+ * there at runtime, and compiled again on the next render after a change reports them. Templates that are not in
+ * the source roots are rendered from their precompiled classes, which follow the class reload, or compiled from
+ * the class path when there are none.</p>
+ *
  * @param <T> type of input model.
  * @param <R> type of request.
  * @author edward3h
  * @since 3.1.0
  */
-public abstract class JteViewsRenderer<T, R> implements ViewsRenderer<T, R> {
+public abstract class JteViewsRenderer<T, R> implements ReloadableViewsRenderer<T, R> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JteViewsRenderer.class);
     private static final List<String> EXTENSIONS = Arrays.asList(".jte", ".kte");
+    private static final Set<String> WATCHED_EXTENSIONS = Set.of("jte", "kte");
     private final TemplateEngine templateEngine;
+    private final @Nullable TemplateEngine sourceEngine;
+    private final @Nullable SourceRootsCodeResolver sourceResolver;
 
     /**
      * @param viewsConfiguration Views configuration
      * @param jteViewsRendererConfiguration JTE specific configuration
      * @param contentType JTE content type of this renderer
      * @param classDirectory When using dynamic templates, where to generate source and class files
+     * @deprecated Use {@link #JteViewsRenderer(ViewsConfiguration, JteViewsRendererConfiguration, ContentType, Path, ViewsSourceRoots, ClassLoader)} instead.
      */
+    @Deprecated(since = "6.4.0")
     protected JteViewsRenderer(
             ViewsConfiguration viewsConfiguration,
             JteViewsRendererConfiguration jteViewsRendererConfiguration,
             ContentType contentType,
             Path classDirectory) {
+        this(viewsConfiguration, jteViewsRendererConfiguration, contentType, classDirectory, ViewsSourceRoots.none(), null);
+    }
 
-        if (jteViewsRendererConfiguration.isDynamic()) {
-            CodeResolver codeResolver = newDynamicCodeResolver(jteViewsRendererConfiguration, viewsConfiguration.getFolder());
+    /**
+     * @param viewsConfiguration Views configuration
+     * @param jteViewsRendererConfiguration JTE specific configuration
+     * @param contentType JTE content type of this renderer
+     * @param classDirectory Where to generate source and class files of templates compiled at runtime
+     * @param sourceRoots The views source roots, whose templates are compiled at runtime in development mode
+     * @param classLoader The application's class loader, which templates compiled at runtime and the class path
+     *                    of their compilation come from in development mode; null for the default
+     * @since 6.4.0
+     */
+    @SuppressWarnings("deprecation")
+    protected JteViewsRenderer(
+            ViewsConfiguration viewsConfiguration,
+            JteViewsRendererConfiguration jteViewsRendererConfiguration,
+            ContentType contentType,
+            Path classDirectory,
+            ViewsSourceRoots sourceRoots,
+            @Nullable ClassLoader classLoader) {
+        String folder = viewsConfiguration.getFolder();
+        if (sourceRoots.isEnabled()) {
+            // development mode: the deprecated dynamic settings only add their source directory after the roots
+            Path dynamicSource = jteViewsRendererConfiguration.isDynamic() || jteViewsRendererConfiguration.getDynamicSourcePath() != null
+                ? findDynamicSourceDirectory(jteViewsRendererConfiguration, folder).orElse(null)
+                : null;
+            CodeResolver classPath = classLoader != null ? new ResourceCodeResolver(folder, classLoader) : new ResourceCodeResolver(folder);
+            sourceResolver = new SourceRootsCodeResolver(sourceRoots, dynamicSource, classPath);
+            sourceEngine = classLoader != null
+                ? TemplateEngine.create(sourceResolver, classDirectory, contentType, classLoader)
+                : TemplateEngine.create(sourceResolver, classDirectory, contentType);
+            sourceEngine.setBinaryStaticContent(jteViewsRendererConfiguration.isBinaryStaticContent());
+            LOGGER.info("Development mode: compiling the views of the source roots at runtime into {}, and using the precompiled views otherwise.", classDirectory);
+            templateEngine = TemplateEngine.createPrecompiled(contentType);
+        } else if (jteViewsRendererConfiguration.isDynamic()) {
+            sourceResolver = null;
+            sourceEngine = null;
+            CodeResolver codeResolver = newDynamicCodeResolver(jteViewsRendererConfiguration, folder);
             templateEngine = TemplateEngine.create(codeResolver, classDirectory, contentType);
         } else {
+            sourceResolver = null;
+            sourceEngine = null;
             LOGGER.info("Using precompiled views.");
             templateEngine = TemplateEngine.createPrecompiled(contentType);
         }
@@ -75,11 +127,20 @@ public abstract class JteViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     }
 
     private CodeResolver newDynamicCodeResolver(JteViewsRendererConfiguration jteViewsRendererConfiguration, String folder) {
+        Optional<Path> path = findDynamicSourceDirectory(jteViewsRendererConfiguration, folder);
+        if (path.isPresent()) {
+            LOGGER.info("Using dynamic views loaded from {}", path.get());
+            return new DirectoryCodeResolver(path.get());
+        }
+        LOGGER.info("Dynamic view path not found, using views from classpath.");
+        return new ResourceCodeResolver(folder);
+    }
+
+    @SuppressWarnings("deprecation")
+    private static Optional<Path> findDynamicSourceDirectory(JteViewsRendererConfiguration jteViewsRendererConfiguration, String folder) {
         if (jteViewsRendererConfiguration.getDynamicSourcePath() != null) {
             // explicit setting - trust it
-            Path path = Paths.get(jteViewsRendererConfiguration.getDynamicSourcePath());
-            LOGGER.info("Using dynamic views loaded from {}", path);
-            return new DirectoryCodeResolver(path);
+            return Optional.of(Paths.get(jteViewsRendererConfiguration.getDynamicSourcePath()));
         }
         // do we have a conventional 'src' folder?
         try {
@@ -93,9 +154,7 @@ public abstract class JteViewsRenderer<T, R> implements ViewsRenderer<T, R> {
                         .filter(Files::exists)
                         .toList();
                     if (jteSrc.size() == 1) {
-                        Path path = jteSrc.get(0);
-                        LOGGER.info("Using dynamic views loaded from {}", path);
-                        return new DirectoryCodeResolver(path);
+                        return Optional.of(jteSrc.get(0));
                     }
                 }
 
@@ -107,17 +166,14 @@ public abstract class JteViewsRenderer<T, R> implements ViewsRenderer<T, R> {
                         .filter(Files::exists)
                         .toList();
                     if (jteSrc.size() == 1) {
-                        Path path = jteSrc.get(0);
-                        LOGGER.info("Using dynamic views loaded from {}", path);
-                        return new DirectoryCodeResolver(path);
+                        return Optional.of(jteSrc.get(0));
                     }
                 }
             }
         } catch (IOException e) {
-            // TODO log error
+            LOGGER.debug("Could not search for the dynamic views source directory", e);
         }
-        LOGGER.info("Dynamic view path not found, using views from classpath.");
-        return new ResourceCodeResolver(folder);
+        return Optional.empty();
     }
 
     @NonNull
@@ -125,7 +181,14 @@ public abstract class JteViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     public Writable render(@NonNull String viewName,
                            @Nullable T data,
                            @Nullable R request) {
-        return new JteWritable(templateEngine, viewName(viewName), ViewUtils.modelOf(data), this::decorateOutput);
+        for (String extension : EXTENSIONS) {
+            String name = viewName(viewName, extension);
+            TemplateEngine engine = engineFor(name);
+            if (engine.hasTemplate(name)) {
+                return new JteWritable(engine, name, ViewUtils.modelOf(data), this::decorateOutput);
+            }
+        }
+        return new JteWritable(templateEngine, null, ViewUtils.modelOf(data), this::decorateOutput);
     }
 
     /**
@@ -143,18 +206,47 @@ public abstract class JteViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     @Override
     public boolean exists(@NonNull String viewName) {
         return EXTENSIONS.stream()
-            .anyMatch(x -> templateEngine.hasTemplate(viewName(viewName, x)));
+            .map(x -> viewName(viewName, x))
+            .anyMatch(name -> engineFor(name).hasTemplate(name));
+    }
+
+    /**
+     * The extensions of jte templates, {@code jte} and {@code kte}.
+     *
+     * @return The extensions
+     * @since 6.4.0
+     */
+    @Override
+    public @NonNull Set<String> extensions() {
+        return WATCHED_EXTENSIONS;
+    }
+
+    /**
+     * Has the templates the change reports, and those that use them, compiled again on their next render.
+     * Precompiled templates are classes, and follow the class reload instead.
+     *
+     * @param change The templates that changed or went
+     * @since 6.4.0
+     */
+    @Override
+    public void reload(@NonNull ResourceChange change) {
+        if (sourceResolver != null) {
+            sourceResolver.changed(change);
+        }
+    }
+
+    private TemplateEngine engineFor(String name) {
+        if (sourceEngine == null || sourceResolver == null) {
+            return templateEngine;
+        }
+        // a template of the source roots is compiled from source, any other is precompiled if it can be
+        if (sourceResolver.isSource(name) || !templateEngine.hasTemplate(name)) {
+            return sourceEngine;
+        }
+        return templateEngine;
     }
 
     private String viewName(@NonNull String name, @NonNull String extension) {
         return ViewUtils.normalizeFile(name, extension) + extension;
-    }
-
-    private String viewName(@NonNull String viewName) {
-        return EXTENSIONS.stream()
-            .filter(x -> templateEngine.hasTemplate(viewName(viewName, x)))
-            .map(x -> viewName(viewName, x))
-            .findFirst()
-            .orElse(null);
     }
 }
