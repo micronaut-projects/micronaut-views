@@ -17,6 +17,7 @@ package io.micronaut.views.soy;
 
 import com.google.common.io.Resources;
 import com.google.template.soy.SoyFileSet;
+import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.views.ViewUtils;
@@ -62,11 +63,11 @@ public final class SoyTemplateSources {
     /**
      * @param viewsConfiguration The views configuration
      * @param sourceRoots The views source roots
-     * @param resourceLoader The class path resource loader, which reads through the application's class loader
+     * @param beanContext The context, whose class loader is the application's
      */
-    SoyTemplateSources(ViewsConfiguration viewsConfiguration, ViewsSourceRoots sourceRoots, ClassPathResourceLoader resourceLoader) {
+    SoyTemplateSources(ViewsConfiguration viewsConfiguration, ViewsSourceRoots sourceRoots, BeanContext beanContext) {
         this.sourceRoots = sourceRoots;
-        this.resourceLoader = resourceLoader;
+        this.resourceLoader = ClassPathResourceLoader.defaultLoader(beanContext.getClassLoader());
         this.folder = viewsConfiguration.getFolder();
     }
 
