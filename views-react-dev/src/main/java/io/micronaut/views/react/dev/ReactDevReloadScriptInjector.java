@@ -15,9 +15,11 @@
  */
 package io.micronaut.views.react.dev;
 
+import io.micronaut.context.BeanProvider;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.views.react.ReactBrowserRefresh;
 import io.micronaut.views.react.ReactRenderPostProcessor;
 import jakarta.inject.Singleton;
 
@@ -32,6 +34,10 @@ import java.io.Writer;
  * connection while navigating, so it can come back having been served markup from before the swap
  * and then never hear again. Measured -- a real browser reloaded once, too early, and sat there
  * showing the old page.
+ *
+ * <p>Under the development launcher, with its LiveReload server running, the page gets nothing either: the
+ * launcher adds its own script, and {@code micronaut-views-react} asks it to refresh once the new bundle is
+ * loaded.
  *
  * <p><strong>A render with no request gets nothing.</strong> That is how
  * {@code micronaut-email-template} renders, and a script tag in a delivered message is at best
@@ -64,15 +70,23 @@ final class ReactDevReloadScriptInjector implements ReactRenderPostProcessor {
 
     private final ReactDevReloadBroadcaster broadcaster;
     private final String path;
+    private final BeanProvider<ReactBrowserRefresh> liveReload;
 
-    ReactDevReloadScriptInjector(ReactDevConfiguration configuration, ReactDevReloadBroadcaster broadcaster) {
+    ReactDevReloadScriptInjector(ReactDevConfiguration configuration, ReactDevReloadBroadcaster broadcaster,
+                                 BeanProvider<ReactBrowserRefresh> liveReload) {
         this.broadcaster = broadcaster;
         this.path = configuration.getPath();
+        this.liveReload = liveReload;
     }
 
     @Override
     public void afterRender(Writer writer, HttpRequest<?> request) throws IOException {
         if (request == null) {
+            return;
+        }
+        if (liveReload.isPresent() && liveReload.get().isActive()) {
+            // the development launcher's LiveReload refreshes the page once the new bundle is loaded, and its own
+            // script is on the page: the server-sent events channel stays the fallback without it
             return;
         }
         writer.write(SCRIPT.formatted(broadcaster.currentToken(), path));

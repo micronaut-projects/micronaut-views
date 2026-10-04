@@ -20,6 +20,9 @@ dependencies {
     compileOnly(mnValidation.micronaut.validation) {
         because("For @NotBlank on config properties")
     }
+    compileOnly(mn.micronaut.dev) {
+        because("To refresh the browser through the development launcher's LiveReload server, when the application runs under it")
+    }
 
     testCompileOnly(mn.micronaut.inject.groovy)
     testAnnotationProcessor(mnValidation.micronaut.validation.processor)
@@ -32,6 +35,7 @@ dependencies {
     testImplementation(mnValidation.micronaut.validation)
     testImplementation(mn.snakeyaml)
     testImplementation(mn.groovy.json)
+    testImplementation(mn.micronaut.dev)
 
     // We will use enterprise edition for testing.
     testImplementation("org.graalvm.polyglot:js:${mn.versions.graal.get()}")
