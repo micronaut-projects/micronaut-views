@@ -59,6 +59,8 @@ class ThymeleafDevReloadTest {
             ApplicationContext context = server.getApplicationContext();
             notify(context, List.of(layout, page), List.of(), true);
             assertTrue(get(client, "/devreload/layout-page").contains("first banner"));
+            // a view named with an extension of its own is found where the resolver reads it
+            assertTrue(context.getBean(ThymeleafViewsRenderer.class).exists("devreload/layout.xml"));
 
             Files.writeString(layout, "<div th:fragment=\"banner\">second banner</div>");
             notify(context, List.of(layout), List.of(), false);

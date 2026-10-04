@@ -135,7 +135,7 @@ public class ThymeleafViewsRenderer<T> implements ReloadableViewsRenderer<T, Htt
     @Override
     public boolean exists(@NonNull String viewName) {
         var templateAndFragment = resolveTemplate(viewName);
-        if (sourceRoots.isEnabled() && sourceRoots.resolve(templateAndFragment.templateName, templateResolver.getSuffix()).isPresent()) {
+        if (sourceRoots.isEnabled() && existsInSourceRoots(templateAndFragment.templateName)) {
             return true;
         }
         String location = viewLocation(templateAndFragment.templateName);
@@ -167,6 +167,16 @@ public class ThymeleafViewsRenderer<T> implements ReloadableViewsRenderer<T, Htt
     @Override
     public void reload(@NonNull ResourceChange change) {
         engine.clearTemplateCache();
+    }
+
+    private boolean existsInSourceRoots(String templateName) {
+        // as the resolver names it: a template named with an extension of its own is read as it is named unless the
+        // suffix is forced
+        String file = templateName.substring(templateName.lastIndexOf('/') + 1);
+        if (!templateResolver.getForceSuffix() && file.indexOf('.') > 0 && sourceRoots.resolve(templateName, null).isPresent()) {
+            return true;
+        }
+        return sourceRoots.resolve(templateName, templateResolver.getSuffix()).isPresent();
     }
 
     private String viewLocation(final String name) {
