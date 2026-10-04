@@ -16,9 +16,9 @@
 package io.micronaut.views.rocker;
 
 import com.fizzed.rocker.runtime.RockerRuntime;
+import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Bean;
 import io.micronaut.context.annotation.Factory;
-import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.ViewsSourceRoots;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class RockerFactory {
      * @param viewsConfiguration The views configuration
      * @param rockerConfiguration The Rocker configuration
      * @return The Rocker engine
-     * @deprecated Use {@link #rockerEngine(ViewsConfiguration, RockerViewsRendererConfiguration, ViewsSourceRoots, ClassPathResourceLoader)} instead.
+     * @deprecated Use {@link #rockerEngine(ViewsConfiguration, RockerViewsRendererConfiguration, ViewsSourceRoots, BeanContext)} instead.
      */
     @Deprecated(since = "6.4.0")
     public RockerEngine rockerEngine(ViewsConfiguration viewsConfiguration,
@@ -60,7 +60,7 @@ public class RockerFactory {
      * @param viewsConfiguration The views configuration
      * @param rockerConfiguration The Rocker configuration
      * @param sourceRoots The views source roots
-     * @param resourceLoader The class path resource loader, which reads through the application's class loader
+     * @param beanContext The context, whose class loader is the application's
      * @return The Rocker engine
      * @since 6.4.0
      */
@@ -70,7 +70,7 @@ public class RockerFactory {
     public RockerEngine rockerEngine(ViewsConfiguration viewsConfiguration,
                                      RockerViewsRendererConfiguration rockerConfiguration,
                                      ViewsSourceRoots sourceRoots,
-                                     ClassPathResourceLoader resourceLoader) {
+                                     BeanContext beanContext) {
         if (sourceRoots.isEnabled()) {
             if (rockerConfiguration.isHotReloading()) {
                 LOG.info("micronaut.views.rocker.hot-reloading is deprecated and has no effect in development mode, where Rocker templates of the views source roots are compiled after an edit");
@@ -78,7 +78,7 @@ public class RockerFactory {
             // the runtime is shared by every generation of the process: keep its plain bootstrap, which finds a
             // template's class through the loader of the model, the generation's or the runtime compilation's
             RockerRuntime.getInstance().setReloading(false);
-            return new RockerEngine(viewsConfiguration.getFolder(), rockerConfiguration.getDefaultExtension(), sourceRoots, resourceLoader.getClassLoader());
+            return new RockerEngine(viewsConfiguration.getFolder(), rockerConfiguration.getDefaultExtension(), sourceRoots, beanContext.getClassLoader());
         }
         RockerRuntime.getInstance().setReloading(rockerConfiguration.isHotReloading());
         return new RockerEngine(viewsConfiguration.getFolder(), rockerConfiguration.getDefaultExtension());

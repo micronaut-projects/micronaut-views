@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
 /**
@@ -77,15 +78,14 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
 
     private static final Logger LOG = LoggerFactory.getLogger(RockerSourceCompiler.class);
     private static final String ROCKER_MARKER = ".rocker.";
-    /**
-     * The compilations kept: the latest, and the one before it for a render still running on it.
-     */
-    private static final int KEPT_COMPILATIONS = 2;
 
     private final ViewsSourceRoots sourceRoots;
     private final ClassLoader classLoader;
     private final String folder;
-    private final List<Path> outputs = new ArrayList<>();
+    /**
+     * How many changes were reported: a compilation started before the latest change is compiled again.
+     */
+    private final AtomicLong changes = new AtomicLong();
     private @Nullable Path workDirectory;
     private int compilations;
     private volatile @Nullable Compiled compiled;
@@ -134,7 +134,7 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
 
     @Override
     public void invalidate() {
-        compiled = null;
+        changes.incrementAndGet();
     }
 
     @Override
@@ -142,7 +142,6 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
         compiled = null;
         Path directory = workDirectory;
         workDirectory = null;
-        outputs.clear();
         if (directory != null) {
             delete(directory);
         }
@@ -150,23 +149,26 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
 
     private Compiled compile() {
         Compiled current = compiled;
-        if (current != null) {
+        if (current != null && current.changes() == changes.get()) {
             return current;
         }
         synchronized (this) {
             current = compiled;
-            if (current == null) {
-                current = compileTemplates();
+            long reported = changes.get();
+            if (current == null || current.changes() != reported) {
+                // a change reported while compiling leaves this compilation behind the count: the next lookup
+                // compiles again
+                current = compileTemplates(reported);
                 compiled = current;
             }
             return current;
         }
     }
 
-    private Compiled compileTemplates() {
+    private Compiled compileTemplates(long reported) {
         Map<String, Path> sources = findTemplates();
         if (sources.isEmpty()) {
-            return new Compiled(Map.of(), classLoader, null);
+            return new Compiled(reported, Map.of(), classLoader, null);
         }
         Map<String, String> templates = new LinkedHashMap<>();
         Path output;
@@ -195,27 +197,27 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
                 javaFiles.add(generator.generate(model));
             }
         } catch (Exception e) {
-            return failed(templates, sources, "Rocker template parsing failed: " + e.getMessage(), e);
+            return failed(reported, templates, sources, "Rocker template parsing failed: " + e.getMessage(), e);
         }
         String errors = javac(javaFiles, classDirectory);
         if (errors != null) {
-            return failed(templates, sources, "Rocker template compilation failed:" + errors, null);
+            return failed(reported, templates, sources, "Rocker template compilation failed:" + errors, null);
         }
         LOG.debug("Compiled {} Rocker template(s) of the views source roots into {}", templates.size(), classDirectory);
         try {
-            return new Compiled(Map.copyOf(templates), new TemplateClassLoader(classDirectory.toUri().toURL(), classLoader), null);
+            return new Compiled(reported, Map.copyOf(templates), new TemplateClassLoader(classDirectory.toUri().toURL(), classLoader), null);
         } catch (MalformedURLException e) {
             throw new UncheckedIOException(e);
         }
     }
 
-    private Compiled failed(Map<String, String> templates, Map<String, Path> sources, String message, @Nullable Exception cause) {
+    private Compiled failed(long reported, Map<String, String> templates, Map<String, Path> sources, String message, @Nullable Exception cause) {
         LOG.error("{}", message);
         Map<String, String> all = new LinkedHashMap<>(templates);
         for (String templatePath : sources.keySet()) {
             all.putIfAbsent(templatePath, templatePath);
         }
-        return new Compiled(Map.copyOf(all), classLoader, new ViewRenderingException(message, cause));
+        return new Compiled(reported, Map.copyOf(all), classLoader, new ViewRenderingException(message, cause));
     }
 
     /**
@@ -315,12 +317,10 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
             base = Files.createTempDirectory("micronaut-views-rocker");
             workDirectory = base;
         }
+        // every compilation is kept until the engine closes: a model of an earlier one may still be rendering, and
+        // loads its nested classes and its text from its directory as it goes
         Path output = base.resolve(Integer.toString(++compilations));
         Files.createDirectories(output);
-        outputs.add(output);
-        while (outputs.size() > KEPT_COMPILATIONS) {
-            delete(outputs.remove(0));
-        }
         return output;
     }
 
@@ -341,11 +341,12 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
     /**
      * A compilation of the templates of the roots.
      *
+     * @param changes The count of changes reported when it started
      * @param templates The template path of each template to its model class
      * @param loader The loader of the compiled templates
      * @param failure Why the templates did not compile, if they did not
      */
-    private record Compiled(Map<String, String> templates, ClassLoader loader, @Nullable RuntimeException failure) {
+    private record Compiled(long changes, Map<String, String> templates, ClassLoader loader, @Nullable RuntimeException failure) {
     }
 
     /**
