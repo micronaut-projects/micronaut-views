@@ -56,6 +56,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import static java.lang.String.format;
@@ -83,6 +84,10 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     private Source serverBundle;  // L(this)
     private Source renderScript;  // L(this)
     private Source hostPolyfills;  // L(this)
+    // the time and size of the files the scripts were read from: a change reported for a file that is still as it
+    // was read, reported again by another watch or after the script was read again, drops nothing
+    private @Nullable String serverBundleStamp;  // L(this)
+    private @Nullable String renderScriptStamp;  // L(this)
     private long generation;
 
     private final @Nullable BeanProvider<FileWatcher> fileWatchers;
@@ -126,6 +131,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     synchronized Source serverBundle() {
         if (serverBundle == null) {
             serverBundle = loadSource(resourceResolver, reactViewsRendererConfiguration.getServerBundlePath(), ".server-bundle-path");
+            serverBundleStamp = stampOf(serverBundle);
         }
         return serverBundle;
     }
@@ -140,6 +146,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     synchronized Source renderScript() {
         if (renderScript == null) {
             renderScript = loadSource(resourceResolver, reactViewsRendererConfiguration.getRenderScript(), ".render-script");
+            renderScriptStamp = stampOf(renderScript);
         }
         return renderScript;
     }
@@ -238,6 +245,29 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
         }
     }
 
+    private static @Nullable String stampOf(@Nullable Source source) {
+        if (source == null) {
+            return null;
+        }
+        URI uri = source.getURI();
+        if (uri == null || !"file".equals(uri.getScheme())) {
+            return null;
+        }
+        try {
+            return stampOf(Paths.get(uri));
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
+
+    private static @Nullable String stampOf(Path file) {
+        try {
+            return Files.getLastModifiedTime(file).toInstant() + ":" + Files.size(file);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     /**
      * Whether a watched file that changed is the file this {@link Source} was loaded from.
      *
@@ -281,11 +311,11 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             boolean dropped = false;
             for (Path changed : paths) {
                 Path path = changed.toAbsolutePath().normalize();
-                if (isOrigin(serverBundle, path)) {
+                if (isOrigin(serverBundle, path) && !Objects.equals(serverBundleStamp, stampOf(path))) {
                     serverBundle = null;
                     dropped = true;
                 }
-                if (isOrigin(renderScript, path)) {
+                if (isOrigin(renderScript, path) && !Objects.equals(renderScriptStamp, stampOf(path))) {
                     renderScript = null;
                     dropped = true;
                 }

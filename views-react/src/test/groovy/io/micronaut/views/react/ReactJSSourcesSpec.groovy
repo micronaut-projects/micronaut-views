@@ -28,8 +28,10 @@ class ReactJSSourcesSpec extends Specification {
 
         when:
         Source server = sources.serverBundle()
+        file.text = "export const App = () => 1"
         sources.onApplicationEvent(new FileChangedEvent(serverPath(server), WatchEventType.MODIFY))
         Source render = sources.renderScript()
+        file.text = "export const App = () => 22"
         sources.onApplicationEvent(new FileChangedEvent(serverPath(render), WatchEventType.MODIFY))
         sources.onApplicationEvent(new FileChangedEvent(serverPath(render), WatchEventType.DELETE))
 

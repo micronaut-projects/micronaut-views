@@ -130,6 +130,12 @@ class ReactJSSourcesWatchSpec extends Specification {
         trigger.reloads == 1
         trigger.bundleWhenReloaded.contains("v: 4")
 
+        when: "the same write is reported again, by another watch, after the bundle was loaded again"
+        sources.onApplicationEvent(new FileChangedEvent(bundle, WatchEventType.MODIFY))
+
+        then: "the file is as it was read: nothing is reloaded"
+        trigger.reloads == 1
+
         when: "the server is off"
         trigger.enabled = false
         Files.writeString(bundle, "export default { v: 5 }")
