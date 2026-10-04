@@ -73,6 +73,22 @@ class JteDevReloadTest {
     }
 
     @Test
+    void inDevelopmentModeAnEditUnderAConfiguredRootBelowTheWatchedRootIsCompiledAgain() throws IOException {
+        Path page = write("templates/devreload/page.jte", "@param String name\n<p>one ${name}</p>");
+        try (EmbeddedServer server = run(Map.of(DevelopmentMode.PROPERTY, true,
+                "micronaut.views.source-roots", List.of(root.resolve("templates").toString())));
+             HttpClient client = HttpClient.create(server.getURL())) {
+            ApplicationContext context = server.getApplicationContext();
+            notify(context, List.of(page), List.of(), true);
+            assertTrue(get(client, "/devreload/page").contains("one Sergio"));
+
+            Files.writeString(page, "@param String name\n<p>two ${name}</p>");
+            notify(context, List.of(page), List.of(), false);
+            assertTrue(get(client, "/devreload/page").contains("two Sergio"));
+        }
+    }
+
+    @Test
     void inDevelopmentModeATemplateOutsideTheSourceRootsIsRenderedFromItsPrecompiledClass() {
         try (EmbeddedServer server = run(Map.of(DevelopmentMode.PROPERTY, true));
              HttpClient client = HttpClient.create(server.getURL())) {

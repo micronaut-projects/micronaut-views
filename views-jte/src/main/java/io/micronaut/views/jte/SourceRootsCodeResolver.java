@@ -28,9 +28,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -86,14 +88,20 @@ final class SourceRootsCodeResolver implements CodeResolver {
         List<Path> paths = new ArrayList<>(change.changed().size() + change.removed().size());
         paths.addAll(change.changed());
         paths.addAll(change.removed());
+        // a configured source root may lie below a watched root: the name is relative to every root holding the file
+        Set<Path> roots = new LinkedHashSet<>();
+        for (Path root : sourceRoots.roots()) {
+            roots.add(root.toAbsolutePath().normalize());
+        }
+        for (Path root : change.roots()) {
+            roots.add(root.toAbsolutePath().normalize());
+        }
         for (Path path : paths) {
             Path file = path.toAbsolutePath().normalize();
-            for (Path root : change.roots()) {
-                Path normalizedRoot = root.toAbsolutePath().normalize();
-                if (file.startsWith(normalizedRoot)) {
-                    String name = normalizedRoot.relativize(file).toString().replace('\\', '/');
-                    stamps.put(name, stamp.incrementAndGet());
-                    break;
+            long next = stamp.incrementAndGet();
+            for (Path root : roots) {
+                if (file.startsWith(root) && !file.equals(root)) {
+                    stamps.put(root.relativize(file).toString().replace('\\', '/'), next);
                 }
             }
         }
