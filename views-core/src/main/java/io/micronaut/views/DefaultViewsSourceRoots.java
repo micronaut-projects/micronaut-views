@@ -21,6 +21,8 @@ import io.micronaut.core.annotation.Internal;
 import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,6 +44,8 @@ import java.util.Set;
 @Internal
 @Singleton
 final class DefaultViewsSourceRoots implements ViewsSourceRoots {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultViewsSourceRoots.class);
 
     private final boolean enabled;
     private final List<Path> configured;
@@ -72,6 +76,14 @@ final class DefaultViewsSourceRoots implements ViewsSourceRoots {
             roots.add(root.toAbsolutePath().normalize());
         }
         reported = List.copyOf(roots);
+        if (change.initial()) {
+            // only the launcher's roots are watched: an edit under a configured root outside them reaches no engine
+            for (Path root : configured) {
+                if (roots.stream().noneMatch(root::startsWith)) {
+                    LOG.warn("The views source root {} is not under a views root the development launcher watches ({}): templates are read from it, but an edit there does not clear the engines' caches. Add it to micronaut.dev.resources.views.", root, roots);
+                }
+            }
+        }
     }
 
     @Override

@@ -19,7 +19,7 @@ This needs no configuration. The launcher reports its `views` resource roots (`m
 
 The other engines keep their own reload settings for now.
 
-If the launcher does not report a views root, or templates live elsewhere, configure the roots. They are read in development mode only:
+Further roots can be configured. They are read in development mode only, ahead of the launcher's roots:
 
 [configuration]
 ----
@@ -28,6 +28,8 @@ micronaut:
     source-roots:
       - src/main/resources/views
 ----
+
+NOTE: Only the launcher's `views` roots are watched. A configured root outside them is read, but an edit there does not clear the engines' caches, and a warning says so at startup: add the directory to `micronaut.dev.resources.views` instead.
 
 Outside development mode none of this is active: there are no source roots, no watch is registered, and templates are read from the class path and cached exactly as before. Development mode is the one the launcher switches on with the `micronaut.dev.enabled` property; the `dev` environment alone does not activate it.
 
