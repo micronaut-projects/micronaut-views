@@ -2,16 +2,18 @@ package io.micronaut.views.react
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.DefaultBeanContext
+import io.micronaut.context.annotation.Replaces
 import io.micronaut.context.annotation.Requires
 import io.micronaut.context.env.DevelopmentMode
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.context.reload.ResourceKind
 import io.micronaut.context.watch.ResourceChange
 import io.micronaut.dev.livereload.LiveReloadTrigger
+import io.micronaut.scheduling.io.watch.DefaultFileWatcher
 import io.micronaut.scheduling.io.watch.FileChange
 import io.micronaut.scheduling.io.watch.FileChangeBatch
 import io.micronaut.scheduling.io.watch.FileWatcher
-import io.micronaut.scheduling.io.watch.WatchOptions
+import io.micronaut.scheduling.io.watch.FileWatcherRegistration
 import io.micronaut.scheduling.io.watch.event.FileChangedEvent
 import io.micronaut.scheduling.io.watch.event.WatchEventType
 import jakarta.inject.Singleton
@@ -20,7 +22,8 @@ import spock.lang.TempDir
 
 import java.nio.file.Files
 import java.nio.file.Path
-import java.util.function.Consumer
+import java.util.concurrent.CompletionStage
+import java.util.function.Function
 
 /**
  * How a rebuild of the server bundle is noticed without {@code micronaut.io.watch.paths}: through the process's
@@ -53,12 +56,12 @@ class ReactJSSourcesWatchSpec extends Specification {
         then: "only the bundle's own file in its directory"
         watcher.registrations.size() == 1
         watcher.registrations[0].root == tempDir.toRealPath() || watcher.registrations[0].root == tempDir
-        watcher.registrations[0].options.includeGlobs() == ["ssr-components.mjs"] as Set
-        !watcher.registrations[0].options.recursive()
+        watcher.registrations[0].includes == ["ssr-components.mjs"]
+        !watcher.registrations[0].recursive
 
         when: "the rebuild is reported by the watcher, and again by a file changed event"
         Files.writeString(bundle, "export default { v: 2 }")
-        watcher.registrations[0].listener.accept(new FileChangeBatch(bundle.parent, [new FileChange(bundle, WatchEventType.MODIFY)]))
+        watcher.registrations[0].listener.apply(new FileChangeBatch(bundle.parent, [new FileChange(bundle, WatchEventType.MODIFY)]))
         sources.onApplicationEvent(new FileChangedEvent(bundle, WatchEventType.MODIFY))
 
         then: "it reloads once"
@@ -69,9 +72,9 @@ class ReactJSSourcesWatchSpec extends Specification {
         context.close()
     }
 
-    void "outside development mode, without a file watcher, nothing is registered"() {
+    void "outside development mode, with file watching disabled, nothing is registered"() {
         given:
-        ApplicationContext context = ApplicationContext.run(properties([:]))
+        ApplicationContext context = ApplicationContext.run(properties(("micronaut.io.watch.enabled"): false))
         ReactJSSources sources = context.getBean(ReactJSSources)
 
         when:
@@ -197,17 +200,38 @@ class ReactJSSourcesWatchSpec extends Specification {
 
     @Singleton
     @Requires(property = "spec.file-watcher", value = "true")
+    @Replaces(DefaultFileWatcher)
     static class RecordingFileWatcher implements FileWatcher {
         final List<Map<String, Object>> registrations = []
 
         @Override
-        FileWatcher.Registration watch(Path root, WatchOptions options, Consumer<FileChangeBatch> listener) {
-            registrations << [root: root, options: options, listener: listener]
-            return new FileWatcher.Registration() {
-                Path root() { root }
-                WatchOptions options() { options }
-                boolean isActive() { true }
-                void close() { }
+        FileWatcher.WatchRequest directory(Path root) {
+            Map<String, Object> registration = [root: root, recursive: true, includes: [], excludes: []]
+            return new FileWatcher.WatchRequest() {
+                FileWatcher.WatchRequest recursive(boolean recursive) {
+                    registration.recursive = recursive
+                    return this
+                }
+
+                FileWatcher.WatchRequest include(String... globs) {
+                    registration.includes.addAll(globs)
+                    return this
+                }
+
+                FileWatcher.WatchRequest exclude(String... globs) {
+                    registration.excludes.addAll(globs)
+                    return this
+                }
+
+                FileWatcherRegistration watchAsync(Function<? super FileChangeBatch, ? extends CompletionStage<?>> listener) {
+                    registration.listener = listener
+                    registrations << registration
+                    return new FileWatcherRegistration() {
+                        Path root() { root }
+                        boolean isActive() { true }
+                        void close() { }
+                    }
+                }
             }
         }
 

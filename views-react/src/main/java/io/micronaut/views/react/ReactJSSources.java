@@ -30,7 +30,7 @@ import io.micronaut.core.value.PropertyResolver;
 import io.micronaut.scheduling.io.watch.FileChange;
 import io.micronaut.scheduling.io.watch.FileChangeBatch;
 import io.micronaut.scheduling.io.watch.FileWatcher;
-import io.micronaut.scheduling.io.watch.WatchOptions;
+import io.micronaut.scheduling.io.watch.FileWatcherRegistration;
 import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
 import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import io.micronaut.views.react.util.BeanPool;
@@ -99,7 +99,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     private long generation;
 
     private final @Nullable BeanProvider<FileWatcher> fileWatchers;
-    private final Map<Path, FileWatcher.Registration> registrations = new HashMap<>();  // L(this)
+    private final Map<Path, FileWatcherRegistration> registrations = new HashMap<>();  // L(this)
     private final List<BeanWatch> resourceWatches = new ArrayList<>();
 
     ReactJSSources(ResourceResolver resourceResolver,
@@ -410,7 +410,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
             return;
         }
         try {
-            registrations.put(file, fileWatchers.get().watch(directory, WatchOptions.nonRecursive().including(name.toString()), this::filesChanged));
+            registrations.put(file, fileWatchers.get().directory(directory).recursive(false).include(name.toString()).watch(this::filesChanged));
         } catch (RuntimeException e) {
             LOG.warn("Could not watch {} for changes: {}", file, e.getMessage());
         }
@@ -421,7 +421,7 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
      */
     @PreDestroy
     synchronized void close() {
-        for (FileWatcher.Registration registration : registrations.values()) {
+        for (FileWatcherRegistration registration : registrations.values()) {
             registration.close();
         }
         registrations.clear();
