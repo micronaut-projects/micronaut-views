@@ -15,8 +15,7 @@
  */
 package io.micronaut.views;
 
-import io.micronaut.context.annotation.Requires;
-import io.micronaut.context.env.DevelopmentMode;
+import io.micronaut.context.env.DevelopmentActive;
 import io.micronaut.context.event.BeanCreatedEvent;
 import io.micronaut.context.event.BeanCreatedEventListener;
 import io.micronaut.core.annotation.Internal;
@@ -33,7 +32,7 @@ import java.util.Set;
  */
 @Internal
 @Singleton
-@Requires(condition = DevelopmentMode.Active.class)
+@DevelopmentActive
 @SuppressWarnings("rawtypes")
 final class ReloadableViewsRendererRegistrar implements BeanCreatedEventListener<ReloadableViewsRenderer> {
 
