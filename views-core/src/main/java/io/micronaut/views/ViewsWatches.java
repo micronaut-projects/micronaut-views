@@ -15,15 +15,14 @@
  */
 package io.micronaut.views;
 
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.WatchableBeanContext;
-import io.micronaut.context.env.DevelopmentMode;
 import io.micronaut.context.reload.ResourceKind;
 import io.micronaut.context.watch.BeanWatch;
 import io.micronaut.context.watch.ResourceSelector;
 import io.micronaut.context.watch.ResourceWatcher;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.value.PropertyResolver;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -46,8 +45,8 @@ final class ViewsWatches {
      */
     static boolean isActive(@Nullable BeanContext beanContext) {
         return beanContext instanceof WatchableBeanContext
-            && beanContext instanceof PropertyResolver propertyResolver
-            && DevelopmentMode.isEnabled(propertyResolver);
+            && beanContext instanceof ApplicationContext applicationContext
+            && applicationContext.getEnvironment().isDevelopmentMode();
     }
 
     /**
