@@ -43,9 +43,9 @@ class ReactJSSourcesWatchSpec extends Specification {
         bundle = Files.writeString(tempDir.resolve("ssr-components.mjs"), "export default {}")
     }
 
-    void "the directory of a bundle read from a file is registered with the file watcher, and a change reloads it once"() {
+    void "in development mode the directory of a bundle read from a file is registered with the file watcher, and a change reloads it once"() {
         given:
-        ApplicationContext context = ApplicationContext.run(properties(fileWatcher: true))
+        ApplicationContext context = ApplicationContext.run(properties((DevelopmentMode.PROPERTY): true, fileWatcher: true))
         RecordingFileWatcher watcher = context.getBean(RecordingFileWatcher)
         ReactJSSources sources = context.getBean(ReactJSSources)
         RecordingListener listener = context.getBean(RecordingListener)
@@ -72,16 +72,17 @@ class ReactJSSourcesWatchSpec extends Specification {
         context.close()
     }
 
-    void "outside development mode, with file watching disabled, nothing is registered"() {
+    void "outside development mode nothing is watched, though the application has a file watcher"() {
         given:
-        ApplicationContext context = ApplicationContext.run(properties(("micronaut.io.watch.enabled"): false))
+        ApplicationContext context = ApplicationContext.run(properties(fileWatcher: true))
         ReactJSSources sources = context.getBean(ReactJSSources)
 
         when:
         sources.serverBundle()
 
         then:
-        !context.containsBean(FileWatcher)
+        !context.containsBean(ReactJSSourcesWatch)
+        context.getBean(RecordingFileWatcher).registrations.isEmpty()
         !context.containsBean(ReactBrowserRefresh)
         sources.registrations.isEmpty()
         sources.resourceWatches.isEmpty()

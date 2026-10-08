@@ -15,21 +15,13 @@
  */
 package io.micronaut.views.react;
 
-import io.micronaut.context.BeanContext;
-import io.micronaut.context.BeanProvider;
-import io.micronaut.context.WatchableBeanContext;
-import io.micronaut.context.env.DevelopmentMode;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.context.event.ApplicationEventPublisher;
-import io.micronaut.context.reload.ResourceKind;
 import io.micronaut.context.watch.BeanWatch;
 import io.micronaut.context.watch.ResourceChange;
-import io.micronaut.context.watch.ResourceSelector;
 import io.micronaut.core.io.ResourceResolver;
-import io.micronaut.core.value.PropertyResolver;
 import io.micronaut.scheduling.io.watch.FileChange;
 import io.micronaut.scheduling.io.watch.FileChangeBatch;
-import io.micronaut.scheduling.io.watch.FileWatcher;
 import io.micronaut.scheduling.io.watch.FileWatcherRegistration;
 import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
 import io.micronaut.scheduling.io.watch.event.WatchEventType;
@@ -67,10 +59,10 @@ import static java.lang.String.format;
 /**
  * Loads source code for the scripts, reloads them on file change and manages the {@link BeanPool context pool}.
  *
- * <p>A change is learnt three ways, whichever the application has: through the process's {@link FileWatcher}, with
- * which the directory of each script read from a file is registered; through the resource watch of a development
- * context, for a script under one of the launcher's resource roots; and through a {@link FileChangedEvent}, as
- * before. A change reported more than once reloads once.</p>
+ * <p>A change is learnt through a {@link FileChangedEvent}, as before, and in development mode only through the
+ * watches of {@link ReactJSSourcesWatch} too: the process's file watcher, with which the directory of each script read
+ * from a file is registered, and the resource watch of the development context, for a script under one of the
+ * launcher's resource roots. A change reported more than once reloads once.</p>
  */
 @Singleton
 class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
@@ -98,41 +90,33 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     private boolean reloadFailed;  // L(this)
     private long generation;
 
-    private final @Nullable BeanProvider<FileWatcher> fileWatchers;
+    private final @Nullable ReactJSSourcesWatch devWatch;
     private final Map<Path, FileWatcherRegistration> registrations = new HashMap<>();  // L(this)
     private final List<BeanWatch> resourceWatches = new ArrayList<>();
 
     ReactJSSources(ResourceResolver resourceResolver,
                    ReactViewsRendererConfiguration reactViewsRendererConfiguration,
                    ApplicationEventPublisher<ReactJSSourcesChangedEvent> sourcesChangedEventPublisher) {
-        this(resourceResolver, reactViewsRendererConfiguration, sourcesChangedEventPublisher, null, null);
+        this(resourceResolver, reactViewsRendererConfiguration, sourcesChangedEventPublisher, null);
     }
 
     /**
      * @param resourceResolver The resource resolver
      * @param reactViewsRendererConfiguration The configuration
      * @param sourcesChangedEventPublisher The publisher of the reloads
-     * @param fileWatchers The process's file watcher, when the application has one
-     * @param beanContext The context, whose resource watch reports changes in development mode
+     * @param devWatch The watches of the scripts' files, present in development mode only
      */
     @Inject
     ReactJSSources(ResourceResolver resourceResolver,
                    ReactViewsRendererConfiguration reactViewsRendererConfiguration,
                    ApplicationEventPublisher<ReactJSSourcesChangedEvent> sourcesChangedEventPublisher,
-                   @Nullable BeanProvider<FileWatcher> fileWatchers,
-                   @Nullable BeanContext beanContext) {
+                   @Nullable ReactJSSourcesWatch devWatch) {
         this.resourceResolver = resourceResolver;
         this.reactViewsRendererConfiguration = reactViewsRendererConfiguration;
         this.sourcesChangedEventPublisher = sourcesChangedEventPublisher;
-        this.fileWatchers = fileWatchers;
-        if (beanContext instanceof WatchableBeanContext watchable
-            && beanContext instanceof PropertyResolver propertyResolver
-            && DevelopmentMode.isEnabled(propertyResolver)) {
-            // a script under a resource root of the launcher is read from there, and the launcher reports its edits;
-            // configuration is refreshed rather than watched, so a script among it is left to the file watcher
-            for (ResourceKind kind : List.of(ResourceKind.VIEWS, ResourceKind.STATIC, ResourceKind.OTHER)) {
-                resourceWatches.add(watchable.watchResources(ResourceSelector.of(kind), this::resourcesChanged));
-            }
+        this.devWatch = devWatch;
+        if (devWatch != null) {
+            resourceWatches.addAll(devWatch.watchResources(this::resourcesChanged));
         }
     }
 
@@ -382,13 +366,13 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     }
 
     /**
-     * Registers the directory of a script read from a file with the process's file watcher, when the application
-     * has one, so that its rebuild is noticed whether or not {@code micronaut.io.watch.paths} covers it.
+     * Registers the directory of a script read from a file with the process's file watcher in development mode, when
+     * the application has one, so that its rebuild is noticed whether or not {@code micronaut.io.watch.paths} covers it.
      *
      * @param source The script
      */
     private void watch(Source source) {
-        if (fileWatchers == null) {
+        if (devWatch == null) {
             return;
         }
         URI uri = source.getURI();
@@ -401,16 +385,14 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
         } catch (RuntimeException e) {
             return;
         }
-        Path directory = file.getParent();
-        Path name = file.getFileName();
-        if (directory == null || name == null || registrations.containsKey(file)) {
-            return;
-        }
-        if (!fileWatchers.isPresent()) {
+        if (registrations.containsKey(file)) {
             return;
         }
         try {
-            registrations.put(file, fileWatchers.get().directory(directory).recursive(false).include(name.toString()).watch(this::filesChanged));
+            FileWatcherRegistration registration = devWatch.watchFile(file, this::filesChanged);
+            if (registration != null) {
+                registrations.put(file, registration);
+            }
         } catch (RuntimeException e) {
             LOG.warn("Could not watch {} for changes: {}", file, e.getMessage());
         }

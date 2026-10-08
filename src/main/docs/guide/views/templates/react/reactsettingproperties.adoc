@@ -44,7 +44,7 @@ micronaut:
       paths: build/resources/main/views
 ----
 
-This makes the server pick up a rebuilt bundle without a restart. The directory of the bundle is registered with the application's file watcher, so it is noticed even when `paths` does not cover it. It does not tell the browser, so the
+This makes the server pick up a rebuilt bundle without a restart. In development mode (`micronaut.dev.enabled`) the directory of the bundle is also registered with the application's file watcher, so that it is noticed even when `paths` does not cover it; outside development mode only `paths` is watched. It does not tell the browser, so the
 refresh is still manual — see <<reactdevreload,Refreshing the browser on rebuild>> for the module that
 closes that gap.
 
