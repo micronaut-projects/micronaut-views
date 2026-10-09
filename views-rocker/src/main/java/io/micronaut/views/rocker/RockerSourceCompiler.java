@@ -37,6 +37,9 @@ import javax.tools.ToolProvider;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.WeakReference;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -46,6 +49,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -70,6 +74,10 @@ import java.util.stream.Stream;
  * version, and loaded in a new loader after each change. A template that is not under a root is left to the
  * precompiled classes.</p>
  *
+ * <p>A compilation that a later one replaces is retired: its directory is deleted once its loader is collected, which
+ * is once no model of it is rendering any more, so that the templates of a long development session take the space
+ * of the compilations in use rather than one more copy per edit.</p>
+ *
  * @author graemerocher
  * @since 6.4.0
  */
@@ -89,6 +97,11 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
     private @Nullable Path workDirectory;
     private int compilations;
     private volatile @Nullable Compiled compiled;
+    /**
+     * The compilations that a later one replaced, until their loader is collected. It keeps the references reachable.
+     */
+    private final Set<RetiredCompilation> retired = new HashSet<>();
+    private final ReferenceQueue<ClassLoader> collectedLoaders = new ReferenceQueue<>();
 
     /**
      * @param folder The views folder, ending with a slash, such as {@code views/}
@@ -140,6 +153,7 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
     @Override
     public synchronized void close() {
         compiled = null;
+        retired.clear();
         Path directory = workDirectory;
         workDirectory = null;
         if (directory != null) {
@@ -148,6 +162,8 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
     }
 
     private Compiled compile() {
+        // every lookup, not only an edit, deletes what a collection found since: an idle session reclaims them too
+        reclaimCollected();
         Compiled current = compiled;
         if (current != null && current.changes() == changes.get()) {
             return current;
@@ -159,7 +175,9 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
                 // a change reported while compiling leaves this compilation behind the count: the next lookup
                 // compiles again
                 current = compileTemplates(reported);
+                Compiled previous = compiled;
                 compiled = current;
+                retire(previous);
             }
             return current;
         }
@@ -168,7 +186,7 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
     private Compiled compileTemplates(long reported) {
         Map<String, Path> sources = findTemplates();
         if (sources.isEmpty()) {
-            return new Compiled(reported, Map.of(), classLoader, null);
+            return new Compiled(reported, Map.of(), classLoader, null, null);
         }
         Map<String, String> templates = new LinkedHashMap<>();
         Path output;
@@ -197,27 +215,27 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
                 javaFiles.add(generator.generate(model));
             }
         } catch (Exception e) {
-            return failed(reported, templates, sources, "Rocker template parsing failed: " + e.getMessage(), e);
+            return failed(reported, templates, sources, output, "Rocker template parsing failed: " + e.getMessage(), e);
         }
         String errors = javac(javaFiles, classDirectory);
         if (errors != null) {
-            return failed(reported, templates, sources, "Rocker template compilation failed:" + errors, null);
+            return failed(reported, templates, sources, output, "Rocker template compilation failed:" + errors, null);
         }
         LOG.debug("Compiled {} Rocker template(s) of the views source roots into {}", templates.size(), classDirectory);
         try {
-            return new Compiled(reported, Map.copyOf(templates), new TemplateClassLoader(classDirectory.toUri().toURL(), classLoader), null);
+            return new Compiled(reported, Map.copyOf(templates), new TemplateClassLoader(classDirectory.toUri().toURL(), classLoader), null, output);
         } catch (MalformedURLException e) {
             throw new UncheckedIOException(e);
         }
     }
 
-    private Compiled failed(long reported, Map<String, String> templates, Map<String, Path> sources, String message, @Nullable Exception cause) {
+    private Compiled failed(long reported, Map<String, String> templates, Map<String, Path> sources, Path output, String message, @Nullable Exception cause) {
         LOG.error("{}", message);
         Map<String, String> all = new LinkedHashMap<>(templates);
         for (String templatePath : sources.keySet()) {
             all.putIfAbsent(templatePath, templatePath);
         }
-        return new Compiled(reported, Map.copyOf(all), classLoader, new ViewRenderingException(message, cause));
+        return new Compiled(reported, Map.copyOf(all), classLoader, new ViewRenderingException(message, cause), output);
     }
 
     /**
@@ -317,11 +335,52 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
             base = Files.createTempDirectory("micronaut-views-rocker");
             workDirectory = base;
         }
-        // every compilation is kept until the engine closes: a model of an earlier one may still be rendering, and
-        // loads its nested classes and its text from its directory as it goes
+        // a compilation is kept until its loader is collected: a model of it may still be rendering, and loads its
+        // nested classes and its text from its directory as it goes
         Path output = base.resolve(Integer.toString(++compilations));
         Files.createDirectories(output);
         return output;
+    }
+
+    /**
+     * Retires a compilation that a later one replaced. A compilation that failed loads nothing from its directory,
+     * which is deleted at once.
+     *
+     * @param previous The compilation replaced, if any
+     */
+    private void retire(@Nullable Compiled previous) {
+        if (previous != null && previous.output() instanceof Path output) {
+            if (previous.loader() instanceof TemplateClassLoader loader) {
+                retired.add(new RetiredCompilation(loader, output, collectedLoaders));
+            } else {
+                delete(output);
+            }
+        }
+    }
+
+    /**
+     * Deletes the directories of the retired compilations whose loader was collected.
+     */
+    private void reclaimCollected() {
+        Reference<? extends ClassLoader> collected = collectedLoaders.poll();
+        if (collected == null) {
+            return;
+        }
+        synchronized (this) {
+            for (; collected != null; collected = collectedLoaders.poll()) {
+                RetiredCompilation compilation = (RetiredCompilation) collected;
+                if (retired.remove(compilation)) {
+                    delete(compilation.output);
+                }
+            }
+        }
+    }
+
+    /**
+     * @return The directory the templates are compiled into, if any compiled yet: visible for testing
+     */
+    synchronized @Nullable Path workDirectory() {
+        return workDirectory;
     }
 
     private static void delete(Path directory) {
@@ -345,8 +404,23 @@ final class RockerSourceCompiler implements SourceRootsTemplates {
      * @param templates The template path of each template to its model class
      * @param loader The loader of the compiled templates
      * @param failure Why the templates did not compile, if they did not
+     * @param output The directory of the compilation, if it has one
      */
-    private record Compiled(long changes, Map<String, String> templates, ClassLoader loader, @Nullable RuntimeException failure) {
+    private record Compiled(long changes, Map<String, String> templates, ClassLoader loader, @Nullable RuntimeException failure,
+                            @Nullable Path output) {
+    }
+
+    /**
+     * A compilation that a later one replaced: its directory is deleted once its loader is collected.
+     */
+    private static final class RetiredCompilation extends WeakReference<ClassLoader> {
+
+        private final Path output;
+
+        RetiredCompilation(ClassLoader loader, Path output, ReferenceQueue<ClassLoader> queue) {
+            super(loader, queue);
+            this.output = output;
+        }
     }
 
     /**
