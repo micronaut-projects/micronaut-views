@@ -48,6 +48,8 @@ public class DefaultViewsRendererLocator implements ViewsRendererLocator {
 
     public DefaultViewsRendererLocator(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
+        // in development mode a template added, removed or renamed may change which renderer has a view
+        ViewsWatches.watch(applicationContext, change -> viewsRendererMap.clear());
     }
 
     @Override

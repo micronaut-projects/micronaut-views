@@ -18,6 +18,8 @@ package io.micronaut.views;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.util.StringUtils;
 
+import java.util.List;
+
 /**
  * Implementation of {@link ViewsConfiguration}. Views configuration properties.
  *
@@ -47,6 +49,8 @@ public class ViewsConfigurationProperties implements ViewsConfiguration {
     private boolean enabled = DEFAULT_ENABLED;
 
     private String folder = DEFAULT_FOLDER;
+
+    private List<String> sourceRoots = List.of();
 
     /**
      * Whether view rendering is enabled. Default value ({@value #DEFAULT_ENABLED}).
@@ -97,6 +101,31 @@ public class ViewsConfigurationProperties implements ViewsConfiguration {
         if (StringUtils.isNotEmpty(folder)) {
             this.folder = folder;
         }
+    }
+
+    /**
+     * The directories view sources are read from in development mode, ahead of the class path, each the
+     * source directory of the views folder, such as {@code src/main/resources/views}. Used in development
+     * mode only, beside the views roots the development launcher reports. Default value: none.
+     *
+     * @return The source roots
+     * @since 6.4.0
+     */
+    @Override
+    public List<String> getSourceRoots() {
+        return sourceRoots;
+    }
+
+    /**
+     * The directories view sources are read from in development mode, ahead of the class path, each the
+     * source directory of the views folder, such as {@code src/main/resources/views}. Used in development
+     * mode only, beside the views roots the development launcher reports. Default value: none.
+     *
+     * @param sourceRoots The source roots
+     * @since 6.4.0
+     */
+    public void setSourceRoots(List<String> sourceRoots) {
+        this.sourceRoots = sourceRoots == null ? List.of() : List.copyOf(sourceRoots);
     }
 
 }
