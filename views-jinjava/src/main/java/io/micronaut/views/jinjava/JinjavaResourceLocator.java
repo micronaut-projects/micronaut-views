@@ -22,9 +22,13 @@ import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
+import io.micronaut.views.ViewsSourceRoots;
 import jakarta.inject.Singleton;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * Loads Jinjava templates exclusively from the configured Views folder.
@@ -33,14 +37,23 @@ import java.nio.charset.Charset;
 @Internal
 final class JinjavaResourceLocator implements ResourceLocator {
     private final ResourceLoader resourceLoader;
+    private final ViewsSourceRoots sourceRoots;
 
     JinjavaResourceLocator(ClassPathResourceLoader resourceLoader,
-                           ViewsConfiguration viewsConfiguration) {
+                           ViewsConfiguration viewsConfiguration,
+                           ViewsSourceRoots sourceRoots) {
         this.resourceLoader = resourceLoader.forBase(ViewUtils.normalizeFolder(viewsConfiguration.getFolder()));
+        this.sourceRoots = sourceRoots;
     }
 
     @Override
     public String getString(String name, Charset charset, JinjavaInterpreter interpreter) throws IOException {
+        // in development mode, a template of the views source roots is read from there, so that an edit is
+        // rendered without a copy step
+        Optional<Path> source = sourceRoots.resolve(name, null);
+        if (source.isPresent()) {
+            return Files.readString(source.get(), charset);
+        }
         return ViewUtils.readResourceAsString(resourceLoader, name, charset);
     }
 

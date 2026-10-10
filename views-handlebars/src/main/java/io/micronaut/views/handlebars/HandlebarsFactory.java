@@ -17,6 +17,9 @@ package io.micronaut.views.handlebars;
 
 import com.github.jknack.handlebars.Handlebars;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.core.io.scan.ClassPathResourceLoader;
+import io.micronaut.views.ViewsConfiguration;
+import io.micronaut.views.ViewsSourceRoots;
 
 import jakarta.inject.Singleton;
 
@@ -31,9 +34,31 @@ public class HandlebarsFactory {
 
     /**
      * @return The handlebars engine
+     * @deprecated Use {@link #handlebars(ViewsConfiguration, ViewsSourceRoots, ClassPathResourceLoader)} instead.
+     */
+    @Deprecated(since = "6.4.0")
+    public Handlebars handlebars() {
+        return new Handlebars();
+    }
+
+    /**
+     * In development mode, the engine reads the templates of the views folder from the views source roots ahead of
+     * the class path, and the class path through the application's class loader. Otherwise it reads them from the
+     * class path, as before.
+     *
+     * @param viewsConfiguration The views configuration
+     * @param sourceRoots The views source roots
+     * @param resourceLoader The class path resource loader
+     * @return The handlebars engine
+     * @since 6.4.0
      */
     @Singleton
-    public Handlebars handlebars() {
+    public Handlebars handlebars(ViewsConfiguration viewsConfiguration,
+                                 ViewsSourceRoots sourceRoots,
+                                 ClassPathResourceLoader resourceLoader) {
+        if (sourceRoots.isEnabled()) {
+            return new Handlebars(new SourceRootsTemplateLoader(viewsConfiguration.getFolder(), sourceRoots, resourceLoader.getClassLoader()));
+        }
         return new Handlebars();
     }
 }
