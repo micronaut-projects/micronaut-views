@@ -22,7 +22,6 @@ import io.micronaut.context.env.DevelopmentActive;
 import io.micronaut.context.reload.ResourceKind;
 import io.micronaut.context.watch.BeanWatch;
 import io.micronaut.context.watch.ResourceChange;
-import io.micronaut.context.watch.ResourceSelector;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.scheduling.io.watch.FileChangeBatch;
 import io.micronaut.scheduling.io.watch.FileWatcher;
@@ -70,7 +69,7 @@ final class ReactJSSourcesWatch {
         List<BeanWatch> watches = new ArrayList<>();
         if (beanContext instanceof WatchableBeanContext watchable) {
             for (ResourceKind kind : List.of(ResourceKind.VIEWS, ResourceKind.STATIC, ResourceKind.OTHER)) {
-                watches.add(watchable.watchResources(ResourceSelector.of(kind), listener::accept));
+                watches.add(watchable.resources(kind).watch(listener::accept));
             }
         }
         return watches;
