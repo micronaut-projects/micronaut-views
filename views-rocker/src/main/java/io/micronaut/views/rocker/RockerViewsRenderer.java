@@ -16,9 +16,11 @@
 package io.micronaut.views.rocker;
 
 import com.fizzed.rocker.BindableRockerModel;
+import io.micronaut.context.watch.ResourceChange;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.views.AbstractViewsRenderer;
+import io.micronaut.views.ReloadableViewsRenderer;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import jakarta.inject.Inject;
@@ -26,7 +28,9 @@ import jakarta.inject.Singleton;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import java.nio.file.Path;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Renders templates with Rocker.
@@ -37,7 +41,7 @@ import java.util.Map;
  * @param <R> The request type
  */
 @Singleton
-public class RockerViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
+public class RockerViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> implements ReloadableViewsRenderer<T, R> {
 
     protected final RockerEngine rockerEngine;
     protected final ViewsConfiguration viewsConfiguration;
@@ -77,4 +81,36 @@ public class RockerViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
         return rockerEngine.exists(viewName);
     }
 
+    /**
+     * None, to watch every views file: a template may call one of another content type, such as
+     * {@code .rocker.raw}. Only a change of a Rocker template compiles the templates again.
+     *
+     * @return No extension
+     * @since 6.4.0
+     */
+    @Override
+    public @NonNull Set<String> extensions() {
+        return Set.of();
+    }
+
+    /**
+     * Compiles the Rocker templates of the views source roots again on the next render, when a Rocker template
+     * changed or went. With no runtime compiler, nothing is compiled: the templates are classes, which follow the
+     * class reload.
+     *
+     * @param change The views files that changed or went
+     * @since 6.4.0
+     */
+    @Override
+    public void reload(@NonNull ResourceChange change) {
+        if (change.initial() || change.changed().stream().anyMatch(RockerViewsRenderer::isRockerTemplate)
+            || change.removed().stream().anyMatch(RockerViewsRenderer::isRockerTemplate)) {
+            rockerEngine.invalidate();
+        }
+    }
+
+    private static boolean isRockerTemplate(Path file) {
+        Path name = file.getFileName();
+        return name != null && name.toString().contains(".rocker.");
+    }
 }

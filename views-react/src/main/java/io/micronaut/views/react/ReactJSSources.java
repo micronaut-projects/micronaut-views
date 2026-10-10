@@ -17,10 +17,17 @@ package io.micronaut.views.react;
 
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.context.event.ApplicationEventPublisher;
+import io.micronaut.context.watch.BeanWatch;
+import io.micronaut.context.watch.ResourceChange;
 import io.micronaut.core.io.ResourceResolver;
+import io.micronaut.scheduling.io.watch.FileChange;
+import io.micronaut.scheduling.io.watch.FileChangeBatch;
+import io.micronaut.scheduling.io.watch.FileWatcherRegistration;
 import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
 import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import io.micronaut.views.react.util.BeanPool;
+import jakarta.annotation.PreDestroy;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Source;
 import org.jspecify.annotations.Nullable;
@@ -33,18 +40,35 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HexFormat;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import static java.lang.String.format;
 
 /**
  * Loads source code for the scripts, reloads them on file change and manages the {@link BeanPool context pool}.
+ *
+ * <p>A change is learnt through a {@link FileChangedEvent}, as before, and in development mode only through the
+ * watches of {@link ReactJSSourcesWatch} too: the process's file watcher, with which the directory of each script read
+ * from a file is registered, and the resource watch of the development context, for a script under one of the
+ * launcher's resource roots. A change reported more than once reloads once.</p>
  */
 @Singleton
 class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     private static final Logger LOG = LoggerFactory.getLogger(ReactJSSources.class);
+    private static final Duration STABILITY_POLL = Duration.ofMillis(100);
+    private static final Duration STABILITY_DEADLINE = Duration.ofSeconds(2);
     private static final String HOST_POLYFILLS_PATH = "classpath:io/micronaut/views/react/host-polyfills.js";
     private final ResourceResolver resourceResolver;
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
@@ -55,19 +79,52 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     private Source serverBundle;  // L(this)
     private Source renderScript;  // L(this)
     private Source hostPolyfills;  // L(this)
+    // the digest of what the scripts were read as: a change reported for a file that still holds it, reported again
+    // by another watch or after the script was read again, drops nothing
+    private @Nullable String serverBundleStamp;  // L(this)
+    private @Nullable String renderScriptStamp;  // L(this)
+    // the files the scripts were last read from, kept while a script is dropped, and whether reading them again after
+    // a change failed: a later write to them is then a change too, though no script is cached
+    private @Nullable Path serverBundleOrigin;  // L(this)
+    private @Nullable Path renderScriptOrigin;  // L(this)
+    private boolean reloadFailed;  // L(this)
     private long generation;
+
+    private final @Nullable ReactJSSourcesWatch devWatch;
+    private final Map<Path, FileWatcherRegistration> registrations = new HashMap<>();  // L(this)
+    private final List<BeanWatch> resourceWatches = new ArrayList<>();
 
     ReactJSSources(ResourceResolver resourceResolver,
                    ReactViewsRendererConfiguration reactViewsRendererConfiguration,
                    ApplicationEventPublisher<ReactJSSourcesChangedEvent> sourcesChangedEventPublisher) {
+        this(resourceResolver, reactViewsRendererConfiguration, sourcesChangedEventPublisher, null);
+    }
+
+    /**
+     * @param resourceResolver The resource resolver
+     * @param reactViewsRendererConfiguration The configuration
+     * @param sourcesChangedEventPublisher The publisher of the reloads
+     * @param devWatch The watches of the scripts' files, present in development mode only
+     */
+    @Inject
+    ReactJSSources(ResourceResolver resourceResolver,
+                   ReactViewsRendererConfiguration reactViewsRendererConfiguration,
+                   ApplicationEventPublisher<ReactJSSourcesChangedEvent> sourcesChangedEventPublisher,
+                   @Nullable ReactJSSourcesWatch devWatch) {
         this.resourceResolver = resourceResolver;
         this.reactViewsRendererConfiguration = reactViewsRendererConfiguration;
         this.sourcesChangedEventPublisher = sourcesChangedEventPublisher;
+        this.devWatch = devWatch;
+        if (devWatch != null) {
+            resourceWatches.addAll(devWatch.watchResources(this::resourcesChanged));
+        }
     }
 
     synchronized Source serverBundle() {
         if (serverBundle == null) {
             serverBundle = loadSource(resourceResolver, reactViewsRendererConfiguration.getServerBundlePath(), ".server-bundle-path");
+            serverBundleStamp = stampOf(serverBundle);
+            serverBundleOrigin = originOf(serverBundle);
         }
         return serverBundle;
     }
@@ -82,8 +139,79 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     synchronized Source renderScript() {
         if (renderScript == null) {
             renderScript = loadSource(resourceResolver, reactViewsRendererConfiguration.getRenderScript(), ".render-script");
+            renderScriptStamp = stampOf(renderScript);
+            renderScriptOrigin = originOf(renderScript);
         }
         return renderScript;
+    }
+
+    /**
+     * Loads the scripts a change dropped, once their files stopped being written, so that a browser refreshed
+     * afterwards is rendered with them.
+     *
+     * @param changeGeneration The generation the change produced
+     * @return Whether the scripts of that generation are loaded; false when a later change dropped them again, and
+     * will be loaded in turn
+     */
+    boolean loadChanged(long changeGeneration) {
+        awaitStable(reactViewsRendererConfiguration.getServerBundlePath());
+        awaitStable(reactViewsRendererConfiguration.getRenderScript());
+        synchronized (this) {
+            if (changeGeneration != generation) {
+                return false;
+            }
+            try {
+                serverBundle();
+                renderScript();
+                reloadFailed = false;
+            } catch (RuntimeException e) {
+                // the render reports it; the browser is refreshed to show it, and the next write is reloaded too
+                LOG.warn("Could not load the rebuilt React SSR bundle: {}", e.getMessage());
+                reloadFailed = true;
+            }
+            return true;
+        }
+    }
+
+    /**
+     * Waits until a script read from a file has stopped growing, or for a bounded time.
+     *
+     * @param desiredPath The configured path of the script
+     */
+    private void awaitStable(@Nullable String desiredPath) {
+        if (desiredPath == null) {
+            return;
+        }
+        Path file;
+        try {
+            Optional<URL> url = resourceResolver.getResource(desiredPath);
+            if (url.isEmpty() || !"file".equals(url.get().getProtocol())) {
+                return;
+            }
+            file = Paths.get(url.get().toURI());
+        } catch (Exception e) {
+            return;
+        }
+        long deadline = System.nanoTime() + STABILITY_DEADLINE.toNanos();
+        long previous = -1;
+        while (System.nanoTime() < deadline) {
+            long current;
+            try {
+                current = Files.size(file);
+            } catch (IOException e) {
+                current = -1;
+            }
+            if (current >= 0 && current == previous) {
+                return;
+            }
+            previous = current;
+            try {
+                Thread.sleep(STABILITY_POLL.toMillis());
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
     }
 
     synchronized long generation() {
@@ -104,10 +232,50 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
                 // the file watcher reports absolute paths and that is the only way to match them.
                 Source.Builder sourceBuilder = Source.newBuilder("js", reader, fileName)
                     .uri(URI.create(url.toString()));
-                return sourceBuilder.mimeType("application/javascript+module").build();
+                Source source = sourceBuilder.mimeType("application/javascript+module").build();
+                watch(source);
+                return source;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static @Nullable Path originOf(Source source) {
+        URI uri = source.getURI();
+        if (uri == null || !"file".equals(uri.getScheme())) {
+            return null;
+        }
+        try {
+            return Paths.get(uri).toAbsolutePath().normalize();
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
+
+    private static @Nullable String stampOf(@Nullable Source source) {
+        if (source == null || source.getURI() == null || !"file".equals(source.getURI().getScheme())) {
+            return null;
+        }
+        return digest(source.getCharacters().toString());
+    }
+
+    private static @Nullable String stampOf(Path file) {
+        try {
+            // decoded as the script was read, so that the same file yields the same digest
+            return digest(new String(Files.readAllBytes(file), StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    private static String digest(String content) {
+        try {
+            byte[] hash = MessageDigest.getInstance("SHA-256").digest(content.getBytes(StandardCharsets.UTF_8));
+            return HexFormat.of().formatHex(hash);
+        } catch (NoSuchAlgorithmException e) {
+            // every platform has SHA-256; without it every change reloads
+            return Long.toString(System.nanoTime());
         }
     }
 
@@ -136,25 +304,112 @@ class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     }
 
     @Override
-    public synchronized void onApplicationEvent(FileChangedEvent event) {
+    public void onApplicationEvent(FileChangedEvent event) {
         if (event.getEventType() == WatchEventType.DELETE) {
             return;
         }
+        changed(List.of(event.getPath()));
+    }
 
-        var path = event.getPath().toAbsolutePath().normalize();
-        if (isOrigin(serverBundle, path)) {
-            serverBundle = null;
+    /**
+     * Drops the scripts read from any of the changed files, and tells the listeners once if one was dropped.
+     *
+     * @param paths The changed files
+     */
+    private void changed(List<Path> paths) {
+        long reloaded;
+        synchronized (this) {
+            boolean dropped = false;
+            for (Path changed : paths) {
+                Path path = changed.toAbsolutePath().normalize();
+                if (isOrigin(serverBundle, path) && !Objects.equals(serverBundleStamp, stampOf(path))) {
+                    serverBundle = null;
+                    dropped = true;
+                }
+                if (isOrigin(renderScript, path) && !Objects.equals(renderScriptStamp, stampOf(path))) {
+                    renderScript = null;
+                    dropped = true;
+                }
+                if (reloadFailed && (path.equals(serverBundleOrigin) || path.equals(renderScriptOrigin))) {
+                    // the scripts are not cached, since reading them failed: this write is worth another try
+                    dropped = true;
+                }
+            }
+            // a script that was not read yet will be read as it is now; one already dropped by the same change,
+            // reported again through another watch, is not dropped twice
+            if (!dropped) {
+                return;
+            }
+            generation++;
+            reloaded = generation;
         }
-        if (isOrigin(renderScript, path)) {
-            renderScript = null;
-        }
+        LOG.info("Reloaded React SSR bundle due to file change.");
+        sourcesChangedEventPublisher.publishEvent(new ReactJSSourcesChangedEvent(this, reloaded));
+    }
 
-        if (serverBundle != null && renderScript != null) {
+    private void filesChanged(FileChangeBatch batch) {
+        List<Path> paths = new ArrayList<>(batch.changes().size());
+        for (FileChange change : batch.changes()) {
+            if (change.type() != WatchEventType.DELETE) {
+                paths.add(change.path());
+            }
+        }
+        if (!paths.isEmpty()) {
+            changed(paths);
+        }
+    }
+
+    private void resourcesChanged(ResourceChange change) {
+        if (!change.initial() && !change.changed().isEmpty()) {
+            changed(change.changed());
+        }
+    }
+
+    /**
+     * Registers the directory of a script read from a file with the process's file watcher in development mode, when
+     * the application has one, so that its rebuild is noticed whether or not {@code micronaut.io.watch.paths} covers it.
+     *
+     * @param source The script
+     */
+    private void watch(Source source) {
+        if (devWatch == null) {
             return;
         }
+        URI uri = source.getURI();
+        if (uri == null || !"file".equals(uri.getScheme())) {
+            return;
+        }
+        Path file;
+        try {
+            file = Paths.get(uri).toAbsolutePath().normalize();
+        } catch (RuntimeException e) {
+            return;
+        }
+        if (registrations.containsKey(file)) {
+            return;
+        }
+        try {
+            FileWatcherRegistration registration = devWatch.watchFile(file, this::filesChanged);
+            if (registration != null) {
+                registrations.put(file, registration);
+            }
+        } catch (RuntimeException e) {
+            LOG.warn("Could not watch {} for changes: {}", file, e.getMessage());
+        }
+    }
 
-        generation++;
-        LOG.info("Reloaded React SSR bundle due to file change.");
-        sourcesChangedEventPublisher.publishEvent(new ReactJSSourcesChangedEvent(this, generation));
+    /**
+     * Stops watching.
+     */
+    @PreDestroy
+    synchronized void close() {
+        for (FileWatcherRegistration registration : registrations.values()) {
+            registration.close();
+        }
+        registrations.clear();
+        for (BeanWatch watch : resourceWatches) {
+            watch.close();
+        }
+        resourceWatches.clear();
     }
 }

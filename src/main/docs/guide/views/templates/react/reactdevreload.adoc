@@ -6,6 +6,10 @@ Nothing tells the browser, though, so the refresh is still manual. The `micronau
 module closes that gap: it adds a small script to every rendered page which listens for a rebuild and
 reloads when one happens.
 
+TIP: Under the Micronaut development launcher, with its LiveReload server running, the browser is refreshed
+through LiveReload instead, once the new bundle is loaded, and this module adds nothing to the page. It needs
+neither this module nor its property. The channel below is what refreshes the browser without the launcher.
+
 == Installation
 
 Declare it as a *development-only* dependency, so a production build does not carry it at all:
