@@ -20,7 +20,6 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.WatchableBeanContext;
 import io.micronaut.context.reload.ResourceKind;
 import io.micronaut.context.watch.BeanWatch;
-import io.micronaut.context.watch.ResourceSelector;
 import io.micronaut.context.watch.ResourceWatcher;
 import io.micronaut.core.annotation.Internal;
 import org.jspecify.annotations.NonNull;
@@ -62,7 +61,7 @@ final class ViewsWatches {
         if (!isActive(beanContext)) {
             return null;
         }
-        return ((WatchableBeanContext) beanContext).watchResources(ResourceSelector.of(ResourceKind.VIEWS, globs), watcher);
+        return ((WatchableBeanContext) beanContext).resources(ResourceKind.VIEWS).include(globs).watch(watcher);
     }
 
     /**
