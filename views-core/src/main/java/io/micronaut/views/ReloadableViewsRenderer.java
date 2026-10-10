@@ -26,7 +26,7 @@ import java.util.Set;
  *
  * <p>In development mode views-core registers one resource watch per extension the renderer
  * {@link #extensions() renders}, on the {@code views} resource kind, through
- * {@link io.micronaut.context.WatchableBeanContext#watchResources}. The renderer's {@link #reload(ResourceChange)}
+ * {@link io.micronaut.context.WatchableBeanContext#resources}. The renderer's {@link #reload(ResourceChange)}
  * receives the templates of its extensions that changed or went, after the launcher made the new contents
  * readable. Outside development mode nothing is registered and {@link #reload(ResourceChange)} is never called.</p>
  *
