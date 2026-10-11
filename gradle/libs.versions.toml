@@ -1,9 +1,9 @@
 [versions]
-micronaut = "5.2.13"
-micronaut-platform = "5.2.1"
-micronaut-data = "5.2.0"
+micronaut = "5.2.15"
+micronaut-platform = "5.2.2"
+micronaut-data = "5.2.2"
 micronaut-sql = "7.2.0"
-micronaut-security = "5.4.0"
+micronaut-security = "5.5.0"
 micronaut-serde = "3.2.4"
 micronaut-reactor = "4.3.0"
 micronaut-validation = "5.2.1"
