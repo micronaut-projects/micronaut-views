@@ -18,7 +18,7 @@ commons-lang3 = "3.21.0"
 jackson = "2.22.3"
 managed-rocker = "1.4.0"
 managed-soy = "2024-02-26"
-org-json = "20240303"
+org-json = "20250107"
 managed-thymeleaf = "3.1.5.RELEASE"
 managed-velocity = "2.4.1"
 
