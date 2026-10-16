@@ -33,13 +33,16 @@ final class JinjavaFactory {
     /**
      * @param jinjavaConfig Jinjava configuration
      * @param resourceLocator The scoped Jinjava resource locator
+     * @param configuration Jinjava Views configuration
      * @return The configured Jinjava engine
      */
     @Singleton
     Jinjava jinjava(JinjavaConfig jinjavaConfig,
-                    JinjavaResourceLocator resourceLocator) {
+                    JinjavaResourceLocator resourceLocator,
+                    JinjavaViewsRendererConfigurationProperties configuration) {
         Jinjava jinjava = new Jinjava(jinjavaConfig);
         jinjava.setResourceLocator(resourceLocator);
+        jinjava.getGlobalContext().setAutoEscape(configuration.isAutoescape());
         return jinjava;
     }
 
