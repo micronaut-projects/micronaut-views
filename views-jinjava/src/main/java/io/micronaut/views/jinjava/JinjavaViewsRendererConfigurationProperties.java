@@ -39,9 +39,16 @@ public final class JinjavaViewsRendererConfigurationProperties implements ViewsR
     public static final boolean DEFAULT_ENABLED = true;
     /** The default Jinjava template extension. */
     public static final String DEFAULT_EXTENSION = "jinja";
+    /**
+     * Whether Jinjava autoescaping is enabled by default.
+     *
+     * @since 6.3.2
+     */
+    public static final boolean DEFAULT_AUTOESCAPE = false;
 
     private boolean enabled = DEFAULT_ENABLED;
     private String defaultExtension = DEFAULT_EXTENSION;
+    private boolean autoescape = DEFAULT_AUTOESCAPE;
 
     @ConfigurationBuilder(prefixes = "with", configurationPrefix = "config")
     private final JinjavaConfig.Builder config = JinjavaConfig.newBuilder();
@@ -75,6 +82,30 @@ public final class JinjavaViewsRendererConfigurationProperties implements ViewsR
         if (StringUtils.isNotEmpty(defaultExtension)) {
             this.defaultExtension = defaultExtension;
         }
+    }
+
+    /**
+     * Whether Jinjava HTML-escapes the output of template expressions unless the value is marked safe,
+     * as Flask does. A template block can switch it off with the autoescape tag.
+     * Defaults to false so existing templates keep their output.
+     *
+     * @return Whether autoescaping is enabled
+     * @since 6.3.2
+     */
+    public boolean isAutoescape() {
+        return autoescape;
+    }
+
+    /**
+     * Whether Jinjava HTML-escapes the output of template expressions unless the value is marked safe,
+     * as Flask does. A template block can switch it off with the autoescape tag.
+     * Defaults to false so existing templates keep their output.
+     *
+     * @param autoescape Whether autoescaping is enabled
+     * @since 6.3.2
+     */
+    public void setAutoescape(boolean autoescape) {
+        this.autoescape = autoescape;
     }
 
     /**
