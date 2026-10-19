@@ -17,13 +17,10 @@ class JinjavaViewsRendererAutoescapeTest {
     private static final Map<String, Object> MODEL = Map.of("message", "<b>x</b>");
 
     @Test
-    void autoescapeIsDisabledByDefault() throws IOException {
+    void autoescapeIsEnabledByDefault() throws IOException {
         try (ApplicationContext context = ApplicationContext.run()) {
-            assertFalse(context.getBean(JinjavaViewsRendererConfigurationProperties.class).isAutoescape());
-            String html = render(context);
-
-            assertTrue(html.contains("<h1><b>x</b></h1>"), html);
-            assertFalse(html.contains("&lt;b&gt;"), html);
+            assertTrue(context.getBean(JinjavaViewsRendererConfigurationProperties.class).isAutoescape());
+            assertEquals("<h1>&lt;b&gt;x&lt;/b&gt;</h1>", render(context).trim());
         }
     }
 
@@ -41,13 +38,14 @@ class JinjavaViewsRendererAutoescapeTest {
     @Test
     void autoescapeCanBeExplicitlyDisabled() throws IOException {
         try (ApplicationContext context = ApplicationContext.run(Map.of("micronaut.views.jinja.autoescape", false))) {
+            assertFalse(context.getBean(JinjavaViewsRendererConfigurationProperties.class).isAutoescape());
             assertEquals("<h1><b>x</b></h1>", render(context).trim());
         }
     }
 
     @Test
     void safeFilterAndAutoescapeBlockOptOutAndEscapeFilterDoubleEscapes() throws IOException {
-        try (ApplicationContext context = ApplicationContext.run(Map.of("micronaut.views.jinja.autoescape", true))) {
+        try (ApplicationContext context = ApplicationContext.run()) {
             String html = render(context, "autoescape-filters");
 
             assertTrue(html.contains("safe=[<b>x</b>]"), html);
