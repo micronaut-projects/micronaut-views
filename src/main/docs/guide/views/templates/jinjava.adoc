@@ -25,9 +25,12 @@ include::{includedir}configurationProperties/io.micronaut.views.jinjava.JinjavaV
 
 === Autoescape
 
-By default, Jinjava does not escape the output of `+{{ }}+` expressions. Set `micronaut.views.jinja.autoescape` to
-`true` to HTML-escape it, which matches the behaviour of Flask's Jinja integration. Templates then no longer need a
-manual `| e` filter to render untrusted values safely:
+By default, Jinjava HTML-escapes the output of `+{{ }}+` expressions. Templates do not need a manual `| e` filter
+to HTML-escape untrusted values. For example, `+<h1>{{ message }}</h1>+` renders a `message` of `+<b>x</b>+` as
+`+<h1>&lt;b&gt;x&lt;/b&gt;</h1>+`.
+
+Earlier versions left autoescaping disabled. To retain that behaviour, explicitly set
+`micronaut.views.jinja.autoescape` to `false`:
 
 .application configuration
 [configuration]
@@ -35,12 +38,11 @@ manual `| e` filter to render untrusted values safely:
 micronaut:
   views:
     jinja:
-      autoescape: true
+      autoescape: false
 ----
 
-With autoescaping enabled, `+<h1>{{ message }}</h1>+` renders a `message` of `+<b>x</b>+` as
-`+<h1>&lt;b&gt;x&lt;/b&gt;</h1>+`. A value that is already safe HTML can be marked with the `| safe` filter, and a
-block can switch autoescaping off with `+{% autoescape false %} ... {% endautoescape %}+`.
+Trusted HTML can be marked with the `| safe` filter, and a block can switch autoescaping off with
+`+{% autoescape false %} ... {% endautoescape %}+`. Only use these opt-outs for trusted content.
 
 NOTE: With autoescaping enabled, do not also apply the `| escape` (or `| e`) filter to the same value. The value is
 already escaped, so `| escape` escapes it a second time and `+&lt;+` is rendered as `+&amp;lt;+`.
