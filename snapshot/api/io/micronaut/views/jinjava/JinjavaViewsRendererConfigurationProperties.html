@@ -62,6 +62,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#PREFIX" tabindex="0">PREFIX</a></li>
 <li><a href="#DEFAULT_ENABLED" tabindex="0">DEFAULT_ENABLED</a></li>
 <li><a href="#DEFAULT_EXTENSION" tabindex="0">DEFAULT_EXTENSION</a></li>
+<li><a href="#DEFAULT_AUTOESCAPE" tabindex="0">DEFAULT_AUTOESCAPE</a></li>
 </ol>
 </li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
@@ -75,6 +76,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#setEnabled(boolean)" tabindex="0">setEnabled(boolean)</a></li>
 <li><a href="#getDefaultExtension()" tabindex="0">getDefaultExtension()</a></li>
 <li><a href="#setDefaultExtension(java.lang.String)" tabindex="0">setDefaultExtension(String)</a></li>
+<li><a href="#isAutoescape()" tabindex="0">isAutoescape()</a></li>
+<li><a href="#setAutoescape(boolean)" tabindex="0">setAutoescape(boolean)</a></li>
 <li><a href="#getConfig()" tabindex="0">getConfig()</a></li>
 </ol>
 </li>
@@ -119,18 +122,23 @@ implements <a href="../ViewsRendererConfiguration.html" title="interface in io.m
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final boolean</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_ENABLED" class="member-name-link">DEFAULT_ENABLED</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_AUTOESCAPE" class="member-name-link">DEFAULT_AUTOESCAPE</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Whether Jinjava autoescaping is enabled by default.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final boolean</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_ENABLED" class="member-name-link">DEFAULT_ENABLED</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Whether Jinjava Views rendering is enabled by default.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_EXTENSION" class="member-name-link">DEFAULT_EXTENSION</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_EXTENSION" class="member-name-link">DEFAULT_EXTENSION</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The default Jinjava template extension.</div>
 </div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#PREFIX" class="member-name-link">PREFIX</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#PREFIX" class="member-name-link">PREFIX</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The Jinjava Views configuration prefix.</div>
 </div>
 </div>
@@ -167,8 +175,20 @@ implements <a href="../ViewsRendererConfiguration.html" title="interface in io.m
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDefaultExtension()" class="member-name-link">getDefaultExtension</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEnabled()" class="member-name-link">isEnabled</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAutoescape()" class="member-name-link">isAutoescape</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Whether Jinjava HTML-escapes the output of template expressions unless the value is marked safe,
+as Flask does.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEnabled()" class="member-name-link">isEnabled</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAutoescape(boolean)" class="member-name-link">setAutoescape</a><wbr>(boolean&nbsp;autoescape)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Whether Jinjava HTML-escapes the output of template expressions unless the value is marked safe,
+as Flask does.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDefaultExtension(java.lang.String)" class="member-name-link">setDefaultExtension</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;defaultExtension)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -237,6 +257,25 @@ implements <a href="../ViewsRendererConfiguration.html" title="interface in io.m
 <dd>
 <ul class="tag-list">
 <li><a href="../../../../constant-values.html#io.micronaut.views.jinjava.JinjavaViewsRendererConfigurationProperties.DEFAULT_EXTENSION">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="DEFAULT_AUTOESCAPE">
+<h3>DEFAULT_AUTOESCAPE</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">DEFAULT_AUTOESCAPE</span></div>
+<div class="block">Whether Jinjava autoescaping is enabled by default.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>6.3.2</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../constant-values.html#io.micronaut.views.jinjava.JinjavaViewsRendererConfigurationProperties.DEFAULT_AUTOESCAPE">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -315,6 +354,40 @@ implements <a href="../ViewsRendererConfiguration.html" title="interface in io.m
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>defaultExtension</code> - The default template extension</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isAutoescape()">
+<h3>isAutoescape</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isAutoescape</span>()</div>
+<div class="block">Whether Jinjava HTML-escapes the output of template expressions unless the value is marked safe,
+as Flask does. A template block can switch it off with the autoescape tag.
+Defaults to true. Set to false to retain unescaped expression output.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Whether autoescaping is enabled</dd>
+<dt>Since:</dt>
+<dd>6.3.2</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setAutoescape(boolean)">
+<h3>setAutoescape</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setAutoescape</span><wbr><span class="parameters">(boolean&nbsp;autoescape)</span></div>
+<div class="block">Whether Jinjava HTML-escapes the output of template expressions unless the value is marked safe,
+as Flask does. A template block can switch it off with the autoescape tag.
+Defaults to true. Set to false to retain unescaped expression output.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>autoescape</code> - Whether autoescaping is enabled</dd>
+<dt>Since:</dt>
+<dd>6.3.2</dd>
 </dl>
 </div>
 </section>

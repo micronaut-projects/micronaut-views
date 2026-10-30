@@ -1076,6 +1076,14 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">The default template extension</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.views.jinja.autoescape</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether Jinjava HTML-escapes the output of template expressions unless the value is marked safe,
+ as Flask does. A template block can switch it off with the autoescape tag.
+ Defaults to true. Set to false to retain unescaped expression output.</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
