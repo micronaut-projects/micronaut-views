@@ -15,7 +15,11 @@
  */
 package io.micronaut.views;
 
+import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.util.Toggleable;
+import org.jspecify.annotations.NonNull;
+
+import java.util.List;
 
 /**
  * Defines Views configuration properties.
@@ -29,4 +33,18 @@ public interface ViewsConfiguration extends Toggleable {
      * @return The resources' folder where views should be searched for.
      */
     String getFolder();
+
+    /**
+     * The directories view sources are read from in development mode, ahead of the class path, each the
+     * source directory of the {@link #getFolder() views folder}, such as {@code src/main/resources/views}.
+     * Used in development mode only, beside the views roots the development launcher reports.
+     *
+     * @return The source roots
+     * @since 6.4.0
+     */
+    @Experimental
+    @NonNull
+    default List<String> getSourceRoots() {
+        return List.of();
+    }
 }

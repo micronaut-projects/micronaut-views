@@ -1,0 +1,36 @@
+When an application runs under the Micronaut development launcher (`micronaut-dev`, started with `./gradlew mnDev` or `mvn mn:dev`), an edit of a template is rendered on the next request. Nothing restarts and nothing is copied: the engine reads the template from the project's source directory and drops what it had compiled from the old version. With LiveReload on, the launcher also refreshes the browser.
+
+This needs no configuration. The launcher reports its `views` resource roots (`micronaut.dev.resources.views` in its manifest, such as `src/main/resources/views`) to the application context, and views-core uses them:
+
+* api:views.ViewsSourceRoots[] holds those roots. A root is the source directory of the views folder (`micronaut.views.folder`, `views` by default), so a view named `home` with the extension `html` resolves to `src/main/resources/views/home.html`. Engines that support development mode read a template from a source root first and from the class path otherwise, so an edited or new template is visible without waiting for the build to copy it.
+* Every renderer implementing api:views.ReloadableViewsRenderer[] is told when templates of its extensions change, through one resource watch per extension, and drops what the change made stale.
+* The renderer locator and the model decorator forget what they cached, so a template that is added, removed or renamed is looked up again.
+
+[cols="1,2"]
+|===
+|Engine |In development mode
+
+|Thymeleaf
+|Reads templates from the source roots ahead of the class path, and clears the engine's template cache when a template changes: every views file when the resolver does not force its suffix (the default, since a template named `layout.xml` is read as it is named), only the files with the suffix when `micronaut.views.thymeleaf.force-suffix` is set. A layout or a fragment is picked up by the pages that use it.
+
+|Pebble
+|The default loader reads templates from the source roots ahead of the class path, and the engine's template and tag caches are invalidated when any views file changes, since a template may extend or import one named with any extension. A loader bean of your own is left as it is.
+|===
+
+The other engines keep their own reload settings for now.
+
+Further roots can be configured. They are read in development mode only, ahead of the launcher's roots:
+
+[configuration]
+----
+micronaut:
+  views:
+    source-roots:
+      - src/main/resources/views
+----
+
+NOTE: Only the launcher's `views` roots are watched. A configured root outside them is read, but an edit there does not clear the engines' caches, and a warning says so at startup: add the directory to `micronaut.dev.resources.views` instead.
+
+Outside development mode none of this is active: there are no source roots, no watch is registered, and templates are read from the class path and cached exactly as before. Development mode is the one the launcher switches on with the `micronaut.dev.enabled` property; the `dev` environment alone does not activate it.
+
+To make an engine of your own follow edits, implement api:views.ReloadableViewsRenderer[]: return the extensions of the templates it reads from `extensions()` and clear its cache in `reload(ResourceChange)`. To read templates from the source directory, resolve them through the api:views.ViewsSourceRoots[] bean before the class path.

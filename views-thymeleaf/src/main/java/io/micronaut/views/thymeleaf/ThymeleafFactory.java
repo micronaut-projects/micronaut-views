@@ -17,7 +17,9 @@ package io.micronaut.views.thymeleaf;
 
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.views.ViewsConfiguration;
+import io.micronaut.views.ViewsSourceRoots;
 import io.micronaut.views.thymeleaf.webexpression.HttpServerRequestExpressionDialect;
 import org.jspecify.annotations.Nullable;
 import org.thymeleaf.TemplateEngine;
@@ -41,17 +43,45 @@ import jakarta.inject.Singleton;
 public class ThymeleafFactory {
 
     /**
-     * Constructs the template resolver bean.
+     * Constructs the template resolver.
      *
      * @param viewsConfiguration The views configuration
      * @param rendererConfiguration The renderer configuration
      * @return The template resolver
+     * @deprecated Use {@link #templateResolver(ViewsConfiguration, ThymeleafViewsRendererConfiguration, ViewsSourceRoots, ClassPathResourceLoader)} instead.
+     */
+    @Deprecated(forRemoval = true, since = "6.4.0")
+    public AbstractConfigurableTemplateResolver templateResolver(ViewsConfiguration viewsConfiguration,
+                                                          ThymeleafViewsRendererConfiguration rendererConfiguration) {
+        return configure(new ClassLoaderTemplateResolver(), viewsConfiguration, rendererConfiguration);
+    }
+
+    /**
+     * Constructs the template resolver bean. In development mode it reads templates from the
+     * {@link ViewsSourceRoots views source roots} ahead of the class path, which it reads through the
+     * application's class loader.
+     *
+     * @param viewsConfiguration The views configuration
+     * @param rendererConfiguration The renderer configuration
+     * @param sourceRoots The views source roots
+     * @param resourceLoader The class path resource loader
+     * @return The template resolver
+     * @since 6.4.0
      */
     @Singleton
     public AbstractConfigurableTemplateResolver templateResolver(ViewsConfiguration viewsConfiguration,
-                                                          ThymeleafViewsRendererConfiguration rendererConfiguration) {
-        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+                                                                 ThymeleafViewsRendererConfiguration rendererConfiguration,
+                                                                 ViewsSourceRoots sourceRoots,
+                                                                 ClassPathResourceLoader resourceLoader) {
+        ClassLoaderTemplateResolver templateResolver = sourceRoots.isEnabled()
+            ? new SourceRootsTemplateResolver(sourceRoots, resourceLoader.getClassLoader())
+            : new ClassLoaderTemplateResolver();
+        return configure(templateResolver, viewsConfiguration, rendererConfiguration);
+    }
 
+    private static AbstractConfigurableTemplateResolver configure(ClassLoaderTemplateResolver templateResolver,
+                                                                  ViewsConfiguration viewsConfiguration,
+                                                                  ThymeleafViewsRendererConfiguration rendererConfiguration) {
         templateResolver.setPrefix(viewsConfiguration.getFolder());
         templateResolver.setCharacterEncoding(rendererConfiguration.getCharacterEncoding());
         templateResolver.setTemplateMode(rendererConfiguration.getTemplateMode());
@@ -61,7 +91,6 @@ public class ThymeleafFactory {
         templateResolver.setCacheTTLMs(rendererConfiguration.getCacheTTLMs());
         templateResolver.setCheckExistence(rendererConfiguration.getCheckExistence());
         templateResolver.setCacheable(rendererConfiguration.getCacheable());
-
         return templateResolver;
     }
 

@@ -25,4 +25,11 @@ dependencies {
     testImplementation(mn.micronaut.management)
     testImplementation(mnValidation.micronaut.validation)
     testImplementation(mn.snakeyaml)
+
+    // the launcher test starts a tiny application through micronaut-dev, compiling it with the processor on the test classpath
+    testImplementation(mn.micronaut.dev.tck)
+    testImplementation(mn.micronaut.inject.java)
+    testImplementation(mnTest.junit.jupiter.api)
+    testImplementation(mnTest.micronaut.test.junit5)
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
 }

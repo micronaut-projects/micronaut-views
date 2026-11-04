@@ -46,6 +46,8 @@ final class DefaultViewsModelDecorator<T, R> implements ViewsModelDecorator<T, R
 
     public DefaultViewsModelDecorator(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
+        // in development mode the processors are looked up again after an edit of the views
+        ViewsWatches.watch(applicationContext, change -> classToProcessors.clear());
     }
 
     /**

@@ -17,7 +17,9 @@ package io.micronaut.views.pebble;
 
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.views.ViewsConfiguration;
+import io.micronaut.views.ViewsSourceRoots;
 import io.pebbletemplates.pebble.PebbleEngine;
 import io.pebbletemplates.pebble.attributes.methodaccess.MethodAccessValidator;
 import io.pebbletemplates.pebble.extension.Extension;
@@ -51,6 +53,9 @@ public class PebbleEngineFactory {
 
     @Nullable
     private final ExecutorService executorService;
+    private final ViewsSourceRoots sourceRoots;
+    @Nullable
+    private final ClassLoader classLoader;
 
     public PebbleEngineFactory(ViewsConfiguration viewsConfiguration,
                                PebbleConfiguration configuration,
@@ -65,16 +70,28 @@ public class PebbleEngineFactory {
         this.methodAccessValidator = methodAccessValidator;
         this.extensions = extensions;
         this.executorService = null;
+        this.sourceRoots = ViewsSourceRoots.none();
+        this.classLoader = null;
     }
 
-    @Inject
+    /**
+     * @param viewsConfiguration The views configuration
+     * @param configuration The Pebble configuration
+     * @param loader A loader bean, used instead of the default one
+     * @param syntax The syntax
+     * @param methodAccessValidator The method access validator
+     * @param extensions The extensions
+     * @param executorService The executor of the parallel tag
+     * @deprecated Use {@link #PebbleEngineFactory(ViewsConfiguration, PebbleConfiguration, Optional, Optional, Optional, List, ExecutorService, ViewsSourceRoots, ClassPathResourceLoader)} instead.
+     */
+    @Deprecated(since = "6.4.0")
     public PebbleEngineFactory(ViewsConfiguration viewsConfiguration,
                                PebbleConfiguration configuration,
                                Optional<Loader<?>> loader,
                                Optional<Syntax> syntax,
                                Optional<MethodAccessValidator> methodAccessValidator,
                                List<Extension> extensions,
-                               @Named(TaskExecutors.IO) ExecutorService executorService) {
+                               ExecutorService executorService) {
         this.viewsConfiguration = viewsConfiguration;
         this.configuration = configuration;
         this.loader = loader;
@@ -82,6 +99,41 @@ public class PebbleEngineFactory {
         this.methodAccessValidator = methodAccessValidator;
         this.extensions = extensions;
         this.executorService = executorService;
+        this.sourceRoots = ViewsSourceRoots.none();
+        this.classLoader = null;
+    }
+
+    /**
+     * @param viewsConfiguration The views configuration
+     * @param configuration The Pebble configuration
+     * @param loader A loader bean, used instead of the default one
+     * @param syntax The syntax
+     * @param methodAccessValidator The method access validator
+     * @param extensions The extensions
+     * @param executorService The executor of the parallel tag
+     * @param sourceRoots The views source roots, which the default loader reads ahead of the class path in development mode
+     * @param resourceLoader The class path resource loader, whose class loader the default loader reads through in development mode
+     * @since 6.4.0
+     */
+    @Inject
+    public PebbleEngineFactory(ViewsConfiguration viewsConfiguration,
+                               PebbleConfiguration configuration,
+                               Optional<Loader<?>> loader,
+                               Optional<Syntax> syntax,
+                               Optional<MethodAccessValidator> methodAccessValidator,
+                               List<Extension> extensions,
+                               @Named(TaskExecutors.IO) ExecutorService executorService,
+                               ViewsSourceRoots sourceRoots,
+                               ClassPathResourceLoader resourceLoader) {
+        this.viewsConfiguration = viewsConfiguration;
+        this.configuration = configuration;
+        this.loader = loader;
+        this.syntax = syntax;
+        this.methodAccessValidator = methodAccessValidator;
+        this.extensions = extensions;
+        this.executorService = executorService;
+        this.sourceRoots = sourceRoots;
+        this.classLoader = resourceLoader.getClassLoader();
     }
 
     /**
@@ -108,7 +160,9 @@ public class PebbleEngineFactory {
             builder.executorService(executorService);
         }
 
-        builder.loader(loader.orElseGet(() -> new PebbleLoader(viewsConfiguration, configuration)));
+        builder.loader(loader.orElseGet(() -> sourceRoots.isEnabled() && classLoader != null
+            ? new PebbleLoader(viewsConfiguration, configuration, sourceRoots, classLoader)
+            : new PebbleLoader(viewsConfiguration, configuration)));
 
         syntax.ifPresent(bean -> builder.syntax(bean));
         methodAccessValidator.ifPresent(bean -> builder.methodAccessValidator(bean));
