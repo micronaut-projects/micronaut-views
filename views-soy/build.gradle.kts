@@ -33,5 +33,7 @@ dependencies {
     testImplementation(mn.micronaut.management)
     testImplementation(mnValidation.micronaut.validation)
     testImplementation(mn.snakeyaml)
+    testImplementation(mnTest.micronaut.test.junit5)
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
 }
 

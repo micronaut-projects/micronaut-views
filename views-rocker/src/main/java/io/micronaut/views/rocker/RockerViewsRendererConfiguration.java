@@ -26,7 +26,10 @@ import io.micronaut.views.ViewsRendererConfiguration;
 public interface RockerViewsRendererConfiguration extends ViewsRendererConfiguration {
     /**
      * @return If hot reloading is enabled
+     * @deprecated Rocker's own hot reloading, outside development mode. Under the development launcher, the
+     * templates of the views source roots are compiled after an edit without it.
      */
+    @Deprecated(since = "6.4.0")
     boolean isHotReloading();
 
     /**
