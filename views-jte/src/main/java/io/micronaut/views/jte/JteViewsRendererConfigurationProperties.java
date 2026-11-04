@@ -49,20 +49,27 @@ public final class JteViewsRendererConfigurationProperties implements JteViewsRe
     private String dynamicSourcePath;
 
     /**
-     * Whether to enable dynamic reloading of templates. Default value ({@value #DEFAULT_DYNAMIC}).
+     * Whether to enable dynamic reloading of templates. Default value ({@value #DEFAULT_DYNAMIC}). Deprecated: run the application in development mode
+     * (micronaut-dev, {@code ./gradlew mnDev} or {@code mvn mn:dev}) instead, where templates of the views source roots
+     * are compiled at runtime and compiled again after an edit. In development mode,
+     * the dynamic source directory is read after the views source roots.
      * @param dynamic true to enable dynamic reloading
+     * @deprecated Run the application in development mode instead.
      */
+    @Deprecated(since = "6.4.0")
     public void setDynamic(boolean dynamic) {
         this.dynamic = dynamic;
     }
 
     @Override
+    @Deprecated(since = "6.4.0")
     public boolean isDynamic() {
         return dynamic;
     }
 
     /**
-     * Root directory under which to write generated source and class files. . Default value ({@value #DEFAULT_DYNAMIC_PATH}).
+     * Root directory under which to write generated source and class files of the templates compiled at runtime, in
+     * development mode or with the dynamic mode. Default value ({@value #DEFAULT_DYNAMIC_PATH}).
      * @param path the directory
      */
     public void setDynamicPath(String path) {
@@ -75,6 +82,7 @@ public final class JteViewsRendererConfigurationProperties implements JteViewsRe
     }
 
     @Override
+    @Deprecated(since = "6.4.0")
     public String getDynamicSourcePath() {
         return dynamicSourcePath;
     }
@@ -83,9 +91,15 @@ public final class JteViewsRendererConfigurationProperties implements JteViewsRe
      * When using dynamic templates, the root source directory to search. If not specified, jte will
      * search src/&lt;sourceset&gt;/jte and src/&lt;sourceset&gt;/resources/&lt;folder&gt; where
      * 'folder' is ViewsConfiguration.getFolder(). In cases where the source directory cannot be found,
-     * jte will use classpath loading instead, and will not dynamically reload templates.
+     * jte will use classpath loading instead, and will not dynamically reload templates. Deprecated: run the application in development mode
+     * (micronaut-dev, {@code ./gradlew mnDev} or {@code mvn mn:dev}) instead, where templates of the views source roots
+     * are compiled at runtime and compiled again after an edit. Set
+     * {@code micronaut.views.source-roots} or {@code micronaut.dev.resources.views} for another directory. In
+     * development mode, this directory is read after the views source roots.
      * @param path the directory
+     * @deprecated Run the application in development mode instead.
      */
+    @Deprecated(since = "6.4.0")
     public void setDynamicSourcePath(String path) {
         this.dynamicSourcePath = path;
     }

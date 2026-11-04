@@ -18,12 +18,14 @@ package io.micronaut.views.handlebars;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.watch.ResourceChange;
 import io.micronaut.core.io.ResourceLoader;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.views.AbstractViewsRenderer;
+import io.micronaut.views.ReloadableViewsRenderer;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import jakarta.inject.Inject;
@@ -32,6 +34,7 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * Renders Views with Handlebars.java.
@@ -45,7 +48,7 @@ import java.io.IOException;
 @Requires(property = HandlebarsViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 @Requires(classes = Handlebars.class)
 @Singleton
-public class HandlebarsViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
+public class HandlebarsViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> implements ReloadableViewsRenderer<T, R> {
 
     protected final ViewsConfiguration viewsConfiguration;
     protected final ResourceLoader resourceLoader;
@@ -92,4 +95,36 @@ public class HandlebarsViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
         };
     }
 
+    @Override
+    public boolean exists(@NonNull String viewName) {
+        if (super.exists(viewName)) {
+            return true;
+        }
+        // in development mode, a template may be in a source root only
+        return handlebars.getLoader() instanceof SourceRootsTemplateLoader loader
+            && loader.isSource(viewLocationWithoutExtension(viewName));
+    }
+
+    /**
+     * None, to watch every views file: a template may use a partial named with any extension.
+     *
+     * @return No extension
+     * @since 6.4.0
+     */
+    @Override
+    public @NonNull Set<String> extensions() {
+        return Set.of();
+    }
+
+    /**
+     * Clears the template cache of the engine. The default engine has none and compiles a template on every
+     * render, so this only matters for an engine configured with a cache.
+     *
+     * @param change The templates that changed or went
+     * @since 6.4.0
+     */
+    @Override
+    public void reload(@NonNull ResourceChange change) {
+        handlebars.getCache().clear();
+    }
 }

@@ -21,8 +21,12 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Produces;
+import io.micronaut.core.io.scan.ClassPathResourceLoader;
 import io.micronaut.views.ViewsConfiguration;
+import io.micronaut.views.ViewsSourceRoots;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.Nullable;
 
 import java.nio.file.Paths;
 
@@ -43,8 +47,27 @@ public class HtmlJteViewsRenderer<T> extends JteViewsRenderer<T, HttpRequest<?>>
     /**
      * @param viewsConfiguration Views Configuration
      * @param jteViewsRendererConfiguration JTE specific configuration
+     * @deprecated Use {@link #HtmlJteViewsRenderer(ViewsConfiguration, JteViewsRendererConfiguration, ViewsSourceRoots, ClassPathResourceLoader)} instead.
      */
+    @Deprecated(since = "6.4.0")
     protected HtmlJteViewsRenderer(ViewsConfiguration viewsConfiguration, JteViewsRendererConfiguration jteViewsRendererConfiguration) {
-        super(viewsConfiguration, jteViewsRendererConfiguration, ContentType.Html, Paths.get(jteViewsRendererConfiguration.getDynamicPath()).resolve(HTML));
+        this(viewsConfiguration, jteViewsRendererConfiguration, ViewsSourceRoots.none(), null);
+    }
+
+    /**
+     * @param viewsConfiguration Views Configuration
+     * @param jteViewsRendererConfiguration JTE specific configuration
+     * @param sourceRoots The views source roots, whose templates are compiled at runtime in development mode
+     * @param resourceLoader The class path resource loader, whose class loader templates compiled at runtime use
+     * @since 6.4.0
+     */
+    @Inject
+    protected HtmlJteViewsRenderer(ViewsConfiguration viewsConfiguration,
+                    JteViewsRendererConfiguration jteViewsRendererConfiguration,
+                    ViewsSourceRoots sourceRoots,
+                    @Nullable ClassPathResourceLoader resourceLoader) {
+        super(viewsConfiguration, jteViewsRendererConfiguration, ContentType.Html,
+            Paths.get(jteViewsRendererConfiguration.getDynamicPath()).resolve(HTML),
+            sourceRoots, resourceLoader != null ? resourceLoader.getClassLoader() : null);
     }
 }
