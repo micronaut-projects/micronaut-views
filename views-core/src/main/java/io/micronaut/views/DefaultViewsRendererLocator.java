@@ -78,8 +78,8 @@ public class DefaultViewsRendererLocator implements ViewsRendererLocator {
      *
      * @param bodyClass Response Body Class
      * @param contentType Response Content Type
-     * @return List of {@link ViewsRenderer} which includes those which do not specify an {@link @Produces} annotation or
-     * whose {link @Produces} annotation value matches the response content type. The list is sorted. The order is those {@link ViewsRenderer} which
+     * @return List of {@link ViewsRenderer} which includes those which do not specify an {@code @Produces} annotation or
+     * whose {@code @Produces} annotation value matches the response content type. The list is sorted. The order is those {@link ViewsRenderer} which
      * type argument matches the response body class first and then ordered by {@link OrderUtil#COMPARATOR}.
      */
     @NonNull
