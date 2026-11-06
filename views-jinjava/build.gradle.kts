@@ -23,6 +23,9 @@ dependencies {
     testImplementation(mnSerde.micronaut.serde.jackson)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
+    // the generation memory test starts a tiny application through micronaut-dev, compiling it with the processor on the test classpath
+    testImplementation(mn.micronaut.dev.tck)
+    testImplementation(mn.micronaut.inject.java)
 }
 micronautBuild {
     testFramework = TestFramework.JUNIT6
