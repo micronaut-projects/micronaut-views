@@ -61,8 +61,7 @@ public abstract class JteViewsRenderer<T, R> implements ReloadableViewsRenderer<
     private static final List<String> EXTENSIONS = Arrays.asList(".jte", ".kte");
     private static final Set<String> WATCHED_EXTENSIONS = Set.of("jte", "kte");
     private final TemplateEngine templateEngine;
-    private final @Nullable TemplateEngine sourceEngine;
-    private final @Nullable SourceRootsCodeResolver sourceResolver;
+    private final @Nullable SourceTemplates sourceTemplates;
 
     /**
      * @param viewsConfiguration Views configuration
@@ -105,21 +104,20 @@ public abstract class JteViewsRenderer<T, R> implements ReloadableViewsRenderer<
                 ? findDynamicSourceDirectory(jteViewsRendererConfiguration, folder).orElse(null)
                 : null;
             CodeResolver classPath = classLoader != null ? new ResourceCodeResolver(folder, classLoader) : new ResourceCodeResolver(folder);
-            sourceResolver = new SourceRootsCodeResolver(sourceRoots, dynamicSource, classPath);
-            sourceEngine = classLoader != null
+            SourceRootsCodeResolver sourceResolver = new SourceRootsCodeResolver(sourceRoots, dynamicSource, classPath);
+            TemplateEngine sourceEngine = classLoader != null
                 ? TemplateEngine.create(sourceResolver, classDirectory, contentType, classLoader)
                 : TemplateEngine.create(sourceResolver, classDirectory, contentType);
             sourceEngine.setBinaryStaticContent(jteViewsRendererConfiguration.isBinaryStaticContent());
+            sourceTemplates = new SourceTemplates(sourceEngine, sourceResolver);
             LOGGER.info("Development mode: compiling the views of the source roots at runtime into {}, and using the precompiled views otherwise.", classDirectory);
             templateEngine = TemplateEngine.createPrecompiled(contentType);
         } else if (jteViewsRendererConfiguration.isDynamic()) {
-            sourceResolver = null;
-            sourceEngine = null;
+            sourceTemplates = null;
             CodeResolver codeResolver = newDynamicCodeResolver(jteViewsRendererConfiguration, folder);
             templateEngine = TemplateEngine.create(codeResolver, classDirectory, contentType);
         } else {
-            sourceResolver = null;
-            sourceEngine = null;
+            sourceTemplates = null;
             LOGGER.info("Using precompiled views.");
             templateEngine = TemplateEngine.createPrecompiled(contentType);
         }
@@ -183,9 +181,13 @@ public abstract class JteViewsRenderer<T, R> implements ReloadableViewsRenderer<
                            @Nullable R request) {
         for (String extension : EXTENSIONS) {
             String name = viewName(viewName, extension);
-            TemplateEngine engine = engineFor(name);
-            if (engine.hasTemplate(name)) {
-                return new JteWritable(engine, name, ViewUtils.modelOf(data), this::decorateOutput);
+            SourceTemplates source = sourceFor(name);
+            if (source == null) {
+                if (templateEngine.hasTemplate(name)) {
+                    return new JteWritable(templateEngine, name, ViewUtils.modelOf(data), this::decorateOutput);
+                }
+            } else if (source.hasTemplate(name)) {
+                return new JteWritable(source, name, ViewUtils.modelOf(data), this::decorateOutput);
             }
         }
         return new JteWritable(templateEngine, null, ViewUtils.modelOf(data), this::decorateOutput);
@@ -207,7 +209,10 @@ public abstract class JteViewsRenderer<T, R> implements ReloadableViewsRenderer<
     public boolean exists(@NonNull String viewName) {
         return EXTENSIONS.stream()
             .map(x -> viewName(viewName, x))
-            .anyMatch(name -> engineFor(name).hasTemplate(name));
+            .anyMatch(name -> {
+                SourceTemplates source = sourceFor(name);
+                return source == null ? templateEngine.hasTemplate(name) : source.hasTemplate(name);
+            });
     }
 
     /**
@@ -230,20 +235,20 @@ public abstract class JteViewsRenderer<T, R> implements ReloadableViewsRenderer<
      */
     @Override
     public void reload(@NonNull ResourceChange change) {
-        if (sourceResolver != null) {
-            sourceResolver.changed(change);
+        if (sourceTemplates != null) {
+            sourceTemplates.changed(change);
         }
     }
 
-    private TemplateEngine engineFor(String name) {
-        if (sourceEngine == null || sourceResolver == null) {
-            return templateEngine;
+    private @Nullable SourceTemplates sourceFor(String name) {
+        if (sourceTemplates == null) {
+            return null;
         }
         // a template of the source roots is compiled from source, any other is precompiled if it can be
-        if (sourceResolver.isSource(name) || !templateEngine.hasTemplate(name)) {
-            return sourceEngine;
+        if (sourceTemplates.isSource(name) || !templateEngine.hasTemplate(name)) {
+            return sourceTemplates;
         }
-        return templateEngine;
+        return null;
     }
 
     private String viewName(@NonNull String name, @NonNull String extension) {

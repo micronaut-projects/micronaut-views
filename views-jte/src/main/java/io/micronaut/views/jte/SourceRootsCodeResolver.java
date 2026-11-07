@@ -79,6 +79,14 @@ final class SourceRootsCodeResolver implements CodeResolver {
     }
 
     /**
+     * @return Whether templates of a deprecated dynamic source directory are read, which follow the time of their
+     * files rather than the changes
+     */
+    boolean followsFileTimes() {
+        return dynamicSource != null;
+    }
+
+    /**
      * Moves the stamp of every template a change reports, so that jte compiles it, and the templates that use
      * it, again on their next render.
      *
