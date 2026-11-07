@@ -24,6 +24,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.function.Supplier;
 
 /**
  * The templates of development mode, which jte compiles at runtime, rendered so that no template is compiled
@@ -87,19 +88,11 @@ final class SourceTemplates {
         if (exists != null) {
             return exists;
         }
-        if (lock.getReadHoldCount() > 0) {
-            // asked while this thread renders: it cannot wait for the other renders, nor they for it
-            return engine.hasTemplate(name);
-        }
-        ReentrantReadWriteLock.WriteLock write = lock.writeLock();
-        write.lock();
-        try {
+        return exclusively(() -> {
             boolean found = engine.hasTemplate(name);
             resolved.put(name, found);
             return found;
-        } finally {
-            write.unlock();
-        }
+        });
     }
 
     /**
@@ -112,21 +105,14 @@ final class SourceTemplates {
     void render(String name, Map<String, Object> model, TemplateOutput output) {
         ReentrantReadWriteLock.ReadLock read = lock.readLock();
         read.lock();
-        // a template rendered within a render of this thread cannot wait for the write lock
-        if (!Boolean.TRUE.equals(known(name)) && lock.getReadHoldCount() == 1 && !lock.isWriteLockedByCurrentThread()) {
-            read.unlock();
-            ReentrantReadWriteLock.WriteLock write = lock.writeLock();
-            write.lock();
-            try {
-                engine.prepareForRendering(name);
-                resolved.put(name, true);
-                // keeps the template as compiled until the render ends
-                read.lock();
-            } finally {
-                write.unlock();
-            }
-        }
         try {
+            if (!Boolean.TRUE.equals(known(name))) {
+                exclusively(() -> {
+                    engine.prepareForRendering(name);
+                    return resolved.put(name, true);
+                });
+            }
+            // the read lock, taken again before the write lock went, keeps the template compiled until the render ends
             engine.render(name, model, output);
         } finally {
             read.unlock();
@@ -145,6 +131,32 @@ final class SourceTemplates {
             resolver.changed(change);
             resolved.clear();
         } finally {
+            write.unlock();
+        }
+    }
+
+    /**
+     * Runs an action under the write lock. A thread that renders, and asks for a template within its render,
+     * releases its read locks first, which it cannot exchange for the write lock otherwise, and takes them again
+     * before it lets the write lock go.
+     */
+    private <V> V exclusively(Supplier<V> action) {
+        if (lock.isWriteLockedByCurrentThread()) {
+            return action.get();
+        }
+        ReentrantReadWriteLock.ReadLock read = lock.readLock();
+        ReentrantReadWriteLock.WriteLock write = lock.writeLock();
+        int holds = lock.getReadHoldCount();
+        for (int i = 0; i < holds; i++) {
+            read.unlock();
+        }
+        write.lock();
+        try {
+            return action.get();
+        } finally {
+            for (int i = 0; i < holds; i++) {
+                read.lock();
+            }
             write.unlock();
         }
     }

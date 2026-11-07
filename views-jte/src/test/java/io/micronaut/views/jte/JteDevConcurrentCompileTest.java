@@ -12,6 +12,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -57,6 +58,10 @@ class JteDevConcurrentCompileTest {
                 @param String name
                 @template.race.layout(title = "page%d", content = @`<p>%d ${name}</p>`)""".formatted(i, i)));
         }
+        files.add(write("race/outer.jte", "@param Object inner\n<section>$unsafe{inner.toString()}</section>"));
+        for (int i = 0; i < PAGES; i++) {
+            files.add(write("race/inner" + i + ".jte", "@param int number\n<p>inner ${number}</p>"));
+        }
         executor = Executors.newFixedThreadPool(PAGES);
     }
 
@@ -92,6 +97,41 @@ class JteDevConcurrentCompileTest {
             }
         }
         assertEquals(List.of(), failures);
+    }
+
+    @Test
+    void aTemplateRenderedWithinTheRenderOfAnotherIsCompiledWhileOthersRender() throws Exception {
+        try (ApplicationContext context = run()) {
+            HtmlJteViewsRenderer<Map<String, Object>> renderer = renderer(context);
+            CyclicBarrier start = new CyclicBarrier(PAGES);
+            List<Future<String>> renders = new ArrayList<>();
+            for (int i = 0; i < PAGES; i++) {
+                int number = i;
+                // renders a template of its own, not compiled yet, while the outer template renders
+                Object inner = new Object() {
+                    @Override
+                    public String toString() {
+                        StringWriter out = new StringWriter();
+                        try {
+                            renderer.render("race/inner" + number, Map.of("number", number), null).writeTo(out);
+                        } catch (IOException e) {
+                            throw new UncheckedIOException(e);
+                        }
+                        return out.toString();
+                    }
+                };
+                renders.add(executor.submit(() -> {
+                    start.await();
+                    StringWriter out = new StringWriter();
+                    renderer.render("race/outer", Map.of("inner", inner), null).writeTo(out);
+                    return out.toString();
+                }));
+            }
+            for (int i = 0; i < PAGES; i++) {
+                String body = renders.get(i).get(2, TimeUnit.MINUTES);
+                assertTrue(body.contains("inner " + i + "</p>"), body);
+            }
+        }
     }
 
     private ApplicationContext run() {
