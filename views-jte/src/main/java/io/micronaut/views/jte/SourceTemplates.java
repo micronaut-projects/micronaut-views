@@ -40,8 +40,8 @@ import java.util.function.Supplier;
  * <p>Here a template is compiled, if it needs to be, under a write lock, and every render holds a read lock. A
  * template known to be compiled since the last change renders under the read lock alone, so renders still run at
  * the same time, and a template known to be missing is not looked for again; a change forgets them all. Templates
- * of a deprecated dynamic source directory follow the time of their files, which no change reports, so every
- * render of them checks for a compilation under the write lock.</p>
+ * of a deprecated dynamic source directory follow the time of their files, which no change reports: jte sees the
+ * times as of the last check, which every render makes, and a file that changed is a change.</p>
  *
  * @author graemerocher
  * @since 6.4.0
@@ -84,13 +84,17 @@ final class SourceTemplates {
      * @return Whether the template exists, which compiles it
      */
     boolean hasTemplate(String name) {
+        followFileTimes();
         Boolean exists = known(name);
         if (exists != null) {
             return exists;
         }
         return exclusively(() -> {
             boolean found = engine.hasTemplate(name);
-            resolved.put(name, found);
+            // a file may appear in the dynamic source directory, which no change reports
+            if (found || !resolver.followsFileTimes()) {
+                resolved.put(name, found);
+            }
             return found;
         });
     }
@@ -106,6 +110,7 @@ final class SourceTemplates {
         ReentrantReadWriteLock.ReadLock read = lock.readLock();
         read.lock();
         try {
+            followFileTimes();
             if (!Boolean.TRUE.equals(known(name))) {
                 exclusively(() -> {
                     engine.prepareForRendering(name);
@@ -161,7 +166,21 @@ final class SourceTemplates {
         }
     }
 
+    /**
+     * Forgets what is compiled once a file of the dynamic source directory changed, which no change reports, and
+     * has jte see the new times then: a render never compiles under the read lock.
+     */
+    private void followFileTimes() {
+        if (resolver.followsFileTimes() && resolver.fileTimesChanged()) {
+            exclusively(() -> {
+                resolver.refreshFileTimes();
+                resolved.clear();
+                return null;
+            });
+        }
+    }
+
     private @Nullable Boolean known(String name) {
-        return resolver.followsFileTimes() ? null : resolved.get(name);
+        return resolved.get(name);
     }
 }

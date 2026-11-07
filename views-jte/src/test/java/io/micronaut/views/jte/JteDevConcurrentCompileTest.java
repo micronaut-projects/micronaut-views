@@ -15,7 +15,10 @@ import java.io.StringWriter;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CyclicBarrier;
@@ -134,10 +137,43 @@ class JteDevConcurrentCompileTest {
         }
     }
 
+    @Test
+    void aLayoutOfTheDynamicSourceDirectoryIsCompiledAgainOnceItsFileChanges(@TempDir Path dynamic) throws Exception {
+        Path layout = dynamic.resolve("dynamic/layout.jte");
+        Files.createDirectories(layout.getParent());
+        Files.writeString(layout, "@param gg.jte.Content content\n<header>one</header>${content}");
+        Files.writeString(dynamic.resolve("dynamic/page.jte"), "@template.dynamic.layout(content = @`<p>page</p>`)");
+        try (ApplicationContext context = run(Map.of("micronaut.views.jte.dynamic-source-path", dynamic.toString()))) {
+            HtmlJteViewsRenderer<Map<String, Object>> renderer = renderer(context);
+            assertTrue(render(renderer, "dynamic/page").contains("<header>one</header>"));
+
+            // no change reports it: the time of the file does
+            Files.writeString(layout, "@param gg.jte.Content content\n<header>two</header>${content}");
+            Files.setLastModifiedTime(layout, FileTime.from(Instant.now().plusSeconds(10)));
+            String body = render(renderer, "dynamic/page");
+            assertTrue(body.contains("<header>two</header>") && body.contains("<p>page</p>"), body);
+
+            // and a template added there is found
+            Files.writeString(dynamic.resolve("dynamic/added.jte"), "<p>added</p>");
+            assertTrue(render(renderer, "dynamic/added").contains("<p>added</p>"));
+        }
+    }
+
+    private static String render(HtmlJteViewsRenderer<Map<String, Object>> renderer, String view) throws IOException {
+        StringWriter out = new StringWriter();
+        renderer.render(view, Map.of(), null).writeTo(out);
+        return out.toString();
+    }
+
     private ApplicationContext run() {
-        ApplicationContext context = ApplicationContext.run(Map.of(
-            DevelopmentMode.PROPERTY, true,
-            "micronaut.views.jte.dynamic-path", classes.toString()));
+        return run(Map.of());
+    }
+
+    private ApplicationContext run(Map<String, Object> properties) {
+        Map<String, Object> all = new HashMap<>(properties);
+        all.put(DevelopmentMode.PROPERTY, true);
+        all.put("micronaut.views.jte.dynamic-path", classes.toString());
+        ApplicationContext context = ApplicationContext.run(all);
         ((DefaultBeanContext) context).notifyResourceChange(
             new ResourceChange(ResourceKind.VIEWS, List.of(root), files, List.of(), true));
         return context;
