@@ -11,11 +11,6 @@ dependencies {
     api projects.micronautViewsCore
     api(libs.managed.thymeleaf)
     api(libs.thymeleaf.extras.java8time)
-    constraints {
-        implementation("ognl:ognl:3.4.13") {
-            because("GHSA-crwc-vw2r-qr6m")
-        }
-    }
     compileOnly(mn.micronaut.management)
     compileOnly(mnValidation.micronaut.validation)
 
