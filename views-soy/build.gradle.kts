@@ -12,7 +12,10 @@ dependencies {
     }
 
     constraints {
-        runtimeOnly("com.google.code.gson:gson:2.14.0") {
+        runtimeOnly("com.google.guava:guava:33.7.2-jre") {
+            because("GHSA-xxph-c9ww-hj94")
+        }
+        runtimeOnly("com.google.code.gson:gson:2.15.0") {
             because("Older gson versions have security vulnerabilities")
         }
     }

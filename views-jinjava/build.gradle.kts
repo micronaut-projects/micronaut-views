@@ -9,6 +9,9 @@ dependencies {
     api(projects.micronautViewsCore)
     api(libs.managed.jinjava)
     constraints {
+        implementation("com.google.guava:guava:33.7.2-jre") {
+            because("GHSA-xxph-c9ww-hj94")
+        }
         implementation(libs.commons.lang3) {
             because("GHSA-j288-q9x7-2f5v")
         }
