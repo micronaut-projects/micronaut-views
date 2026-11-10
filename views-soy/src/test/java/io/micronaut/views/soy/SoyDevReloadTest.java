@@ -73,6 +73,9 @@ class SoyDevReloadTest {
             Files.writeString(page, "{namespace devreload}\n{template page}\n  {if}\n{/template}\n");
             notify(context, List.of(page), false);
             assertThrows(HttpClientResponseException.class, () -> get(client, "/devreload/page"));
+            // a view the last compilation does not have exists while the file set does not compile, so that
+            // rendering it reports the compilation error rather than that it is missing
+            assertTrue(context.getBean(SoySauceViewsRenderer.class).exists("devreload.added"));
 
             Files.writeString(page, PAGE.formatted("three"));
             notify(context, List.of(page), false);

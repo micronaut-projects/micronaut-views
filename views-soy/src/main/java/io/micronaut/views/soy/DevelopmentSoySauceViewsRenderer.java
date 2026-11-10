@@ -133,9 +133,16 @@ final class DevelopmentSoySauceViewsRenderer<T> extends SoySauceViewsRenderer<T>
         return render(current, viewName, data, request);
     }
 
+    /**
+     * Whether the latest compilation has the view. While the file set does not compile, every view exists, so that
+     * rendering one, such as a template just added with an error, reports the compilation error.
+     *
+     * @param view The view name
+     * @return Whether the view exists
+     */
     @Override
     public boolean exists(@NonNull String view) {
-        return current.hasTemplate(view);
+        return compileFailure != null || current.hasTemplate(view);
     }
 
     private SoySauce compile() {
