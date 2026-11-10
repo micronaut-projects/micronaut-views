@@ -39,7 +39,7 @@ import org.jspecify.annotations.Nullable;
 @Singleton
 @Requires(property = JinjavaViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = StringUtils.FALSE)
 @Requires(classes = Jinjava.class)
-public final class JinjavaViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
+public class JinjavaViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
 
     private final Jinjava jinjava;
 

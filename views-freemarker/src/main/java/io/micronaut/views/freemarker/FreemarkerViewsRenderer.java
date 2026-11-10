@@ -21,9 +21,11 @@ import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.watch.ResourceChange;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.ArgumentUtils;
 import io.micronaut.views.AbstractViewsRenderer;
+import io.micronaut.views.ReloadableViewsRenderer;
 import io.micronaut.views.ViewUtils;
 import io.micronaut.views.ViewsConfiguration;
 import io.micronaut.views.exceptions.ViewRenderingException;
@@ -33,6 +35,7 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * Renders Views with FreeMarker Java template engine.
@@ -46,7 +49,7 @@ import java.io.IOException;
 @Requires(property = FreemarkerViewsRendererConfigurationProperties.PREFIX + ".enabled", notEquals = "false")
 @Requires(classes = Configuration.class)
 @Singleton
-public class FreemarkerViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
+public class FreemarkerViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> implements ReloadableViewsRenderer<T, R> {
 
     /**
      * Views Configuration.
@@ -110,5 +113,28 @@ public class FreemarkerViewsRenderer<T, R> extends AbstractViewsRenderer<T, R> {
             return false;
         }
         return true;
+    }
+
+    /**
+     * None, to watch every views file: a template may include or import another named with any extension.
+     *
+     * @return No extension
+     * @since 6.4.0
+     */
+    @Override
+    public @NonNull Set<String> extensions() {
+        return Set.of();
+    }
+
+    /**
+     * Clears the template cache of the configuration, so that every template is read again: a template may be
+     * included or imported by others.
+     *
+     * @param change The templates that changed or went
+     * @since 6.4.0
+     */
+    @Override
+    public void reload(@NonNull ResourceChange change) {
+        freemarkerMicronautConfiguration.clearTemplateCache();
     }
 }

@@ -31,7 +31,7 @@ import java.nio.charset.Charset;
  */
 @Singleton
 @Internal
-final class JinjavaResourceLocator implements ResourceLocator {
+class JinjavaResourceLocator implements ResourceLocator {
     private final ResourceLoader resourceLoader;
 
     JinjavaResourceLocator(ClassPathResourceLoader resourceLoader,
