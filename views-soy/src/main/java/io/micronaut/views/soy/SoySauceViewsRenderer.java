@@ -78,11 +78,25 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>
                                  @Nullable CspConfiguration cspConfiguration,
                                  @Nullable SoyNamingMapProvider namingMapProvider,
                                  SoyViewsRendererConfigurationProperties soyConfiguration) {
+        this(viewsConfiguration, cspConfiguration, namingMapProvider, soyConfiguration, soyConfiguration.getCompiledTemplates());
+    }
+
+    /**
+     * @param viewsConfiguration Views configuration properties.
+     * @param cspConfiguration Content-Security-Policy configuration.
+     * @param namingMapProvider Soy naming map provider
+     * @param soyConfiguration   Soy configuration properties.
+     * @param precompiled The templates the provider precompiled, as it provided them, or null to compile its file set
+     */
+    SoySauceViewsRenderer(ViewsConfiguration viewsConfiguration,
+                          @Nullable CspConfiguration cspConfiguration,
+                          @Nullable SoyNamingMapProvider namingMapProvider,
+                          SoyViewsRendererConfigurationProperties soyConfiguration,
+                          @Nullable SoySauce precompiled) {
         this.viewsConfiguration = viewsConfiguration;
         this.soyMicronautConfiguration = soyConfiguration;
         this.namingMapProvider = namingMapProvider;
         this.injectNonce = cspConfiguration != null && cspConfiguration.isNonceEnabled();
-        final SoySauce precompiled = soyConfiguration.getCompiledTemplates();
         if (precompiled != null) {
             this.soySauce = precompiled;
         } else {

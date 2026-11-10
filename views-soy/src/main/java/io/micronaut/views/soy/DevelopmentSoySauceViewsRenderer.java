@@ -73,8 +73,17 @@ final class DevelopmentSoySauceViewsRenderer<T> extends SoySauceViewsRenderer<T>
                                      @Nullable CspConfiguration cspConfiguration,
                                      @Nullable SoyNamingMapProvider namingMapProvider,
                                      SoyViewsRendererConfigurationProperties soyConfiguration) {
-        super(viewsConfiguration, cspConfiguration, namingMapProvider, soyConfiguration);
-        this.precompiled = soyConfiguration.getCompiledTemplates() != null;
+        // the provider is asked once, so that what is reloaded follows the templates the renderer started with
+        this(viewsConfiguration, cspConfiguration, namingMapProvider, soyConfiguration, soyConfiguration.getCompiledTemplates());
+    }
+
+    private DevelopmentSoySauceViewsRenderer(ViewsConfiguration viewsConfiguration,
+                                             @Nullable CspConfiguration cspConfiguration,
+                                             @Nullable SoyNamingMapProvider namingMapProvider,
+                                             SoyViewsRendererConfigurationProperties soyConfiguration,
+                                             @Nullable SoySauce compiledTemplates) {
+        super(viewsConfiguration, cspConfiguration, namingMapProvider, soyConfiguration, compiledTemplates);
+        this.precompiled = compiledTemplates != null;
         this.current = soySauce;
     }
 
