@@ -12,6 +12,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.views.ReloadableViewsRenderer;
 import io.micronaut.views.View;
 import io.micronaut.views.ViewsSourceRoots;
 import jakarta.inject.Singleton;
@@ -26,6 +27,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -49,6 +51,7 @@ class SoyDevReloadTest {
         try (EmbeddedServer server = ApplicationContext.run(EmbeddedServer.class, devProperties());
              HttpClient client = HttpClient.create(server.getURL())) {
             ApplicationContext context = server.getApplicationContext();
+            assertInstanceOf(ReloadableViewsRenderer.class, context.getBean(SoySauceViewsRenderer.class));
             assertTrue(get(client, "/devreload/page").contains("one Sergio"));
 
             // compiled once, until the change arrives
@@ -93,6 +96,9 @@ class SoyDevReloadTest {
              HttpClient client = HttpClient.create(server.getURL())) {
             ApplicationContext context = server.getApplicationContext();
             assertFalse(context.getBean(ViewsSourceRoots.class).isEnabled());
+            // the production renderer, which compiles the file set once and has no development behaviour
+            assertEquals(SoySauceViewsRenderer.class, context.getBean(SoySauceViewsRenderer.class).getClass());
+            assertFalse(context.containsBean(DevelopmentSoySauceViewsRenderer.class));
             assertTrue(context.getBean(SoyTemplateSources.class).resolve("home.soy").orElseThrow().getPath().endsWith("/views/home.soy"));
             assertFalse(context.getBean(SoyTemplateSources.class).resolve("home.soy").orElseThrow().getPath().startsWith(root.toRealPath().toString()));
 
