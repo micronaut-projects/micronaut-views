@@ -16,6 +16,7 @@
 package io.micronaut.views.react;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.env.DevelopmentActive;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.order.Ordered;
@@ -29,7 +30,7 @@ import jakarta.inject.Singleton;
  * the new bundle is read is served the old markup, and would not be told again.
  *
  * <p>Only present when {@code micronaut-dev} is on the class path and the context is a development one, which has a
- * {@link LiveReloadTrigger}. {@code micronaut-views-react} does not depend on it.</p>
+ * {@link LiveReloadTrigger}, in development mode. {@code micronaut-views-react} does not depend on it.</p>
  *
  * @author graemerocher
  * @since 6.4.0
@@ -38,12 +39,13 @@ import jakarta.inject.Singleton;
 @Singleton
 @Requires(classes = LiveReloadTrigger.class)
 @Requires(beans = LiveReloadTrigger.class)
+@DevelopmentActive
 final class LiveReloadBrowserRefresh implements ReactBrowserRefresh, ApplicationEventListener<ReactJSSourcesChangedEvent>, Ordered {
 
     private final LiveReloadTrigger trigger;
-    private final ReactJSSources sources;
+    private final DevelopmentReactJSSources sources;
 
-    LiveReloadBrowserRefresh(LiveReloadTrigger trigger, ReactJSSources sources) {
+    LiveReloadBrowserRefresh(LiveReloadTrigger trigger, DevelopmentReactJSSources sources) {
         this.trigger = trigger;
         this.sources = sources;
     }

@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * The watches that reload the scripts of {@link ReactJSSources} when their files change, in development mode only.
+ * The watches that reload the scripts of {@link DevelopmentReactJSSources} when their files change, in development mode only.
  * Outside it the scripts are read once, and reloaded only on a {@code FileChangedEvent} of {@code micronaut.io.watch}.
  *
  * @author graemerocher

@@ -84,8 +84,9 @@ class ReactJSSourcesWatchSpec extends Specification {
         !context.containsBean(ReactJSSourcesWatch)
         context.getBean(RecordingFileWatcher).registrations.isEmpty()
         !context.containsBean(ReactBrowserRefresh)
-        sources.registrations.isEmpty()
-        sources.resourceWatches.isEmpty()
+        // the production sources, which read the scripts once and watch nothing
+        sources.getClass() == ReactJSSources
+        !context.containsBean(DevelopmentReactJSSources)
 
         cleanup:
         context.close()
@@ -111,6 +112,33 @@ class ReactJSSourcesWatchSpec extends Specification {
 
         then:
         listener.generations == [1L]
+
+        cleanup:
+        context.close()
+    }
+
+    void "in development mode a later write before the dropped bundle is read again is a change too, and the same write reported twice is one"() {
+        given:
+        ApplicationContext context = ApplicationContext.run(properties((DevelopmentMode.PROPERTY): true))
+        ReactJSSources sources = context.getBean(ReactJSSources)
+        RecordingListener listener = context.getBean(RecordingListener)
+        sources.serverBundle()
+
+        when: "the bundler writes twice, and nothing reads the bundle in between"
+        Files.writeString(bundle, "export default { v: 7 }")
+        notify(context, ResourceKind.STATIC, [bundle])
+        Files.writeString(bundle, "export default { v: 8 }")
+        notify(context, ResourceKind.STATIC, [bundle])
+
+        then: "the second write supersedes the first"
+        listener.generations == [1L, 2L]
+
+        when: "the second write is reported again, by another watch"
+        sources.onApplicationEvent(new FileChangedEvent(bundle, WatchEventType.MODIFY))
+
+        then:
+        listener.generations == [1L, 2L]
+        sources.serverBundle().characters.toString().contains("v: 8")
 
         cleanup:
         context.close()
