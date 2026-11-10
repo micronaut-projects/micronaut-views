@@ -73,6 +73,8 @@ class JinjavaDevReloadTest {
             ApplicationContext context = server.getApplicationContext();
             assertFalse(context.getBean(ViewsSourceRoots.class).isEnabled());
             assertFalse(context.getBean(JinjavaViewsRenderer.class).exists("devreload/page"));
+            // the production renderer, with no development behaviour
+            assertEquals(JinjavaViewsRenderer.class, context.getBean(JinjavaViewsRenderer.class).getClass());
 
             String before = get(client, "/devreload/home");
             assertTrue(before.contains("username: <span>sdelamo</span>"), before);

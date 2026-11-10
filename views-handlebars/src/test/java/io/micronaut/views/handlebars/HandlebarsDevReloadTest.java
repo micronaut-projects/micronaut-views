@@ -84,6 +84,8 @@ class HandlebarsDevReloadTest {
             ApplicationContext context = server.getApplicationContext();
             assertFalse(context.getBean(ViewsSourceRoots.class).isEnabled());
             assertFalse(context.getBean(HandlebarsViewsRenderer.class).exists("devreload/page"));
+            // the production renderer, with no development behaviour
+            assertEquals(HandlebarsViewsRenderer.class, context.getBean(HandlebarsViewsRenderer.class).getClass());
 
             String before = get(client, "/devreload/home");
             assertTrue(before.contains("username: <span>sdelamo</span>"), before);
