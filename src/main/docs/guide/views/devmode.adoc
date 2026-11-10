@@ -26,7 +26,7 @@ This needs no configuration. The launcher reports its `views` resource roots (`m
 |The default engine reads the templates of the views folder from the source roots ahead of the class path. It has no template cache and compiles a template on every render, so an edit is rendered on the next request. An engine of your own configured with a cache has it cleared when any views file changes.
 
 |Jinjava
-|Templates and the templates they include or extend are read from the source roots ahead of the class path. Jinjava parses a template on every render, so there is nothing to clear.
+|Templates and the templates they include or extend are read from the source roots ahead of the class path. Jinjava parses a template on every render, so there is nothing to clear. Each context has an EL resolver of its own, unless the application set one, so that Jinjava's static default does not keep the classes of a retired generation.
 
 |Velocity
 |The default engine reads the templates of the views folder from the source roots ahead of the class path, and the class path through the application's class loader. It caches no template, so there is nothing to clear.
