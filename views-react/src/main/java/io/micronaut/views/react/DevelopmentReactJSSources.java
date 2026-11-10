@@ -26,7 +26,6 @@ import io.micronaut.scheduling.io.watch.FileChange;
 import io.micronaut.scheduling.io.watch.FileChangeBatch;
 import io.micronaut.scheduling.io.watch.FileWatcherRegistration;
 import io.micronaut.scheduling.io.watch.event.FileChangedEvent;
-import io.micronaut.scheduling.io.watch.event.WatchEventType;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import org.graalvm.polyglot.Source;
@@ -161,11 +160,14 @@ final class DevelopmentReactJSSources extends ReactJSSources {
         }
     }
 
+    /**
+     * A change, a deletion too: a bundler that deletes its output before it writes the next one, and fails to, leaves
+     * no script to serve, which rendering reports.
+     *
+     * @param event The event
+     */
     @Override
     public void onApplicationEvent(FileChangedEvent event) {
-        if (event.getEventType() == WatchEventType.DELETE) {
-            return;
-        }
         changed(List.of(event.getPath()));
     }
 
@@ -215,9 +217,7 @@ final class DevelopmentReactJSSources extends ReactJSSources {
     private void filesChanged(FileChangeBatch batch) {
         List<Path> paths = new ArrayList<>(batch.changes().size());
         for (FileChange change : batch.changes()) {
-            if (change.type() != WatchEventType.DELETE) {
-                paths.add(change.path());
-            }
+            paths.add(change.path());
         }
         if (!paths.isEmpty()) {
             changed(paths);
@@ -225,8 +225,14 @@ final class DevelopmentReactJSSources extends ReactJSSources {
     }
 
     private void resourcesChanged(ResourceChange change) {
-        if (!change.initial() && !change.changed().isEmpty()) {
-            changed(change.changed());
+        if (change.initial()) {
+            return;
+        }
+        List<Path> paths = new ArrayList<>(change.changed().size() + change.removed().size());
+        paths.addAll(change.changed());
+        paths.addAll(change.removed());
+        if (!paths.isEmpty()) {
+            changed(paths);
         }
     }
 

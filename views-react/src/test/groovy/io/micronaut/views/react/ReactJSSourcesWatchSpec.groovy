@@ -140,6 +140,15 @@ class ReactJSSourcesWatchSpec extends Specification {
         listener.generations == [1L, 2L]
         sources.serverBundle().characters.toString().contains("v: 8")
 
+        when: "the bundler deletes its output, and the launcher reports the removal"
+        Files.delete(bundle)
+        ((DefaultBeanContext) context).notifyResourceChange(new ResourceChange(ResourceKind.STATIC, [tempDir], [], [bundle], false))
+
+        then: "the bundle is dropped, and reported again the deletion is one change"
+        listener.generations == [1L, 2L, 3L]
+        sources.onApplicationEvent(new FileChangedEvent(bundle, WatchEventType.DELETE))
+        listener.generations == [1L, 2L, 3L]
+
         cleanup:
         context.close()
     }
