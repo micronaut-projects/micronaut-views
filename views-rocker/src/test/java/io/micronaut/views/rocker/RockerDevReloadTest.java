@@ -58,6 +58,22 @@ class RockerDevReloadTest {
     }
 
     @Test
+    void inDevelopmentModeATemplateDeletedFromTheSourceRootsIsNotServedFromTheClassABuildGenerated() throws IOException {
+        // home has a class the build generated too
+        Path home = write("home.rocker.html", "@args (Boolean loggedIn, String username)\n<p>from the source root</p>\n");
+        try (EmbeddedServer server = ApplicationContext.run(EmbeddedServer.class, devProperties(Map.of()));
+             HttpClient client = HttpClient.create(server.getURL())) {
+            ApplicationContext context = server.getApplicationContext();
+            notify(context, List.of(home), true);
+            assertTrue(get(client, "/devreload/home").contains("from the source root"));
+
+            Files.delete(home);
+            ((DefaultBeanContext) context).notifyResourceChange(new ResourceChange(ResourceKind.VIEWS, List.of(root), List.of(), List.of(home), false));
+            assertThrows(HttpClientResponseException.class, () -> get(client, "/devreload/home"));
+        }
+    }
+
+    @Test
     void inDevelopmentModeATemplateCallingAnEditedTemplateRendersItsNewVersion() throws IOException {
         Path header = write("devreload/header.rocker.html", "<header>first header</header>\n");
         Path child = write("devreload/child.rocker.html", "@views.devreload.header.template()<p>child</p>\n");

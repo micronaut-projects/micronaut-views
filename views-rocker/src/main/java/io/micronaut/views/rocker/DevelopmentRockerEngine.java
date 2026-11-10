@@ -28,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static io.micronaut.views.ViewUtils.normalizeFile;
 
@@ -49,6 +51,8 @@ final class DevelopmentRockerEngine extends RockerEngine implements AutoCloseabl
     private final String extension;
     private final ClassLoader classLoader;
     private final @Nullable SourceRootsTemplates sourceRootsTemplates;
+    // the templates compiled from the source roots: one deleted there is not served from the class a build generated
+    private final Set<String> compiledFromSource = ConcurrentHashMap.newKeySet();
 
     /**
      * @param path The base path templates are stored under
@@ -91,7 +95,12 @@ final class DevelopmentRockerEngine extends RockerEngine implements AutoCloseabl
         if (sourceRootsTemplates != null) {
             Optional<RockerModel> model = sourceRootsTemplates.model(templatePath);
             if (model.isPresent()) {
+                compiledFromSource.add(templatePath);
                 return new BindableRockerModel(templatePath, model.get().getClass().getCanonicalName(), model.get());
+            }
+            if (compiledFromSource.contains(templatePath)) {
+                // deleted from the source roots: the class the last build generated is stale
+                throw new TemplateNotFoundException("Template " + templatePath + " was removed from the views source roots");
             }
         }
         return new BindableRockerModel(templatePath, DefaultRockerBootstrap.templatePathToClassName(templatePath), precompiled(templatePath, classLoader));
