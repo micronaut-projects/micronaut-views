@@ -257,7 +257,8 @@ final class DevelopmentReactJSSources extends ReactJSSources {
     }
 
     /**
-     * Waits until a script read from a file has stopped growing, or for a bounded time.
+     * Waits until a script read from a file has stopped being written, its size and time unchanged over a poll, or for
+     * a bounded time.
      *
      * @param desiredPath The configured path of the script
      */
@@ -276,15 +277,16 @@ final class DevelopmentReactJSSources extends ReactJSSources {
             return;
         }
         long deadline = System.nanoTime() + STABILITY_DEADLINE.toNanos();
-        long previous = -1;
+        // the size and the time of the file: a bundle rewritten in place at the same size still moves its time
+        List<Object> previous = null;
         while (System.nanoTime() < deadline) {
-            long current;
+            List<Object> current;
             try {
-                current = Files.size(file);
+                current = List.of(Files.size(file), Files.getLastModifiedTime(file));
             } catch (IOException e) {
-                current = -1;
+                current = null;
             }
-            if (current >= 0 && current == previous) {
+            if (current != null && current.equals(previous)) {
                 return;
             }
             previous = current;
