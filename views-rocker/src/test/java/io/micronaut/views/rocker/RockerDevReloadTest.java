@@ -13,6 +13,7 @@ import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.runtime.server.EmbeddedServer;
 import io.micronaut.views.View;
+import io.micronaut.views.ReloadableViewsRenderer;
 import io.micronaut.views.ViewsSourceRoots;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -26,6 +27,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -42,6 +44,8 @@ class RockerDevReloadTest {
         try (EmbeddedServer server = ApplicationContext.run(EmbeddedServer.class, devProperties(Map.of()));
              HttpClient client = HttpClient.create(server.getURL())) {
             ApplicationContext context = server.getApplicationContext();
+            assertInstanceOf(DevelopmentRockerEngine.class, context.getBean(RockerEngine.class));
+            assertInstanceOf(ReloadableViewsRenderer.class, context.getBean(RockerViewsRenderer.class));
             notify(context, List.of(page), true);
             assertTrue(get(client, "/devreload/page").contains("one Sergio"));
 
@@ -112,6 +116,9 @@ class RockerDevReloadTest {
              HttpClient client = HttpClient.create(server.getURL())) {
             ApplicationContext context = server.getApplicationContext();
             assertFalse(context.getBean(ViewsSourceRoots.class).isEnabled());
+            // the production engine and renderer, with no development behaviour
+            assertEquals(RockerEngine.class, context.getBean(RockerEngine.class).getClass());
+            assertEquals(RockerViewsRenderer.class, context.getBean(RockerViewsRenderer.class).getClass());
             write("devreload/page.rocker.html", "@args (String name)\n<p>one @name</p>\n");
             assertFalse(context.getBean(RockerViewsRenderer.class).exists("devreload/page"));
 
