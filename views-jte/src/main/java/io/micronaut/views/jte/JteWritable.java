@@ -20,7 +20,6 @@ import gg.jte.TemplateOutput;
 import gg.jte.output.Utf8ByteOutput;
 import gg.jte.output.WriterOutput;
 import io.micronaut.core.io.Writable;
-import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -35,28 +34,12 @@ import java.util.function.Function;
  */
 public class JteWritable implements Writable {
     private final TemplateEngine templateEngine;
-    private final @Nullable SourceTemplates sourceTemplates;
     private final String viewName;
     private final Map<String, Object> data;
     private final Function<TemplateOutput, TemplateOutput> outputDecorator;
 
     public JteWritable(TemplateEngine templateEngine, String viewName, Map<String, Object> data, Function<TemplateOutput, TemplateOutput> outputDecorator) {
         this.templateEngine = templateEngine;
-        this.sourceTemplates = null;
-        this.viewName = viewName;
-        this.data = data;
-        this.outputDecorator = outputDecorator;
-    }
-
-    /**
-     * @param sourceTemplates The templates of development mode, which compile at runtime
-     * @param viewName The template name
-     * @param data The model
-     * @param outputDecorator Decorates the output
-     */
-    JteWritable(SourceTemplates sourceTemplates, String viewName, Map<String, Object> data, Function<TemplateOutput, TemplateOutput> outputDecorator) {
-        this.templateEngine = sourceTemplates.engine();
-        this.sourceTemplates = sourceTemplates;
         this.viewName = viewName;
         this.data = data;
         this.outputDecorator = outputDecorator;
@@ -64,11 +47,7 @@ public class JteWritable implements Writable {
 
     private void render(TemplateOutput output) {
         TemplateOutput decorated = outputDecorator.apply(output);
-        if (sourceTemplates != null) {
-            sourceTemplates.render(viewName, data, decorated);
-        } else {
-            templateEngine.render(viewName, data, decorated);
-        }
+        templateEngine.render(viewName, data, decorated);
     }
 
     @Override

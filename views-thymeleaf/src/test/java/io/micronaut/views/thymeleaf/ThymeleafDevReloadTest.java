@@ -10,6 +10,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.views.ReloadableViewsRenderer;
 import io.micronaut.views.View;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -78,6 +79,8 @@ class ThymeleafDevReloadTest {
             ApplicationContext context = server.getApplicationContext();
             ThymeleafViewsRenderer<?> renderer = context.getBean(ThymeleafViewsRenderer.class);
             assertFalse(renderer.templateResolver instanceof SourceRootsTemplateResolver);
+            // the production renderer, with no development behaviour
+            assertEquals(ThymeleafViewsRenderer.class, renderer.getClass());
             assertFalse(renderer.exists("devreload/page"));
 
             String before = get(client, "/devreload/home");
@@ -91,10 +94,10 @@ class ThymeleafDevReloadTest {
     @Test
     void theRendererWatchesItsSuffixOnlyWhenTheResolverForcesIt() {
         try (ApplicationContext context = ApplicationContext.run(Map.of(DevelopmentMode.PROPERTY, true))) {
-            assertEquals(Set.of(), context.getBean(ThymeleafViewsRenderer.class).extensions());
+            assertEquals(Set.of(), ((ReloadableViewsRenderer<?, ?>) context.getBean(ThymeleafViewsRenderer.class)).extensions());
         }
         try (ApplicationContext context = ApplicationContext.run(Map.of(DevelopmentMode.PROPERTY, true, "micronaut.views.thymeleaf.force-suffix", true))) {
-            assertEquals(Set.of("html"), context.getBean(ThymeleafViewsRenderer.class).extensions());
+            assertEquals(Set.of("html"), ((ReloadableViewsRenderer<?, ?>) context.getBean(ThymeleafViewsRenderer.class)).extensions());
         }
     }
 

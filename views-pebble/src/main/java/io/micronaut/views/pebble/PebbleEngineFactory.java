@@ -161,7 +161,7 @@ public class PebbleEngineFactory {
         }
 
         builder.loader(loader.orElseGet(() -> sourceRoots.isEnabled() && classLoader != null
-            ? new PebbleLoader(viewsConfiguration, configuration, sourceRoots, classLoader)
+            ? new DevelopmentPebbleLoader(viewsConfiguration, configuration, sourceRoots, classLoader)
             : new PebbleLoader(viewsConfiguration, configuration)));
 
         syntax.ifPresent(bean -> builder.syntax(bean));

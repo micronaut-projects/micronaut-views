@@ -65,13 +65,6 @@ final class SourceTemplates {
     }
 
     /**
-     * @return The engine
-     */
-    TemplateEngine engine() {
-        return engine;
-    }
-
-    /**
      * @param name The template name, such as {@code home.jte}
      * @return Whether the template is read from a source directory rather than the class path
      */
