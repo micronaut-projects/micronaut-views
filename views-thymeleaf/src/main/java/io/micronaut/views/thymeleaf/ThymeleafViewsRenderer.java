@@ -121,7 +121,14 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
             templateResolver.getSuffix();
     }
 
-    private TemplateAndFragment resolveTemplate(String viewName) {
+    /**
+     * Resolves a view name to its template and fragment selectors. Package-private for the renderer of development
+     * mode, which looks the template up in the views source roots too.
+     *
+     * @param viewName The view name
+     * @return The template name and fragment selectors
+     */
+    final TemplateAndFragment resolveTemplate(String viewName) {
         if (!viewName.contains("::")) {
             return new TemplateAndFragment(viewName, null);
         }
@@ -141,6 +148,6 @@ public class ThymeleafViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?
         return new TemplateAndFragment(templateName, fragmentSelectors);
     }
 
-    private record TemplateAndFragment(String templateName, Set<String> fragmentSelectors) {
+    record TemplateAndFragment(String templateName, Set<String> fragmentSelectors) {
     }
 }

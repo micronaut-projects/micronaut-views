@@ -16,11 +16,12 @@
 package io.micronaut.views.pebble;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.watch.ResourceChange;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.util.LocaleResolver;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.views.ViewUtils;
-import io.micronaut.views.ViewsRenderer;
+import io.micronaut.views.ReloadableViewsRenderer;
 import io.micronaut.views.exceptions.ViewRenderingException;
 import io.pebbletemplates.pebble.PebbleEngine;
 import io.pebbletemplates.pebble.template.PebbleTemplate;
@@ -29,6 +30,7 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Renders Views with Pebble.
@@ -42,7 +44,7 @@ import java.util.Locale;
 @Singleton
 @Requires(property = PebbleConfigurationProperties.ENABLED, notEquals = StringUtils.FALSE)
 @Requires(classes = PebbleEngine.class)
-public class PebbleViewsRenderer<T, R> implements ViewsRenderer<T, R> {
+public class PebbleViewsRenderer<T, R> implements ReloadableViewsRenderer<T, R> {
 
     private final PebbleEngine engine;
     private final LocaleResolver<R> httpLocaleResolver;
@@ -79,5 +81,28 @@ public class PebbleViewsRenderer<T, R> implements ViewsRenderer<T, R> {
     @Override
     public boolean exists(@NonNull String name) {
         return engine.getLoader().resourceExists(name);
+    }
+
+    /**
+     * None, to watch every views file: the default extension is only appended to a name without one, and a
+     * template may extend or import another named with any extension, such as {@code layout.peb}.
+     *
+     * @return No extension
+     */
+    @Override
+    public @NonNull Set<String> extensions() {
+        return Set.of();
+    }
+
+    /**
+     * Invalidates the compiled templates and the tag cache of the engine: a template may be extended or
+     * imported by others.
+     *
+     * @param change The templates that changed or went
+     */
+    @Override
+    public void reload(@NonNull ResourceChange change) {
+        engine.getTemplateCache().invalidateAll();
+        engine.getTagCache().invalidateAll();
     }
 }

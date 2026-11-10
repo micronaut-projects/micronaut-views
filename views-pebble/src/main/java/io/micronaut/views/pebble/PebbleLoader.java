@@ -39,8 +39,21 @@ public class PebbleLoader extends ClasspathLoader {
         extension = ViewUtils.EXTENSION_SEPARATOR + pebble.getDefaultExtension();
     }
 
+    /**
+     * A loader of the class path of the given class loader, for the loader of development mode.
+     *
+     * @param views Views Configuration
+     * @param pebble Pebble Configuration
+     * @param classLoader The class loader of the class path
+     */
+    PebbleLoader(ViewsConfiguration views, PebbleConfiguration pebble, ClassLoader classLoader) {
+        super(classLoader);
+        super.setPrefix(ViewUtils.normalizeFolder(views.getFolder()));
+        extension = ViewUtils.EXTENSION_SEPARATOR + pebble.getDefaultExtension();
+    }
+
     @NonNull
-    private String normalizeTemplateName(@NonNull String templateName) {
+    final String normalizeTemplateName(@NonNull String templateName) {
         templateName = templateName.replace("\\", "/");
 
         if (templateName.startsWith("/")) {
