@@ -111,6 +111,9 @@ class JteDevReloadTest {
             ApplicationContext context = server.getApplicationContext();
             assertFalse(context.getBean(ViewsSourceRoots.class).isEnabled());
             assertFalse(context.getBean(HtmlJteViewsRenderer.class).exists("devreload/page"));
+            // the production renderers, with no development behaviour
+            assertEquals(HtmlJteViewsRenderer.class, context.getBean(HtmlJteViewsRenderer.class).getClass());
+            assertEquals(PlainJteViewsRenderer.class, context.getBean(PlainJteViewsRenderer.class).getClass());
 
             String before = get(client, "/devreload/home");
             assertTrue(before.contains("username: <span>sdelamo</span>"), before);
