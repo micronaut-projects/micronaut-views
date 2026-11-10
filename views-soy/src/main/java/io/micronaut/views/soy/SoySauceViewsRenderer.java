@@ -78,11 +78,25 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>
                                  @Nullable CspConfiguration cspConfiguration,
                                  @Nullable SoyNamingMapProvider namingMapProvider,
                                  SoyViewsRendererConfigurationProperties soyConfiguration) {
+        this(viewsConfiguration, cspConfiguration, namingMapProvider, soyConfiguration, soyConfiguration.getCompiledTemplates());
+    }
+
+    /**
+     * @param viewsConfiguration Views configuration properties.
+     * @param cspConfiguration Content-Security-Policy configuration.
+     * @param namingMapProvider Soy naming map provider
+     * @param soyConfiguration   Soy configuration properties.
+     * @param precompiled The templates the provider precompiled, as it provided them, or null to compile its file set
+     */
+    SoySauceViewsRenderer(ViewsConfiguration viewsConfiguration,
+                          @Nullable CspConfiguration cspConfiguration,
+                          @Nullable SoyNamingMapProvider namingMapProvider,
+                          SoyViewsRendererConfigurationProperties soyConfiguration,
+                          @Nullable SoySauce precompiled) {
         this.viewsConfiguration = viewsConfiguration;
         this.soyMicronautConfiguration = soyConfiguration;
         this.namingMapProvider = namingMapProvider;
         this.injectNonce = cspConfiguration != null && cspConfiguration.isNonceEnabled();
-        final SoySauce precompiled = soyConfiguration.getCompiledTemplates();
         if (precompiled != null) {
             this.soySauce = precompiled;
         } else {
@@ -113,11 +127,29 @@ public class SoySauceViewsRenderer<T> implements ViewsRenderer<T, HttpRequest<?>
     public Writable render(@NonNull String viewName,
                            @Nullable T data,
                            @Nullable HttpRequest<?> request) {
+        return render(soySauce, viewName, data, request);
+    }
+
+    /**
+     * Renders a view with the given templates, for the renderer of development mode, which renders the latest
+     * compilation of the file set.
+     *
+     * @param templates The compiled templates
+     * @param viewName view name to be rendered
+     * @param data     response body to render it with a view
+     * @param request  HTTP request
+     * @return A writable where the view will be written to.
+     */
+    @NonNull
+    final Writable render(@NonNull SoySauce templates,
+                          @NonNull String viewName,
+                          @Nullable T data,
+                          @Nullable HttpRequest<?> request) {
         ArgumentUtils.requireNonNull("viewName", viewName);
 
         Map<String, Object> ijOverlay = new HashMap<>(1);
         Map<String, Object> context = ViewUtils.modelOf(data);
-        final SoySauce.Renderer renderer = soySauce.renderTemplate(TemplateName.of(viewName));
+        final SoySauce.Renderer renderer = templates.renderTemplate(TemplateName.of(viewName));
         renderer.setData(context);
         if (injectNonce) {
             Optional<Object> nonceObj = request != null ? request.getAttribute(CspFilter.NONCE_PROPERTY) : Optional.empty();

@@ -59,6 +59,8 @@ sourceSets {
 </build>
 ----
 
+In development mode, under the Micronaut development launcher, the templates of the views source roots are compiled at runtime when `com.fizzed:rocker-compiler` is a `developmentOnly` dependency, and compiled again after an edit: see <<devmode, development mode>>. `micronaut.views.rocker.hot-reloading`, Rocker's own reloading, is deprecated.
+
 === Compile Time Type Checking
 
 Rocker templates are compiled at build time giving the ability to statically type check template arguments.

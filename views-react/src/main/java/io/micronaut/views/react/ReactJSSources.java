@@ -46,16 +46,18 @@ import static java.lang.String.format;
 class ReactJSSources implements ApplicationEventListener<FileChangedEvent> {
     private static final Logger LOG = LoggerFactory.getLogger(ReactJSSources.class);
     private static final String HOST_POLYFILLS_PATH = "classpath:io/micronaut/views/react/host-polyfills.js";
+
+    // We cache the Source objects because they are expensive to create, but, we don't want them
+    // to be singleton beans so we can recreate them on file change. Package-private for the development-mode
+    // subclass, DevelopmentReactJSSources, which drops them on its own watches.
+    Source serverBundle;  // L(this)
+    Source renderScript;  // L(this)
+    long generation;  // L(this)
+
     private final ResourceResolver resourceResolver;
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
     private final ApplicationEventPublisher<ReactJSSourcesChangedEvent> sourcesChangedEventPublisher;
-
-    // We cache the Source objects because they are expensive to create, but, we don't want them
-    // to be singleton beans so we can recreate them on file change.
-    private Source serverBundle;  // L(this)
-    private Source renderScript;  // L(this)
     private Source hostPolyfills;  // L(this)
-    private long generation;
 
     ReactJSSources(ResourceResolver resourceResolver,
                    ReactViewsRendererConfiguration reactViewsRendererConfiguration,
