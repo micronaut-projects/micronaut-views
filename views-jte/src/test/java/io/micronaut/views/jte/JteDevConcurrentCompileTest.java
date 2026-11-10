@@ -5,6 +5,7 @@ import io.micronaut.context.DefaultBeanContext;
 import io.micronaut.context.env.DevelopmentMode;
 import io.micronaut.context.reload.ResourceKind;
 import io.micronaut.context.watch.ResourceChange;
+import io.micronaut.views.ViewsSourceRoots;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -157,6 +159,21 @@ class JteDevConcurrentCompileTest {
             Files.writeString(dynamic.resolve("dynamic/added.jte"), "<p>added</p>");
             assertTrue(render(renderer, "dynamic/added").contains("<p>added</p>"));
         }
+    }
+
+    @Test
+    void aFileAddedToTheDynamicSourceDirectoryOverAClassPathTemplateIsAChangeOfFileTimes(@TempDir Path dynamic) throws Exception {
+        SourceRootsCodeResolver resolver = new SourceRootsCodeResolver(ViewsSourceRoots.none(), dynamic,
+            new gg.jte.resolve.ResourceCodeResolver("views"));
+        // a dependency read from the class path, which the dynamic source directory does not hold yet
+        resolver.getLastModified("tim.jte");
+        assertFalse(resolver.fileTimesChanged());
+
+        Files.writeString(dynamic.resolve("tim.jte"), "<p>dynamic</p>");
+        // its appearance is seen before a render, so that it is compiled under the write lock
+        assertTrue(resolver.fileTimesChanged());
+        resolver.refreshFileTimes();
+        assertFalse(resolver.fileTimesChanged());
     }
 
     private static String render(HtmlJteViewsRenderer<Map<String, Object>> renderer, String view) throws IOException {

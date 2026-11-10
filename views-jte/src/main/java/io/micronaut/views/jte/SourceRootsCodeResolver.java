@@ -168,6 +168,11 @@ final class SourceRootsCodeResolver implements CodeResolver {
             // the source roots; the time as of the last refresh, which SourceTemplates makes before it compiles
             return Math.max(stamps.getOrDefault(name, 0L), fileTimes.computeIfAbsent(name, dynamicSource::getLastModified));
         }
+        if (dynamicSource != null) {
+            // a file added to the dynamic source directory later takes over from the class path: its time, none
+            // now, is followed too, so that it is compiled under the write lock rather than within a render
+            fileTimes.computeIfAbsent(name, dynamicSource::getLastModified);
+        }
         // a template that went from the source roots is compiled again from the class path
         return stamps.getOrDefault(name, 0L);
     }
