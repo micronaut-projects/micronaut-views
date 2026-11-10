@@ -55,6 +55,8 @@ final class SourceRootsCodeResolver implements CodeResolver {
     private final @Nullable DirectoryCodeResolver dynamicSource;
     private final CodeResolver classPath;
     private final Map<String, Long> stamps = new ConcurrentHashMap<>();
+    // the times of the files of the dynamic source directory jte has read, as of the last refresh
+    private final Map<String, Long> fileTimes = new ConcurrentHashMap<>();
     // jte recompiles a template when a stamp is later than the one it compiled with, so the stamps of changes
     // start after any time of a file, which the dynamic source directory still reports
     private final AtomicLong stamp = new AtomicLong(1L << 62);
@@ -76,6 +78,39 @@ final class SourceRootsCodeResolver implements CodeResolver {
      */
     boolean isSource(String name) {
         return sourceRoots.resolve(name, null).isPresent() || (dynamicSource != null && dynamicSource.exists(name));
+    }
+
+    /**
+     * @return Whether templates of a deprecated dynamic source directory are read, which follow the time of their
+     * files rather than the changes
+     */
+    boolean followsFileTimes() {
+        return dynamicSource != null;
+    }
+
+    /**
+     * @return Whether a file of the dynamic source directory that jte has read changed since the last refresh
+     */
+    boolean fileTimesChanged() {
+        if (dynamicSource == null) {
+            return false;
+        }
+        for (Map.Entry<String, Long> time : fileTimes.entrySet()) {
+            if (dynamicSource.getLastModified(time.getKey()) != time.getValue()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Has jte see the times the files of the dynamic source directory have now, rather than those of the last
+     * refresh, so that it compiles those that changed again.
+     */
+    void refreshFileTimes() {
+        if (dynamicSource != null) {
+            fileTimes.replaceAll((name, time) -> dynamicSource.getLastModified(name));
+        }
     }
 
     /**
@@ -130,8 +165,13 @@ final class SourceRootsCodeResolver implements CodeResolver {
         }
         if (dynamicSource != null && dynamicSource.exists(name)) {
             // not watched: jte follows the time of the file, as the dynamic mode did, or a template that went from
-            // the source roots
-            return Math.max(stamps.getOrDefault(name, 0L), dynamicSource.getLastModified(name));
+            // the source roots; the time as of the last refresh, which SourceTemplates makes before it compiles
+            return Math.max(stamps.getOrDefault(name, 0L), fileTimes.computeIfAbsent(name, dynamicSource::getLastModified));
+        }
+        if (dynamicSource != null) {
+            // a file added to the dynamic source directory later takes over from the class path: its time, none
+            // now, is followed too, so that it is compiled under the write lock rather than within a render
+            fileTimes.computeIfAbsent(name, dynamicSource::getLastModified);
         }
         // a template that went from the source roots is compiled again from the class path
         return stamps.getOrDefault(name, 0L);

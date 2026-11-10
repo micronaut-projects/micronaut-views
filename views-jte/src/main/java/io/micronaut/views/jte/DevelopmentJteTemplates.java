@@ -62,8 +62,7 @@ final class DevelopmentJteTemplates {
     private static final List<String> EXTENSIONS = List.of(".jte", ".kte");
 
     private final TemplateEngine precompiled;
-    private final TemplateEngine sourceEngine;
-    private final SourceRootsCodeResolver sourceResolver;
+    private final SourceTemplates sourceTemplates;
 
     /**
      * @param viewsConfiguration Views configuration
@@ -87,11 +86,12 @@ final class DevelopmentJteTemplates {
             ? findDynamicSourceDirectory(jteViewsRendererConfiguration, folder).orElse(null)
             : null;
         CodeResolver classPath = classLoader != null ? new ResourceCodeResolver(folder, classLoader) : new ResourceCodeResolver(folder);
-        sourceResolver = new SourceRootsCodeResolver(sourceRoots, dynamicSource, classPath);
-        sourceEngine = classLoader != null
+        SourceRootsCodeResolver sourceResolver = new SourceRootsCodeResolver(sourceRoots, dynamicSource, classPath);
+        TemplateEngine sourceEngine = classLoader != null
             ? TemplateEngine.create(sourceResolver, classDirectory, contentType, classLoader)
             : TemplateEngine.create(sourceResolver, classDirectory, contentType);
         sourceEngine.setBinaryStaticContent(jteViewsRendererConfiguration.isBinaryStaticContent());
+        sourceTemplates = new SourceTemplates(sourceEngine, sourceResolver);
         LOGGER.info("Development mode: compiling the views of the source roots at runtime into {}, and using the precompiled views otherwise.", classDirectory);
         precompiled = TemplateEngine.createPrecompiled(contentType);
     }
@@ -105,9 +105,13 @@ final class DevelopmentJteTemplates {
     Writable render(String viewName, Map<String, Object> model, Function<TemplateOutput, TemplateOutput> outputDecorator) {
         for (String extension : EXTENSIONS) {
             String name = viewName(viewName, extension);
-            TemplateEngine engine = engineFor(name);
-            if (engine.hasTemplate(name)) {
-                return new JteWritable(engine, name, model, outputDecorator);
+            SourceTemplates source = sourceFor(name);
+            if (source == null) {
+                if (precompiled.hasTemplate(name)) {
+                    return new JteWritable(precompiled, name, model, outputDecorator);
+                }
+            } else if (source.hasTemplate(name)) {
+                return new SourceTemplatesWritable(source, name, model, outputDecorator);
             }
         }
         return new JteWritable(precompiled, null, model, outputDecorator);
@@ -120,7 +124,8 @@ final class DevelopmentJteTemplates {
     boolean exists(String viewName) {
         for (String extension : EXTENSIONS) {
             String name = viewName(viewName, extension);
-            if (engineFor(name).hasTemplate(name)) {
+            SourceTemplates source = sourceFor(name);
+            if (source == null ? precompiled.hasTemplate(name) : source.hasTemplate(name)) {
                 return true;
             }
         }
@@ -134,15 +139,15 @@ final class DevelopmentJteTemplates {
      * @param change The templates that changed or went
      */
     void changed(ResourceChange change) {
-        sourceResolver.changed(change);
+        sourceTemplates.changed(change);
     }
 
-    private TemplateEngine engineFor(String name) {
+    private @Nullable SourceTemplates sourceFor(String name) {
         // a template of the source roots is compiled from source, any other is precompiled if it can be
-        if (sourceResolver.isSource(name) || !precompiled.hasTemplate(name)) {
-            return sourceEngine;
+        if (sourceTemplates.isSource(name) || !precompiled.hasTemplate(name)) {
+            return sourceTemplates;
         }
-        return precompiled;
+        return null;
     }
 
     private static String viewName(String name, String extension) {
