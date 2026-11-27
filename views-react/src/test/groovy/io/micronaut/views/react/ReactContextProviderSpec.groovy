@@ -1,5 +1,6 @@
 package io.micronaut.views.react
 
+import io.micronaut.context.BeanProvider
 import io.micronaut.views.react.util.BeanPool
 import io.micronaut.http.exceptions.MessageBodyException
 import org.graalvm.polyglot.Context
@@ -95,7 +96,7 @@ class ReactContextProviderSpec extends Specification {
         sources.hostPolyfills() >> module("", "host-polyfills.js")
         sources.serverBundle() >> serverBundle
         sources.renderScript() >> renderScript
-        ReactViewsRenderer renderer = new ReactViewsRenderer(provider, configuration, sources, [])
+        ReactViewsRenderer renderer = new ReactViewsRenderer(provider, configuration, sources, [], Stub(BeanProvider))
 
         when:
         String result = WritableUtils.writableToString(renderer.render("App", [:], null)).orElseThrow()
@@ -133,6 +134,6 @@ class ReactContextProviderSpec extends Specification {
         sources.generation() >> 0L
         sources.serverBundle() >> serverBundle
         sources.renderScript() >> renderScript
-        new ReactViewsRenderer(provider, configuration, sources, [])
+        new ReactViewsRenderer(provider, configuration, sources, [], Stub(BeanProvider))
     }
 }

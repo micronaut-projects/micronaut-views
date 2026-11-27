@@ -72,6 +72,23 @@ public interface ReactViewsRendererConfiguration {
     boolean isHydrateWithoutRequest();
 
     /**
+     * Whether a component is given its props as JSON: the props are written by the {@code JsonMapper} of the
+     * application, and what the component reads is what that JSON says, on the server as in the browser.
+     *
+     * <p>Without it the component reads the Java object, property by property, on the server, and the browser is
+     * handed what {@code JSON.stringify} makes of that. The two differ from what a controller of the same
+     * application answers with for the same object: an enum is no string, a date is a Java object, and what the
+     * annotations of JSON say of names and of what is left out is not followed. With it, the props of a page and
+     * the body of a response are one thing. A method of a props object cannot be called then, since JSON has
+     * none; a component that does so cannot be made live in a browser either way.</p>
+     *
+     * @return whether the props are written as JSON and read from it. Defaults to false, which is how it was.
+     * @since 6.3.2
+     */
+    @Bindable(defaultValue = "false")
+    boolean isPropsAsJson();
+
+    /**
      * @return the path relative to micronaut.views.folder where the bundle used for
      * server-side rendering can be found. Defaults to {@value #DEFAULT_SERVER_BUNDLE_PATH}
      */

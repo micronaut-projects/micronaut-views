@@ -15,11 +15,14 @@
  */
 package io.micronaut.views.react;
 
+import io.micronaut.context.BeanProvider;
 import io.micronaut.context.exceptions.BeanInstantiationException;
+import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.exceptions.MessageBodyException;
+import io.micronaut.json.JsonMapper;
 import io.micronaut.views.ViewsRenderer;
 import io.micronaut.views.react.truffle.IntrospectableToTruffleAdapter;
 import jakarta.inject.Singleton;
@@ -48,12 +51,15 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
     private final ReactViewsRendererConfiguration reactViewsRendererConfiguration;
     private final ReactJSSources reactJSSources;
     private final List<ReactRenderPostProcessor> postProcessors;
+    private final BeanProvider<JsonMapper> jsonMapper;
     private final Map<Context, LoadedReactContext> loadedContexts = new WeakHashMap<>();
 
     ReactViewsRenderer(ReactContextProvider contextProvider,
                        ReactViewsRendererConfiguration reactViewsRendererConfiguration,
                        ReactJSSources reactJSSources,
-                       List<ReactRenderPostProcessor> postProcessors) {
+                       List<ReactRenderPostProcessor> postProcessors,
+                       BeanProvider<JsonMapper> jsonMapper) {
+        this.jsonMapper = jsonMapper;
         this.contextProvider = contextProvider;
         this.reactViewsRendererConfiguration = reactViewsRendererConfiguration;
         this.reactJSSources = reactJSSources;
@@ -121,7 +127,7 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
                     throw new IllegalArgumentException("Unable to look up ssr function in render script `%s`. Please make sure it is exported."
                         .formatted(reactViewsRendererConfiguration.getRenderScript()));
                 }
-                loaded = new LoadedReactContext(generation, render, ssrModule);
+                loaded = new LoadedReactContext(generation, render, ssrModule, context.eval("js", "JSON.parse"));
                 loadedContexts.put(context, loaded);
             }
             return loaded;
@@ -140,7 +146,11 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
         // We wrap the props object so we can use Micronaut's compile-time reflection implementation.
         // This should be more native-image friendly (no need to write reflection config files), and
         // might also be faster.
-        Value guestProps = IntrospectableToTruffleAdapter.wrap(polyglotContext, props);
+        // Or, where the application asks for it, the component is given what the JSON of the props says, which is
+        // what the browser is given: the props of a page are then what a controller would answer with.
+        Value guestProps = propsAsJson()
+            ? jsonProps(context, props)
+            : IntrospectableToTruffleAdapter.wrap(polyglotContext, props);
         // Without a client bundle URL the render script emits markup only. A render that no browser will
         // receive -- an email body built by micronaut-email-template, which has no request -- cannot
         // hydrate, and the bootstrap it would otherwise carry serialises the whole view model into the
@@ -159,9 +169,34 @@ class ReactViewsRenderer<PROPS> implements ViewsRenderer<PROPS, HttpRequest<?>>,
         }
     }
 
+    private boolean propsAsJson() {
+        try {
+            return reactViewsRendererConfiguration.isPropsAsJson();
+        } catch (AbstractMethodError e) {
+            // A configuration written by hand and compiled against a release that had no such setting. The method
+            // cannot have a default body: the configuration that is bound from properties implements what is abstract.
+            return false;
+        }
+    }
+
+    private Value jsonProps(LoadedReactContext context, @Nullable PROPS props) {
+        if (props == null) {
+            // the null of JavaScript, which the render script can spread, and not one of the host
+            return context.parse().execute("null");
+        }
+        JsonMapper mapper = jsonMapper.find(null).orElseThrow(() -> new ConfigurationException(
+            "micronaut.views.react.props-as-json needs a JsonMapper: add micronaut-serde-jackson or micronaut-jackson-databind"));
+        try {
+            return context.parse().execute(new String(mapper.writeValueAsBytes(props), StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            throw new MessageBodyException("Could not write the props of type " + props.getClass().getName() + " as JSON", e);
+        }
+    }
+
     private record LoadedReactContext(long generation,
                                       Value render,
-                                      Value ssrModule) {
+                                      Value ssrModule,
+                                      Value parse) {
         private static final java.util.Set<String> IMPORT_SYMBOLS =
             java.util.Set.of("React", "ReactDOMServer", "renderToString", "h");
 
