@@ -57,6 +57,22 @@ The https://www.graalvm.org/latest/reference-manual/embed-languages/#access-java
 
 Note that props are read only. Attempting to set the value of a Java property on a props object will fail.
 
+== Props as JSON
+
+A component reads the Java object behind its props on the server, and the browser is handed what `JSON.stringify` makes of that object. Neither is the JSON your controllers answer with for the same object: an enum is not a string, a date is a Java object, and annotations such as `@JsonProperty` and `@JsonIgnore` are not followed. A component that renders an enum of its props fails on the server, since React takes no object as a child.
+
+With `micronaut.views.react.props-as-json` set to `true` the props are written as JSON by the `JsonMapper` of the application, which is Micronaut Serialization or Jackson Databind, and the component is given what that JSON says, on the server as in the browser:
+
+[configuration]
+----
+micronaut:
+  views:
+    react:
+      props-as-json: true
+----
+
+The props of a page are then what a controller would answer with for the same object, so a page can share its types with the calls it makes to the server. The props have to be serializable: with Micronaut Serialization, annotate their classes with `@Serdeable`. What the mapper leaves out is not in the props either: Micronaut Serialization leaves out a property that is null or an empty collection unless `micronaut.serde.serialization.inclusion` is `ALWAYS`, so a component that maps over a list should expect the list to be missing, or the application should include everything. A method of a props object cannot be called, since JSON has none; a component that calls one cannot be hydrated in a browser either way. The setting is off by default.
+
 == Sandbox
 
 By default, Javascript executing server side runs with the same privilege level as the server itself. This is similar to the Node security model but exposes you to supply chain attacks. If a third party React component you depend on turns out to be malicious or simply buggy, it could allow an attacker to run code server side instead of only inside the browser sandbox.
