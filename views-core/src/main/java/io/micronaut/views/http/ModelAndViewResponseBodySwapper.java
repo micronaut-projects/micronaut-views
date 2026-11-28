@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpAttributes;
+import io.micronaut.http.HttpMethod;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -54,7 +55,7 @@ final class ModelAndViewResponseBodySwapper implements ResponseBodySwapper<Model
         if (response == null) {
             return Optional.empty();
         }
-        Object body = response.body();
+        Object body = model(request, response);
         if (body instanceof ModelAndView<?> modelAndView) {
             return Optional.of(new ResponseBodySwap<>(modelAndView, MediaType.TEXT_HTML));
         }
@@ -63,6 +64,20 @@ final class ModelAndViewResponseBodySwapper implements ResponseBodySwapper<Model
                 .flatMap(route -> route.findAnnotation(View.class))
                 .map(ann -> modelAndViewOf(ann, body))
                 .map(m -> new ResponseBodySwap<>(m, mediaType.map(MediaType::toString).orElse(MediaType.TEXT_HTML)));
+    }
+
+    /**
+     * What the route returned. For a HEAD request the server has taken it off the response by now, since no body is
+     * sent, and keeps it in an attribute: a view that is resolved for such a response is given it as its model all
+     * the same, so that a server that writes the body of a HEAD response for the sake of its headers, as Micronaut
+     * does from 5.3 for the length of the content, renders the view as it does for a GET, and not without its model.
+     */
+    private static @Nullable Object model(@NonNull HttpRequest<?> request, @NonNull HttpResponse<?> response) {
+        Object body = response.body();
+        if (body == null && request.getMethod() == HttpMethod.HEAD) {
+            return response.getAttribute(HttpAttributes.HEAD_BODY).orElse(null);
+        }
+        return body;
     }
 
     private <T> ModelAndView<T> modelAndViewOf(@NonNull AnnotationValue<View> an, @Nullable T body) {
